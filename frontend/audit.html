@@ -1,12 +1,16 @@
-<!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Quantora Audit</title>
-<style>body{font-family:Arial,sans-serif;margin:24px;background:#f8fafc} .card{background:#fff;border:1px solid #dde3ee;border-radius:12px;padding:16px} pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:10px}</style></head>
-<body>
-<h1>Quantora Audit</h1>
-<div class="card"><pre id="out">Loading...</pre></div>
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Quantora Audit</title><script src="/config.js"></script></head>
+<body style="font-family:Arial;margin:18px;background:#f5f7fb;">
+<h1>Audit Detail</h1>
+<pre id="out" style="background:#0b1735;color:#e2e8f0;padding:14px;border-radius:10px;"></pre>
 <script>
-Promise.all([fetch('/audit/current').then(r=>r.json()), fetch('/system/trust-summary').then(r=>r.json())]).then(([audit, summary])=>{
- document.getElementById('out').textContent = JSON.stringify({audit, summary}, null, 2);
-}).catch(e=>{document.getElementById('out').textContent='Failed: '+e.message})
+Promise.all([
+  fetch(window.API_BASE_URL + "/audit/current").then(r=>r.json()),
+  fetch(window.API_BASE_URL + "/passport/violations").then(r=>r.json())
+]).then(([audit, violations])=>{
+  document.getElementById("out").innerText = JSON.stringify({audit, violations}, null, 2);
+});
 </script>
-</body></html>
+</body>
+</html>

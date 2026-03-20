@@ -1,11 +1,11 @@
-# QNT30100 Quantora Real Data + Trust Engine
+# QNT30200 Quantora Allocator Live Interface
 
-Deploy-ready backend and static frontend for local boot, Railway backend deploy, and Vercel frontend deploy.
+Deploy-ready package for allocator-facing trust infrastructure.
 
-## Local boot
-- Windows: run `0_START_ALL_WIN.bat`
-- Mac: run `0_START_ALL_MAC.command`
-
-## Backend health
-- http://127.0.0.1:8010/health
-- http://127.0.0.1:8010/docs
+## Live routes
+- `/`
+- `/docs`
+- `/health`
+- `/allocator/profile`
+- `/allocator/report`
+- `/allocator/request-access`

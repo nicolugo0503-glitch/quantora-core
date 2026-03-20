@@ -1,5 +1,6 @@
 #!/bin/bash
-set -e
-ROOT="$(cd "$(dirname "$0")" && pwd)"
-osascript -e "tell application \"Terminal\" to do script \"cd '$ROOT' && ./1_START_BACKEND_MAC.command\"" || true
-osascript -e "tell application \"Terminal\" to do script \"cd '$ROOT' && ./2_START_FRONTEND_MAC.command\"" || true
+DIR="$(cd "$(dirname "$0")" && pwd)"
+osascript -e 'tell application "Terminal" to do script "cd "'"$DIR"'"; ./1_START_BACKEND_MAC.command"'
+sleep 3
+open http://127.0.0.1:8010/
+open http://127.0.0.1:8010/docs

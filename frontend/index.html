@@ -1,93 +1,93 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Quantora Trust Console</title>
+  <title>Quantora Allocator Console</title>
   <script src="/config.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; margin: 24px; line-height: 1.4; background:#f7f8fb; color:#0f172a; }
-    h1,h2 { margin-top: 0; }
-    .grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
-    .card { background:#fff; border:1px solid #dde3ee; border-radius:12px; padding:16px; margin-bottom:16px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
-    .metric { font-size: 30px; font-weight: 700; margin: 6px 0; }
-    .label { color:#475569; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }
-    button { padding:10px 14px; cursor:pointer; border:0; border-radius:8px; background:#1d4ed8; color:#fff; }
-    .muted { color:#64748b; }
-    pre { background:#0f172a; color:#e2e8f0; padding:12px; border-radius:10px; overflow:auto; }
-    a { color:#1d4ed8; }
+    body { font-family: Arial, sans-serif; margin: 18px; background:#f5f7fb; color:#111827; }
+    h1 { margin:0 0 16px; }
+    .bar, .panel, .card { background:white; border:1px solid #d9dfeb; border-radius:12px; padding:14px; margin-bottom:14px; }
+    .row { display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; }
+    .card h3 { margin:0 0 8px; font-size:12px; color:#64748b; text-transform:uppercase; }
+    .metric { font-size:18px; font-weight:700; }
+    button { background:#2563eb; color:white; border:none; border-radius:8px; padding:10px 14px; cursor:pointer; }
+    pre { background:#0b1735; color:#e2e8f0; padding:14px; border-radius:10px; overflow:auto; min-height:120px; }
+    .split { display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
+    a { color:#2563eb; }
   </style>
 </head>
 <body>
-  <h1>Quantora Trust Console</h1>
-  <div class="card">
-    <div><strong>API Base URL:</strong> <span id="apiBase"></span></div>
-    <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-      <button onclick="loadAll()">Refresh Trust State</button>
-      <button onclick="openDocs()">Open API docs</button>
-    </div>
+  <h1>Quantora Allocator Console</h1>
+
+  <div class="bar">
+    <strong>API Base URL:</strong> <span id="api"></span><br><br>
+    <button onclick="refreshAll()">Refresh Trust + Allocator State</button>
+    <a href="/docs" target="_blank" style="margin-left:12px;">Open API docs</a>
   </div>
 
-  <div class="grid">
-    <div class="card"><div class="label">Trust Score</div><div id="trustScore" class="metric">--</div><div class="muted">Allocator-facing trust signal</div></div>
-    <div class="card"><div class="label">Audit Status</div><div id="auditStatus" class="metric">--</div><div class="muted">Current audit state</div></div>
-    <div class="card"><div class="label">Deployment Stage</div><div id="deployStage" class="metric" style="font-size:22px;">--</div><div class="muted">Capital activation stage</div></div>
-    <div class="card"><div class="label">Violations</div><div id="violations" class="metric">--</div><div class="muted">Active violations</div></div>
+  <div class="row">
+    <div class="card"><h3>Trust Score</h3><div class="metric" id="trust_score">-</div><div>Allocator-facing trust signal</div></div>
+    <div class="card"><h3>Audit Status</h3><div class="metric" id="audit_status">-</div><div>Current audit state</div></div>
+    <div class="card"><h3>Deployment Stage</h3><div class="metric" id="deployment_stage">-</div><div>Capital activation stage</div></div>
+    <div class="card"><h3>Violations</h3><div class="metric" id="violations">-</div><div>Active violations</div></div>
   </div>
 
-  <div class="grid">
-    <div class="card">
+  <div class="split">
+    <div class="panel">
       <h2>Trust Summary</h2>
-      <pre id="trustSummary">Loading...</pre>
+      <pre id="trust_summary"></pre>
     </div>
-    <div class="card">
-      <h2>Passport State</h2>
-      <pre id="passportState">Loading...</pre>
+    <div class="panel">
+      <h2>Allocator Profile</h2>
+      <pre id="allocator_profile"></pre>
     </div>
   </div>
 
-  <div class="grid">
-    <div class="card">
-      <h2>Audit State</h2>
-      <pre id="auditState">Loading...</pre>
+  <div class="split">
+    <div class="panel">
+      <h2>Allocator Report</h2>
+      <pre id="allocator_report"></pre>
     </div>
-    <div class="card">
-      <h2>Allocator View</h2>
+    <div class="panel">
+      <h2>Actions</h2>
+      <button onclick="requestAccess()">Request Access</button>
+      <pre id="access_result">No allocator action yet.</pre>
       <ul>
         <li><a href="/passport.html">Passport Detail</a></li>
         <li><a href="/audit.html">Audit Detail</a></li>
-        <li><a href="/reporting.html">Institutional Reporting</a></li>
-        <li><a href="/distribution.html">Allocator Distribution</a></li>
       </ul>
     </div>
   </div>
 
   <script>
-    document.getElementById('apiBase').textContent = window.QUANTORA_CONFIG.API_BASE_URL;
-    async function fetchJson(path) {
-      const res = await fetch(path);
-      if (!res.ok) throw new Error(path + ' -> ' + res.status);
-      return res.json();
+    document.getElementById("api").innerText = window.API_BASE_URL;
+
+    async function getJson(path) {
+      const res = await fetch(window.API_BASE_URL + path);
+      return await res.json();
     }
-    async function loadAll() {
-      const [summary, passport, audit, violations] = await Promise.all([
-        fetchJson('/system/trust-summary'),
-        fetchJson('/passport/current'),
-        fetchJson('/audit/current'),
-        fetchJson('/passport/violations')
-      ]);
-      document.getElementById('trustScore').textContent = summary.trust_score;
-      document.getElementById('auditStatus').textContent = summary.audit_status;
-      document.getElementById('deployStage').textContent = summary.deployment_stage;
-      document.getElementById('violations').textContent = summary.violation_count;
-      document.getElementById('trustSummary').textContent = JSON.stringify(summary, null, 2);
-      document.getElementById('passportState').textContent = JSON.stringify(passport, null, 2);
-      document.getElementById('auditState').textContent = JSON.stringify({ audit, violations }, null, 2);
+
+    async function refreshAll() {
+      const trust = await getJson("/system/trust-summary");
+      const profile = await getJson("/allocator/profile");
+      const report = await getJson("/allocator/report");
+      document.getElementById("trust_score").innerText = trust.trust_score;
+      document.getElementById("audit_status").innerText = trust.audit_status;
+      document.getElementById("deployment_stage").innerText = trust.deployment_stage;
+      document.getElementById("violations").innerText = trust.violation_count;
+      document.getElementById("trust_summary").innerText = JSON.stringify(trust, null, 2);
+      document.getElementById("allocator_profile").innerText = JSON.stringify(profile, null, 2);
+      document.getElementById("allocator_report").innerText = JSON.stringify(report, null, 2);
     }
-    function openDocs() { window.open('/docs', '_blank'); }
-    loadAll().catch(err => {
-      document.getElementById('trustSummary').textContent = 'Failed to load trust state: ' + err.message;
-    });
+
+    async function requestAccess() {
+      const res = await fetch(window.API_BASE_URL + "/allocator/request-access", { method: "POST" });
+      const data = await res.json();
+      document.getElementById("access_result").innerText = JSON.stringify(data, null, 2);
+    }
+
+    refreshAll();
   </script>
 </body>
 </html>

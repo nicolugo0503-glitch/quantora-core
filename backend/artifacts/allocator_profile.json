@@ -1,0 +1,12 @@
+{
+  "allocator_id": "allocator_demo_001",
+  "operator_id": "operator_demo_001",
+  "operator_name": "Quantora Demo Operator",
+  "trust_score": 82,
+  "risk_tier": "TIER_2_MODERATE",
+  "deployment_stage": "STAGE_2_MICRO_LIVE",
+  "passport_status": "ACTIVE",
+  "available_reports": [
+    "allocator_report.json"
+  ]
+}

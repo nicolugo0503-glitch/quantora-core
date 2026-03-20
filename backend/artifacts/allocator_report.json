@@ -1,0 +1,16 @@
+{
+  "report_id": "report_demo_001",
+  "operator_id": "operator_demo_001",
+  "generated_at": "2026-03-20T22:40:00Z",
+  "summary": {
+    "trust_score": 82,
+    "audit_status": "VALID",
+    "violation_count": 0,
+    "deployment_stage": "STAGE_2_MICRO_LIVE"
+  },
+  "capital": {
+    "requested": 25000,
+    "deployed": 5000,
+    "risk_tier": "TIER_2_MODERATE"
+  }
+}

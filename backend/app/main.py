@@ -1,15 +1,16 @@
-from __future__ import annotations
-
+from fastapi import FastAPI
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 import json
 
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse
+APP_DIR = Path(__file__).resolve().parent
+BACKEND_DIR = APP_DIR.parent
+PROJECT_DIR = BACKEND_DIR.parent
+ARTIFACTS_DIR = BACKEND_DIR / "artifacts"
+FRONTEND_DIR = PROJECT_DIR / "frontend"
 
-from app.data_loader import load_json
-
-app = FastAPI(title="Quantora QNT30100 Real Data + Trust Engine")
+app = FastAPI(title="Quantora QNT30200", version="30200")
 
 app.add_middleware(
     CORSMiddleware,
@@ -19,139 +20,78 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-BASE = Path(__file__).resolve().parents[2]
-FRONTEND = BASE / "frontend"
-BACKEND_ART = BASE / "backend" / "artifacts"
-ART = BASE / "artifacts"
-
-
-def safe_file_response(filename: str, media_type: str | None = None):
-    path = FRONTEND / filename
-    if path.exists():
-        return FileResponse(path, media_type=media_type)
-    return JSONResponse(
-        {
-            "status": "ok",
-            "message": "Quantora backend live",
-            "missing_file": filename,
-            "docs": "/docs",
-            "health": "/health",
-        }
-    )
-
-
-def read_root_artifact(name: str):
-    path = ART / name
+def load_json(filename: str, fallback):
+    path = ARTIFACTS_DIR / filename
     if path.exists():
         return json.loads(path.read_text(encoding="utf-8"))
-    return {}
-
-
-@app.get("/")
-def root_page():
-    return safe_file_response("index.html")
-
-
-@app.get("/index.html")
-def index_page():
-    return safe_file_response("index.html")
-
-
-@app.get("/passport.html")
-def passport_page():
-    return safe_file_response("passport.html")
-
-
-@app.get("/audit.html")
-def audit_page():
-    return safe_file_response("audit.html")
-
-
-@app.get("/reporting.html")
-def reporting_page():
-    return safe_file_response("reporting.html")
-
-
-@app.get("/distribution.html")
-def distribution_page():
-    return safe_file_response("distribution.html")
-
-
-@app.get("/config.js")
-def config_js():
-    return safe_file_response("config.js", media_type="application/javascript")
-
+    return fallback
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "layer": "QNT30100"}
-
+    return {"status": "ok", "layer": "QNT30200"}
 
 @app.get("/passport/current")
 def passport_current():
-    return load_json("passport.json")
-
+    return load_json("passport.json", {})
 
 @app.get("/passport/score")
 def passport_score():
-    return load_json("passport_score.json")
-
+    return load_json("passport_score.json", {})
 
 @app.get("/passport/violations")
 def passport_violations():
-    return load_json("violation_registry.json")
-
+    return load_json("violation_registry.json", {})
 
 @app.get("/audit/current")
 def audit_current():
-    return load_json("audit_report.json")
-
+    return load_json("audit_report.json", {})
 
 @app.get("/system/trust-summary")
 def trust_summary():
-    passport = load_json("passport.json")
-    violations = load_json("violation_registry.json")
-    audit = load_json("audit_report.json")
+    passport = load_json("passport.json", {})
+    score = load_json("passport_score.json", {})
+    audit = load_json("audit_report.json", {})
+    violations = load_json("violation_registry.json", {})
     return {
         "status": "ok",
-        "layer": "QNT30100",
+        "layer": "QNT30200",
         "operator_id": passport.get("operator_id", "operator_demo_001"),
-        "trust_score": passport.get("trust_score", 82),
+        "trust_score": score.get("trust_score", passport.get("trust_score", 0)),
         "audit_status": audit.get("status", "UNKNOWN"),
         "violation_count": violations.get("violation_count", 0),
-        "deployment_stage": passport.get("deployment_stage", "STAGE_2_MICRO_LIVE"),
-        "passport_status": passport.get("passport_status", "ACTIVE"),
+        "deployment_stage": passport.get("deployment_stage", "STAGE_0_BLOCKED"),
+        "passport_status": passport.get("passport_status", "UNKNOWN"),
     }
 
+@app.get("/allocator/profile")
+def allocator_profile():
+    return load_json("allocator_profile.json", {})
 
-@app.get("/reporting/policy")
-def policy():
-    path = BASE / "backend" / "institutional_reporting" / "reporting_policy.json"
-    return json.loads(path.read_text(encoding="utf-8"))
+@app.get("/allocator/report")
+def allocator_report():
+    return load_json("allocator_report.json", {})
 
+@app.post("/allocator/request-access")
+def allocator_request_access():
+    return {
+        "status": "accepted",
+        "layer": "QNT30200",
+        "request_id": "alloc_req_demo_001",
+        "message": "Allocator access request recorded."
+    }
 
-@app.post("/reporting/generate")
-def generate():
-    data = read_root_artifact("allocator_reports.json")
-    return {"status": "generated", "reports": len(data.get("reports", []))}
+@app.get("/")
+def root():
+    index = FRONTEND_DIR / "index.html"
+    if index.exists():
+        return FileResponse(index)
+    return JSONResponse({"status": "ok", "message": "Quantora backend live", "docs": "/docs", "health": "/health"})
 
-
-@app.get("/reporting/current")
-def current():
-    return read_root_artifact("allocator_reports.json")
-
-
-@app.get("/reporting/distribution-log")
-def distribution_log():
-    return read_root_artifact("distribution_log.json")
-
-
-@app.get("/reporting/allocator-packets")
-def packets():
-    return read_root_artifact("allocator_packets.json")
-
-
-@app.post("/reporting/distribute")
-def distribute():
-    data = read_root_artifact("distribution_log.json")
-    return JSONResponse({"status": "queued", "distributions": len(data.get("events", []))})
+@app.get("/{page_name}")
+def static_pages(page_name: str):
+    page = FRONTEND_DIR / page_name
+    if page.suffix == "" and not page_name.endswith(".html"):
+        page = FRONTEND_DIR / f"{page_name}.html"
+    if page.exists() and page.is_file():
+        return FileResponse(page)
+    return JSONResponse({"error": "not found", "page": page_name}, status_code=404)
