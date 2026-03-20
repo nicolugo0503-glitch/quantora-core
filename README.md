@@ -1,4 +1,4 @@
-# QNT30000 Quantora Deploy Ready
+# QNT30100 Quantora Real Data + Trust Engine
 
 Deploy-ready backend and static frontend for local boot, Railway backend deploy, and Vercel frontend deploy.
 

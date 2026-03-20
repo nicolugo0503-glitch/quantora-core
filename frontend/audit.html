@@ -1,0 +1,12 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Quantora Audit</title>
+<style>body{font-family:Arial,sans-serif;margin:24px;background:#f8fafc} .card{background:#fff;border:1px solid #dde3ee;border-radius:12px;padding:16px} pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:10px}</style></head>
+<body>
+<h1>Quantora Audit</h1>
+<div class="card"><pre id="out">Loading...</pre></div>
+<script>
+Promise.all([fetch('/audit/current').then(r=>r.json()), fetch('/system/trust-summary').then(r=>r.json())]).then(([audit, summary])=>{
+ document.getElementById('out').textContent = JSON.stringify({audit, summary}, null, 2);
+}).catch(e=>{document.getElementById('out').textContent='Failed: '+e.message})
+</script>
+</body></html>

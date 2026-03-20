@@ -1,0 +1,12 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Quantora Passport</title>
+<style>body{font-family:Arial,sans-serif;margin:24px;background:#f8fafc} .card{background:#fff;border:1px solid #dde3ee;border-radius:12px;padding:16px} pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:10px}</style></head>
+<body>
+<h1>Quantora Passport</h1>
+<div class="card"><pre id="out">Loading...</pre></div>
+<script>
+Promise.all([fetch('/passport/current').then(r=>r.json()), fetch('/passport/score').then(r=>r.json()), fetch('/passport/violations').then(r=>r.json())]).then(([passport, score, violations])=>{
+ document.getElementById('out').textContent = JSON.stringify({passport, score, violations}, null, 2);
+}).catch(e=>{document.getElementById('out').textContent='Failed: '+e.message})
+</script>
+</body></html>

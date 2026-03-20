@@ -3,49 +3,91 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Quantora Deployment Console</title>
+  <title>Quantora Trust Console</title>
   <script src="/config.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; margin: 32px; line-height: 1.4; }
-    .card { border: 1px solid #ddd; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
-    button { padding: 10px 14px; cursor: pointer; }
-    code, pre { background: #f5f5f5; padding: 8px; border-radius: 6px; }
-    .ok { color: #0a7a1f; }
-    .bad { color: #b42318; }
+    body { font-family: Arial, sans-serif; margin: 24px; line-height: 1.4; background:#f7f8fb; color:#0f172a; }
+    h1,h2 { margin-top: 0; }
+    .grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+    .card { background:#fff; border:1px solid #dde3ee; border-radius:12px; padding:16px; margin-bottom:16px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
+    .metric { font-size: 30px; font-weight: 700; margin: 6px 0; }
+    .label { color:#475569; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }
+    button { padding:10px 14px; cursor:pointer; border:0; border-radius:8px; background:#1d4ed8; color:#fff; }
+    .muted { color:#64748b; }
+    pre { background:#0f172a; color:#e2e8f0; padding:12px; border-radius:10px; overflow:auto; }
+    a { color:#1d4ed8; }
   </style>
 </head>
 <body>
-  <h1>Quantora Deploy Console</h1>
+  <h1>Quantora Trust Console</h1>
   <div class="card">
-    <p><strong>API Base URL:</strong> <span id="apiBase"></span></p>
-    <button onclick="checkHealth()">Check backend health</button>
-    <button onclick="openDocs()">Open API docs</button>
-    <pre id="healthOut">Not checked yet.</pre>
+    <div><strong>API Base URL:</strong> <span id="apiBase"></span></div>
+    <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+      <button onclick="loadAll()">Refresh Trust State</button>
+      <button onclick="openDocs()">Open API docs</button>
+    </div>
   </div>
-  <div class="card">
-    <h2>Surfaces</h2>
-    <ul>
-      <li><a href="/reporting.html">Institutional Reporting</a></li>
-      <li><a href="/distribution.html">Allocator Distribution</a></li>
-    </ul>
+
+  <div class="grid">
+    <div class="card"><div class="label">Trust Score</div><div id="trustScore" class="metric">--</div><div class="muted">Allocator-facing trust signal</div></div>
+    <div class="card"><div class="label">Audit Status</div><div id="auditStatus" class="metric">--</div><div class="muted">Current audit state</div></div>
+    <div class="card"><div class="label">Deployment Stage</div><div id="deployStage" class="metric" style="font-size:22px;">--</div><div class="muted">Capital activation stage</div></div>
+    <div class="card"><div class="label">Violations</div><div id="violations" class="metric">--</div><div class="muted">Active violations</div></div>
   </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Trust Summary</h2>
+      <pre id="trustSummary">Loading...</pre>
+    </div>
+    <div class="card">
+      <h2>Passport State</h2>
+      <pre id="passportState">Loading...</pre>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Audit State</h2>
+      <pre id="auditState">Loading...</pre>
+    </div>
+    <div class="card">
+      <h2>Allocator View</h2>
+      <ul>
+        <li><a href="/passport.html">Passport Detail</a></li>
+        <li><a href="/audit.html">Audit Detail</a></li>
+        <li><a href="/reporting.html">Institutional Reporting</a></li>
+        <li><a href="/distribution.html">Allocator Distribution</a></li>
+      </ul>
+    </div>
+  </div>
+
   <script>
-    const API = window.QUANTORA_CONFIG.API_BASE_URL;
-    document.getElementById('apiBase').textContent = API;
-    async function checkHealth() {
-      const out = document.getElementById('healthOut');
-      out.textContent = 'Checking...';
-      try {
-        const res = await fetch('/health');
-        const data = await res.json();
-        out.textContent = 'Health OK: ' + JSON.stringify(data, null, 2);
-        out.className = 'ok';
-      } catch (e) {
-        out.textContent = `Health check failed: ${e.message}`;
-        out.className = 'bad';
-      }
+    document.getElementById('apiBase').textContent = window.QUANTORA_CONFIG.API_BASE_URL;
+    async function fetchJson(path) {
+      const res = await fetch(path);
+      if (!res.ok) throw new Error(path + ' -> ' + res.status);
+      return res.json();
+    }
+    async function loadAll() {
+      const [summary, passport, audit, violations] = await Promise.all([
+        fetchJson('/system/trust-summary'),
+        fetchJson('/passport/current'),
+        fetchJson('/audit/current'),
+        fetchJson('/passport/violations')
+      ]);
+      document.getElementById('trustScore').textContent = summary.trust_score;
+      document.getElementById('auditStatus').textContent = summary.audit_status;
+      document.getElementById('deployStage').textContent = summary.deployment_stage;
+      document.getElementById('violations').textContent = summary.violation_count;
+      document.getElementById('trustSummary').textContent = JSON.stringify(summary, null, 2);
+      document.getElementById('passportState').textContent = JSON.stringify(passport, null, 2);
+      document.getElementById('auditState').textContent = JSON.stringify({ audit, violations }, null, 2);
     }
     function openDocs() { window.open('/docs', '_blank'); }
+    loadAll().catch(err => {
+      document.getElementById('trustSummary').textContent = 'Failed to load trust state: ' + err.message;
+    });
   </script>
 </body>
 </html>

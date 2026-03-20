@@ -1,0 +1,17 @@
+{
+  "operator_id": "operator_demo_001",
+  "trust_score": 82,
+  "discipline_score": 84,
+  "risk_score": 79,
+  "consistency_score": 81,
+  "performance_quality_score": 80,
+  "audit_integrity_score": 100,
+  "weights": {
+    "discipline": 0.30,
+    "risk_control": 0.25,
+    "consistency": 0.20,
+    "performance_quality": 0.15,
+    "audit_integrity": 0.10
+  },
+  "computed_at": "2026-03-20T22:40:00Z"
+}
