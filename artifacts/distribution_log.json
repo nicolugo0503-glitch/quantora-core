@@ -1,0 +1,10 @@
+{
+  "events": [
+    {
+      "distribution_id": "DST-2026-001",
+      "allocator_id": "AL-001",
+      "report_id": "RPT-2026-001",
+      "status": "READY"
+    }
+  ]
+}
