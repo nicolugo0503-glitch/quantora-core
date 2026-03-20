@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Quantora Allocator Console</title>
+  <title>Quantora Operator Console</title>
   <script src="/config.js"></script>
   <style>
     body { font-family: Arial, sans-serif; margin: 18px; background:#f5f7fb; color:#111827; }
@@ -12,22 +12,46 @@
     .card h3 { margin:0 0 8px; font-size:12px; color:#64748b; text-transform:uppercase; }
     .metric { font-size:18px; font-weight:700; }
     button { background:#2563eb; color:white; border:none; border-radius:8px; padding:10px 14px; cursor:pointer; }
+    input { padding:10px; border:1px solid #cbd5e1; border-radius:8px; width:100%; box-sizing:border-box; margin-bottom:10px; }
     pre { background:#0b1735; color:#e2e8f0; padding:14px; border-radius:10px; overflow:auto; min-height:120px; }
     .split { display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
     a { color:#2563eb; }
   </style>
 </head>
 <body>
-  <h1>Quantora Allocator Console</h1>
+  <h1>Quantora Operator Console</h1>
 
   <div class="bar">
     <strong>API Base URL:</strong> <span id="api"></span><br><br>
-    <button onclick="refreshAll()">Refresh Trust + Allocator State</button>
+    <button onclick="refreshAll()">Refresh Operator State</button>
     <a href="/docs" target="_blank" style="margin-left:12px;">Open API docs</a>
   </div>
 
+  <div class="split">
+    <div class="panel">
+      <h2>Register</h2>
+      <input id="reg_name" placeholder="Display name" />
+      <input id="reg_email" placeholder="Email" />
+      <input id="reg_password" placeholder="Password" type="password" />
+      <button onclick="registerUser()">Register</button>
+      <pre id="register_result">No registration yet.</pre>
+    </div>
+    <div class="panel">
+      <h2>Login</h2>
+      <input id="login_email" placeholder="Email" />
+      <input id="login_password" placeholder="Password" type="password" />
+      <button onclick="loginUser()">Login</button>
+      <pre id="login_result">No login yet.</pre>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Current Operator Session</h2>
+    <pre id="me_out"></pre>
+  </div>
+
   <div class="row">
-    <div class="card"><h3>Trust Score</h3><div class="metric" id="trust_score">-</div><div>Allocator-facing trust signal</div></div>
+    <div class="card"><h3>Trust Score</h3><div class="metric" id="trust_score">-</div><div>Operator trust signal</div></div>
     <div class="card"><h3>Audit Status</h3><div class="metric" id="audit_status">-</div><div>Current audit state</div></div>
     <div class="card"><h3>Deployment Stage</h3><div class="metric" id="deployment_stage">-</div><div>Capital activation stage</div></div>
     <div class="card"><h3>Violations</h3><div class="metric" id="violations">-</div><div>Active violations</div></div>
@@ -39,20 +63,19 @@
       <pre id="trust_summary"></pre>
     </div>
     <div class="panel">
-      <h2>Allocator Profile</h2>
-      <pre id="allocator_profile"></pre>
+      <h2>Passport State</h2>
+      <pre id="passport_state"></pre>
     </div>
   </div>
 
   <div class="split">
     <div class="panel">
-      <h2>Allocator Report</h2>
-      <pre id="allocator_report"></pre>
+      <h2>Audit State</h2>
+      <pre id="audit_state"></pre>
     </div>
     <div class="panel">
-      <h2>Actions</h2>
-      <button onclick="requestAccess()">Request Access</button>
-      <pre id="access_result">No allocator action yet.</pre>
+      <h2>Allocator View</h2>
+      <pre id="allocator_profile"></pre>
       <ul>
         <li><a href="/passport.html">Passport Detail</a></li>
         <li><a href="/audit.html">Audit Detail</a></li>
@@ -68,23 +91,52 @@
       return await res.json();
     }
 
+    async function postJson(path, payload) {
+      const res = await fetch(window.API_BASE_URL + path, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(payload)
+      });
+      return await res.json();
+    }
+
     async function refreshAll() {
       const trust = await getJson("/system/trust-summary");
-      const profile = await getJson("/allocator/profile");
-      const report = await getJson("/allocator/report");
+      const me = await getJson("/auth/me");
+      const passport = await getJson("/passport/current");
+      const audit = await getJson("/audit/current");
+      const allocator = await getJson("/allocator/profile");
+
       document.getElementById("trust_score").innerText = trust.trust_score;
       document.getElementById("audit_status").innerText = trust.audit_status;
       document.getElementById("deployment_stage").innerText = trust.deployment_stage;
       document.getElementById("violations").innerText = trust.violation_count;
       document.getElementById("trust_summary").innerText = JSON.stringify(trust, null, 2);
-      document.getElementById("allocator_profile").innerText = JSON.stringify(profile, null, 2);
-      document.getElementById("allocator_report").innerText = JSON.stringify(report, null, 2);
+      document.getElementById("me_out").innerText = JSON.stringify(me, null, 2);
+      document.getElementById("passport_state").innerText = JSON.stringify(passport, null, 2);
+      document.getElementById("audit_state").innerText = JSON.stringify(audit, null, 2);
+      document.getElementById("allocator_profile").innerText = JSON.stringify(allocator, null, 2);
     }
 
-    async function requestAccess() {
-      const res = await fetch(window.API_BASE_URL + "/allocator/request-access", { method: "POST" });
-      const data = await res.json();
-      document.getElementById("access_result").innerText = JSON.stringify(data, null, 2);
+    async function registerUser() {
+      const payload = {
+        display_name: document.getElementById("reg_name").value,
+        email: document.getElementById("reg_email").value,
+        password: document.getElementById("reg_password").value
+      };
+      const data = await postJson("/auth/register", payload);
+      document.getElementById("register_result").innerText = JSON.stringify(data, null, 2);
+      refreshAll();
+    }
+
+    async function loginUser() {
+      const payload = {
+        email: document.getElementById("login_email").value,
+        password: document.getElementById("login_password").value
+      };
+      const data = await postJson("/auth/login", payload);
+      document.getElementById("login_result").innerText = JSON.stringify(data, null, 2);
+      refreshAll();
     }
 
     refreshAll();

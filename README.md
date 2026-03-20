@@ -1,11 +1,13 @@
-# QNT30200 Quantora Allocator Live Interface
+# QNT30300 Quantora Operator Identity + Real Auth
 
-Deploy-ready package for allocator-facing trust infrastructure.
+Deploy-ready package for operator identity and authentication.
 
 ## Live routes
 - `/`
 - `/docs`
 - `/health`
-- `/allocator/profile`
-- `/allocator/report`
-- `/allocator/request-access`
+- `/auth/register`
+- `/auth/login`
+- `/auth/me`
+- `/passport/current`
+- `/system/trust-summary`
