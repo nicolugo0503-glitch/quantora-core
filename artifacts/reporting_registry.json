@@ -1,0 +1,9 @@
+{
+  "registry": [
+    {
+      "cycle": "2026-Q1",
+      "status": "ACTIVE",
+      "distribution_mode": "allocator-controlled"
+    }
+  ]
+}

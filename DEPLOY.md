@@ -19,3 +19,6 @@ Deploy from the project root using the root `Dockerfile`.
 
 ## Vercel
 Deploy the `frontend` directory as a static site.
+
+
+Railway note: Dockerfile copies frontend into /app/frontend and serves it through FastAPI.
