@@ -5,8 +5,14 @@
 <h1>Passport Detail</h1>
 <pre id="out" style="background:#0b1735;color:#e2e8f0;padding:14px;border-radius:10px;"></pre>
 <script>
-fetch(window.API_BASE_URL + "/passport/current").then(r=>r.json()).then(d=>{
-  document.getElementById("out").innerText = JSON.stringify(d, null, 2);
+fetch(window.API_BASE_URL + "/auth/me").then(r=>r.json()).then(me=>{
+  if(!me.logged_in){
+    document.getElementById("out").innerText = "Authentication required.";
+    return;
+  }
+  fetch(window.API_BASE_URL + "/passport/current").then(r=>r.json()).then(d=>{
+    document.getElementById("out").innerText = JSON.stringify(d, null, 2);
+  });
 });
 </script>
 </body>

@@ -5,11 +5,17 @@
 <h1>Audit Detail</h1>
 <pre id="out" style="background:#0b1735;color:#e2e8f0;padding:14px;border-radius:10px;"></pre>
 <script>
-Promise.all([
-  fetch(window.API_BASE_URL + "/audit/current").then(r=>r.json()),
-  fetch(window.API_BASE_URL + "/passport/violations").then(r=>r.json())
-]).then(([audit, violations])=>{
-  document.getElementById("out").innerText = JSON.stringify({audit, violations}, null, 2);
+fetch(window.API_BASE_URL + "/auth/me").then(r=>r.json()).then(me=>{
+  if(!me.logged_in){
+    document.getElementById("out").innerText = "Authentication required.";
+    return;
+  }
+  Promise.all([
+    fetch(window.API_BASE_URL + "/audit/current").then(r=>r.json()),
+    fetch(window.API_BASE_URL + "/passport/violations").then(r=>r.json())
+  ]).then(([audit, violations])=>{
+    document.getElementById("out").innerText = JSON.stringify({audit, violations}, null, 2);
+  });
 });
 </script>
 </body>

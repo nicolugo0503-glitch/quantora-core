@@ -2,7 +2,7 @@
   "operator_id": "operator_demo_001",
   "passport_status": "ACTIVE",
   "deployment_stage": "STAGE_2_MICRO_LIVE",
-  "score_last_updated": "2026-03-20T23:00:00Z",
+  "score_last_updated": "2026-03-20T23:10:00Z",
   "discipline_score": 84,
   "risk_score": 79,
   "consistency_score": 81,
