@@ -1,9 +1,3 @@
-# QNT30301 Quantora Auth Lockdown
+# QNT30302 Quantora Capital Engine
 
-Deploy-ready package for auth enforcement.
-
-## Added
-- protected trust routes
-- protected allocator routes
-- logout endpoint
-- UI lockdown when not logged in
+Deploy-ready package for capital allocation decisioning.

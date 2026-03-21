@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Quantora Operator Console</title>
+  <title>Quantora Capital Console</title>
   <script src="/config.js"></script>
   <style>
     body { font-family: Arial, sans-serif; margin: 18px; background:#f5f7fb; color:#111827; }
@@ -16,17 +17,16 @@
     input { padding:10px; border:1px solid #cbd5e1; border-radius:8px; width:100%; box-sizing:border-box; margin-bottom:10px; }
     pre { background:#0b1735; color:#e2e8f0; padding:14px; border-radius:10px; overflow:auto; min-height:120px; }
     .split { display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
-    a { color:#2563eb; }
     .hidden { display:none; }
     .notice { background:#fff7ed; border:1px solid #fdba74; color:#9a3412; border-radius:12px; padding:14px; margin-bottom:14px; }
   </style>
 </head>
 <body>
-  <h1>Quantora Operator Console</h1>
+  <h1>Quantora Capital Console</h1>
 
   <div class="bar">
     <strong>API Base URL:</strong> <span id="api"></span><br><br>
-    <button onclick="refreshAll()">Refresh Operator State</button>
+    <button onclick="refreshAll()">Refresh Capital State</button>
     <button class="secondary" onclick="logoutUser()">Logout</button>
     <a href="/docs" target="_blank" style="margin-left:12px;">Open API docs</a>
   </div>
@@ -55,7 +55,7 @@
   </div>
 
   <div id="auth_notice" class="notice hidden">
-    Please login to unlock trust data, passport state, audit state, and allocator access.
+    Please login to unlock capital decisioning, trust data, and allocator access.
   </div>
 
   <div id="protected_area" class="hidden">
@@ -72,37 +72,35 @@
         <pre id="trust_summary"></pre>
       </div>
       <div class="panel">
-        <h2>Passport State</h2>
-        <pre id="passport_state"></pre>
+        <h2>Capital Decision</h2>
+        <pre id="capital_decision"></pre>
       </div>
     </div>
 
     <div class="split">
       <div class="panel">
-        <h2>Audit State</h2>
-        <pre id="audit_state"></pre>
+        <h2>Allocator Profile</h2>
+        <pre id="allocator_profile"></pre>
       </div>
       <div class="panel">
-        <h2>Allocator View</h2>
-        <button onclick="requestAccess()">Request Allocator Access</button>
-        <pre id="allocator_profile"></pre>
-        <pre id="request_result">No allocator action yet.</pre>
-        <ul>
-          <li><a href="/passport.html">Passport Detail</a></li>
-          <li><a href="/audit.html">Audit Detail</a></li>
-        </ul>
+        <h2>Allocator Report</h2>
+        <pre id="allocator_report"></pre>
       </div>
+    </div>
+
+    <div class="panel">
+      <h2>Allocator Actions</h2>
+      <button onclick="requestAccess()">Request Allocator Access</button>
+      <pre id="request_result">No allocator action yet.</pre>
     </div>
   </div>
 
   <script>
     document.getElementById("api").innerText = window.API_BASE_URL;
-
     async function getJson(path) {
       const res = await fetch(window.API_BASE_URL + path);
       return await res.json();
     }
-
     async function postJson(path, payload) {
       const res = await fetch(window.API_BASE_URL + path, {
         method: "POST",
@@ -111,37 +109,31 @@
       });
       return await res.json();
     }
-
     function setProtectedVisible(visible) {
       document.getElementById("protected_area").classList.toggle("hidden", !visible);
       document.getElementById("auth_notice").classList.toggle("hidden", visible);
     }
-
     async function refreshAll() {
       const me = await getJson("/auth/me");
       document.getElementById("me_out").innerText = JSON.stringify(me, null, 2);
-
       if (!me.logged_in) {
         setProtectedVisible(false);
         return;
       }
-
       setProtectedVisible(true);
       const trust = await getJson("/system/trust-summary");
-      const passport = await getJson("/passport/current");
-      const audit = await getJson("/audit/current");
+      const capital = await getJson("/capital/decision");
       const allocator = await getJson("/allocator/profile");
-
+      const report = await getJson("/allocator/report");
       document.getElementById("trust_score").innerText = trust.trust_score;
       document.getElementById("audit_status").innerText = trust.audit_status;
       document.getElementById("deployment_stage").innerText = trust.deployment_stage;
       document.getElementById("violations").innerText = trust.violation_count;
       document.getElementById("trust_summary").innerText = JSON.stringify(trust, null, 2);
-      document.getElementById("passport_state").innerText = JSON.stringify(passport, null, 2);
-      document.getElementById("audit_state").innerText = JSON.stringify(audit, null, 2);
+      document.getElementById("capital_decision").innerText = JSON.stringify(capital, null, 2);
       document.getElementById("allocator_profile").innerText = JSON.stringify(allocator, null, 2);
+      document.getElementById("allocator_report").innerText = JSON.stringify(report, null, 2);
     }
-
     async function registerUser() {
       const payload = {
         display_name: document.getElementById("reg_name").value,
@@ -152,7 +144,6 @@
       document.getElementById("register_result").innerText = JSON.stringify(data, null, 2);
       refreshAll();
     }
-
     async function loginUser() {
       const payload = {
         email: document.getElementById("login_email").value,
@@ -162,19 +153,16 @@
       document.getElementById("login_result").innerText = JSON.stringify(data, null, 2);
       refreshAll();
     }
-
     async function logoutUser() {
       const data = await postJson("/auth/logout", {});
       document.getElementById("login_result").innerText = JSON.stringify(data, null, 2);
       document.getElementById("request_result").innerText = "No allocator action yet.";
       refreshAll();
     }
-
     async function requestAccess() {
       const data = await postJson("/allocator/request-access", {});
       document.getElementById("request_result").innerText = JSON.stringify(data, null, 2);
     }
-
     refreshAll();
   </script>
 </body>
