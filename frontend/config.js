@@ -1,1 +1,0 @@
-(function(){window.API_BASE_URL=location.origin.includes('127.0.0.1')?'http://127.0.0.1:8010':window.location.origin})();
