@@ -1,7 +1,0 @@
-{
-  "broker": "paper_execution_adapter",
-  "mode": "paper",
-  "connected": true,
-  "provider": "simulated-broker-layer",
-  "last_sync": "2026-03-20T23:20:00Z"
-}
