@@ -1,3 +1,3 @@
-# QNT30302 Quantora Capital Engine
+# QNT30303 Quantora Broker Execution Layer
 
-Deploy-ready package for capital allocation decisioning.
+Deploy-ready package for paper broker execution.

@@ -4,7 +4,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pathlib import Path
-import json, uuid
+import json, uuid, datetime
 
 APP_DIR = Path(__file__).resolve().parent
 BACKEND_DIR = APP_DIR.parent
@@ -12,7 +12,7 @@ PROJECT_DIR = BACKEND_DIR.parent
 ARTIFACTS_DIR = BACKEND_DIR / "artifacts"
 FRONTEND_DIR = PROJECT_DIR / "frontend"
 
-app = FastAPI(title="Quantora QNT30302", version="30302")
+app = FastAPI(title="Quantora QNT30303", version="30303")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -20,6 +20,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+def now_iso():
+    return datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
 
 def load_json(filename: str, fallback):
     path = ARTIFACTS_DIR / filename
@@ -39,12 +42,18 @@ class LoginRequest(BaseModel):
     email: str
     password: str
 
+class OrderRequest(BaseModel):
+    symbol: str
+    side: str
+    qty: int
+    order_type: str = "market"
+
 def build_passport(operator_id: str):
     return {
         "operator_id": operator_id,
         "passport_status": "ACTIVE",
         "deployment_stage": "STAGE_2_MICRO_LIVE",
-        "score_last_updated": "2026-03-20T23:20:00Z",
+        "score_last_updated": now_iso(),
         "discipline_score": 84,
         "risk_score": 79,
         "consistency_score": 81,
@@ -71,26 +80,12 @@ def build_violations(operator_id: str):
         "violations": []
     }
 
-def build_audit():
-    return {
-        "status": "VALID",
-        "checked_files": 5,
-        "failed_files": [],
-        "details": {
-            "passport.json": "OK",
-            "passport_score.json": "OK",
-            "violation_registry.json": "OK",
-            "audit_report.json": "OK",
-            "capital_decision.json": "OK"
-        },
-        "timestamp": "2026-03-20T23:20:00Z"
-    }
-
 def compute_capital_decision(passport, score, violations):
     trust_score = score.get("trust_score", passport.get("trust_score", 0))
     risk_score = passport.get("risk_score", score.get("risk_score", 50))
     violation_count = violations.get("violation_count", passport.get("violation_count", 0))
     critical_count = violations.get("critical_violation_count", 0)
+
     approved = True
     reasons = []
     if trust_score < 70:
@@ -108,11 +103,13 @@ def compute_capital_decision(passport, score, violations):
         reasons.append("Risk score too low")
     else:
         reasons.append("Risk score acceptable")
+
     confidence = round(max(0.0, min(0.99, (trust_score / 100.0) - (violation_count * 0.03))), 2)
     base_capital = max(0, int(trust_score * 250))
     risk_adjustment = max(0.4, min(1.0, risk_score / 100.0))
     violation_penalty = max(0.0, 1.0 - (violation_count * 0.15))
     capital_allocated = int(base_capital * risk_adjustment * violation_penalty) if approved else 0
+
     return {
         "approved": approved,
         "capital_allocated": capital_allocated,
@@ -126,38 +123,22 @@ def compute_capital_decision(passport, score, violations):
         }
     }
 
-def build_allocator_profile(operator_id: str, display_name: str, capital_decision: dict):
+def build_broker_status():
     return {
-        "allocator_id": "allocator_demo_001",
-        "operator_id": operator_id,
-        "operator_name": display_name,
-        "trust_score": capital_decision["inputs"]["trust_score"],
-        "risk_tier": "TIER_2_MODERATE",
-        "deployment_stage": "STAGE_2_MICRO_LIVE",
-        "passport_status": "ACTIVE",
-        "capital_decision": capital_decision,
-        "available_reports": ["allocator_report.json"]
+        "broker": "paper_execution_adapter",
+        "mode": "paper",
+        "connected": True,
+        "provider": "simulated-broker-layer",
+        "last_sync": now_iso()
     }
 
-def build_allocator_report(operator_id: str, capital_decision: dict):
+def build_portfolio():
     return {
-        "report_id": "report_demo_001",
-        "operator_id": operator_id,
-        "generated_at": "2026-03-20T23:20:00Z",
-        "summary": {
-            "trust_score": capital_decision["inputs"]["trust_score"],
-            "audit_status": "VALID",
-            "violation_count": capital_decision["inputs"]["violation_count"],
-            "deployment_stage": "STAGE_2_MICRO_LIVE"
-        },
-        "capital": {
-            "approved": capital_decision["approved"],
-            "requested": 25000,
-            "allocated": capital_decision["capital_allocated"],
-            "confidence": capital_decision["confidence"],
-            "risk_tier": "TIER_2_MODERATE",
-            "reason": capital_decision["reason"]
-        }
+        "equity": 25000,
+        "cash": 19000,
+        "buying_power": 17350,
+        "positions_count": 0,
+        "unrealized_pl": 0
     }
 
 def ensure_user_state(user):
@@ -166,13 +147,58 @@ def ensure_user_state(user):
     score = build_score()
     violations = build_violations(operator_id)
     capital = compute_capital_decision(passport, score, violations)
+
     save_json("passport.json", passport)
     save_json("passport_score.json", score)
     save_json("violation_registry.json", violations)
-    save_json("audit_report.json", build_audit())
     save_json("capital_decision.json", capital)
-    save_json("allocator_profile.json", build_allocator_profile(operator_id, user["display_name"], capital))
-    save_json("allocator_report.json", build_allocator_report(operator_id, capital))
+    save_json("audit_report.json", {
+        "status": "VALID",
+        "checked_files": 7,
+        "failed_files": [],
+        "details": {
+            "passport.json": "OK",
+            "passport_score.json": "OK",
+            "violation_registry.json": "OK",
+            "capital_decision.json": "OK",
+            "broker_status.json": "OK",
+            "orders.json": "OK",
+            "portfolio.json": "OK"
+        },
+        "timestamp": now_iso()
+    })
+    save_json("broker_status.json", build_broker_status())
+    save_json("portfolio.json", build_portfolio())
+    save_json("orders.json", {"orders": []})
+    save_json("positions.json", {"positions": []})
+    save_json("allocator_profile.json", {
+        "allocator_id": "allocator_demo_001",
+        "operator_id": operator_id,
+        "operator_name": user["display_name"],
+        "trust_score": capital["inputs"]["trust_score"],
+        "risk_tier": "TIER_2_MODERATE",
+        "deployment_stage": "STAGE_2_MICRO_LIVE",
+        "passport_status": "ACTIVE",
+        "capital_decision": capital
+    })
+    save_json("allocator_report.json", {
+        "report_id": "report_demo_001",
+        "operator_id": operator_id,
+        "generated_at": now_iso(),
+        "summary": {
+            "trust_score": capital["inputs"]["trust_score"],
+            "audit_status": "VALID",
+            "violation_count": capital["inputs"]["violation_count"],
+            "deployment_stage": "STAGE_2_MICRO_LIVE"
+        },
+        "capital": {
+            "approved": capital["approved"],
+            "requested": 25000,
+            "allocated": capital["capital_allocated"],
+            "confidence": capital["confidence"],
+            "reason": capital["reason"]
+        }
+    })
 
 def get_session():
     return load_json("session.json", {"logged_in": False, "display_name": None, "operator_id": None, "email": None})
@@ -185,7 +211,7 @@ def require_auth():
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "layer": "QNT30302"}
+    return {"status": "ok", "layer": "QNT30303"}
 
 @app.post("/auth/register")
 def auth_register(payload: RegisterRequest):
@@ -219,22 +245,6 @@ def auth_logout():
 def auth_me():
     return get_session()
 
-@app.get("/passport/current")
-def passport_current(session = Depends(require_auth)):
-    return load_json("passport.json", {})
-
-@app.get("/passport/score")
-def passport_score(session = Depends(require_auth)):
-    return load_json("passport_score.json", {})
-
-@app.get("/passport/violations")
-def passport_violations(session = Depends(require_auth)):
-    return load_json("violation_registry.json", {})
-
-@app.get("/audit/current")
-def audit_current(session = Depends(require_auth)):
-    return load_json("audit_report.json", {})
-
 @app.get("/system/trust-summary")
 def trust_summary(session = Depends(require_auth)):
     passport = load_json("passport.json", {})
@@ -243,7 +253,7 @@ def trust_summary(session = Depends(require_auth)):
     violations = load_json("violation_registry.json", {})
     return {
         "status": "ok",
-        "layer": "QNT30302",
+        "layer": "QNT30303",
         "operator_id": passport.get("operator_id", session.get("operator_id")),
         "trust_score": score.get("trust_score", passport.get("trust_score", 0)),
         "audit_status": audit.get("status", "UNKNOWN"),
@@ -257,23 +267,83 @@ def trust_summary(session = Depends(require_auth)):
 def capital_decision(session = Depends(require_auth)):
     return load_json("capital_decision.json", {})
 
-@app.get("/allocator/profile")
-def allocator_profile(session = Depends(require_auth)):
-    return load_json("allocator_profile.json", {})
+@app.get("/broker/status")
+def broker_status(session = Depends(require_auth)):
+    return load_json("broker_status.json", {})
 
-@app.get("/allocator/report")
-def allocator_report(session = Depends(require_auth)):
-    return load_json("allocator_report.json", {})
+@app.get("/orders/list")
+def orders_list(session = Depends(require_auth)):
+    return load_json("orders.json", {"orders": []})
 
-@app.post("/allocator/request-access")
-def allocator_request_access(session = Depends(require_auth)):
-    return {
-        "status": "accepted",
-        "layer": "QNT30302",
-        "request_id": "alloc_req_demo_001",
-        "message": "Allocator access request recorded.",
+@app.get("/positions")
+def positions(session = Depends(require_auth)):
+    return load_json("positions.json", {"positions": []})
+
+@app.get("/portfolio")
+def portfolio(session = Depends(require_auth)):
+    return load_json("portfolio.json", {})
+
+@app.post("/orders/place")
+def place_order(payload: OrderRequest, session = Depends(require_auth)):
+    capital = load_json("capital_decision.json", {})
+    if not capital.get("approved"):
+        raise HTTPException(status_code=403, detail="Capital not approved")
+    if payload.qty <= 0:
+        raise HTTPException(status_code=400, detail="Quantity must be positive")
+    symbol = payload.symbol.upper().strip()
+    if not symbol:
+        raise HTTPException(status_code=400, detail="Symbol required")
+
+    mock_prices = {"AAPL": 180.0, "TSLA": 175.0, "SPY": 510.0, "NVDA": 910.0, "MSFT": 420.0}
+    fill_price = mock_prices.get(symbol, 100.0)
+    estimated_notional = round(fill_price * payload.qty, 2)
+    if estimated_notional > capital.get("capital_allocated", 0):
+        raise HTTPException(status_code=403, detail="Order exceeds allocated capital")
+
+    orders = load_json("orders.json", {"orders": []})
+    positions = load_json("positions.json", {"positions": []})
+    portfolio = load_json("portfolio.json", build_portfolio())
+
+    order = {
+        "order_id": f"ord_{uuid.uuid4().hex[:10]}",
+        "symbol": symbol,
+        "side": payload.side.lower(),
+        "qty": payload.qty,
+        "order_type": payload.order_type,
+        "status": "filled",
+        "fill_price": fill_price,
+        "notional": estimated_notional,
+        "timestamp": now_iso(),
         "operator_id": session.get("operator_id")
     }
+    orders["orders"].append(order)
+    save_json("orders.json", orders)
+
+    if order["side"] == "buy":
+        existing = next((p for p in positions["positions"] if p["symbol"] == symbol), None)
+        if existing:
+            existing["qty"] += payload.qty
+            existing["market_value"] = round(existing["qty"] * fill_price, 2)
+        else:
+            positions["positions"].append({"symbol": symbol, "qty": payload.qty, "avg_price": fill_price, "market_value": estimated_notional})
+        portfolio["cash"] = round(float(portfolio.get("cash", 0)) - estimated_notional, 2)
+    else:
+        existing = next((p for p in positions["positions"] if p["symbol"] == symbol), None)
+        if not existing or existing["qty"] < payload.qty:
+            raise HTTPException(status_code=400, detail="Not enough position to sell")
+        existing["qty"] -= payload.qty
+        portfolio["cash"] = round(float(portfolio.get("cash", 0)) + estimated_notional, 2)
+        existing["market_value"] = round(existing["qty"] * fill_price, 2)
+        if existing["qty"] == 0:
+            positions["positions"] = [p for p in positions["positions"] if p["symbol"] != symbol]
+
+    portfolio["positions_count"] = len(positions["positions"])
+    portfolio["buying_power"] = max(0, capital.get("capital_allocated", 0) - sum(p.get("market_value", 0) for p in positions["positions"]))
+    portfolio["equity"] = round(portfolio["cash"] + sum(p.get("market_value", 0) for p in positions["positions"]), 2)
+
+    save_json("positions.json", positions)
+    save_json("portfolio.json", portfolio)
+    return {"status": "filled", "order": order, "portfolio": portfolio, "positions": positions}
 
 @app.get("/")
 def root():

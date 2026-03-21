@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Quantora Capital Console</title>
+  <title>Quantora Broker Execution Console</title>
   <script src="/config.js"></script>
   <style>
     body { font-family: Arial, sans-serif; margin: 18px; background:#f5f7fb; color:#111827; }
@@ -14,7 +14,7 @@
     .metric { font-size:18px; font-weight:700; }
     button { background:#2563eb; color:white; border:none; border-radius:8px; padding:10px 14px; cursor:pointer; }
     button.secondary { background:#64748b; }
-    input { padding:10px; border:1px solid #cbd5e1; border-radius:8px; width:100%; box-sizing:border-box; margin-bottom:10px; }
+    input, select { padding:10px; border:1px solid #cbd5e1; border-radius:8px; width:100%; box-sizing:border-box; margin-bottom:10px; }
     pre { background:#0b1735; color:#e2e8f0; padding:14px; border-radius:10px; overflow:auto; min-height:120px; }
     .split { display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
     .hidden { display:none; }
@@ -22,81 +22,90 @@
   </style>
 </head>
 <body>
-  <h1>Quantora Capital Console</h1>
+  <h1>Quantora Broker Execution Console</h1>
 
   <div class="bar">
     <strong>API Base URL:</strong> <span id="api"></span><br><br>
-    <button onclick="refreshAll()">Refresh Capital State</button>
+    <button onclick="refreshAll()">Refresh Execution State</button>
     <button class="secondary" onclick="logoutUser()">Logout</button>
     <a href="/docs" target="_blank" style="margin-left:12px;">Open API docs</a>
   </div>
 
   <div class="split">
     <div class="panel">
-      <h2>Register</h2>
+      <h2>Register / Login</h2>
       <input id="reg_name" placeholder="Display name" />
       <input id="reg_email" placeholder="Email" />
       <input id="reg_password" placeholder="Password" type="password" />
       <button onclick="registerUser()">Register</button>
-      <pre id="register_result">No registration yet.</pre>
-    </div>
-    <div class="panel">
-      <h2>Login</h2>
+      <hr>
       <input id="login_email" placeholder="Email" />
       <input id="login_password" placeholder="Password" type="password" />
       <button onclick="loginUser()">Login</button>
-      <pre id="login_result">No login yet.</pre>
+      <pre id="auth_result">No auth action yet.</pre>
+    </div>
+    <div class="panel">
+      <h2>Current Session</h2>
+      <pre id="me_out"></pre>
     </div>
   </div>
 
-  <div class="panel">
-    <h2>Current Operator Session</h2>
-    <pre id="me_out"></pre>
-  </div>
-
   <div id="auth_notice" class="notice hidden">
-    Please login to unlock capital decisioning, trust data, and allocator access.
+    Please login to unlock broker execution, orders, positions, and portfolio state.
   </div>
 
   <div id="protected_area" class="hidden">
     <div class="row">
-      <div class="card"><h3>Trust Score</h3><div class="metric" id="trust_score">-</div><div>Operator trust signal</div></div>
-      <div class="card"><h3>Audit Status</h3><div class="metric" id="audit_status">-</div><div>Current audit state</div></div>
-      <div class="card"><h3>Deployment Stage</h3><div class="metric" id="deployment_stage">-</div><div>Capital activation stage</div></div>
-      <div class="card"><h3>Violations</h3><div class="metric" id="violations">-</div><div>Active violations</div></div>
+      <div class="card"><h3>Trust Score</h3><div class="metric" id="trust_score">-</div></div>
+      <div class="card"><h3>Allocated Capital</h3><div class="metric" id="allocated_capital">-</div></div>
+      <div class="card"><h3>Broker Mode</h3><div class="metric" id="broker_mode">-</div></div>
+      <div class="card"><h3>Portfolio Equity</h3><div class="metric" id="portfolio_equity">-</div></div>
     </div>
 
     <div class="split">
-      <div class="panel">
-        <h2>Trust Summary</h2>
-        <pre id="trust_summary"></pre>
-      </div>
       <div class="panel">
         <h2>Capital Decision</h2>
         <pre id="capital_decision"></pre>
       </div>
+      <div class="panel">
+        <h2>Broker Status</h2>
+        <pre id="broker_status"></pre>
+      </div>
     </div>
 
     <div class="split">
       <div class="panel">
-        <h2>Allocator Profile</h2>
-        <pre id="allocator_profile"></pre>
+        <h2>Place Paper Order</h2>
+        <input id="order_symbol" placeholder="Symbol (AAPL, TSLA, SPY)" />
+        <select id="order_side">
+          <option value="buy">buy</option>
+          <option value="sell">sell</option>
+        </select>
+        <input id="order_qty" placeholder="Quantity" type="number" min="1" />
+        <button onclick="placeOrder()">Place Order</button>
+        <pre id="order_result">No order submitted.</pre>
       </div>
       <div class="panel">
-        <h2>Allocator Report</h2>
-        <pre id="allocator_report"></pre>
+        <h2>Portfolio</h2>
+        <pre id="portfolio"></pre>
       </div>
     </div>
 
-    <div class="panel">
-      <h2>Allocator Actions</h2>
-      <button onclick="requestAccess()">Request Allocator Access</button>
-      <pre id="request_result">No allocator action yet.</pre>
+    <div class="split">
+      <div class="panel">
+        <h2>Orders</h2>
+        <pre id="orders"></pre>
+      </div>
+      <div class="panel">
+        <h2>Positions</h2>
+        <pre id="positions"></pre>
+      </div>
     </div>
   </div>
 
   <script>
     document.getElementById("api").innerText = window.API_BASE_URL;
+
     async function getJson(path) {
       const res = await fetch(window.API_BASE_URL + path);
       return await res.json();
@@ -123,16 +132,20 @@
       setProtectedVisible(true);
       const trust = await getJson("/system/trust-summary");
       const capital = await getJson("/capital/decision");
-      const allocator = await getJson("/allocator/profile");
-      const report = await getJson("/allocator/report");
+      const broker = await getJson("/broker/status");
+      const portfolio = await getJson("/portfolio");
+      const orders = await getJson("/orders/list");
+      const positions = await getJson("/positions");
+
       document.getElementById("trust_score").innerText = trust.trust_score;
-      document.getElementById("audit_status").innerText = trust.audit_status;
-      document.getElementById("deployment_stage").innerText = trust.deployment_stage;
-      document.getElementById("violations").innerText = trust.violation_count;
-      document.getElementById("trust_summary").innerText = JSON.stringify(trust, null, 2);
+      document.getElementById("allocated_capital").innerText = capital.capital_allocated;
+      document.getElementById("broker_mode").innerText = broker.mode;
+      document.getElementById("portfolio_equity").innerText = portfolio.equity;
       document.getElementById("capital_decision").innerText = JSON.stringify(capital, null, 2);
-      document.getElementById("allocator_profile").innerText = JSON.stringify(allocator, null, 2);
-      document.getElementById("allocator_report").innerText = JSON.stringify(report, null, 2);
+      document.getElementById("broker_status").innerText = JSON.stringify(broker, null, 2);
+      document.getElementById("portfolio").innerText = JSON.stringify(portfolio, null, 2);
+      document.getElementById("orders").innerText = JSON.stringify(orders, null, 2);
+      document.getElementById("positions").innerText = JSON.stringify(positions, null, 2);
     }
     async function registerUser() {
       const payload = {
@@ -141,7 +154,7 @@
         password: document.getElementById("reg_password").value
       };
       const data = await postJson("/auth/register", payload);
-      document.getElementById("register_result").innerText = JSON.stringify(data, null, 2);
+      document.getElementById("auth_result").innerText = JSON.stringify(data, null, 2);
       refreshAll();
     }
     async function loginUser() {
@@ -150,18 +163,25 @@
         password: document.getElementById("login_password").value
       };
       const data = await postJson("/auth/login", payload);
-      document.getElementById("login_result").innerText = JSON.stringify(data, null, 2);
+      document.getElementById("auth_result").innerText = JSON.stringify(data, null, 2);
       refreshAll();
     }
     async function logoutUser() {
       const data = await postJson("/auth/logout", {});
-      document.getElementById("login_result").innerText = JSON.stringify(data, null, 2);
-      document.getElementById("request_result").innerText = "No allocator action yet.";
+      document.getElementById("auth_result").innerText = JSON.stringify(data, null, 2);
+      document.getElementById("order_result").innerText = "No order submitted.";
       refreshAll();
     }
-    async function requestAccess() {
-      const data = await postJson("/allocator/request-access", {});
-      document.getElementById("request_result").innerText = JSON.stringify(data, null, 2);
+    async function placeOrder() {
+      const payload = {
+        symbol: document.getElementById("order_symbol").value,
+        side: document.getElementById("order_side").value,
+        qty: parseInt(document.getElementById("order_qty").value || "0", 10),
+        order_type: "market"
+      };
+      const data = await postJson("/orders/place", payload);
+      document.getElementById("order_result").innerText = JSON.stringify(data, null, 2);
+      refreshAll();
     }
     refreshAll();
   </script>
