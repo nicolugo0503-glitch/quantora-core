@@ -1,0 +1,14 @@
+{
+  "operators": [
+    {
+      "operator_id": "operator_demo_001",
+      "display_name": "Quantora Demo Operator",
+      "trust_score": 82
+    },
+    {
+      "operator_id": "operator_FEBE82A8",
+      "display_name": "quantora",
+      "trust_score": 82
+    }
+  ]
+}

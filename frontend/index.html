@@ -1,189 +1,38 @@
 
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>Quantora Broker Execution Console</title>
-  <script src="/config.js"></script>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 18px; background:#f5f7fb; color:#111827; }
-    h1 { margin:0 0 16px; }
-    .bar, .panel, .card { background:white; border:1px solid #d9dfeb; border-radius:12px; padding:14px; margin-bottom:14px; }
-    .row { display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; }
-    .card h3 { margin:0 0 8px; font-size:12px; color:#64748b; text-transform:uppercase; }
-    .metric { font-size:18px; font-weight:700; }
-    button { background:#2563eb; color:white; border:none; border-radius:8px; padding:10px 14px; cursor:pointer; }
-    button.secondary { background:#64748b; }
-    input, select { padding:10px; border:1px solid #cbd5e1; border-radius:8px; width:100%; box-sizing:border-box; margin-bottom:10px; }
-    pre { background:#0b1735; color:#e2e8f0; padding:14px; border-radius:10px; overflow:auto; min-height:120px; }
-    .split { display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
-    .hidden { display:none; }
-    .notice { background:#fff7ed; border:1px solid #fdba74; color:#9a3412; border-radius:12px; padding:14px; margin-bottom:14px; }
-  </style>
-</head>
-<body>
-  <h1>Quantora Broker Execution Console</h1>
-
-  <div class="bar">
-    <strong>API Base URL:</strong> <span id="api"></span><br><br>
-    <button onclick="refreshAll()">Refresh Execution State</button>
-    <button class="secondary" onclick="logoutUser()">Logout</button>
-    <a href="/docs" target="_blank" style="margin-left:12px;">Open API docs</a>
-  </div>
-
-  <div class="split">
-    <div class="panel">
-      <h2>Register / Login</h2>
-      <input id="reg_name" placeholder="Display name" />
-      <input id="reg_email" placeholder="Email" />
-      <input id="reg_password" placeholder="Password" type="password" />
-      <button onclick="registerUser()">Register</button>
-      <hr>
-      <input id="login_email" placeholder="Email" />
-      <input id="login_password" placeholder="Password" type="password" />
-      <button onclick="loginUser()">Login</button>
-      <pre id="auth_result">No auth action yet.</pre>
-    </div>
-    <div class="panel">
-      <h2>Current Session</h2>
-      <pre id="me_out"></pre>
-    </div>
-  </div>
-
-  <div id="auth_notice" class="notice hidden">
-    Please login to unlock broker execution, orders, positions, and portfolio state.
-  </div>
-
-  <div id="protected_area" class="hidden">
-    <div class="row">
-      <div class="card"><h3>Trust Score</h3><div class="metric" id="trust_score">-</div></div>
-      <div class="card"><h3>Allocated Capital</h3><div class="metric" id="allocated_capital">-</div></div>
-      <div class="card"><h3>Broker Mode</h3><div class="metric" id="broker_mode">-</div></div>
-      <div class="card"><h3>Portfolio Equity</h3><div class="metric" id="portfolio_equity">-</div></div>
-    </div>
-
-    <div class="split">
-      <div class="panel">
-        <h2>Capital Decision</h2>
-        <pre id="capital_decision"></pre>
-      </div>
-      <div class="panel">
-        <h2>Broker Status</h2>
-        <pre id="broker_status"></pre>
-      </div>
-    </div>
-
-    <div class="split">
-      <div class="panel">
-        <h2>Place Paper Order</h2>
-        <input id="order_symbol" placeholder="Symbol (AAPL, TSLA, SPY)" />
-        <select id="order_side">
-          <option value="buy">buy</option>
-          <option value="sell">sell</option>
-        </select>
-        <input id="order_qty" placeholder="Quantity" type="number" min="1" />
-        <button onclick="placeOrder()">Place Order</button>
-        <pre id="order_result">No order submitted.</pre>
-      </div>
-      <div class="panel">
-        <h2>Portfolio</h2>
-        <pre id="portfolio"></pre>
-      </div>
-    </div>
-
-    <div class="split">
-      <div class="panel">
-        <h2>Orders</h2>
-        <pre id="orders"></pre>
-      </div>
-      <div class="panel">
-        <h2>Positions</h2>
-        <pre id="positions"></pre>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    document.getElementById("api").innerText = window.API_BASE_URL;
-
-    async function getJson(path) {
-      const res = await fetch(window.API_BASE_URL + path);
-      return await res.json();
-    }
-    async function postJson(path, payload) {
-      const res = await fetch(window.API_BASE_URL + path, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(payload || {})
-      });
-      return await res.json();
-    }
-    function setProtectedVisible(visible) {
-      document.getElementById("protected_area").classList.toggle("hidden", !visible);
-      document.getElementById("auth_notice").classList.toggle("hidden", visible);
-    }
-    async function refreshAll() {
-      const me = await getJson("/auth/me");
-      document.getElementById("me_out").innerText = JSON.stringify(me, null, 2);
-      if (!me.logged_in) {
-        setProtectedVisible(false);
-        return;
-      }
-      setProtectedVisible(true);
-      const trust = await getJson("/system/trust-summary");
-      const capital = await getJson("/capital/decision");
-      const broker = await getJson("/broker/status");
-      const portfolio = await getJson("/portfolio");
-      const orders = await getJson("/orders/list");
-      const positions = await getJson("/positions");
-
-      document.getElementById("trust_score").innerText = trust.trust_score;
-      document.getElementById("allocated_capital").innerText = capital.capital_allocated;
-      document.getElementById("broker_mode").innerText = broker.mode;
-      document.getElementById("portfolio_equity").innerText = portfolio.equity;
-      document.getElementById("capital_decision").innerText = JSON.stringify(capital, null, 2);
-      document.getElementById("broker_status").innerText = JSON.stringify(broker, null, 2);
-      document.getElementById("portfolio").innerText = JSON.stringify(portfolio, null, 2);
-      document.getElementById("orders").innerText = JSON.stringify(orders, null, 2);
-      document.getElementById("positions").innerText = JSON.stringify(positions, null, 2);
-    }
-    async function registerUser() {
-      const payload = {
-        display_name: document.getElementById("reg_name").value,
-        email: document.getElementById("reg_email").value,
-        password: document.getElementById("reg_password").value
-      };
-      const data = await postJson("/auth/register", payload);
-      document.getElementById("auth_result").innerText = JSON.stringify(data, null, 2);
-      refreshAll();
-    }
-    async function loginUser() {
-      const payload = {
-        email: document.getElementById("login_email").value,
-        password: document.getElementById("login_password").value
-      };
-      const data = await postJson("/auth/login", payload);
-      document.getElementById("auth_result").innerText = JSON.stringify(data, null, 2);
-      refreshAll();
-    }
-    async function logoutUser() {
-      const data = await postJson("/auth/logout", {});
-      document.getElementById("auth_result").innerText = JSON.stringify(data, null, 2);
-      document.getElementById("order_result").innerText = "No order submitted.";
-      refreshAll();
-    }
-    async function placeOrder() {
-      const payload = {
-        symbol: document.getElementById("order_symbol").value,
-        side: document.getElementById("order_side").value,
-        qty: parseInt(document.getElementById("order_qty").value || "0", 10),
-        order_type: "market"
-      };
-      const data = await postJson("/orders/place", payload);
-      document.getElementById("order_result").innerText = JSON.stringify(data, null, 2);
-      refreshAll();
-    }
-    refreshAll();
-  </script>
-</body>
-</html>
+<!DOCTYPE html><html><head><meta charset="utf-8"/>
+<title>Quantora Allocator Capital Deployment</title><script src="/config.js"></script></head>
+<body style="font-family:Arial;margin:20px">
+<h1>Allocator Capital Deployment</h1>
+<button onclick="refreshAll()">Refresh</button>
+<hr>
+<input id="operator_id" placeholder="operator_id">
+<input id="requested_capital" type="number" placeholder="Requested capital">
+<button onclick="requestCapital()">Request Capital</button>
+<hr>
+<input id="allocation_id" placeholder="allocation_id">
+<input id="approved_capital" type="number" placeholder="Approved capital">
+<button onclick="approveCapital()">Approve Capital</button>
+<pre id="out"></pre>
+<script>
+async function api(p,m='GET',b){
+ const r=await fetch(API_BASE_URL+p,{method:m,headers:{'Content-Type':'application/json'},body:b?JSON.stringify(b):undefined});
+ return await r.json();
+}
+async function refreshAll(){
+ const operators=await api('/allocator/operators');
+ const deployments=await api('/allocator/deployments');
+ const capital=await api('/allocator/capital-state');
+ const packets=await api('/allocator/packets');
+ out.textContent=JSON.stringify({operators,deployments,capital,packets},null,2);
+}
+async function requestCapital(){
+ const res=await api('/allocator/request-capital','POST',{operator_id:operator_id.value,requested_capital:parseFloat(requested_capital.value||'0')});
+ out.textContent=JSON.stringify(res,null,2); await refreshAll();
+}
+async function approveCapital(){
+ const res=await api('/allocator/approve-capital','POST',{allocation_id:allocation_id.value,approved_capital:parseFloat(approved_capital.value||'0')});
+ out.textContent=JSON.stringify(res,null,2); await refreshAll();
+}
+refreshAll();
+</script>
+</body></html>
