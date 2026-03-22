@@ -2,36 +2,210 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Quantora Alpaca Fix V3</title>
+  <title>Quantora Recovery Merged Build</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 24px; }
-    button { padding: 10px 14px; margin-right: 8px; margin-bottom: 8px; }
-    pre { background: #111827; color: #e5e7eb; padding: 16px; border-radius: 8px; white-space: pre-wrap; }
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f5f7fb; color: #111827; }
+    h1, h2 { margin: 0 0 12px; }
+    .panel { background: white; border: 1px solid #d9dfeb; border-radius: 12px; padding: 14px; margin-bottom: 14px; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .metric { font-size: 24px; font-weight: 700; }
+    .label { color: #64748b; font-size: 12px; text-transform: uppercase; margin-bottom: 8px; }
+    input, select { width: 100%; padding: 10px; margin-bottom: 8px; box-sizing: border-box; border: 1px solid #cbd5e1; border-radius: 8px; }
+    button { padding: 10px 14px; margin-right: 8px; margin-bottom: 8px; border-radius: 8px; border: none; background: #2563eb; color: white; cursor: pointer; }
+    button.secondary { background: #475569; }
+    pre { background: #08142d; color: #e2e8f0; padding: 14px; border-radius: 10px; white-space: pre-wrap; min-height: 120px; overflow: auto; }
+    .small { font-size: 12px; color: #64748b; }
   </style>
 </head>
 <body>
-  <h1>Quantora Alpaca Fix V3</h1>
-  <button onclick="callApi('/health')">Check Health</button>
-  <button onclick="callApi('/debug/env')">Debug Env</button>
-  <button onclick="callApi('/alpaca/status')">Check Alpaca Status</button>
-  <button onclick="callApi('/alpaca/account')">Get Alpaca Account</button>
-  <pre id="out">Ready.</pre>
+  <h1>Quantora Recovery Merged Build</h1>
+  <div class="panel">
+    <div><strong>Goal:</strong> advanced app restored + Alpaca wiring preserved.</div>
+    <div class="small">Use login, strategy runtime, allocator deployment, reporting, and Alpaca from one app.</div>
+  </div>
+
+  <div class="grid2">
+    <div class="panel">
+      <h2>Auth</h2>
+      <input id="reg_name" placeholder="Display name">
+      <input id="reg_email" placeholder="Email">
+      <input id="reg_password" placeholder="Password" type="password">
+      <button onclick="registerUser()">Register</button>
+      <hr>
+      <input id="login_email" placeholder="Email">
+      <input id="login_password" placeholder="Password" type="password">
+      <button onclick="loginUser()">Login</button>
+      <button class="secondary" onclick="logoutUser()">Logout</button>
+      <pre id="auth_out">Ready.</pre>
+    </div>
+    <div class="panel">
+      <h2>Security + Alpaca</h2>
+      <button onclick="callGet('/debug/env','security_out')">Debug Env</button>
+      <button onclick="callGet('/security/status','security_out')">Security Status</button>
+      <button onclick="callGet('/alpaca/status','security_out')">Alpaca Status</button>
+      <button onclick="callGet('/alpaca/account','security_out')">Alpaca Account</button>
+      <pre id="security_out">Ready.</pre>
+    </div>
+  </div>
+
+  <div class="grid4">
+    <div class="panel"><div class="label">Trust Score</div><div class="metric" id="m_trust">-</div></div>
+    <div class="panel"><div class="label">Allocated Capital</div><div class="metric" id="m_capital">-</div></div>
+    <div class="panel"><div class="label">Orders</div><div class="metric" id="m_orders">-</div></div>
+    <div class="panel"><div class="label">Fills</div><div class="metric" id="m_fills">-</div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="panel">
+      <h2>Execution</h2>
+      <input id="order_symbol" placeholder="Symbol">
+      <select id="order_side"><option value="buy">buy</option><option value="sell">sell</option></select>
+      <input id="order_qty" type="number" placeholder="Quantity">
+      <select id="execution_mode"><option value="internal">internal paper</option><option value="alpaca">alpaca paper</option></select>
+      <button onclick="placeOrder()">Place Order</button>
+      <pre id="order_out">Ready.</pre>
+    </div>
+    <div class="panel">
+      <h2>Strategy Runtime</h2>
+      <input id="strategy_name" placeholder="Strategy name">
+      <input id="strategy_symbol" placeholder="Strategy symbol">
+      <select id="strategy_side"><option value="buy">buy</option><option value="sell">sell</option></select>
+      <input id="strategy_qty" type="number" placeholder="Default qty">
+      <button onclick="registerStrategy()">Register Strategy</button>
+      <hr>
+      <input id="signal_strategy_id" placeholder="Strategy ID">
+      <select id="signal_mode"><option value="internal">internal paper</option><option value="alpaca">alpaca paper</option></select>
+      <button onclick="fireSignal()">Fire Signal</button>
+      <pre id="strategy_out">Ready.</pre>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="panel">
+      <h2>Allocator Deployment</h2>
+      <input id="alloc_operator_id" placeholder="Operator ID">
+      <input id="alloc_requested" type="number" placeholder="Requested capital">
+      <button onclick="requestCapital()">Request Capital</button>
+      <hr>
+      <input id="approve_allocation_id" placeholder="Allocation ID">
+      <input id="approve_capital" type="number" placeholder="Approved capital">
+      <button onclick="approveCapital()">Approve Capital</button>
+      <pre id="allocator_out">Ready.</pre>
+    </div>
+    <div class="panel">
+      <h2>Reports</h2>
+      <button onclick="callPost('/reports/generate', {}, 'reports_out')">Generate Evidence Packet</button>
+      <button onclick="callGet('/reports/performance','reports_out')">Performance</button>
+      <button onclick="callGet('/reports/evidence-packet','reports_out')">Evidence Packet</button>
+      <button onclick="callGet('/reports/execution-ledger','reports_out')">Execution Ledger</button>
+      <pre id="reports_out">Ready.</pre>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="panel">
+      <h2>Operator State</h2>
+      <button onclick="callGet('/auth/me','state_out')">Session</button>
+      <button onclick="callGet('/system/trust-summary','state_out')">Trust Summary</button>
+      <button onclick="callGet('/operator/state','state_out')">Operator State</button>
+      <button onclick="callGet('/portfolio','state_out')">Portfolio</button>
+      <button onclick="callGet('/orders/list','state_out')">Orders</button>
+      <button onclick="callGet('/positions','state_out')">Positions</button>
+      <pre id="state_out">Ready.</pre>
+    </div>
+    <div class="panel">
+      <h2>Allocator / Strategy Lists</h2>
+      <button onclick="callGet('/allocator/operators','lists_out')">Allocator Operators</button>
+      <button onclick="callGet('/allocator/deployments','lists_out')">Allocator Deployments</button>
+      <button onclick="callGet('/allocator/capital-state','lists_out')">Capital State</button>
+      <button onclick="callGet('/strategies/list','lists_out')">Strategies</button>
+      <button onclick="callGet('/signals','lists_out')">Signals</button>
+      <pre id="lists_out">Ready.</pre>
+    </div>
+  </div>
+
   <script>
-    async function callApi(path) {
-      const out = document.getElementById('out');
-      out.textContent = 'Loading...';
-      try {
-        const res = await fetch(path);
-        const text = await res.text();
-        try {
-          out.textContent = JSON.stringify(JSON.parse(text), null, 2);
-        } catch {
-          out.textContent = text;
-        }
-      } catch (e) {
-        out.textContent = String(e);
-      }
+    async function api(path, method='GET', body=null) {
+      const res = await fetch(path, {
+        method,
+        headers: {'Content-Type': 'application/json'},
+        body: body ? JSON.stringify(body) : undefined
+      });
+      const text = await res.text();
+      try { return JSON.parse(text); } catch { return {raw:text, status:res.status}; }
     }
+    async function callGet(path, target) {
+      document.getElementById(target).textContent = JSON.stringify(await api(path), null, 2);
+      refreshMetrics();
+    }
+    async function callPost(path, body, target) {
+      document.getElementById(target).textContent = JSON.stringify(await api(path,'POST',body), null, 2);
+      refreshMetrics();
+    }
+    async function registerUser() {
+      await callPost('/auth/register', {
+        display_name: reg_name.value,
+        email: reg_email.value,
+        password: reg_password.value
+      }, 'auth_out');
+    }
+    async function loginUser() {
+      await callPost('/auth/login', {
+        email: login_email.value,
+        password: login_password.value
+      }, 'auth_out');
+    }
+    async function logoutUser() {
+      await callPost('/auth/logout', {}, 'auth_out');
+    }
+    async function placeOrder() {
+      await callPost('/orders/place', {
+        symbol: order_symbol.value,
+        side: order_side.value,
+        qty: parseInt(order_qty.value || '0', 10),
+        execution_mode: execution_mode.value
+      }, 'order_out');
+    }
+    async function registerStrategy() {
+      await callPost('/strategies/register', {
+        name: strategy_name.value,
+        symbol: strategy_symbol.value,
+        side: strategy_side.value,
+        default_qty: parseInt(strategy_qty.value || '0', 10),
+        enabled: true
+      }, 'strategy_out');
+    }
+    async function fireSignal() {
+      await callPost('/strategies/signal', {
+        strategy_id: signal_strategy_id.value,
+        execution_mode: signal_mode.value
+      }, 'strategy_out');
+    }
+    async function requestCapital() {
+      await callPost('/allocator/request-capital', {
+        operator_id: alloc_operator_id.value,
+        requested_capital: parseFloat(alloc_requested.value || '0')
+      }, 'allocator_out');
+    }
+    async function approveCapital() {
+      await callPost('/allocator/approve-capital', {
+        allocation_id: approve_allocation_id.value,
+        approved_capital: parseFloat(approve_capital.value || '0')
+      }, 'allocator_out');
+    }
+    async function refreshMetrics() {
+      try {
+        const trust = await api('/system/trust-summary');
+        const capital = await api('/capital/decision');
+        const perf = await api('/reports/performance');
+        m_trust.textContent = trust.trust_score || '-';
+        m_capital.textContent = capital.capital_allocated || '-';
+        m_orders.textContent = perf.orders_count || 0;
+        m_fills.textContent = perf.fills_count || 0;
+      } catch {}
+    }
+    refreshMetrics();
   </script>
 </body>
 </html>

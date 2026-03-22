@@ -1,6 +1,13 @@
-# Quantora Alpaca Fix V3
+# Quantora Recovery Merged Build
 
-Supported variable names:
-- ALPACA_API_KEY or APCA_API_KEY_ID
-- ALPACA_SECRET_KEY or APCA_API_SECRET_KEY
-- ALPACA_BASE_URL
+This rebuild restores the advanced app while preserving the working Alpaca integration path.
+
+Included:
+- auth
+- operator state
+- strategy runtime
+- enforcement
+- reporting/evidence
+- allocator deployment
+- Alpaca status/account/orders/positions
+- order execution mode: internal or alpaca
