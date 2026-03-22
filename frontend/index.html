@@ -2,17 +2,17 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Quantora Alpaca Fix V2</title>
+  <title>Quantora Alpaca Fix V3</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 24px; }
-    button { padding: 10px 14px; margin-right: 8px; }
+    button { padding: 10px 14px; margin-right: 8px; margin-bottom: 8px; }
     pre { background: #111827; color: #e5e7eb; padding: 16px; border-radius: 8px; white-space: pre-wrap; }
   </style>
 </head>
 <body>
-  <h1>Quantora Alpaca Fix V2</h1>
-  <p>Use the buttons below to verify the live backend.</p>
+  <h1>Quantora Alpaca Fix V3</h1>
   <button onclick="callApi('/health')">Check Health</button>
+  <button onclick="callApi('/debug/env')">Debug Env</button>
   <button onclick="callApi('/alpaca/status')">Check Alpaca Status</button>
   <button onclick="callApi('/alpaca/account')">Get Alpaca Account</button>
   <pre id="out">Ready.</pre>

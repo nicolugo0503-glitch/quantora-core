@@ -1,6 +1,6 @@
-# Quantora Alpaca Fix V2
+# Quantora Alpaca Fix V3
 
-Required Railway variables:
-- ALPACA_API_KEY
-- ALPACA_SECRET_KEY
-- ALPACA_BASE_URL=https://paper-api.alpaca.markets
+Supported variable names:
+- ALPACA_API_KEY or APCA_API_KEY_ID
+- ALPACA_SECRET_KEY or APCA_API_SECRET_KEY
+- ALPACA_BASE_URL
