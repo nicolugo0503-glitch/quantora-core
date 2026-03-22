@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Quantora Alpaca Fix V2</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; }
+    button { padding: 10px 14px; margin-right: 8px; }
+    pre { background: #111827; color: #e5e7eb; padding: 16px; border-radius: 8px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>Quantora Alpaca Fix V2</h1>
+  <p>Use the buttons below to verify the live backend.</p>
+  <button onclick="callApi('/health')">Check Health</button>
+  <button onclick="callApi('/alpaca/status')">Check Alpaca Status</button>
+  <button onclick="callApi('/alpaca/account')">Get Alpaca Account</button>
+  <pre id="out">Ready.</pre>
+  <script>
+    async function callApi(path) {
+      const out = document.getElementById('out');
+      out.textContent = 'Loading...';
+      try {
+        const res = await fetch(path);
+        const text = await res.text();
+        try {
+          out.textContent = JSON.stringify(JSON.parse(text), null, 2);
+        } catch {
+          out.textContent = text;
+        }
+      } catch (e) {
+        out.textContent = String(e);
+      }
+    }
+  </script>
+</body>
+</html>
