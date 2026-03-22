@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Quantora Recovery Merged Build</title>
+  <title>Quantora QNT30311 Broker Sync Console</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; background: #f5f7fb; color: #111827; }
     h1, h2 { margin: 0 0 12px; }
@@ -19,12 +19,11 @@
   </style>
 </head>
 <body>
-  <h1>Quantora Recovery Merged Build</h1>
+  <h1>Quantora QNT30311 Broker Sync Console</h1>
   <div class="panel">
-    <div><strong>Goal:</strong> advanced app restored + Alpaca wiring preserved.</div>
-    <div class="small">Use login, strategy runtime, allocator deployment, reporting, and Alpaca from one app.</div>
+    <div><strong>Goal:</strong> positions, PnL, orders, and broker sync merged into Quantora operations.</div>
+    <div class="small">Use sync to reconcile Alpaca broker state with Quantora operator state.</div>
   </div>
-
   <div class="grid2">
     <div class="panel">
       <h2>Auth</h2>
@@ -48,14 +47,18 @@
       <pre id="security_out">Ready.</pre>
     </div>
   </div>
-
   <div class="grid4">
     <div class="panel"><div class="label">Trust Score</div><div class="metric" id="m_trust">-</div></div>
     <div class="panel"><div class="label">Allocated Capital</div><div class="metric" id="m_capital">-</div></div>
     <div class="panel"><div class="label">Orders</div><div class="metric" id="m_orders">-</div></div>
     <div class="panel"><div class="label">Fills</div><div class="metric" id="m_fills">-</div></div>
   </div>
-
+  <div class="grid4">
+    <div class="panel"><div class="label">Broker Equity</div><div class="metric" id="m_equity">-</div></div>
+    <div class="panel"><div class="label">Broker Cash</div><div class="metric" id="m_cash">-</div></div>
+    <div class="panel"><div class="label">Unrealized PnL</div><div class="metric" id="m_upl">-</div></div>
+    <div class="panel"><div class="label">Positions</div><div class="metric" id="m_positions">-</div></div>
+  </div>
   <div class="grid2">
     <div class="panel">
       <h2>Execution</h2>
@@ -66,6 +69,34 @@
       <button onclick="placeOrder()">Place Order</button>
       <pre id="order_out">Ready.</pre>
     </div>
+    <div class="panel">
+      <h2>Broker Sync</h2>
+      <button onclick="callPost('/broker/sync', {}, 'sync_out')">Sync Broker</button>
+      <button onclick="callGet('/broker/account-summary','sync_out')">Account Summary</button>
+      <button onclick="callGet('/broker/pnl','sync_out')">PnL</button>
+      <button onclick="callGet('/broker/reconciliation','sync_out')">Reconciliation</button>
+      <pre id="sync_out">Ready.</pre>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <h2>Broker Positions + Orders</h2>
+      <button onclick="callGet('/broker/positions','broker_out')">Broker Positions</button>
+      <button onclick="callGet('/broker/orders','broker_out')">Broker Orders</button>
+      <button onclick="callGet('/alpaca/positions','broker_out')">Raw Alpaca Positions</button>
+      <button onclick="callGet('/alpaca/orders','broker_out')">Raw Alpaca Orders</button>
+      <pre id="broker_out">Ready.</pre>
+    </div>
+    <div class="panel">
+      <h2>Reports</h2>
+      <button onclick="callPost('/reports/generate', {}, 'reports_out')">Generate Evidence Packet</button>
+      <button onclick="callGet('/reports/performance','reports_out')">Performance</button>
+      <button onclick="callGet('/reports/evidence-packet','reports_out')">Evidence Packet</button>
+      <button onclick="callGet('/reports/execution-ledger','reports_out')">Execution Ledger</button>
+      <pre id="reports_out">Ready.</pre>
+    </div>
+  </div>
+  <div class="grid2">
     <div class="panel">
       <h2>Strategy Runtime</h2>
       <input id="strategy_name" placeholder="Strategy name">
@@ -79,130 +110,46 @@
       <button onclick="fireSignal()">Fire Signal</button>
       <pre id="strategy_out">Ready.</pre>
     </div>
-  </div>
-
-  <div class="grid2">
     <div class="panel">
-      <h2>Allocator Deployment</h2>
-      <input id="alloc_operator_id" placeholder="Operator ID">
-      <input id="alloc_requested" type="number" placeholder="Requested capital">
-      <button onclick="requestCapital()">Request Capital</button>
-      <hr>
-      <input id="approve_allocation_id" placeholder="Allocation ID">
-      <input id="approve_capital" type="number" placeholder="Approved capital">
-      <button onclick="approveCapital()">Approve Capital</button>
-      <pre id="allocator_out">Ready.</pre>
-    </div>
-    <div class="panel">
-      <h2>Reports</h2>
-      <button onclick="callPost('/reports/generate', {}, 'reports_out')">Generate Evidence Packet</button>
-      <button onclick="callGet('/reports/performance','reports_out')">Performance</button>
-      <button onclick="callGet('/reports/evidence-packet','reports_out')">Evidence Packet</button>
-      <button onclick="callGet('/reports/execution-ledger','reports_out')">Execution Ledger</button>
-      <pre id="reports_out">Ready.</pre>
-    </div>
-  </div>
-
-  <div class="grid2">
-    <div class="panel">
-      <h2>Operator State</h2>
+      <h2>Operator / Allocator State</h2>
       <button onclick="callGet('/auth/me','state_out')">Session</button>
       <button onclick="callGet('/system/trust-summary','state_out')">Trust Summary</button>
       <button onclick="callGet('/operator/state','state_out')">Operator State</button>
       <button onclick="callGet('/portfolio','state_out')">Portfolio</button>
-      <button onclick="callGet('/orders/list','state_out')">Orders</button>
-      <button onclick="callGet('/positions','state_out')">Positions</button>
+      <button onclick="callGet('/positions','state_out')">Local Positions</button>
+      <button onclick="callGet('/orders/list','state_out')">Local Orders</button>
       <pre id="state_out">Ready.</pre>
     </div>
-    <div class="panel">
-      <h2>Allocator / Strategy Lists</h2>
-      <button onclick="callGet('/allocator/operators','lists_out')">Allocator Operators</button>
-      <button onclick="callGet('/allocator/deployments','lists_out')">Allocator Deployments</button>
-      <button onclick="callGet('/allocator/capital-state','lists_out')">Capital State</button>
-      <button onclick="callGet('/strategies/list','lists_out')">Strategies</button>
-      <button onclick="callGet('/signals','lists_out')">Signals</button>
-      <pre id="lists_out">Ready.</pre>
-    </div>
   </div>
-
   <script>
     async function api(path, method='GET', body=null) {
-      const res = await fetch(path, {
-        method,
-        headers: {'Content-Type': 'application/json'},
-        body: body ? JSON.stringify(body) : undefined
-      });
+      const res = await fetch(path, {method, headers: {'Content-Type': 'application/json'}, body: body ? JSON.stringify(body) : undefined});
       const text = await res.text();
       try { return JSON.parse(text); } catch { return {raw:text, status:res.status}; }
     }
-    async function callGet(path, target) {
-      document.getElementById(target).textContent = JSON.stringify(await api(path), null, 2);
-      refreshMetrics();
-    }
-    async function callPost(path, body, target) {
-      document.getElementById(target).textContent = JSON.stringify(await api(path,'POST',body), null, 2);
-      refreshMetrics();
-    }
-    async function registerUser() {
-      await callPost('/auth/register', {
-        display_name: reg_name.value,
-        email: reg_email.value,
-        password: reg_password.value
-      }, 'auth_out');
-    }
-    async function loginUser() {
-      await callPost('/auth/login', {
-        email: login_email.value,
-        password: login_password.value
-      }, 'auth_out');
-    }
-    async function logoutUser() {
-      await callPost('/auth/logout', {}, 'auth_out');
-    }
-    async function placeOrder() {
-      await callPost('/orders/place', {
-        symbol: order_symbol.value,
-        side: order_side.value,
-        qty: parseInt(order_qty.value || '0', 10),
-        execution_mode: execution_mode.value
-      }, 'order_out');
-    }
-    async function registerStrategy() {
-      await callPost('/strategies/register', {
-        name: strategy_name.value,
-        symbol: strategy_symbol.value,
-        side: strategy_side.value,
-        default_qty: parseInt(strategy_qty.value || '0', 10),
-        enabled: true
-      }, 'strategy_out');
-    }
-    async function fireSignal() {
-      await callPost('/strategies/signal', {
-        strategy_id: signal_strategy_id.value,
-        execution_mode: signal_mode.value
-      }, 'strategy_out');
-    }
-    async function requestCapital() {
-      await callPost('/allocator/request-capital', {
-        operator_id: alloc_operator_id.value,
-        requested_capital: parseFloat(alloc_requested.value || '0')
-      }, 'allocator_out');
-    }
-    async function approveCapital() {
-      await callPost('/allocator/approve-capital', {
-        allocation_id: approve_allocation_id.value,
-        approved_capital: parseFloat(approve_capital.value || '0')
-      }, 'allocator_out');
-    }
+    async function callGet(path, target) { document.getElementById(target).textContent = JSON.stringify(await api(path), null, 2); refreshMetrics(); }
+    async function callPost(path, body, target) { document.getElementById(target).textContent = JSON.stringify(await api(path,'POST',body), null, 2); refreshMetrics(); }
+    async function registerUser() { await callPost('/auth/register', {display_name: reg_name.value, email: reg_email.value, password: reg_password.value}, 'auth_out'); }
+    async function loginUser() { await callPost('/auth/login', {email: login_email.value, password: login_password.value}, 'auth_out'); }
+    async function logoutUser() { await callPost('/auth/logout', {}, 'auth_out'); }
+    async function placeOrder() { await callPost('/orders/place', {symbol: order_symbol.value, side: order_side.value, qty: parseInt(order_qty.value || '0', 10), execution_mode: execution_mode.value}, 'order_out'); }
+    async function registerStrategy() { await callPost('/strategies/register', {name: strategy_name.value, symbol: strategy_symbol.value, side: strategy_side.value, default_qty: parseInt(strategy_qty.value || '0', 10), enabled: true}, 'strategy_out'); }
+    async function fireSignal() { await callPost('/strategies/signal', {strategy_id: signal_strategy_id.value, execution_mode: signal_mode.value}, 'strategy_out'); }
     async function refreshMetrics() {
       try {
         const trust = await api('/system/trust-summary');
         const capital = await api('/capital/decision');
         const perf = await api('/reports/performance');
+        const pnl = await api('/broker/pnl');
+        const brokerPos = await api('/broker/positions');
         m_trust.textContent = trust.trust_score || '-';
         m_capital.textContent = capital.capital_allocated || '-';
         m_orders.textContent = perf.orders_count || 0;
         m_fills.textContent = perf.fills_count || 0;
+        m_equity.textContent = pnl.equity || '-';
+        m_cash.textContent = pnl.cash || '-';
+        m_upl.textContent = pnl.unrealized_pl || 0;
+        m_positions.textContent = brokerPos.positions ? brokerPos.positions.length : 0;
       } catch {}
     }
     refreshMetrics();
