@@ -8,6 +8,12 @@
   "strategies": {
     "strategies": []
   },
+  "strategy_engine": {
+    "metrics": {},
+    "logs": [],
+    "last_engine_run_at": null,
+    "last_engine_status": "idle"
+  },
   "orders": {
     "orders": [
       {
@@ -50,9 +56,18 @@
       "allocated_capital": 0.0,
       "remaining_capital": -180.0,
       "utilization_pct": 0.0,
-      "alerts_count": 0
+      "alerts_count": 1,
+      "strategy_realized_pnl": 0.0,
+      "strategy_unrealized_pnl": 0.0,
+      "active_strategies": 0
     },
-    "alerts": [],
+    "alerts": [
+      {
+        "level": "critical",
+        "type": "capital-breach",
+        "message": "Open exposure 180.0 exceeds allocated capital 0.0"
+      }
+    ],
     "last_evaluated_at": "2026-03-23T06:29:21Z"
   }
 }

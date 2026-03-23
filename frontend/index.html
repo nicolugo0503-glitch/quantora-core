@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Quantora QNT30322B1 Frontend Sync Hotfix</title>
+  <title>Quantora QNT30323 Real Strategy Engine</title>
   <style>
     :root {
       --bg: #07111f;
@@ -18,84 +18,65 @@
       --bad: #fb7185;
     }
     * { box-sizing: border-box; }
-    body {
-      margin: 0; font-family: Inter, Arial, sans-serif;
-      background: linear-gradient(180deg, #040b15 0%, #0a1424 100%); color: var(--text);
-    }
-    .shell { max-width: 1600px; margin: 0 auto; padding: 24px; }
-    .hero {
-      display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
-      margin-bottom: 18px; padding: 20px; border: 1px solid var(--line);
-      background: rgba(15,29,49,.92); border-radius: 18px; box-shadow: 0 18px 60px rgba(0,0,0,.25);
-    }
-    h1,h2,h3 { margin: 0 0 10px; }
-    .sub { color: var(--muted); max-width: 860px; line-height: 1.5; }
-    .hero-actions { display:flex; gap: 10px; flex-wrap: wrap; }
-    .metric-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
-    .metric, .panel {
-      background: rgba(15,29,49,.95); border: 1px solid var(--line); border-radius: 18px;
-      padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.16);
-    }
-    .metric .label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
-    .metric .value { font-size: 28px; font-weight: 700; margin-top: 8px; }
-    .grid-main { display:grid; grid-template-columns: 1.2fr 1fr 1fr; gap:16px; align-items:start; }
-    .stack { display:grid; gap: 16px; }
-    button {
-      border: none; background: var(--accent); color: white; padding: 10px 14px;
-      border-radius: 10px; cursor: pointer; font-weight: 700;
-    }
+    body { margin: 0; font-family: Inter, Arial, sans-serif; background: linear-gradient(180deg, #040b15 0%, #0a1424 100%); color: var(--text); }
+    .shell { max-width: 1680px; margin: 0 auto; padding: 24px; }
+    .hero, .metric, .panel { background: rgba(15,29,49,.95); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,.16); }
+    .hero { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 18px; padding: 20px; }
+    .hero .sub { color: var(--muted); max-width: 980px; line-height: 1.5; }
+    .hero-actions, .stack-actions { display:flex; gap:10px; flex-wrap:wrap; }
+    button { border: none; background: var(--accent); color: white; padding: 10px 14px; border-radius: 10px; cursor: pointer; font-weight: 700; }
     button.secondary { background: #1d4ed8; }
     button.warn { background: var(--warn); color: #111827; }
     button.danger { background: var(--bad); }
-    input, select {
+    .metric-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+    .metric, .panel { padding: 16px; }
+    .metric .label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+    .metric .value { font-size: 28px; font-weight: 700; margin-top: 8px; }
+    .grid-main { display:grid; grid-template-columns: 1.1fr 1fr 1fr; gap:16px; align-items:start; }
+    .stack { display:grid; gap: 16px; }
+    .section-title { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px; }
+    .section-title h2 { margin:0; font-size: 18px; }
+    .two-col, .three-col, .four-col { display:grid; gap:10px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .four-col { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    input, select, textarea {
       width: 100%; border: 1px solid var(--line); background: var(--panel-2); color: var(--text);
-      border-radius: 10px; padding: 10px 12px; margin-bottom: 10px;
+      border-radius: 10px; padding: 11px 12px; outline: none;
     }
-    .two-col, .three-col { display: grid; gap: 10px; }
-    .two-col { grid-template-columns: 1fr 1fr; }
-    .three-col { grid-template-columns: 1fr 1fr 1fr; }
-    .tiny { font-size: 12px; color: var(--muted); }
-    .pill {
-      display:inline-block; padding: 5px 9px; border-radius: 999px; font-size: 12px; font-weight: 700;
-      background: rgba(96,165,250,.12); color: #bfdbfe; border: 1px solid rgba(96,165,250,.22);
-      margin-right: 6px; margin-bottom: 6px;
-    }
-    .pill.good { background: rgba(52,211,153,.12); color: #a7f3d0; border-color: rgba(52,211,153,.22); }
-    .pill.warn { background: rgba(245,158,11,.12); color: #fde68a; border-color: rgba(245,158,11,.22); }
-    .pill.bad { background: rgba(251,113,133,.12); color: #fecdd3; border-color: rgba(251,113,133,.22); }
-    .table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    .table th, .table td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: top; }
-    .table th { color: var(--muted); font-weight: 600; }
-    .section-title { display:flex; justify-content: space-between; align-items: center; gap:10px; margin-bottom: 12px; }
+    textarea { min-height: 90px; }
+    .tiny { color: var(--muted); font-size: 12px; }
+    .pills { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .pill { padding: 6px 10px; border-radius: 999px; font-size: 12px; background:#0b1a2c; border:1px solid #274168; }
+    .pill.good { border-color:#256b53; color:#9ff0ce; }
+    .pill.warn { border-color:#8a5a0a; color:#fcd68f; }
+    .pill.bad { border-color:#7c243d; color:#fecdd3; }
     pre {
       margin: 0; background: #06101d; color: #dbeafe; border: 1px solid #1e2d47;
       border-radius: 14px; min-height: 180px; max-height: 380px; overflow: auto; padding: 14px; white-space: pre-wrap;
     }
-    .log { min-height: 220px; }
+    .table-wrap { overflow:auto; border:1px solid #1e2d47; border-radius:14px; background:#0a1526; }
+    table { width:100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 9px 10px; border-bottom: 1px solid #1e2d47; text-align:left; }
+    th { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
     .card-list { display: grid; gap: 10px; }
     .event { padding: 11px; border-radius: 12px; background: #0a1526; border: 1px solid #1e2d47; }
     .event .meta { color: var(--muted); font-size: 12px; }
-    @media (max-width: 1200px) {
-      .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .grid-main { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 760px) {
-      .metric-grid, .two-col, .three-col { grid-template-columns: 1fr; }
-      .hero { flex-direction: column; }
-    }
+    @media (max-width: 1280px) { .metric-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .grid-main { grid-template-columns: 1fr; } }
+    @media (max-width: 760px) { .metric-grid, .two-col, .three-col, .four-col { grid-template-columns: 1fr; } .hero { flex-direction: column; } }
   </style>
 </head>
 <body>
   <div class="shell">
     <div class="hero">
       <div>
-        <h1>Quantora Unified Command Center · Alpaca Reintegration</h1>
+        <h1 style="margin:0 0 10px">Quantora Unified Command Center · Real Strategy Engine</h1>
         <div class="sub">
-          QNT30322B1 locks frontend/backend parity: the Alpaca broker layer remains live, and the deployment now forces fresh HTML delivery with no-cache headers so Railway/browser stale pages cannot serve the old command center shell.
+          QNT30323 upgrades Quantora from broker-connected command center into a real strategy operating layer: lifecycle control, persistent strategy state, capital guards, per-strategy PnL, win-rate tracking, and execution logs now live inside the same OS surface.
         </div>
       </div>
       <div class="hero-actions">
-        <button onclick="refreshAll()">Refresh Command Center</button>
+        <button onclick="refreshAll()">Refresh OS</button>
         <button class="secondary" onclick="loadSnapshot()">Snapshot</button>
         <button class="secondary" onclick="loadBroker()">Broker Refresh</button>
       </div>
@@ -105,9 +86,10 @@
       <div class="metric"><div class="label">Operator</div><div class="value" id="m_operator">-</div></div>
       <div class="metric"><div class="label">Allocated Capital</div><div class="value" id="m_allocated">-</div></div>
       <div class="metric"><div class="label">Used Capital</div><div class="value" id="m_used">-</div></div>
-      <div class="metric"><div class="label">Pending Approvals</div><div class="value" id="m_approvals">-</div></div>
-      <div class="metric"><div class="label">Broker Status</div><div class="value" id="m_broker">-</div></div>
-      <div class="metric"><div class="label">System Layer</div><div class="value" id="m_layer">QNT30322B1</div></div>
+      <div class="metric"><div class="label">Remaining Capital</div><div class="value" id="m_remaining">-</div></div>
+      <div class="metric"><div class="label">Running Strategies</div><div class="value" id="m_running">-</div></div>
+      <div class="metric"><div class="label">Realized PnL</div><div class="value" id="m_realized">-</div></div>
+      <div class="metric"><div class="label">Layer</div><div class="value" id="m_layer">QNT30323</div></div>
     </div>
 
     <div class="grid-main">
@@ -134,35 +116,46 @@
         </div>
 
         <div class="panel">
-          <div class="section-title"><h2>Operator Workspace</h2><button class="secondary" onclick="loadWorkspace()">Load Workspace</button></div>
-          <div class="three-col">
-            <div>
-              <input id="strategy_name" placeholder="Strategy name">
-              <input id="strategy_symbol" placeholder="Symbol">
-            </div>
-            <div>
-              <select id="strategy_side"><option value="buy">buy</option><option value="sell">sell</option></select>
-              <input id="strategy_qty" type="number" placeholder="Default qty">
-            </div>
-            <div>
-              <button onclick="registerStrategy()">Register Strategy</button>
-              <select id="run_mode"><option value="internal">internal</option><option value="alpaca">alpaca</option></select>
-              <button class="secondary" onclick="runOnce()">Run My Strategies Once</button>
-            </div>
+          <div class="section-title"><h2>Strategy Registry + Lifecycle</h2><button class="secondary" onclick="loadStrategyPerformance()">Load Engine</button></div>
+          <div class="four-col">
+            <input id="strategy_name" placeholder="Strategy name">
+            <input id="strategy_symbol" placeholder="Symbol" value="AAPL">
+            <select id="strategy_side"><option value="buy">buy</option><option value="sell">sell</option></select>
+            <input id="strategy_qty" type="number" placeholder="Default qty" value="1">
           </div>
-          <div class="two-col">
+          <div class="three-col" style="margin-top:10px">
+            <input id="strategy_capital_limit" type="number" placeholder="Strategy capital limit (optional)">
+            <select id="strategy_mode"><option value="inherit">inherit command center mode</option><option value="internal">force internal</option><option value="alpaca">force alpaca</option></select>
+            <button onclick="registerStrategy()">Register Strategy</button>
+          </div>
+          <div class="four-col" style="margin-top:10px">
+            <input id="manage_strategy_id" placeholder="Strategy ID">
+            <button class="secondary" onclick="strategyLifecycle('start')">Start</button>
+            <button class="warn" onclick="strategyLifecycle('stop')">Stop</button>
+            <button class="danger" onclick="deleteStrategy()">Delete</button>
+          </div>
+          <div id="workspace_summary" class="tiny" style="margin-top:10px">Strategy engine not loaded.</div>
+          <pre id="workspace_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Operator Capital + Run Control</h2><button class="secondary" onclick="loadWorkspace()">Load Workspace</button></div>
+          <div class="three-col">
             <div>
               <input id="operator_capital" type="number" placeholder="Allocated capital">
               <button onclick="setCapital()">Set My Capital</button>
             </div>
             <div>
+              <select id="run_mode"><option value="internal">internal</option><option value="alpaca">alpaca</option></select>
+              <button class="secondary" onclick="runOnce()">Run All Running Strategies Once</button>
+            </div>
+            <div>
               <input id="toggle_strategy_id" placeholder="Strategy ID to toggle">
               <select id="toggle_strategy_enabled"><option value="true">enabled</option><option value="false">disabled</option></select>
-              <button class="secondary" onclick="toggleStrategy()">Toggle Strategy</button>
+              <button class="secondary" onclick="toggleStrategy()">Toggle Enable</button>
             </div>
           </div>
-          <div id="workspace_summary" class="tiny">Workspace not loaded.</div>
-          <pre id="workspace_out">Ready.</pre>
+          <div id="capital_pills" class="pills"></div>
         </div>
 
         <div class="panel">
@@ -173,9 +166,19 @@
 
       <div class="stack">
         <div class="panel">
+          <div class="section-title"><h2>Strategy Performance Grid</h2><button class="secondary" onclick="loadStrategyPerformance()">Refresh</button></div>
+          <div id="strategy_table"></div>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Strategy Execution Logs</h2><button class="secondary" onclick="loadStrategyLogs()">Refresh Logs</button></div>
+          <div id="strategy_logs" class="card-list"></div>
+        </div>
+
+        <div class="panel">
           <div class="section-title"><h2>Alpaca Broker Layer</h2><button class="secondary" onclick="loadBroker()">Refresh Broker</button></div>
-          <div class="tiny">Admin can connect via form below. For production or Railway, prefer env vars: <strong>ALPACA_API_KEY</strong>, <strong>ALPACA_SECRET_KEY</strong>, <strong>ALPACA_BASE_URL</strong>.</div>
-          <div class="three-col">
+          <div class="tiny">Use env vars on Railway or connect from the panel below for local testing.</div>
+          <div class="three-col" style="margin-top:10px">
             <div>
               <input id="alpaca_key" placeholder="APCA API Key ID">
               <input id="alpaca_base" placeholder="Base URL" value="https://paper-api.alpaca.markets">
@@ -190,8 +193,7 @@
               <button class="danger" onclick="disconnectAlpaca()">Disconnect</button>
             </div>
           </div>
-          <div id="broker_pills"></div>
-          <div id="broker_account_cards" class="tiny">Broker account not loaded.</div>
+          <div id="broker_pills" class="pills"></div>
           <pre id="broker_out">Ready.</pre>
         </div>
 
@@ -237,7 +239,7 @@
               <button class="warn" onclick="decideApproval()">Decide Approval</button>
             </div>
           </div>
-          <div id="policy_pills"></div>
+          <div id="policy_pills" class="pills"></div>
           <pre id="gov_out">Ready.</pre>
         </div>
 
@@ -261,179 +263,294 @@
 
         <div class="panel">
           <div class="section-title"><h2>Command Center Console</h2><button class="secondary" onclick="loadSnapshot()">Reload Snapshot</button></div>
-          <pre id="snapshot_out" class="log">Ready.</pre>
+          <pre id="snapshot_out">Ready.</pre>
         </div>
       </div>
     </div>
   </div>
 
-  <script>
-    const fmt = n => (n === null || n === undefined || Number.isNaN(Number(n))) ? '-' : Number(n).toLocaleString(undefined, {maximumFractionDigits: 2});
-    async function api(path, method='GET', body=null) {
-      const res = await fetch(path, {
-        method,
-        headers: {'Content-Type': 'application/json'},
-        body: body ? JSON.stringify(body) : undefined
-      });
-      const text = await res.text();
-      let data;
-      try { data = JSON.parse(text); } catch { data = {raw:text}; }
-      if (!res.ok) data.__http_status = res.status;
-      return data;
-    }
-    function setOut(id, data) { document.getElementById(id).textContent = JSON.stringify(data, null, 2); }
+<script>
+const fmt = (v) => (v === null || v === undefined || Number.isNaN(Number(v))) ? '-' : Number(v).toFixed(2);
+async function api(path, method='GET', body=null){
+  const res = await fetch(path, {method, headers: {'Content-Type':'application/json'}, body: body ? JSON.stringify(body) : null});
+  const txt = await res.text();
+  let data;
+  try { data = txt ? JSON.parse(txt) : {}; } catch { data = {raw: txt}; }
+  if(!res.ok){ data.__http_status = res.status; }
+  return data;
+}
+function setText(id, value){ document.getElementById(id).textContent = typeof value === 'string' ? value : JSON.stringify(value, null, 2); }
+function setHTML(id, html){ document.getElementById(id).innerHTML = html; }
+function renderTable(rows, cols){
+  if(!rows || !rows.length) return '<div class="tiny">No data.</div>';
+  const head = '<tr>' + cols.map(c => `<th>${c.label}</th>`).join('') + '</tr>';
+  const body = rows.map(r => '<tr>' + cols.map(c => `<td>${c.render ? c.render(r[c.key], r) : (r[c.key] ?? '')}</td>`).join('') + '</tr>').join('');
+  return `<div class="table-wrap"><table><thead>${head}</thead><tbody>${body}</tbody></table></div>`;
+}
+function pills(items){
+  return items.map(i => `<span class="pill ${i.className||''}">${i.label}</span>`).join('');
+}
 
-    function renderOrders(data) {
-      const orders = (data && data.orders) ? data.orders.slice(0, 12) : [];
-      document.getElementById('orders_table').innerHTML = orders.length ? `
-        <table class="table">
-          <thead><tr><th>Timestamp</th><th>Symbol</th><th>Side</th><th>Qty</th><th>Notional</th><th>Mode</th><th>Status</th></tr></thead>
-          <tbody>${orders.map(o => `<tr><td>${o.timestamp || '-'}</td><td>${o.symbol}</td><td>${o.side}</td><td>${o.qty}</td><td>${fmt(o.notional)}</td><td>${o.mode}</td><td>${o.status || '-'}</td></tr>`).join('')}</tbody>
-        </table>
-      ` : '<div class="tiny">No orders yet.</div>';
-    }
+async function refreshAll(){
+  await Promise.all([loadAuthMe(), loadWorkspace(), loadStrategyPerformance(), loadStrategyLogs(), loadBroker(), loadGovernance(), loadControlTower(), loadLedger(), loadOrders(), loadSnapshot()]);
+}
 
-    function renderTower(snapshot) {
-      const tower = snapshot && snapshot.control_tower ? snapshot.control_tower : null;
-      if (!tower) { document.getElementById('tower_table').innerHTML = '<div class="tiny">Admin-only control tower.</div>'; return; }
-      const rows = tower.operators || [];
-      document.getElementById('tower_table').innerHTML = rows.length ? `
-        <table class="table">
-          <thead><tr><th>Operator</th><th>Capital</th><th>Used</th><th>Strategies</th><th>Orders</th><th>Loop</th><th>Mode</th></tr></thead>
-          <tbody>${rows.map(r => `<tr><td>${r.display_name}<div class="tiny">${r.operator_id}</div></td><td>${fmt(r.allocated_capital)}</td><td>${fmt(r.used_capital)}</td><td>${r.strategies}</td><td>${r.orders}</td><td>${r.loop_running ? 'running' : 'idle'}</td><td>${r.execution_mode || '-'}</td></tr>`).join('')}</tbody>
-        </table>
-      ` : '<div class="tiny">No operators registered.</div>';
-    }
+async function loadAuthMe(){
+  const data = await api('/auth/me');
+  document.getElementById('session_hint').textContent = data.logged_in ? `${data.display_name || 'Operator'} · ${data.email}` : 'No session loaded';
+  return data;
+}
 
-    function renderEvents(snapshot) {
-      const events = snapshot?.governance?.recent_events || [];
-      document.getElementById('events_list').innerHTML = events.length ? events.map(ev => `
-        <div class="event">
-          <div><strong>${ev.action}</strong> <span class="pill">${ev.category}</span></div>
-          <div class="meta">${ev.timestamp} · ${ev.actor_email || 'system'} · ${ev.target}</div>
-        </div>
-      `).join('') : '<div class="tiny">No governance events yet.</div>';
-    }
+async function registerUser(){
+  const data = await api('/auth/register','POST',{display_name:reg_name.value,email:reg_email.value,password:reg_password.value});
+  setText('auth_out', data);
+  refreshAll();
+}
+async function loginUser(){
+  const data = await api('/auth/login','POST',{email:login_email.value,password:login_password.value});
+  setText('auth_out', data);
+  refreshAll();
+}
+async function logoutUser(){
+  const data = await api('/auth/logout','POST',{});
+  setText('auth_out', data);
+  refreshAll();
+}
 
-    function renderPolicyPills(snapshot) {
-      const policies = snapshot?.governance?.policies || [];
-      document.getElementById('policy_pills').innerHTML = policies.map(p => `<span class="pill ${p.enabled ? 'good' : 'warn'}">${p.policy_id} · ${p.policy_type} · threshold ${p.threshold} · ${p.enabled ? 'enabled' : 'disabled'}</span>`).join('');
-    }
+async function registerStrategy(){
+  const data = await api('/strategies/register','POST',{
+    name: strategy_name.value,
+    symbol: strategy_symbol.value,
+    side: strategy_side.value,
+    default_qty: Number(strategy_qty.value || 1),
+    capital_limit: Number(strategy_capital_limit.value || 0),
+    execution_mode: strategy_mode.value,
+    enabled: true
+  });
+  setText('workspace_out', data);
+  if(data.strategy){ manage_strategy_id.value = data.strategy.strategy_id; }
+  refreshAll();
+}
+async function toggleStrategy(){
+  const data = await api('/strategies/toggle','POST',{strategy_id:toggle_strategy_id.value,enabled:toggle_strategy_enabled.value === 'true'});
+  setText('workspace_out', data);
+  refreshAll();
+}
+async function strategyLifecycle(action){
+  const data = await api('/strategies/lifecycle','POST',{strategy_id:manage_strategy_id.value,action});
+  setText('workspace_out', data);
+  refreshAll();
+}
+async function deleteStrategy(){
+  const data = await api('/strategies/delete','POST',{strategy_id:manage_strategy_id.value});
+  setText('workspace_out', data);
+  refreshAll();
+}
+async function setCapital(){
+  const data = await api('/allocator/operator-capital/set','POST',{allocated_capital:Number(operator_capital.value||0)});
+  setText('workspace_out', data);
+  refreshAll();
+}
+async function runOnce(){
+  const data = await api('/operator/run-once','POST',{execution_mode:run_mode.value});
+  setText('workspace_out', data);
+  refreshAll();
+}
+async function loadWorkspace(){
+  const data = await api('/operator/workspace');
+  setText('workspace_out', data);
+  if(data.capital){
+    document.getElementById('workspace_summary').textContent = `${data.execution_summary?.running_strategies || 0} running / ${data.execution_summary?.enabled_strategies || 0} enabled · realized ${fmt(data.execution_summary?.realized_pnl)} · unrealized ${fmt(data.execution_summary?.unrealized_pnl)}`;
+    setHTML('capital_pills', pills([
+      {label:`allocated ${fmt(data.capital.allocated_capital)}`},
+      {label:`used ${fmt(data.capital.used_capital)}`},
+      {label:`remaining ${fmt(data.capital.remaining_capital)}`},
+      {label:`utilization ${fmt(data.capital.utilization_pct)}%`, className: (Number(data.capital.utilization_pct) >= 80 ? 'warn' : 'good')},
+      {label:`alerts ${(data.monitoring?.alerts || []).length}`, className: ((data.monitoring?.alerts || []).length ? 'warn' : 'good')}
+    ]));
+  }
+  return data;
+}
 
-    function renderWorkspaceSummary(workspace) {
-      if (!workspace || workspace.__http_status) { document.getElementById('workspace_summary').textContent = 'Workspace unavailable.'; return; }
-      document.getElementById('workspace_summary').innerHTML = `
-        <span class="pill good">${workspace.display_name}</span>
-        <span class="pill">${workspace.operator_id}</span>
-        <span class="pill">${workspace.execution_summary.enabled_strategies} enabled strategies</span>
-        <span class="pill">${workspace.capital.utilization_pct}% utilization</span>
-        <span class="pill warn">${workspace.monitoring.alerts.length} alerts</span>
-      `;
-    }
+async function loadStrategyPerformance(){
+  const data = await api('/strategies/performance');
+  const rows = (data.strategies || []).map(s => ({
+    strategy_id: s.strategy_id,
+    name: s.name,
+    status: s.status,
+    enabled: s.enabled,
+    symbol: s.symbol,
+    side: s.side,
+    qty: s.default_qty,
+    execution_mode: s.execution_mode,
+    capital_limit: s.capital_limit,
+    orders_count: s.metrics?.orders_count,
+    capital_in_use: s.metrics?.capital_in_use,
+    realized_pnl: s.metrics?.realized_pnl,
+    unrealized_pnl: s.metrics?.unrealized_pnl,
+    win_rate: s.metrics?.win_rate
+  }));
+  setHTML('strategy_table', renderTable(rows, [
+    {key:'name', label:'Strategy'},
+    {key:'strategy_id', label:'ID'},
+    {key:'status', label:'Status'},
+    {key:'enabled', label:'Enabled'},
+    {key:'symbol', label:'Symbol'},
+    {key:'side', label:'Side'},
+    {key:'qty', label:'Qty'},
+    {key:'execution_mode', label:'Mode'},
+    {key:'capital_limit', label:'Cap Limit', render:v=>fmt(v)},
+    {key:'capital_in_use', label:'Cap Used', render:v=>fmt(v)},
+    {key:'realized_pnl', label:'Realized PnL', render:v=>fmt(v)},
+    {key:'unrealized_pnl', label:'Unrealized PnL', render:v=>fmt(v)},
+    {key:'win_rate', label:'Win Rate', render:v=>fmt(v)+'%'}
+  ]));
+  return data;
+}
 
-    function renderBroker(data) {
-      const broker = data?.broker || data;
-      const status = broker?.last_status || 'disconnected';
-      const pillClass = status === 'connected' ? 'good' : (status === 'error' ? 'bad' : 'warn');
-      document.getElementById('broker_pills').innerHTML = `
-        <span class="pill ${pillClass}">${status}</span>
-        <span class="pill">source ${broker?.source || 'none'}</span>
-        <span class="pill">${broker?.paper ? 'paper' : 'live'}</span>
-        <span class="pill">${broker?.base_url || '-'}</span>
-        <span class="pill">key ${broker?.api_key_masked || '-'}</span>
-        ${broker?.last_error ? `<span class="pill bad">${broker.last_error}</span>` : ''}
-      `;
-      const account = broker?.account || {};
-      document.getElementById('broker_account_cards').innerHTML = `
-        <span class="pill good">equity ${fmt(account.equity)}</span>
-        <span class="pill">cash ${fmt(account.cash)}</span>
-        <span class="pill">buying power ${fmt(account.buying_power)}</span>
-        <span class="pill">multiplier ${account.multiplier || '-'}</span>
-        <span class="pill">account status ${account.status || '-'}</span>
-      `;
-      const positions = broker?.positions || [];
-      document.getElementById('broker_positions_table').innerHTML = positions.length ? `
-        <table class="table">
-          <thead><tr><th>Symbol</th><th>Qty</th><th>Market Value</th><th>Avg Entry</th><th>Unrealized PnL</th></tr></thead>
-          <tbody>${positions.map(p => `<tr><td>${p.symbol}</td><td>${p.qty}</td><td>${fmt(p.market_value)}</td><td>${fmt(p.avg_entry_price)}</td><td>${fmt(p.unrealized_pl)}</td></tr>`).join('')}</tbody>
-        </table>
-      ` : '<div class="tiny">No broker positions returned.</div>';
-      const orders = broker?.orders || [];
-      document.getElementById('broker_orders_table').innerHTML = orders.length ? `
-        <table class="table">
-          <thead><tr><th>Symbol</th><th>Side</th><th>Qty</th><th>Type</th><th>Status</th><th>Submitted</th></tr></thead>
-          <tbody>${orders.map(o => `<tr><td>${o.symbol}</td><td>${o.side}</td><td>${o.qty}</td><td>${o.type || o.order_type || '-'}</td><td>${o.status}</td><td>${o.submitted_at || '-'}</td></tr>`).join('')}</tbody>
-        </table>
-      ` : '<div class="tiny">No open Alpaca orders.</div>';
-      document.getElementById('m_broker').textContent = status;
-    }
+async function loadStrategyLogs(){
+  const data = await api('/strategies/logs');
+  const logs = data.logs || [];
+  setHTML('strategy_logs', logs.length ? logs.map(l => `
+    <div class="event">
+      <div><strong>${l.event_type}</strong> · ${l.strategy_id || 'system'}</div>
+      <div>${l.message}</div>
+      <div class="meta">${l.timestamp}</div>
+    </div>`).join('') : '<div class="tiny">No logs.</div>');
+  return data;
+}
 
-    function hydrateMetrics(snapshot) {
-      document.getElementById('m_operator').textContent = snapshot?.personal_workspace?.display_name || '-';
-      document.getElementById('m_allocated').textContent = fmt(snapshot?.personal_workspace?.capital?.allocated_capital);
-      document.getElementById('m_used').textContent = fmt(snapshot?.personal_workspace?.capital?.used_capital);
-      document.getElementById('m_approvals').textContent = snapshot?.governance?.pending_approvals ?? '-';
-      document.getElementById('m_layer').textContent = snapshot?.system_health?.layer || 'QNT30322B1';
-      document.getElementById('session_hint').textContent = snapshot?.session?.logged_in ? `${snapshot.session.display_name} · ${snapshot.session.email}` : 'No active session';
-      if (snapshot?.broker) renderBroker(snapshot.broker);
-    }
+async function loadOrders(){
+  const data = await api('/orders/list');
+  const rows = (data.orders || []).slice(0, 25);
+  setHTML('orders_table', renderTable(rows, [
+    {key:'timestamp', label:'Timestamp'},
+    {key:'strategy_name', label:'Strategy'},
+    {key:'symbol', label:'Symbol'},
+    {key:'side', label:'Side'},
+    {key:'qty', label:'Qty'},
+    {key:'notional', label:'Notional', render:v=>fmt(v)},
+    {key:'mode', label:'Mode'},
+    {key:'status', label:'Status'}
+  ]));
+  return data;
+}
 
-    async function loadMe() {
-      const data = await api('/auth/me'); setOut('auth_out', data);
-      if (!data.__http_status) document.getElementById('session_hint').textContent = data.logged_in ? `${data.display_name} · ${data.email}` : 'No active session';
-      return data;
-    }
-    async function loadWorkspace() { const data = await api('/operator/workspace'); setOut('workspace_out', data); renderWorkspaceSummary(data); return data; }
-    async function loadOrders() { const data = await api('/orders/list'); renderOrders(data); return data; }
-    async function loadGovernance() {
-      const policies = await api('/policy-engine/policies'); const approvals = await api('/approvals/queue');
-      setOut('gov_out', {policies, approvals});
-      if (!policies.__http_status) document.getElementById('policy_pills').innerHTML = (policies.policies || []).map(p => `<span class="pill ${p.enabled ? 'good' : 'warn'}">${p.policy_id} · ${p.threshold}</span>`).join('');
-      return {policies, approvals};
-    }
-    async function loadLedger() { const ledger = await api('/governance/ledger'); if (!ledger.__http_status) renderEvents({governance:{recent_events: ledger.events || []}}); setOut('gov_out', ledger); return ledger; }
-    async function loadControlTower() { const data = await api('/admin/control-tower'); setOut('admin_out', data); renderTower({control_tower: data}); return data; }
-    async function loadBroker() { const data = await api('/broker/alpaca/status'); setOut('broker_out', data); if (!data.__http_status) renderBroker(data); return data; }
-    async function loadSnapshot() {
-      const data = await api('/command-center/snapshot'); setOut('snapshot_out', data);
-      if (!data.__http_status) { hydrateMetrics(data); renderTower(data); renderEvents(data); renderPolicyPills(data); renderWorkspaceSummary(data.personal_workspace); renderOrders({orders: data.personal_workspace?.orders || []}); }
-      return data;
-    }
-    async function refreshAll() {
-      const snap = await loadSnapshot();
-      if (snap.__http_status) { await loadMe(); await loadWorkspace(); await loadOrders(); }
-      await loadBroker();
-    }
+async function connectAlpaca(){
+  const data = await api('/broker/alpaca/connect','POST',{api_key:alpaca_key.value,secret_key:alpaca_secret.value,base_url:alpaca_base.value,paper:alpaca_paper.value === 'true'});
+  setText('broker_out', data);
+  refreshAll();
+}
+async function disconnectAlpaca(){
+  const data = await api('/broker/alpaca/disconnect','POST',{});
+  setText('broker_out', data);
+  refreshAll();
+}
+async function loadBroker(){
+  const data = await api('/broker/alpaca/status');
+  setText('broker_out', data);
+  setHTML('broker_pills', pills([
+    {label: data.connected ? 'connected' : data.last_status, className: data.connected ? 'good' : (data.last_status === 'error' ? 'bad' : 'warn')},
+    {label: `source ${data.source || '-'}`},
+    {label: data.paper ? 'paper' : 'live'},
+    {label: `equity ${fmt(data.account?.equity)}`},
+    {label: `cash ${fmt(data.account?.cash)}`},
+    {label: `buying power ${fmt(data.account?.buying_power)}`}
+  ]));
+  setHTML('broker_positions_table', renderTable(data.positions || [], [
+    {key:'symbol', label:'Symbol'},
+    {key:'qty', label:'Qty'},
+    {key:'market_value', label:'Market Value'},
+    {key:'avg_entry_price', label:'Avg Entry'},
+    {key:'unrealized_pl', label:'Unrealized PnL'}
+  ]));
+  setHTML('broker_orders_table', renderTable(data.orders || [], [
+    {key:'symbol', label:'Symbol'},
+    {key:'side', label:'Side'},
+    {key:'qty', label:'Qty'},
+    {key:'type', label:'Type'},
+    {key:'status', label:'Status'},
+    {key:'submitted_at', label:'Submitted'}
+  ]));
+  return data;
+}
 
-    async function registerUser() { const data = await api('/auth/register', 'POST', {display_name: reg_name.value, email: reg_email.value, password: reg_password.value}); setOut('auth_out', data); await refreshAll(); }
-    async function loginUser() { const data = await api('/auth/login', 'POST', {email: login_email.value, password: login_password.value}); setOut('auth_out', data); await refreshAll(); }
-    async function logoutUser() { const data = await api('/auth/logout', 'POST', {}); setOut('auth_out', data); await loadMe(); }
-    async function registerStrategy() {
-      const data = await api('/strategies/register', 'POST', {name: strategy_name.value, symbol: strategy_symbol.value, side: strategy_side.value, default_qty: parseInt(strategy_qty.value || '0', 10), enabled: true});
-      setOut('workspace_out', data); await refreshAll();
-    }
-    async function toggleStrategy() { const data = await api('/strategies/toggle', 'POST', {strategy_id: toggle_strategy_id.value, enabled: toggle_strategy_enabled.value === 'true'}); setOut('workspace_out', data); await refreshAll(); }
-    async function setCapital() { const data = await api('/allocator/operator-capital/set', 'POST', {allocated_capital: parseFloat(operator_capital.value || '0')}); setOut('workspace_out', data); await refreshAll(); }
-    async function runOnce() { const data = await api('/operator/run-once', 'POST', {execution_mode: run_mode.value || 'internal'}); setOut('workspace_out', data); await refreshAll(); }
-    async function submitManualOrder() {
-      const data = await api('/orders/submit', 'POST', {symbol: manual_symbol.value, side: manual_side.value, qty: parseFloat(manual_qty.value || '0'), execution_mode: manual_mode.value || 'alpaca'});
-      setOut('manual_order_out', data); await refreshAll();
-    }
-    async function connectAlpaca() {
-      const data = await api('/broker/alpaca/connect', 'POST', {api_key: alpaca_key.value, secret_key: alpaca_secret.value, base_url: alpaca_base.value, paper: alpaca_paper.value === 'true'});
-      setOut('broker_out', data); await refreshAll();
-    }
-    async function disconnectAlpaca() { const data = await api('/broker/alpaca/disconnect', 'POST', {}); setOut('broker_out', data); await refreshAll(); }
-    async function updatePolicy() {
-      const data = await api('/policy-engine/policies/update', 'POST', {policy_id: policy_id.value, threshold: parseFloat(policy_threshold.value || '0'), enabled: policy_enabled.value === 'true'});
-      setOut('gov_out', data); await refreshAll();
-    }
-    async function decideApproval() { const data = await api('/approvals/decision', 'POST', {request_id: approval_request_id.value, decision: approval_decision.value, notes: approval_notes.value}); setOut('gov_out', data); await refreshAll(); }
-    async function adminSetCapital() { const data = await api('/admin/operator-capital/set', 'POST', {operator_id: admin_operator_id.value, allocated_capital: parseFloat(admin_operator_capital.value || '0')}); setOut('admin_out', data); await refreshAll(); }
-    async function adminStartLoop() { const data = await api('/admin/operator-loop/start', 'POST', {operator_id: admin_operator_id.value, execution_mode: admin_loop_mode.value, interval_seconds: parseInt(admin_loop_interval.value || '60', 10)}); setOut('admin_out', data); await refreshAll(); }
-    async function adminRunAll() { const data = await api('/admin/run-all-once', 'POST', {}); setOut('admin_out', data); await refreshAll(); }
+async function submitManualOrder(){
+  const data = await api('/orders/submit','POST',{symbol:manual_symbol.value,side:manual_side.value,qty:Number(manual_qty.value||1),execution_mode:manual_mode.value});
+  setText('manual_order_out', data);
+  refreshAll();
+}
 
-    loadMe();
-  </script>
+async function loadGovernance(){
+  const policies = await api('/policy-engine/policies');
+  setText('gov_out', policies);
+  setHTML('policy_pills', pills((policies.policies || []).map(p => ({label:`${p.policy_id} · threshold ${p.threshold} · ${p.enabled ? 'enabled' : 'disabled'}`, className:p.enabled ? 'good' : 'warn'}))));
+  return policies;
+}
+async function updatePolicy(){
+  const data = await api('/policy-engine/policies/update','POST',{policy_id:policy_id.value,threshold:Number(policy_threshold.value||0),enabled:policy_enabled.value === 'true'});
+  setText('gov_out', data); loadGovernance(); loadLedger();
+}
+async function decideApproval(){
+  const data = await api('/approvals/decision','POST',{request_id:approval_request_id.value,decision:approval_decision.value,notes:approval_notes.value});
+  setText('gov_out', data); loadGovernance(); loadLedger(); loadControlTower();
+}
+
+async function loadControlTower(){
+  const data = await api('/admin/control-tower');
+  setText('admin_out', data);
+  setHTML('tower_table', renderTable(data.operators || [], [
+    {key:'display_name', label:'Operator'},
+    {key:'operator_id', label:'Operator ID'},
+    {key:'allocated_capital', label:'Capital', render:v=>fmt(v)},
+    {key:'used_capital', label:'Used', render:v=>fmt(v)},
+    {key:'strategies', label:'Strategies'},
+    {key:'orders', label:'Orders'},
+    {key:'execution_mode', label:'Mode'},
+    {key:'realized_pnl', label:'Realized PnL', render:v=>fmt(v)},
+    {key:'alerts', label:'Alerts'}
+  ]));
+  return data;
+}
+async function adminSetCapital(){
+  const data = await api('/admin/operator-capital/set','POST',{operator_id:admin_operator_id.value,allocated_capital:Number(admin_operator_capital.value||0)});
+  setText('admin_out', data); refreshAll();
+}
+async function adminStartLoop(){
+  const data = await api('/admin/operator-loop/start','POST',{operator_id:admin_operator_id.value,execution_mode:admin_loop_mode.value,interval_seconds:Number(admin_loop_interval.value||60)});
+  setText('admin_out', data); refreshAll();
+}
+async function adminRunAll(){
+  const data = await api('/admin/run-all-once','POST',{});
+  setText('admin_out', data); refreshAll();
+}
+
+async function loadLedger(){
+  const data = await api('/governance/ledger');
+  const events = data.events || [];
+  setHTML('events_list', events.slice(0,12).map(e => `
+    <div class="event">
+      <div><strong>${e.action}</strong> <span class="tiny">${e.category}</span></div>
+      <div class="meta">${e.timestamp} · ${e.actor_email || '-'} · ${e.target || '-'}</div>
+    </div>`).join('') || '<div class="tiny">No events.</div>');
+  return data;
+}
+
+async function loadSnapshot(){
+  const data = await api('/command-center/snapshot');
+  setText('snapshot_out', data);
+  const ws = data.personal_workspace || {};
+  document.getElementById('m_operator').textContent = ws.display_name || '-';
+  document.getElementById('m_allocated').textContent = fmt(ws.capital?.allocated_capital);
+  document.getElementById('m_used').textContent = fmt(ws.capital?.used_capital);
+  document.getElementById('m_remaining').textContent = fmt(ws.capital?.remaining_capital);
+  document.getElementById('m_running').textContent = data.strategy_engine?.running_strategies ?? '-';
+  document.getElementById('m_realized').textContent = fmt(data.strategy_engine?.portfolio_realized_pnl);
+  document.getElementById('m_layer').textContent = data.system_health?.layer || 'QNT30323';
+  return data;
+}
+
+refreshAll();
+</script>
 </body>
 </html>

@@ -1,35 +1,52 @@
-# Quantora QNT30322B - Alpaca Reintegration Layer
+# Quantora QNT30323 - Real Strategy Engine
 
-This package extends QNT30322A and restores a visible broker layer inside the Unified Command Center.
+This package extends QNT30322B1 and upgrades Quantora from broker-connected command center into a real strategy operating layer.
 
 ## What was added
 
-- Alpaca broker status panel inside the UI
-- Alpaca account snapshot: equity, cash, buying power, account status
-- Alpaca positions table
-- Alpaca open orders table
-- Manual order submission route: `/orders/submit`
-- Strategy execution routed to Alpaca when execution mode = `alpaca`
-- Broker block included in `/command-center/snapshot`
-- Railway-safe startup preserved from QNT30322A
+- Strategy lifecycle controls: register, start, stop, pause, delete
+- Persistent strategy state and migration for existing operator state files
+- Per-strategy performance tracking:
+  - realized PnL
+  - unrealized PnL
+  - win rate
+  - gross notional
+  - capital in use
+- Strategy execution logs inside the command center
+- Capital guard on buy execution so strategies cannot keep allocating beyond operator capital
+- Strategy-level capital limits
+- Improved capital accounting based on open net exposure instead of cumulative filled notional
+- Existing Alpaca broker layer preserved
+- Railway-safe startup preserved
+
+## Main endpoints
+
+- `/strategies/register`
+- `/strategies/lifecycle`
+- `/strategies/delete`
+- `/strategies/performance`
+- `/strategies/logs`
+- `/operator/run-once`
+- `/command-center/snapshot`
+- `/broker/alpaca/status`
+- `/version`
 
 ## Alpaca configuration
 
-### Preferred production / Railway setup
-Set these environment variables in Railway:
+Preferred production / Railway setup:
 
 - `ALPACA_API_KEY`
 - `ALPACA_SECRET_KEY`
-- `ALPACA_BASE_URL` (example: `https://paper-api.alpaca.markets`)
+- `ALPACA_BASE_URL`
 
-### Local fallback
+Local fallback:
 Admin users can connect through the UI broker panel. That stores credentials in `backend/artifacts/broker_config.json` for local use.
 
 ## Local run
 
 ### macOS
 ```bash
-cd QNT30322B_QUANTORA_ALPACA_REINTEGRATION_LAYER
+cd QNT30323_QUANTORA_REAL_STRATEGY_ENGINE
 chmod +x *.command
 xattr -dr com.apple.quarantine *.command 2>/dev/null || true
 ./0_START_ALL_MAC.command
@@ -41,16 +58,15 @@ Run:
 - or `START_QUANTORA.bat`
 
 ## Health checks
+
 - Backend: `http://127.0.0.1:8010/health`
 - Frontend: `http://127.0.0.1:8010/`
+- Version: `http://127.0.0.1:8010/version`
 - Snapshot: `http://127.0.0.1:8010/command-center/snapshot`
 
 ## Notes
 
-- If no Alpaca credentials are configured, broker status returns `disconnected` and strategy/manual orders in `alpaca` mode will be rejected.
-- This package was validated locally for startup, auth, snapshot, and disconnected-broker handling. Live Alpaca calls require real credentials and network access from your deployment environment.
-
-
-## QNT30322B1 Frontend Sync Hotfix
-
-This hotfix resolves the split deployment state where Railway/browser cache could serve the old command-center HTML while the QNT30322B backend was already live. The backend now serves HTML with strict no-cache headers and exposes `/version` for deployment verification.
+- Existing operator state files are migrated in-place when loaded.
+- Buy orders are now blocked if operator capital is zero or insufficient.
+- Sells are allowed so exposure can be reduced.
+- Live Alpaca calls require valid credentials and internet access from the deployment environment.
