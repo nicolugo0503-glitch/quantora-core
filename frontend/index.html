@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Quantora QNT30322 Unified Command Center</title>
+  <title>Quantora QNT30322B Alpaca Reintegration Layer</title>
   <style>
     :root {
       --bg: #07111f;
@@ -19,51 +19,39 @@
     }
     * { box-sizing: border-box; }
     body {
-      margin: 0;
-      font-family: Inter, Arial, sans-serif;
-      background: linear-gradient(180deg, #040b15 0%, #0a1424 100%);
-      color: var(--text);
+      margin: 0; font-family: Inter, Arial, sans-serif;
+      background: linear-gradient(180deg, #040b15 0%, #0a1424 100%); color: var(--text);
     }
-    .shell { max-width: 1500px; margin: 0 auto; padding: 24px; }
+    .shell { max-width: 1600px; margin: 0 auto; padding: 24px; }
     .hero {
       display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
       margin-bottom: 18px; padding: 20px; border: 1px solid var(--line);
-      background: rgba(15,29,49,.92); border-radius: 18px;
-      box-shadow: 0 18px 60px rgba(0,0,0,.25);
+      background: rgba(15,29,49,.92); border-radius: 18px; box-shadow: 0 18px 60px rgba(0,0,0,.25);
     }
     h1,h2,h3 { margin: 0 0 10px; }
-    .sub { color: var(--muted); max-width: 760px; line-height: 1.5; }
+    .sub { color: var(--muted); max-width: 860px; line-height: 1.5; }
     .hero-actions { display:flex; gap: 10px; flex-wrap: wrap; }
-    .metric-grid {
-      display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px;
-    }
+    .metric-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
     .metric, .panel {
-      background: rgba(15,29,49,.95);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 12px 40px rgba(0,0,0,.16);
+      background: rgba(15,29,49,.95); border: 1px solid var(--line); border-radius: 18px;
+      padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.16);
     }
     .metric .label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
-    .metric .value { font-size: 30px; font-weight: 700; margin-top: 8px; }
-    .grid-main {
-      display: grid;
-      grid-template-columns: 1.15fr 1.15fr .95fr;
-      gap: 16px;
-      align-items: start;
-    }
-    .stack { display: grid; gap: 16px; }
+    .metric .value { font-size: 28px; font-weight: 700; margin-top: 8px; }
+    .grid-main { display:grid; grid-template-columns: 1.2fr 1fr 1fr; gap:16px; align-items:start; }
+    .stack { display:grid; gap: 16px; }
     button {
-      border: none; border-radius: 10px; padding: 10px 14px; cursor: pointer;
-      background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; font-weight: 600;
+      border: none; background: var(--accent); color: white; padding: 10px 14px;
+      border-radius: 10px; cursor: pointer; font-weight: 700;
     }
-    button.secondary { background: #334155; }
-    button.warn { background: linear-gradient(135deg, #d97706, #b45309); }
+    button.secondary { background: #1d4ed8; }
+    button.warn { background: var(--warn); color: #111827; }
+    button.danger { background: var(--bad); }
     input, select {
       width: 100%; border: 1px solid var(--line); background: var(--panel-2); color: var(--text);
       border-radius: 10px; padding: 10px 12px; margin-bottom: 10px;
     }
-    .form-row, .two-col, .three-col { display: grid; gap: 10px; }
+    .two-col, .three-col { display: grid; gap: 10px; }
     .two-col { grid-template-columns: 1fr 1fr; }
     .three-col { grid-template-columns: 1fr 1fr 1fr; }
     .tiny { font-size: 12px; color: var(--muted); }
@@ -74,6 +62,7 @@
     }
     .pill.good { background: rgba(52,211,153,.12); color: #a7f3d0; border-color: rgba(52,211,153,.22); }
     .pill.warn { background: rgba(245,158,11,.12); color: #fde68a; border-color: rgba(245,158,11,.22); }
+    .pill.bad { background: rgba(251,113,133,.12); color: #fecdd3; border-color: rgba(251,113,133,.22); }
     .table { width: 100%; border-collapse: collapse; font-size: 13px; }
     .table th, .table td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: top; }
     .table th { color: var(--muted); font-weight: 600; }
@@ -84,9 +73,7 @@
     }
     .log { min-height: 220px; }
     .card-list { display: grid; gap: 10px; }
-    .event {
-      padding: 11px; border-radius: 12px; background: #0a1526; border: 1px solid #1e2d47;
-    }
+    .event { padding: 11px; border-radius: 12px; background: #0a1526; border: 1px solid #1e2d47; }
     .event .meta { color: var(--muted); font-size: 12px; }
     @media (max-width: 1200px) {
       .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -102,15 +89,15 @@
   <div class="shell">
     <div class="hero">
       <div>
-        <h1>Quantora Unified Command Center</h1>
+        <h1>Quantora Unified Command Center · Alpaca Reintegration</h1>
         <div class="sub">
-          QNT30322 merges execution, strategy runtime, capital allocation, governance policy controls, approvals, and control tower oversight into one operating surface.
+          QNT30322B restores the broker layer inside the command center: live Alpaca connection status, account state, positions, open orders, and real broker execution routing, without resetting the Quantora operating system.
         </div>
       </div>
       <div class="hero-actions">
         <button onclick="refreshAll()">Refresh Command Center</button>
         <button class="secondary" onclick="loadSnapshot()">Snapshot</button>
-        <button class="secondary" onclick="loadMe()">Session</button>
+        <button class="secondary" onclick="loadBroker()">Broker Refresh</button>
       </div>
     </div>
 
@@ -119,7 +106,8 @@
       <div class="metric"><div class="label">Allocated Capital</div><div class="value" id="m_allocated">-</div></div>
       <div class="metric"><div class="label">Used Capital</div><div class="value" id="m_used">-</div></div>
       <div class="metric"><div class="label">Pending Approvals</div><div class="value" id="m_approvals">-</div></div>
-      <div class="metric"><div class="label">System Layer</div><div class="value" id="m_layer">QNT30322</div></div>
+      <div class="metric"><div class="label">Broker Status</div><div class="value" id="m_broker">-</div></div>
+      <div class="metric"><div class="label">System Layer</div><div class="value" id="m_layer">QNT30322B</div></div>
     </div>
 
     <div class="grid-main">
@@ -158,7 +146,7 @@
             </div>
             <div>
               <button onclick="registerStrategy()">Register Strategy</button>
-              <input id="run_mode" placeholder="Run mode" value="internal">
+              <select id="run_mode"><option value="internal">internal</option><option value="alpaca">alpaca</option></select>
               <button class="secondary" onclick="runOnce()">Run My Strategies Once</button>
             </div>
           </div>
@@ -185,6 +173,55 @@
 
       <div class="stack">
         <div class="panel">
+          <div class="section-title"><h2>Alpaca Broker Layer</h2><button class="secondary" onclick="loadBroker()">Refresh Broker</button></div>
+          <div class="tiny">Admin can connect via form below. For production or Railway, prefer env vars: <strong>ALPACA_API_KEY</strong>, <strong>ALPACA_SECRET_KEY</strong>, <strong>ALPACA_BASE_URL</strong>.</div>
+          <div class="three-col">
+            <div>
+              <input id="alpaca_key" placeholder="APCA API Key ID">
+              <input id="alpaca_base" placeholder="Base URL" value="https://paper-api.alpaca.markets">
+            </div>
+            <div>
+              <input id="alpaca_secret" type="password" placeholder="APCA Secret Key">
+              <select id="alpaca_paper"><option value="true">paper</option><option value="false">live</option></select>
+            </div>
+            <div>
+              <button onclick="connectAlpaca()">Connect Alpaca</button>
+              <button class="secondary" onclick="loadBroker()">Reload Status</button>
+              <button class="danger" onclick="disconnectAlpaca()">Disconnect</button>
+            </div>
+          </div>
+          <div id="broker_pills"></div>
+          <div id="broker_account_cards" class="tiny">Broker account not loaded.</div>
+          <pre id="broker_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Manual Broker Order</h2><button class="secondary" onclick="submitManualOrder()">Submit Order</button></div>
+          <div class="three-col">
+            <div>
+              <input id="manual_symbol" placeholder="Symbol" value="AAPL">
+              <select id="manual_side"><option value="buy">buy</option><option value="sell">sell</option></select>
+            </div>
+            <div>
+              <input id="manual_qty" type="number" placeholder="Qty" value="1">
+              <select id="manual_mode"><option value="alpaca">alpaca</option><option value="internal">internal</option></select>
+            </div>
+            <div>
+              <button onclick="submitManualOrder()">Submit Manual Order</button>
+            </div>
+          </div>
+          <pre id="manual_order_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Positions + Open Orders</h2><button class="secondary" onclick="loadBroker()">Refresh</button></div>
+          <div id="broker_positions_table"></div>
+          <div id="broker_orders_table"></div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="panel">
           <div class="section-title"><h2>Governance + Policy Engine</h2><button class="secondary" onclick="loadGovernance()">Load Governance</button></div>
           <div class="two-col">
             <div>
@@ -205,13 +242,6 @@
         </div>
 
         <div class="panel">
-          <div class="section-title"><h2>Recent Governance Events</h2><button class="secondary" onclick="loadLedger()">Ledger</button></div>
-          <div id="events_list" class="card-list"></div>
-        </div>
-      </div>
-
-      <div class="stack">
-        <div class="panel">
           <div class="section-title"><h2>Admin Control Tower</h2><button class="secondary" onclick="loadControlTower()">Load Tower</button></div>
           <input id="admin_operator_id" placeholder="Target operator ID">
           <input id="admin_operator_capital" type="number" placeholder="Allocated capital">
@@ -222,6 +252,11 @@
           <button class="warn" onclick="adminRunAll()">Admin Run All Once</button>
           <div id="tower_table"></div>
           <pre id="admin_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Recent Governance Events</h2><button class="secondary" onclick="loadLedger()">Ledger</button></div>
+          <div id="events_list" class="card-list"></div>
         </div>
 
         <div class="panel">
@@ -246,32 +281,26 @@
       if (!res.ok) data.__http_status = res.status;
       return data;
     }
-
-    function setOut(id, data) {
-      document.getElementById(id).textContent = JSON.stringify(data, null, 2);
-    }
+    function setOut(id, data) { document.getElementById(id).textContent = JSON.stringify(data, null, 2); }
 
     function renderOrders(data) {
-      const orders = (data && data.orders) ? data.orders.slice(0, 10) : [];
+      const orders = (data && data.orders) ? data.orders.slice(0, 12) : [];
       document.getElementById('orders_table').innerHTML = orders.length ? `
         <table class="table">
-          <thead><tr><th>Timestamp</th><th>Symbol</th><th>Side</th><th>Qty</th><th>Notional</th><th>Mode</th></tr></thead>
-          <tbody>${orders.map(o => `<tr><td>${o.timestamp || '-'}</td><td>${o.symbol}</td><td>${o.side}</td><td>${o.qty}</td><td>${fmt(o.notional)}</td><td>${o.mode}</td></tr>`).join('')}</tbody>
+          <thead><tr><th>Timestamp</th><th>Symbol</th><th>Side</th><th>Qty</th><th>Notional</th><th>Mode</th><th>Status</th></tr></thead>
+          <tbody>${orders.map(o => `<tr><td>${o.timestamp || '-'}</td><td>${o.symbol}</td><td>${o.side}</td><td>${o.qty}</td><td>${fmt(o.notional)}</td><td>${o.mode}</td><td>${o.status || '-'}</td></tr>`).join('')}</tbody>
         </table>
       ` : '<div class="tiny">No orders yet.</div>';
     }
 
     function renderTower(snapshot) {
       const tower = snapshot && snapshot.control_tower ? snapshot.control_tower : null;
-      if (!tower) {
-        document.getElementById('tower_table').innerHTML = '<div class="tiny">Admin-only control tower.</div>';
-        return;
-      }
+      if (!tower) { document.getElementById('tower_table').innerHTML = '<div class="tiny">Admin-only control tower.</div>'; return; }
       const rows = tower.operators || [];
       document.getElementById('tower_table').innerHTML = rows.length ? `
         <table class="table">
-          <thead><tr><th>Operator</th><th>Capital</th><th>Used</th><th>Strategies</th><th>Orders</th><th>Loop</th><th>Alerts</th></tr></thead>
-          <tbody>${rows.map(r => `<tr><td>${r.display_name}<div class="tiny">${r.operator_id}</div></td><td>${fmt(r.allocated_capital)}</td><td>${fmt(r.used_capital)}</td><td>${r.strategies}</td><td>${r.orders}</td><td>${r.loop_running ? 'running' : 'idle'}</td><td>${r.alerts}</td></tr>`).join('')}</tbody>
+          <thead><tr><th>Operator</th><th>Capital</th><th>Used</th><th>Strategies</th><th>Orders</th><th>Loop</th><th>Mode</th></tr></thead>
+          <tbody>${rows.map(r => `<tr><td>${r.display_name}<div class="tiny">${r.operator_id}</div></td><td>${fmt(r.allocated_capital)}</td><td>${fmt(r.used_capital)}</td><td>${r.strategies}</td><td>${r.orders}</td><td>${r.loop_running ? 'running' : 'idle'}</td><td>${r.execution_mode || '-'}</td></tr>`).join('')}</tbody>
         </table>
       ` : '<div class="tiny">No operators registered.</div>';
     }
@@ -292,10 +321,7 @@
     }
 
     function renderWorkspaceSummary(workspace) {
-      if (!workspace || workspace.__http_status) {
-        document.getElementById('workspace_summary').textContent = 'Workspace unavailable.';
-        return;
-      }
+      if (!workspace || workspace.__http_status) { document.getElementById('workspace_summary').textContent = 'Workspace unavailable.'; return; }
       document.getElementById('workspace_summary').innerHTML = `
         <span class="pill good">${workspace.display_name}</span>
         <span class="pill">${workspace.operator_id}</span>
@@ -305,177 +331,107 @@
       `;
     }
 
+    function renderBroker(data) {
+      const broker = data?.broker || data;
+      const status = broker?.last_status || 'disconnected';
+      const pillClass = status === 'connected' ? 'good' : (status === 'error' ? 'bad' : 'warn');
+      document.getElementById('broker_pills').innerHTML = `
+        <span class="pill ${pillClass}">${status}</span>
+        <span class="pill">source ${broker?.source || 'none'}</span>
+        <span class="pill">${broker?.paper ? 'paper' : 'live'}</span>
+        <span class="pill">${broker?.base_url || '-'}</span>
+        <span class="pill">key ${broker?.api_key_masked || '-'}</span>
+        ${broker?.last_error ? `<span class="pill bad">${broker.last_error}</span>` : ''}
+      `;
+      const account = broker?.account || {};
+      document.getElementById('broker_account_cards').innerHTML = `
+        <span class="pill good">equity ${fmt(account.equity)}</span>
+        <span class="pill">cash ${fmt(account.cash)}</span>
+        <span class="pill">buying power ${fmt(account.buying_power)}</span>
+        <span class="pill">multiplier ${account.multiplier || '-'}</span>
+        <span class="pill">account status ${account.status || '-'}</span>
+      `;
+      const positions = broker?.positions || [];
+      document.getElementById('broker_positions_table').innerHTML = positions.length ? `
+        <table class="table">
+          <thead><tr><th>Symbol</th><th>Qty</th><th>Market Value</th><th>Avg Entry</th><th>Unrealized PnL</th></tr></thead>
+          <tbody>${positions.map(p => `<tr><td>${p.symbol}</td><td>${p.qty}</td><td>${fmt(p.market_value)}</td><td>${fmt(p.avg_entry_price)}</td><td>${fmt(p.unrealized_pl)}</td></tr>`).join('')}</tbody>
+        </table>
+      ` : '<div class="tiny">No broker positions returned.</div>';
+      const orders = broker?.orders || [];
+      document.getElementById('broker_orders_table').innerHTML = orders.length ? `
+        <table class="table">
+          <thead><tr><th>Symbol</th><th>Side</th><th>Qty</th><th>Type</th><th>Status</th><th>Submitted</th></tr></thead>
+          <tbody>${orders.map(o => `<tr><td>${o.symbol}</td><td>${o.side}</td><td>${o.qty}</td><td>${o.type || o.order_type || '-'}</td><td>${o.status}</td><td>${o.submitted_at || '-'}</td></tr>`).join('')}</tbody>
+        </table>
+      ` : '<div class="tiny">No open Alpaca orders.</div>';
+      document.getElementById('m_broker').textContent = status;
+    }
+
     function hydrateMetrics(snapshot) {
       document.getElementById('m_operator').textContent = snapshot?.personal_workspace?.display_name || '-';
       document.getElementById('m_allocated').textContent = fmt(snapshot?.personal_workspace?.capital?.allocated_capital);
       document.getElementById('m_used').textContent = fmt(snapshot?.personal_workspace?.capital?.used_capital);
       document.getElementById('m_approvals').textContent = snapshot?.governance?.pending_approvals ?? '-';
-      document.getElementById('m_layer').textContent = snapshot?.system_health?.layer || 'QNT30322';
+      document.getElementById('m_layer').textContent = snapshot?.system_health?.layer || 'QNT30322B';
       document.getElementById('session_hint').textContent = snapshot?.session?.logged_in ? `${snapshot.session.display_name} · ${snapshot.session.email}` : 'No active session';
+      if (snapshot?.broker) renderBroker(snapshot.broker);
     }
 
     async function loadMe() {
-      const data = await api('/auth/me');
-      setOut('auth_out', data);
+      const data = await api('/auth/me'); setOut('auth_out', data);
       if (!data.__http_status) document.getElementById('session_hint').textContent = data.logged_in ? `${data.display_name} · ${data.email}` : 'No active session';
       return data;
     }
-
-    async function loadWorkspace() {
-      const data = await api('/operator/workspace');
-      setOut('workspace_out', data);
-      renderWorkspaceSummary(data);
-      return data;
-    }
-
-    async function loadOrders() {
-      const data = await api('/orders/list');
-      renderOrders(data);
-      return data;
-    }
-
+    async function loadWorkspace() { const data = await api('/operator/workspace'); setOut('workspace_out', data); renderWorkspaceSummary(data); return data; }
+    async function loadOrders() { const data = await api('/orders/list'); renderOrders(data); return data; }
     async function loadGovernance() {
-      const policies = await api('/policy-engine/policies');
-      const approvals = await api('/approvals/queue');
+      const policies = await api('/policy-engine/policies'); const approvals = await api('/approvals/queue');
       setOut('gov_out', {policies, approvals});
-      if (!policies.__http_status) {
-        document.getElementById('policy_pills').innerHTML = (policies.policies || []).map(p => `<span class="pill ${p.enabled ? 'good' : 'warn'}">${p.policy_id} · ${p.threshold}</span>`).join('');
-      }
+      if (!policies.__http_status) document.getElementById('policy_pills').innerHTML = (policies.policies || []).map(p => `<span class="pill ${p.enabled ? 'good' : 'warn'}">${p.policy_id} · ${p.threshold}</span>`).join('');
       return {policies, approvals};
     }
-
-    async function loadLedger() {
-      const ledger = await api('/governance/ledger');
-      if (!ledger.__http_status) renderEvents({governance:{recent_events: ledger.events || []}});
-      setOut('gov_out', ledger);
-      return ledger;
-    }
-
-    async function loadControlTower() {
-      const data = await api('/admin/control-tower');
-      setOut('admin_out', data);
-      renderTower({control_tower: data});
-      return data;
-    }
-
+    async function loadLedger() { const ledger = await api('/governance/ledger'); if (!ledger.__http_status) renderEvents({governance:{recent_events: ledger.events || []}}); setOut('gov_out', ledger); return ledger; }
+    async function loadControlTower() { const data = await api('/admin/control-tower'); setOut('admin_out', data); renderTower({control_tower: data}); return data; }
+    async function loadBroker() { const data = await api('/broker/alpaca/status'); setOut('broker_out', data); if (!data.__http_status) renderBroker(data); return data; }
     async function loadSnapshot() {
-      const data = await api('/command-center/snapshot');
-      setOut('snapshot_out', data);
-      if (!data.__http_status) {
-        hydrateMetrics(data);
-        renderTower(data);
-        renderEvents(data);
-        renderPolicyPills(data);
-        renderWorkspaceSummary(data.personal_workspace);
-        renderOrders({orders: data.personal_workspace?.orders || []});
-      }
+      const data = await api('/command-center/snapshot'); setOut('snapshot_out', data);
+      if (!data.__http_status) { hydrateMetrics(data); renderTower(data); renderEvents(data); renderPolicyPills(data); renderWorkspaceSummary(data.personal_workspace); renderOrders({orders: data.personal_workspace?.orders || []}); }
       return data;
     }
-
     async function refreshAll() {
       const snap = await loadSnapshot();
-      if (snap.__http_status) {
-        await loadMe();
-        await loadWorkspace();
-        await loadOrders();
-      }
+      if (snap.__http_status) { await loadMe(); await loadWorkspace(); await loadOrders(); }
+      await loadBroker();
     }
 
-    async function registerUser() {
-      const data = await api('/auth/register', 'POST', {display_name: reg_name.value, email: reg_email.value, password: reg_password.value});
-      setOut('auth_out', data);
-      await refreshAll();
-    }
-
-    async function loginUser() {
-      const data = await api('/auth/login', 'POST', {email: login_email.value, password: login_password.value});
-      setOut('auth_out', data);
-      await refreshAll();
-    }
-
-    async function logoutUser() {
-      const data = await api('/auth/logout', 'POST', {});
-      setOut('auth_out', data);
-      await loadMe();
-    }
-
+    async function registerUser() { const data = await api('/auth/register', 'POST', {display_name: reg_name.value, email: reg_email.value, password: reg_password.value}); setOut('auth_out', data); await refreshAll(); }
+    async function loginUser() { const data = await api('/auth/login', 'POST', {email: login_email.value, password: login_password.value}); setOut('auth_out', data); await refreshAll(); }
+    async function logoutUser() { const data = await api('/auth/logout', 'POST', {}); setOut('auth_out', data); await loadMe(); }
     async function registerStrategy() {
-      const data = await api('/strategies/register', 'POST', {
-        name: strategy_name.value,
-        symbol: strategy_symbol.value,
-        side: strategy_side.value,
-        default_qty: parseInt(strategy_qty.value || '0', 10),
-        enabled: true
-      });
-      setOut('workspace_out', data);
-      await refreshAll();
+      const data = await api('/strategies/register', 'POST', {name: strategy_name.value, symbol: strategy_symbol.value, side: strategy_side.value, default_qty: parseInt(strategy_qty.value || '0', 10), enabled: true});
+      setOut('workspace_out', data); await refreshAll();
     }
-
-    async function toggleStrategy() {
-      const data = await api('/strategies/toggle', 'POST', {
-        strategy_id: toggle_strategy_id.value,
-        enabled: toggle_strategy_enabled.value === 'true'
-      });
-      setOut('workspace_out', data);
-      await refreshAll();
+    async function toggleStrategy() { const data = await api('/strategies/toggle', 'POST', {strategy_id: toggle_strategy_id.value, enabled: toggle_strategy_enabled.value === 'true'}); setOut('workspace_out', data); await refreshAll(); }
+    async function setCapital() { const data = await api('/allocator/operator-capital/set', 'POST', {allocated_capital: parseFloat(operator_capital.value || '0')}); setOut('workspace_out', data); await refreshAll(); }
+    async function runOnce() { const data = await api('/operator/run-once', 'POST', {execution_mode: run_mode.value || 'internal'}); setOut('workspace_out', data); await refreshAll(); }
+    async function submitManualOrder() {
+      const data = await api('/orders/submit', 'POST', {symbol: manual_symbol.value, side: manual_side.value, qty: parseFloat(manual_qty.value || '0'), execution_mode: manual_mode.value || 'alpaca'});
+      setOut('manual_order_out', data); await refreshAll();
     }
-
-    async function setCapital() {
-      const data = await api('/allocator/operator-capital/set', 'POST', {allocated_capital: parseFloat(operator_capital.value || '0')});
-      setOut('workspace_out', data);
-      await refreshAll();
+    async function connectAlpaca() {
+      const data = await api('/broker/alpaca/connect', 'POST', {api_key: alpaca_key.value, secret_key: alpaca_secret.value, base_url: alpaca_base.value, paper: alpaca_paper.value === 'true'});
+      setOut('broker_out', data); await refreshAll();
     }
-
-    async function runOnce() {
-      const data = await api('/operator/run-once', 'POST', {execution_mode: run_mode.value || 'internal'});
-      setOut('workspace_out', data);
-      await refreshAll();
-    }
-
+    async function disconnectAlpaca() { const data = await api('/broker/alpaca/disconnect', 'POST', {}); setOut('broker_out', data); await refreshAll(); }
     async function updatePolicy() {
-      const data = await api('/policy-engine/policies/update', 'POST', {
-        policy_id: policy_id.value,
-        threshold: parseFloat(policy_threshold.value || '0'),
-        enabled: policy_enabled.value === 'true'
-      });
-      setOut('gov_out', data);
-      await refreshAll();
+      const data = await api('/policy-engine/policies/update', 'POST', {policy_id: policy_id.value, threshold: parseFloat(policy_threshold.value || '0'), enabled: policy_enabled.value === 'true'});
+      setOut('gov_out', data); await refreshAll();
     }
-
-    async function decideApproval() {
-      const data = await api('/approvals/decision', 'POST', {
-        request_id: approval_request_id.value,
-        decision: approval_decision.value,
-        notes: approval_notes.value
-      });
-      setOut('gov_out', data);
-      await refreshAll();
-    }
-
-    async function adminSetCapital() {
-      const data = await api('/admin/operator-capital/set', 'POST', {
-        operator_id: admin_operator_id.value,
-        allocated_capital: parseFloat(admin_operator_capital.value || '0')
-      });
-      setOut('admin_out', data);
-      await refreshAll();
-    }
-
-    async function adminStartLoop() {
-      const data = await api('/admin/operator-loop/start', 'POST', {
-        operator_id: admin_operator_id.value,
-        execution_mode: admin_loop_mode.value,
-        interval_seconds: parseInt(admin_loop_interval.value || '60', 10)
-      });
-      setOut('admin_out', data);
-      await refreshAll();
-    }
-
-    async function adminRunAll() {
-      const data = await api('/admin/run-all-once', 'POST', {});
-      setOut('admin_out', data);
-      await refreshAll();
-    }
+    async function decideApproval() { const data = await api('/approvals/decision', 'POST', {request_id: approval_request_id.value, decision: approval_decision.value, notes: approval_notes.value}); setOut('gov_out', data); await refreshAll(); }
+    async function adminSetCapital() { const data = await api('/admin/operator-capital/set', 'POST', {operator_id: admin_operator_id.value, allocated_capital: parseFloat(admin_operator_capital.value || '0')}); setOut('admin_out', data); await refreshAll(); }
+    async function adminStartLoop() { const data = await api('/admin/operator-loop/start', 'POST', {operator_id: admin_operator_id.value, execution_mode: admin_loop_mode.value, interval_seconds: parseInt(admin_loop_interval.value || '60', 10)}); setOut('admin_out', data); await refreshAll(); }
+    async function adminRunAll() { const data = await api('/admin/run-all-once', 'POST', {}); setOut('admin_out', data); await refreshAll(); }
 
     loadMe();
   </script>

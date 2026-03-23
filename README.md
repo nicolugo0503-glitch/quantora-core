@@ -1,36 +1,51 @@
-# Quantora QNT30322 Unified Command Center
+# Quantora QNT30322B - Alpaca Reintegration Layer
 
-This mission extends QNT30321 without resetting the system.
+This package extends QNT30322A and restores a visible broker layer inside the Unified Command Center.
 
-## What is included
-- Unified single-screen command center UI
-- Preserved auth, strategy registration, capital allocation, policy engine, approvals, governance ledger, and admin control tower
-- New command-center snapshot endpoint for one-call system state hydration
-- Operator workspace and execution feed on the same operating surface
+## What was added
 
-## Run locally
+- Alpaca broker status panel inside the UI
+- Alpaca account snapshot: equity, cash, buying power, account status
+- Alpaca positions table
+- Alpaca open orders table
+- Manual order submission route: `/orders/submit`
+- Strategy execution routed to Alpaca when execution mode = `alpaca`
+- Broker block included in `/command-center/snapshot`
+- Railway-safe startup preserved from QNT30322A
+
+## Alpaca configuration
+
+### Preferred production / Railway setup
+Set these environment variables in Railway:
+
+- `ALPACA_API_KEY`
+- `ALPACA_SECRET_KEY`
+- `ALPACA_BASE_URL` (example: `https://paper-api.alpaca.markets`)
+
+### Local fallback
+Admin users can connect through the UI broker panel. That stores credentials in `backend/artifacts/broker_config.json` for local use.
+
+## Local run
+
 ### macOS
-- Double-click `0_START_ALL_MAC.command`
-
-### Windows
-- Double-click `START_QUANTORA.bat`
-
-## Manual backend start
 ```bash
-cd backend
-python3 -m pip install -r requirements.txt
-python3 -m uvicorn app.main:app --host 127.0.0.1 --port 8010 --reload
+cd QNT30322B_QUANTORA_ALPACA_REINTEGRATION_LAYER
+chmod +x *.command
+xattr -dr com.apple.quarantine *.command 2>/dev/null || true
+./0_START_ALL_MAC.command
 ```
 
-Open:
-- http://127.0.0.1:8010/
-- http://127.0.0.1:8010/docs
+### Windows
+Run:
+- `START_BACKEND_WIN.bat`
+- or `START_QUANTORA.bat`
 
-## Railway Hotfix
+## Health checks
+- Backend: `http://127.0.0.1:8010/health`
+- Frontend: `http://127.0.0.1:8010/`
+- Snapshot: `http://127.0.0.1:8010/command-center/snapshot`
 
-This hotfix fixes Railway 502 deployment failure by binding the backend to the runtime `PORT` environment variable instead of forcing port `8010` only.
+## Notes
 
-### Railway deploy note
-- Docker deploy now starts with `/app/start.sh`
-- Runtime port uses `PORT` when Railway injects it
-- Health check endpoint remains `/health`
+- If no Alpaca credentials are configured, broker status returns `disconnected` and strategy/manual orders in `alpaca` mode will be rejected.
+- This package was validated locally for startup, auth, snapshot, and disconnected-broker handling. Live Alpaca calls require real credentials and network access from your deployment environment.

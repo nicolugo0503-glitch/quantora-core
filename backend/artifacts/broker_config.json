@@ -1,0 +1,14 @@
+{
+  "alpaca": {
+    "base_url": "https://paper-api.alpaca.markets",
+    "paper": true,
+    "api_key": "",
+    "secret_key": "",
+    "last_status": "disconnected",
+    "last_tested_at": null,
+    "last_error": "No credentials configured",
+    "account_snapshot": {},
+    "positions_snapshot": [],
+    "orders_snapshot": []
+  }
+}

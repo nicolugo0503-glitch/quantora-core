@@ -1,3 +1,36 @@
 {
-  "events": []
+  "events": [
+    {
+      "event_id": "gov_c1f516b5a8",
+      "timestamp": "2026-03-23T06:29:21Z",
+      "category": "execution",
+      "actor_email": "nicolugo0503@gmail.com",
+      "actor_operator_id": "operator_45A48844",
+      "action": "orders.submit",
+      "target": "operator_45A48844",
+      "details": {
+        "order_id": "ord_8209a65960",
+        "symbol": "AAPL",
+        "side": "buy",
+        "qty": 1.0,
+        "notional": 180.0,
+        "status": "filled",
+        "mode": "internal",
+        "broker": "internal",
+        "timestamp": "2026-03-23T06:29:21Z"
+      }
+    },
+    {
+      "event_id": "gov_4bec398fa9",
+      "timestamp": "2026-03-23T06:29:03Z",
+      "category": "auth",
+      "actor_email": "nicolugo0503@gmail.com",
+      "actor_operator_id": "operator_45A48844",
+      "action": "register",
+      "target": "operator_45A48844",
+      "details": {
+        "display_name": "Nico"
+      }
+    }
+  ]
 }

@@ -1,0 +1,58 @@
+{
+  "operator_id": "operator_45A48844",
+  "display_name": "Nico",
+  "capital_decision": {
+    "approved": true,
+    "capital_allocated": 16195
+  },
+  "strategies": {
+    "strategies": []
+  },
+  "orders": {
+    "orders": [
+      {
+        "order_id": "ord_8209a65960",
+        "symbol": "AAPL",
+        "side": "buy",
+        "qty": 1.0,
+        "notional": 180.0,
+        "status": "filled",
+        "mode": "internal",
+        "broker": "internal",
+        "timestamp": "2026-03-23T06:29:21Z"
+      }
+    ]
+  },
+  "allocator_caps": {
+    "operator": {
+      "operator_id": "operator_45A48844",
+      "allocated_capital": 0.0,
+      "status": "UNFUNDED",
+      "updated_at": null
+    }
+  },
+  "strategy_loop": {
+    "running": false,
+    "execution_mode": "internal",
+    "interval_seconds": 60,
+    "last_run_at": null,
+    "next_run_at": null,
+    "heartbeat_at": null,
+    "total_runs": 0,
+    "total_signals": 0,
+    "total_orders": 1
+  },
+  "monitoring": {
+    "latest_snapshot": {
+      "timestamp": "2026-03-23T06:29:21Z",
+      "order_count": 1,
+      "used_capital": 180.0,
+      "allocated_capital": 0.0,
+      "remaining_capital": -180.0,
+      "utilization_pct": 0.0,
+      "alerts_count": 0
+    },
+    "alerts": [],
+    "last_evaluated_at": "2026-03-23T06:29:21Z"
+  }
+}

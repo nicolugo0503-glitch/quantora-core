@@ -1,5 +1,9 @@
 import datetime
 import json
+import os
+import urllib.error
+import urllib.parse
+import urllib.request
 import uuid
 from pathlib import Path
 from fastapi import Depends, FastAPI, HTTPException
@@ -13,7 +17,7 @@ PROJECT_DIR = BACKEND_DIR.parent
 ARTIFACTS_DIR = BACKEND_DIR / "artifacts"
 FRONTEND_DIR = PROJECT_DIR / "frontend"
 
-app = FastAPI(title="Quantora QNT30322 Unified Command Center", version="30322")
+app = FastAPI(title="Quantora QNT30322B Alpaca Reintegration Layer", version="30322B")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -23,9 +27,20 @@ app.add_middleware(
 )
 
 ADMIN_EMAILS = {"admin@quantora.local", "nicolugo0503@gmail.com"}
-PRICE_BOOK = {"AAPL": 180.0, "TSLA": 175.0, "SPY": 510.0, "NVDA": 910.0, "MSFT": 420.0, "AMZN": 185.0, "META": 505.0}
+PRICE_BOOK = {
+    "AAPL": 180.0,
+    "TSLA": 175.0,
+    "SPY": 510.0,
+    "NVDA": 910.0,
+    "MSFT": 420.0,
+    "AMZN": 185.0,
+    "META": 505.0,
+}
 
 
+# -------------------------
+# Generic utilities
+# -------------------------
 def now_dt():
     return datetime.datetime.utcnow().replace(microsecond=0)
 
@@ -40,6 +55,7 @@ def load_json(filename, fallback):
 
 
 def save_json(filename, data):
+    ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
     (ARTIFACTS_DIR / filename).write_text(json.dumps(data, indent=2), encoding="utf-8")
 
 
@@ -188,7 +204,7 @@ def operator_exposure(state):
     total = 0.0
     count = 0
     for order in state["orders"]["orders"]:
-        if order.get("status") in ["filled", "accepted", "submitted"]:
+        if order.get("status") in ["filled", "accepted", "submitted", "new", "partially_filled", "held_for_orders"]:
             total += float(order.get("notional", 0))
             count += 1
     return {"notional": round(total, 2), "orders": count}
@@ -225,6 +241,203 @@ def summarize_governance(ledger_events):
     return summary
 
 
+# -------------------------
+# Alpaca broker layer
+# -------------------------
+def default_broker_config():
+    return {
+        "alpaca": {
+            "base_url": "https://paper-api.alpaca.markets",
+            "paper": True,
+            "api_key": "",
+            "secret_key": "",
+            "last_status": "disconnected",
+            "last_tested_at": None,
+            "last_error": None,
+            "account_snapshot": {},
+            "positions_snapshot": [],
+            "orders_snapshot": [],
+        }
+    }
+
+
+def get_broker_config():
+    return load_json("broker_config.json", default_broker_config())
+
+
+def save_broker_config(data):
+    save_json("broker_config.json", data)
+
+
+def mask_secret(value):
+    if not value:
+        return ""
+    if len(value) <= 6:
+        return "*" * len(value)
+    return value[:3] + ("*" * (len(value) - 6)) + value[-3:]
+
+
+def resolved_alpaca_credentials():
+    cfg = get_broker_config()["alpaca"]
+    env_key = os.getenv("ALPACA_API_KEY") or os.getenv("APCA_API_KEY_ID")
+    env_secret = os.getenv("ALPACA_SECRET_KEY") or os.getenv("APCA_API_SECRET_KEY")
+    env_base = os.getenv("ALPACA_BASE_URL")
+    if env_key and env_secret:
+        base_url = (env_base or cfg.get("base_url") or "https://paper-api.alpaca.markets").rstrip("/")
+        return {
+            "api_key": env_key,
+            "secret_key": env_secret,
+            "base_url": base_url,
+            "paper": "paper" in base_url,
+            "source": "env",
+        }
+    if cfg.get("api_key") and cfg.get("secret_key"):
+        return {
+            "api_key": cfg["api_key"],
+            "secret_key": cfg["secret_key"],
+            "base_url": (cfg.get("base_url") or "https://paper-api.alpaca.markets").rstrip("/"),
+            "paper": bool(cfg.get("paper", True)),
+            "source": "stored",
+        }
+    return None
+
+
+def safe_broker_view(data=None):
+    cfg = data or get_broker_config()
+    alpaca = cfg["alpaca"]
+    creds = resolved_alpaca_credentials()
+    source = creds["source"] if creds else "none"
+    return {
+        "alpaca": {
+            "connected": bool(creds),
+            "source": source,
+            "base_url": (creds or {}).get("base_url", alpaca.get("base_url")),
+            "paper": (creds or {}).get("paper", alpaca.get("paper", True)),
+            "api_key_masked": mask_secret((creds or {}).get("api_key", alpaca.get("api_key", ""))),
+            "secret_key_masked": mask_secret((creds or {}).get("secret_key", alpaca.get("secret_key", ""))),
+            "last_status": alpaca.get("last_status", "disconnected"),
+            "last_tested_at": alpaca.get("last_tested_at"),
+            "last_error": alpaca.get("last_error"),
+        }
+    }
+
+
+def alpaca_request(method, path, payload=None, query=None):
+    creds = resolved_alpaca_credentials()
+    if not creds:
+        raise HTTPException(status_code=400, detail="Alpaca credentials not configured")
+    url = creds["base_url"].rstrip("/") + path
+    if query:
+        url += "?" + urllib.parse.urlencode(query)
+    headers = {
+        "APCA-API-KEY-ID": creds["api_key"],
+        "APCA-API-SECRET-KEY": creds["secret_key"],
+        "Accept": "application/json",
+    }
+    data = None
+    if payload is not None:
+        data = json.dumps(payload).encode("utf-8")
+        headers["Content-Type"] = "application/json"
+    req = urllib.request.Request(url, data=data, headers=headers, method=method.upper())
+    try:
+        with urllib.request.urlopen(req, timeout=15) as response:
+            raw = response.read().decode("utf-8")
+            return json.loads(raw) if raw else {}
+    except urllib.error.HTTPError as exc:
+        body = exc.read().decode("utf-8", errors="ignore")
+        detail = f"Alpaca HTTP {exc.code}: {body[:400]}"
+        raise HTTPException(status_code=502, detail=detail)
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Alpaca connectivity error: {exc}")
+
+
+def refresh_alpaca_state(soft=False):
+    cfg = get_broker_config()
+    alpaca_cfg = cfg["alpaca"]
+    creds = resolved_alpaca_credentials()
+    if not creds:
+        alpaca_cfg["last_status"] = "disconnected"
+        alpaca_cfg["last_error"] = "No credentials configured"
+        save_broker_config(cfg)
+        return {
+            **safe_broker_view(cfg)["alpaca"],
+            "account": alpaca_cfg.get("account_snapshot", {}),
+            "positions": alpaca_cfg.get("positions_snapshot", []),
+            "orders": alpaca_cfg.get("orders_snapshot", []),
+            "stale": True,
+        }
+    try:
+        account = alpaca_request("GET", "/v2/account")
+        positions = alpaca_request("GET", "/v2/positions")
+        orders = alpaca_request("GET", "/v2/orders", query={"status": "open", "direction": "desc", "limit": 50})
+        alpaca_cfg["account_snapshot"] = account
+        alpaca_cfg["positions_snapshot"] = positions if isinstance(positions, list) else []
+        alpaca_cfg["orders_snapshot"] = orders if isinstance(orders, list) else []
+        alpaca_cfg["last_status"] = "connected"
+        alpaca_cfg["last_tested_at"] = now_iso()
+        alpaca_cfg["last_error"] = None
+        save_broker_config(cfg)
+        return {
+            **safe_broker_view(cfg)["alpaca"],
+            "account": alpaca_cfg["account_snapshot"],
+            "positions": alpaca_cfg["positions_snapshot"],
+            "orders": alpaca_cfg["orders_snapshot"],
+            "stale": False,
+        }
+    except HTTPException as exc:
+        alpaca_cfg["last_status"] = "error"
+        alpaca_cfg["last_tested_at"] = now_iso()
+        alpaca_cfg["last_error"] = exc.detail
+        save_broker_config(cfg)
+        if not soft:
+            raise
+        return {
+            **safe_broker_view(cfg)["alpaca"],
+            "account": alpaca_cfg.get("account_snapshot", {}),
+            "positions": alpaca_cfg.get("positions_snapshot", []),
+            "orders": alpaca_cfg.get("orders_snapshot", []),
+            "stale": True,
+        }
+
+
+def normalize_alpaca_order(order, fallback_symbol, fallback_side, fallback_qty):
+    qty = float(order.get("qty") or fallback_qty or 0)
+    avg_price = float(order.get("limit_price") or order.get("filled_avg_price") or get_price(fallback_symbol))
+    return {
+        "order_id": f"ord_{uuid.uuid4().hex[:10]}",
+        "broker_order_id": order.get("id"),
+        "symbol": (order.get("symbol") or fallback_symbol).upper(),
+        "side": (order.get("side") or fallback_side).lower(),
+        "qty": qty,
+        "notional": round(qty * avg_price, 2),
+        "status": order.get("status", "submitted"),
+        "mode": "alpaca",
+        "broker": "alpaca",
+        "timestamp": now_iso(),
+        "asset_class": order.get("asset_class"),
+        "order_type": order.get("type") or order.get("order_type") or "market",
+        "time_in_force": order.get("time_in_force") or "day",
+        "raw": order,
+    }
+
+
+def alpaca_submit_market_order(symbol, side, qty):
+    return alpaca_request(
+        "POST",
+        "/v2/orders",
+        payload={
+            "symbol": symbol.upper(),
+            "qty": str(qty),
+            "side": side.lower(),
+            "type": "market",
+            "time_in_force": "day",
+        },
+    )
+
+
+# -------------------------
+# Quantora control tower views
+# -------------------------
 def control_tower_view():
     users = users_db()["users"]
     operators = []
@@ -285,6 +498,12 @@ def submit_approval_request(session, request_type, target, payload, reason):
     return req
 
 
+def persist_order(state, order):
+    state["orders"]["orders"].insert(0, order)
+    state["orders"]["orders"] = state["orders"]["orders"][:1000]
+    state["strategy_loop"]["total_orders"] += 1
+
+
 def run_strategies_for_state(state, execution_mode, actor_email, actor_operator_id, source_action):
     strategies = [s for s in state["strategies"]["strategies"] if s.get("enabled")]
     executed_orders = []
@@ -292,23 +511,36 @@ def run_strategies_for_state(state, execution_mode, actor_email, actor_operator_
     state["strategy_loop"]["heartbeat_at"] = now_iso()
     state["strategy_loop"]["total_runs"] += 1
     state["strategy_loop"]["total_signals"] += len(strategies)
+    execution_mode = (execution_mode or "internal").lower()
+
+    if execution_mode == "alpaca" and not resolved_alpaca_credentials():
+        raise HTTPException(status_code=400, detail="Alpaca mode requested but no Alpaca credentials are configured")
+
     for strategy in strategies:
-        notional = round(get_price(strategy["symbol"]) * int(strategy["default_qty"]), 2)
-        order = {
-            "order_id": f"ord_{uuid.uuid4().hex[:10]}",
-            "strategy_id": strategy["strategy_id"],
-            "symbol": strategy["symbol"],
-            "side": strategy["side"],
-            "qty": strategy["default_qty"],
-            "notional": notional,
-            "status": "filled",
-            "mode": execution_mode,
-            "timestamp": now_iso(),
-        }
-        state["orders"]["orders"].insert(0, order)
+        notional = round(get_price(strategy["symbol"]) * float(strategy["default_qty"]), 2)
+        if execution_mode == "alpaca":
+            broker_order = alpaca_submit_market_order(strategy["symbol"], strategy["side"], strategy["default_qty"])
+            order = normalize_alpaca_order(broker_order, strategy["symbol"], strategy["side"], strategy["default_qty"])
+            if not order.get("notional"):
+                order["notional"] = notional
+        else:
+            order = {
+                "order_id": f"ord_{uuid.uuid4().hex[:10]}",
+                "strategy_id": strategy["strategy_id"],
+                "symbol": strategy["symbol"],
+                "side": strategy["side"],
+                "qty": strategy["default_qty"],
+                "notional": notional,
+                "status": "filled",
+                "mode": execution_mode,
+                "broker": "internal",
+                "timestamp": now_iso(),
+            }
+        order["strategy_id"] = strategy["strategy_id"]
+        persist_order(state, order)
         executed_orders.append(order)
-        state["strategy_loop"]["total_orders"] += 1
         append_governance_event(actor_email, actor_operator_id, source_action, state["operator_id"], order, "execution")
+
     evaluate_monitoring(state)
     save_operator_state(state)
     return executed_orders
@@ -374,14 +606,16 @@ def build_command_center_snapshot(session):
     approvals = get_approvals()["requests"]
     ledger = load_json("governance_ledger.json", {"events": []})["events"]
     pending = [r for r in approvals if r.get("status") == "PENDING"]
+    broker = refresh_alpaca_state(soft=True)
     snapshot = {
         "session": {**session, "is_admin": session.get("email") in ADMIN_EMAILS},
         "north_star": {
-            "mission": "QNT30322 Unified Command Center",
+            "mission": "QNT30322B Alpaca Reintegration Layer",
             "system": "Quantora multi-layer institutional trading operating system",
             "timestamp": now_iso(),
         },
         "personal_workspace": workspace,
+        "broker": broker,
         "governance": {
             "pending_approvals": len(pending),
             "approvals": approvals[:8],
@@ -393,7 +627,8 @@ def build_command_center_snapshot(session):
             "status": "ok",
             "registered_users": len(users),
             "policies_enabled": len([p for p in get_policies()["policies"] if p.get("enabled")]),
-            "layer": "qnt30322-unified-command-center",
+            "layer": "qnt30322b-alpaca-reintegration-layer",
+            "broker_status": broker.get("last_status"),
         },
     }
     if session.get("email") in ADMIN_EMAILS:
@@ -401,6 +636,9 @@ def build_command_center_snapshot(session):
     return snapshot
 
 
+# -------------------------
+# Request models
+# -------------------------
 class RegisterRequest(BaseModel):
     email: str
     password: str
@@ -456,9 +694,26 @@ class RunOperatorRequest(BaseModel):
     execution_mode: str = Field(default="internal")
 
 
+class AlpacaConnectRequest(BaseModel):
+    api_key: str
+    secret_key: str
+    base_url: str = "https://paper-api.alpaca.markets"
+    paper: bool = True
+
+
+class ManualOrderRequest(BaseModel):
+    symbol: str
+    side: str
+    qty: float
+    execution_mode: str = "internal"
+
+
+# -------------------------
+# Core routes
+# -------------------------
 @app.get("/health")
 def health():
-    return {"status": "ok", "layer": "qnt30322-unified-command-center"}
+    return {"status": "ok", "layer": "qnt30322b-alpaca-reintegration-layer"}
 
 
 @app.post("/auth/register")
@@ -576,6 +831,34 @@ def orders_list(session=Depends(require_auth)):
     return get_operator_state(session)["orders"]
 
 
+@app.post("/orders/submit")
+def orders_submit(payload: ManualOrderRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    execution_mode = (payload.execution_mode or "internal").lower()
+    if execution_mode == "alpaca":
+        if not resolved_alpaca_credentials():
+            raise HTTPException(status_code=400, detail="Alpaca mode requested but no Alpaca credentials are configured")
+        broker_order = alpaca_submit_market_order(payload.symbol.upper(), payload.side.lower(), payload.qty)
+        order = normalize_alpaca_order(broker_order, payload.symbol.upper(), payload.side.lower(), payload.qty)
+    else:
+        order = {
+            "order_id": f"ord_{uuid.uuid4().hex[:10]}",
+            "symbol": payload.symbol.upper(),
+            "side": payload.side.lower(),
+            "qty": payload.qty,
+            "notional": round(get_price(payload.symbol.upper()) * float(payload.qty), 2),
+            "status": "filled",
+            "mode": execution_mode,
+            "broker": "internal",
+            "timestamp": now_iso(),
+        }
+    persist_order(state, order)
+    evaluate_monitoring(state)
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "orders.submit", state["operator_id"], order, "execution")
+    return {"status": "submitted", "order": order}
+
+
 @app.post("/operator/run-once")
 def operator_run_once(payload: RunOperatorRequest, session=Depends(require_auth)):
     state = get_operator_state(session)
@@ -594,6 +877,60 @@ def command_center_snapshot(session=Depends(require_auth)):
     return build_command_center_snapshot(session)
 
 
+# -------------------------
+# Alpaca routes
+# -------------------------
+@app.get("/broker/alpaca/status")
+def broker_alpaca_status(session=Depends(require_auth)):
+    return refresh_alpaca_state(soft=True)
+
+
+@app.post("/broker/alpaca/connect")
+def broker_alpaca_connect(payload: AlpacaConnectRequest, admin=Depends(require_admin)):
+    cfg = get_broker_config()
+    cfg["alpaca"].update(
+        {
+            "api_key": payload.api_key.strip(),
+            "secret_key": payload.secret_key.strip(),
+            "base_url": payload.base_url.strip().rstrip("/"),
+            "paper": payload.paper,
+            "last_status": "connecting",
+            "last_error": None,
+        }
+    )
+    save_broker_config(cfg)
+    result = refresh_alpaca_state(soft=False)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "broker.alpaca.connect", "alpaca", {"base_url": payload.base_url, "paper": payload.paper}, "broker")
+    return {"status": "connected", "broker": result}
+
+
+@app.post("/broker/alpaca/disconnect")
+def broker_alpaca_disconnect(admin=Depends(require_admin)):
+    cfg = get_broker_config()
+    cfg["alpaca"] = default_broker_config()["alpaca"]
+    save_broker_config(cfg)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "broker.alpaca.disconnect", "alpaca", {}, "broker")
+    return {"status": "disconnected", "broker": safe_broker_view(cfg)["alpaca"]}
+
+
+@app.get("/broker/alpaca/account")
+def broker_alpaca_account(session=Depends(require_auth)):
+    return {"account": refresh_alpaca_state(soft=True).get("account", {})}
+
+
+@app.get("/broker/alpaca/positions")
+def broker_alpaca_positions(session=Depends(require_auth)):
+    return {"positions": refresh_alpaca_state(soft=True).get("positions", [])}
+
+
+@app.get("/broker/alpaca/orders")
+def broker_alpaca_orders(session=Depends(require_auth)):
+    return {"orders": refresh_alpaca_state(soft=True).get("orders", [])}
+
+
+# -------------------------
+# Admin + governance routes
+# -------------------------
 @app.get("/admin/control-tower")
 def admin_control_tower(admin=Depends(require_admin)):
     return control_tower_view()
@@ -716,7 +1053,7 @@ def root():
     index = FRONTEND_DIR / "index.html"
     if index.exists():
         return FileResponse(index)
-    return {"status": "ok", "message": "Quantora QNT30322 live"}
+    return {"status": "ok", "message": "Quantora QNT30322B live"}
 
 
 @app.get("/{page_name}")
