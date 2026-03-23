@@ -1,0 +1,154 @@
+{
+  "operator_id": "operator_AE1AFBC2",
+  "display_name": "RiskTest",
+  "capital_decision": {
+    "approved": true,
+    "capital_allocated": 16195
+  },
+  "strategies": {
+    "strategies": [
+      {
+        "strategy_id": "strat_cf2b100a",
+        "name": "tiny",
+        "symbol": "AAPL",
+        "side": "buy",
+        "default_qty": 1,
+        "enabled": true,
+        "status": "running",
+        "capital_limit": 0.0,
+        "execution_mode": "internal",
+        "created_at": "2026-03-23T14:33:01Z",
+        "updated_at": "2026-03-23T14:33:01Z",
+        "operator_id": "operator_AE1AFBC2",
+        "last_action": "register",
+        "deleted": false
+      }
+    ]
+  },
+  "strategy_engine": {
+    "metrics": {
+      "strat_cf2b100a": {
+        "strategy_id": "strat_cf2b100a",
+        "orders_count": 0,
+        "buy_orders": 0,
+        "sell_orders": 0,
+        "closed_trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "realized_pnl": 0.0,
+        "unrealized_pnl": 0.0,
+        "gross_notional": 0.0,
+        "current_position_qty": 0.0,
+        "avg_entry_price": 0.0,
+        "current_market_value": 0.0,
+        "capital_in_use": 0.0,
+        "last_price": 180.0,
+        "last_run_at": null,
+        "last_order_at": null,
+        "last_signal_at": null,
+        "win_rate": 0.0
+      }
+    },
+    "logs": [
+      {
+        "log_id": "log_92b9bc686d",
+        "timestamp": "2026-03-23T14:33:01Z",
+        "strategy_id": "strat_cf2b100a",
+        "event_type": "execution_blocked",
+        "message": "Risk engine: projected AAPL exposure 180.0 exceeds position limit 100.0",
+        "data": {
+          "execution_mode": "internal"
+        }
+      },
+      {
+        "log_id": "log_80769bf252",
+        "timestamp": "2026-03-23T14:33:01Z",
+        "strategy_id": "strat_cf2b100a",
+        "event_type": "lifecycle",
+        "message": "tiny registered",
+        "data": {
+          "strategy_id": "strat_cf2b100a",
+          "name": "tiny",
+          "symbol": "AAPL",
+          "side": "buy",
+          "default_qty": 1,
+          "enabled": true,
+          "status": "running",
+          "capital_limit": 0.0,
+          "execution_mode": "internal",
+          "created_at": "2026-03-23T14:33:01Z",
+          "updated_at": "2026-03-23T14:33:01Z",
+          "operator_id": "operator_AE1AFBC2",
+          "last_action": "register",
+          "deleted": false
+        }
+      }
+    ],
+    "last_engine_run_at": "2026-03-23T14:33:01Z",
+    "last_engine_status": "completed"
+  },
+  "risk_engine": {
+    "enabled": true,
+    "max_position_notional": 100.0,
+    "max_total_exposure": 150.0,
+    "max_drawdown_pct": 12.0,
+    "max_daily_loss": 1000.0,
+    "max_orders_per_run": 1,
+    "require_broker_for_alpaca": true,
+    "auto_shutdown_on_breach": true,
+    "kill_switch_active": true,
+    "breached": true,
+    "breach_count": 1,
+    "last_breach": "2026-03-23T14:33:22Z",
+    "last_breach_reason": "Kill switch active",
+    "last_evaluated_at": "2026-03-23T14:33:22Z",
+    "peak_equity": 1000.0,
+    "current_equity": 1000.0,
+    "current_drawdown_pct": 0.0,
+    "day_start_date": "2026-03-23",
+    "day_start_realized_pnl": 0.0,
+    "current_daily_realized_pnl": 0.0,
+    "current_total_exposure": 0.0
+  },
+  "orders": {
+    "orders": []
+  },
+  "allocator_caps": {
+    "operator": {
+      "operator_id": "operator_AE1AFBC2",
+      "allocated_capital": 1000.0,
+      "status": "FUNDED",
+      "updated_at": "2026-03-23T14:33:01Z"
+    }
+  },
+  "strategy_loop": {
+    "running": false,
+    "execution_mode": "internal",
+    "interval_seconds": 60,
+    "last_run_at": "2026-03-23T14:33:01Z",
+    "next_run_at": null,
+    "heartbeat_at": "2026-03-23T14:33:01Z",
+    "total_runs": 1,
+    "total_signals": 1,
+    "total_orders": 0
+  },
+  "monitoring": {
+    "latest_snapshot": {
+      "timestamp": "2026-03-23T14:33:01Z",
+      "order_count": 0,
+      "used_capital": 0.0,
+      "allocated_capital": 1000.0,
+      "remaining_capital": 1000.0,
+      "utilization_pct": 0.0,
+      "alerts_count": 0,
+      "strategy_realized_pnl": 0.0,
+      "strategy_unrealized_pnl": 0.0,
+      "active_strategies": 1,
+      "risk_breached": false,
+      "drawdown_pct": 0.0,
+      "daily_realized_pnl": 0.0
+    },
+    "alerts": [],
+    "last_evaluated_at": "2026-03-23T14:33:01Z"
+  }
+}

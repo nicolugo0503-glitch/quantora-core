@@ -1,6 +1,102 @@
 {
   "events": [
     {
+      "event_id": "gov_ba699fa698",
+      "timestamp": "2026-03-23T14:33:22Z",
+      "category": "risk",
+      "actor_email": "risktest@example.com",
+      "actor_operator_id": "operator_AE1AFBC2",
+      "action": "risk.kill_switch",
+      "target": "operator_AE1AFBC2",
+      "details": {
+        "active": true,
+        "note": "test"
+      }
+    },
+    {
+      "event_id": "gov_4ca9943bca",
+      "timestamp": "2026-03-23T14:33:01Z",
+      "category": "risk",
+      "actor_email": "risktest@example.com",
+      "actor_operator_id": "operator_AE1AFBC2",
+      "action": "strategy.execution_blocked",
+      "target": "strat_cf2b100a",
+      "details": {
+        "detail": "Risk engine: projected AAPL exposure 180.0 exceeds position limit 100.0"
+      }
+    },
+    {
+      "event_id": "gov_ddea907ca2",
+      "timestamp": "2026-03-23T14:33:01Z",
+      "category": "capital",
+      "actor_email": "risktest@example.com",
+      "actor_operator_id": "operator_AE1AFBC2",
+      "action": "allocator.operator_capital.set",
+      "target": "operator_AE1AFBC2",
+      "details": {
+        "operator_id": "operator_AE1AFBC2",
+        "allocated_capital": 1000.0,
+        "status": "FUNDED",
+        "updated_at": "2026-03-23T14:33:01Z"
+      }
+    },
+    {
+      "event_id": "gov_92782f9bf3",
+      "timestamp": "2026-03-23T14:33:01Z",
+      "category": "strategy",
+      "actor_email": "risktest@example.com",
+      "actor_operator_id": "operator_AE1AFBC2",
+      "action": "strategy.register",
+      "target": "strat_cf2b100a",
+      "details": {
+        "strategy_id": "strat_cf2b100a",
+        "name": "tiny",
+        "symbol": "AAPL",
+        "side": "buy",
+        "default_qty": 1,
+        "enabled": true,
+        "status": "running",
+        "capital_limit": 0.0,
+        "execution_mode": "internal",
+        "created_at": "2026-03-23T14:33:01Z",
+        "updated_at": "2026-03-23T14:33:01Z",
+        "operator_id": "operator_AE1AFBC2",
+        "last_action": "register",
+        "deleted": false
+      }
+    },
+    {
+      "event_id": "gov_bf4ca9e19a",
+      "timestamp": "2026-03-23T14:33:01Z",
+      "category": "risk",
+      "actor_email": "risktest@example.com",
+      "actor_operator_id": "operator_AE1AFBC2",
+      "action": "risk.config.update",
+      "target": "operator_AE1AFBC2",
+      "details": {
+        "enabled": true,
+        "max_position_notional": 100.0,
+        "max_total_exposure": 150.0,
+        "max_drawdown_pct": 12.0,
+        "max_daily_loss": 1000.0,
+        "max_orders_per_run": 1,
+        "require_broker_for_alpaca": true,
+        "auto_shutdown_on_breach": true
+      }
+    },
+    {
+      "event_id": "gov_810af43036",
+      "timestamp": "2026-03-23T14:33:01Z",
+      "category": "auth",
+      "actor_email": "risktest@example.com",
+      "actor_operator_id": "operator_AE1AFBC2",
+      "action": "register",
+      "target": "operator_AE1AFBC2",
+      "details": {
+        "display_name": "RiskTest"
+      }
+    },
+    {
       "event_id": "gov_c1f516b5a8",
       "timestamp": "2026-03-23T06:29:21Z",
       "category": "execution",

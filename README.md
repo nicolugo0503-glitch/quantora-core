@@ -1,4 +1,4 @@
-# Quantora QNT30323 - Real Strategy Engine
+# Quantora QNT30324 - Risk Engine
 
 This package extends QNT30322B1 and upgrades Quantora from broker-connected command center into a real strategy operating layer.
 
@@ -46,7 +46,7 @@ Admin users can connect through the UI broker panel. That stores credentials in 
 
 ### macOS
 ```bash
-cd QNT30323_QUANTORA_REAL_STRATEGY_ENGINE
+cd QNT30324_QUANTORA_REAL_STRATEGY_ENGINE
 chmod +x *.command
 xattr -dr com.apple.quarantine *.command 2>/dev/null || true
 ./0_START_ALL_MAC.command

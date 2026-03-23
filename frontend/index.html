@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Quantora QNT30323 Real Strategy Engine</title>
+  <title>Quantora QNT30324 Risk Engine</title>
   <style>
     :root {
       --bg: #07111f;
@@ -70,15 +70,16 @@
   <div class="shell">
     <div class="hero">
       <div>
-        <h1 style="margin:0 0 10px">Quantora Unified Command Center · Real Strategy Engine</h1>
+        <h1 style="margin:0 0 10px">Quantora Unified Command Center · Risk Engine</h1>
         <div class="sub">
-          QNT30323 upgrades Quantora from broker-connected command center into a real strategy operating layer: lifecycle control, persistent strategy state, capital guards, per-strategy PnL, win-rate tracking, and execution logs now live inside the same OS surface.
+          QNT30324 hardens Quantora with a true risk operating layer: position limits, total exposure caps, max drawdown rules, daily loss limits, kill switch controls, auto shutdown, and per-run execution throttles now protect live broker-connected capital.
         </div>
       </div>
       <div class="hero-actions">
         <button onclick="refreshAll()">Refresh OS</button>
         <button class="secondary" onclick="loadSnapshot()">Snapshot</button>
         <button class="secondary" onclick="loadBroker()">Broker Refresh</button>
+        <button class="warn" onclick="loadRisk()">Risk Refresh</button>
       </div>
     </div>
 
@@ -89,7 +90,8 @@
       <div class="metric"><div class="label">Remaining Capital</div><div class="value" id="m_remaining">-</div></div>
       <div class="metric"><div class="label">Running Strategies</div><div class="value" id="m_running">-</div></div>
       <div class="metric"><div class="label">Realized PnL</div><div class="value" id="m_realized">-</div></div>
-      <div class="metric"><div class="label">Layer</div><div class="value" id="m_layer">QNT30323</div></div>
+      <div class="metric"><div class="label">Risk State</div><div class="value" id="m_risk">-</div></div>
+      <div class="metric"><div class="label">Layer</div><div class="value" id="m_layer">QNT30324</div></div>
     </div>
 
     <div class="grid-main">
@@ -223,6 +225,30 @@
       </div>
 
       <div class="stack">
+
+        <div class="panel">
+          <div class="section-title"><h2>Risk Engine</h2><button class="secondary" onclick="loadRisk()">Load Risk</button></div>
+          <div class="four-col">
+            <select id="risk_enabled"><option value="true">risk enabled</option><option value="false">risk disabled</option></select>
+            <input id="risk_max_position" type="number" placeholder="Max position notional">
+            <input id="risk_max_total" type="number" placeholder="Max total exposure">
+            <input id="risk_max_dd" type="number" placeholder="Max drawdown %">
+          </div>
+          <div class="four-col" style="margin-top:10px">
+            <input id="risk_max_daily_loss" type="number" placeholder="Max daily loss">
+            <input id="risk_max_orders" type="number" placeholder="Max orders per run">
+            <select id="risk_require_broker"><option value="true">alpaca broker required</option><option value="false">alpaca broker optional</option></select>
+            <select id="risk_auto_shutdown"><option value="true">auto shutdown on breach</option><option value="false">manual shutdown only</option></select>
+          </div>
+          <div class="hero-actions" style="margin-top:10px">
+            <button onclick="updateRiskConfig()">Update Risk</button>
+            <button class="danger" onclick="toggleKillSwitch(true)">Kill Switch</button>
+            <button class="secondary" onclick="toggleKillSwitch(false)">Release Kill Switch</button>
+          </div>
+          <div id="risk_pills" class="pills"></div>
+          <pre id="risk_out">Ready.</pre>
+        </div>
+
         <div class="panel">
           <div class="section-title"><h2>Governance + Policy Engine</h2><button class="secondary" onclick="loadGovernance()">Load Governance</button></div>
           <div class="two-col">
@@ -292,7 +318,7 @@ function pills(items){
 }
 
 async function refreshAll(){
-  await Promise.all([loadAuthMe(), loadWorkspace(), loadStrategyPerformance(), loadStrategyLogs(), loadBroker(), loadGovernance(), loadControlTower(), loadLedger(), loadOrders(), loadSnapshot()]);
+  await Promise.all([loadAuthMe(), loadWorkspace(), loadStrategyPerformance(), loadStrategyLogs(), loadBroker(), loadRisk(), loadGovernance(), loadControlTower(), loadLedger(), loadOrders(), loadSnapshot()]);
 }
 
 async function loadAuthMe(){
@@ -481,6 +507,53 @@ async function submitManualOrder(){
   refreshAll();
 }
 
+
+async function loadRisk(){
+  const data = await api('/risk-engine/status');
+  setText('risk_out', data);
+  const cfg = data.config || {};
+  risk_enabled.value = String(!!cfg.enabled);
+  risk_max_position.value = cfg.max_position_notional ?? '';
+  risk_max_total.value = cfg.max_total_exposure ?? '';
+  risk_max_dd.value = cfg.max_drawdown_pct ?? '';
+  risk_max_daily_loss.value = cfg.max_daily_loss ?? '';
+  risk_max_orders.value = cfg.max_orders_per_run ?? '';
+  risk_require_broker.value = String(cfg.require_broker_for_alpaca !== false);
+  risk_auto_shutdown.value = String(cfg.auto_shutdown_on_breach !== false);
+  setHTML('risk_pills', pills([
+    {label: cfg.enabled ? 'risk enabled' : 'risk disabled', className: cfg.enabled ? 'good' : 'warn'},
+    {label: cfg.kill_switch_active ? 'kill switch active' : 'kill switch released', className: cfg.kill_switch_active ? 'bad' : 'good'},
+    {label: data.breaches && data.breaches.length ? `breaches ${data.breaches.length}` : 'no active breaches', className: data.breaches && data.breaches.length ? 'bad' : 'good'},
+    {label: `drawdown ${fmt(data.totals?.current_drawdown_pct)}%`, className: Number(data.totals?.current_drawdown_pct || 0) > Number(cfg.max_drawdown_pct || 0) && Number(cfg.max_drawdown_pct || 0) > 0 ? 'bad' : 'good'},
+    {label: `daily pnl ${fmt(data.totals?.current_daily_realized_pnl)}`},
+    {label: `max pos ${fmt(cfg.max_position_notional)}`},
+    {label: `max total ${fmt(cfg.max_total_exposure)}`},
+    {label: `orders/run ${cfg.max_orders_per_run || '-'}`}
+  ]));
+  return data;
+}
+
+async function updateRiskConfig(){
+  const data = await api('/risk-engine/config/update','POST',{
+    enabled: risk_enabled.value === 'true',
+    max_position_notional: Number(risk_max_position.value || 0),
+    max_total_exposure: Number(risk_max_total.value || 0),
+    max_drawdown_pct: Number(risk_max_dd.value || 0),
+    max_daily_loss: Number(risk_max_daily_loss.value || 0),
+    max_orders_per_run: Number(risk_max_orders.value || 0),
+    require_broker_for_alpaca: risk_require_broker.value === 'true',
+    auto_shutdown_on_breach: risk_auto_shutdown.value === 'true'
+  });
+  setText('risk_out', data);
+  refreshAll();
+}
+
+async function toggleKillSwitch(active){
+  const data = await api('/risk-engine/kill-switch','POST',{active, note: active ? 'manual shutdown' : 'manual release'});
+  setText('risk_out', data);
+  refreshAll();
+}
+
 async function loadGovernance(){
   const policies = await api('/policy-engine/policies');
   setText('gov_out', policies);
@@ -508,6 +581,7 @@ async function loadControlTower(){
     {key:'orders', label:'Orders'},
     {key:'execution_mode', label:'Mode'},
     {key:'realized_pnl', label:'Realized PnL', render:v=>fmt(v)},
+    {key:'risk_breached', label:'Risk', render:v=>v ? 'breached' : 'clear'},
     {key:'alerts', label:'Alerts'}
   ]));
   return data;
@@ -546,7 +620,8 @@ async function loadSnapshot(){
   document.getElementById('m_remaining').textContent = fmt(ws.capital?.remaining_capital);
   document.getElementById('m_running').textContent = data.strategy_engine?.running_strategies ?? '-';
   document.getElementById('m_realized').textContent = fmt(data.strategy_engine?.portfolio_realized_pnl);
-  document.getElementById('m_layer').textContent = data.system_health?.layer || 'QNT30323';
+  document.getElementById('m_layer').textContent = data.system_health?.layer || 'QNT30324';
+  document.getElementById('m_risk').textContent = data.risk_engine?.breaches?.length ? 'BREACH' : (data.risk_engine?.config?.kill_switch_active ? 'LOCKED' : 'SAFE');
   return data;
 }
 

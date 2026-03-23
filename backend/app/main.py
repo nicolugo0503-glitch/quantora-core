@@ -18,7 +18,7 @@ PROJECT_DIR = BACKEND_DIR.parent
 ARTIFACTS_DIR = BACKEND_DIR / "artifacts"
 FRONTEND_DIR = PROJECT_DIR / "frontend"
 
-app = FastAPI(title="Quantora QNT30323 Real Strategy Engine", version="30323")
+app = FastAPI(title="Quantora QNT30324 Risk Engine", version="30324")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -160,6 +160,32 @@ def default_strategy_metrics(strategy_id, symbol="AAPL"):
     }
 
 
+def default_risk_engine():
+    return {
+        "enabled": True,
+        "max_position_notional": 5000.0,
+        "max_total_exposure": 20000.0,
+        "max_drawdown_pct": 12.0,
+        "max_daily_loss": 1500.0,
+        "max_orders_per_run": 3,
+        "require_broker_for_alpaca": True,
+        "auto_shutdown_on_breach": True,
+        "kill_switch_active": False,
+        "breached": False,
+        "breach_count": 0,
+        "last_breach": None,
+        "last_breach_reason": None,
+        "last_evaluated_at": None,
+        "peak_equity": 0.0,
+        "current_equity": 0.0,
+        "current_drawdown_pct": 0.0,
+        "day_start_date": now_dt().date().isoformat(),
+        "day_start_realized_pnl": 0.0,
+        "current_daily_realized_pnl": 0.0,
+        "current_total_exposure": 0.0,
+    }
+
+
 def default_operator_state(operator_id, display_name):
     return {
         "operator_id": operator_id,
@@ -172,6 +198,7 @@ def default_operator_state(operator_id, display_name):
             "last_engine_run_at": None,
             "last_engine_status": "idle",
         },
+        "risk_engine": default_risk_engine(),
         "orders": {"orders": []},
         "allocator_caps": {
             "operator": {
@@ -336,6 +363,28 @@ def migrate_operator_state(state, display_name=None):
     state.setdefault("allocator_caps", {"operator": {"operator_id": state.get("operator_id"), "allocated_capital": 0.0, "status": "UNFUNDED", "updated_at": None}})
     state.setdefault("strategy_loop", {"running": False, "execution_mode": "internal", "interval_seconds": 60, "last_run_at": None, "next_run_at": None, "heartbeat_at": None, "total_runs": 0, "total_signals": 0, "total_orders": 0})
     state.setdefault("monitoring", {"latest_snapshot": {}, "alerts": [], "last_evaluated_at": None})
+    risk = state.setdefault("risk_engine", default_risk_engine())
+    risk.setdefault("enabled", True)
+    risk.setdefault("max_position_notional", 5000.0)
+    risk.setdefault("max_total_exposure", 20000.0)
+    risk.setdefault("max_drawdown_pct", 12.0)
+    risk.setdefault("max_daily_loss", 1500.0)
+    risk.setdefault("max_orders_per_run", 3)
+    risk.setdefault("require_broker_for_alpaca", True)
+    risk.setdefault("auto_shutdown_on_breach", True)
+    risk.setdefault("kill_switch_active", False)
+    risk.setdefault("breached", False)
+    risk.setdefault("breach_count", 0)
+    risk.setdefault("last_breach", None)
+    risk.setdefault("last_breach_reason", None)
+    risk.setdefault("last_evaluated_at", None)
+    risk.setdefault("peak_equity", 0.0)
+    risk.setdefault("current_equity", 0.0)
+    risk.setdefault("current_drawdown_pct", 0.0)
+    risk.setdefault("day_start_date", now_dt().date().isoformat())
+    risk.setdefault("day_start_realized_pnl", 0.0)
+    risk.setdefault("current_daily_realized_pnl", 0.0)
+    risk.setdefault("current_total_exposure", 0.0)
     engine = state.setdefault("strategy_engine", {})
     engine.setdefault("metrics", {})
     engine.setdefault("logs", [])
@@ -428,17 +477,118 @@ def enforce_capital_guard(state, notional, side, strategy=None):
             raise HTTPException(status_code=400, detail=f"Capital guard: strategy limit remaining {strategy_remaining}")
 
 
+def evaluate_risk_state(state):
+    risk = state.setdefault("risk_engine", default_risk_engine())
+    risk.setdefault("enabled", True)
+    engine = summarize_strategy_engine(state)
+    exposure = operator_exposure(state)
+    allocated = float(state["allocator_caps"]["operator"].get("allocated_capital", 0) or 0)
+    today = now_dt().date().isoformat()
+    if risk.get("day_start_date") != today:
+        risk["day_start_date"] = today
+        risk["day_start_realized_pnl"] = round(engine["portfolio_realized_pnl"], 2)
+
+    current_equity = round(allocated + float(engine.get("portfolio_realized_pnl") or 0) + float(engine.get("portfolio_unrealized_pnl") or 0), 2)
+    peak_equity = float(risk.get("peak_equity") or 0)
+    if peak_equity <= 0:
+        peak_equity = max(current_equity, allocated, 0.0)
+    peak_equity = max(peak_equity, current_equity)
+    risk["peak_equity"] = round(peak_equity, 2)
+    drawdown_pct = round((((peak_equity - current_equity) / peak_equity) * 100) if peak_equity > 0 else 0.0, 2)
+    daily_realized_pnl = round(float(engine.get("portfolio_realized_pnl") or 0) - float(risk.get("day_start_realized_pnl") or 0), 2)
+
+    breaches = []
+    if risk.get("enabled"):
+        if risk.get("kill_switch_active"):
+            breaches.append("Kill switch active")
+        max_total = float(risk.get("max_total_exposure") or 0)
+        if max_total > 0 and exposure["notional"] > max_total:
+            breaches.append(f"Total exposure {round(exposure['notional'],2)} exceeds max total exposure {round(max_total,2)}")
+        max_position = float(risk.get("max_position_notional") or 0)
+        if max_position > 0:
+            for pos in exposure["positions"]:
+                if float(pos.get("market_value") or 0) > max_position:
+                    breaches.append(f"{pos['symbol']} exposure {round(float(pos.get('market_value') or 0),2)} exceeds position limit {round(max_position,2)}")
+        max_dd = float(risk.get("max_drawdown_pct") or 0)
+        if max_dd > 0 and drawdown_pct > max_dd:
+            breaches.append(f"Drawdown {drawdown_pct}% exceeds limit {round(max_dd,2)}%")
+        max_daily_loss = float(risk.get("max_daily_loss") or 0)
+        if max_daily_loss > 0 and daily_realized_pnl < (-1 * max_daily_loss):
+            breaches.append(f"Daily realized PnL {daily_realized_pnl} breaches daily loss limit {-round(max_daily_loss,2)}")
+
+    previous_reason = risk.get("last_breach_reason")
+    risk["breached"] = bool(breaches)
+    risk["current_equity"] = current_equity
+    risk["current_drawdown_pct"] = drawdown_pct
+    risk["current_daily_realized_pnl"] = daily_realized_pnl
+    risk["current_total_exposure"] = round(exposure["notional"], 2)
+    risk["last_evaluated_at"] = now_iso()
+    if breaches:
+        reason = "; ".join(breaches[:5])
+        if reason != previous_reason:
+            risk["breach_count"] = int(risk.get("breach_count") or 0) + 1
+        risk["last_breach"] = now_iso()
+        risk["last_breach_reason"] = reason
+        if risk.get("auto_shutdown_on_breach"):
+            state["strategy_loop"]["running"] = False
+            state["strategy_loop"]["next_run_at"] = None
+    return {
+        "config": risk,
+        "breaches": breaches,
+        "totals": {
+            "current_total_exposure": round(exposure["notional"], 2),
+            "current_equity": current_equity,
+            "current_drawdown_pct": drawdown_pct,
+            "current_daily_realized_pnl": daily_realized_pnl,
+            "allocated_capital": allocated,
+        },
+        "positions": exposure["positions"],
+    }
+
+
+def enforce_risk_guard(state, symbol, side, qty, execution_mode="internal"):
+    risk_view = evaluate_risk_state(state)
+    risk = risk_view["config"]
+    if not risk.get("enabled"):
+        return risk_view
+    if risk.get("kill_switch_active"):
+        raise HTTPException(status_code=400, detail="Risk engine: kill switch active")
+    if execution_mode == "alpaca" and risk.get("require_broker_for_alpaca") and not resolved_alpaca_credentials():
+        raise HTTPException(status_code=400, detail="Risk engine: Alpaca mode requires broker connectivity")
+    if risk_view["breaches"] and risk.get("auto_shutdown_on_breach"):
+        raise HTTPException(status_code=400, detail=f"Risk engine breach: {risk_view['breaches'][0]}")
+
+    price = get_price(symbol)
+    signed_qty = float(qty) if (side or "buy").lower() == "buy" else (-1 * float(qty))
+    positions = {p["symbol"]: p for p in risk_view["positions"]}
+    current_qty = float(positions.get(symbol, {}).get("net_qty") or 0)
+    current_symbol_notional = round(abs(current_qty) * price, 2)
+    projected_qty = current_qty + signed_qty
+    projected_symbol_notional = round(abs(projected_qty) * price, 2)
+    max_position = float(risk.get("max_position_notional") or 0)
+    if max_position > 0 and projected_symbol_notional > max_position:
+        raise HTTPException(status_code=400, detail=f"Risk engine: projected {symbol} exposure {projected_symbol_notional} exceeds position limit {round(max_position,2)}")
+    max_total = float(risk.get("max_total_exposure") or 0)
+    projected_total = round(float(risk_view["totals"]["current_total_exposure"]) - current_symbol_notional + projected_symbol_notional, 2)
+    if max_total > 0 and projected_total > max_total:
+        raise HTTPException(status_code=400, detail=f"Risk engine: projected total exposure {projected_total} exceeds limit {round(max_total,2)}")
+    return risk_view
+
+
 def evaluate_monitoring(state):
     exposure = operator_exposure(state)
     allocated = float(state["allocator_caps"]["operator"].get("allocated_capital", 0) or 0)
     utilization = round((exposure["notional"] / allocated) * 100, 2) if allocated > 0 else 0.0
     alerts = []
+    risk_view = evaluate_risk_state(state)
     if exposure["notional"] > allocated and allocated >= 0:
         alerts.append({"level": "critical", "type": "capital-breach", "message": f"Open exposure {exposure['notional']} exceeds allocated capital {allocated}"})
     elif utilization >= 80 and allocated > 0:
         alerts.append({"level": "warn", "type": "operator-utilization", "message": f"Operator utilization at {utilization}%"})
     if state["strategy_loop"].get("running") and not state["strategy_loop"].get("heartbeat_at"):
         alerts.append({"level": "warn", "type": "loop-heartbeat", "message": "Loop is marked running without heartbeat"})
+    for breach in risk_view.get("breaches", []):
+        alerts.append({"level": "critical", "type": "risk-breach", "message": breach})
 
     engine = state.setdefault("strategy_engine", {})
     metrics = engine.setdefault("metrics", {})
@@ -465,6 +615,9 @@ def evaluate_monitoring(state):
         "strategy_realized_pnl": totals["portfolio_realized_pnl"],
         "strategy_unrealized_pnl": totals["portfolio_unrealized_pnl"],
         "active_strategies": totals["running_strategies"],
+        "risk_breached": bool(risk_view.get("breaches")),
+        "drawdown_pct": risk_view["totals"].get("current_drawdown_pct", 0),
+        "daily_realized_pnl": risk_view["totals"].get("current_daily_realized_pnl", 0),
     }
     state["monitoring"]["alerts"] = alerts
     state["monitoring"]["last_evaluated_at"] = now_iso()
@@ -753,6 +906,7 @@ def run_strategy_for_state(state, strategy, execution_mode, actor_email, actor_o
     strategy_mode = (strategy.get("execution_mode") or "inherit").lower()
     chosen_mode = (execution_mode or "internal").lower() if strategy_mode == "inherit" else strategy_mode
     notional = round(get_price(strategy["symbol"]) * float(strategy["default_qty"]), 2)
+    enforce_risk_guard(state, strategy["symbol"], strategy["side"], float(strategy["default_qty"]), chosen_mode)
     enforce_capital_guard(state, notional, strategy["side"], strategy)
 
     if chosen_mode == "alpaca":
@@ -783,7 +937,12 @@ def run_strategies_for_state(state, execution_mode, actor_email, actor_operator_
     engine["last_engine_run_at"] = now_iso()
     engine["last_engine_status"] = "running"
 
+    risk = state.setdefault("risk_engine", default_risk_engine())
     for strategy in strategies:
+        if risk.get("enabled") and int(risk.get("max_orders_per_run") or 0) > 0 and len(executed_orders) >= int(risk.get("max_orders_per_run") or 0):
+            strategy_log(state, strategy["strategy_id"], "risk_block", "Execution skipped: max orders per run reached", {"max_orders_per_run": risk.get("max_orders_per_run")})
+            append_governance_event(actor_email, actor_operator_id, "strategy.execution_blocked", strategy["strategy_id"], {"detail": "Risk engine: max orders per run reached"}, "risk")
+            continue
         try:
             executed_orders.append(run_strategy_for_state(state, strategy, execution_mode, actor_email, actor_operator_id, source_action))
         except HTTPException as exc:
@@ -815,6 +974,7 @@ def build_operator_workspace(state):
         "orders": orders,
         "positions": operator_positions_from_orders(state)[0],
         "monitoring": monitoring,
+        "risk_engine": evaluate_risk_state(state),
         "execution_summary": {
             "recent_orders": len(orders),
             "enabled_strategies": engine["enabled_strategies"],
@@ -837,12 +997,13 @@ def build_command_center_snapshot(session):
     snapshot = {
         "session": {**session, "is_admin": session.get("email") in ADMIN_EMAILS},
         "north_star": {
-            "mission": "QNT30323 Real Strategy Engine",
+            "mission": "QNT30324 Risk Engine",
             "system": "Quantora multi-layer institutional trading operating system",
             "timestamp": now_iso(),
         },
         "personal_workspace": workspace,
         "strategy_engine": workspace["strategies"],
+        "risk_engine": workspace["risk_engine"],
         "broker": broker,
         "governance": {
             "pending_approvals": len(pending),
@@ -855,7 +1016,7 @@ def build_command_center_snapshot(session):
             "status": "ok",
             "registered_users": len(users),
             "policies_enabled": len([p for p in get_policies()["policies"] if p.get("enabled")]),
-            "layer": "qnt30323-real-strategy-engine",
+            "layer": "qnt30324-risk-engine",
             "broker_status": broker.get("last_status"),
         },
     }
@@ -893,6 +1054,7 @@ def control_tower_view():
             "execution_mode": state["strategy_loop"].get("execution_mode"),
             "last_run_at": state["strategy_loop"].get("last_run_at"),
             "realized_pnl": engine["portfolio_realized_pnl"],
+            "risk_breached": bool(state.get("risk_engine", {}).get("breached")),
         }
         operators.append(row)
         totals["operators"] += 1
@@ -1035,6 +1197,22 @@ class AlpacaConnectRequest(BaseModel):
     paper: bool = True
 
 
+class RiskConfigUpdateRequest(BaseModel):
+    enabled: bool = True
+    max_position_notional: float = 5000.0
+    max_total_exposure: float = 20000.0
+    max_drawdown_pct: float = 12.0
+    max_daily_loss: float = 1500.0
+    max_orders_per_run: int = 3
+    require_broker_for_alpaca: bool = True
+    auto_shutdown_on_breach: bool = True
+
+
+class RiskKillSwitchRequest(BaseModel):
+    active: bool
+    note: str = ""
+
+
 class ManualOrderRequest(BaseModel):
     symbol: str
     side: str
@@ -1047,7 +1225,7 @@ class ManualOrderRequest(BaseModel):
 # -------------------------
 @app.get("/health")
 def health():
-    return {"status": "ok", "layer": "qnt30323-real-strategy-engine"}
+    return {"status": "ok", "layer": "qnt30324-risk-engine"}
 
 
 @app.post("/auth/register")
@@ -1236,6 +1414,7 @@ def orders_submit(payload: ManualOrderRequest, session=Depends(require_auth)):
     symbol = payload.symbol.upper()
     side = payload.side.lower()
     notional = round(get_price(symbol) * float(payload.qty), 2)
+    enforce_risk_guard(state, symbol, side, float(payload.qty), execution_mode)
     enforce_capital_guard(state, notional, side)
     if execution_mode == "alpaca":
         if not resolved_alpaca_credentials():
@@ -1267,6 +1446,37 @@ def operator_workspace(session=Depends(require_auth)):
 @app.get("/command-center/snapshot")
 def command_center_snapshot(session=Depends(require_auth)):
     return build_command_center_snapshot(session)
+
+
+@app.get("/risk-engine/status")
+def risk_engine_status(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    result = evaluate_risk_state(state)
+    save_operator_state(state)
+    return result
+
+
+@app.post("/risk-engine/config/update")
+def risk_engine_config_update(payload: RiskConfigUpdateRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    state["risk_engine"].update(payload.model_dump())
+    result = evaluate_risk_state(state)
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "risk.config.update", state["operator_id"], payload.model_dump(), "risk")
+    return {"status": "updated", "risk_engine": result}
+
+
+@app.post("/risk-engine/kill-switch")
+def risk_engine_kill_switch(payload: RiskKillSwitchRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    state["risk_engine"]["kill_switch_active"] = bool(payload.active)
+    if payload.active:
+        state["strategy_loop"]["running"] = False
+        state["strategy_loop"]["next_run_at"] = None
+    result = evaluate_risk_state(state)
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "risk.kill_switch", state["operator_id"], {"active": payload.active, "note": payload.note}, "risk")
+    return {"status": "updated", "risk_engine": result}
 
 
 # -------------------------
@@ -1443,9 +1653,9 @@ def approvals_decision(payload: ApprovalDecisionRequest, admin=Depends(require_a
 @app.get("/version")
 def version():
     return {
-        "mission": "QNT30323 Real Strategy Engine",
-        "layer": "qnt30323-real-strategy-engine",
-        "frontend": "qnt30323",
+        "mission": "QNT30324 Risk Engine",
+        "layer": "qnt30324-risk-engine",
+        "frontend": "qnt30324",
         "cache_policy": NO_CACHE_HEADERS["Cache-Control"],
         "timestamp": now_iso(),
     }
@@ -1456,7 +1666,7 @@ def root():
     index = FRONTEND_DIR / "index.html"
     if index.exists():
         return FileResponse(index, media_type="text/html", headers=NO_CACHE_HEADERS)
-    return {"status": "ok", "message": "Quantora QNT30323 live"}
+    return {"status": "ok", "message": "Quantora QNT30324 live"}
 
 
 @app.get("/{page_name}")
