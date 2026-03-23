@@ -1,31 +1,30 @@
-# Quantora QNT30324B - Capital Source of Truth
+# Quantora QNT30323A - Operator Context Wiring Hotfix
 
-This package extends QNT30325A and formalizes capital hierarchy across Quantora.
+This package extends QNT30324B and repairs operator identity propagation across Quantora.
 
 ## What was fixed
 
-- added a real capital source layer: `internal` or `broker`
-- aligned risk calculations to the selected capital source
-- aligned performance summaries to the selected capital source
-- removed the internal-vs-Alpaca capital mismatch that caused risk instability
-- added safe fallback state when broker capital mode is selected but broker data is unavailable
-- exposed capital source controls in the unified command center
-- preserved Alpaca, Strategy Engine, Risk Engine, Governance, Control Tower, and Railway-safe startup
+- repaired legacy operator state migration by backfilling missing `operator_id`
+- added session-derived operator context fallback using the logged-in email
+- removed raw `operator_id` 500 crashes from strategy/workspace/snapshot flows
+- added structured operator-context error classification
+- preserved broker capital mode, risk engine, performance engine, governance, and Railway-safe startup
 
 ## Main endpoints
 
 - `/health`
 - `/version`
+- `/auth/me`
+- `/strategies/list`
+- `/operator/workspace`
 - `/command-center/snapshot`
-- `/capital-source/status`
-- `/capital-source/update`
 - `/performance/metrics`
 - `/risk-engine/status`
 - `/admin/control-tower`
 
 ## Clean deploy behavior
 
-This build ships with empty users/session artifacts. Register your admin email after deploy to start with a clean operator state.
+This build ships without persisted artifacts. After deploy, register or log in again. If an old session survives without an operator id, the backend now repairs it automatically from the user record.
 
 ## Health checks
 

@@ -19,7 +19,7 @@ PROJECT_DIR = BACKEND_DIR.parent
 ARTIFACTS_DIR = BACKEND_DIR / "artifacts"
 FRONTEND_DIR = PROJECT_DIR / "frontend"
 
-app = FastAPI(title="Quantora QNT30324B Capital Source of Truth", version="30324B")
+app = FastAPI(title="Quantora QNT30323A Operator Context Wiring Hotfix", version="30323A")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -435,7 +435,8 @@ def operator_exposure(state):
     return {"notional": total, "positions": positions, "orders": len(state.get("orders", {}).get("orders", []))}
 
 
-def migrate_operator_state(state, display_name=None):
+def migrate_operator_state(state, operator_id=None, display_name=None):
+    state.setdefault("operator_id", operator_id or state.get("operator_id"))
     state.setdefault("display_name", display_name or state.get("display_name") or "Operator")
     state.setdefault("strategies", {"strategies": []})
     state.setdefault("orders", {"orders": []})
@@ -496,7 +497,7 @@ def ensure_state_for_user(user):
     if existing is None:
         save_json(state_filename(operator_id), default_operator_state(operator_id, user["display_name"]))
     else:
-        existing = migrate_operator_state(existing, user.get("display_name"))
+        existing = migrate_operator_state(existing, user.get("operator_id"), user.get("display_name"))
         save_json(state_filename(operator_id), existing)
 
 
@@ -512,17 +513,44 @@ def get_operator_by_id(operator_id):
 def get_operator_state_by_id(operator_id):
     user = get_operator_by_id(operator_id)
     state = load_json(state_filename(operator_id), {})
-    state = migrate_operator_state(state, user.get("display_name"))
+    state = migrate_operator_state(state, operator_id, user.get("display_name"))
     save_operator_state(state)
     return state
 
 
+def resolve_operator_context(session):
+    session_payload = session_view(session)
+    operator_id = session_payload.get("operator_id")
+    if operator_id:
+        return session_payload
+    email = normalize_email(session_payload.get("email"))
+    if session_payload.get("logged_in") and email:
+        users = users_db()
+        user = next((u for u in users.get("users", []) if normalize_email(u.get("email")) == email), None)
+        if user:
+            repaired = {
+                **session_payload,
+                "email": user.get("email"),
+                "operator_id": user.get("operator_id"),
+                "display_name": user.get("display_name"),
+                "is_admin": user_is_admin_email(user.get("email")),
+                "logged_in": True,
+            }
+            save_session(repaired)
+            return session_view(repaired)
+    raise HTTPException(status_code=409, detail="Operator context missing for session")
+
+
 def get_operator_state(session):
-    return get_operator_state_by_id(session.get("operator_id"))
+    session_payload = resolve_operator_context(session)
+    return get_operator_state_by_id(session_payload.get("operator_id"))
 
 
 def save_operator_state(state):
-    save_json(state_filename(state["operator_id"]), state)
+    operator_id = state.get("operator_id")
+    if not operator_id:
+        raise HTTPException(status_code=409, detail="Operator context missing for state")
+    save_json(state_filename(operator_id), state)
 
 
 def policy_for(policy_type):
@@ -1272,7 +1300,7 @@ def build_operator_workspace(state):
 
 def build_command_center_snapshot(session):
     seed_artifacts()
-    session_payload = session_view(session)
+    session_payload = resolve_operator_context(session) if session_view(session).get("logged_in") else session_view(session)
     users = users_db()["users"]
     state = get_operator_state(session_payload)
     workspace = build_operator_workspace(state)
@@ -1300,7 +1328,7 @@ def build_command_center_snapshot(session):
     snapshot = {
         "session": session_payload,
         "north_star": {
-            "mission": "QNT30324B Capital Source of Truth",
+            "mission": "QNT30323A Operator Context Wiring Hotfix",
             "system": "Quantora multi-layer institutional trading operating system",
             "timestamp": now_iso(),
         },
@@ -1315,7 +1343,7 @@ def build_command_center_snapshot(session):
             "status": "ok",
             "registered_users": len(users),
             "policies_enabled": len([p for p in governance["policies"] if p.get("enabled")]),
-            "layer": "qnt30324b-capital-source-of-truth",
+            "layer": "qnt30323a-operator-context-wiring-hotfix",
             "broker_status": broker.get("last_status"),
             "admin_ready": session_payload.get("is_admin"),
         },
@@ -1338,7 +1366,7 @@ def control_tower_view():
     for user in users:
         ensure_state_for_user(user)
         state = load_json(state_filename(user["operator_id"]), {})
-        state = migrate_operator_state(state, user.get("display_name"))
+        state = migrate_operator_state(state, operator_id, user.get("display_name"))
         monitoring = evaluate_monitoring(state)
         engine = summarize_strategy_engine(state)
         save_operator_state(state)
@@ -1414,7 +1442,7 @@ def apply_approval_request(req, admin_session):
         for user in users_db()["users"]:
             ensure_state_for_user(user)
             state = load_json(state_filename(user["operator_id"]), {})
-            state = migrate_operator_state(state, user.get("display_name"))
+            state = migrate_operator_state(state, operator_id, user.get("display_name"))
             run_strategies_for_state(state, state["strategy_loop"].get("execution_mode", "internal"), admin_session.get("email"), admin_session.get("operator_id"), "approval.run_all.execute")
     elif req["request_type"] == "loop_start":
         state = get_operator_state_by_id(req["target"])
@@ -1555,6 +1583,8 @@ def classify_http_error(status_code, detail):
         return "CONFLICT"
     if "risk engine" in low or "kill switch" in low or "risk" in low and "breach" in low:
         return "RISK_BLOCK"
+    if "operator context" in low or "operator_id" in low:
+        return "OPERATOR_CONTEXT_MISSING"
     if "capital guard" in low:
         return "CAPITAL_GUARD"
     if "alpaca" in low:
@@ -1591,7 +1621,7 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 # -------------------------
 @app.get("/health")
 def health():
-    return {"status": "ok", "layer": "qnt30324b-capital-source-of-truth"}
+    return {"status": "ok", "layer": "qnt30323a-operator-context-wiring-hotfix"}
 
 
 @app.post("/auth/register")
@@ -1636,7 +1666,13 @@ def auth_logout():
 @app.get("/auth/me")
 def auth_me():
     session = get_session()
-    return session_view(session)
+    session_payload = session_view(session)
+    if session_payload.get("logged_in"):
+        try:
+            session_payload = resolve_operator_context(session_payload)
+        except HTTPException:
+            pass
+    return session_view(session_payload)
 
 
 @app.post("/strategies/register")
@@ -2084,9 +2120,9 @@ def approvals_decision(payload: ApprovalDecisionRequest, admin=Depends(require_a
 @app.get("/version")
 def version():
     return {
-        "mission": "QNT30324B Capital Source of Truth",
-        "layer": "qnt30324b-capital-source-of-truth",
-        "frontend": "qnt30324b",
+        "mission": "QNT30323A Operator Context Wiring Hotfix",
+        "layer": "qnt30323a-operator-context-wiring-hotfix",
+        "frontend": "qnt30323a",
         "cache_policy": NO_CACHE_HEADERS["Cache-Control"],
         "timestamp": now_iso(),
     }

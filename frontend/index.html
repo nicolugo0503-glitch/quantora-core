@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Quantora QNT30324B Capital Source of Truth</title>
+  <title>Quantora QNT30323A Operator Context Wiring Hotfix</title>
   <style>
     :root {
       --bg: #07111f;
@@ -70,9 +70,9 @@
   <div class="shell">
     <div class="hero">
       <div>
-        <h1 style="margin:0 0 10px">Quantora Unified Command Center · Capital Source of Truth</h1>
+        <h1 style="margin:0 0 10px">Quantora Unified Command Center · Operator Context Wiring Hotfix</h1>
         <div class="sub">
-          QNT30324B formalizes capital hierarchy across Quantora. Risk, performance, monitoring, and command-center metrics now use a single capital source of truth: internal operator capital or live Alpaca broker capital.
+          QNT30323A repairs operator identity propagation across Quantora. Strategy, workspace, and snapshot flows now recover operator context from session state and migrate legacy operator artifacts safely.
         </div>
       </div>
       <div class="hero-actions">
@@ -92,7 +92,7 @@
       <div class="metric"><div class="label">Realized PnL</div><div class="value" id="m_realized">-</div></div>
       <div class="metric"><div class="label">Risk State</div><div class="value" id="m_risk">-</div></div>
       <div class="metric"><div class="label">Capital Source</div><div class="value" id="m_capital_source">-</div></div>
-      <div class="metric"><div class="label">Layer</div><div class="value" id="m_layer">QNT30324B</div></div>
+      <div class="metric"><div class="label">Layer</div><div class="value" id="m_layer">QNT30323A</div></div>
     </div>
 
     <div class="grid-main">
@@ -673,7 +673,7 @@ async function loadSnapshot(){
   document.getElementById('m_remaining').textContent = fmt(ws.capital?.remaining_capital);
   document.getElementById('m_running').textContent = data.strategy_engine?.running_strategies ?? '-';
   document.getElementById('m_realized').textContent = fmt(data.strategy_engine?.portfolio_realized_pnl);
-  document.getElementById('m_layer').textContent = data.system_health?.layer || 'QNT30324B';
+  document.getElementById('m_layer').textContent = data.system_health?.layer || 'QNT30323A';
   document.getElementById('m_capital_source').textContent = `${data.capital_source?.mode || data.personal_workspace?.capital_source?.mode || '-'} / ${data.risk_engine?.capital_source?.label || data.personal_workspace?.capital?.label || '-'}`;
   document.getElementById('m_risk').textContent = data.risk_engine?.status || (data.risk_engine?.config?.kill_switch_active ? 'LOCKED' : (data.risk_engine?.breaches?.length ? 'BREACH' : 'SAFE'));
   return data;
