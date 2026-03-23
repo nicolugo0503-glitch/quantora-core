@@ -1,836 +1,483 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Quantora QNT30322 Unified Command Center</title>
   <style>
     :root {
-      --bg: #08111f;
-      --panel: #0f1b2d;
-      --panel-2: #14253d;
-      --line: #223654;
-      --text: #e8eefc;
-      --muted: #96a6c5;
-      --accent: #4f8cff;
-      --accent-2: #1dd1a1;
+      --bg: #07111f;
+      --panel: #0f1d31;
+      --panel-2: #132742;
+      --line: #22314e;
+      --text: #e5eefc;
+      --muted: #9bb0d1;
+      --accent: #60a5fa;
+      --good: #34d399;
       --warn: #f59e0b;
-      --danger: #ef4444;
-      --shadow: 0 18px 45px rgba(0,0,0,.28);
-      --radius: 18px;
+      --bad: #fb7185;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(180deg, #07101d 0%, #0b1525 100%);
+      font-family: Inter, Arial, sans-serif;
+      background: linear-gradient(180deg, #040b15 0%, #0a1424 100%);
       color: var(--text);
     }
-    .shell {
+    .shell { max-width: 1500px; margin: 0 auto; padding: 24px; }
+    .hero {
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+      margin-bottom: 18px; padding: 20px; border: 1px solid var(--line);
+      background: rgba(15,29,49,.92); border-radius: 18px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.25);
+    }
+    h1,h2,h3 { margin: 0 0 10px; }
+    .sub { color: var(--muted); max-width: 760px; line-height: 1.5; }
+    .hero-actions { display:flex; gap: 10px; flex-wrap: wrap; }
+    .metric-grid {
+      display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px;
+    }
+    .metric, .panel {
+      background: rgba(15,29,49,.95);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.16);
+    }
+    .metric .label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+    .metric .value { font-size: 30px; font-weight: 700; margin-top: 8px; }
+    .grid-main {
       display: grid;
-      grid-template-columns: 280px 1fr;
-      min-height: 100vh;
+      grid-template-columns: 1.15fr 1.15fr .95fr;
+      gap: 16px;
+      align-items: start;
     }
-    .sidebar {
-      border-right: 1px solid var(--line);
-      background: rgba(10,18,31,.9);
-      padding: 24px 18px;
-      position: sticky;
-      top: 0;
-      height: 100vh;
-    }
-    .brand { margin-bottom: 22px; }
-    .eyebrow { color: var(--accent-2); font-size: 12px; text-transform: uppercase; letter-spacing: .14em; }
-    .brand h1 { margin: 8px 0 4px; font-size: 26px; }
-    .brand p { margin: 0; color: var(--muted); font-size: 14px; }
-    .nav button {
-      width: 100%; text-align: left; background: transparent; color: var(--text);
-      border: 1px solid transparent; border-radius: 14px; padding: 12px 14px; margin-bottom: 8px;
-      font-size: 14px; cursor: pointer;
-    }
-    .nav button.active, .nav button:hover { background: var(--panel); border-color: var(--line); }
-    .content { padding: 24px; }
-    .topbar {
-      display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 12px; margin-bottom: 18px;
-    }
-    .stat {
-      background: linear-gradient(180deg, rgba(20,37,61,.96), rgba(14,26,44,.96));
-      border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow);
-    }
-    .stat .label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; }
-    .stat .value { font-size: 26px; font-weight: 700; margin-top: 8px; }
-    .grid {
-      display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 14px;
-    }
-    .card {
-      background: linear-gradient(180deg, rgba(15,27,45,.98), rgba(11,21,37,.98));
-      border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow);
-      padding: 18px;
-    }
-    .span-12 { grid-column: span 12; }
-    .span-8 { grid-column: span 8; }
-    .span-6 { grid-column: span 6; }
-    .span-4 { grid-column: span 4; }
-    .span-3 { grid-column: span 3; }
-    h2,h3 { margin: 0 0 12px; }
-    .subtle { color: var(--muted); font-size: 14px; }
-    .kpi-row { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
-    .mini { background: rgba(255,255,255,.02); border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
-    .mini .mini-label { color: var(--muted); font-size: 12px; }
-    .mini .mini-value { font-size: 20px; font-weight: 700; margin-top: 6px; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { padding: 10px 8px; border-bottom: 1px solid rgba(150,166,197,.14); text-align: left; font-size: 14px; vertical-align: top; }
-    th { color: var(--muted); font-weight: 600; }
-    input, select {
-      width: 100%; background: #091423; color: var(--text); border: 1px solid var(--line);
-      border-radius: 12px; padding: 11px 12px; margin-bottom: 10px;
-    }
-    button.action {
-      background: var(--accent); color: white; border: none; border-radius: 12px; padding: 10px 14px; cursor: pointer; font-weight: 600; margin-right: 8px; margin-bottom: 8px;
+    .stack { display: grid; gap: 16px; }
+    button {
+      border: none; border-radius: 10px; padding: 10px 14px; cursor: pointer;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; font-weight: 600;
     }
     button.secondary { background: #334155; }
-    button.success { background: #059669; }
-    button.danger { background: #dc2626; }
-    .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    button.warn { background: linear-gradient(135deg, #d97706, #b45309); }
+    input, select {
+      width: 100%; border: 1px solid var(--line); background: var(--panel-2); color: var(--text);
+      border-radius: 10px; padding: 10px 12px; margin-bottom: 10px;
+    }
+    .form-row, .two-col, .three-col { display: grid; gap: 10px; }
+    .two-col { grid-template-columns: 1fr 1fr; }
+    .three-col { grid-template-columns: 1fr 1fr 1fr; }
+    .tiny { font-size: 12px; color: var(--muted); }
+    .pill {
+      display:inline-block; padding: 5px 9px; border-radius: 999px; font-size: 12px; font-weight: 700;
+      background: rgba(96,165,250,.12); color: #bfdbfe; border: 1px solid rgba(96,165,250,.22);
+      margin-right: 6px; margin-bottom: 6px;
+    }
+    .pill.good { background: rgba(52,211,153,.12); color: #a7f3d0; border-color: rgba(52,211,153,.22); }
+    .pill.warn { background: rgba(245,158,11,.12); color: #fde68a; border-color: rgba(245,158,11,.22); }
+    .table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .table th, .table td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: top; }
+    .table th { color: var(--muted); font-weight: 600; }
+    .section-title { display:flex; justify-content: space-between; align-items: center; gap:10px; margin-bottom: 12px; }
     pre {
-      background: #06101d; color: #d5e3ff; border: 1px solid var(--line); border-radius: 14px; padding: 14px; min-height: 160px; white-space: pre-wrap; overflow: auto;
+      margin: 0; background: #06101d; color: #dbeafe; border: 1px solid #1e2d47;
+      border-radius: 14px; min-height: 180px; max-height: 380px; overflow: auto; padding: 14px; white-space: pre-wrap;
     }
-    .pill { display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
-    .ok { background: rgba(29,209,161,.16); color: #7af0cc; }
-    .warn { background: rgba(245,158,11,.16); color: #f7c46a; }
-    .bad { background: rgba(239,68,68,.16); color: #fca5a5; }
-    .muted { color: var(--muted); }
-    .split { display: grid; grid-template-columns: 1.1fr .9fr; gap: 14px; }
-    .footer-note { margin-top: 16px; color: var(--muted); font-size: 13px; }
-    @media (max-width: 1180px) {
-      .topbar { grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .span-8, .span-6, .span-4, .span-3 { grid-column: span 12; }
-      .split { grid-template-columns: 1fr; }
+    .log { min-height: 220px; }
+    .card-list { display: grid; gap: 10px; }
+    .event {
+      padding: 11px; border-radius: 12px; background: #0a1526; border: 1px solid #1e2d47;
     }
-    @media (max-width: 860px) {
-      .shell { grid-template-columns: 1fr; }
-      .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--line); }
-      .topbar { grid-template-columns: 1fr; }
-      .kpi-row { grid-template-columns: 1fr; }
+    .event .meta { color: var(--muted); font-size: 12px; }
+    @media (max-width: 1200px) {
+      .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid-main { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px) {
+      .metric-grid, .two-col, .three-col { grid-template-columns: 1fr; }
+      .hero { flex-direction: column; }
     }
   </style>
 </head>
 <body>
   <div class="shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="eyebrow">QNT30322 Mission Live</div>
-        <h1>Quantora</h1>
-        <p>Unified Command Center for AI-managed capital.</p>
+    <div class="hero">
+      <div>
+        <h1>Quantora Unified Command Center</h1>
+        <div class="sub">
+          QNT30322 merges execution, strategy runtime, capital allocation, governance policy controls, approvals, and control tower oversight into one operating surface.
+        </div>
       </div>
-      <div id="sessionBadge" class="card" style="padding:14px; margin-bottom:14px;">
-        <div class="subtle">Session</div>
-        <div id="sessionName" style="font-size:18px; font-weight:700; margin-top:8px;">Guest</div>
-        <div id="sessionMeta" class="muted" style="margin-top:6px;">Login required</div>
+      <div class="hero-actions">
+        <button onclick="refreshAll()">Refresh Command Center</button>
+        <button class="secondary" onclick="loadSnapshot()">Snapshot</button>
+        <button class="secondary" onclick="loadMe()">Session</button>
       </div>
-      <nav class="nav" id="nav"></nav>
-    </aside>
-    <main class="content">
-      <div class="topbar" id="topbar"></div>
-      <div id="view"></div>
-    </main>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric"><div class="label">Operator</div><div class="value" id="m_operator">-</div></div>
+      <div class="metric"><div class="label">Allocated Capital</div><div class="value" id="m_allocated">-</div></div>
+      <div class="metric"><div class="label">Used Capital</div><div class="value" id="m_used">-</div></div>
+      <div class="metric"><div class="label">Pending Approvals</div><div class="value" id="m_approvals">-</div></div>
+      <div class="metric"><div class="label">System Layer</div><div class="value" id="m_layer">QNT30322</div></div>
+    </div>
+
+    <div class="grid-main">
+      <div class="stack">
+        <div class="panel">
+          <div class="section-title"><h2>Auth + Session</h2><span class="tiny" id="session_hint">No session loaded</span></div>
+          <div class="two-col">
+            <div>
+              <input id="reg_name" placeholder="Display name">
+              <input id="reg_email" placeholder="Email">
+              <input id="reg_password" type="password" placeholder="Password">
+              <button onclick="registerUser()">Register</button>
+            </div>
+            <div>
+              <input id="login_email" placeholder="Email">
+              <input id="login_password" type="password" placeholder="Password">
+              <div class="hero-actions">
+                <button onclick="loginUser()">Login</button>
+                <button class="secondary" onclick="logoutUser()">Logout</button>
+              </div>
+            </div>
+          </div>
+          <pre id="auth_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Operator Workspace</h2><button class="secondary" onclick="loadWorkspace()">Load Workspace</button></div>
+          <div class="three-col">
+            <div>
+              <input id="strategy_name" placeholder="Strategy name">
+              <input id="strategy_symbol" placeholder="Symbol">
+            </div>
+            <div>
+              <select id="strategy_side"><option value="buy">buy</option><option value="sell">sell</option></select>
+              <input id="strategy_qty" type="number" placeholder="Default qty">
+            </div>
+            <div>
+              <button onclick="registerStrategy()">Register Strategy</button>
+              <input id="run_mode" placeholder="Run mode" value="internal">
+              <button class="secondary" onclick="runOnce()">Run My Strategies Once</button>
+            </div>
+          </div>
+          <div class="two-col">
+            <div>
+              <input id="operator_capital" type="number" placeholder="Allocated capital">
+              <button onclick="setCapital()">Set My Capital</button>
+            </div>
+            <div>
+              <input id="toggle_strategy_id" placeholder="Strategy ID to toggle">
+              <select id="toggle_strategy_enabled"><option value="true">enabled</option><option value="false">disabled</option></select>
+              <button class="secondary" onclick="toggleStrategy()">Toggle Strategy</button>
+            </div>
+          </div>
+          <div id="workspace_summary" class="tiny">Workspace not loaded.</div>
+          <pre id="workspace_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Execution Feed</h2><button class="secondary" onclick="loadOrders()">Load Orders</button></div>
+          <div id="orders_table"></div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="panel">
+          <div class="section-title"><h2>Governance + Policy Engine</h2><button class="secondary" onclick="loadGovernance()">Load Governance</button></div>
+          <div class="two-col">
+            <div>
+              <input id="policy_id" placeholder="Policy ID">
+              <input id="policy_threshold" type="number" placeholder="Threshold">
+              <select id="policy_enabled"><option value="true">enabled</option><option value="false">disabled</option></select>
+              <button onclick="updatePolicy()">Update Policy</button>
+            </div>
+            <div>
+              <input id="approval_request_id" placeholder="Approval Request ID">
+              <select id="approval_decision"><option value="APPROVED">APPROVED</option><option value="REJECTED">REJECTED</option></select>
+              <input id="approval_notes" placeholder="Approval notes">
+              <button class="warn" onclick="decideApproval()">Decide Approval</button>
+            </div>
+          </div>
+          <div id="policy_pills"></div>
+          <pre id="gov_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Recent Governance Events</h2><button class="secondary" onclick="loadLedger()">Ledger</button></div>
+          <div id="events_list" class="card-list"></div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="panel">
+          <div class="section-title"><h2>Admin Control Tower</h2><button class="secondary" onclick="loadControlTower()">Load Tower</button></div>
+          <input id="admin_operator_id" placeholder="Target operator ID">
+          <input id="admin_operator_capital" type="number" placeholder="Allocated capital">
+          <button onclick="adminSetCapital()">Admin Set Operator Capital</button>
+          <select id="admin_loop_mode"><option value="internal">internal</option><option value="alpaca">alpaca</option></select>
+          <input id="admin_loop_interval" type="number" value="60" placeholder="Interval seconds">
+          <button class="secondary" onclick="adminStartLoop()">Admin Start Loop</button>
+          <button class="warn" onclick="adminRunAll()">Admin Run All Once</button>
+          <div id="tower_table"></div>
+          <pre id="admin_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Command Center Console</h2><button class="secondary" onclick="loadSnapshot()">Reload Snapshot</button></div>
+          <pre id="snapshot_out" class="log">Ready.</pre>
+        </div>
+      </div>
+    </div>
   </div>
 
-  
   <script>
-    const state = {
-      activeModule: 'overview',
-      me: { logged_in: false },
-      summary: null,
-      autoRefreshHandle: null,
-      inFlightRefresh: false,
-      draftCache: {},
-      feedback: {
-        auth_out: 'Awaiting action.',
-        strategy_out: 'Awaiting action.',
-        capital_out: 'Awaiting action.',
-        policy_out: 'Awaiting action.',
-        approval_out: 'Awaiting action.',
-        admin_out: 'Awaiting action.',
-        ledger_out: 'Press refresh to load governance ledger.',
-      },
-      lastRefreshAt: null,
-      lastRefreshReason: 'startup',
-    };
-
-    const modules = [
-      ['overview', 'Overview'],
-      ['execution', 'Execution'],
-      ['strategies', 'Strategies'],
-      ['capital', 'Capital'],
-      ['governance', 'Governance'],
-      ['approvals', 'Approvals'],
-      ['control', 'Control Tower'],
-      ['logs', 'Ledger / Logs'],
-    ];
-
-    const FORM_HEAVY_MODULES = new Set(['strategies', 'capital', 'governance', 'approvals', 'control']);
-
-    function el(id) {
-      return document.getElementById(id);
-    }
-
+    const fmt = n => (n === null || n === undefined || Number.isNaN(Number(n))) ? '-' : Number(n).toLocaleString(undefined, {maximumFractionDigits: 2});
     async function api(path, method='GET', body=null) {
       const res = await fetch(path, {
         method,
-        headers: { 'Content-Type': 'application/json' },
-        body: body ? JSON.stringify(body) : undefined,
-        cache: 'no-store',
+        headers: {'Content-Type': 'application/json'},
+        body: body ? JSON.stringify(body) : undefined
       });
       const text = await res.text();
       let data;
-      try { data = JSON.parse(text); } catch { data = { raw: text }; }
-      if (!res.ok) throw new Error(data.detail || data.error || text || `HTTP ${res.status}`);
+      try { data = JSON.parse(text); } catch { data = {raw:text}; }
+      if (!res.ok) data.__http_status = res.status;
       return data;
     }
 
-    function currency(v) {
-      const n = Number(v || 0);
-      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(n);
+    function setOut(id, data) {
+      document.getElementById(id).textContent = JSON.stringify(data, null, 2);
     }
 
-    function percent(v) {
-      const n = Number(v || 0);
-      return `${n.toFixed(2)}%`;
+    function renderOrders(data) {
+      const orders = (data && data.orders) ? data.orders.slice(0, 10) : [];
+      document.getElementById('orders_table').innerHTML = orders.length ? `
+        <table class="table">
+          <thead><tr><th>Timestamp</th><th>Symbol</th><th>Side</th><th>Qty</th><th>Notional</th><th>Mode</th></tr></thead>
+          <tbody>${orders.map(o => `<tr><td>${o.timestamp || '-'}</td><td>${o.symbol}</td><td>${o.side}</td><td>${o.qty}</td><td>${fmt(o.notional)}</td><td>${o.mode}</td></tr>`).join('')}</tbody>
+        </table>
+      ` : '<div class="tiny">No orders yet.</div>';
     }
 
-    function pill(text, cls='ok') {
-      return `<span class="pill ${cls}">${text}</span>`;
-    }
-
-    function safe(v) { return v == null || v === '' ? '—' : v; }
-
-    function isEditable(node) {
-      return !!(node && (node.matches?.('input, select, textarea') || node.isContentEditable));
-    }
-
-    function currentViewHasInputs() {
-      return !!document.querySelector('#view input, #view select, #view textarea');
-    }
-
-    function shouldFreezeViewRefresh() {
-      if (!state.me.logged_in) return true;
-      if (document.hidden) return true;
-      if (FORM_HEAVY_MODULES.has(state.activeModule) && currentViewHasInputs()) return true;
-      if (isEditable(document.activeElement)) return true;
-      return false;
-    }
-
-    function captureDrafts(root=document) {
-      root.querySelectorAll('input[id], select[id], textarea[id]').forEach(field => {
-        if (field.type === 'checkbox' || field.type === 'radio') {
-          state.draftCache[field.id] = { checked: field.checked };
-        } else {
-          state.draftCache[field.id] = { value: field.value };
-        }
-      });
-    }
-
-    function restoreDrafts(root=document) {
-      root.querySelectorAll('input[id], select[id], textarea[id]').forEach(field => {
-        const draft = state.draftCache[field.id];
-        if (!draft) return;
-        if (field.type === 'checkbox' || field.type === 'radio') {
-          field.checked = !!draft.checked;
-        } else if (typeof draft.value === 'string' || typeof draft.value === 'number') {
-          field.value = draft.value;
-        }
-      });
-    }
-
-    function clearDrafts(ids) {
-      ids.forEach(id => delete state.draftCache[id]);
-    }
-
-    function syncFeedback() {
-      Object.entries(state.feedback).forEach(([id, text]) => {
-        const node = el(id);
-        if (node) node.textContent = text;
-      });
-    }
-
-    function renderNav() {
-      const nav = el('nav');
-      const isAdmin = !!state.me.is_admin;
-      nav.innerHTML = modules
-        .filter(([id]) => isAdmin || !['governance','approvals','control','logs'].includes(id))
-        .map(([id, label]) => `<button class="${state.activeModule === id ? 'active' : ''}" onclick="activateModule('${id}')">${label}</button>`)
-        .join('');
-    }
-
-    function renderTopbar() {
-      const s = state.summary || {};
-      const o = s.overview || {};
-      const topbar = el('topbar');
-      const live = state.me.logged_in ? (o.broker_connected ? 'BROKER READY' : (o.loop_running ? 'LIVE' : 'READY')) : 'OFFLINE';
-      topbar.innerHTML = [
-        ['System Status', live],
-        ['Total Equity', currency(o.total_equity)],
-        ['Used Capital', currency(o.used_capital)],
-        ['Active Strategies', safe(o.active_strategies)],
-        ['Alerts', safe(o.alerts)],
-      ].map(([label, value]) => `<div class="stat"><div class="label">${label}</div><div class="value">${value}</div></div>`).join('');
-
-      el('sessionName').textContent = state.me.display_name || 'Guest';
-      el('sessionMeta').innerHTML = state.me.logged_in
-        ? `${state.me.email || ''}<br>${state.me.operator_id || ''} ${state.me.is_admin ? '• ADMIN' : '• OPERATOR'}`
-        : 'Register or login to enter the OS';
-    }
-
-    async function refreshSession() {
-      try {
-        state.me = await api('/auth/me');
-      } catch {
-        state.me = { logged_in: false };
-      }
-    }
-
-    async function refreshSummary() {
-      if (!state.me.logged_in) {
-        state.summary = null;
+    function renderTower(snapshot) {
+      const tower = snapshot && snapshot.control_tower ? snapshot.control_tower : null;
+      if (!tower) {
+        document.getElementById('tower_table').innerHTML = '<div class="tiny">Admin-only control tower.</div>';
         return;
       }
-      try {
-        state.summary = await api('/command-center/summary');
-      } catch (err) {
-        state.summary = { error: err.message };
+      const rows = tower.operators || [];
+      document.getElementById('tower_table').innerHTML = rows.length ? `
+        <table class="table">
+          <thead><tr><th>Operator</th><th>Capital</th><th>Used</th><th>Strategies</th><th>Orders</th><th>Loop</th><th>Alerts</th></tr></thead>
+          <tbody>${rows.map(r => `<tr><td>${r.display_name}<div class="tiny">${r.operator_id}</div></td><td>${fmt(r.allocated_capital)}</td><td>${fmt(r.used_capital)}</td><td>${r.strategies}</td><td>${r.orders}</td><td>${r.loop_running ? 'running' : 'idle'}</td><td>${r.alerts}</td></tr>`).join('')}</tbody>
+        </table>
+      ` : '<div class="tiny">No operators registered.</div>';
+    }
+
+    function renderEvents(snapshot) {
+      const events = snapshot?.governance?.recent_events || [];
+      document.getElementById('events_list').innerHTML = events.length ? events.map(ev => `
+        <div class="event">
+          <div><strong>${ev.action}</strong> <span class="pill">${ev.category}</span></div>
+          <div class="meta">${ev.timestamp} · ${ev.actor_email || 'system'} · ${ev.target}</div>
+        </div>
+      `).join('') : '<div class="tiny">No governance events yet.</div>';
+    }
+
+    function renderPolicyPills(snapshot) {
+      const policies = snapshot?.governance?.policies || [];
+      document.getElementById('policy_pills').innerHTML = policies.map(p => `<span class="pill ${p.enabled ? 'good' : 'warn'}">${p.policy_id} · ${p.policy_type} · threshold ${p.threshold} · ${p.enabled ? 'enabled' : 'disabled'}</span>`).join('');
+    }
+
+    function renderWorkspaceSummary(workspace) {
+      if (!workspace || workspace.__http_status) {
+        document.getElementById('workspace_summary').textContent = 'Workspace unavailable.';
+        return;
       }
+      document.getElementById('workspace_summary').innerHTML = `
+        <span class="pill good">${workspace.display_name}</span>
+        <span class="pill">${workspace.operator_id}</span>
+        <span class="pill">${workspace.execution_summary.enabled_strategies} enabled strategies</span>
+        <span class="pill">${workspace.capital.utilization_pct}% utilization</span>
+        <span class="pill warn">${workspace.monitoring.alerts.length} alerts</span>
+      `;
     }
 
-    async function refreshShell({ forceViewRender=false, reason='tick' } = {}) {
-      if (state.inFlightRefresh) return;
-      state.inFlightRefresh = true;
-      try {
-        captureDrafts(document);
-        await refreshSession();
-        await refreshSummary();
-        state.lastRefreshAt = new Date().toISOString();
-        state.lastRefreshReason = reason;
-        renderNav();
-        renderTopbar();
-        if (forceViewRender || !shouldFreezeViewRefresh()) {
-          renderActiveModule();
-        } else {
-          restoreDrafts(document);
-          syncFeedback();
-        }
-      } finally {
-        state.inFlightRefresh = false;
+    function hydrateMetrics(snapshot) {
+      document.getElementById('m_operator').textContent = snapshot?.personal_workspace?.display_name || '-';
+      document.getElementById('m_allocated').textContent = fmt(snapshot?.personal_workspace?.capital?.allocated_capital);
+      document.getElementById('m_used').textContent = fmt(snapshot?.personal_workspace?.capital?.used_capital);
+      document.getElementById('m_approvals').textContent = snapshot?.governance?.pending_approvals ?? '-';
+      document.getElementById('m_layer').textContent = snapshot?.system_health?.layer || 'QNT30322';
+      document.getElementById('session_hint').textContent = snapshot?.session?.logged_in ? `${snapshot.session.display_name} · ${snapshot.session.email}` : 'No active session';
+    }
+
+    async function loadMe() {
+      const data = await api('/auth/me');
+      setOut('auth_out', data);
+      if (!data.__http_status) document.getElementById('session_hint').textContent = data.logged_in ? `${data.display_name} · ${data.email}` : 'No active session';
+      return data;
+    }
+
+    async function loadWorkspace() {
+      const data = await api('/operator/workspace');
+      setOut('workspace_out', data);
+      renderWorkspaceSummary(data);
+      return data;
+    }
+
+    async function loadOrders() {
+      const data = await api('/orders/list');
+      renderOrders(data);
+      return data;
+    }
+
+    async function loadGovernance() {
+      const policies = await api('/policy-engine/policies');
+      const approvals = await api('/approvals/queue');
+      setOut('gov_out', {policies, approvals});
+      if (!policies.__http_status) {
+        document.getElementById('policy_pills').innerHTML = (policies.policies || []).map(p => `<span class="pill ${p.enabled ? 'good' : 'warn'}">${p.policy_id} · ${p.threshold}</span>`).join('');
       }
-    }
-
-    async function boot() {
-      await refreshShell({ forceViewRender: true, reason: 'boot' });
-      if (state.autoRefreshHandle) clearInterval(state.autoRefreshHandle);
-      state.autoRefreshHandle = setInterval(() => {
-        refreshShell({ forceViewRender: false, reason: 'interval' });
-      }, 5000);
-    }
-
-    function activateModule(id) {
-      state.activeModule = id;
-      renderNav();
-      renderActiveModule();
-    }
-
-    function authCard() {
-      return `
-        <div class="grid">
-          <section class="card span-6">
-            <h2>Register Operator</h2>
-            <div class="subtle">Create an operator identity inside Quantora.</div>
-            <input id="reg_name" placeholder="Display name" autocomplete="name">
-            <input id="reg_email" placeholder="Email" autocomplete="username">
-            <input id="reg_password" type="password" placeholder="Password" autocomplete="new-password">
-            <button class="action" onclick="registerUser()">Register + Enter</button>
-          </section>
-          <section class="card span-6">
-            <h2>Login</h2>
-            <div class="subtle">Access the existing operator system.</div>
-            <input id="login_email" placeholder="Email" autocomplete="username">
-            <input id="login_password" type="password" placeholder="Password" autocomplete="current-password">
-            <button class="action" onclick="loginUser()">Login</button>
-            <button class="action secondary" onclick="logoutUser()">Logout</button>
-          </section>
-          <section class="card span-12">
-            <h3>System Response</h3>
-            <pre id="auth_out">${state.feedback.auth_out}</pre>
-          </section>
-        </div>
-      `;
-    }
-
-    function tableRows(items, cols, empty='No records yet.') {
-      if (!items || !items.length) return `<tr><td colspan="${cols.length}" class="muted">${empty}</td></tr>`;
-      return items.map(item => `<tr>${cols.map(c => `<td>${c.render ? c.render(item) : safe(item[c.key])}</td>`).join('')}</tr>`).join('');
-    }
-
-    function renderOverview() {
-      if (!state.me.logged_in) return authCard();
-      const s = state.summary || {};
-      const monitoring = s.monitoring || {};
-      const loop = s.strategy_loop || {};
-      const alerts = monitoring.alerts || [];
-      const source = s.execution?.source || {};
-      const snap = monitoring.latest_snapshot || {};
-      const refreshMeta = state.lastRefreshAt ? `${state.lastRefreshAt} · ${state.lastRefreshReason}` : 'Awaiting refresh';
-      return `
-        <div class="grid">
-          <section class="card span-8">
-            <h2>Overview</h2>
-            <div class="subtle">Single-pane operating view across execution, strategy runtime, capital, and governance.</div>
-            <div class="kpi-row" style="margin-top:14px;">
-              <div class="mini"><div class="mini-label">Broker</div><div class="mini-value">${safe(source.provider || 'internal')}</div></div>
-              <div class="mini"><div class="mini-label">Buying Power</div><div class="mini-value">${currency(s.overview?.buying_power)}</div></div>
-              <div class="mini"><div class="mini-label">Loop Interval</div><div class="mini-value">${safe(loop.interval_seconds)}s</div></div>
-            </div>
-            <div class="footer-note">Account status: ${safe(s.overview?.account_status)} · Runtime heartbeat: ${safe(loop.heartbeat_at)} · Next run: ${safe(loop.next_run_at)}</div>
-          </section>
-          <section class="card span-4">
-            <h2>Auth + Operator</h2>
-            <div class="subtle">Current identity and access level.</div>
-            <pre>${JSON.stringify(state.me, null, 2)}</pre>
-          </section>
-          <section class="card span-6">
-            <h3>Monitoring Snapshot</h3>
-            <div class="kpi-row">
-              <div class="mini"><div class="mini-label">Orders</div><div class="mini-value">${safe(snap.order_count)}</div></div>
-              <div class="mini"><div class="mini-label">Used Capital</div><div class="mini-value">${currency(snap.used_capital)}</div></div>
-              <div class="mini"><div class="mini-label">Utilization</div><div class="mini-value">${percent(snap.utilization_pct)}</div></div>
-            </div>
-            <div class="footer-note">Last update: ${safe(snap.timestamp)} · Refresh engine: ${refreshMeta}</div>
-          </section>
-          <section class="card span-6">
-            <h3>Live Alerts</h3>
-            ${alerts.length ? alerts.map(a => `<div class="mini" style="margin-bottom:10px;">${pill(a.level || 'info', a.level === 'warn' ? 'warn' : 'ok')} <div style="margin-top:10px;">${a.message}</div></div>`).join('') : '<div class="mini">No active alerts.</div>'}
-          </section>
-          <section class="card span-12">
-            <h3>Mission Output</h3>
-            <div class="subtle">QNT30322 now exposes real broker connectivity, account status, and execution visibility.</div>
-          </section>
-        </div>
-      `;
-    }
-
-    function renderExecution() {
-      if (!state.me.logged_in) return authCard();
-      const internalOrders = state.summary?.orders?.orders || [];
-      const execution = state.summary?.execution || {};
-      const source = execution.source || {};
-      const alpacaAccount = execution.alpaca || {};
-      const alpacaPositions = execution.alpaca_positions?.positions || [];
-      const alpacaOrders = execution.alpaca_orders?.orders || [];
-      const brokerError = alpacaAccount.error || execution.alpaca_positions?.error || execution.alpaca_orders?.error;
-      return `
-        <div class="grid">
-          <section class="card span-12">
-            <h2>Execution Layer</h2>
-            <div class="subtle">Real broker state, positions, orders, and internal execution records.</div>
-          </section>
-          <section class="card span-12">
-            <div class="kpi-row">
-              <div class="mini"><div class="mini-label">Broker Connection</div><div class="mini-value">${source.connected ? 'CONNECTED' : 'NOT CONNECTED'}</div></div>
-              <div class="mini"><div class="mini-label">Equity</div><div class="mini-value">${currency(source.equity)}</div></div>
-              <div class="mini"><div class="mini-label">Cash</div><div class="mini-value">${currency(source.cash)}</div></div>
-            </div>
-            <div class="kpi-row" style="margin-top:12px;">
-              <div class="mini"><div class="mini-label">Buying Power</div><div class="mini-value">${currency(source.buying_power)}</div></div>
-              <div class="mini"><div class="mini-label">Provider</div><div class="mini-value">${safe(source.provider)}</div></div>
-              <div class="mini"><div class="mini-label">Mode</div><div class="mini-value">${safe(source.mode)}</div></div>
-            </div>
-            ${brokerError ? `<div class="footer-note" style="color:#f7c46a;">Broker message: ${brokerError}</div>` : `<div class="footer-note">Account status: ${safe(source.account_status)}</div>`}
-          </section>
-          <section class="card span-6">
-            <h3>Alpaca Positions</h3>
-            <table>
-              <thead><tr><th>Symbol</th><th>Qty</th><th>Market Value</th><th>Side</th><th>Unrealized P/L</th></tr></thead>
-              <tbody>
-                ${tableRows(alpacaPositions, [
-                  { key: 'symbol' },
-                  { key: 'qty' },
-                  { render: i => currency(i.market_value) },
-                  { key: 'side' },
-                  { render: i => currency(i.unrealized_pl) },
-                ], source.connected ? 'No live positions in Alpaca.' : 'Connect Alpaca credentials to load positions.')}
-              </tbody>
-            </table>
-          </section>
-          <section class="card span-6">
-            <h3>Alpaca Orders</h3>
-            <table>
-              <thead><tr><th>ID</th><th>Symbol</th><th>Side</th><th>Qty</th><th>Status</th><th>Submitted</th></tr></thead>
-              <tbody>
-                ${tableRows(alpacaOrders, [
-                  { key: 'id' },
-                  { key: 'symbol' },
-                  { key: 'side' },
-                  { key: 'qty' },
-                  { key: 'status' },
-                  { key: 'submitted_at' },
-                ], source.connected ? 'No Alpaca orders found.' : 'Connect Alpaca credentials to load broker orders.')}
-              </tbody>
-            </table>
-          </section>
-          <section class="card span-12">
-            <h3>Quantora Internal Execution Records</h3>
-            <table>
-              <thead><tr><th>Order ID</th><th>Strategy</th><th>Symbol</th><th>Side</th><th>Qty</th><th>Notional</th><th>Status</th><th>Mode</th><th>Timestamp</th></tr></thead>
-              <tbody>
-                ${tableRows(internalOrders, [
-                  { key: 'order_id' },
-                  { key: 'strategy_id' },
-                  { key: 'symbol' },
-                  { key: 'side' },
-                  { key: 'qty' },
-                  { render: i => currency(i.notional) },
-                  { key: 'status' },
-                  { key: 'mode' },
-                  { key: 'timestamp' },
-                ], 'No internal execution records yet.')}
-              </tbody>
-            </table>
-          </section>
-        </div>
-      `;
-    }
-
-    function renderStrategies() {
-      if (!state.me.logged_in) return authCard();
-      const strategies = state.summary?.strategies?.strategies || [];
-      return `
-        <div class="grid">
-          <section class="card span-5">
-            <h2>Register Strategy</h2>
-            <div class="subtle">Persistent strategy registration for the current operator.</div>
-            <input id="strategy_name" placeholder="Strategy name">
-            <input id="strategy_symbol" placeholder="Symbol">
-            <select id="strategy_side"><option value="buy">buy</option><option value="sell">sell</option></select>
-            <input id="strategy_qty" type="number" placeholder="Default qty">
-            <button class="action" onclick="registerStrategy()">Register Strategy</button>
-            <pre id="strategy_out">${state.feedback.strategy_out}</pre>
-          </section>
-          <section class="card span-7">
-            <h2>Strategy Registry</h2>
-            <table>
-              <thead><tr><th>ID</th><th>Name</th><th>Symbol</th><th>Side</th><th>Qty</th><th>Enabled</th><th>Created</th></tr></thead>
-              <tbody>
-                ${tableRows(strategies, [
-                  { key: 'strategy_id' },
-                  { key: 'name' },
-                  { key: 'symbol' },
-                  { key: 'side' },
-                  { key: 'default_qty' },
-                  { render: i => i.enabled ? pill('ENABLED','ok') : pill('DISABLED','bad') },
-                  { key: 'created_at' },
-                ], 'No strategies registered yet.')}
-              </tbody>
-            </table>
-          </section>
-        </div>
-      `;
-    }
-
-    function renderCapital() {
-      if (!state.me.logged_in) return authCard();
-      const capital = state.summary?.capital?.operator || {};
-      return `
-        <div class="grid">
-          <section class="card span-5">
-            <h2>Capital Allocation</h2>
-            <div class="subtle">Operator-level capital configuration and capacity monitoring.</div>
-            <input id="operator_capital" type="number" placeholder="Allocated capital">
-            <button class="action" onclick="setOperatorCapital()">Set My Operator Capital</button>
-            <pre id="capital_out">${state.feedback.capital_out}</pre>
-          </section>
-          <section class="card span-7">
-            <h2>Capital View</h2>
-            <div class="kpi-row">
-              <div class="mini"><div class="mini-label">Allocated</div><div class="mini-value">${currency(capital.allocated_capital)}</div></div>
-              <div class="mini"><div class="mini-label">Used</div><div class="mini-value">${currency(capital.used_capital)}</div></div>
-              <div class="mini"><div class="mini-label">Remaining</div><div class="mini-value">${currency(capital.remaining_capital)}</div></div>
-            </div>
-            <pre style="margin-top:14px;">${JSON.stringify(capital, null, 2)}</pre>
-          </section>
-        </div>
-      `;
-    }
-
-    function renderGovernance() {
-      if (!state.me.logged_in) return authCard();
-      if (!state.me.is_admin) return restrictedCard('Governance policies require admin access.');
-      const policies = state.summary?.policies?.policies || [];
-      return `
-        <div class="grid">
-          <section class="card span-5">
-            <h2>Policy Engine</h2>
-            <input id="policy_id" placeholder="Policy ID">
-            <input id="policy_threshold" type="number" placeholder="Threshold">
-            <select id="policy_enabled"><option value="true">enabled</option><option value="false">disabled</option></select>
-            <button class="action" onclick="updatePolicy()">Update Policy</button>
-            <pre id="policy_out">${state.feedback.policy_out}</pre>
-          </section>
-          <section class="card span-7">
-            <h2>Policy Registry</h2>
-            <table>
-              <thead><tr><th>ID</th><th>Name</th><th>Type</th><th>Threshold</th><th>Status</th></tr></thead>
-              <tbody>
-                ${tableRows(policies, [
-                  { key: 'policy_id' },
-                  { key: 'name' },
-                  { key: 'policy_type' },
-                  { key: 'threshold' },
-                  { render: i => i.enabled ? pill('ENABLED','ok') : pill('DISABLED','bad') },
-                ], 'No policies available.')}
-              </tbody>
-            </table>
-          </section>
-        </div>
-      `;
-    }
-
-    function renderApprovals() {
-      if (!state.me.logged_in) return authCard();
-      if (!state.me.is_admin) return restrictedCard('Approval queue requires admin access.');
-      const requests = state.summary?.approvals?.requests || [];
-      return `
-        <div class="grid">
-          <section class="card span-5">
-            <h2>Approval Decisioning</h2>
-            <input id="approval_request_id" placeholder="Approval Request ID">
-            <select id="approval_decision"><option value="APPROVED">APPROVED</option><option value="REJECTED">REJECTED</option></select>
-            <input id="approval_notes" placeholder="Notes">
-            <button class="action success" onclick="decideApproval()">Submit Decision</button>
-            <pre id="approval_out">${state.feedback.approval_out}</pre>
-          </section>
-          <section class="card span-7">
-            <h2>Approval Queue</h2>
-            <table>
-              <thead><tr><th>Request ID</th><th>Type</th><th>Target</th><th>Status</th><th>Created By</th><th>Created At</th></tr></thead>
-              <tbody>
-                ${tableRows(requests, [
-                  { key: 'request_id' },
-                  { key: 'request_type' },
-                  { key: 'target' },
-                  { render: i => i.status === 'PENDING' ? pill('PENDING','warn') : i.status === 'APPROVED' ? pill('APPROVED','ok') : pill('REJECTED','bad') },
-                  { key: 'created_by_email' },
-                  { key: 'created_at' },
-                ], 'No approval requests in queue.')}
-              </tbody>
-            </table>
-          </section>
-        </div>
-      `;
-    }
-
-    function renderControl() {
-      if (!state.me.logged_in) return authCard();
-      if (!state.me.is_admin) return restrictedCard('Control Tower requires admin access.');
-      const tower = state.summary?.control_tower || { totals: {}, operators: [] };
-      return `
-        <div class="grid">
-          <section class="card span-12">
-            <h2>Control Tower</h2>
-            <div class="kpi-row">
-              <div class="mini"><div class="mini-label">Operators</div><div class="mini-value">${safe(tower.totals.operators)}</div></div>
-              <div class="mini"><div class="mini-label">Allocated Capital</div><div class="mini-value">${currency(tower.totals.allocated_capital)}</div></div>
-              <div class="mini"><div class="mini-label">Running Loops</div><div class="mini-value">${safe(tower.totals.running_loops)}</div></div>
-            </div>
-          </section>
-          <section class="card span-5">
-            <h3>Admin Actions</h3>
-            <input id="admin_operator_id" placeholder="Target operator ID">
-            <input id="admin_operator_capital" type="number" placeholder="Allocated capital">
-            <button class="action" onclick="adminSetCapital()">Admin Set Operator Capital</button>
-            <select id="admin_loop_mode"><option value="internal">internal paper</option><option value="alpaca">alpaca paper</option></select>
-            <input id="admin_loop_interval" type="number" value="60" placeholder="Interval seconds">
-            <button class="action" onclick="adminStartLoop()">Admin Start Loop</button>
-            <button class="action secondary" onclick="adminRunAll()">Admin Run All Once</button>
-            <pre id="admin_out">${state.feedback.admin_out}</pre>
-          </section>
-          <section class="card span-7">
-            <h3>Operator Fleet</h3>
-            <table>
-              <thead><tr><th>Operator</th><th>Email</th><th>Strategies</th><th>Orders</th><th>Allocated</th><th>Used</th><th>Alerts</th><th>Loop</th></tr></thead>
-              <tbody>
-                ${tableRows(tower.operators, [
-                  { render: i => `${safe(i.display_name)}<br><span class="muted">${safe(i.operator_id)}</span>` },
-                  { key: 'email' },
-                  { key: 'strategies' },
-                  { key: 'orders' },
-                  { render: i => currency(i.allocated_capital) },
-                  { render: i => currency(i.used_capital) },
-                  { key: 'alerts' },
-                  { render: i => i.loop_running ? pill('RUNNING','ok') : pill('STOPPED','warn') },
-                ], 'No operators registered yet.')}
-              </tbody>
-            </table>
-          </section>
-        </div>
-      `;
-    }
-
-    function renderLogs() {
-      if (!state.me.logged_in) return authCard();
-      if (!state.me.is_admin) return restrictedCard('Ledger visibility requires admin access.');
-      return `
-        <div class="grid">
-          <section class="card span-4">
-            <h2>Ledger Summary</h2>
-            <pre>${JSON.stringify(state.summary?.ledger_summary || {}, null, 2)}</pre>
-          </section>
-          <section class="card span-8">
-            <h2>Governance Ledger</h2>
-            <div class="toolbar"><button class="action secondary" onclick="loadLedger()">Refresh Ledger</button></div>
-            <pre id="ledger_out">${state.feedback.ledger_out}</pre>
-          </section>
-        </div>
-      `;
-    }
-
-    function restrictedCard(message) {
-      return `<div class="grid"><section class="card span-12"><h2>Restricted</h2><div class="subtle">${message}</div></section></div>`;
-    }
-
-    function renderActiveModule() {
-      const view = el('view');
-      captureDrafts(view);
-      const map = {
-        overview: renderOverview,
-        execution: renderExecution,
-        strategies: renderStrategies,
-        capital: renderCapital,
-        governance: renderGovernance,
-        approvals: renderApprovals,
-        control: renderControl,
-        logs: renderLogs,
-      };
-      view.innerHTML = (map[state.activeModule] || renderOverview)();
-      restoreDrafts(view);
-      syncFeedback();
-    }
-
-    async function action(path, body, targetId, options={}) {
-      try {
-        const data = await api(path, 'POST', body);
-        state.feedback[targetId] = JSON.stringify(data, null, 2);
-        if (options.clearDraftIds) clearDrafts(options.clearDraftIds);
-      } catch (err) {
-        state.feedback[targetId] = JSON.stringify({ error: err.message }, null, 2);
-      }
-      await refreshShell({ forceViewRender: true, reason: `action:${path}` });
-    }
-
-    async function registerUser() {
-      await action('/auth/register', {
-        display_name: el('reg_name')?.value || '',
-        email: el('reg_email')?.value || '',
-        password: el('reg_password')?.value || '',
-      }, 'auth_out', { clearDraftIds: ['reg_name', 'reg_email', 'reg_password', 'login_email', 'login_password'] });
-    }
-
-    async function loginUser() {
-      await action('/auth/login', {
-        email: el('login_email')?.value || '',
-        password: el('login_password')?.value || '',
-      }, 'auth_out', { clearDraftIds: ['login_email', 'login_password'] });
-    }
-
-    async function logoutUser() {
-      await action('/auth/logout', {}, 'auth_out', { clearDraftIds: ['login_email', 'login_password', 'reg_name', 'reg_email', 'reg_password'] });
-    }
-
-    async function registerStrategy() {
-      await action('/strategies/register', {
-        name: el('strategy_name')?.value || '',
-        symbol: el('strategy_symbol')?.value || '',
-        side: el('strategy_side')?.value || 'buy',
-        default_qty: parseInt(el('strategy_qty')?.value || '0', 10),
-        enabled: true,
-      }, 'strategy_out');
-    }
-
-    async function setOperatorCapital() {
-      await action('/allocator/operator-capital/set', {
-        allocated_capital: parseFloat(el('operator_capital')?.value || '0'),
-      }, 'capital_out');
-    }
-
-    async function updatePolicy() {
-      await action('/policy-engine/policies/update', {
-        policy_id: el('policy_id')?.value || '',
-        threshold: parseFloat(el('policy_threshold')?.value || '0'),
-        enabled: (el('policy_enabled')?.value || 'true') === 'true',
-      }, 'policy_out');
-    }
-
-    async function decideApproval() {
-      await action('/approvals/decision', {
-        request_id: el('approval_request_id')?.value || '',
-        decision: el('approval_decision')?.value || 'APPROVED',
-        notes: el('approval_notes')?.value || '',
-      }, 'approval_out');
-    }
-
-    async function adminSetCapital() {
-      await action('/admin/operator-capital/set', {
-        operator_id: el('admin_operator_id')?.value || '',
-        allocated_capital: parseFloat(el('admin_operator_capital')?.value || '0'),
-      }, 'admin_out');
-    }
-
-    async function adminStartLoop() {
-      await action('/admin/operator-loop/start', {
-        operator_id: el('admin_operator_id')?.value || '',
-        execution_mode: el('admin_loop_mode')?.value || 'internal',
-        interval_seconds: parseInt(el('admin_loop_interval')?.value || '60', 10),
-      }, 'admin_out');
-    }
-
-    async function adminRunAll() {
-      await action('/admin/run-all-once', {}, 'admin_out');
+      return {policies, approvals};
     }
 
     async function loadLedger() {
-      try {
-        const data = await api('/governance/ledger');
-        state.feedback.ledger_out = JSON.stringify(data, null, 2);
-      } catch (err) {
-        state.feedback.ledger_out = JSON.stringify({ error: err.message }, null, 2);
-      }
-      syncFeedback();
+      const ledger = await api('/governance/ledger');
+      if (!ledger.__http_status) renderEvents({governance:{recent_events: ledger.events || []}});
+      setOut('gov_out', ledger);
+      return ledger;
     }
 
-    document.addEventListener('input', event => {
-      const target = event.target;
-      if (!target || !target.id) return;
-      if (target.matches('input, select, textarea')) {
-        if (target.type === 'checkbox' || target.type === 'radio') {
-          state.draftCache[target.id] = { checked: target.checked };
-        } else {
-          state.draftCache[target.id] = { value: target.value };
-        }
-      }
-    });
+    async function loadControlTower() {
+      const data = await api('/admin/control-tower');
+      setOut('admin_out', data);
+      renderTower({control_tower: data});
+      return data;
+    }
 
-    document.addEventListener('change', event => {
-      const target = event.target;
-      if (!target || !target.id) return;
-      if (target.matches('input, select, textarea')) {
-        if (target.type === 'checkbox' || target.type === 'radio') {
-          state.draftCache[target.id] = { checked: target.checked };
-        } else {
-          state.draftCache[target.id] = { value: target.value };
-        }
+    async function loadSnapshot() {
+      const data = await api('/command-center/snapshot');
+      setOut('snapshot_out', data);
+      if (!data.__http_status) {
+        hydrateMetrics(data);
+        renderTower(data);
+        renderEvents(data);
+        renderPolicyPills(data);
+        renderWorkspaceSummary(data.personal_workspace);
+        renderOrders({orders: data.personal_workspace?.orders || []});
       }
-    });
+      return data;
+    }
 
-    boot();
+    async function refreshAll() {
+      const snap = await loadSnapshot();
+      if (snap.__http_status) {
+        await loadMe();
+        await loadWorkspace();
+        await loadOrders();
+      }
+    }
+
+    async function registerUser() {
+      const data = await api('/auth/register', 'POST', {display_name: reg_name.value, email: reg_email.value, password: reg_password.value});
+      setOut('auth_out', data);
+      await refreshAll();
+    }
+
+    async function loginUser() {
+      const data = await api('/auth/login', 'POST', {email: login_email.value, password: login_password.value});
+      setOut('auth_out', data);
+      await refreshAll();
+    }
+
+    async function logoutUser() {
+      const data = await api('/auth/logout', 'POST', {});
+      setOut('auth_out', data);
+      await loadMe();
+    }
+
+    async function registerStrategy() {
+      const data = await api('/strategies/register', 'POST', {
+        name: strategy_name.value,
+        symbol: strategy_symbol.value,
+        side: strategy_side.value,
+        default_qty: parseInt(strategy_qty.value || '0', 10),
+        enabled: true
+      });
+      setOut('workspace_out', data);
+      await refreshAll();
+    }
+
+    async function toggleStrategy() {
+      const data = await api('/strategies/toggle', 'POST', {
+        strategy_id: toggle_strategy_id.value,
+        enabled: toggle_strategy_enabled.value === 'true'
+      });
+      setOut('workspace_out', data);
+      await refreshAll();
+    }
+
+    async function setCapital() {
+      const data = await api('/allocator/operator-capital/set', 'POST', {allocated_capital: parseFloat(operator_capital.value || '0')});
+      setOut('workspace_out', data);
+      await refreshAll();
+    }
+
+    async function runOnce() {
+      const data = await api('/operator/run-once', 'POST', {execution_mode: run_mode.value || 'internal'});
+      setOut('workspace_out', data);
+      await refreshAll();
+    }
+
+    async function updatePolicy() {
+      const data = await api('/policy-engine/policies/update', 'POST', {
+        policy_id: policy_id.value,
+        threshold: parseFloat(policy_threshold.value || '0'),
+        enabled: policy_enabled.value === 'true'
+      });
+      setOut('gov_out', data);
+      await refreshAll();
+    }
+
+    async function decideApproval() {
+      const data = await api('/approvals/decision', 'POST', {
+        request_id: approval_request_id.value,
+        decision: approval_decision.value,
+        notes: approval_notes.value
+      });
+      setOut('gov_out', data);
+      await refreshAll();
+    }
+
+    async function adminSetCapital() {
+      const data = await api('/admin/operator-capital/set', 'POST', {
+        operator_id: admin_operator_id.value,
+        allocated_capital: parseFloat(admin_operator_capital.value || '0')
+      });
+      setOut('admin_out', data);
+      await refreshAll();
+    }
+
+    async function adminStartLoop() {
+      const data = await api('/admin/operator-loop/start', 'POST', {
+        operator_id: admin_operator_id.value,
+        execution_mode: admin_loop_mode.value,
+        interval_seconds: parseInt(admin_loop_interval.value || '60', 10)
+      });
+      setOut('admin_out', data);
+      await refreshAll();
+    }
+
+    async function adminRunAll() {
+      const data = await api('/admin/run-all-once', 'POST', {});
+      setOut('admin_out', data);
+      await refreshAll();
+    }
+
+    loadMe();
   </script>
-
 </body>
 </html>

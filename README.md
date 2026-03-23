@@ -1,39 +1,27 @@
 # Quantora QNT30322 Unified Command Center
 
-Institutional-grade unified operating surface for Quantora.
+This mission extends QNT30321 without resetting the system.
 
-## Included systems
-- Auth + operator system
-- Strategy registration and monitoring
-- Capital allocation view and controls
-- Governance policy engine
-- Approval workflows
-- Control tower
-- Governance ledger
-
-## Mission objective
-QNT30322 unifies the existing Quantora systems into one command center UI without resetting backend logic.
+## What is included
+- Unified single-screen command center UI
+- Preserved auth, strategy registration, capital allocation, policy engine, approvals, governance ledger, and admin control tower
+- New command-center snapshot endpoint for one-call system state hydration
+- Operator workspace and execution feed on the same operating surface
 
 ## Run locally
-- Windows: `START_QUANTORA.bat`
-- Mac: `0_START_ALL_MAC.command`
+### macOS
+- Double-click `0_START_ALL_MAC.command`
 
-## Default local URLs
-- App: `http://127.0.0.1:8010/`
-- API docs: `http://127.0.0.1:8010/docs`
-- Health: `http://127.0.0.1:8010/health`
+### Windows
+- Double-click `START_QUANTORA.bat`
 
+## Manual backend start
+```bash
+cd backend
+python3 -m pip install -r requirements.txt
+python3 -m uvicorn app.main:app --host 127.0.0.1 --port 8010 --reload
+```
 
-## Alpaca environment variables
-
-Set these in Railway or your shell before starting the backend:
-
-- `ALPACA_API_KEY`
-- `ALPACA_SECRET_KEY`
-- `ALPACA_LIVE=false` for paper trading, `true` for live
-- optional `ALPACA_BASE_URL` to override the default Alpaca endpoint
-
-New endpoints:
-- `/api/alpaca/account`
-- `/api/alpaca/positions`
-- `/api/alpaca/orders`
+Open:
+- http://127.0.0.1:8010/
+- http://127.0.0.1:8010/docs

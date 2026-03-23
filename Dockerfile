@@ -3,5 +3,5 @@ WORKDIR /app
 COPY backend /app/backend
 COPY frontend /app/frontend
 RUN pip install --no-cache-dir -r /app/backend/requirements.txt
-EXPOSE 8080
-CMD ["python", "-m", "uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+EXPOSE 8010
+CMD ["python", "-m", "uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--port", "8010"]

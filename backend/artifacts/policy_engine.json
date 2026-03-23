@@ -16,7 +16,7 @@
     },
     {
       "policy_id": "POL-003",
-      "name": "Fast loop starts require approval",
+      "name": "Loop start below 300s requires approval",
       "policy_type": "loop_start",
       "threshold": 300,
       "enabled": true
