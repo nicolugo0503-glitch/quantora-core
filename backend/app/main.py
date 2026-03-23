@@ -19,7 +19,7 @@ PROJECT_DIR = BACKEND_DIR.parent
 ARTIFACTS_DIR = BACKEND_DIR / "artifacts"
 FRONTEND_DIR = PROJECT_DIR / "frontend"
 
-app = FastAPI(title="Quantora QNT30323A Operator Context Wiring Hotfix", version="30323A")
+app = FastAPI(title="Quantora QNT30324C Broker Capital Metrics Normalization", version="30324C")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -1267,6 +1267,7 @@ def run_strategies_for_state(state, execution_mode, actor_email, actor_operator_
 def build_operator_workspace(state):
     monitoring = evaluate_monitoring(state)
     engine = summarize_strategy_engine(state)
+    capital = build_capital_context(state)
     save_operator_state(state)
     orders = state["orders"]["orders"][:12]
     return {
@@ -1274,11 +1275,17 @@ def build_operator_workspace(state):
         "display_name": state["display_name"],
         "capital": {
             **state["allocator_caps"]["operator"],
-            "mode": state.get("capital_source", {}).get("mode", "internal"),
-            "label": monitoring["latest_snapshot"].get("capital_label", "internal"),
-            "used_capital": monitoring["latest_snapshot"].get("used_capital", 0),
-            "remaining_capital": monitoring["latest_snapshot"].get("remaining_capital", 0),
-            "utilization_pct": monitoring["latest_snapshot"].get("utilization_pct", 0),
+            "allocated_capital": capital.get("allocated_capital", state["allocator_caps"]["operator"].get("allocated_capital", 0)),
+            "mode": capital.get("mode", state.get("capital_source", {}).get("mode", "internal")),
+            "label": capital.get("label", monitoring["latest_snapshot"].get("capital_label", "internal")),
+            "used_capital": capital.get("used_capital", monitoring["latest_snapshot"].get("used_capital", 0)),
+            "remaining_capital": capital.get("remaining_capital", monitoring["latest_snapshot"].get("remaining_capital", 0)),
+            "utilization_pct": capital.get("utilization_pct", monitoring["latest_snapshot"].get("utilization_pct", 0)),
+            "current_equity": capital.get("current_equity", 0),
+            "cash": capital.get("cash", 0),
+            "buying_power": capital.get("buying_power", 0),
+            "valid": capital.get("valid", True),
+            "connected": capital.get("connected", True),
         },
         "capital_source": state.get("capital_source", default_capital_source()),
         "strategies": engine,
@@ -1294,6 +1301,47 @@ def build_operator_workspace(state):
             "total_orders": state["strategy_loop"].get("total_orders", 0),
             "realized_pnl": engine["portfolio_realized_pnl"],
             "unrealized_pnl": engine["portfolio_unrealized_pnl"],
+        },
+    }
+
+
+def build_top_bar_metrics(snapshot):
+    workspace = snapshot.get("personal_workspace", {}) or {}
+    capital = workspace.get("capital", {}) or {}
+    performance = (snapshot.get("performance", {}) or {}).get("summary", {}) or {}
+    broker = snapshot.get("broker", {}) or {}
+    account = broker.get("account", {}) or {}
+    mode = (capital.get("mode") or snapshot.get("capital_source", {}).get("mode") or "internal").lower()
+    label = capital.get("label") or snapshot.get("risk_engine", {}).get("capital_source", {}).get("label") or "internal"
+
+    if mode == "broker":
+        return {
+            "mode": "broker",
+            "source_display": f"broker / {label}",
+            "cards": {
+                "operator": {"label": "Operator", "value": workspace.get("display_name") or "-"},
+                "primary_1": {"label": "Broker Equity", "value": round(as_float(capital.get("current_equity") or account.get("equity"), 0.0), 2)},
+                "primary_2": {"label": "Exposure", "value": round(as_float(capital.get("used_capital"), 0.0), 2)},
+                "primary_3": {"label": "Buying Power", "value": round(as_float(capital.get("buying_power") or account.get("buying_power") or account.get("regt_buying_power"), 0.0), 2)},
+                "strategies": {"label": "Running Strategies", "value": snapshot.get("strategy_engine", {}).get("running_strategies", 0)},
+                "pnl": {"label": "Realized PnL", "value": round(as_float(performance.get("realized_pnl"), 0.0), 2)},
+                "risk": {"label": "Risk State", "value": snapshot.get("risk_engine", {}).get("status") or "SAFE"},
+                "source": {"label": "Broker Cash", "value": round(as_float(capital.get("cash") or account.get("cash"), 0.0), 2)},
+            },
+        }
+
+    return {
+        "mode": "internal",
+        "source_display": f"internal / {label}",
+        "cards": {
+            "operator": {"label": "Operator", "value": workspace.get("display_name") or "-"},
+            "primary_1": {"label": "Allocated Capital", "value": round(as_float(capital.get("allocated_capital"), 0.0), 2)},
+            "primary_2": {"label": "Used Capital", "value": round(as_float(capital.get("used_capital"), 0.0), 2)},
+            "primary_3": {"label": "Remaining Capital", "value": round(as_float(capital.get("remaining_capital"), 0.0), 2)},
+            "strategies": {"label": "Running Strategies", "value": snapshot.get("strategy_engine", {}).get("running_strategies", 0)},
+            "pnl": {"label": "Realized PnL", "value": round(as_float(performance.get("realized_pnl"), 0.0), 2)},
+            "risk": {"label": "Risk State", "value": snapshot.get("risk_engine", {}).get("status") or "SAFE"},
+            "source": {"label": "Capital Source", "value": f"internal / {label}"},
         },
     }
 
@@ -1328,7 +1376,7 @@ def build_command_center_snapshot(session):
     snapshot = {
         "session": session_payload,
         "north_star": {
-            "mission": "QNT30323A Operator Context Wiring Hotfix",
+            "mission": "QNT30324C Broker Capital Metrics Normalization",
             "system": "Quantora multi-layer institutional trading operating system",
             "timestamp": now_iso(),
         },
@@ -1343,11 +1391,12 @@ def build_command_center_snapshot(session):
             "status": "ok",
             "registered_users": len(users),
             "policies_enabled": len([p for p in governance["policies"] if p.get("enabled")]),
-            "layer": "qnt30323a-operator-context-wiring-hotfix",
+            "layer": "qnt30324c-broker-capital-metrics-normalization",
             "broker_status": broker.get("last_status"),
             "admin_ready": session_payload.get("is_admin"),
         },
     }
+    snapshot["top_bar"] = build_top_bar_metrics(snapshot)
     if session_payload.get("is_admin"):
         try:
             snapshot["control_tower"] = control_tower_view()
@@ -1621,7 +1670,7 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 # -------------------------
 @app.get("/health")
 def health():
-    return {"status": "ok", "layer": "qnt30323a-operator-context-wiring-hotfix"}
+    return {"status": "ok", "layer": "qnt30324c-broker-capital-metrics-normalization"}
 
 
 @app.post("/auth/register")
@@ -2120,9 +2169,9 @@ def approvals_decision(payload: ApprovalDecisionRequest, admin=Depends(require_a
 @app.get("/version")
 def version():
     return {
-        "mission": "QNT30323A Operator Context Wiring Hotfix",
-        "layer": "qnt30323a-operator-context-wiring-hotfix",
-        "frontend": "qnt30323a",
+        "mission": "QNT30324C Broker Capital Metrics Normalization",
+        "layer": "qnt30324c-broker-capital-metrics-normalization",
+        "frontend": "qnt30324c",
         "cache_policy": NO_CACHE_HEADERS["Cache-Control"],
         "timestamp": now_iso(),
     }

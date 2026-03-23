@@ -1,4 +1,4 @@
-# Quantora QNT30323A - Operator Context Wiring Hotfix
+# Quantora QNT30324C - Broker Capital Metrics Normalization
 
 This package extends QNT30324B and repairs operator identity propagation across Quantora.
 

@@ -1,7 +1,7 @@
 {
-  "logged_in": true,
-  "display_name": "Nico",
-  "operator_id": "operator_0A7D760E",
-  "email": "nicolugo0503@gmail.com",
-  "is_admin": true
+  "logged_in": false,
+  "display_name": null,
+  "operator_id": null,
+  "email": null,
+  "is_admin": false
 }

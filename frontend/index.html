@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Quantora QNT30323A Operator Context Wiring Hotfix</title>
+  <title>Quantora QNT30324C Broker Capital Metrics Normalization</title>
   <style>
     :root {
       --bg: #07111f;
@@ -70,9 +70,9 @@
   <div class="shell">
     <div class="hero">
       <div>
-        <h1 style="margin:0 0 10px">Quantora Unified Command Center · Operator Context Wiring Hotfix</h1>
+        <h1 style="margin:0 0 10px">Quantora Unified Command Center · Broker Capital Metrics Normalization</h1>
         <div class="sub">
-          QNT30323A repairs operator identity propagation across Quantora. Strategy, workspace, and snapshot flows now recover operator context from session state and migrate legacy operator artifacts safely.
+          QNT30324C normalizes broker-mode accounting language across the command center. Broker mode now surfaces broker-native summary metrics: equity, exposure, buying power, and cash, while internal mode keeps allocation-driven labels.
         </div>
       </div>
       <div class="hero-actions">
@@ -85,14 +85,14 @@
 
     <div class="metric-grid">
       <div class="metric"><div class="label">Operator</div><div class="value" id="m_operator">-</div></div>
-      <div class="metric"><div class="label">Allocated Capital</div><div class="value" id="m_allocated">-</div></div>
-      <div class="metric"><div class="label">Used Capital</div><div class="value" id="m_used">-</div></div>
-      <div class="metric"><div class="label">Remaining Capital</div><div class="value" id="m_remaining">-</div></div>
+      <div class="metric"><div class="label" id="label_allocated">Allocated Capital</div><div class="value" id="m_allocated">-</div></div>
+      <div class="metric"><div class="label" id="label_used">Used Capital</div><div class="value" id="m_used">-</div></div>
+      <div class="metric"><div class="label" id="label_remaining">Remaining Capital</div><div class="value" id="m_remaining">-</div></div>
       <div class="metric"><div class="label">Running Strategies</div><div class="value" id="m_running">-</div></div>
       <div class="metric"><div class="label">Realized PnL</div><div class="value" id="m_realized">-</div></div>
       <div class="metric"><div class="label">Risk State</div><div class="value" id="m_risk">-</div></div>
-      <div class="metric"><div class="label">Capital Source</div><div class="value" id="m_capital_source">-</div></div>
-      <div class="metric"><div class="label">Layer</div><div class="value" id="m_layer">QNT30323A</div></div>
+      <div class="metric"><div class="label" id="label_capital_source">Capital Source</div><div class="value" id="m_capital_source">-</div></div>
+      <div class="metric"><div class="label">Layer</div><div class="value" id="m_layer">QNT30324C</div></div>
     </div>
 
     <div class="grid-main">
@@ -411,13 +411,22 @@ async function loadWorkspace(){
       {label:`provider ${data.capital_source?.provider || 'internal'}`},
       {label:`risk ${(data.risk_engine?.status || 'SAFE').toLowerCase()}`, className:(data.risk_engine?.status || 'SAFE') === 'UNKNOWN' ? 'warn' : 'good'}
     ]));
-    setHTML('capital_pills', pills([
+    const brokerMode = (data.capital?.mode || data.capital_source?.mode || 'internal') === 'broker';
+    const capitalPills = brokerMode ? [
+      {label:`equity ${fmt(data.capital.current_equity)}`},
+      {label:`exposure ${fmt(data.capital.used_capital)}`},
+      {label:`buying power ${fmt(data.capital.buying_power)}`},
+      {label:`cash ${fmt(data.capital.cash)}`},
+      {label:`utilization ${fmt(data.capital.utilization_pct)}%`, className: (Number(data.capital.utilization_pct) >= 80 ? 'warn' : 'good')},
+      {label:`alerts ${(data.monitoring?.alerts || []).length}`, className: ((data.monitoring?.alerts || []).length ? 'warn' : 'good')}
+    ] : [
       {label:`allocated ${fmt(data.capital.allocated_capital)}`},
       {label:`used ${fmt(data.capital.used_capital)}`},
       {label:`remaining ${fmt(data.capital.remaining_capital)}`},
       {label:`utilization ${fmt(data.capital.utilization_pct)}%`, className: (Number(data.capital.utilization_pct) >= 80 ? 'warn' : 'good')},
       {label:`alerts ${(data.monitoring?.alerts || []).length}`, className: ((data.monitoring?.alerts || []).length ? 'warn' : 'good')}
-    ]));
+    ];
+    setHTML('capital_pills', pills(capitalPills));
   }
   return data;
 }
@@ -667,15 +676,37 @@ async function loadSnapshot(){
   const data = await api('/command-center/snapshot');
   setText('snapshot_out', data);
   const ws = data.personal_workspace || {};
-  document.getElementById('m_operator').textContent = ws.display_name || '-';
-  document.getElementById('m_allocated').textContent = fmt(ws.capital?.allocated_capital);
-  document.getElementById('m_used').textContent = fmt(ws.capital?.used_capital);
-  document.getElementById('m_remaining').textContent = fmt(ws.capital?.remaining_capital);
-  document.getElementById('m_running').textContent = data.strategy_engine?.running_strategies ?? '-';
-  document.getElementById('m_realized').textContent = fmt(data.strategy_engine?.portfolio_realized_pnl);
-  document.getElementById('m_layer').textContent = data.system_health?.layer || 'QNT30323A';
-  document.getElementById('m_capital_source').textContent = `${data.capital_source?.mode || data.personal_workspace?.capital_source?.mode || '-'} / ${data.risk_engine?.capital_source?.label || data.personal_workspace?.capital?.label || '-'}`;
-  document.getElementById('m_risk').textContent = data.risk_engine?.status || (data.risk_engine?.config?.kill_switch_active ? 'LOCKED' : (data.risk_engine?.breaches?.length ? 'BREACH' : 'SAFE'));
+  const capital = ws.capital || {};
+  const topBar = data.top_bar || {};
+  const cards = topBar.cards || {};
+  const capitalMode = (topBar.mode || capital.mode || data.capital_source?.mode || 'internal').toLowerCase();
+  const sourceDisplay = topBar.source_display || `${data.capital_source?.mode || data.personal_workspace?.capital_source?.mode || '-'} / ${data.risk_engine?.capital_source?.label || data.personal_workspace?.capital?.label || '-'}`;
+
+  document.getElementById('m_operator').textContent = cards.operator?.value || ws.display_name || '-';
+  document.getElementById('m_running').textContent = cards.strategies?.value ?? data.strategy_engine?.running_strategies ?? '-';
+  document.getElementById('m_realized').textContent = fmt(cards.pnl?.value ?? data.strategy_engine?.portfolio_realized_pnl);
+  document.getElementById('m_layer').textContent = data.system_health?.layer || 'QNT30324C';
+  document.getElementById('m_risk').textContent = cards.risk?.value || data.risk_engine?.status || (data.risk_engine?.config?.kill_switch_active ? 'LOCKED' : (data.risk_engine?.breaches?.length ? 'BREACH' : 'SAFE'));
+
+  if (capitalMode === 'broker') {
+    document.getElementById('label_allocated').textContent = 'Broker Equity';
+    document.getElementById('label_used').textContent = 'Exposure';
+    document.getElementById('label_remaining').textContent = 'Buying Power';
+    document.getElementById('label_capital_source').textContent = 'Broker Cash';
+    document.getElementById('m_allocated').textContent = fmt(cards.primary_1?.value ?? capital.current_equity ?? capital.allocated_capital);
+    document.getElementById('m_used').textContent = fmt(cards.primary_2?.value ?? capital.used_capital);
+    document.getElementById('m_remaining').textContent = fmt(cards.primary_3?.value ?? capital.buying_power ?? capital.remaining_capital);
+    document.getElementById('m_capital_source').textContent = fmt(cards.source?.value ?? capital.cash ?? data.broker?.account?.cash);
+  } else {
+    document.getElementById('label_allocated').textContent = 'Allocated Capital';
+    document.getElementById('label_used').textContent = 'Used Capital';
+    document.getElementById('label_remaining').textContent = 'Remaining Capital';
+    document.getElementById('label_capital_source').textContent = 'Capital Source';
+    document.getElementById('m_allocated').textContent = fmt(cards.primary_1?.value ?? capital.allocated_capital);
+    document.getElementById('m_used').textContent = fmt(cards.primary_2?.value ?? capital.used_capital);
+    document.getElementById('m_remaining').textContent = fmt(cards.primary_3?.value ?? capital.remaining_capital);
+    document.getElementById('m_capital_source').textContent = cards.source?.value || sourceDisplay;
+  }
   return data;
 }
 
