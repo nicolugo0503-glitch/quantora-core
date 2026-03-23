@@ -1,0 +1,45 @@
+{
+  "operator_id": "operator_622092D2",
+  "display_name": "Test",
+  "capital_decision": {
+    "approved": true,
+    "capital_allocated": 16195
+  },
+  "strategies": {
+    "strategies": []
+  },
+  "orders": {
+    "orders": []
+  },
+  "allocator_caps": {
+    "operator": {
+      "operator_id": "operator_622092D2",
+      "allocated_capital": 0.0,
+      "status": "UNFUNDED",
+      "updated_at": null
+    }
+  },
+  "strategy_loop": {
+    "running": false,
+    "execution_mode": "internal",
+    "interval_seconds": 60,
+    "last_run_at": null,
+    "next_run_at": null,
+    "heartbeat_at": null,
+    "total_runs": 0,
+    "total_signals": 0,
+    "total_orders": 0
+  },
+  "monitoring": {
+    "latest_snapshot": {
+      "timestamp": "2026-03-23T05:14:50Z",
+      "order_count": 0,
+      "used_capital": 0.0,
+      "allocated_capital": 0.0,
+      "utilization_pct": 0.0,
+      "alerts_count": 0
+    },
+    "alerts": [],
+    "last_evaluated_at": "2026-03-23T05:14:50Z"
+  }
+}

@@ -1,3 +1,10 @@
 {
-  "users": []
+  "users": [
+    {
+      "email": "test@example.com",
+      "password": "abc",
+      "display_name": "Test",
+      "operator_id": "operator_622092D2"
+    }
+  ]
 }
