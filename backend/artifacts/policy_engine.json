@@ -1,0 +1,25 @@
+{
+  "policies": [
+    {
+      "policy_id": "POL-001",
+      "name": "Large capital changes require approval",
+      "policy_type": "capital_change",
+      "threshold": 5000,
+      "enabled": true
+    },
+    {
+      "policy_id": "POL-002",
+      "name": "Fleet run-all requires approval",
+      "policy_type": "run_all",
+      "threshold": 1,
+      "enabled": true
+    },
+    {
+      "policy_id": "POL-003",
+      "name": "Fast loop starts require approval",
+      "policy_type": "loop_start",
+      "threshold": 300,
+      "enabled": true
+    }
+  ]
+}

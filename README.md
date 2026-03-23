@@ -1,3 +1,3 @@
-# Quantora QNT30311 Broker Sync Console
+# Quantora QNT30321 Policy Engine + Approval Workflows
 
-Adds positions, PnL, account summary, broker sync, and reconciliation to the merged Quantora build.
+Adds policy rules, approval queue, approval decisions, and policy-driven gating for admin actions.
