@@ -1,100 +1,597 @@
-
 <!doctype html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Quantora QNT30321 Policy Engine + Approval Workflows</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quantora QNT30322 Unified Command Center</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; background: #f5f7fb; color: #111827; }
-    .panel { background: white; border: 1px solid #d9dfeb; border-radius: 12px; padding: 14px; margin-bottom: 14px; }
-    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    input, select { width: 100%; padding: 10px; margin-bottom: 8px; box-sizing: border-box; border: 1px solid #cbd5e1; border-radius: 8px; }
-    button { padding: 10px 14px; margin-right: 8px; margin-bottom: 8px; border-radius: 8px; border: none; background: #2563eb; color: white; cursor: pointer; }
-    button.secondary { background: #475569; }
-    pre { background: #08142d; color: #e2e8f0; padding: 14px; border-radius: 10px; white-space: pre-wrap; min-height: 120px; overflow: auto; }
+    :root {
+      --bg: #08111f;
+      --panel: #0f1b2d;
+      --panel-2: #14253d;
+      --line: #223654;
+      --text: #e8eefc;
+      --muted: #96a6c5;
+      --accent: #4f8cff;
+      --accent-2: #1dd1a1;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --shadow: 0 18px 45px rgba(0,0,0,.28);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #07101d 0%, #0b1525 100%);
+      color: var(--text);
+    }
+    .shell {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+    .sidebar {
+      border-right: 1px solid var(--line);
+      background: rgba(10,18,31,.9);
+      padding: 24px 18px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+    .brand { margin-bottom: 22px; }
+    .eyebrow { color: var(--accent-2); font-size: 12px; text-transform: uppercase; letter-spacing: .14em; }
+    .brand h1 { margin: 8px 0 4px; font-size: 26px; }
+    .brand p { margin: 0; color: var(--muted); font-size: 14px; }
+    .nav button {
+      width: 100%; text-align: left; background: transparent; color: var(--text);
+      border: 1px solid transparent; border-radius: 14px; padding: 12px 14px; margin-bottom: 8px;
+      font-size: 14px; cursor: pointer;
+    }
+    .nav button.active, .nav button:hover { background: var(--panel); border-color: var(--line); }
+    .content { padding: 24px; }
+    .topbar {
+      display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 12px; margin-bottom: 18px;
+    }
+    .stat {
+      background: linear-gradient(180deg, rgba(20,37,61,.96), rgba(14,26,44,.96));
+      border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow);
+    }
+    .stat .label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; }
+    .stat .value { font-size: 26px; font-weight: 700; margin-top: 8px; }
+    .grid {
+      display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 14px;
+    }
+    .card {
+      background: linear-gradient(180deg, rgba(15,27,45,.98), rgba(11,21,37,.98));
+      border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .span-12 { grid-column: span 12; }
+    .span-8 { grid-column: span 8; }
+    .span-6 { grid-column: span 6; }
+    .span-4 { grid-column: span 4; }
+    .span-3 { grid-column: span 3; }
+    h2,h3 { margin: 0 0 12px; }
+    .subtle { color: var(--muted); font-size: 14px; }
+    .kpi-row { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+    .mini { background: rgba(255,255,255,.02); border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
+    .mini .mini-label { color: var(--muted); font-size: 12px; }
+    .mini .mini-value { font-size: 20px; font-weight: 700; margin-top: 6px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px 8px; border-bottom: 1px solid rgba(150,166,197,.14); text-align: left; font-size: 14px; vertical-align: top; }
+    th { color: var(--muted); font-weight: 600; }
+    input, select {
+      width: 100%; background: #091423; color: var(--text); border: 1px solid var(--line);
+      border-radius: 12px; padding: 11px 12px; margin-bottom: 10px;
+    }
+    button.action {
+      background: var(--accent); color: white; border: none; border-radius: 12px; padding: 10px 14px; cursor: pointer; font-weight: 600; margin-right: 8px; margin-bottom: 8px;
+    }
+    button.secondary { background: #334155; }
+    button.success { background: #059669; }
+    button.danger { background: #dc2626; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    pre {
+      background: #06101d; color: #d5e3ff; border: 1px solid var(--line); border-radius: 14px; padding: 14px; min-height: 160px; white-space: pre-wrap; overflow: auto;
+    }
+    .pill { display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+    .ok { background: rgba(29,209,161,.16); color: #7af0cc; }
+    .warn { background: rgba(245,158,11,.16); color: #f7c46a; }
+    .bad { background: rgba(239,68,68,.16); color: #fca5a5; }
+    .muted { color: var(--muted); }
+    .split { display: grid; grid-template-columns: 1.1fr .9fr; gap: 14px; }
+    .footer-note { margin-top: 16px; color: var(--muted); font-size: 13px; }
+    @media (max-width: 1180px) {
+      .topbar { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .span-8, .span-6, .span-4, .span-3 { grid-column: span 12; }
+      .split { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 860px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--line); }
+      .topbar { grid-template-columns: 1fr; }
+      .kpi-row { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-  <h1>Quantora QNT30321 Policy Engine + Approval Workflows</h1>
-  <div class="grid2">
-    <div class="panel">
-      <h2>Auth + Operator Setup</h2>
-      <input id="reg_name" placeholder="Display name">
-      <input id="reg_email" placeholder="Email">
-      <input id="reg_password" placeholder="Password" type="password">
-      <button onclick="registerUser()">Register</button>
-      <hr>
-      <input id="login_email" placeholder="Email">
-      <input id="login_password" placeholder="Password" type="password">
-      <button onclick="loginUser()">Login</button>
-      <button class="secondary" onclick="logoutUser()">Logout</button>
-      <hr>
-      <input id="strategy_name" placeholder="Strategy name">
-      <input id="strategy_symbol" placeholder="Strategy symbol">
-      <select id="strategy_side"><option value="buy">buy</option><option value="sell">sell</option></select>
-      <input id="strategy_qty" type="number" placeholder="Default qty">
-      <button onclick="registerStrategy()">Register Strategy</button>
-      <input id="operator_capital" type="number" placeholder="Operator allocated capital">
-      <button onclick="setOperatorCapital()">Set My Operator Capital</button>
-      <pre id="setup_out">Ready.</pre>
-    </div>
-    <div class="panel">
-      <h2>Policy + Approvals</h2>
-      <button onclick="callGet('/policy-engine/policies','policy_out')">Policies</button>
-      <input id="policy_id" placeholder="Policy ID">
-      <input id="policy_threshold" type="number" placeholder="Threshold">
-      <select id="policy_enabled"><option value="true">enabled</option><option value="false">disabled</option></select>
-      <button onclick="updatePolicy()">Update Policy</button>
-      <hr>
-      <button onclick="callGet('/approvals/queue','policy_out')">Approval Queue</button>
-      <input id="approval_request_id" placeholder="Approval Request ID">
-      <select id="approval_decision"><option value="APPROVED">APPROVED</option><option value="REJECTED">REJECTED</option></select>
-      <input id="approval_notes" placeholder="Notes">
-      <button onclick="decideApproval()">Decide Approval</button>
-      <pre id="policy_out">Ready.</pre>
-    </div>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="eyebrow">QNT30322 Mission Live</div>
+        <h1>Quantora</h1>
+        <p>Unified Command Center for AI-managed capital.</p>
+      </div>
+      <div id="sessionBadge" class="card" style="padding:14px; margin-bottom:14px;">
+        <div class="subtle">Session</div>
+        <div id="sessionName" style="font-size:18px; font-weight:700; margin-top:8px;">Guest</div>
+        <div id="sessionMeta" class="muted" style="margin-top:6px;">Login required</div>
+      </div>
+      <nav class="nav" id="nav"></nav>
+    </aside>
+    <main class="content">
+      <div class="topbar" id="topbar"></div>
+      <div id="view"></div>
+    </main>
   </div>
-  <div class="grid2">
-    <div class="panel">
-      <h2>Admin Actions</h2>
-      <button onclick="callGet('/admin/control-tower','admin_out')">Control Tower</button>
-      <button onclick="callGet('/governance/ledger','admin_out')">Governance Ledger</button>
-      <hr>
-      <input id="admin_operator_id" placeholder="Target operator ID">
-      <input id="admin_operator_capital" type="number" placeholder="Allocated capital">
-      <button onclick="adminSetCapital()">Admin Set Operator Capital</button>
-      <select id="admin_loop_mode"><option value="internal">internal paper</option><option value="alpaca">alpaca paper</option></select>
-      <input id="admin_loop_interval" type="number" value="60" placeholder="Interval seconds">
-      <button onclick="adminStartLoop()">Admin Start Loop</button>
-      <button onclick="adminRunAll()">Admin Run All Once</button>
-      <pre id="admin_out">Ready.</pre>
-    </div>
-    <div class="panel">
-      <h2>Governance Summary</h2>
-      <button onclick="callGet('/governance/ledger/summary','gov_out')">Ledger Summary</button>
-      <button onclick="callGet('/auth/me','gov_out')">Me</button>
-      <button onclick="callGet('/allocator/capital-view','gov_out')">My Capital View</button>
-      <pre id="gov_out">Ready.</pre>
-    </div>
-  </div>
+
   <script>
+    const state = {
+      activeModule: 'overview',
+      me: { logged_in: false },
+      summary: null,
+      autoRefreshHandle: null,
+    };
+
+    const modules = [
+      ['overview', 'Overview'],
+      ['execution', 'Execution'],
+      ['strategies', 'Strategies'],
+      ['capital', 'Capital'],
+      ['governance', 'Governance'],
+      ['approvals', 'Approvals'],
+      ['control', 'Control Tower'],
+      ['logs', 'Ledger / Logs'],
+    ];
+
     async function api(path, method='GET', body=null) {
-      const res = await fetch(path, {method, headers:{'Content-Type':'application/json'}, body: body ? JSON.stringify(body) : undefined});
+      const res = await fetch(path, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: body ? JSON.stringify(body) : undefined,
+      });
       const text = await res.text();
-      try { return JSON.parse(text); } catch { return {raw:text, status:res.status}; }
+      let data;
+      try { data = JSON.parse(text); } catch { data = { raw: text }; }
+      if (!res.ok) throw new Error(data.detail || data.error || text || `HTTP ${res.status}`);
+      return data;
     }
-    async function callGet(path, target) { document.getElementById(target).textContent = JSON.stringify(await api(path), null, 2); }
-    async function callPost(path, body, target) { document.getElementById(target).textContent = JSON.stringify(await api(path,'POST',body), null, 2); }
-    async function registerUser(){ await callPost('/auth/register',{display_name:reg_name.value,email:reg_email.value,password:reg_password.value},'setup_out'); }
-    async function loginUser(){ await callPost('/auth/login',{email:login_email.value,password:login_password.value},'setup_out'); }
-    async function logoutUser(){ await callPost('/auth/logout',{},'setup_out'); }
-    async function registerStrategy(){ await callPost('/strategies/register',{name:strategy_name.value,symbol:strategy_symbol.value,side:strategy_side.value,default_qty:parseInt(strategy_qty.value||'0',10),enabled:true},'setup_out'); }
-    async function setOperatorCapital(){ await callPost('/allocator/operator-capital/set',{allocated_capital:parseFloat(operator_capital.value||'0')},'setup_out'); }
-    async function updatePolicy(){ await callPost('/policy-engine/policies/update',{policy_id:policy_id.value,threshold:parseFloat(policy_threshold.value||'0'),enabled:policy_enabled.value==='true'},'policy_out'); }
-    async function decideApproval(){ await callPost('/approvals/decision',{request_id:approval_request_id.value,decision:approval_decision.value,notes:approval_notes.value},'policy_out'); }
-    async function adminSetCapital(){ await callPost('/admin/operator-capital/set',{operator_id:admin_operator_id.value,allocated_capital:parseFloat(admin_operator_capital.value||'0')},'admin_out'); }
-    async function adminStartLoop(){ await callPost('/admin/operator-loop/start',{operator_id:admin_operator_id.value,execution_mode:admin_loop_mode.value,interval_seconds:parseInt(admin_loop_interval.value||'60',10)},'admin_out'); }
-    async function adminRunAll(){ await callPost('/admin/run-all-once',{},'admin_out'); }
+
+    function currency(v) {
+      const n = Number(v || 0);
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(n);
+    }
+
+    function pill(text, cls='ok') {
+      return `<span class="pill ${cls}">${text}</span>`;
+    }
+
+    function safe(v) { return v == null || v === '' ? '—' : v; }
+
+    function renderNav() {
+      const nav = document.getElementById('nav');
+      const isAdmin = !!state.me.is_admin;
+      nav.innerHTML = modules.filter(([id]) => isAdmin || !['governance','approvals','control','logs'].includes(id)).map(([id, label]) => `
+        <button class="${state.activeModule === id ? 'active' : ''}" onclick="activateModule('${id}')">${label}</button>
+      `).join('');
+    }
+
+    function renderTopbar() {
+      const s = state.summary || {};
+      const o = s.overview || {};
+      const topbar = document.getElementById('topbar');
+      const live = state.me.logged_in ? (o.loop_running ? 'LIVE' : 'READY') : 'OFFLINE';
+      topbar.innerHTML = [
+        ['System Status', live],
+        ['Total Equity', currency(o.total_equity)],
+        ['Used Capital', currency(o.used_capital)],
+        ['Active Strategies', safe(o.active_strategies)],
+        ['Alerts', safe(o.alerts)],
+      ].map(([label, value]) => `<div class="stat"><div class="label">${label}</div><div class="value">${value}</div></div>`).join('');
+
+      document.getElementById('sessionName').textContent = state.me.display_name || 'Guest';
+      document.getElementById('sessionMeta').innerHTML = state.me.logged_in
+        ? `${state.me.email || ''}<br>${state.me.operator_id || ''} ${state.me.is_admin ? '• ADMIN' : '• OPERATOR'}`
+        : 'Register or login to enter the OS';
+    }
+
+    async function refreshSession() {
+      try {
+        state.me = await api('/auth/me');
+      } catch {
+        state.me = { logged_in: false };
+      }
+    }
+
+    async function refreshSummary() {
+      if (!state.me.logged_in) { state.summary = null; return; }
+      try {
+        state.summary = await api('/command-center/summary');
+      } catch (err) {
+        state.summary = { error: err.message };
+      }
+    }
+
+    async function boot() {
+      await refreshSession();
+      await refreshSummary();
+      renderNav();
+      renderTopbar();
+      renderActiveModule();
+      if (state.autoRefreshHandle) clearInterval(state.autoRefreshHandle);
+      state.autoRefreshHandle = setInterval(async () => {
+        await refreshSession();
+        await refreshSummary();
+        renderNav();
+        renderTopbar();
+        renderActiveModule();
+      }, 5000);
+    }
+
+    function activateModule(id) {
+      state.activeModule = id;
+      renderNav();
+      renderActiveModule();
+    }
+
+    function authCard() {
+      return `
+        <div class="grid">
+          <section class="card span-6">
+            <h2>Register Operator</h2>
+            <div class="subtle">Create an operator identity inside Quantora.</div>
+            <input id="reg_name" placeholder="Display name">
+            <input id="reg_email" placeholder="Email">
+            <input id="reg_password" type="password" placeholder="Password">
+            <button class="action" onclick="registerUser()">Register + Enter</button>
+          </section>
+          <section class="card span-6">
+            <h2>Login</h2>
+            <div class="subtle">Access the existing operator system.</div>
+            <input id="login_email" placeholder="Email">
+            <input id="login_password" type="password" placeholder="Password">
+            <button class="action" onclick="loginUser()">Login</button>
+            <button class="action secondary" onclick="logoutUser()">Logout</button>
+          </section>
+          <section class="card span-12">
+            <h3>System Response</h3>
+            <pre id="auth_out">Awaiting action.</pre>
+          </section>
+        </div>
+      `;
+    }
+
+    function tableRows(items, cols, empty='No records yet.') {
+      if (!items || !items.length) return `<tr><td colspan="${cols.length}" class="muted">${empty}</td></tr>`;
+      return items.map(item => `<tr>${cols.map(c => `<td>${c.render ? c.render(item) : safe(item[c.key])}</td>`).join('')}</tr>`).join('');
+    }
+
+    function renderOverview() {
+      if (!state.me.logged_in) return authCard();
+      const s = state.summary || {};
+      const monitoring = s.monitoring || {};
+      const loop = s.strategy_loop || {};
+      const alerts = monitoring.alerts || [];
+      return `
+        <div class="grid">
+          <section class="card span-8">
+            <h2>Overview</h2>
+            <div class="subtle">Single-pane operating view across execution, strategy runtime, capital, and governance.</div>
+            <div class="kpi-row" style="margin-top:14px;">
+              <div class="mini"><div class="mini-label">Remaining Capital</div><div class="mini-value">${currency(s.overview?.remaining_capital)}</div></div>
+              <div class="mini"><div class="mini-label">Orders</div><div class="mini-value">${safe(s.overview?.orders)}</div></div>
+              <div class="mini"><div class="mini-label">Loop Interval</div><div class="mini-value">${safe(loop.interval_seconds)}s</div></div>
+            </div>
+            <div class="footer-note">Runtime heartbeat: ${safe(loop.heartbeat_at)} · Next run: ${safe(loop.next_run_at)}</div>
+          </section>
+          <section class="card span-4">
+            <h2>Auth + Operator</h2>
+            <div class="subtle">Current identity and access level.</div>
+            <pre>${JSON.stringify(state.me, null, 2)}</pre>
+          </section>
+          <section class="card span-6">
+            <h3>Monitoring Snapshot</h3>
+            <pre>${JSON.stringify(monitoring.latest_snapshot || {}, null, 2)}</pre>
+          </section>
+          <section class="card span-6">
+            <h3>Live Alerts</h3>
+            ${alerts.length ? alerts.map(a => `<div class="mini" style="margin-bottom:10px;">${pill(a.level || 'info', a.level === 'warn' ? 'warn' : 'ok')} <div style="margin-top:10px;">${a.message}</div></div>`).join('') : '<div class="mini">No active alerts.</div>'}
+          </section>
+          <section class="card span-12">
+            <h3>Mission Output</h3>
+            <div class="subtle">QNT30322 preserves backend truth and unifies operating visibility.</div>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderExecution() {
+      if (!state.me.logged_in) return authCard();
+      const orders = state.summary?.orders?.orders || [];
+      return `
+        <div class="grid">
+          <section class="card span-12">
+            <h2>Execution Layer</h2>
+            <div class="subtle">Order flow, filled activity, and runtime execution visibility.</div>
+          </section>
+          <section class="card span-12">
+            <table>
+              <thead><tr><th>Order ID</th><th>Strategy</th><th>Symbol</th><th>Side</th><th>Qty</th><th>Notional</th><th>Status</th><th>Mode</th><th>Timestamp</th></tr></thead>
+              <tbody>
+                ${tableRows(orders, [
+                  { key: 'order_id' },
+                  { key: 'strategy_id' },
+                  { key: 'symbol' },
+                  { key: 'side' },
+                  { key: 'qty' },
+                  { render: i => currency(i.notional) },
+                  { key: 'status' },
+                  { key: 'mode' },
+                  { key: 'timestamp' },
+                ], 'No execution records yet. Start a strategy loop or run approvals.')}
+              </tbody>
+            </table>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderStrategies() {
+      if (!state.me.logged_in) return authCard();
+      const strategies = state.summary?.strategies?.strategies || [];
+      return `
+        <div class="grid">
+          <section class="card span-5">
+            <h2>Register Strategy</h2>
+            <div class="subtle">Persistent strategy registration for the current operator.</div>
+            <input id="strategy_name" placeholder="Strategy name">
+            <input id="strategy_symbol" placeholder="Symbol">
+            <select id="strategy_side"><option value="buy">buy</option><option value="sell">sell</option></select>
+            <input id="strategy_qty" type="number" placeholder="Default qty">
+            <button class="action" onclick="registerStrategy()">Register Strategy</button>
+            <pre id="strategy_out">Awaiting action.</pre>
+          </section>
+          <section class="card span-7">
+            <h2>Strategy Registry</h2>
+            <table>
+              <thead><tr><th>ID</th><th>Name</th><th>Symbol</th><th>Side</th><th>Qty</th><th>Enabled</th><th>Created</th></tr></thead>
+              <tbody>
+                ${tableRows(strategies, [
+                  { key: 'strategy_id' },
+                  { key: 'name' },
+                  { key: 'symbol' },
+                  { key: 'side' },
+                  { key: 'default_qty' },
+                  { render: i => i.enabled ? pill('ENABLED','ok') : pill('DISABLED','bad') },
+                  { key: 'created_at' },
+                ], 'No strategies registered yet.')}
+              </tbody>
+            </table>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderCapital() {
+      if (!state.me.logged_in) return authCard();
+      const capital = state.summary?.capital?.operator || {};
+      return `
+        <div class="grid">
+          <section class="card span-5">
+            <h2>Capital Allocation</h2>
+            <div class="subtle">Operator-level capital configuration and capacity monitoring.</div>
+            <input id="operator_capital" type="number" placeholder="Allocated capital">
+            <button class="action" onclick="setOperatorCapital()">Set My Operator Capital</button>
+            <pre id="capital_out">Awaiting action.</pre>
+          </section>
+          <section class="card span-7">
+            <h2>Capital View</h2>
+            <div class="kpi-row">
+              <div class="mini"><div class="mini-label">Allocated</div><div class="mini-value">${currency(capital.allocated_capital)}</div></div>
+              <div class="mini"><div class="mini-label">Used</div><div class="mini-value">${currency(capital.used_capital)}</div></div>
+              <div class="mini"><div class="mini-label">Remaining</div><div class="mini-value">${currency(capital.remaining_capital)}</div></div>
+            </div>
+            <pre style="margin-top:14px;">${JSON.stringify(capital, null, 2)}</pre>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderGovernance() {
+      if (!state.me.logged_in) return authCard();
+      if (!state.me.is_admin) return restrictedCard('Governance policies require admin access.');
+      const policies = state.summary?.policies?.policies || [];
+      return `
+        <div class="grid">
+          <section class="card span-5">
+            <h2>Policy Engine</h2>
+            <input id="policy_id" placeholder="Policy ID">
+            <input id="policy_threshold" type="number" placeholder="Threshold">
+            <select id="policy_enabled"><option value="true">enabled</option><option value="false">disabled</option></select>
+            <button class="action" onclick="updatePolicy()">Update Policy</button>
+            <pre id="policy_out">Awaiting action.</pre>
+          </section>
+          <section class="card span-7">
+            <h2>Policy Registry</h2>
+            <table>
+              <thead><tr><th>ID</th><th>Name</th><th>Type</th><th>Threshold</th><th>Status</th></tr></thead>
+              <tbody>
+                ${tableRows(policies, [
+                  { key: 'policy_id' },
+                  { key: 'name' },
+                  { key: 'policy_type' },
+                  { key: 'threshold' },
+                  { render: i => i.enabled ? pill('ENABLED','ok') : pill('DISABLED','bad') },
+                ], 'No policies available.')}
+              </tbody>
+            </table>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderApprovals() {
+      if (!state.me.logged_in) return authCard();
+      if (!state.me.is_admin) return restrictedCard('Approval queue requires admin access.');
+      const requests = state.summary?.approvals?.requests || [];
+      return `
+        <div class="grid">
+          <section class="card span-5">
+            <h2>Approval Decisioning</h2>
+            <input id="approval_request_id" placeholder="Approval Request ID">
+            <select id="approval_decision"><option value="APPROVED">APPROVED</option><option value="REJECTED">REJECTED</option></select>
+            <input id="approval_notes" placeholder="Notes">
+            <button class="action success" onclick="decideApproval()">Submit Decision</button>
+            <pre id="approval_out">Awaiting action.</pre>
+          </section>
+          <section class="card span-7">
+            <h2>Approval Queue</h2>
+            <table>
+              <thead><tr><th>Request ID</th><th>Type</th><th>Target</th><th>Status</th><th>Created By</th><th>Created At</th></tr></thead>
+              <tbody>
+                ${tableRows(requests, [
+                  { key: 'request_id' },
+                  { key: 'request_type' },
+                  { key: 'target' },
+                  { render: i => i.status === 'PENDING' ? pill('PENDING','warn') : i.status === 'APPROVED' ? pill('APPROVED','ok') : pill('REJECTED','bad') },
+                  { key: 'created_by_email' },
+                  { key: 'created_at' },
+                ], 'No approval requests in queue.')}
+              </tbody>
+            </table>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderControl() {
+      if (!state.me.logged_in) return authCard();
+      if (!state.me.is_admin) return restrictedCard('Control Tower requires admin access.');
+      const tower = state.summary?.control_tower || { totals: {}, operators: [] };
+      return `
+        <div class="grid">
+          <section class="card span-12">
+            <h2>Control Tower</h2>
+            <div class="kpi-row">
+              <div class="mini"><div class="mini-label">Operators</div><div class="mini-value">${safe(tower.totals.operators)}</div></div>
+              <div class="mini"><div class="mini-label">Allocated Capital</div><div class="mini-value">${currency(tower.totals.allocated_capital)}</div></div>
+              <div class="mini"><div class="mini-label">Running Loops</div><div class="mini-value">${safe(tower.totals.running_loops)}</div></div>
+            </div>
+          </section>
+          <section class="card span-5">
+            <h3>Admin Actions</h3>
+            <input id="admin_operator_id" placeholder="Target operator ID">
+            <input id="admin_operator_capital" type="number" placeholder="Allocated capital">
+            <button class="action" onclick="adminSetCapital()">Admin Set Operator Capital</button>
+            <select id="admin_loop_mode"><option value="internal">internal paper</option><option value="alpaca">alpaca paper</option></select>
+            <input id="admin_loop_interval" type="number" value="60" placeholder="Interval seconds">
+            <button class="action" onclick="adminStartLoop()">Admin Start Loop</button>
+            <button class="action secondary" onclick="adminRunAll()">Admin Run All Once</button>
+            <pre id="admin_out">Awaiting action.</pre>
+          </section>
+          <section class="card span-7">
+            <h3>Operator Fleet</h3>
+            <table>
+              <thead><tr><th>Operator</th><th>Email</th><th>Strategies</th><th>Orders</th><th>Allocated</th><th>Used</th><th>Alerts</th><th>Loop</th></tr></thead>
+              <tbody>
+                ${tableRows(tower.operators, [
+                  { render: i => `${safe(i.display_name)}<br><span class="muted">${safe(i.operator_id)}</span>` },
+                  { key: 'email' },
+                  { key: 'strategies' },
+                  { key: 'orders' },
+                  { render: i => currency(i.allocated_capital) },
+                  { render: i => currency(i.used_capital) },
+                  { key: 'alerts' },
+                  { render: i => i.loop_running ? pill('RUNNING','ok') : pill('STOPPED','warn') },
+                ], 'No operators registered yet.')}
+              </tbody>
+            </table>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderLogs() {
+      if (!state.me.logged_in) return authCard();
+      if (!state.me.is_admin) return restrictedCard('Ledger visibility requires admin access.');
+      return `
+        <div class="grid">
+          <section class="card span-4">
+            <h2>Ledger Summary</h2>
+            <pre>${JSON.stringify(state.summary?.ledger_summary || {}, null, 2)}</pre>
+          </section>
+          <section class="card span-8">
+            <h2>Governance Ledger</h2>
+            <div class="toolbar"><button class="action secondary" onclick="loadLedger()">Refresh Ledger</button></div>
+            <pre id="ledger_out">Press refresh to load governance ledger.</pre>
+          </section>
+        </div>
+      `;
+    }
+
+    function restrictedCard(message) {
+      return `<div class="grid"><section class="card span-12"><h2>Restricted</h2><div class="subtle">${message}</div></section></div>`;
+    }
+
+    function renderActiveModule() {
+      const view = document.getElementById('view');
+      const map = {
+        overview: renderOverview,
+        execution: renderExecution,
+        strategies: renderStrategies,
+        capital: renderCapital,
+        governance: renderGovernance,
+        approvals: renderApprovals,
+        control: renderControl,
+        logs: renderLogs,
+      };
+      view.innerHTML = (map[state.activeModule] || renderOverview)();
+    }
+
+    async function action(path, body, targetId) {
+      const target = document.getElementById(targetId);
+      try {
+        const data = await api(path, 'POST', body);
+        target.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        target.textContent = JSON.stringify({ error: err.message }, null, 2);
+      }
+      await boot();
+    }
+
+    async function registerUser() { await action('/auth/register', { display_name: reg_name.value, email: reg_email.value, password: reg_password.value }, 'auth_out'); }
+    async function loginUser() { await action('/auth/login', { email: login_email.value, password: login_password.value }, 'auth_out'); }
+    async function logoutUser() { await action('/auth/logout', {}, 'auth_out'); }
+    async function registerStrategy() { await action('/strategies/register', { name: strategy_name.value, symbol: strategy_symbol.value, side: strategy_side.value, default_qty: parseInt(strategy_qty.value || '0', 10), enabled: true }, 'strategy_out'); }
+    async function setOperatorCapital() { await action('/allocator/operator-capital/set', { allocated_capital: parseFloat(operator_capital.value || '0') }, 'capital_out'); }
+    async function updatePolicy() { await action('/policy-engine/policies/update', { policy_id: policy_id.value, threshold: parseFloat(policy_threshold.value || '0'), enabled: policy_enabled.value === 'true' }, 'policy_out'); }
+    async function decideApproval() { await action('/approvals/decision', { request_id: approval_request_id.value, decision: approval_decision.value, notes: approval_notes.value }, 'approval_out'); }
+    async function adminSetCapital() { await action('/admin/operator-capital/set', { operator_id: admin_operator_id.value, allocated_capital: parseFloat(admin_operator_capital.value || '0') }, 'admin_out'); }
+    async function adminStartLoop() { await action('/admin/operator-loop/start', { operator_id: admin_operator_id.value, execution_mode: admin_loop_mode.value, interval_seconds: parseInt(admin_loop_interval.value || '60', 10) }, 'admin_out'); }
+    async function adminRunAll() { await action('/admin/run-all-once', {}, 'admin_out'); }
+
+    async function loadLedger() {
+      const out = document.getElementById('ledger_out');
+      try {
+        const data = await api('/governance/ledger');
+        out.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        out.textContent = JSON.stringify({ error: err.message }, null, 2);
+      }
+    }
+
+    boot();
   </script>
 </body>
 </html>

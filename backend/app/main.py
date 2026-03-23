@@ -12,7 +12,7 @@ PROJECT_DIR = BACKEND_DIR.parent
 ARTIFACTS_DIR = BACKEND_DIR / "artifacts"
 FRONTEND_DIR = PROJECT_DIR / "frontend"
 
-app = FastAPI(title="Quantora QNT30321", version="30321")
+app = FastAPI(title="Quantora QNT30322 Unified Command Center", version="30322")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=False, allow_methods=["*"], allow_headers=["*"])
 
 ADMIN_EMAILS = {"admin@quantora.local", "nicolugo0503@gmail.com"}
@@ -291,7 +291,7 @@ class ApprovalDecisionRequest(BaseModel):
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "layer": "qnt30321-policy-engine-approval-workflows"}
+    return {"status": "ok", "layer": "qnt30322-unified-command-center"}
 
 @app.post("/auth/register")
 def auth_register(payload: RegisterRequest):
@@ -463,6 +463,44 @@ def approvals_decision(payload: ApprovalDecisionRequest, admin=Depends(require_a
         append_governance_event(admin.get("email"), admin.get("operator_id"), "approval.rejected", req["target"], req, "approval")
     save_approvals(queue)
     return {"status": req["status"], "request": req}
+
+
+@app.get("/command-center/summary")
+def command_center_summary(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    monitoring = evaluate_monitoring(state)
+    save_operator_state(state)
+    exposure = operator_exposure(state)
+    capital = state["allocator_caps"]["operator"]
+    auth = auth_me()
+    payload = {
+        "session": auth,
+        "overview": {
+            "total_equity": round(float(capital.get("allocated_capital", 0) or 0), 2),
+            "used_capital": exposure["notional"],
+            "remaining_capital": round(float(capital.get("allocated_capital", 0) or 0) - exposure["notional"], 2),
+            "active_strategies": len([s for s in state["strategies"]["strategies"] if s.get("enabled")]),
+            "orders": len(state["orders"]["orders"]),
+            "alerts": len(monitoring.get("alerts", [])),
+            "loop_running": state["strategy_loop"].get("running", False),
+        },
+        "strategy_loop": state["strategy_loop"],
+        "capital": allocator_capital_view(session),
+        "monitoring": monitoring,
+        "strategies": state["strategies"],
+        "orders": state["orders"],
+    }
+    if auth.get("is_admin"):
+        payload["control_tower"] = control_tower_view()
+        payload["policies"] = get_policies()
+        payload["approvals"] = get_approvals()
+        ledger = load_json("governance_ledger.json", {"events": []})["events"]
+        ledger_summary = {"total_events": len(ledger), "by_category": {}, "by_action": {}}
+        for ev in ledger:
+            ledger_summary["by_category"][ev["category"]] = ledger_summary["by_category"].get(ev["category"], 0) + 1
+            ledger_summary["by_action"][ev["action"]] = ledger_summary["by_action"].get(ev["action"], 0) + 1
+        payload["ledger_summary"] = ledger_summary
+    return payload
 
 @app.get("/")
 def root():
