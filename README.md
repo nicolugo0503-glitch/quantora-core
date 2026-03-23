@@ -25,3 +25,12 @@ python3 -m uvicorn app.main:app --host 127.0.0.1 --port 8010 --reload
 Open:
 - http://127.0.0.1:8010/
 - http://127.0.0.1:8010/docs
+
+## Railway Hotfix
+
+This hotfix fixes Railway 502 deployment failure by binding the backend to the runtime `PORT` environment variable instead of forcing port `8010` only.
+
+### Railway deploy note
+- Docker deploy now starts with `/app/start.sh`
+- Runtime port uses `PORT` when Railway injects it
+- Health check endpoint remains `/health`
