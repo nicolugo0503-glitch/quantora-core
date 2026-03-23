@@ -2,15 +2,9 @@
   "users": [
     {
       "email": "nicolugo0503@gmail.com",
-      "password": "test123",
+      "password": "secret",
       "display_name": "Nico",
-      "operator_id": "operator_45A48844"
-    },
-    {
-      "email": "risktest@example.com",
-      "password": "pw",
-      "display_name": "RiskTest",
-      "operator_id": "operator_AE1AFBC2"
+      "operator_id": "operator_12A42D6F"
     }
   ]
 }

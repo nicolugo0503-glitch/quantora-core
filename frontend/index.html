@@ -70,9 +70,9 @@
   <div class="shell">
     <div class="hero">
       <div>
-        <h1 style="margin:0 0 10px">Quantora Unified Command Center · Risk Engine</h1>
+        <h1 style="margin:0 0 10px">Quantora Unified Command Center · System Stabilization Hotfix</h1>
         <div class="sub">
-          QNT30324 hardens Quantora with a true risk operating layer: position limits, total exposure caps, max drawdown rules, daily loss limits, kill switch controls, auto shutdown, and per-run execution throttles now protect live broker-connected capital.
+          QNT30325A stabilizes Quantora after the first scaling fracture: clean deployment state, structured errors, admin/session parity fixes, safe snapshot loading, and a real Performance Engine summary are now integrated into the live command center.
         </div>
       </div>
       <div class="hero-actions">
@@ -91,7 +91,7 @@
       <div class="metric"><div class="label">Running Strategies</div><div class="value" id="m_running">-</div></div>
       <div class="metric"><div class="label">Realized PnL</div><div class="value" id="m_realized">-</div></div>
       <div class="metric"><div class="label">Risk State</div><div class="value" id="m_risk">-</div></div>
-      <div class="metric"><div class="label">Layer</div><div class="value" id="m_layer">QNT30324</div></div>
+      <div class="metric"><div class="label">Layer</div><div class="value" id="m_layer">QNT30325A</div></div>
     </div>
 
     <div class="grid-main">
@@ -283,6 +283,12 @@
         </div>
 
         <div class="panel">
+          <div class="section-title"><h2>Performance Engine</h2><button class="secondary" onclick="loadPerformance()">Refresh Performance</button></div>
+          <div id="performance_pills" class="pills"></div>
+          <div id="performance_table"></div>
+        </div>
+
+        <div class="panel">
           <div class="section-title"><h2>Recent Governance Events</h2><button class="secondary" onclick="loadLedger()">Ledger</button></div>
           <div id="events_list" class="card-list"></div>
         </div>
@@ -302,7 +308,7 @@ async function api(path, method='GET', body=null){
   const txt = await res.text();
   let data;
   try { data = txt ? JSON.parse(txt) : {}; } catch { data = {raw: txt}; }
-  if(!res.ok){ data.__http_status = res.status; }
+  if(!res.ok){ data.__http_status = res.status; data._error = data.error || 'HTTP_ERROR'; }
   return data;
 }
 function setText(id, value){ document.getElementById(id).textContent = typeof value === 'string' ? value : JSON.stringify(value, null, 2); }
@@ -318,7 +324,7 @@ function pills(items){
 }
 
 async function refreshAll(){
-  await Promise.all([loadAuthMe(), loadWorkspace(), loadStrategyPerformance(), loadStrategyLogs(), loadBroker(), loadRisk(), loadGovernance(), loadControlTower(), loadLedger(), loadOrders(), loadSnapshot()]);
+  await Promise.all([loadAuthMe(), loadWorkspace(), loadStrategyPerformance(), loadStrategyLogs(), loadBroker(), loadRisk(), loadPerformance(), loadGovernance(), loadControlTower(), loadLedger(), loadOrders(), loadSnapshot()]);
 }
 
 async function loadAuthMe(){
@@ -554,6 +560,32 @@ async function toggleKillSwitch(active){
   refreshAll();
 }
 
+async function loadPerformance(){
+  const data = await api('/performance/metrics');
+  const s = data.summary || {};
+  setHTML('performance_pills', pills([
+    {label:`score ${fmt(s.operator_score)}`},
+    {label:`realized ${fmt(s.realized_pnl)}`, className: Number(s.realized_pnl || 0) >= 0 ? 'good' : 'bad'},
+    {label:`unrealized ${fmt(s.unrealized_pnl)}`, className: Number(s.unrealized_pnl || 0) >= 0 ? 'good' : 'bad'},
+    {label:`win rate ${fmt(s.win_rate)}%`},
+    {label:`equity ${fmt(s.current_equity)}`},
+    {label:`drawdown ${fmt(s.current_drawdown_pct)}%`, className: Number(s.current_drawdown_pct || 0) > 0 ? 'warn' : 'good'},
+    {label:`risk breaches ${s.risk_breaches || 0}`, className: Number(s.risk_breaches || 0) ? 'bad' : 'good'}
+  ]));
+  setHTML('performance_table', renderTable(data.strategies || [], [
+    {key:'name', label:'Strategy'},
+    {key:'symbol', label:'Symbol'},
+    {key:'status', label:'Status'},
+    {key:'orders_count', label:'Orders'},
+    {key:'closed_trades', label:'Closed'},
+    {key:'win_rate', label:'Win Rate', render:v=>fmt(v)+'%'},
+    {key:'realized_pnl', label:'Realized', render:v=>fmt(v)},
+    {key:'unrealized_pnl', label:'Unrealized', render:v=>fmt(v)},
+    {key:'capital_in_use', label:'Cap Used', render:v=>fmt(v)}
+  ]));
+  return data;
+}
+
 async function loadGovernance(){
   const policies = await api('/policy-engine/policies');
   setText('gov_out', policies);
@@ -620,8 +652,8 @@ async function loadSnapshot(){
   document.getElementById('m_remaining').textContent = fmt(ws.capital?.remaining_capital);
   document.getElementById('m_running').textContent = data.strategy_engine?.running_strategies ?? '-';
   document.getElementById('m_realized').textContent = fmt(data.strategy_engine?.portfolio_realized_pnl);
-  document.getElementById('m_layer').textContent = data.system_health?.layer || 'QNT30324';
-  document.getElementById('m_risk').textContent = data.risk_engine?.breaches?.length ? 'BREACH' : (data.risk_engine?.config?.kill_switch_active ? 'LOCKED' : 'SAFE');
+  document.getElementById('m_layer').textContent = data.system_health?.layer || 'QNT30325A';
+  document.getElementById('m_risk').textContent = data.risk_engine?.config?.kill_switch_active ? 'LOCKED' : (data.risk_engine?.breaches?.length ? 'BREACH' : 'SAFE');
   return data;
 }
 

@@ -7,7 +7,8 @@ import urllib.request
 import uuid
 from pathlib import Path
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, Field
@@ -18,7 +19,7 @@ PROJECT_DIR = BACKEND_DIR.parent
 ARTIFACTS_DIR = BACKEND_DIR / "artifacts"
 FRONTEND_DIR = PROJECT_DIR / "frontend"
 
-app = FastAPI(title="Quantora QNT30324 Risk Engine", version="30324")
+app = FastAPI(title="Quantora QNT30325A System Stabilization Hotfix", version="30325A")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -44,6 +45,60 @@ PRICE_BOOK = {
     "META": 505.0,
 }
 ACTIVE_ORDER_STATUSES = {"filled", "accepted", "submitted", "new", "partially_filled", "held_for_orders"}
+ADMIN_EMAILS_NORMALIZED = {e.strip().lower() for e in ADMIN_EMAILS}
+
+
+def normalize_email(value):
+    return (value or "").strip().lower()
+
+
+def user_is_admin_email(email):
+    return normalize_email(email) in ADMIN_EMAILS_NORMALIZED
+
+
+def empty_session():
+    return {"logged_in": False, "display_name": None, "operator_id": None, "email": None, "is_admin": False}
+
+
+def default_users_data():
+    return {"users": []}
+
+
+def default_policies_data():
+    return {
+        "policies": [
+            {"policy_id": "POL-001", "name": "Large capital changes require approval", "policy_type": "capital_change", "threshold": 5000, "enabled": True},
+            {"policy_id": "POL-002", "name": "Fleet run-all requires approval", "policy_type": "run_all", "threshold": 1, "enabled": True},
+            {"policy_id": "POL-003", "name": "Loop start below 300s requires approval", "policy_type": "loop_start", "threshold": 300, "enabled": True},
+        ]
+    }
+
+
+def default_approvals_data():
+    return {"requests": []}
+
+
+def session_view(data):
+    session = {**empty_session(), **(data or {})}
+    session["email"] = (session.get("email") or None)
+    session["is_admin"] = bool(session.get("is_admin") or user_is_admin_email(session.get("email")))
+    return session
+
+
+def seed_artifacts():
+    ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
+    defaults = {
+        "users.json": default_users_data(),
+        "session.json": empty_session(),
+        "policy_engine.json": default_policies_data(),
+        "approval_queue.json": default_approvals_data(),
+        "governance_ledger.json": {"events": []},
+        "broker_config.json": default_broker_config(),
+    }
+    for filename, fallback in defaults.items():
+        path = ARTIFACTS_DIR / filename
+        if not path.exists():
+            path.write_text(json.dumps(fallback, indent=2), encoding="utf-8")
 
 
 # -------------------------
@@ -59,7 +114,12 @@ def now_iso():
 
 def load_json(filename, fallback):
     path = ARTIFACTS_DIR / filename
-    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else fallback
+    if not path.exists():
+        return fallback
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return fallback
 
 
 def save_json(filename, data):
@@ -68,7 +128,7 @@ def save_json(filename, data):
 
 
 def users_db():
-    return load_json("users.json", {"users": []})
+    return load_json("users.json", default_users_data())
 
 
 def save_users(data):
@@ -76,15 +136,15 @@ def save_users(data):
 
 
 def get_session():
-    return load_json("session.json", {"logged_in": False, "display_name": None, "operator_id": None, "email": None})
+    return session_view(load_json("session.json", empty_session()))
 
 
 def save_session(data):
-    save_json("session.json", data)
+    save_json("session.json", session_view(data))
 
 
 def get_policies():
-    return load_json("policy_engine.json", {"policies": []})
+    return load_json("policy_engine.json", default_policies_data())
 
 
 def save_policies(data):
@@ -92,7 +152,7 @@ def save_policies(data):
 
 
 def get_approvals():
-    return load_json("approval_queue.json", {"requests": []})
+    return load_json("approval_queue.json", default_approvals_data())
 
 
 def save_approvals(data):
@@ -126,9 +186,9 @@ def require_auth():
 
 def require_admin():
     session = require_auth()
-    if session.get("email") not in ADMIN_EMAILS:
+    if not session.get("is_admin") and not user_is_admin_email(session.get("email")):
         raise HTTPException(status_code=403, detail="Admin access required")
-    return session
+    return session_view(session)
 
 
 def state_filename(operator_id):
@@ -660,6 +720,75 @@ def summarize_strategy_engine(state):
     }
 
 
+
+
+def build_performance_snapshot(state):
+    engine = summarize_strategy_engine(state)
+    risk_view = evaluate_risk_state(state)
+    monitoring = evaluate_monitoring(state)
+    orders = state.get("orders", {}).get("orders", [])
+    strategy_rows = engine.get("strategies", [])
+    closed_trades = sum(int((s.get("metrics") or {}).get("closed_trades") or 0) for s in strategy_rows)
+    wins = sum(int((s.get("metrics") or {}).get("wins") or 0) for s in strategy_rows)
+    losses = sum(int((s.get("metrics") or {}).get("losses") or 0) for s in strategy_rows)
+    total_orders = len(orders)
+    filled_orders = len([o for o in orders if (o.get("status") or "").lower() in ACTIVE_ORDER_STATUSES])
+    allocated = float(state.get("allocator_caps", {}).get("operator", {}).get("allocated_capital", 0) or 0)
+    used = float(monitoring.get("latest_snapshot", {}).get("used_capital", 0) or 0)
+    current_equity = float(risk_view.get("totals", {}).get("current_equity", allocated) or allocated)
+    operator_score = round((float(engine.get("portfolio_realized_pnl") or 0) * 0.35) + (wins * 3) - (losses * 1.5) - (len(risk_view.get("breaches", [])) * 10), 2)
+    recent_orders = list(reversed(orders[:10]))
+    equity_curve = [{
+        "label": "current",
+        "equity": round(current_equity, 2),
+        "allocated_capital": round(allocated, 2),
+        "realized_pnl": round(float(engine.get("portfolio_realized_pnl") or 0), 2),
+        "unrealized_pnl": round(float(engine.get("portfolio_unrealized_pnl") or 0), 2),
+    }]
+    return {
+        "summary": {
+            "operator_id": state.get("operator_id"),
+            "display_name": state.get("display_name"),
+            "total_orders": total_orders,
+            "filled_orders": filled_orders,
+            "closed_trades": closed_trades,
+            "wins": wins,
+            "losses": losses,
+            "win_rate": round((wins / closed_trades) * 100, 2) if closed_trades else 0.0,
+            "realized_pnl": round(float(engine.get("portfolio_realized_pnl") or 0), 2),
+            "unrealized_pnl": round(float(engine.get("portfolio_unrealized_pnl") or 0), 2),
+            "capital_in_use": round(float(engine.get("portfolio_capital_in_use") or 0), 2),
+            "allocated_capital": round(allocated, 2),
+            "used_capital": round(used, 2),
+            "utilization_pct": round((used / allocated) * 100, 2) if allocated > 0 else 0.0,
+            "current_equity": round(current_equity, 2),
+            "current_drawdown_pct": round(float(risk_view.get("totals", {}).get("current_drawdown_pct") or 0), 2),
+            "daily_realized_pnl": round(float(risk_view.get("totals", {}).get("current_daily_realized_pnl") or 0), 2),
+            "risk_breaches": len(risk_view.get("breaches", [])),
+            "operator_score": operator_score,
+        },
+        "strategies": [
+            {
+                "strategy_id": s.get("strategy_id"),
+                "name": s.get("name"),
+                "symbol": s.get("symbol"),
+                "status": s.get("status"),
+                "enabled": s.get("enabled"),
+                "execution_mode": s.get("execution_mode"),
+                "orders_count": (s.get("metrics") or {}).get("orders_count", 0),
+                "closed_trades": (s.get("metrics") or {}).get("closed_trades", 0),
+                "win_rate": (s.get("metrics") or {}).get("win_rate", 0),
+                "realized_pnl": (s.get("metrics") or {}).get("realized_pnl", 0),
+                "unrealized_pnl": (s.get("metrics") or {}).get("unrealized_pnl", 0),
+                "capital_in_use": (s.get("metrics") or {}).get("capital_in_use", 0),
+            }
+            for s in strategy_rows
+        ],
+        "recent_orders": recent_orders,
+        "equity_curve": equity_curve,
+    }
+
+
 # -------------------------
 # Alpaca broker layer
 # -------------------------
@@ -987,41 +1116,59 @@ def build_operator_workspace(state):
 
 
 def build_command_center_snapshot(session):
+    seed_artifacts()
+    session_payload = session_view(session)
     users = users_db()["users"]
-    state = get_operator_state(session)
+    state = get_operator_state(session_payload)
     workspace = build_operator_workspace(state)
     approvals = get_approvals()["requests"]
-    ledger = load_json("governance_ledger.json", {"events": []})["events"]
+    ledger = load_json("governance_ledger.json", {"events": []}).get("events", [])
     pending = [r for r in approvals if r.get("status") == "PENDING"]
-    broker = refresh_alpaca_state(soft=True)
+
+    try:
+        broker = refresh_alpaca_state(soft=True)
+    except Exception as exc:
+        broker = {"connected": False, "last_status": "error", "last_error": str(exc), "positions": [], "orders": [], "account": {}, "stale": True}
+
+    try:
+        performance = build_performance_snapshot(state)
+    except Exception as exc:
+        performance = {"status": "degraded", "error": str(exc)}
+
+    governance = {
+        "pending_approvals": len(pending),
+        "approvals": approvals[:8],
+        "policies": get_policies().get("policies", []),
+        "ledger_summary": summarize_governance(ledger),
+        "recent_events": ledger[:8],
+    }
     snapshot = {
-        "session": {**session, "is_admin": session.get("email") in ADMIN_EMAILS},
+        "session": session_payload,
         "north_star": {
-            "mission": "QNT30324 Risk Engine",
+            "mission": "QNT30325A System Stabilization Hotfix",
             "system": "Quantora multi-layer institutional trading operating system",
             "timestamp": now_iso(),
         },
         "personal_workspace": workspace,
         "strategy_engine": workspace["strategies"],
         "risk_engine": workspace["risk_engine"],
+        "performance": performance,
         "broker": broker,
-        "governance": {
-            "pending_approvals": len(pending),
-            "approvals": approvals[:8],
-            "policies": get_policies()["policies"],
-            "ledger_summary": summarize_governance(ledger),
-            "recent_events": ledger[:8],
-        },
+        "governance": governance,
         "system_health": {
             "status": "ok",
             "registered_users": len(users),
-            "policies_enabled": len([p for p in get_policies()["policies"] if p.get("enabled")]),
-            "layer": "qnt30324-risk-engine",
+            "policies_enabled": len([p for p in governance["policies"] if p.get("enabled")]),
+            "layer": "qnt30325a-system-stabilization-hotfix",
             "broker_status": broker.get("last_status"),
+            "admin_ready": session_payload.get("is_admin"),
         },
     }
-    if session.get("email") in ADMIN_EMAILS:
-        snapshot["control_tower"] = control_tower_view()
+    if session_payload.get("is_admin"):
+        try:
+            snapshot["control_tower"] = control_tower_view()
+        except Exception as exc:
+            snapshot["control_tower"] = {"status": "degraded", "error": str(exc), "operators": [], "totals": {}}
     return snapshot
 
 
@@ -1221,38 +1368,97 @@ class ManualOrderRequest(BaseModel):
 
 
 # -------------------------
+# Error handling
+# -------------------------
+def structured_error(status_code, error, reason, detail=None, extra=None):
+    payload = {"error": error, "reason": reason, "_http_status": status_code}
+    if detail and detail != reason:
+        payload["detail"] = detail
+    if extra:
+        payload.update(extra)
+    return payload
+
+
+def classify_http_error(status_code, detail):
+    text = detail if isinstance(detail, str) else json.dumps(detail)
+    low = text.lower()
+    if status_code == 401:
+        return "AUTH_REQUIRED"
+    if status_code == 403:
+        return "ADMIN_REQUIRED" if "admin" in low else "FORBIDDEN"
+    if status_code == 404:
+        return "NOT_FOUND"
+    if status_code == 409:
+        return "CONFLICT"
+    if "risk engine" in low or "kill switch" in low or "risk" in low and "breach" in low:
+        return "RISK_BLOCK"
+    if "capital guard" in low:
+        return "CAPITAL_GUARD"
+    if "alpaca" in low:
+        return "BROKER_ERROR"
+    if status_code == 422:
+        return "VALIDATION_ERROR"
+    return "HTTP_ERROR"
+
+
+@app.on_event("startup")
+def startup_event():
+    seed_artifacts()
+
+
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    detail = exc.detail if isinstance(exc.detail, str) else json.dumps(exc.detail)
+    error = classify_http_error(exc.status_code, detail)
+    return JSONResponse(status_code=exc.status_code, content=structured_error(exc.status_code, error, detail))
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(status_code=422, content=structured_error(422, "VALIDATION_ERROR", "Request validation failed", extra={"fields": exc.errors()}))
+
+
+@app.exception_handler(Exception)
+async def unhandled_exception_handler(request: Request, exc: Exception):
+    return JSONResponse(status_code=500, content=structured_error(500, "SYSTEM_ERROR", "Internal Server Error", detail=str(exc)))
+
+
+# -------------------------
 # Core routes
 # -------------------------
 @app.get("/health")
 def health():
-    return {"status": "ok", "layer": "qnt30324-risk-engine"}
+    return {"status": "ok", "layer": "qnt30325a-system-stabilization-hotfix"}
 
 
 @app.post("/auth/register")
 def auth_register(payload: RegisterRequest):
     users = users_db()
-    if any(u["email"].lower() == payload.email.lower() for u in users["users"]):
-        raise HTTPException(status_code=400, detail="Email already registered")
+    email = normalize_email(payload.email)
+    display_name = (payload.display_name or "Operator").strip() or "Operator"
+    if any(normalize_email(u["email"]) == email for u in users["users"]):
+        raise HTTPException(status_code=409, detail="Email already registered")
     operator_id = f"operator_{uuid.uuid4().hex[:8].upper()}"
-    user = {"email": payload.email, "password": payload.password, "display_name": payload.display_name, "operator_id": operator_id}
+    user = {"email": email, "password": payload.password, "display_name": display_name, "operator_id": operator_id}
     users["users"].append(user)
     save_users(users)
     ensure_state_for_user(user)
-    save_session({"email": payload.email, "operator_id": operator_id, "display_name": payload.display_name, "logged_in": True})
-    append_governance_event(payload.email, operator_id, "register", operator_id, {"display_name": payload.display_name}, "auth")
-    return {"status": "registered", "operator_id": operator_id, "display_name": payload.display_name, "is_admin": payload.email in ADMIN_EMAILS}
+    save_session({"email": email, "operator_id": operator_id, "display_name": display_name, "logged_in": True})
+    append_governance_event(email, operator_id, "register", operator_id, {"display_name": display_name}, "auth")
+    return {"status": "registered", "operator_id": operator_id, "display_name": display_name, "is_admin": user_is_admin_email(email)}
 
 
 @app.post("/auth/login")
 def auth_login(payload: LoginRequest):
     users = users_db()
-    user = next((u for u in users["users"] if u["email"].lower() == payload.email.lower() and u["password"] == payload.password), None)
+    email = normalize_email(payload.email)
+    user = next((u for u in users["users"] if normalize_email(u["email"]) == email and u["password"] == payload.password), None)
     if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
     ensure_state_for_user(user)
     save_session({"email": user["email"], "operator_id": user["operator_id"], "display_name": user["display_name"], "logged_in": True})
     append_governance_event(user["email"], user["operator_id"], "login", user["operator_id"], {}, "auth")
-    return {"status": "logged_in", "operator_id": user["operator_id"], "display_name": user["display_name"], "is_admin": user["email"] in ADMIN_EMAILS}
+    return {"status": "logged_in", "operator_id": user["operator_id"], "display_name": user["display_name"], "is_admin": user_is_admin_email(user["email"])}
 
 
 @app.post("/auth/logout")
@@ -1260,14 +1466,14 @@ def auth_logout():
     session = get_session()
     if session.get("logged_in"):
         append_governance_event(session.get("email"), session.get("operator_id"), "logout", session.get("operator_id"), {}, "auth")
-    save_session({"logged_in": False, "display_name": None, "operator_id": None, "email": None})
+    save_session(empty_session())
     return {"status": "logged_out"}
 
 
 @app.get("/auth/me")
 def auth_me():
     session = get_session()
-    return {**session, "is_admin": session.get("email") in ADMIN_EMAILS if session.get("email") else False}
+    return session_view(session)
 
 
 @app.post("/strategies/register")
@@ -1368,6 +1574,36 @@ def strategies_logs(session=Depends(require_auth)):
     state = get_operator_state(session)
     engine = summarize_strategy_engine(state)
     return {"logs": engine["recent_logs"]}
+
+
+@app.get("/performance/metrics")
+def performance_metrics(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    snapshot = build_performance_snapshot(state)
+    save_operator_state(state)
+    return snapshot
+
+
+@app.get("/performance/operator/{operator_id}")
+def performance_operator(operator_id: str, session=Depends(require_auth)):
+    session_payload = session_view(session)
+    if operator_id != session_payload.get("operator_id") and not session_payload.get("is_admin"):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    state = get_operator_state_by_id(operator_id)
+    snapshot = build_performance_snapshot(state)
+    save_operator_state(state)
+    return snapshot
+
+
+@app.get("/performance/strategy/{strategy_id}")
+def performance_strategy(strategy_id: str, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    strategy = get_strategy_by_id(state, strategy_id)
+    engine = summarize_strategy_engine(state)
+    row = next((s for s in engine.get("strategies", []) if s.get("strategy_id") == strategy_id), None)
+    if not row:
+        raise HTTPException(status_code=404, detail="Strategy not found")
+    return {"strategy": row, "performance": build_performance_snapshot(state).get("summary", {}), "recent_logs": [l for l in state.get("strategy_engine", {}).get("logs", []) if l.get("strategy_id") == strategy_id][:25]}
 
 
 @app.post("/allocator/operator-capital/set")
@@ -1653,9 +1889,9 @@ def approvals_decision(payload: ApprovalDecisionRequest, admin=Depends(require_a
 @app.get("/version")
 def version():
     return {
-        "mission": "QNT30324 Risk Engine",
-        "layer": "qnt30324-risk-engine",
-        "frontend": "qnt30324",
+        "mission": "QNT30325A System Stabilization Hotfix",
+        "layer": "qnt30325a-system-stabilization-hotfix",
+        "frontend": "qnt30325a",
         "cache_policy": NO_CACHE_HEADERS["Cache-Control"],
         "timestamp": now_iso(),
     }
@@ -1675,5 +1911,5 @@ def static_pages(page_name: str):
     if page.suffix == "" and not page_name.endswith(".html"):
         page = FRONTEND_DIR / f"{page_name}.html"
     if page.exists() and page.is_file():
-        return FileResponse(page)
+        return FileResponse(page, headers=NO_CACHE_HEADERS if page.suffix == ".html" else None)
     return JSONResponse({"error": "not found", "page": page_name}, status_code=404)
