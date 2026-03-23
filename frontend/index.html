@@ -136,12 +136,26 @@
     </main>
   </div>
 
+  
   <script>
     const state = {
       activeModule: 'overview',
       me: { logged_in: false },
       summary: null,
       autoRefreshHandle: null,
+      inFlightRefresh: false,
+      draftCache: {},
+      feedback: {
+        auth_out: 'Awaiting action.',
+        strategy_out: 'Awaiting action.',
+        capital_out: 'Awaiting action.',
+        policy_out: 'Awaiting action.',
+        approval_out: 'Awaiting action.',
+        admin_out: 'Awaiting action.',
+        ledger_out: 'Press refresh to load governance ledger.',
+      },
+      lastRefreshAt: null,
+      lastRefreshReason: 'startup',
     };
 
     const modules = [
@@ -155,11 +169,18 @@
       ['logs', 'Ledger / Logs'],
     ];
 
+    const FORM_HEAVY_MODULES = new Set(['strategies', 'capital', 'governance', 'approvals', 'control']);
+
+    function el(id) {
+      return document.getElementById(id);
+    }
+
     async function api(path, method='GET', body=null) {
       const res = await fetch(path, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: body ? JSON.stringify(body) : undefined,
+        cache: 'no-store',
       });
       const text = await res.text();
       let data;
@@ -184,18 +205,68 @@
 
     function safe(v) { return v == null || v === '' ? '—' : v; }
 
+    function isEditable(node) {
+      return !!(node && (node.matches?.('input, select, textarea') || node.isContentEditable));
+    }
+
+    function currentViewHasInputs() {
+      return !!document.querySelector('#view input, #view select, #view textarea');
+    }
+
+    function shouldFreezeViewRefresh() {
+      if (!state.me.logged_in) return true;
+      if (document.hidden) return true;
+      if (FORM_HEAVY_MODULES.has(state.activeModule) && currentViewHasInputs()) return true;
+      if (isEditable(document.activeElement)) return true;
+      return false;
+    }
+
+    function captureDrafts(root=document) {
+      root.querySelectorAll('input[id], select[id], textarea[id]').forEach(field => {
+        if (field.type === 'checkbox' || field.type === 'radio') {
+          state.draftCache[field.id] = { checked: field.checked };
+        } else {
+          state.draftCache[field.id] = { value: field.value };
+        }
+      });
+    }
+
+    function restoreDrafts(root=document) {
+      root.querySelectorAll('input[id], select[id], textarea[id]').forEach(field => {
+        const draft = state.draftCache[field.id];
+        if (!draft) return;
+        if (field.type === 'checkbox' || field.type === 'radio') {
+          field.checked = !!draft.checked;
+        } else if (typeof draft.value === 'string' || typeof draft.value === 'number') {
+          field.value = draft.value;
+        }
+      });
+    }
+
+    function clearDrafts(ids) {
+      ids.forEach(id => delete state.draftCache[id]);
+    }
+
+    function syncFeedback() {
+      Object.entries(state.feedback).forEach(([id, text]) => {
+        const node = el(id);
+        if (node) node.textContent = text;
+      });
+    }
+
     function renderNav() {
-      const nav = document.getElementById('nav');
+      const nav = el('nav');
       const isAdmin = !!state.me.is_admin;
-      nav.innerHTML = modules.filter(([id]) => isAdmin || !['governance','approvals','control','logs'].includes(id)).map(([id, label]) => `
-        <button class="${state.activeModule === id ? 'active' : ''}" onclick="activateModule('${id}')">${label}</button>
-      `).join('');
+      nav.innerHTML = modules
+        .filter(([id]) => isAdmin || !['governance','approvals','control','logs'].includes(id))
+        .map(([id, label]) => `<button class="${state.activeModule === id ? 'active' : ''}" onclick="activateModule('${id}')">${label}</button>`)
+        .join('');
     }
 
     function renderTopbar() {
       const s = state.summary || {};
       const o = s.overview || {};
-      const topbar = document.getElementById('topbar');
+      const topbar = el('topbar');
       const live = state.me.logged_in ? (o.broker_connected ? 'BROKER READY' : (o.loop_running ? 'LIVE' : 'READY')) : 'OFFLINE';
       topbar.innerHTML = [
         ['System Status', live],
@@ -205,8 +276,8 @@
         ['Alerts', safe(o.alerts)],
       ].map(([label, value]) => `<div class="stat"><div class="label">${label}</div><div class="value">${value}</div></div>`).join('');
 
-      document.getElementById('sessionName').textContent = state.me.display_name || 'Guest';
-      document.getElementById('sessionMeta').innerHTML = state.me.logged_in
+      el('sessionName').textContent = state.me.display_name || 'Guest';
+      el('sessionMeta').innerHTML = state.me.logged_in
         ? `${state.me.email || ''}<br>${state.me.operator_id || ''} ${state.me.is_admin ? '• ADMIN' : '• OPERATOR'}`
         : 'Register or login to enter the OS';
     }
@@ -220,7 +291,10 @@
     }
 
     async function refreshSummary() {
-      if (!state.me.logged_in) { state.summary = null; return; }
+      if (!state.me.logged_in) {
+        state.summary = null;
+        return;
+      }
       try {
         state.summary = await api('/command-center/summary');
       } catch (err) {
@@ -228,19 +302,33 @@
       }
     }
 
-    async function boot() {
-      await refreshSession();
-      await refreshSummary();
-      renderNav();
-      renderTopbar();
-      renderActiveModule();
-      if (state.autoRefreshHandle) clearInterval(state.autoRefreshHandle);
-      state.autoRefreshHandle = setInterval(async () => {
+    async function refreshShell({ forceViewRender=false, reason='tick' } = {}) {
+      if (state.inFlightRefresh) return;
+      state.inFlightRefresh = true;
+      try {
+        captureDrafts(document);
         await refreshSession();
         await refreshSummary();
+        state.lastRefreshAt = new Date().toISOString();
+        state.lastRefreshReason = reason;
         renderNav();
         renderTopbar();
-        renderActiveModule();
+        if (forceViewRender || !shouldFreezeViewRefresh()) {
+          renderActiveModule();
+        } else {
+          restoreDrafts(document);
+          syncFeedback();
+        }
+      } finally {
+        state.inFlightRefresh = false;
+      }
+    }
+
+    async function boot() {
+      await refreshShell({ forceViewRender: true, reason: 'boot' });
+      if (state.autoRefreshHandle) clearInterval(state.autoRefreshHandle);
+      state.autoRefreshHandle = setInterval(() => {
+        refreshShell({ forceViewRender: false, reason: 'interval' });
       }, 5000);
     }
 
@@ -256,22 +344,22 @@
           <section class="card span-6">
             <h2>Register Operator</h2>
             <div class="subtle">Create an operator identity inside Quantora.</div>
-            <input id="reg_name" placeholder="Display name">
-            <input id="reg_email" placeholder="Email">
-            <input id="reg_password" type="password" placeholder="Password">
+            <input id="reg_name" placeholder="Display name" autocomplete="name">
+            <input id="reg_email" placeholder="Email" autocomplete="username">
+            <input id="reg_password" type="password" placeholder="Password" autocomplete="new-password">
             <button class="action" onclick="registerUser()">Register + Enter</button>
           </section>
           <section class="card span-6">
             <h2>Login</h2>
             <div class="subtle">Access the existing operator system.</div>
-            <input id="login_email" placeholder="Email">
-            <input id="login_password" type="password" placeholder="Password">
+            <input id="login_email" placeholder="Email" autocomplete="username">
+            <input id="login_password" type="password" placeholder="Password" autocomplete="current-password">
             <button class="action" onclick="loginUser()">Login</button>
             <button class="action secondary" onclick="logoutUser()">Logout</button>
           </section>
           <section class="card span-12">
             <h3>System Response</h3>
-            <pre id="auth_out">Awaiting action.</pre>
+            <pre id="auth_out">${state.feedback.auth_out}</pre>
           </section>
         </div>
       `;
@@ -290,6 +378,7 @@
       const alerts = monitoring.alerts || [];
       const source = s.execution?.source || {};
       const snap = monitoring.latest_snapshot || {};
+      const refreshMeta = state.lastRefreshAt ? `${state.lastRefreshAt} · ${state.lastRefreshReason}` : 'Awaiting refresh';
       return `
         <div class="grid">
           <section class="card span-8">
@@ -314,7 +403,7 @@
               <div class="mini"><div class="mini-label">Used Capital</div><div class="mini-value">${currency(snap.used_capital)}</div></div>
               <div class="mini"><div class="mini-label">Utilization</div><div class="mini-value">${percent(snap.utilization_pct)}</div></div>
             </div>
-            <div class="footer-note">Last update: ${safe(snap.timestamp)}</div>
+            <div class="footer-note">Last update: ${safe(snap.timestamp)} · Refresh engine: ${refreshMeta}</div>
           </section>
           <section class="card span-6">
             <h3>Live Alerts</h3>
@@ -423,7 +512,7 @@
             <select id="strategy_side"><option value="buy">buy</option><option value="sell">sell</option></select>
             <input id="strategy_qty" type="number" placeholder="Default qty">
             <button class="action" onclick="registerStrategy()">Register Strategy</button>
-            <pre id="strategy_out">Awaiting action.</pre>
+            <pre id="strategy_out">${state.feedback.strategy_out}</pre>
           </section>
           <section class="card span-7">
             <h2>Strategy Registry</h2>
@@ -456,7 +545,7 @@
             <div class="subtle">Operator-level capital configuration and capacity monitoring.</div>
             <input id="operator_capital" type="number" placeholder="Allocated capital">
             <button class="action" onclick="setOperatorCapital()">Set My Operator Capital</button>
-            <pre id="capital_out">Awaiting action.</pre>
+            <pre id="capital_out">${state.feedback.capital_out}</pre>
           </section>
           <section class="card span-7">
             <h2>Capital View</h2>
@@ -483,7 +572,7 @@
             <input id="policy_threshold" type="number" placeholder="Threshold">
             <select id="policy_enabled"><option value="true">enabled</option><option value="false">disabled</option></select>
             <button class="action" onclick="updatePolicy()">Update Policy</button>
-            <pre id="policy_out">Awaiting action.</pre>
+            <pre id="policy_out">${state.feedback.policy_out}</pre>
           </section>
           <section class="card span-7">
             <h2>Policy Registry</h2>
@@ -516,7 +605,7 @@
             <select id="approval_decision"><option value="APPROVED">APPROVED</option><option value="REJECTED">REJECTED</option></select>
             <input id="approval_notes" placeholder="Notes">
             <button class="action success" onclick="decideApproval()">Submit Decision</button>
-            <pre id="approval_out">Awaiting action.</pre>
+            <pre id="approval_out">${state.feedback.approval_out}</pre>
           </section>
           <section class="card span-7">
             <h2>Approval Queue</h2>
@@ -561,7 +650,7 @@
             <input id="admin_loop_interval" type="number" value="60" placeholder="Interval seconds">
             <button class="action" onclick="adminStartLoop()">Admin Start Loop</button>
             <button class="action secondary" onclick="adminRunAll()">Admin Run All Once</button>
-            <pre id="admin_out">Awaiting action.</pre>
+            <pre id="admin_out">${state.feedback.admin_out}</pre>
           </section>
           <section class="card span-7">
             <h3>Operator Fleet</h3>
@@ -597,7 +686,7 @@
           <section class="card span-8">
             <h2>Governance Ledger</h2>
             <div class="toolbar"><button class="action secondary" onclick="loadLedger()">Refresh Ledger</button></div>
-            <pre id="ledger_out">Press refresh to load governance ledger.</pre>
+            <pre id="ledger_out">${state.feedback.ledger_out}</pre>
           </section>
         </div>
       `;
@@ -608,7 +697,8 @@
     }
 
     function renderActiveModule() {
-      const view = document.getElementById('view');
+      const view = el('view');
+      captureDrafts(view);
       const map = {
         overview: renderOverview,
         execution: renderExecution,
@@ -620,41 +710,127 @@
         logs: renderLogs,
       };
       view.innerHTML = (map[state.activeModule] || renderOverview)();
+      restoreDrafts(view);
+      syncFeedback();
     }
 
-    async function action(path, body, targetId) {
-      const target = document.getElementById(targetId);
+    async function action(path, body, targetId, options={}) {
       try {
         const data = await api(path, 'POST', body);
-        target.textContent = JSON.stringify(data, null, 2);
+        state.feedback[targetId] = JSON.stringify(data, null, 2);
+        if (options.clearDraftIds) clearDrafts(options.clearDraftIds);
       } catch (err) {
-        target.textContent = JSON.stringify({ error: err.message }, null, 2);
+        state.feedback[targetId] = JSON.stringify({ error: err.message }, null, 2);
       }
-      await boot();
+      await refreshShell({ forceViewRender: true, reason: `action:${path}` });
     }
 
-    async function registerUser() { await action('/auth/register', { display_name: reg_name.value, email: reg_email.value, password: reg_password.value }, 'auth_out'); }
-    async function loginUser() { await action('/auth/login', { email: login_email.value, password: login_password.value }, 'auth_out'); }
-    async function logoutUser() { await action('/auth/logout', {}, 'auth_out'); }
-    async function registerStrategy() { await action('/strategies/register', { name: strategy_name.value, symbol: strategy_symbol.value, side: strategy_side.value, default_qty: parseInt(strategy_qty.value || '0', 10), enabled: true }, 'strategy_out'); }
-    async function setOperatorCapital() { await action('/allocator/operator-capital/set', { allocated_capital: parseFloat(operator_capital.value || '0') }, 'capital_out'); }
-    async function updatePolicy() { await action('/policy-engine/policies/update', { policy_id: policy_id.value, threshold: parseFloat(policy_threshold.value || '0'), enabled: policy_enabled.value === 'true' }, 'policy_out'); }
-    async function decideApproval() { await action('/approvals/decision', { request_id: approval_request_id.value, decision: approval_decision.value, notes: approval_notes.value }, 'approval_out'); }
-    async function adminSetCapital() { await action('/admin/operator-capital/set', { operator_id: admin_operator_id.value, allocated_capital: parseFloat(admin_operator_capital.value || '0') }, 'admin_out'); }
-    async function adminStartLoop() { await action('/admin/operator-loop/start', { operator_id: admin_operator_id.value, execution_mode: admin_loop_mode.value, interval_seconds: parseInt(admin_loop_interval.value || '60', 10) }, 'admin_out'); }
-    async function adminRunAll() { await action('/admin/run-all-once', {}, 'admin_out'); }
+    async function registerUser() {
+      await action('/auth/register', {
+        display_name: el('reg_name')?.value || '',
+        email: el('reg_email')?.value || '',
+        password: el('reg_password')?.value || '',
+      }, 'auth_out', { clearDraftIds: ['reg_name', 'reg_email', 'reg_password', 'login_email', 'login_password'] });
+    }
+
+    async function loginUser() {
+      await action('/auth/login', {
+        email: el('login_email')?.value || '',
+        password: el('login_password')?.value || '',
+      }, 'auth_out', { clearDraftIds: ['login_email', 'login_password'] });
+    }
+
+    async function logoutUser() {
+      await action('/auth/logout', {}, 'auth_out', { clearDraftIds: ['login_email', 'login_password', 'reg_name', 'reg_email', 'reg_password'] });
+    }
+
+    async function registerStrategy() {
+      await action('/strategies/register', {
+        name: el('strategy_name')?.value || '',
+        symbol: el('strategy_symbol')?.value || '',
+        side: el('strategy_side')?.value || 'buy',
+        default_qty: parseInt(el('strategy_qty')?.value || '0', 10),
+        enabled: true,
+      }, 'strategy_out');
+    }
+
+    async function setOperatorCapital() {
+      await action('/allocator/operator-capital/set', {
+        allocated_capital: parseFloat(el('operator_capital')?.value || '0'),
+      }, 'capital_out');
+    }
+
+    async function updatePolicy() {
+      await action('/policy-engine/policies/update', {
+        policy_id: el('policy_id')?.value || '',
+        threshold: parseFloat(el('policy_threshold')?.value || '0'),
+        enabled: (el('policy_enabled')?.value || 'true') === 'true',
+      }, 'policy_out');
+    }
+
+    async function decideApproval() {
+      await action('/approvals/decision', {
+        request_id: el('approval_request_id')?.value || '',
+        decision: el('approval_decision')?.value || 'APPROVED',
+        notes: el('approval_notes')?.value || '',
+      }, 'approval_out');
+    }
+
+    async function adminSetCapital() {
+      await action('/admin/operator-capital/set', {
+        operator_id: el('admin_operator_id')?.value || '',
+        allocated_capital: parseFloat(el('admin_operator_capital')?.value || '0'),
+      }, 'admin_out');
+    }
+
+    async function adminStartLoop() {
+      await action('/admin/operator-loop/start', {
+        operator_id: el('admin_operator_id')?.value || '',
+        execution_mode: el('admin_loop_mode')?.value || 'internal',
+        interval_seconds: parseInt(el('admin_loop_interval')?.value || '60', 10),
+      }, 'admin_out');
+    }
+
+    async function adminRunAll() {
+      await action('/admin/run-all-once', {}, 'admin_out');
+    }
 
     async function loadLedger() {
-      const out = document.getElementById('ledger_out');
       try {
         const data = await api('/governance/ledger');
-        out.textContent = JSON.stringify(data, null, 2);
+        state.feedback.ledger_out = JSON.stringify(data, null, 2);
       } catch (err) {
-        out.textContent = JSON.stringify({ error: err.message }, null, 2);
+        state.feedback.ledger_out = JSON.stringify({ error: err.message }, null, 2);
       }
+      syncFeedback();
     }
+
+    document.addEventListener('input', event => {
+      const target = event.target;
+      if (!target || !target.id) return;
+      if (target.matches('input, select, textarea')) {
+        if (target.type === 'checkbox' || target.type === 'radio') {
+          state.draftCache[target.id] = { checked: target.checked };
+        } else {
+          state.draftCache[target.id] = { value: target.value };
+        }
+      }
+    });
+
+    document.addEventListener('change', event => {
+      const target = event.target;
+      if (!target || !target.id) return;
+      if (target.matches('input, select, textarea')) {
+        if (target.type === 'checkbox' || target.type === 'radio') {
+          state.draftCache[target.id] = { checked: target.checked };
+        } else {
+          state.draftCache[target.id] = { value: target.value };
+        }
+      }
+    });
 
     boot();
   </script>
+
 </body>
 </html>

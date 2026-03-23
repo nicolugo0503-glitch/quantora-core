@@ -16,6 +16,16 @@ FRONTEND_DIR = PROJECT_DIR / "frontend"
 app = FastAPI(title="Quantora QNT30322 Unified Command Center", version="30322")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=False, allow_methods=["*"], allow_headers=["*"])
 
+def file_response_no_cache(path: Path):
+    return FileResponse(
+        path,
+        headers={
+            "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+            "Pragma": "no-cache",
+            "Expires": "0",
+        },
+    )
+
 ADMIN_EMAILS = {"admin@quantora.local", "nicolugo0503@gmail.com"}
 
 def now_dt():
@@ -676,7 +686,7 @@ def command_center_summary(session=Depends(require_auth)):
 def root():
     index = FRONTEND_DIR / "index.html"
     if index.exists():
-        return FileResponse(index)
+        return file_response_no_cache(index)
     return {"status": "ok", "message": "Quantora QNT30321 live"}
 
 @app.get("/{page_name}")
@@ -685,5 +695,5 @@ def static_pages(page_name: str):
     if page.suffix == "" and not page_name.endswith(".html"):
         page = FRONTEND_DIR / f"{page_name}.html"
     if page.exists() and page.is_file():
-        return FileResponse(page)
+        return file_response_no_cache(page)
     return JSONResponse({"error": "not found", "page": page_name}, status_code=404)
