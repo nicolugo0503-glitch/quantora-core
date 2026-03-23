@@ -17,7 +17,7 @@ PROJECT_DIR = BACKEND_DIR.parent
 ARTIFACTS_DIR = BACKEND_DIR / "artifacts"
 FRONTEND_DIR = PROJECT_DIR / "frontend"
 
-app = FastAPI(title="Quantora QNT30322B Alpaca Reintegration Layer", version="30322B")
+app = FastAPI(title="Quantora QNT30322B1 Frontend Sync Hotfix", version="30322B1")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -25,6 +25,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+NO_CACHE_HEADERS = {
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Expires": "0",
+}
 
 ADMIN_EMAILS = {"admin@quantora.local", "nicolugo0503@gmail.com"}
 PRICE_BOOK = {
@@ -610,7 +616,7 @@ def build_command_center_snapshot(session):
     snapshot = {
         "session": {**session, "is_admin": session.get("email") in ADMIN_EMAILS},
         "north_star": {
-            "mission": "QNT30322B Alpaca Reintegration Layer",
+            "mission": "QNT30322B1 Frontend Sync Hotfix",
             "system": "Quantora multi-layer institutional trading operating system",
             "timestamp": now_iso(),
         },
@@ -627,7 +633,7 @@ def build_command_center_snapshot(session):
             "status": "ok",
             "registered_users": len(users),
             "policies_enabled": len([p for p in get_policies()["policies"] if p.get("enabled")]),
-            "layer": "qnt30322b-alpaca-reintegration-layer",
+            "layer": "qnt30322b1-frontend-sync-hotfix",
             "broker_status": broker.get("last_status"),
         },
     }
@@ -713,7 +719,7 @@ class ManualOrderRequest(BaseModel):
 # -------------------------
 @app.get("/health")
 def health():
-    return {"status": "ok", "layer": "qnt30322b-alpaca-reintegration-layer"}
+    return {"status": "ok", "layer": "qnt30322b1-frontend-sync-hotfix"}
 
 
 @app.post("/auth/register")
@@ -1048,11 +1054,22 @@ def approvals_decision(payload: ApprovalDecisionRequest, admin=Depends(require_a
     return {"status": req["status"], "request": req}
 
 
+@app.get("/version")
+def version():
+    return {
+        "mission": "QNT30322B1 Frontend Sync Hotfix",
+        "layer": "qnt30322b1-frontend-sync-hotfix",
+        "frontend": "qnt30322b1",
+        "cache_policy": NO_CACHE_HEADERS["Cache-Control"],
+        "timestamp": now_iso(),
+    }
+
+
 @app.get("/")
 def root():
     index = FRONTEND_DIR / "index.html"
     if index.exists():
-        return FileResponse(index)
+        return FileResponse(index, media_type="text/html", headers=NO_CACHE_HEADERS)
     return {"status": "ok", "message": "Quantora QNT30322B live"}
 
 

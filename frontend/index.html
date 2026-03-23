@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Quantora QNT30322B Alpaca Reintegration Layer</title>
+  <title>Quantora QNT30322B1 Frontend Sync Hotfix</title>
   <style>
     :root {
       --bg: #07111f;
@@ -91,7 +91,7 @@
       <div>
         <h1>Quantora Unified Command Center · Alpaca Reintegration</h1>
         <div class="sub">
-          QNT30322B restores the broker layer inside the command center: live Alpaca connection status, account state, positions, open orders, and real broker execution routing, without resetting the Quantora operating system.
+          QNT30322B1 locks frontend/backend parity: the Alpaca broker layer remains live, and the deployment now forces fresh HTML delivery with no-cache headers so Railway/browser stale pages cannot serve the old command center shell.
         </div>
       </div>
       <div class="hero-actions">
@@ -107,7 +107,7 @@
       <div class="metric"><div class="label">Used Capital</div><div class="value" id="m_used">-</div></div>
       <div class="metric"><div class="label">Pending Approvals</div><div class="value" id="m_approvals">-</div></div>
       <div class="metric"><div class="label">Broker Status</div><div class="value" id="m_broker">-</div></div>
-      <div class="metric"><div class="label">System Layer</div><div class="value" id="m_layer">QNT30322B</div></div>
+      <div class="metric"><div class="label">System Layer</div><div class="value" id="m_layer">QNT30322B1</div></div>
     </div>
 
     <div class="grid-main">
@@ -373,7 +373,7 @@
       document.getElementById('m_allocated').textContent = fmt(snapshot?.personal_workspace?.capital?.allocated_capital);
       document.getElementById('m_used').textContent = fmt(snapshot?.personal_workspace?.capital?.used_capital);
       document.getElementById('m_approvals').textContent = snapshot?.governance?.pending_approvals ?? '-';
-      document.getElementById('m_layer').textContent = snapshot?.system_health?.layer || 'QNT30322B';
+      document.getElementById('m_layer').textContent = snapshot?.system_health?.layer || 'QNT30322B1';
       document.getElementById('session_hint').textContent = snapshot?.session?.logged_in ? `${snapshot.session.display_name} · ${snapshot.session.email}` : 'No active session';
       if (snapshot?.broker) renderBroker(snapshot.broker);
     }

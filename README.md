@@ -49,3 +49,8 @@ Run:
 
 - If no Alpaca credentials are configured, broker status returns `disconnected` and strategy/manual orders in `alpaca` mode will be rejected.
 - This package was validated locally for startup, auth, snapshot, and disconnected-broker handling. Live Alpaca calls require real credentials and network access from your deployment environment.
+
+
+## QNT30322B1 Frontend Sync Hotfix
+
+This hotfix resolves the split deployment state where Railway/browser cache could serve the old command-center HTML while the QNT30322B backend was already live. The backend now serves HTML with strict no-cache headers and exposes `/version` for deployment verification.
