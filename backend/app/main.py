@@ -19,7 +19,7 @@ PROJECT_DIR = BACKEND_DIR.parent
 ARTIFACTS_DIR = BACKEND_DIR / "artifacts"
 FRONTEND_DIR = PROJECT_DIR / "frontend"
 
-app = FastAPI(title="Quantora QNT30325A System Stabilization Hotfix", version="30325A")
+app = FastAPI(title="Quantora QNT30324B Capital Source of Truth", version="30324B")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -54,6 +54,15 @@ def normalize_email(value):
 
 def user_is_admin_email(email):
     return normalize_email(email) in ADMIN_EMAILS_NORMALIZED
+
+
+def as_float(value, default=0.0):
+    try:
+        if value in (None, ""):
+            return default
+        return float(value)
+    except Exception:
+        return default
 
 
 def empty_session():
@@ -246,6 +255,15 @@ def default_risk_engine():
     }
 
 
+def default_capital_source():
+    return {
+        "mode": "internal",
+        "provider": "alpaca",
+        "last_updated_at": None,
+        "last_updated_by": None,
+    }
+
+
 def default_operator_state(operator_id, display_name):
     return {
         "operator_id": operator_id,
@@ -259,6 +277,7 @@ def default_operator_state(operator_id, display_name):
             "last_engine_status": "idle",
         },
         "risk_engine": default_risk_engine(),
+        "capital_source": default_capital_source(),
         "orders": {"orders": []},
         "allocator_caps": {
             "operator": {
@@ -423,6 +442,11 @@ def migrate_operator_state(state, display_name=None):
     state.setdefault("allocator_caps", {"operator": {"operator_id": state.get("operator_id"), "allocated_capital": 0.0, "status": "UNFUNDED", "updated_at": None}})
     state.setdefault("strategy_loop", {"running": False, "execution_mode": "internal", "interval_seconds": 60, "last_run_at": None, "next_run_at": None, "heartbeat_at": None, "total_runs": 0, "total_signals": 0, "total_orders": 0})
     state.setdefault("monitoring", {"latest_snapshot": {}, "alerts": [], "last_evaluated_at": None})
+    capital_source = state.setdefault("capital_source", default_capital_source())
+    capital_source.setdefault("mode", "internal")
+    capital_source.setdefault("provider", "alpaca")
+    capital_source.setdefault("last_updated_at", None)
+    capital_source.setdefault("last_updated_by", None)
     risk = state.setdefault("risk_engine", default_risk_engine())
     risk.setdefault("enabled", True)
     risk.setdefault("max_position_notional", 5000.0)
@@ -508,22 +532,117 @@ def policy_for(policy_type):
     return None
 
 
-def available_operator_capital(state):
+def broker_positions_exposure(broker_state):
+    positions = []
+    total = 0.0
+    for pos in broker_state.get("positions", []) or []:
+        symbol = (pos.get("symbol") or "UNK").upper()
+        qty = as_float(pos.get("qty"), 0.0)
+        market_value = abs(as_float(pos.get("market_value"), 0.0))
+        if market_value <= 0 and qty:
+            market_value = round(abs(qty) * get_price(symbol), 2)
+        last_price = as_float(pos.get("current_price"), get_price(symbol))
+        positions.append({
+            "symbol": symbol,
+            "net_qty": round(qty, 6),
+            "last_price": last_price,
+            "market_value": round(market_value, 2),
+        })
+        total += market_value
+    positions.sort(key=lambda x: x["symbol"])
+    return positions, round(total, 2)
+
+
+def build_capital_context(state):
+    source = state.setdefault("capital_source", default_capital_source())
+    mode = (source.get("mode") or "internal").lower()
+    provider = (source.get("provider") or "alpaca").lower()
+    if mode == "broker":
+        broker_state = refresh_alpaca_state(soft=True)
+        account = broker_state.get("account", {}) or {}
+        positions, used_capital = broker_positions_exposure(broker_state)
+        equity = round(as_float(account.get("equity"), 0.0), 2)
+        cash = round(as_float(account.get("cash"), 0.0), 2)
+        buying_power = round(as_float(account.get("buying_power") or account.get("regt_buying_power") or account.get("cash"), 0.0), 2)
+        if broker_state.get("connected") or equity > 0 or used_capital > 0 or buying_power > 0:
+            allocated = equity
+            utilization = round((used_capital / allocated) * 100, 2) if allocated > 0 else 0.0
+            return {
+                "mode": "broker",
+                "provider": provider,
+                "label": "alpaca" if provider == "alpaca" else provider,
+                "allocated_capital": allocated,
+                "used_capital": used_capital,
+                "remaining_capital": buying_power,
+                "utilization_pct": utilization,
+                "current_equity": equity,
+                "cash": cash,
+                "buying_power": buying_power,
+                "positions": positions,
+                "orders_count": len(broker_state.get("orders", []) or []),
+                "connected": bool(broker_state.get("connected")),
+                "valid": True,
+                "reason": None,
+                "broker": broker_state,
+            }
+        return {
+            "mode": "broker",
+            "provider": provider,
+            "label": "alpaca" if provider == "alpaca" else provider,
+            "allocated_capital": 0.0,
+            "used_capital": 0.0,
+            "remaining_capital": 0.0,
+            "utilization_pct": 0.0,
+            "current_equity": 0.0,
+            "cash": 0.0,
+            "buying_power": 0.0,
+            "positions": [],
+            "orders_count": 0,
+            "connected": False,
+            "valid": False,
+            "reason": "Broker capital mode selected but broker snapshot is unavailable",
+            "broker": broker_state,
+        }
+
     exposure = operator_exposure(state)
-    allocated = float(state["allocator_caps"]["operator"].get("allocated_capital", 0) or 0)
-    return round(allocated - exposure["notional"], 2)
+    allocated = round(as_float(state["allocator_caps"]["operator"].get("allocated_capital"), 0.0), 2)
+    used_capital = round(as_float(exposure["notional"], 0.0), 2)
+    remaining = round(allocated - used_capital, 2)
+    return {
+        "mode": "internal",
+        "provider": "internal",
+        "label": "internal",
+        "allocated_capital": allocated,
+        "used_capital": used_capital,
+        "remaining_capital": remaining,
+        "utilization_pct": round((used_capital / allocated) * 100, 2) if allocated > 0 else 0.0,
+        "current_equity": allocated,
+        "cash": remaining,
+        "buying_power": remaining,
+        "positions": exposure["positions"],
+        "orders_count": exposure["orders"],
+        "connected": True,
+        "valid": True,
+        "reason": None,
+        "broker": None,
+    }
+
+
+def available_operator_capital(state):
+    return round(build_capital_context(state).get("remaining_capital", 0.0), 2)
 
 
 def enforce_capital_guard(state, notional, side, strategy=None):
     if (side or "buy").lower() != "buy":
         return
-    remaining = available_operator_capital(state)
-    allocated = float(state["allocator_caps"]["operator"].get("allocated_capital", 0) or 0)
+    capital = build_capital_context(state)
+    remaining = round(capital.get("remaining_capital", 0.0), 2)
+    allocated = round(capital.get("allocated_capital", 0.0), 2)
     if allocated <= 0:
         strategy_id = strategy.get("strategy_id") if strategy else None
         if strategy_id:
-            strategy_log(state, strategy_id, "risk_block", "Buy order blocked: operator has no allocated capital", {"required": notional, "remaining": remaining})
-        raise HTTPException(status_code=400, detail="Capital guard: operator has no allocated capital")
+            strategy_log(state, strategy_id, "risk_block", "Buy order blocked: no capital available from selected capital source", {"required": notional, "remaining": remaining, "capital_mode": capital.get("mode")})
+        raise HTTPException(status_code=400, detail=f"Capital guard: no capital available from {capital.get('label')} source")
     if notional > remaining:
         strategy_id = strategy.get("strategy_id") if strategy else None
         if strategy_id:
@@ -541,38 +660,42 @@ def evaluate_risk_state(state):
     risk = state.setdefault("risk_engine", default_risk_engine())
     risk.setdefault("enabled", True)
     engine = summarize_strategy_engine(state)
-    exposure = operator_exposure(state)
-    allocated = float(state["allocator_caps"]["operator"].get("allocated_capital", 0) or 0)
+    capital = build_capital_context(state)
+    allocated = round(as_float(capital.get("allocated_capital"), 0.0), 2)
+    used_capital = round(as_float(capital.get("used_capital"), 0.0), 2)
+    current_equity = round(as_float(capital.get("current_equity"), allocated), 2)
     today = now_dt().date().isoformat()
     if risk.get("day_start_date") != today:
         risk["day_start_date"] = today
-        risk["day_start_realized_pnl"] = round(engine["portfolio_realized_pnl"], 2)
+        risk["day_start_realized_pnl"] = round(as_float(engine.get("portfolio_realized_pnl"), 0.0), 2)
 
-    current_equity = round(allocated + float(engine.get("portfolio_realized_pnl") or 0) + float(engine.get("portfolio_unrealized_pnl") or 0), 2)
-    peak_equity = float(risk.get("peak_equity") or 0)
+    peak_equity = as_float(risk.get("peak_equity"), 0.0)
     if peak_equity <= 0:
         peak_equity = max(current_equity, allocated, 0.0)
     peak_equity = max(peak_equity, current_equity)
     risk["peak_equity"] = round(peak_equity, 2)
     drawdown_pct = round((((peak_equity - current_equity) / peak_equity) * 100) if peak_equity > 0 else 0.0, 2)
-    daily_realized_pnl = round(float(engine.get("portfolio_realized_pnl") or 0) - float(risk.get("day_start_realized_pnl") or 0), 2)
+    daily_realized_pnl = round(as_float(engine.get("portfolio_realized_pnl"), 0.0) - as_float(risk.get("day_start_realized_pnl"), 0.0), 2)
 
     breaches = []
+    status = "SAFE"
+    if not capital.get("valid"):
+        status = "UNKNOWN"
     if risk.get("enabled"):
         if risk.get("kill_switch_active"):
             breaches.append("Kill switch active")
-        max_total = float(risk.get("max_total_exposure") or 0)
-        if max_total > 0 and exposure["notional"] > max_total:
-            breaches.append(f"Total exposure {round(exposure['notional'],2)} exceeds max total exposure {round(max_total,2)}")
-        max_position = float(risk.get("max_position_notional") or 0)
+        max_total = as_float(risk.get("max_total_exposure"), 0.0)
+        if max_total > 0 and used_capital > max_total:
+            breaches.append(f"Total exposure {round(used_capital,2)} exceeds max total exposure {round(max_total,2)}")
+        max_position = as_float(risk.get("max_position_notional"), 0.0)
         if max_position > 0:
-            for pos in exposure["positions"]:
-                if float(pos.get("market_value") or 0) > max_position:
-                    breaches.append(f"{pos['symbol']} exposure {round(float(pos.get('market_value') or 0),2)} exceeds position limit {round(max_position,2)}")
-        max_dd = float(risk.get("max_drawdown_pct") or 0)
+            for pos in capital.get("positions", []):
+                if as_float(pos.get("market_value"), 0.0) > max_position:
+                    breaches.append(f"{pos['symbol']} exposure {round(as_float(pos.get('market_value'), 0.0),2)} exceeds position limit {round(max_position,2)}")
+        max_dd = as_float(risk.get("max_drawdown_pct"), 0.0)
         if max_dd > 0 and drawdown_pct > max_dd:
             breaches.append(f"Drawdown {drawdown_pct}% exceeds limit {round(max_dd,2)}%")
-        max_daily_loss = float(risk.get("max_daily_loss") or 0)
+        max_daily_loss = as_float(risk.get("max_daily_loss"), 0.0)
         if max_daily_loss > 0 and daily_realized_pnl < (-1 * max_daily_loss):
             breaches.append(f"Daily realized PnL {daily_realized_pnl} breaches daily loss limit {-round(max_daily_loss,2)}")
 
@@ -581,9 +704,10 @@ def evaluate_risk_state(state):
     risk["current_equity"] = current_equity
     risk["current_drawdown_pct"] = drawdown_pct
     risk["current_daily_realized_pnl"] = daily_realized_pnl
-    risk["current_total_exposure"] = round(exposure["notional"], 2)
+    risk["current_total_exposure"] = used_capital
     risk["last_evaluated_at"] = now_iso()
     if breaches:
+        status = "BREACH"
         reason = "; ".join(breaches[:5])
         if reason != previous_reason:
             risk["breach_count"] = int(risk.get("breach_count") or 0) + 1
@@ -592,17 +716,36 @@ def evaluate_risk_state(state):
         if risk.get("auto_shutdown_on_breach"):
             state["strategy_loop"]["running"] = False
             state["strategy_loop"]["next_run_at"] = None
+    elif risk.get("kill_switch_active"):
+        status = "LOCKED"
+        risk["last_breach_reason"] = "Kill switch active"
+    elif not capital.get("valid"):
+        risk["last_breach_reason"] = capital.get("reason")
+    else:
+        risk["last_breach_reason"] = None
+
     return {
+        "status": status,
+        "capital_source": {
+            "mode": capital.get("mode"),
+            "label": capital.get("label"),
+            "provider": capital.get("provider"),
+            "valid": capital.get("valid"),
+            "connected": capital.get("connected"),
+            "reason": capital.get("reason"),
+        },
         "config": risk,
         "breaches": breaches,
         "totals": {
-            "current_total_exposure": round(exposure["notional"], 2),
+            "current_total_exposure": used_capital,
             "current_equity": current_equity,
             "current_drawdown_pct": drawdown_pct,
             "current_daily_realized_pnl": daily_realized_pnl,
             "allocated_capital": allocated,
+            "remaining_capital": round(as_float(capital.get("remaining_capital"), 0.0), 2),
+            "utilization_pct": round(as_float(capital.get("utilization_pct"), 0.0), 2),
         },
-        "positions": exposure["positions"],
+        "positions": capital.get("positions", []),
     }
 
 
@@ -620,7 +763,7 @@ def enforce_risk_guard(state, symbol, side, qty, execution_mode="internal"):
 
     price = get_price(symbol)
     signed_qty = float(qty) if (side or "buy").lower() == "buy" else (-1 * float(qty))
-    positions = {p["symbol"]: p for p in risk_view["positions"]}
+    positions = {p["symbol"]: p for p in risk_view.get("positions", [])}
     current_qty = float(positions.get(symbol, {}).get("net_qty") or 0)
     current_symbol_notional = round(abs(current_qty) * price, 2)
     projected_qty = current_qty + signed_qty
@@ -636,13 +779,16 @@ def enforce_risk_guard(state, symbol, side, qty, execution_mode="internal"):
 
 
 def evaluate_monitoring(state):
-    exposure = operator_exposure(state)
-    allocated = float(state["allocator_caps"]["operator"].get("allocated_capital", 0) or 0)
-    utilization = round((exposure["notional"] / allocated) * 100, 2) if allocated > 0 else 0.0
+    capital = build_capital_context(state)
+    allocated = round(as_float(capital.get("allocated_capital"), 0.0), 2)
+    used_capital = round(as_float(capital.get("used_capital"), 0.0), 2)
+    utilization = round(as_float(capital.get("utilization_pct"), 0.0), 2)
     alerts = []
     risk_view = evaluate_risk_state(state)
-    if exposure["notional"] > allocated and allocated >= 0:
-        alerts.append({"level": "critical", "type": "capital-breach", "message": f"Open exposure {exposure['notional']} exceeds allocated capital {allocated}"})
+    if not capital.get("valid"):
+        alerts.append({"level": "warn", "type": "capital-source", "message": capital.get("reason") or "Capital source unavailable"})
+    if used_capital > allocated and allocated > 0:
+        alerts.append({"level": "critical", "type": "capital-breach", "message": f"Open exposure {used_capital} exceeds source capital {allocated}"})
     elif utilization >= 80 and allocated > 0:
         alerts.append({"level": "warn", "type": "operator-utilization", "message": f"Operator utilization at {utilization}%"})
     if state["strategy_loop"].get("running") and not state["strategy_loop"].get("heartbeat_at"):
@@ -666,11 +812,13 @@ def evaluate_monitoring(state):
     totals = summarize_strategy_engine(state)
     state["monitoring"]["latest_snapshot"] = {
         "timestamp": now_iso(),
-        "order_count": exposure["orders"],
-        "used_capital": exposure["notional"],
+        "order_count": capital.get("orders_count", 0),
+        "used_capital": used_capital,
         "allocated_capital": allocated,
-        "remaining_capital": round(allocated - exposure["notional"], 2),
+        "remaining_capital": round(as_float(capital.get("remaining_capital"), 0.0), 2),
         "utilization_pct": utilization,
+        "capital_mode": capital.get("mode"),
+        "capital_label": capital.get("label"),
         "alerts_count": len(alerts),
         "strategy_realized_pnl": totals["portfolio_realized_pnl"],
         "strategy_unrealized_pnl": totals["portfolio_unrealized_pnl"],
@@ -733,8 +881,9 @@ def build_performance_snapshot(state):
     losses = sum(int((s.get("metrics") or {}).get("losses") or 0) for s in strategy_rows)
     total_orders = len(orders)
     filled_orders = len([o for o in orders if (o.get("status") or "").lower() in ACTIVE_ORDER_STATUSES])
-    allocated = float(state.get("allocator_caps", {}).get("operator", {}).get("allocated_capital", 0) or 0)
-    used = float(monitoring.get("latest_snapshot", {}).get("used_capital", 0) or 0)
+    capital = build_capital_context(state)
+    allocated = float(capital.get("allocated_capital", 0) or 0)
+    used = float(capital.get("used_capital", 0) or 0)
     current_equity = float(risk_view.get("totals", {}).get("current_equity", allocated) or allocated)
     operator_score = round((float(engine.get("portfolio_realized_pnl") or 0) * 0.35) + (wins * 3) - (losses * 1.5) - (len(risk_view.get("breaches", [])) * 10), 2)
     recent_orders = list(reversed(orders[:10]))
@@ -762,6 +911,9 @@ def build_performance_snapshot(state):
             "used_capital": round(used, 2),
             "utilization_pct": round((used / allocated) * 100, 2) if allocated > 0 else 0.0,
             "current_equity": round(current_equity, 2),
+            "capital_mode": capital.get("mode"),
+            "capital_label": capital.get("label"),
+            "capital_valid": capital.get("valid"),
             "current_drawdown_pct": round(float(risk_view.get("totals", {}).get("current_drawdown_pct") or 0), 2),
             "daily_realized_pnl": round(float(risk_view.get("totals", {}).get("current_daily_realized_pnl") or 0), 2),
             "risk_breaches": len(risk_view.get("breaches", [])),
@@ -1094,10 +1246,13 @@ def build_operator_workspace(state):
         "display_name": state["display_name"],
         "capital": {
             **state["allocator_caps"]["operator"],
+            "mode": state.get("capital_source", {}).get("mode", "internal"),
+            "label": monitoring["latest_snapshot"].get("capital_label", "internal"),
             "used_capital": monitoring["latest_snapshot"].get("used_capital", 0),
             "remaining_capital": monitoring["latest_snapshot"].get("remaining_capital", 0),
             "utilization_pct": monitoring["latest_snapshot"].get("utilization_pct", 0),
         },
+        "capital_source": state.get("capital_source", default_capital_source()),
         "strategies": engine,
         "strategy_loop": state["strategy_loop"],
         "orders": orders,
@@ -1145,13 +1300,14 @@ def build_command_center_snapshot(session):
     snapshot = {
         "session": session_payload,
         "north_star": {
-            "mission": "QNT30325A System Stabilization Hotfix",
+            "mission": "QNT30324B Capital Source of Truth",
             "system": "Quantora multi-layer institutional trading operating system",
             "timestamp": now_iso(),
         },
         "personal_workspace": workspace,
         "strategy_engine": workspace["strategies"],
         "risk_engine": workspace["risk_engine"],
+        "capital_source": workspace.get("capital_source", default_capital_source()),
         "performance": performance,
         "broker": broker,
         "governance": governance,
@@ -1159,7 +1315,7 @@ def build_command_center_snapshot(session):
             "status": "ok",
             "registered_users": len(users),
             "policies_enabled": len([p for p in governance["policies"] if p.get("enabled")]),
-            "layer": "qnt30325a-system-stabilization-hotfix",
+            "layer": "qnt30324b-capital-source-of-truth",
             "broker_status": broker.get("last_status"),
             "admin_ready": session_payload.get("is_admin"),
         },
@@ -1186,7 +1342,8 @@ def control_tower_view():
         monitoring = evaluate_monitoring(state)
         engine = summarize_strategy_engine(state)
         save_operator_state(state)
-        allocated = float(state["allocator_caps"]["operator"].get("allocated_capital", 0) or 0)
+        capital = build_capital_context(state)
+        allocated = float(capital.get("allocated_capital", 0) or 0)
         row = {
             "operator_id": user["operator_id"],
             "display_name": user["display_name"],
@@ -1195,7 +1352,9 @@ def control_tower_view():
             "strategies": engine["total_strategies"],
             "allocated_capital": allocated,
             "used_capital": monitoring["latest_snapshot"].get("used_capital", 0),
-            "remaining_capital": round(allocated - monitoring["latest_snapshot"].get("used_capital", 0), 2),
+            "remaining_capital": monitoring["latest_snapshot"].get("remaining_capital", 0),
+            "capital_mode": capital.get("mode"),
+            "capital_label": capital.get("label"),
             "loop_running": state["strategy_loop"]["running"],
             "alerts": len(monitoring["alerts"]),
             "execution_mode": state["strategy_loop"].get("execution_mode"),
@@ -1360,6 +1519,10 @@ class RiskKillSwitchRequest(BaseModel):
     note: str = ""
 
 
+class CapitalSourceUpdateRequest(BaseModel):
+    mode: str = "internal"
+
+
 class ManualOrderRequest(BaseModel):
     symbol: str
     side: str
@@ -1428,7 +1591,7 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 # -------------------------
 @app.get("/health")
 def health():
-    return {"status": "ok", "layer": "qnt30325a-system-stabilization-hotfix"}
+    return {"status": "ok", "layer": "qnt30324b-capital-source-of-truth"}
 
 
 @app.post("/auth/register")
@@ -1684,6 +1847,38 @@ def command_center_snapshot(session=Depends(require_auth)):
     return build_command_center_snapshot(session)
 
 
+@app.get("/capital-source/status")
+def capital_source_status(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    capital = build_capital_context(state)
+    risk = evaluate_risk_state(state)
+    save_operator_state(state)
+    return {
+        "config": state.get("capital_source", default_capital_source()),
+        "context": capital,
+        "risk_state": risk.get("status"),
+    }
+
+
+@app.post("/capital-source/update")
+def capital_source_update(payload: CapitalSourceUpdateRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    mode = (payload.mode or "internal").strip().lower()
+    if mode not in {"internal", "broker"}:
+        raise HTTPException(status_code=400, detail="Capital source mode must be internal or broker")
+    state["capital_source"] = {
+        "mode": mode,
+        "provider": "alpaca",
+        "last_updated_at": now_iso(),
+        "last_updated_by": session.get("email"),
+    }
+    monitoring = evaluate_monitoring(state)
+    risk = evaluate_risk_state(state)
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "capital_source.update", state["operator_id"], state["capital_source"], "capital")
+    return {"status": "updated", "capital_source": state["capital_source"], "monitoring": monitoring, "risk_engine": risk}
+
+
 @app.get("/risk-engine/status")
 def risk_engine_status(session=Depends(require_auth)):
     state = get_operator_state(session)
@@ -1889,9 +2084,9 @@ def approvals_decision(payload: ApprovalDecisionRequest, admin=Depends(require_a
 @app.get("/version")
 def version():
     return {
-        "mission": "QNT30325A System Stabilization Hotfix",
-        "layer": "qnt30325a-system-stabilization-hotfix",
-        "frontend": "qnt30325a",
+        "mission": "QNT30324B Capital Source of Truth",
+        "layer": "qnt30324b-capital-source-of-truth",
+        "frontend": "qnt30324b",
         "cache_policy": NO_CACHE_HEADERS["Cache-Control"],
         "timestamp": now_iso(),
     }
@@ -1902,7 +2097,7 @@ def root():
     index = FRONTEND_DIR / "index.html"
     if index.exists():
         return FileResponse(index, media_type="text/html", headers=NO_CACHE_HEADERS)
-    return {"status": "ok", "message": "Quantora QNT30324 live"}
+    return {"status": "ok", "message": "Quantora QNT30324B live"}
 
 
 @app.get("/{page_name}")

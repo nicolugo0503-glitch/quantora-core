@@ -1,26 +1,43 @@
 {
   "events": [
     {
-      "event_id": "gov_07ff5e3455",
-      "timestamp": "2026-03-23T15:10:19Z",
-      "category": "risk",
+      "event_id": "gov_cd72c6ea37",
+      "timestamp": "2026-03-23T15:43:03Z",
+      "category": "capital",
       "actor_email": "nicolugo0503@gmail.com",
-      "actor_operator_id": "operator_12A42D6F",
-      "action": "risk.kill_switch",
-      "target": "operator_12A42D6F",
+      "actor_operator_id": "operator_0A7D760E",
+      "action": "capital_source.update",
+      "target": "operator_0A7D760E",
       "details": {
-        "active": true,
-        "note": "test"
+        "mode": "broker",
+        "provider": "alpaca",
+        "last_updated_at": "2026-03-23T15:43:03Z",
+        "last_updated_by": "nicolugo0503@gmail.com"
       }
     },
     {
-      "event_id": "gov_d5f77cb85c",
-      "timestamp": "2026-03-23T15:10:18Z",
+      "event_id": "gov_10f4438ec7",
+      "timestamp": "2026-03-23T15:42:48Z",
+      "category": "capital",
+      "actor_email": "nicolugo0503@gmail.com",
+      "actor_operator_id": "operator_0A7D760E",
+      "action": "capital_source.update",
+      "target": "operator_0A7D760E",
+      "details": {
+        "mode": "internal",
+        "provider": "alpaca",
+        "last_updated_at": "2026-03-23T15:42:48Z",
+        "last_updated_by": "nicolugo0503@gmail.com"
+      }
+    },
+    {
+      "event_id": "gov_f9d129d19a",
+      "timestamp": "2026-03-23T15:42:48Z",
       "category": "auth",
       "actor_email": "nicolugo0503@gmail.com",
-      "actor_operator_id": "operator_12A42D6F",
+      "actor_operator_id": "operator_0A7D760E",
       "action": "register",
-      "target": "operator_12A42D6F",
+      "target": "operator_0A7D760E",
       "details": {
         "display_name": "Nico"
       }

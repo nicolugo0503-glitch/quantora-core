@@ -1,25 +1,25 @@
-# Quantora QNT30325A - System Stabilization Hotfix
+# Quantora QNT30324B - Capital Source of Truth
 
-This package extends QNT30324 and fixes the deployment and integration issues discovered during live use.
+This package extends QNT30325A and formalizes capital hierarchy across Quantora.
 
 ## What was fixed
 
-- clean deployment state (no stale session, users, or operator artifacts shipped in the package)
-- admin/session parity with normalized email + explicit `is_admin` session flag
-- structured API errors instead of raw 500 fallthroughs
-- snapshot hardening so modules degrade independently instead of crashing the command center
-- integrated Performance Engine summary endpoints and UI panel
-- preserved Alpaca, Strategy Engine, Risk Engine, Governance, and Control Tower
-- Railway-safe startup preserved
+- added a real capital source layer: `internal` or `broker`
+- aligned risk calculations to the selected capital source
+- aligned performance summaries to the selected capital source
+- removed the internal-vs-Alpaca capital mismatch that caused risk instability
+- added safe fallback state when broker capital mode is selected but broker data is unavailable
+- exposed capital source controls in the unified command center
+- preserved Alpaca, Strategy Engine, Risk Engine, Governance, Control Tower, and Railway-safe startup
 
 ## Main endpoints
 
 - `/health`
 - `/version`
 - `/command-center/snapshot`
+- `/capital-source/status`
+- `/capital-source/update`
 - `/performance/metrics`
-- `/performance/strategy/{strategy_id}`
-- `/performance/operator/{operator_id}`
 - `/risk-engine/status`
 - `/admin/control-tower`
 

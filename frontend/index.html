@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Quantora QNT30324 Risk Engine</title>
+  <title>Quantora QNT30324B Capital Source of Truth</title>
   <style>
     :root {
       --bg: #07111f;
@@ -70,9 +70,9 @@
   <div class="shell">
     <div class="hero">
       <div>
-        <h1 style="margin:0 0 10px">Quantora Unified Command Center · System Stabilization Hotfix</h1>
+        <h1 style="margin:0 0 10px">Quantora Unified Command Center · Capital Source of Truth</h1>
         <div class="sub">
-          QNT30325A stabilizes Quantora after the first scaling fracture: clean deployment state, structured errors, admin/session parity fixes, safe snapshot loading, and a real Performance Engine summary are now integrated into the live command center.
+          QNT30324B formalizes capital hierarchy across Quantora. Risk, performance, monitoring, and command-center metrics now use a single capital source of truth: internal operator capital or live Alpaca broker capital.
         </div>
       </div>
       <div class="hero-actions">
@@ -91,7 +91,8 @@
       <div class="metric"><div class="label">Running Strategies</div><div class="value" id="m_running">-</div></div>
       <div class="metric"><div class="label">Realized PnL</div><div class="value" id="m_realized">-</div></div>
       <div class="metric"><div class="label">Risk State</div><div class="value" id="m_risk">-</div></div>
-      <div class="metric"><div class="label">Layer</div><div class="value" id="m_layer">QNT30325A</div></div>
+      <div class="metric"><div class="label">Capital Source</div><div class="value" id="m_capital_source">-</div></div>
+      <div class="metric"><div class="label">Layer</div><div class="value" id="m_layer">QNT30324B</div></div>
     </div>
 
     <div class="grid-main">
@@ -142,7 +143,7 @@
 
         <div class="panel">
           <div class="section-title"><h2>Operator Capital + Run Control</h2><button class="secondary" onclick="loadWorkspace()">Load Workspace</button></div>
-          <div class="three-col">
+          <div class="four-col">
             <div>
               <input id="operator_capital" type="number" placeholder="Allocated capital">
               <button onclick="setCapital()">Set My Capital</button>
@@ -152,11 +153,16 @@
               <button class="secondary" onclick="runOnce()">Run All Running Strategies Once</button>
             </div>
             <div>
+              <select id="capital_source_mode"><option value="internal">internal capital</option><option value="broker">alpaca broker capital</option></select>
+              <button class="secondary" onclick="updateCapitalSource()">Set Capital Source</button>
+            </div>
+            <div>
               <input id="toggle_strategy_id" placeholder="Strategy ID to toggle">
               <select id="toggle_strategy_enabled"><option value="true">enabled</option><option value="false">disabled</option></select>
               <button class="secondary" onclick="toggleStrategy()">Toggle Enable</button>
             </div>
           </div>
+          <div id="capital_source_pills" class="pills" style="margin-top:10px"></div>
           <div id="capital_pills" class="pills"></div>
         </div>
 
@@ -388,11 +394,23 @@ async function runOnce(){
   setText('workspace_out', data);
   refreshAll();
 }
+async function updateCapitalSource(){
+  const data = await api('/capital-source/update','POST',{mode:capital_source_mode.value});
+  setText('workspace_out', data);
+  refreshAll();
+}
 async function loadWorkspace(){
   const data = await api('/operator/workspace');
   setText('workspace_out', data);
   if(data.capital){
     document.getElementById('workspace_summary').textContent = `${data.execution_summary?.running_strategies || 0} running / ${data.execution_summary?.enabled_strategies || 0} enabled · realized ${fmt(data.execution_summary?.realized_pnl)} · unrealized ${fmt(data.execution_summary?.unrealized_pnl)}`;
+    capital_source_mode.value = String(data.capital_source?.mode || data.capital?.mode || 'internal');
+    setHTML('capital_source_pills', pills([
+      {label:`source ${data.capital_source?.mode || data.capital?.mode || 'internal'}`, className:(data.capital_source?.mode || data.capital?.mode || 'internal') === 'broker' ? 'good' : 'warn'},
+      {label:`label ${data.capital?.label || '-'}`},
+      {label:`provider ${data.capital_source?.provider || 'internal'}`},
+      {label:`risk ${(data.risk_engine?.status || 'SAFE').toLowerCase()}`, className:(data.risk_engine?.status || 'SAFE') === 'UNKNOWN' ? 'warn' : 'good'}
+    ]));
     setHTML('capital_pills', pills([
       {label:`allocated ${fmt(data.capital.allocated_capital)}`},
       {label:`used ${fmt(data.capital.used_capital)}`},
@@ -530,6 +548,7 @@ async function loadRisk(){
     {label: cfg.enabled ? 'risk enabled' : 'risk disabled', className: cfg.enabled ? 'good' : 'warn'},
     {label: cfg.kill_switch_active ? 'kill switch active' : 'kill switch released', className: cfg.kill_switch_active ? 'bad' : 'good'},
     {label: data.breaches && data.breaches.length ? `breaches ${data.breaches.length}` : 'no active breaches', className: data.breaches && data.breaches.length ? 'bad' : 'good'},
+    {label: `capital ${(data.capital_source?.mode || '-')} / ${(data.capital_source?.label || '-')}`, className: data.capital_source?.valid === false ? 'warn' : 'good'},
     {label: `drawdown ${fmt(data.totals?.current_drawdown_pct)}%`, className: Number(data.totals?.current_drawdown_pct || 0) > Number(cfg.max_drawdown_pct || 0) && Number(cfg.max_drawdown_pct || 0) > 0 ? 'bad' : 'good'},
     {label: `daily pnl ${fmt(data.totals?.current_daily_realized_pnl)}`},
     {label: `max pos ${fmt(cfg.max_position_notional)}`},
@@ -565,6 +584,7 @@ async function loadPerformance(){
   const s = data.summary || {};
   setHTML('performance_pills', pills([
     {label:`score ${fmt(s.operator_score)}`},
+    {label:`capital ${s.capital_mode || '-'} / ${s.capital_label || '-'}`, className: s.capital_valid === false ? 'warn' : 'good'},
     {label:`realized ${fmt(s.realized_pnl)}`, className: Number(s.realized_pnl || 0) >= 0 ? 'good' : 'bad'},
     {label:`unrealized ${fmt(s.unrealized_pnl)}`, className: Number(s.unrealized_pnl || 0) >= 0 ? 'good' : 'bad'},
     {label:`win rate ${fmt(s.win_rate)}%`},
@@ -609,6 +629,7 @@ async function loadControlTower(){
     {key:'operator_id', label:'Operator ID'},
     {key:'allocated_capital', label:'Capital', render:v=>fmt(v)},
     {key:'used_capital', label:'Used', render:v=>fmt(v)},
+    {key:'capital_mode', label:'Capital Source'},
     {key:'strategies', label:'Strategies'},
     {key:'orders', label:'Orders'},
     {key:'execution_mode', label:'Mode'},
@@ -652,8 +673,9 @@ async function loadSnapshot(){
   document.getElementById('m_remaining').textContent = fmt(ws.capital?.remaining_capital);
   document.getElementById('m_running').textContent = data.strategy_engine?.running_strategies ?? '-';
   document.getElementById('m_realized').textContent = fmt(data.strategy_engine?.portfolio_realized_pnl);
-  document.getElementById('m_layer').textContent = data.system_health?.layer || 'QNT30325A';
-  document.getElementById('m_risk').textContent = data.risk_engine?.config?.kill_switch_active ? 'LOCKED' : (data.risk_engine?.breaches?.length ? 'BREACH' : 'SAFE');
+  document.getElementById('m_layer').textContent = data.system_health?.layer || 'QNT30324B';
+  document.getElementById('m_capital_source').textContent = `${data.capital_source?.mode || data.personal_workspace?.capital_source?.mode || '-'} / ${data.risk_engine?.capital_source?.label || data.personal_workspace?.capital?.label || '-'}`;
+  document.getElementById('m_risk').textContent = data.risk_engine?.status || (data.risk_engine?.config?.kill_switch_active ? 'LOCKED' : (data.risk_engine?.breaches?.length ? 'BREACH' : 'SAFE'));
   return data;
 }
 
