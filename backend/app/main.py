@@ -1,6 +1,7 @@
 
-import json, uuid, datetime
+import json, uuid, datetime, os
 from pathlib import Path
+from urllib import request as urllib_request, error as urllib_error
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -29,6 +30,133 @@ def load_json(filename, fallback):
 
 def save_json(filename, data):
     (ARTIFACTS_DIR / filename).write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+
+def env_bool(name, default=False):
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
+
+def alpaca_base_url():
+    explicit = os.getenv("ALPACA_BASE_URL")
+    if explicit:
+        return explicit.rstrip("/")
+    return "https://api.alpaca.markets" if env_bool("ALPACA_LIVE", False) else "https://paper-api.alpaca.markets"
+
+
+def alpaca_credentials_present():
+    return bool(os.getenv("ALPACA_API_KEY") and os.getenv("ALPACA_SECRET_KEY"))
+
+
+def alpaca_headers():
+    return {
+        "APCA-API-KEY-ID": os.getenv("ALPACA_API_KEY", ""),
+        "APCA-API-SECRET-KEY": os.getenv("ALPACA_SECRET_KEY", ""),
+        "Accept": "application/json",
+        "User-Agent": "Quantora-QNT30322/AlpacaPatch",
+    }
+
+
+def alpaca_request(path, method="GET", payload=None):
+    if not alpaca_credentials_present():
+        raise HTTPException(status_code=503, detail="Alpaca credentials are not configured")
+    url = f"{alpaca_base_url()}{path}"
+    data = None if payload is None else json.dumps(payload).encode("utf-8")
+    req = urllib_request.Request(url, data=data, method=method, headers=alpaca_headers())
+    if data is not None:
+        req.add_header("Content-Type", "application/json")
+    try:
+        with urllib_request.urlopen(req, timeout=20) as resp:
+            raw = resp.read().decode("utf-8")
+            return json.loads(raw) if raw else {}
+    except urllib_error.HTTPError as e:
+        body = e.read().decode("utf-8", errors="replace")
+        detail = body
+        try:
+            parsed = json.loads(body)
+            detail = parsed.get("message") or parsed
+        except Exception:
+            pass
+        raise HTTPException(status_code=e.code, detail=f"Alpaca API error: {detail}")
+    except urllib_error.URLError as e:
+        raise HTTPException(status_code=502, detail=f"Alpaca connection error: {e.reason}")
+
+
+def alpaca_account_snapshot():
+    if not alpaca_credentials_present():
+        return {
+            "connected": False,
+            "mode": "live" if env_bool("ALPACA_LIVE", False) else "paper",
+            "base_url": alpaca_base_url(),
+            "error": "Missing ALPACA_API_KEY / ALPACA_SECRET_KEY",
+        }
+    try:
+        account = alpaca_request("/v2/account")
+        return {
+            "connected": True,
+            "mode": "live" if env_bool("ALPACA_LIVE", False) else "paper",
+            "base_url": alpaca_base_url(),
+            "account": account,
+        }
+    except HTTPException as exc:
+        return {
+            "connected": False,
+            "mode": "live" if env_bool("ALPACA_LIVE", False) else "paper",
+            "base_url": alpaca_base_url(),
+            "error": exc.detail,
+        }
+
+
+def alpaca_positions_snapshot():
+    if not alpaca_credentials_present():
+        return {"connected": False, "positions": [], "error": "Missing ALPACA_API_KEY / ALPACA_SECRET_KEY"}
+    try:
+        positions = alpaca_request("/v2/positions")
+        return {"connected": True, "positions": positions if isinstance(positions, list) else []}
+    except HTTPException as exc:
+        return {"connected": False, "positions": [], "error": exc.detail}
+
+
+def alpaca_orders_snapshot(limit=25, status="all"):
+    if not alpaca_credentials_present():
+        return {"connected": False, "orders": [], "error": "Missing ALPACA_API_KEY / ALPACA_SECRET_KEY"}
+    try:
+        orders = alpaca_request(f"/v2/orders?status={status}&limit={int(limit)}&direction=desc")
+        return {"connected": True, "orders": orders if isinstance(orders, list) else []}
+    except HTTPException as exc:
+        return {"connected": False, "orders": [], "error": exc.detail}
+
+
+def quantora_execution_source(session, state):
+    mode = state.get("strategy_loop", {}).get("execution_mode", "internal")
+    alpaca = alpaca_account_snapshot()
+    if alpaca.get("connected"):
+        account = alpaca.get("account", {})
+        return {
+            "provider": "alpaca",
+            "mode": alpaca.get("mode"),
+            "connected": True,
+            "equity": float(account.get("equity") or 0),
+            "cash": float(account.get("cash") or 0),
+            "buying_power": float(account.get("buying_power") or 0),
+            "account_status": account.get("status"),
+            "raw": alpaca,
+        }
+    capital = state["allocator_caps"]["operator"]
+    exposure = operator_exposure(state)
+    allocated = float(capital.get("allocated_capital", 0) or 0)
+    return {
+        "provider": "internal",
+        "mode": mode,
+        "connected": False,
+        "equity": allocated,
+        "cash": round(max(allocated - exposure["notional"], 0), 2),
+        "buying_power": round(max(allocated - exposure["notional"], 0), 2),
+        "account_status": "SIMULATED",
+        "raw": alpaca,
+    }
 
 def append_governance_event(actor_email, actor_operator_id, action, target, details=None, category="governance"):
     ledger = load_json("governance_ledger.json", {"events": []})
@@ -465,6 +593,35 @@ def approvals_decision(payload: ApprovalDecisionRequest, admin=Depends(require_a
     return {"status": req["status"], "request": req}
 
 
+@app.get("/api/alpaca/account")
+def alpaca_account(session=Depends(require_auth)):
+    snapshot = alpaca_account_snapshot()
+    if snapshot.get("connected"):
+        account = snapshot.get("account", {})
+        return {
+            "connected": True,
+            "mode": snapshot.get("mode"),
+            "equity": float(account.get("equity") or 0),
+            "cash": float(account.get("cash") or 0),
+            "buying_power": float(account.get("buying_power") or 0),
+            "status": account.get("status"),
+            "account_number": account.get("account_number"),
+            "base_url": snapshot.get("base_url"),
+            "raw": account,
+        }
+    return snapshot
+
+
+@app.get("/api/alpaca/positions")
+def alpaca_positions(session=Depends(require_auth)):
+    return alpaca_positions_snapshot()
+
+
+@app.get("/api/alpaca/orders")
+def alpaca_orders(session=Depends(require_auth), limit: int = 25, status: str = "all"):
+    return alpaca_orders_snapshot(limit=limit, status=status)
+
+
 @app.get("/command-center/summary")
 def command_center_summary(session=Depends(require_auth)):
     state = get_operator_state(session)
@@ -473,22 +630,35 @@ def command_center_summary(session=Depends(require_auth)):
     exposure = operator_exposure(state)
     capital = state["allocator_caps"]["operator"]
     auth = auth_me()
+    execution_source = quantora_execution_source(session, state)
+    alpaca_positions = alpaca_positions_snapshot()
+    alpaca_orders = alpaca_orders_snapshot()
     payload = {
         "session": auth,
         "overview": {
-            "total_equity": round(float(capital.get("allocated_capital", 0) or 0), 2),
+            "total_equity": execution_source["equity"],
             "used_capital": exposure["notional"],
-            "remaining_capital": round(float(capital.get("allocated_capital", 0) or 0) - exposure["notional"], 2),
+            "remaining_capital": execution_source["cash"],
             "active_strategies": len([s for s in state["strategies"]["strategies"] if s.get("enabled")]),
             "orders": len(state["orders"]["orders"]),
             "alerts": len(monitoring.get("alerts", [])),
             "loop_running": state["strategy_loop"].get("running", False),
+            "broker_connected": execution_source["connected"],
+            "broker_provider": execution_source["provider"],
+            "buying_power": execution_source["buying_power"],
+            "account_status": execution_source["account_status"],
         },
         "strategy_loop": state["strategy_loop"],
         "capital": allocator_capital_view(session),
         "monitoring": monitoring,
         "strategies": state["strategies"],
         "orders": state["orders"],
+        "execution": {
+            "source": execution_source,
+            "alpaca": execution_source.get("raw", {}),
+            "alpaca_positions": alpaca_positions,
+            "alpaca_orders": alpaca_orders,
+        },
     }
     if auth.get("is_admin"):
         payload["control_tower"] = control_tower_view()

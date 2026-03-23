@@ -1,6 +1,6 @@
 {
-  "email": "test@example.com",
-  "operator_id": "operator_622092D2",
-  "display_name": "Test",
-  "logged_in": true
+  "logged_in": false,
+  "display_name": null,
+  "operator_id": null,
+  "email": null
 }

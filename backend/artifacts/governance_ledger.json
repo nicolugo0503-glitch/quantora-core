@@ -1,16 +1,3 @@
 {
-  "events": [
-    {
-      "event_id": "gov_92a8b59efc",
-      "timestamp": "2026-03-23T05:14:50Z",
-      "category": "auth",
-      "actor_email": "test@example.com",
-      "actor_operator_id": "operator_622092D2",
-      "action": "register",
-      "target": "operator_622092D2",
-      "details": {
-        "display_name": "Test"
-      }
-    }
-  ]
+  "events": []
 }

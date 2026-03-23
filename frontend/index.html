@@ -139,12 +139,9 @@
   <script>
     const state = {
       activeModule: 'overview',
-      me: { logged_in: false, is_admin: false },
+      me: { logged_in: false },
       summary: null,
-      health: { online: false, label: 'CHECKING' },
       autoRefreshHandle: null,
-      formDrafts: {},
-      responsePanels: {},
     };
 
     const modules = [
@@ -157,16 +154,6 @@
       ['control', 'Control Tower'],
       ['logs', 'Ledger / Logs'],
     ];
-
-    const FORM_INPUT_IDS = [
-      'reg_name','reg_email','reg_password','login_email','login_password',
-      'strategy_name','strategy_symbol','strategy_side','strategy_qty',
-      'operator_capital','policy_id','policy_threshold','policy_enabled',
-      'approval_request_id','approval_decision','approval_notes',
-      'admin_operator_id','admin_operator_capital','admin_loop_mode','admin_loop_interval'
-    ];
-
-    function el(id) { return document.getElementById(id); }
 
     async function api(path, method='GET', body=null) {
       const res = await fetch(path, {
@@ -186,40 +173,19 @@
       return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(n);
     }
 
+    function percent(v) {
+      const n = Number(v || 0);
+      return `${n.toFixed(2)}%`;
+    }
+
     function pill(text, cls='ok') {
       return `<span class="pill ${cls}">${text}</span>`;
     }
 
     function safe(v) { return v == null || v === '' ? '—' : v; }
 
-    function captureDrafts() {
-      FORM_INPUT_IDS.forEach(id => {
-        const node = el(id);
-        if (node) state.formDrafts[id] = node.value;
-      });
-    }
-
-    function restoreDrafts() {
-      FORM_INPUT_IDS.forEach(id => {
-        const node = el(id);
-        if (node && state.formDrafts[id] != null && document.activeElement !== node) {
-          node.value = state.formDrafts[id];
-        }
-      });
-      Object.entries(state.responsePanels).forEach(([id, value]) => {
-        const node = el(id);
-        if (node) node.textContent = value;
-      });
-    }
-
-    function setPanel(id, value) {
-      state.responsePanels[id] = typeof value === 'string' ? value : JSON.stringify(value, null, 2);
-      const node = el(id);
-      if (node) node.textContent = state.responsePanels[id];
-    }
-
     function renderNav() {
-      const nav = el('nav');
+      const nav = document.getElementById('nav');
       const isAdmin = !!state.me.is_admin;
       nav.innerHTML = modules.filter(([id]) => isAdmin || !['governance','approvals','control','logs'].includes(id)).map(([id, label]) => `
         <button class="${state.activeModule === id ? 'active' : ''}" onclick="activateModule('${id}')">${label}</button>
@@ -229,44 +195,32 @@
     function renderTopbar() {
       const s = state.summary || {};
       const o = s.overview || {};
-      const topbar = el('topbar');
-      const systemLabel = !state.health.online ? 'BACKEND OFFLINE' : state.me.logged_in ? (o.loop_running ? 'LIVE' : 'READY') : 'ONLINE';
+      const topbar = document.getElementById('topbar');
+      const live = state.me.logged_in ? (o.broker_connected ? 'BROKER READY' : (o.loop_running ? 'LIVE' : 'READY')) : 'OFFLINE';
       topbar.innerHTML = [
-        ['System Status', systemLabel],
+        ['System Status', live],
         ['Total Equity', currency(o.total_equity)],
         ['Used Capital', currency(o.used_capital)],
         ['Active Strategies', safe(o.active_strategies)],
         ['Alerts', safe(o.alerts)],
       ].map(([label, value]) => `<div class="stat"><div class="label">${label}</div><div class="value">${value}</div></div>`).join('');
 
-      el('sessionName').textContent = state.me.display_name || 'Guest';
-      el('sessionMeta').innerHTML = state.me.logged_in
+      document.getElementById('sessionName').textContent = state.me.display_name || 'Guest';
+      document.getElementById('sessionMeta').innerHTML = state.me.logged_in
         ? `${state.me.email || ''}<br>${state.me.operator_id || ''} ${state.me.is_admin ? '• ADMIN' : '• OPERATOR'}`
-        : state.health.online ? 'Register or login to enter the OS' : 'Backend unreachable';
-    }
-
-    async function refreshHealth() {
-      try {
-        await api('/health');
-        state.health = { online: true, label: 'ONLINE' };
-      } catch {
-        state.health = { online: false, label: 'OFFLINE' };
-      }
+        : 'Register or login to enter the OS';
     }
 
     async function refreshSession() {
       try {
         state.me = await api('/auth/me');
       } catch {
-        state.me = { logged_in: false, is_admin: false };
+        state.me = { logged_in: false };
       }
     }
 
     async function refreshSummary() {
-      if (!state.me.logged_in) {
-        state.summary = null;
-        return;
-      }
+      if (!state.me.logged_in) { state.summary = null; return; }
       try {
         state.summary = await api('/command-center/summary');
       } catch (err) {
@@ -274,35 +228,26 @@
       }
     }
 
-    function renderUI() {
-      captureDrafts();
+    async function boot() {
+      await refreshSession();
+      await refreshSummary();
       renderNav();
       renderTopbar();
       renderActiveModule();
-      restoreDrafts();
-    }
-
-    async function boot() {
-      await refreshHealth();
-      await refreshSession();
-      await refreshSummary();
-      renderUI();
       if (state.autoRefreshHandle) clearInterval(state.autoRefreshHandle);
       state.autoRefreshHandle = setInterval(async () => {
-        captureDrafts();
-        await refreshHealth();
         await refreshSession();
-        if (state.me.logged_in) {
-          await refreshSummary();
-        }
-        renderUI();
-      }, 8000);
+        await refreshSummary();
+        renderNav();
+        renderTopbar();
+        renderActiveModule();
+      }, 5000);
     }
 
     function activateModule(id) {
-      captureDrafts();
       state.activeModule = id;
-      renderUI();
+      renderNav();
+      renderActiveModule();
     }
 
     function authCard() {
@@ -343,18 +288,19 @@
       const monitoring = s.monitoring || {};
       const loop = s.strategy_loop || {};
       const alerts = monitoring.alerts || [];
+      const source = s.execution?.source || {};
+      const snap = monitoring.latest_snapshot || {};
       return `
         <div class="grid">
           <section class="card span-8">
             <h2>Overview</h2>
             <div class="subtle">Single-pane operating view across execution, strategy runtime, capital, and governance.</div>
-            ${s.error ? `<div class="mini" style="margin-top:14px;">${pill('SUMMARY ERROR','bad')}<div style="margin-top:10px;">${s.error}</div></div>` : ''}
             <div class="kpi-row" style="margin-top:14px;">
-              <div class="mini"><div class="mini-label">Remaining Capital</div><div class="mini-value">${currency(s.overview?.remaining_capital)}</div></div>
-              <div class="mini"><div class="mini-label">Orders</div><div class="mini-value">${safe(s.overview?.orders)}</div></div>
+              <div class="mini"><div class="mini-label">Broker</div><div class="mini-value">${safe(source.provider || 'internal')}</div></div>
+              <div class="mini"><div class="mini-label">Buying Power</div><div class="mini-value">${currency(s.overview?.buying_power)}</div></div>
               <div class="mini"><div class="mini-label">Loop Interval</div><div class="mini-value">${safe(loop.interval_seconds)}s</div></div>
             </div>
-            <div class="footer-note">Runtime heartbeat: ${safe(loop.heartbeat_at)} · Next run: ${safe(loop.next_run_at)}</div>
+            <div class="footer-note">Account status: ${safe(s.overview?.account_status)} · Runtime heartbeat: ${safe(loop.heartbeat_at)} · Next run: ${safe(loop.next_run_at)}</div>
           </section>
           <section class="card span-4">
             <h2>Auth + Operator</h2>
@@ -363,7 +309,12 @@
           </section>
           <section class="card span-6">
             <h3>Monitoring Snapshot</h3>
-            <pre>${JSON.stringify(monitoring.latest_snapshot || {}, null, 2)}</pre>
+            <div class="kpi-row">
+              <div class="mini"><div class="mini-label">Orders</div><div class="mini-value">${safe(snap.order_count)}</div></div>
+              <div class="mini"><div class="mini-label">Used Capital</div><div class="mini-value">${currency(snap.used_capital)}</div></div>
+              <div class="mini"><div class="mini-label">Utilization</div><div class="mini-value">${percent(snap.utilization_pct)}</div></div>
+            </div>
+            <div class="footer-note">Last update: ${safe(snap.timestamp)}</div>
           </section>
           <section class="card span-6">
             <h3>Live Alerts</h3>
@@ -371,7 +322,7 @@
           </section>
           <section class="card span-12">
             <h3>Mission Output</h3>
-            <div class="subtle">QNT30322 preserves backend truth and unifies operating visibility.</div>
+            <div class="subtle">QNT30322 now exposes real broker connectivity, account status, and execution visibility.</div>
           </section>
         </div>
       `;
@@ -379,18 +330,69 @@
 
     function renderExecution() {
       if (!state.me.logged_in) return authCard();
-      const orders = state.summary?.orders?.orders || [];
+      const internalOrders = state.summary?.orders?.orders || [];
+      const execution = state.summary?.execution || {};
+      const source = execution.source || {};
+      const alpacaAccount = execution.alpaca || {};
+      const alpacaPositions = execution.alpaca_positions?.positions || [];
+      const alpacaOrders = execution.alpaca_orders?.orders || [];
+      const brokerError = alpacaAccount.error || execution.alpaca_positions?.error || execution.alpaca_orders?.error;
       return `
         <div class="grid">
           <section class="card span-12">
             <h2>Execution Layer</h2>
-            <div class="subtle">Order flow, filled activity, and runtime execution visibility.</div>
+            <div class="subtle">Real broker state, positions, orders, and internal execution records.</div>
           </section>
           <section class="card span-12">
+            <div class="kpi-row">
+              <div class="mini"><div class="mini-label">Broker Connection</div><div class="mini-value">${source.connected ? 'CONNECTED' : 'NOT CONNECTED'}</div></div>
+              <div class="mini"><div class="mini-label">Equity</div><div class="mini-value">${currency(source.equity)}</div></div>
+              <div class="mini"><div class="mini-label">Cash</div><div class="mini-value">${currency(source.cash)}</div></div>
+            </div>
+            <div class="kpi-row" style="margin-top:12px;">
+              <div class="mini"><div class="mini-label">Buying Power</div><div class="mini-value">${currency(source.buying_power)}</div></div>
+              <div class="mini"><div class="mini-label">Provider</div><div class="mini-value">${safe(source.provider)}</div></div>
+              <div class="mini"><div class="mini-label">Mode</div><div class="mini-value">${safe(source.mode)}</div></div>
+            </div>
+            ${brokerError ? `<div class="footer-note" style="color:#f7c46a;">Broker message: ${brokerError}</div>` : `<div class="footer-note">Account status: ${safe(source.account_status)}</div>`}
+          </section>
+          <section class="card span-6">
+            <h3>Alpaca Positions</h3>
+            <table>
+              <thead><tr><th>Symbol</th><th>Qty</th><th>Market Value</th><th>Side</th><th>Unrealized P/L</th></tr></thead>
+              <tbody>
+                ${tableRows(alpacaPositions, [
+                  { key: 'symbol' },
+                  { key: 'qty' },
+                  { render: i => currency(i.market_value) },
+                  { key: 'side' },
+                  { render: i => currency(i.unrealized_pl) },
+                ], source.connected ? 'No live positions in Alpaca.' : 'Connect Alpaca credentials to load positions.')}
+              </tbody>
+            </table>
+          </section>
+          <section class="card span-6">
+            <h3>Alpaca Orders</h3>
+            <table>
+              <thead><tr><th>ID</th><th>Symbol</th><th>Side</th><th>Qty</th><th>Status</th><th>Submitted</th></tr></thead>
+              <tbody>
+                ${tableRows(alpacaOrders, [
+                  { key: 'id' },
+                  { key: 'symbol' },
+                  { key: 'side' },
+                  { key: 'qty' },
+                  { key: 'status' },
+                  { key: 'submitted_at' },
+                ], source.connected ? 'No Alpaca orders found.' : 'Connect Alpaca credentials to load broker orders.')}
+              </tbody>
+            </table>
+          </section>
+          <section class="card span-12">
+            <h3>Quantora Internal Execution Records</h3>
             <table>
               <thead><tr><th>Order ID</th><th>Strategy</th><th>Symbol</th><th>Side</th><th>Qty</th><th>Notional</th><th>Status</th><th>Mode</th><th>Timestamp</th></tr></thead>
               <tbody>
-                ${tableRows(orders, [
+                ${tableRows(internalOrders, [
                   { key: 'order_id' },
                   { key: 'strategy_id' },
                   { key: 'symbol' },
@@ -400,7 +402,7 @@
                   { key: 'status' },
                   { key: 'mode' },
                   { key: 'timestamp' },
-                ], 'No execution records yet. Start a strategy loop or run approvals.')}
+                ], 'No internal execution records yet.')}
               </tbody>
             </table>
           </section>
@@ -606,7 +608,7 @@
     }
 
     function renderActiveModule() {
-      const view = el('view');
+      const view = document.getElementById('view');
       const map = {
         overview: renderOverview,
         execution: renderExecution,
@@ -621,81 +623,34 @@
     }
 
     async function action(path, body, targetId) {
-      setPanel(targetId, 'Working...');
+      const target = document.getElementById(targetId);
       try {
         const data = await api(path, 'POST', body);
-        setPanel(targetId, data);
+        target.textContent = JSON.stringify(data, null, 2);
       } catch (err) {
-        setPanel(targetId, { error: err.message });
+        target.textContent = JSON.stringify({ error: err.message }, null, 2);
       }
-      await refreshHealth();
-      await refreshSession();
-      await refreshSummary();
-      renderUI();
+      await boot();
     }
 
-    async function registerUser() {
-      await action('/auth/register', {
-        display_name: el('reg_name')?.value || '',
-        email: el('reg_email')?.value || '',
-        password: el('reg_password')?.value || '',
-      }, 'auth_out');
-    }
-    async function loginUser() {
-      await action('/auth/login', {
-        email: el('login_email')?.value || '',
-        password: el('login_password')?.value || '',
-      }, 'auth_out');
-    }
+    async function registerUser() { await action('/auth/register', { display_name: reg_name.value, email: reg_email.value, password: reg_password.value }, 'auth_out'); }
+    async function loginUser() { await action('/auth/login', { email: login_email.value, password: login_password.value }, 'auth_out'); }
     async function logoutUser() { await action('/auth/logout', {}, 'auth_out'); }
-    async function registerStrategy() {
-      await action('/strategies/register', {
-        name: el('strategy_name')?.value || '',
-        symbol: el('strategy_symbol')?.value || '',
-        side: el('strategy_side')?.value || 'buy',
-        default_qty: parseInt(el('strategy_qty')?.value || '0', 10),
-        enabled: true,
-      }, 'strategy_out');
-    }
-    async function setOperatorCapital() {
-      await action('/allocator/operator-capital/set', { allocated_capital: parseFloat(el('operator_capital')?.value || '0') }, 'capital_out');
-    }
-    async function updatePolicy() {
-      await action('/policy-engine/policies/update', {
-        policy_id: el('policy_id')?.value || '',
-        threshold: parseFloat(el('policy_threshold')?.value || '0'),
-        enabled: el('policy_enabled')?.value === 'true',
-      }, 'policy_out');
-    }
-    async function decideApproval() {
-      await action('/approvals/decision', {
-        request_id: el('approval_request_id')?.value || '',
-        decision: el('approval_decision')?.value || 'APPROVED',
-        notes: el('approval_notes')?.value || '',
-      }, 'approval_out');
-    }
-    async function adminSetCapital() {
-      await action('/admin/operator-capital/set', {
-        operator_id: el('admin_operator_id')?.value || '',
-        allocated_capital: parseFloat(el('admin_operator_capital')?.value || '0'),
-      }, 'admin_out');
-    }
-    async function adminStartLoop() {
-      await action('/admin/operator-loop/start', {
-        operator_id: el('admin_operator_id')?.value || '',
-        execution_mode: el('admin_loop_mode')?.value || 'internal',
-        interval_seconds: parseInt(el('admin_loop_interval')?.value || '60', 10),
-      }, 'admin_out');
-    }
+    async function registerStrategy() { await action('/strategies/register', { name: strategy_name.value, symbol: strategy_symbol.value, side: strategy_side.value, default_qty: parseInt(strategy_qty.value || '0', 10), enabled: true }, 'strategy_out'); }
+    async function setOperatorCapital() { await action('/allocator/operator-capital/set', { allocated_capital: parseFloat(operator_capital.value || '0') }, 'capital_out'); }
+    async function updatePolicy() { await action('/policy-engine/policies/update', { policy_id: policy_id.value, threshold: parseFloat(policy_threshold.value || '0'), enabled: policy_enabled.value === 'true' }, 'policy_out'); }
+    async function decideApproval() { await action('/approvals/decision', { request_id: approval_request_id.value, decision: approval_decision.value, notes: approval_notes.value }, 'approval_out'); }
+    async function adminSetCapital() { await action('/admin/operator-capital/set', { operator_id: admin_operator_id.value, allocated_capital: parseFloat(admin_operator_capital.value || '0') }, 'admin_out'); }
+    async function adminStartLoop() { await action('/admin/operator-loop/start', { operator_id: admin_operator_id.value, execution_mode: admin_loop_mode.value, interval_seconds: parseInt(admin_loop_interval.value || '60', 10) }, 'admin_out'); }
     async function adminRunAll() { await action('/admin/run-all-once', {}, 'admin_out'); }
 
     async function loadLedger() {
-      setPanel('ledger_out', 'Loading ledger...');
+      const out = document.getElementById('ledger_out');
       try {
         const data = await api('/governance/ledger');
-        setPanel('ledger_out', data);
+        out.textContent = JSON.stringify(data, null, 2);
       } catch (err) {
-        setPanel('ledger_out', { error: err.message });
+        out.textContent = JSON.stringify({ error: err.message }, null, 2);
       }
     }
 
