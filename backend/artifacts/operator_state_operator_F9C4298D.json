@@ -1,0 +1,285 @@
+{
+  "operator_id": "operator_F9C4298D",
+  "display_name": "Nico",
+  "capital_decision": {
+    "approved": true,
+    "capital_allocated": 16195
+  },
+  "strategies": {
+    "strategies": [
+      {
+        "strategy_id": "strat_53404dfa",
+        "name": "AAPL Momentum",
+        "symbol": "AAPL",
+        "side": "buy",
+        "default_qty": 1,
+        "enabled": true,
+        "status": "running",
+        "capital_limit": 500.0,
+        "execution_mode": "internal",
+        "created_at": "2026-03-24T04:12:22Z",
+        "updated_at": "2026-03-24T04:15:44Z",
+        "operator_id": "operator_F9C4298D",
+        "last_action": "register",
+        "deleted": false
+      },
+      {
+        "strategy_id": "strat_f7e89782",
+        "name": "AAPL Momentum",
+        "symbol": "AAPL",
+        "side": "buy",
+        "default_qty": 1,
+        "enabled": true,
+        "status": "running",
+        "capital_limit": 500.0,
+        "execution_mode": "internal",
+        "created_at": "2026-03-24T04:15:44Z",
+        "updated_at": "2026-03-24T04:15:44Z",
+        "operator_id": "operator_F9C4298D",
+        "last_action": "register",
+        "deleted": false
+      }
+    ]
+  },
+  "strategy_engine": {
+    "metrics": {
+      "strat_53404dfa": {
+        "strategy_id": "strat_53404dfa",
+        "orders_count": 2,
+        "buy_orders": 2,
+        "sell_orders": 0,
+        "closed_trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "realized_pnl": 0.0,
+        "unrealized_pnl": 0.0,
+        "gross_notional": 360.0,
+        "current_position_qty": 2.0,
+        "avg_entry_price": 180.0,
+        "current_market_value": 360.0,
+        "capital_in_use": 360.0,
+        "last_price": 180.0,
+        "last_run_at": "2026-03-24T04:15:44Z",
+        "last_order_at": "2026-03-24T04:15:44Z",
+        "last_signal_at": "2026-03-24T04:15:44Z",
+        "win_rate": 0.0
+      },
+      "strat_f7e89782": {
+        "strategy_id": "strat_f7e89782",
+        "orders_count": 1,
+        "buy_orders": 1,
+        "sell_orders": 0,
+        "closed_trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "realized_pnl": 0.0,
+        "unrealized_pnl": 0.0,
+        "gross_notional": 180.0,
+        "current_position_qty": 1.0,
+        "avg_entry_price": 180.0,
+        "current_market_value": 180.0,
+        "capital_in_use": 180.0,
+        "last_price": 180.0,
+        "last_run_at": "2026-03-24T04:15:44Z",
+        "last_order_at": "2026-03-24T04:15:44Z",
+        "last_signal_at": "2026-03-24T04:15:44Z",
+        "win_rate": 0.0
+      }
+    },
+    "logs": [
+      {
+        "log_id": "log_a75d9071cc",
+        "timestamp": "2026-03-24T04:15:44Z",
+        "strategy_id": "strat_f7e89782",
+        "event_type": "execution",
+        "message": "AAPL Momentum executed buy 1.0 AAPL via internal",
+        "data": {
+          "order_id": "ord_7fcd4cb3e5",
+          "notional": 180.0
+        }
+      },
+      {
+        "log_id": "log_1b985eb720",
+        "timestamp": "2026-03-24T04:15:44Z",
+        "strategy_id": "strat_53404dfa",
+        "event_type": "execution",
+        "message": "AAPL Momentum executed buy 1.0 AAPL via internal",
+        "data": {
+          "order_id": "ord_c7308cd162",
+          "notional": 180.0
+        }
+      },
+      {
+        "log_id": "log_0f0f9838be",
+        "timestamp": "2026-03-24T04:15:44Z",
+        "strategy_id": "strat_f7e89782",
+        "event_type": "lifecycle",
+        "message": "AAPL Momentum registered",
+        "data": {
+          "strategy_id": "strat_f7e89782",
+          "name": "AAPL Momentum",
+          "symbol": "AAPL",
+          "side": "buy",
+          "default_qty": 1,
+          "enabled": true,
+          "status": "running",
+          "capital_limit": 500.0,
+          "execution_mode": "internal",
+          "created_at": "2026-03-24T04:15:44Z",
+          "updated_at": "2026-03-24T04:15:44Z",
+          "operator_id": "operator_F9C4298D",
+          "last_action": "register",
+          "deleted": false
+        }
+      },
+      {
+        "log_id": "log_3d79906b19",
+        "timestamp": "2026-03-24T04:12:22Z",
+        "strategy_id": "strat_53404dfa",
+        "event_type": "execution",
+        "message": "AAPL Momentum executed buy 1.0 AAPL via internal",
+        "data": {
+          "order_id": "ord_a723431f30",
+          "notional": 180.0
+        }
+      },
+      {
+        "log_id": "log_cc9f800cde",
+        "timestamp": "2026-03-24T04:12:22Z",
+        "strategy_id": "strat_53404dfa",
+        "event_type": "lifecycle",
+        "message": "AAPL Momentum registered",
+        "data": {
+          "strategy_id": "strat_53404dfa",
+          "name": "AAPL Momentum",
+          "symbol": "AAPL",
+          "side": "buy",
+          "default_qty": 1,
+          "enabled": true,
+          "status": "running",
+          "capital_limit": 500.0,
+          "execution_mode": "internal",
+          "created_at": "2026-03-24T04:12:22Z",
+          "updated_at": "2026-03-24T04:12:22Z",
+          "operator_id": "operator_F9C4298D",
+          "last_action": "register",
+          "deleted": false
+        }
+      }
+    ],
+    "last_engine_run_at": "2026-03-24T04:15:44Z",
+    "last_engine_status": "completed"
+  },
+  "risk_engine": {
+    "enabled": true,
+    "max_position_notional": 5000.0,
+    "max_total_exposure": 20000.0,
+    "max_drawdown_pct": 12.0,
+    "max_daily_loss": 1500.0,
+    "max_orders_per_run": 3,
+    "require_broker_for_alpaca": true,
+    "auto_shutdown_on_breach": true,
+    "kill_switch_active": false,
+    "breached": false,
+    "breach_count": 0,
+    "last_breach": null,
+    "last_breach_reason": null,
+    "last_evaluated_at": "2026-03-24T04:15:44Z",
+    "peak_equity": 1000.0,
+    "current_equity": 1000.0,
+    "current_drawdown_pct": 0.0,
+    "day_start_date": "2026-03-24",
+    "day_start_realized_pnl": 0.0,
+    "current_daily_realized_pnl": 0.0,
+    "current_total_exposure": 540.0
+  },
+  "capital_source": {
+    "mode": "internal",
+    "provider": "alpaca",
+    "last_updated_at": null,
+    "last_updated_by": null
+  },
+  "orders": {
+    "orders": [
+      {
+        "order_id": "ord_7fcd4cb3e5",
+        "strategy_id": "strat_f7e89782",
+        "symbol": "AAPL",
+        "side": "buy",
+        "qty": 1.0,
+        "notional": 180.0,
+        "status": "filled",
+        "mode": "internal",
+        "broker": "internal",
+        "timestamp": "2026-03-24T04:15:44Z",
+        "strategy_name": "AAPL Momentum"
+      },
+      {
+        "order_id": "ord_c7308cd162",
+        "strategy_id": "strat_53404dfa",
+        "symbol": "AAPL",
+        "side": "buy",
+        "qty": 1.0,
+        "notional": 180.0,
+        "status": "filled",
+        "mode": "internal",
+        "broker": "internal",
+        "timestamp": "2026-03-24T04:15:44Z",
+        "strategy_name": "AAPL Momentum"
+      },
+      {
+        "order_id": "ord_a723431f30",
+        "strategy_id": "strat_53404dfa",
+        "symbol": "AAPL",
+        "side": "buy",
+        "qty": 1.0,
+        "notional": 180.0,
+        "status": "filled",
+        "mode": "internal",
+        "broker": "internal",
+        "timestamp": "2026-03-24T04:12:22Z",
+        "strategy_name": "AAPL Momentum"
+      }
+    ]
+  },
+  "allocator_caps": {
+    "operator": {
+      "operator_id": "operator_F9C4298D",
+      "allocated_capital": 1000.0,
+      "status": "FUNDED",
+      "updated_at": "2026-03-24T04:15:44Z"
+    }
+  },
+  "strategy_loop": {
+    "running": false,
+    "execution_mode": "internal",
+    "interval_seconds": 60,
+    "last_run_at": "2026-03-24T04:15:44Z",
+    "next_run_at": null,
+    "heartbeat_at": "2026-03-24T04:15:44Z",
+    "total_runs": 2,
+    "total_signals": 3,
+    "total_orders": 3
+  },
+  "monitoring": {
+    "latest_snapshot": {
+      "timestamp": "2026-03-24T04:15:44Z",
+      "order_count": 3,
+      "used_capital": 540.0,
+      "allocated_capital": 1000.0,
+      "remaining_capital": 460.0,
+      "utilization_pct": 54.0,
+      "capital_mode": "internal",
+      "capital_label": "internal",
+      "alerts_count": 0,
+      "strategy_realized_pnl": 0.0,
+      "strategy_unrealized_pnl": 0.0,
+      "active_strategies": 2,
+      "risk_breached": false,
+      "drawdown_pct": 0.0,
+      "daily_realized_pnl": 0.0
+    },
+    "alerts": [],
+    "last_evaluated_at": "2026-03-24T04:15:44Z"
+  }
+}

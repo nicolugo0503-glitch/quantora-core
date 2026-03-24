@@ -7,8 +7,8 @@
     "last_status": "disconnected",
     "last_tested_at": null,
     "last_error": null,
-    "account_snapshot": {},
-    "positions_snapshot": [],
-    "orders_snapshot": []
+    "account": {},
+    "positions": [],
+    "orders": []
   }
 }

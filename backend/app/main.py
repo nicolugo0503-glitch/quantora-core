@@ -19,7 +19,7 @@ PROJECT_DIR = BACKEND_DIR.parent
 ARTIFACTS_DIR = BACKEND_DIR / "artifacts"
 FRONTEND_DIR = PROJECT_DIR / "frontend"
 
-app = FastAPI(title="Quantora QNT30324C Broker Capital Metrics Normalization", version="30324C")
+app = FastAPI(title="Quantora QNT30325B Performance Engine Completion", version="30325B")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -898,6 +898,124 @@ def summarize_strategy_engine(state):
 
 
 
+
+def compute_trade_journal(state):
+    strategies = {s.get("strategy_id"): s for s in state.get("strategies", {}).get("strategies", []) if not s.get("deleted")}
+    positions = {}
+    journal = []
+    cumulative_realized = 0.0
+    for order in list(reversed(state.get("orders", {}).get("orders", []))):
+        symbol = (order.get("symbol") or "AAPL").upper()
+        side = (order.get("side") or "buy").lower()
+        qty = float(order.get("qty") or 0)
+        price = fill_price(order)
+        strategy_id = order.get("strategy_id")
+        key = strategy_id or f"manual::{symbol}"
+        slot = positions.setdefault(key, {"qty": 0.0, "avg_entry": 0.0})
+        current_qty = float(slot.get("qty") or 0.0)
+        avg_entry = float(slot.get("avg_entry") or 0.0)
+        delta = qty if side == "buy" else -qty
+        realized = 0.0
+        if current_qty == 0 or current_qty * delta > 0:
+            new_qty = current_qty + delta
+            if current_qty == 0:
+                avg_entry = price
+            else:
+                avg_entry = ((abs(current_qty) * avg_entry) + (abs(delta) * price)) / max(abs(new_qty), 1e-9)
+            current_qty = new_qty
+        else:
+            close_qty = min(abs(current_qty), abs(delta))
+            realized = close_qty * ((price - avg_entry) if current_qty > 0 else (avg_entry - price))
+            remaining_qty = current_qty + delta
+            if remaining_qty == 0:
+                current_qty = 0.0
+                avg_entry = 0.0
+            elif current_qty * remaining_qty < 0:
+                current_qty = remaining_qty
+                avg_entry = price
+            else:
+                current_qty = remaining_qty
+        slot["qty"] = round(current_qty, 8)
+        slot["avg_entry"] = round(avg_entry, 8)
+        cumulative_realized = round(cumulative_realized + realized, 2)
+        strategy_name = None
+        if strategy_id and strategy_id in strategies:
+            strategy_name = strategies[strategy_id].get("name")
+        journal.append({
+            "timestamp": order.get("timestamp"),
+            "order_id": order.get("order_id"),
+            "strategy_id": strategy_id,
+            "strategy_name": strategy_name or order.get("strategy_name") or ("manual" if not strategy_id else None),
+            "symbol": symbol,
+            "side": side,
+            "qty": qty,
+            "execution_price": round(price, 6),
+            "notional": round(float(order.get("notional") or qty * price), 2),
+            "mode": order.get("mode"),
+            "broker": order.get("broker"),
+            "status": order.get("status"),
+            "realized_pnl": round(realized, 2),
+            "cumulative_realized_pnl": cumulative_realized,
+            "remaining_position_qty": round(current_qty, 8),
+        })
+    return list(reversed(journal))
+
+
+def build_equity_curve(state, journal, current_equity, realized_total):
+    capital = build_capital_context(state)
+    if capital.get("mode") == "broker":
+        base_equity = round(float(current_equity or 0) - float(realized_total or 0), 2)
+    else:
+        base_equity = round(float(capital.get("allocated_capital") or 0), 2)
+    ordered = list(reversed(journal))
+    points = [{"label": "start", "timestamp": None, "equity": round(base_equity, 2), "cumulative_realized_pnl": 0.0}]
+    cumulative = 0.0
+    for idx, entry in enumerate(ordered, start=1):
+        cumulative = round(cumulative + float(entry.get("realized_pnl") or 0), 2)
+        points.append({
+            "label": f"trade-{idx}",
+            "timestamp": entry.get("timestamp"),
+            "equity": round(base_equity + cumulative, 2),
+            "cumulative_realized_pnl": cumulative,
+            "order_id": entry.get("order_id"),
+            "strategy_id": entry.get("strategy_id"),
+        })
+    points.append({
+        "label": "current",
+        "timestamp": now_iso(),
+        "equity": round(float(current_equity or base_equity + cumulative), 2),
+        "cumulative_realized_pnl": round(float(realized_total or cumulative), 2),
+    })
+    return points[-100:]
+
+
+def build_scorecard(summary, journal):
+    closed = [j for j in journal if abs(float(j.get("realized_pnl") or 0)) > 0]
+    profits = [float(j.get("realized_pnl") or 0) for j in closed if float(j.get("realized_pnl") or 0) > 0]
+    losses = [float(j.get("realized_pnl") or 0) for j in closed if float(j.get("realized_pnl") or 0) < 0]
+    gross_profit = round(sum(profits), 2)
+    gross_loss = round(sum(losses), 2)
+    avg_win = round((sum(profits) / len(profits)), 2) if profits else 0.0
+    avg_loss = round((sum(losses) / len(losses)), 2) if losses else 0.0
+    expectancy = round((sum(float(j.get("realized_pnl") or 0) for j in closed) / len(closed)), 2) if closed else 0.0
+    profit_factor = round(gross_profit / abs(gross_loss), 2) if gross_loss < 0 else (None if gross_profit == 0 else 999.0)
+    best_trade = max([float(j.get("realized_pnl") or 0) for j in closed], default=0.0)
+    worst_trade = min([float(j.get("realized_pnl") or 0) for j in closed], default=0.0)
+    score = round(float(summary.get("operator_score") or 0) + (expectancy * 0.5) + ((profit_factor or 0) * 2 if profit_factor not in (None, 999.0) else 4), 2)
+    return {
+        "closed_trade_count": len(closed),
+        "gross_profit": gross_profit,
+        "gross_loss": gross_loss,
+        "avg_win": avg_win,
+        "avg_loss": avg_loss,
+        "expectancy": expectancy,
+        "profit_factor": profit_factor,
+        "best_trade": round(best_trade, 2),
+        "worst_trade": round(worst_trade, 2),
+        "score": score,
+    }
+
+
 def build_performance_snapshot(state):
     engine = summarize_strategy_engine(state)
     risk_view = evaluate_risk_state(state)
@@ -913,40 +1031,53 @@ def build_performance_snapshot(state):
     allocated = float(capital.get("allocated_capital", 0) or 0)
     used = float(capital.get("used_capital", 0) or 0)
     current_equity = float(risk_view.get("totals", {}).get("current_equity", allocated) or allocated)
+    journal = compute_trade_journal(state)
     operator_score = round((float(engine.get("portfolio_realized_pnl") or 0) * 0.35) + (wins * 3) - (losses * 1.5) - (len(risk_view.get("breaches", [])) * 10), 2)
-    recent_orders = list(reversed(orders[:10]))
-    equity_curve = [{
-        "label": "current",
-        "equity": round(current_equity, 2),
-        "allocated_capital": round(allocated, 2),
+    summary = {
+        "operator_id": state.get("operator_id"),
+        "display_name": state.get("display_name"),
+        "total_orders": total_orders,
+        "filled_orders": filled_orders,
+        "closed_trades": closed_trades,
+        "wins": wins,
+        "losses": losses,
+        "win_rate": round((wins / closed_trades) * 100, 2) if closed_trades else 0.0,
         "realized_pnl": round(float(engine.get("portfolio_realized_pnl") or 0), 2),
         "unrealized_pnl": round(float(engine.get("portfolio_unrealized_pnl") or 0), 2),
-    }]
+        "capital_in_use": round(float(engine.get("portfolio_capital_in_use") or 0), 2),
+        "allocated_capital": round(allocated, 2),
+        "used_capital": round(used, 2),
+        "utilization_pct": round((used / allocated) * 100, 2) if allocated > 0 else 0.0,
+        "current_equity": round(current_equity, 2),
+        "capital_mode": capital.get("mode"),
+        "capital_label": capital.get("label"),
+        "capital_valid": capital.get("valid"),
+        "current_drawdown_pct": round(float(risk_view.get("totals", {}).get("current_drawdown_pct") or 0), 2),
+        "daily_realized_pnl": round(float(risk_view.get("totals", {}).get("current_daily_realized_pnl") or 0), 2),
+        "risk_breaches": len(risk_view.get("breaches", [])),
+        "operator_score": operator_score,
+        "journal_entries": len(journal),
+    }
+    scorecard = build_scorecard(summary, journal)
+    summary["operator_score"] = scorecard["score"]
+    equity_curve = build_equity_curve(state, journal, current_equity, summary["realized_pnl"])
+
+    by_symbol = {}
+    for row in strategy_rows:
+        symbol = row.get("symbol") or "-"
+        slot = by_symbol.setdefault(symbol, {"symbol": symbol, "realized_pnl": 0.0, "unrealized_pnl": 0.0, "orders": 0, "strategies": 0})
+        slot["realized_pnl"] += float((row.get("metrics") or {}).get("realized_pnl") or 0)
+        slot["unrealized_pnl"] += float((row.get("metrics") or {}).get("unrealized_pnl") or 0)
+        slot["orders"] += int((row.get("metrics") or {}).get("orders_count") or 0)
+        slot["strategies"] += 1
+    attribution = sorted([
+        {**v, "realized_pnl": round(v["realized_pnl"], 2), "unrealized_pnl": round(v["unrealized_pnl"], 2)}
+        for v in by_symbol.values()
+    ], key=lambda x: (x["realized_pnl"] + x["unrealized_pnl"]), reverse=True)
+
     return {
-        "summary": {
-            "operator_id": state.get("operator_id"),
-            "display_name": state.get("display_name"),
-            "total_orders": total_orders,
-            "filled_orders": filled_orders,
-            "closed_trades": closed_trades,
-            "wins": wins,
-            "losses": losses,
-            "win_rate": round((wins / closed_trades) * 100, 2) if closed_trades else 0.0,
-            "realized_pnl": round(float(engine.get("portfolio_realized_pnl") or 0), 2),
-            "unrealized_pnl": round(float(engine.get("portfolio_unrealized_pnl") or 0), 2),
-            "capital_in_use": round(float(engine.get("portfolio_capital_in_use") or 0), 2),
-            "allocated_capital": round(allocated, 2),
-            "used_capital": round(used, 2),
-            "utilization_pct": round((used / allocated) * 100, 2) if allocated > 0 else 0.0,
-            "current_equity": round(current_equity, 2),
-            "capital_mode": capital.get("mode"),
-            "capital_label": capital.get("label"),
-            "capital_valid": capital.get("valid"),
-            "current_drawdown_pct": round(float(risk_view.get("totals", {}).get("current_drawdown_pct") or 0), 2),
-            "daily_realized_pnl": round(float(risk_view.get("totals", {}).get("current_daily_realized_pnl") or 0), 2),
-            "risk_breaches": len(risk_view.get("breaches", [])),
-            "operator_score": operator_score,
-        },
+        "summary": summary,
+        "scorecard": scorecard,
         "strategies": [
             {
                 "strategy_id": s.get("strategy_id"),
@@ -961,13 +1092,17 @@ def build_performance_snapshot(state):
                 "realized_pnl": (s.get("metrics") or {}).get("realized_pnl", 0),
                 "unrealized_pnl": (s.get("metrics") or {}).get("unrealized_pnl", 0),
                 "capital_in_use": (s.get("metrics") or {}).get("capital_in_use", 0),
+                "gross_notional": (s.get("metrics") or {}).get("gross_notional", 0),
+                "current_position_qty": (s.get("metrics") or {}).get("current_position_qty", 0),
             }
             for s in strategy_rows
         ],
-        "recent_orders": recent_orders,
+        "recent_orders": list(reversed(orders[:10])),
+        "trade_journal": journal[:100],
         "equity_curve": equity_curve,
+        "attribution": attribution,
+        "monitoring": monitoring,
     }
-
 
 # -------------------------
 # Alpaca broker layer
@@ -1376,7 +1511,7 @@ def build_command_center_snapshot(session):
     snapshot = {
         "session": session_payload,
         "north_star": {
-            "mission": "QNT30324C Broker Capital Metrics Normalization",
+            "mission": "QNT30325B Performance Engine Completion",
             "system": "Quantora multi-layer institutional trading operating system",
             "timestamp": now_iso(),
         },
@@ -1391,7 +1526,7 @@ def build_command_center_snapshot(session):
             "status": "ok",
             "registered_users": len(users),
             "policies_enabled": len([p for p in governance["policies"] if p.get("enabled")]),
-            "layer": "qnt30324c-broker-capital-metrics-normalization",
+            "layer": "qnt30325b-performance-engine-completion",
             "broker_status": broker.get("last_status"),
             "admin_ready": session_payload.get("is_admin"),
         },
@@ -1670,7 +1805,7 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 # -------------------------
 @app.get("/health")
 def health():
-    return {"status": "ok", "layer": "qnt30324c-broker-capital-metrics-normalization"}
+    return {"status": "ok", "layer": "qnt30325b-performance-engine-completion"}
 
 
 @app.post("/auth/register")
@@ -1846,12 +1981,35 @@ def performance_operator(operator_id: str, session=Depends(require_auth)):
 @app.get("/performance/strategy/{strategy_id}")
 def performance_strategy(strategy_id: str, session=Depends(require_auth)):
     state = get_operator_state(session)
-    strategy = get_strategy_by_id(state, strategy_id)
+    get_strategy_by_id(state, strategy_id)
     engine = summarize_strategy_engine(state)
     row = next((s for s in engine.get("strategies", []) if s.get("strategy_id") == strategy_id), None)
     if not row:
         raise HTTPException(status_code=404, detail="Strategy not found")
-    return {"strategy": row, "performance": build_performance_snapshot(state).get("summary", {}), "recent_logs": [l for l in state.get("strategy_engine", {}).get("logs", []) if l.get("strategy_id") == strategy_id][:25]}
+    snapshot = build_performance_snapshot(state)
+    journal = [j for j in snapshot.get("trade_journal", []) if j.get("strategy_id") == strategy_id][:25]
+    return {"strategy": row, "performance": snapshot.get("summary", {}), "scorecard": snapshot.get("scorecard", {}), "recent_logs": [l for l in state.get("strategy_engine", {}).get("logs", []) if l.get("strategy_id") == strategy_id][:25], "trade_journal": journal}
+
+
+@app.get("/performance/journal")
+def performance_journal(limit: int = 50, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    snapshot = build_performance_snapshot(state)
+    return {"trade_journal": snapshot.get("trade_journal", [])[:max(1, min(limit, 200))], "summary": snapshot.get("summary", {})}
+
+
+@app.get("/performance/equity-curve")
+def performance_equity_curve(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    snapshot = build_performance_snapshot(state)
+    return {"equity_curve": snapshot.get("equity_curve", []), "summary": snapshot.get("summary", {})}
+
+
+@app.get("/performance/scorecard")
+def performance_scorecard(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    snapshot = build_performance_snapshot(state)
+    return {"summary": snapshot.get("summary", {}), "scorecard": snapshot.get("scorecard", {}), "attribution": snapshot.get("attribution", [])}
 
 
 @app.post("/allocator/operator-capital/set")
@@ -2169,9 +2327,9 @@ def approvals_decision(payload: ApprovalDecisionRequest, admin=Depends(require_a
 @app.get("/version")
 def version():
     return {
-        "mission": "QNT30324C Broker Capital Metrics Normalization",
-        "layer": "qnt30324c-broker-capital-metrics-normalization",
-        "frontend": "qnt30324c",
+        "mission": "QNT30325B Performance Engine Completion",
+        "layer": "qnt30325b-performance-engine-completion",
+        "frontend": "qnt30325b",
         "cache_policy": NO_CACHE_HEADERS["Cache-Control"],
         "timestamp": now_iso(),
     }

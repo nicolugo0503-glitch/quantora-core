@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Quantora QNT30324C Broker Capital Metrics Normalization</title>
+  <title>Quantora QNT30325B Performance Engine Completion</title>
   <style>
     :root {
       --bg: #07111f;
@@ -70,9 +70,9 @@
   <div class="shell">
     <div class="hero">
       <div>
-        <h1 style="margin:0 0 10px">Quantora Unified Command Center · Broker Capital Metrics Normalization</h1>
+        <h1 style="margin:0 0 10px">Quantora Unified Command Center · Performance Engine Completion</h1>
         <div class="sub">
-          QNT30324C normalizes broker-mode accounting language across the command center. Broker mode now surfaces broker-native summary metrics: equity, exposure, buying power, and cash, while internal mode keeps allocation-driven labels.
+          QNT30325B completes the performance layer across Quantora. The command center now surfaces scorecard metrics, trade journal rows, equity-curve points, and attribution data for operators and strategies.
         </div>
       </div>
       <div class="hero-actions">
@@ -92,7 +92,7 @@
       <div class="metric"><div class="label">Realized PnL</div><div class="value" id="m_realized">-</div></div>
       <div class="metric"><div class="label">Risk State</div><div class="value" id="m_risk">-</div></div>
       <div class="metric"><div class="label" id="label_capital_source">Capital Source</div><div class="value" id="m_capital_source">-</div></div>
-      <div class="metric"><div class="label">Layer</div><div class="value" id="m_layer">QNT30324C</div></div>
+      <div class="metric"><div class="label">Layer</div><div class="value" id="m_layer">QNT30325B</div></div>
     </div>
 
     <div class="grid-main">
@@ -291,7 +291,10 @@
         <div class="panel">
           <div class="section-title"><h2>Performance Engine</h2><button class="secondary" onclick="loadPerformance()">Refresh Performance</button></div>
           <div id="performance_pills" class="pills"></div>
+          <div id="performance_scorecard" class="pills"></div>
           <div id="performance_table"></div>
+          <div id="performance_curve"></div>
+          <div id="performance_journal"></div>
         </div>
 
         <div class="panel">
@@ -588,9 +591,11 @@ async function toggleKillSwitch(active){
   refreshAll();
 }
 
+
 async function loadPerformance(){
   const data = await api('/performance/metrics');
   const s = data.summary || {};
+  const sc = data.scorecard || {};
   setHTML('performance_pills', pills([
     {label:`score ${fmt(s.operator_score)}`},
     {label:`capital ${s.capital_mode || '-'} / ${s.capital_label || '-'}`, className: s.capital_valid === false ? 'warn' : 'good'},
@@ -601,6 +606,16 @@ async function loadPerformance(){
     {label:`drawdown ${fmt(s.current_drawdown_pct)}%`, className: Number(s.current_drawdown_pct || 0) > 0 ? 'warn' : 'good'},
     {label:`risk breaches ${s.risk_breaches || 0}`, className: Number(s.risk_breaches || 0) ? 'bad' : 'good'}
   ]));
+  setHTML('performance_scorecard', pills([
+    {label:`expectancy ${fmt(sc.expectancy)}`},
+    {label:`profit factor ${sc.profit_factor === null ? '-' : fmt(sc.profit_factor)}`},
+    {label:`avg win ${fmt(sc.avg_win)}`, className:'good'},
+    {label:`avg loss ${fmt(sc.avg_loss)}`, className:Number(sc.avg_loss||0) < 0 ? 'bad' : ''},
+    {label:`best ${fmt(sc.best_trade)}`, className:'good'},
+    {label:`worst ${fmt(sc.worst_trade)}`, className:Number(sc.worst_trade||0) < 0 ? 'bad' : ''},
+    {label:`closed trades ${sc.closed_trade_count || 0}`},
+    {label:`journal rows ${s.journal_entries || 0}`}
+  ]));
   setHTML('performance_table', renderTable(data.strategies || [], [
     {key:'name', label:'Strategy'},
     {key:'symbol', label:'Symbol'},
@@ -610,7 +625,26 @@ async function loadPerformance(){
     {key:'win_rate', label:'Win Rate', render:v=>fmt(v)+'%'},
     {key:'realized_pnl', label:'Realized', render:v=>fmt(v)},
     {key:'unrealized_pnl', label:'Unrealized', render:v=>fmt(v)},
-    {key:'capital_in_use', label:'Cap Used', render:v=>fmt(v)}
+    {key:'capital_in_use', label:'Cap Used', render:v=>fmt(v)},
+    {key:'gross_notional', label:'Gross Notional', render:v=>fmt(v)}
+  ]));
+  setHTML('performance_curve', renderTable((data.equity_curve || []).slice(-10), [
+    {key:'label', label:'Curve Point'},
+    {key:'timestamp', label:'Timestamp'},
+    {key:'equity', label:'Equity', render:v=>fmt(v)},
+    {key:'cumulative_realized_pnl', label:'Cum Realized', render:v=>fmt(v)}
+  ]));
+  setHTML('performance_journal', renderTable((data.trade_journal || []).slice(0, 15), [
+    {key:'timestamp', label:'Timestamp'},
+    {key:'strategy_name', label:'Strategy'},
+    {key:'symbol', label:'Symbol'},
+    {key:'side', label:'Side'},
+    {key:'qty', label:'Qty'},
+    {key:'execution_price', label:'Price', render:v=>fmt(v)},
+    {key:'notional', label:'Notional', render:v=>fmt(v)},
+    {key:'realized_pnl', label:'Realized PnL', render:v=>fmt(v)},
+    {key:'remaining_position_qty', label:'Remain Qty', render:v=>fmt(v)},
+    {key:'mode', label:'Mode'}
   ]));
   return data;
 }
@@ -685,7 +719,7 @@ async function loadSnapshot(){
   document.getElementById('m_operator').textContent = cards.operator?.value || ws.display_name || '-';
   document.getElementById('m_running').textContent = cards.strategies?.value ?? data.strategy_engine?.running_strategies ?? '-';
   document.getElementById('m_realized').textContent = fmt(cards.pnl?.value ?? data.strategy_engine?.portfolio_realized_pnl);
-  document.getElementById('m_layer').textContent = data.system_health?.layer || 'QNT30324C';
+  document.getElementById('m_layer').textContent = data.system_health?.layer || 'QNT30325B';
   document.getElementById('m_risk').textContent = cards.risk?.value || data.risk_engine?.status || (data.risk_engine?.config?.kill_switch_active ? 'LOCKED' : (data.risk_engine?.breaches?.length ? 'BREACH' : 'SAFE'));
 
   if (capitalMode === 'broker') {
