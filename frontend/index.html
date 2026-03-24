@@ -70,9 +70,9 @@
   <div class="shell">
     <div class="hero">
       <div>
-        <h1 style="margin:0 0 10px">Quantora Unified Command Center · Real Multi-Operator System</h1>
+        <h1 style="margin:0 0 10px">Quantora Unified Command Center · Platform Layer Activation</h1>
         <div class="sub">
-          QNT30326B extends Quantora into a real multi-operator platform with leaderboard ranking, admin operator selection, and isolated operator performance views.
+          QNT30326C activates the platform layer with leaderboard ranking, operator switching, capital allocation, and operator-vs-operator comparison.
         </div>
       </div>
       <div class="hero-actions">
@@ -281,11 +281,21 @@
             <div>
               <input id="select_operator_id" placeholder="Operator ID for admin selection">
               <button onclick="selectOperatorContext()">Select Operator Context</button>
+              <button class="secondary" onclick="switchOperatorContext()">Switch Active Operator</button>
             </div>
-            <div id="multi_operator_pills" class="pills"></div>
-            <div class="tiny">Admin can inspect leaderboard standings and switch the active operator context safely.</div>
+            <div>
+              <input id="allocate_total_capital" type="number" placeholder="Total capital to allocate">
+              <button class="warn" onclick="allocateCapital()">Allocate Capital</button>
+            </div>
+            <div>
+              <input id="compare_operator_a" placeholder="Compare operator A">
+              <input id="compare_operator_b" placeholder="Compare operator B">
+              <button class="secondary" onclick="compareOperators()">Compare Operators</button>
+            </div>
           </div>
+          <div id="multi_operator_pills" class="pills"></div>
           <div id="leaderboard_table" style="margin-top:10px"></div>
+          <div id="compare_table" style="margin-top:10px"></div>
           <pre id="multi_operator_out">Ready.</pre>
         </div>
 
@@ -709,6 +719,35 @@ async function selectOperatorContext(){
   const data = await api('/admin/operator-context/select','POST',{operator_id:select_operator_id.value});
   setText('multi_operator_out', data);
   refreshAll();
+}
+
+async function switchOperatorContext(){
+  const data = await api('/multi-operator/switch','POST',{operator_id:select_operator_id.value});
+  setText('multi_operator_out', data);
+  refreshAll();
+}
+
+async function allocateCapital(){
+  const data = await api('/multi-operator/allocate','POST',{total_capital:Number(allocate_total_capital.value || 0)});
+  setText('multi_operator_out', data);
+  refreshAll();
+}
+
+async function compareOperators(){
+  const data = await api('/multi-operator/compare','POST',{operator_a_id:compare_operator_a.value, operator_b_id:compare_operator_b.value});
+  setText('multi_operator_out', data);
+  const rows = data.operator_a && data.operator_b ? [
+    {metric:'score', a:data.operator_a.score, b:data.operator_b.score},
+    {metric:'realized_pnl', a:data.operator_a.realized_pnl, b:data.operator_b.realized_pnl},
+    {metric:'drawdown_pct', a:data.operator_a.drawdown_pct, b:data.operator_b.drawdown_pct},
+    {metric:'win_rate', a:data.operator_a.win_rate, b:data.operator_b.win_rate},
+    {metric:'capital_mode', a:data.operator_a.capital_mode, b:data.operator_b.capital_mode},
+  ] : [];
+  setHTML('compare_table', renderTable(rows, [
+    {key:'metric', label:'Metric'},
+    {key:'a', label:(data.operator_a?.display_name || 'Operator A')},
+    {key:'b', label:(data.operator_b?.display_name || 'Operator B')}
+  ]) + (data.winner ? `<div class="tiny" style="margin-top:8px">Winner: ${data.winner}</div>` : ''));
 }
 
 async function loadControlTower(){

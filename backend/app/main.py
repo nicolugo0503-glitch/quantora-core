@@ -19,7 +19,7 @@ PROJECT_DIR = BACKEND_DIR.parent
 ARTIFACTS_DIR = BACKEND_DIR / "artifacts"
 FRONTEND_DIR = PROJECT_DIR / "frontend"
 
-app = FastAPI(title="Quantora QNT30326B Real Multi-Operator System", version="30326B")
+app = FastAPI(title="Quantora QNT30326C Platform Layer Activation", version="30326C")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -1526,7 +1526,7 @@ def build_command_center_snapshot(session):
     snapshot = {
         "session": session_payload,
         "north_star": {
-            "mission": "QNT30326B Real Multi-Operator System",
+            "mission": "QNT30326C Platform Layer Activation",
             "system": "Quantora multi-layer institutional trading operating system",
             "timestamp": now_iso(),
         },
@@ -1541,7 +1541,7 @@ def build_command_center_snapshot(session):
             "status": "ok",
             "registered_users": len(users),
             "policies_enabled": len([p for p in governance["policies"] if p.get("enabled")]),
-            "layer": "qnt30326b-real-multi-operator-system",
+            "layer": "qnt30326c-platform-layer-activation",
             "broker_status": broker.get("last_status"),
             "admin_ready": session_payload.get("is_admin"),
         },
@@ -1642,6 +1642,73 @@ def multi_operator_overview():
         "broker_mode_operators": sum(1 for r in rows if r.get("capital_mode") == "broker"),
     }
     return {"leaderboard": rows, "totals": totals}
+
+
+def compare_operator_states(operator_a_id, operator_b_id):
+    user_a = get_operator_by_id(operator_a_id)
+    user_b = get_operator_by_id(operator_b_id)
+    state_a = get_operator_state_by_id(user_a["operator_id"])
+    state_b = get_operator_state_by_id(user_b["operator_id"])
+    perf_a = build_performance_snapshot(state_a).get("summary", {})
+    perf_b = build_performance_snapshot(state_b).get("summary", {})
+    return {
+        "operator_a": {
+            "operator_id": user_a.get("operator_id"),
+            "display_name": user_a.get("display_name"),
+            "score": round(as_float(perf_a.get("operator_score"),0.0),2),
+            "realized_pnl": round(as_float(perf_a.get("realized_pnl"),0.0),2),
+            "drawdown_pct": round(as_float(perf_a.get("current_drawdown_pct"),0.0),2),
+            "win_rate": round(as_float(perf_a.get("win_rate"),0.0),2),
+            "capital_mode": perf_a.get("capital_mode"),
+        },
+        "operator_b": {
+            "operator_id": user_b.get("operator_id"),
+            "display_name": user_b.get("display_name"),
+            "score": round(as_float(perf_b.get("operator_score"),0.0),2),
+            "realized_pnl": round(as_float(perf_b.get("realized_pnl"),0.0),2),
+            "drawdown_pct": round(as_float(perf_b.get("current_drawdown_pct"),0.0),2),
+            "win_rate": round(as_float(perf_b.get("win_rate"),0.0),2),
+            "capital_mode": perf_b.get("capital_mode"),
+        },
+        "winner": operator_a_id if as_float(perf_a.get("operator_score"),0.0) >= as_float(perf_b.get("operator_score"),0.0) else operator_b_id
+    }
+
+
+def auto_allocate_capital(total_capital):
+    rows = build_multi_operator_leaderboard()
+    if not rows:
+        return {"allocations": [], "totals": {"operators": 0, "allocated": 0.0}}
+    weights = []
+    for r in rows:
+        score = max(as_float(r.get("score"), 0.0), 0.0)
+        pnl_bonus = max(as_float(r.get("realized_pnl"), 0.0), 0.0) / 1000.0
+        dd_penalty = min(max(as_float(r.get("drawdown_pct"), 0.0), 0.0), 100.0) / 100.0
+        weight = max(0.1, score + pnl_bonus + 1.0 - dd_penalty)
+        weights.append(weight)
+    total_weight = sum(weights) or len(rows)
+    allocations = []
+    for row, weight in zip(rows, weights):
+        allocation = round(float(total_capital) * weight / total_weight, 2)
+        state = get_operator_state_by_id(row["operator_id"])
+        state["allocator_caps"]["operator"] = {
+            "operator_id": row["operator_id"],
+            "allocated_capital": allocation,
+            "status": "FUNDED" if allocation > 0 else "UNFUNDED",
+            "updated_at": now_iso(),
+        }
+        evaluate_monitoring(state)
+        save_operator_state(state)
+        allocations.append({
+            "operator_id": row["operator_id"],
+            "display_name": row.get("display_name"),
+            "score": row.get("score"),
+            "drawdown_pct": row.get("drawdown_pct"),
+            "allocation": allocation,
+        })
+    return {
+        "allocations": allocations,
+        "totals": {"operators": len(allocations), "allocated": round(sum(a["allocation"] for a in allocations),2)}
+    }
 
 
 def submit_approval_request(session, request_type, target, payload, reason):
@@ -1750,6 +1817,15 @@ class AdminLoopRequest(BaseModel):
 
 class AdminSelectOperatorRequest(BaseModel):
     operator_id: str
+
+
+class MultiOperatorAllocateRequest(BaseModel):
+    total_capital: float = 0.0
+
+
+class MultiOperatorCompareRequest(BaseModel):
+    operator_a_id: str
+    operator_b_id: str
 
 
 class PolicyUpdateRequest(BaseModel):
@@ -1865,7 +1941,7 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 # -------------------------
 @app.get("/health")
 def health():
-    return {"status": "ok", "layer": "qnt30326b-real-multi-operator-system"}
+    return {"status": "ok", "layer": "qnt30326c-platform-layer-activation"}
 
 
 @app.post("/auth/register")
@@ -2412,12 +2488,41 @@ def admin_operator_context_select(payload: AdminSelectOperatorRequest, admin=Dep
     return {"status": "selected", "session": session_view(updated), "selected_operator": user}
 
 
+@app.post("/multi-operator/switch")
+def multi_operator_switch(payload: AdminSelectOperatorRequest, admin=Depends(require_admin)):
+    user = get_operator_by_id(payload.operator_id)
+    session = get_session()
+    updated = {
+        **session,
+        "logged_in": True,
+        "email": session.get("email") or admin.get("email"),
+        "is_admin": True,
+        "selected_operator_id": user.get("operator_id"),
+    }
+    save_session(updated)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "multi_operator.switch", payload.operator_id, {"selected_operator_id": payload.operator_id}, "multi_operator")
+    return {"status": "switched", "session": session_view(updated), "selected_operator": user}
+
+
+@app.post("/multi-operator/allocate")
+def multi_operator_allocate(payload: MultiOperatorAllocateRequest, admin=Depends(require_admin)):
+    result = auto_allocate_capital(payload.total_capital)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "multi_operator.allocate", "fleet", {"total_capital": payload.total_capital, "totals": result.get("totals", {})}, "multi_operator")
+    return {"status": "allocated", **result}
+
+
+@app.post("/multi-operator/compare")
+def multi_operator_compare(payload: MultiOperatorCompareRequest, admin=Depends(require_admin)):
+    result = compare_operator_states(payload.operator_a_id, payload.operator_b_id)
+    return {"status": "ok", **result}
+
+
 @app.get("/version")
 def version():
     return {
-        "mission": "QNT30326B Real Multi-Operator System",
-        "layer": "qnt30326b-real-multi-operator-system",
-        "frontend": "qnt30326b",
+        "mission": "QNT30326C Platform Layer Activation",
+        "layer": "qnt30326c-platform-layer-activation",
+        "frontend": "qnt30326c",
         "cache_policy": NO_CACHE_HEADERS["Cache-Control"],
         "timestamp": now_iso(),
     }
