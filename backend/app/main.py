@@ -19,7 +19,7 @@ PROJECT_DIR = BACKEND_DIR.parent
 ARTIFACTS_DIR = BACKEND_DIR / "artifacts"
 FRONTEND_DIR = PROJECT_DIR / "frontend"
 
-app = FastAPI(title="Quantora QNT30328E AI Activation", version="30328E")
+app = FastAPI(title="Quantora QNT30329 Real Strategy Intelligence Engine", version="30329")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -1526,7 +1526,7 @@ def build_command_center_snapshot(session):
     snapshot = {
         "session": session_payload,
         "north_star": {
-            "mission": "QNT30328E AI Activation",
+            "mission": "QNT30329 Real Strategy Intelligence Engine",
             "system": "Quantora multi-layer institutional trading operating system",
             "timestamp": now_iso(),
         },
@@ -1541,7 +1541,7 @@ def build_command_center_snapshot(session):
             "status": "ok",
             "registered_users": len(users),
             "policies_enabled": len([p for p in governance["policies"] if p.get("enabled")]),
-            "layer": "qnt30328e-ai-activation",
+            "layer": "qnt30329-real-strategy-intelligence-engine",
             "broker_status": broker.get("last_status"),
             "admin_ready": session_payload.get("is_admin"),
         },
@@ -1891,7 +1891,7 @@ def build_ai_operator_insights():
 
 def build_ai_activation_payload(session):
     try:
-        status = {"mission": "QNT30328E", "layer": "qnt30328e-ai-activation", "ai_enabled": True, "mode": "live-integrated"}
+        status = {"mission": "QNT30329", "layer": "qnt30329-real-strategy-intelligence-engine", "ai_enabled": True, "mode": "live-integrated"}
         return {
             "status": status,
             "strategy_suggestions": build_ai_strategy_suggestions(session).get("items", []),
@@ -1900,7 +1900,7 @@ def build_ai_activation_payload(session):
             "operator_insights": build_ai_operator_insights().get("items", []),
         }
     except Exception as exc:
-        return {"status": {"mission": "QNT30328E", "layer": "qnt30328e-ai-activation", "ai_enabled": True, "mode": "degraded"}, "error": str(exc)}
+        return {"status": {"mission": "QNT30329", "layer": "qnt30329-real-strategy-intelligence-engine", "ai_enabled": True, "mode": "degraded"}, "error": str(exc)}
 
 # -------------------------
 # Request models
@@ -1971,6 +1971,12 @@ class MultiOperatorCompareRequest(BaseModel):
 
 class AIStrategySuggestionRequest(BaseModel):
     market_bias: str = "neutral"
+
+
+class StrategyEngineCycleRequest(BaseModel):
+    execution_mode: str = "internal"
+    market_bias: str = "neutral"
+
 
 class PolicyUpdateRequest(BaseModel):
     policy_id: str
@@ -2085,7 +2091,7 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 # -------------------------
 @app.get("/health")
 def health():
-    return {"status": "ok", "layer": "qnt30328e-ai-activation"}
+    return {"status": "ok", "layer": "qnt30329-real-strategy-intelligence-engine"}
 
 
 @app.post("/auth/register")
@@ -2665,7 +2671,7 @@ def multi_operator_compare(payload: MultiOperatorCompareRequest, admin=Depends(r
 @app.get("/ai-platform/status")
 def ai_platform_status(session=Depends(require_auth)):
     payload = build_ai_activation_payload(session)
-    return payload.get("status", {"mission": "QNT30328E", "layer": "qnt30328e-ai-activation", "ai_enabled": True})
+    return payload.get("status", {"mission": "QNT30329", "layer": "qnt30329-real-strategy-intelligence-engine", "ai_enabled": True})
 
 
 @app.post("/ai-platform/strategy-suggestions")
@@ -2695,12 +2701,221 @@ def ai_platform_operator_insights(session=Depends(require_admin)):
     append_governance_event(session.get("email"), session.get("operator_id"), "ai.operator_insights", "ai-platform", {"count": len(data.get("items", []))}, "ai")
     return data
 
+
+
+def signal_conviction(strategy, risk_state, market_bias):
+    base = 0.58
+    symbol = (strategy.get("symbol") or "").upper()
+    if symbol in {"NVDA", "AAPL", "MSFT", "META"}:
+        base += 0.08
+    if market_bias == "bullish":
+        base += 0.06
+    elif market_bias == "bearish":
+        base -= 0.07
+    elif market_bias == "range":
+        base -= 0.02
+    if (risk_state or {}).get("status") == "SAFE":
+        base += 0.04
+    if (risk_state or {}).get("breaches"):
+        base -= 0.12
+    return round(max(0.05, min(base, 0.95)), 2)
+
+
+def build_strategy_signal_row(state, strategy, market_bias="neutral"):
+    metrics = state.setdefault("strategy_engine", {}).setdefault("metrics", {})
+    metric = metrics.setdefault(strategy["strategy_id"], default_strategy_metrics(strategy["strategy_id"], strategy.get("symbol")))
+    refresh_metric_market_values(metric, strategy.get("symbol"))
+    risk_state = evaluate_risk_state(state)
+    current_price = float(metric.get("last_price") or get_price(strategy.get("symbol")))
+    avg_entry = float(metric.get("avg_entry_price") or 0)
+    position_qty = float(metric.get("current_position_qty") or 0)
+    side_bias = (strategy.get("side") or "buy").lower()
+    conviction = signal_conviction(strategy, risk_state, market_bias)
+
+    action = "hold"
+    order_side = None
+    order_qty = 0.0
+    reason = "No execution trigger"
+    stop_price = 0.0
+    take_profit_price = 0.0
+    pnl_pct = 0.0
+
+    if position_qty != 0 and avg_entry > 0:
+        if position_qty > 0:
+            pnl_pct = round(((current_price - avg_entry) / avg_entry) * 100, 2)
+            stop_price = round(avg_entry * 0.98, 2)
+            take_profit_price = round(avg_entry * 1.03, 2)
+            if current_price <= stop_price:
+                action = "stop_exit"
+                order_side = "sell"
+                order_qty = abs(position_qty)
+                reason = "Long stop triggered"
+            elif current_price >= take_profit_price:
+                action = "take_profit"
+                order_side = "sell"
+                order_qty = abs(position_qty)
+                reason = "Long target reached"
+        else:
+            pnl_pct = round(((avg_entry - current_price) / avg_entry) * 100, 2)
+            stop_price = round(avg_entry * 1.02, 2)
+            take_profit_price = round(avg_entry * 0.97, 2)
+            if current_price >= stop_price:
+                action = "stop_exit"
+                order_side = "buy"
+                order_qty = abs(position_qty)
+                reason = "Short stop triggered"
+            elif current_price <= take_profit_price:
+                action = "take_profit"
+                order_side = "buy"
+                order_qty = abs(position_qty)
+                reason = "Short target reached"
+
+    if action == "hold":
+        if side_bias == "buy":
+            if position_qty <= 0 and conviction >= 0.55 and market_bias != "bearish":
+                action = "enter_long"
+                order_side = "buy"
+                order_qty = float(strategy.get("default_qty") or 1)
+                reason = "Constructive bias with no active long position"
+            elif position_qty > 0:
+                reason = "Maintain long until stop or target triggers"
+        else:
+            if position_qty >= 0 and conviction >= 0.55 and market_bias != "bullish":
+                action = "enter_short"
+                order_side = "sell"
+                order_qty = float(strategy.get("default_qty") or 1)
+                reason = "Defensive bias with no active short position"
+            elif position_qty < 0:
+                reason = "Maintain short until stop or target triggers"
+
+    state.setdefault("strategy_engine", {}).setdefault("signals", {})
+    signal = {
+        "strategy_id": strategy.get("strategy_id"),
+        "strategy_name": strategy.get("name"),
+        "symbol": (strategy.get("symbol") or "AAPL").upper(),
+        "market_bias": market_bias,
+        "side_bias": side_bias,
+        "signal_action": action,
+        "order_side": order_side,
+        "order_qty": round(float(order_qty or 0), 6),
+        "current_price": round(current_price, 2),
+        "avg_entry_price": round(avg_entry, 2),
+        "position_qty": round(position_qty, 6),
+        "pnl_pct": round(pnl_pct, 2),
+        "stop_price": round(stop_price, 2),
+        "take_profit_price": round(take_profit_price, 2),
+        "confidence": conviction,
+        "reason": reason,
+        "generated_at": now_iso(),
+    }
+    state["strategy_engine"]["signals"][strategy["strategy_id"]] = signal
+    metric["last_signal_at"] = signal["generated_at"]
+    return signal
+
+
+def build_strategy_signal_book(state, market_bias="neutral"):
+    strategies = [s for s in state.get("strategies", {}).get("strategies", []) if not s.get("deleted")]
+    rows = [build_strategy_signal_row(state, strategy, market_bias) for strategy in strategies]
+    rows.sort(key=lambda r: (r.get("signal_action") == "hold", -(r.get("confidence") or 0)))
+    return {
+        "market_bias": market_bias,
+        "generated_at": now_iso(),
+        "signals": rows,
+        "actionable": len([r for r in rows if r.get("signal_action") != "hold"]),
+        "running_strategies": len([s for s in strategies if s.get("status") == "running" and s.get("enabled")]),
+        "total_strategies": len(strategies),
+    }
+
+
+def submit_strategy_signal_order(state, strategy, signal, execution_mode, actor_email, actor_operator_id):
+    chosen_mode = ((execution_mode or "internal").lower() if (strategy.get("execution_mode") or "inherit").lower() == "inherit" else (strategy.get("execution_mode") or "internal").lower())
+    side = (signal.get("order_side") or strategy.get("side") or "buy").lower()
+    qty = float(signal.get("order_qty") or strategy.get("default_qty") or 1)
+    notional = round(get_price(strategy["symbol"]) * qty, 2)
+    enforce_risk_guard(state, strategy["symbol"], side, qty, chosen_mode)
+    enforce_capital_guard(state, notional, side, strategy)
+
+    if chosen_mode == "alpaca":
+        if not resolved_alpaca_credentials():
+            strategy_log(state, strategy["strategy_id"], "broker_error", "Alpaca execution requested but no credentials configured", {})
+            raise HTTPException(status_code=400, detail="Alpaca mode requested but no Alpaca credentials are configured")
+        broker_order = alpaca_submit_market_order(strategy["symbol"], side, qty)
+        order = normalize_alpaca_order(broker_order, strategy["symbol"], side, qty)
+    else:
+        order = build_internal_order(strategy["symbol"], side, qty, chosen_mode, strategy["strategy_id"])
+
+    order["strategy_id"] = strategy["strategy_id"]
+    order["strategy_name"] = strategy["name"]
+    order["signal_action"] = signal.get("signal_action")
+    persist_order(state, order)
+    apply_order_to_strategy(state, strategy, order)
+    strategy_log(state, strategy["strategy_id"], "signal_execution", signal.get("reason"), {"signal_action": signal.get("signal_action"), "confidence": signal.get("confidence")})
+    append_governance_event(actor_email, actor_operator_id, "strategy.signal_execution", state["operator_id"], {"strategy_id": strategy["strategy_id"], "signal_action": signal.get("signal_action"), "order_id": order.get("order_id")}, "strategy")
+    return order
+
+
+def run_strategy_intelligence_cycle(state, execution_mode, market_bias, actor_email, actor_operator_id):
+    book = build_strategy_signal_book(state, market_bias)
+    executed = []
+    strategies = {s.get("strategy_id"): s for s in state.get("strategies", {}).get("strategies", []) if not s.get("deleted")}
+    risk = state.setdefault("risk_engine", default_risk_engine())
+    for signal in book.get("signals", []):
+        strategy = strategies.get(signal.get("strategy_id"))
+        if not strategy or not strategy.get("enabled") or strategy.get("status") != "running":
+            continue
+        if signal.get("signal_action") == "hold":
+            strategy_log(state, strategy["strategy_id"], "signal_hold", signal.get("reason"), {"confidence": signal.get("confidence")})
+            continue
+        if risk.get("enabled") and int(risk.get("max_orders_per_run") or 0) > 0 and len(executed) >= int(risk.get("max_orders_per_run") or 0):
+            strategy_log(state, strategy["strategy_id"], "risk_block", "Intelligent cycle skipped: max orders per run reached", {"max_orders_per_run": risk.get("max_orders_per_run")})
+            continue
+        try:
+            executed.append(submit_strategy_signal_order(state, strategy, signal, execution_mode, actor_email, actor_operator_id))
+        except HTTPException as exc:
+            strategy_log(state, strategy["strategy_id"], "signal_blocked", str(exc.detail), {"signal_action": signal.get("signal_action")})
+    state.setdefault("strategy_engine", {})["last_cycle_at"] = now_iso()
+    state.setdefault("strategy_engine", {})["last_cycle_market_bias"] = market_bias
+    state.setdefault("strategy_engine", {})["last_cycle_status"] = "completed"
+    evaluate_monitoring(state)
+    save_operator_state(state)
+    return {"status": "completed", "market_bias": market_bias, "signals": book.get("signals", []), "executed_orders": executed, "executed_count": len(executed)}
+
+
+@app.get("/strategy-engine/signals")
+def strategy_engine_signals(market_bias: str = "neutral", session=Depends(require_auth)):
+    state = get_operator_state(session)
+    book = build_strategy_signal_book(state, market_bias)
+    save_operator_state(state)
+    return book
+
+
+@app.post("/strategy-engine/run-cycle")
+def strategy_engine_run_cycle(payload: StrategyEngineCycleRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    result = run_strategy_intelligence_cycle(state, payload.execution_mode, payload.market_bias, session.get("email"), session.get("operator_id"))
+    return result
+
+
+@app.get("/strategy-engine/portfolio")
+def strategy_engine_portfolio(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    engine = summarize_strategy_engine(state)
+    signal_book = build_strategy_signal_book(state, state.setdefault("strategy_engine", {}).get("last_cycle_market_bias") or "neutral")
+    return {
+        "engine": engine,
+        "signals": signal_book,
+        "performance": build_performance_snapshot(state).get("summary", {}),
+        "last_cycle_at": state.setdefault("strategy_engine", {}).get("last_cycle_at"),
+        "last_cycle_status": state.setdefault("strategy_engine", {}).get("last_cycle_status", "idle"),
+    }
+
+
 @app.get("/version")
 def version():
     return {
-        "mission": "QNT30328E AI Activation",
-        "layer": "qnt30328e-ai-activation",
-        "frontend": "qnt30328e",
+        "mission": "QNT30329 Real Strategy Intelligence Engine",
+        "layer": "qnt30329-real-strategy-intelligence-engine",
+        "frontend": "qnt30329",
         "cache_policy": NO_CACHE_HEADERS["Cache-Control"],
         "timestamp": now_iso(),
     }
@@ -2711,7 +2926,7 @@ def root():
     index = FRONTEND_DIR / "index.html"
     if index.exists():
         return FileResponse(index, media_type="text/html", headers=NO_CACHE_HEADERS)
-    return {"status": "ok", "message": "Quantora QNT30324B live"}
+    return {"status": "ok", "message": "Quantora QNT30329 live"}
 
 
 @app.get("/{page_name}")

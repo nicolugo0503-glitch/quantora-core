@@ -16,3 +16,10 @@ This package extends QNT30324C with completed performance-layer endpoints and UI
 ## Notes
 - Uses existing Quantora order and strategy state; no schema reset required
 - Ships clean artifacts for fresh Railway deployment
+
+
+## QNT30329
+- strategy intelligence engine
+- signal book endpoint
+- intelligent execution cycle
+- stop/target logic
