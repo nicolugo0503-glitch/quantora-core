@@ -1,0 +1,12 @@
+{
+  "mission": "QNT30333",
+  "layer": "qnt30333-broker-fill-pnl-sync",
+  "alpaca": {
+    "fill_webhook_ready": true,
+    "position_sync_ready": true
+  },
+  "pnl": {
+    "mode": "broker-backed",
+    "snapshot_interval_seconds": 30
+  }
+}

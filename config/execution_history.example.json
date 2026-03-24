@@ -1,0 +1,11 @@
+{
+  "mission": "QNT30334",
+  "layer": "qnt30334-execution-history-attribution",
+  "history_retention_days": 365,
+  "operator_attribution": {
+    "enabled": true
+  },
+  "broker_reconciliation": {
+    "enabled": true
+  }
+}
