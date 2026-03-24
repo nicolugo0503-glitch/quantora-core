@@ -19,7 +19,7 @@ PROJECT_DIR = BACKEND_DIR.parent
 ARTIFACTS_DIR = BACKEND_DIR / "artifacts"
 FRONTEND_DIR = PROJECT_DIR / "frontend"
 
-app = FastAPI(title="Quantora QNT30326C Platform Layer Activation", version="30326C")
+app = FastAPI(title="Quantora QNT30328E AI Activation", version="30328E")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -1526,7 +1526,7 @@ def build_command_center_snapshot(session):
     snapshot = {
         "session": session_payload,
         "north_star": {
-            "mission": "QNT30326C Platform Layer Activation",
+            "mission": "QNT30328E AI Activation",
             "system": "Quantora multi-layer institutional trading operating system",
             "timestamp": now_iso(),
         },
@@ -1541,7 +1541,7 @@ def build_command_center_snapshot(session):
             "status": "ok",
             "registered_users": len(users),
             "policies_enabled": len([p for p in governance["policies"] if p.get("enabled")]),
-            "layer": "qnt30326c-platform-layer-activation",
+            "layer": "qnt30328e-ai-activation",
             "broker_status": broker.get("last_status"),
             "admin_ready": session_payload.get("is_admin"),
         },
@@ -1762,6 +1762,146 @@ def apply_approval_request(req, admin_session):
     append_governance_event(admin_session.get("email"), admin_session.get("operator_id"), "approval.approved", req["target"], req, "approval")
 
 
+
+# -------------------------
+# AI activation layer
+# -------------------------
+def build_ai_strategy_suggestions(session, market_bias="neutral"):
+    session = resolve_operator_context(session)
+    state = get_operator_state(session)
+    perf = build_performance_snapshot(state).get("summary", {})
+    risk = evaluate_risk_state(state)
+    capital = build_capital_context(state)
+    suggestions = [
+        {
+            "strategy_id": "ai-momentum-breakout",
+            "name": "AI Momentum Breakout",
+            "market_bias": market_bias,
+            "confidence": 0.74 if market_bias == "bullish" else 0.61,
+            "thesis": "Favor leaders only when risk state remains safe and exposure stays controlled.",
+            "symbols": ["NVDA", "AAPL", "MSFT"],
+            "guardrails": {
+                "risk_status": risk.get("status"),
+                "capital_mode": capital.get("mode"),
+                "max_orders_per_run": risk.get("config", {}).get("max_orders_per_run", 0),
+            },
+        },
+        {
+            "strategy_id": "ai-mean-reversion-pullback",
+            "name": "AI Mean Reversion Pullback",
+            "market_bias": market_bias,
+            "confidence": 0.67 if market_bias in ("neutral", "range") else 0.49,
+            "thesis": "Fade stretched pullbacks only when drawdown pressure remains low.",
+            "symbols": ["SPY", "QQQ"],
+            "guardrails": {
+                "drawdown_pct": perf.get("current_drawdown_pct", 0),
+                "win_rate": perf.get("win_rate", 0),
+            },
+        },
+    ]
+    return {"items": suggestions, "operator_id": state.get("operator_id"), "market_bias": market_bias}
+
+
+def build_ai_capital_recommendations():
+    rows = build_multi_operator_leaderboard()
+    if not rows:
+        return {"items": [], "totals": {"operators": 0}}
+    weighted = []
+    for row in rows:
+        score = max(as_float(row.get("score"), 0.0), 0.0)
+        realized = max(as_float(row.get("realized_pnl"), 0.0), 0.0)
+        dd = abs(as_float(row.get("drawdown_pct"), 0.0))
+        win_rate = as_float(row.get("win_rate"), 0.0)
+        raw = max(0.0, score * 0.5 + realized * 0.00015 + win_rate * 18 - dd * 1.35)
+        weighted.append((row, raw))
+    total = sum(v for _, v in weighted) or 1.0
+    items=[]
+    for row, raw in weighted:
+        weight = round(raw / total, 4)
+        items.append({
+            "operator_id": row.get("operator_id"),
+            "display_name": row.get("display_name"),
+            "recommended_weight": weight,
+            "recommended_action": "increase" if weight >= 0.34 else ("hold" if weight >= 0.2 else "decrease"),
+            "score": row.get("score"),
+            "drawdown_pct": row.get("drawdown_pct"),
+        })
+    return {"items": sorted(items, key=lambda x: x["recommended_weight"], reverse=True), "totals": {"operators": len(items)}}
+
+
+def build_ai_risk_adjustments(session):
+    session = resolve_operator_context(session)
+    state = get_operator_state(session)
+    perf = build_performance_snapshot(state).get("summary", {})
+    drawdown = abs(as_float(perf.get("current_drawdown_pct"), 0.0))
+    win_rate = as_float(perf.get("win_rate"), 0.0)
+    score = as_float(perf.get("operator_score"), 0.0)
+    exposure_multiplier = 1.0
+    max_orders_per_run = 5
+    kill_switch_recommendation = False
+    note = "maintain normal limits"
+    if drawdown >= 10:
+        exposure_multiplier = 0.6
+        max_orders_per_run = 2
+        note = "reduce exposure due to elevated drawdown"
+    if drawdown >= 15:
+        exposure_multiplier = 0.0
+        max_orders_per_run = 0
+        kill_switch_recommendation = True
+        note = "recommend kill switch due to critical drawdown"
+    if drawdown < 6 and win_rate >= 60 and score >= 70:
+        exposure_multiplier = 1.15
+        max_orders_per_run = 6
+        note = "operator eligible for slight risk expansion"
+    return {
+        "operator_id": state.get("operator_id"),
+        "display_name": state.get("display_name"),
+        "exposure_multiplier": exposure_multiplier,
+        "max_orders_per_run": max_orders_per_run,
+        "kill_switch_recommendation": kill_switch_recommendation,
+        "note": note,
+    }
+
+
+def build_ai_operator_insights():
+    rows = build_multi_operator_leaderboard()
+    insights=[]
+    for row in rows:
+        dd = abs(as_float(row.get("drawdown_pct"), 0.0))
+        wr = as_float(row.get("win_rate"), 0.0)
+        pnl = as_float(row.get("realized_pnl"), 0.0)
+        score = as_float(row.get("score"), 0.0)
+        if dd > 12:
+            insight = "de-risk operator due to elevated drawdown pressure"
+        elif pnl > 0 and wr > 58 and score > 65:
+            insight = "operator shows positive expectancy and qualifies for capital review"
+        else:
+            insight = "maintain steady allocation and continue observation"
+        insights.append({
+            "operator_id": row.get("operator_id"),
+            "display_name": row.get("display_name"),
+            "score": score,
+            "realized_pnl": pnl,
+            "drawdown_pct": dd,
+            "win_rate": wr,
+            "insight": insight,
+        })
+    return {"items": sorted(insights, key=lambda x: x["score"], reverse=True)}
+
+
+def build_ai_activation_payload(session):
+    try:
+        status = {"mission": "QNT30328E", "layer": "qnt30328e-ai-activation", "ai_enabled": True, "mode": "live-integrated"}
+        return {
+            "status": status,
+            "strategy_suggestions": build_ai_strategy_suggestions(session).get("items", []),
+            "capital_recommendations": build_ai_capital_recommendations().get("items", []),
+            "risk_adjustments": build_ai_risk_adjustments(session),
+            "operator_insights": build_ai_operator_insights().get("items", []),
+        }
+    except Exception as exc:
+        return {"status": {"mission": "QNT30328E", "layer": "qnt30328e-ai-activation", "ai_enabled": True, "mode": "degraded"}, "error": str(exc)}
+
 # -------------------------
 # Request models
 # -------------------------
@@ -1827,6 +1967,10 @@ class MultiOperatorCompareRequest(BaseModel):
     operator_a_id: str
     operator_b_id: str
 
+
+
+class AIStrategySuggestionRequest(BaseModel):
+    market_bias: str = "neutral"
 
 class PolicyUpdateRequest(BaseModel):
     policy_id: str
@@ -1941,7 +2085,7 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 # -------------------------
 @app.get("/health")
 def health():
-    return {"status": "ok", "layer": "qnt30326c-platform-layer-activation"}
+    return {"status": "ok", "layer": "qnt30328e-ai-activation"}
 
 
 @app.post("/auth/register")
@@ -2517,12 +2661,46 @@ def multi_operator_compare(payload: MultiOperatorCompareRequest, admin=Depends(r
     return {"status": "ok", **result}
 
 
+
+@app.get("/ai-platform/status")
+def ai_platform_status(session=Depends(require_auth)):
+    payload = build_ai_activation_payload(session)
+    return payload.get("status", {"mission": "QNT30328E", "layer": "qnt30328e-ai-activation", "ai_enabled": True})
+
+
+@app.post("/ai-platform/strategy-suggestions")
+def ai_platform_strategy_suggestions(payload: AIStrategySuggestionRequest, session=Depends(require_auth)):
+    data = build_ai_strategy_suggestions(session, payload.market_bias)
+    append_governance_event(session.get("email"), session.get("operator_id"), "ai.strategy_suggestions", "ai-platform", {"market_bias": payload.market_bias, "count": len(data.get("items", []))}, "ai")
+    return data
+
+
+@app.get("/ai-platform/capital-recommendations")
+def ai_platform_capital_recommendations(session=Depends(require_admin)):
+    data = build_ai_capital_recommendations()
+    append_governance_event(session.get("email"), session.get("operator_id"), "ai.capital_recommendations", "ai-platform", {"count": len(data.get("items", []))}, "ai")
+    return data
+
+
+@app.get("/ai-platform/risk-adjustments")
+def ai_platform_risk_adjustments(session=Depends(require_auth)):
+    data = build_ai_risk_adjustments(session)
+    append_governance_event(session.get("email"), session.get("operator_id"), "ai.risk_adjustments", data.get("operator_id"), data, "ai")
+    return data
+
+
+@app.get("/ai-platform/operator-insights")
+def ai_platform_operator_insights(session=Depends(require_admin)):
+    data = build_ai_operator_insights()
+    append_governance_event(session.get("email"), session.get("operator_id"), "ai.operator_insights", "ai-platform", {"count": len(data.get("items", []))}, "ai")
+    return data
+
 @app.get("/version")
 def version():
     return {
-        "mission": "QNT30326C Platform Layer Activation",
-        "layer": "qnt30326c-platform-layer-activation",
-        "frontend": "qnt30326c",
+        "mission": "QNT30328E AI Activation",
+        "layer": "qnt30328e-ai-activation",
+        "frontend": "qnt30328e",
         "cache_policy": NO_CACHE_HEADERS["Cache-Control"],
         "timestamp": now_iso(),
     }
