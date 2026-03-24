@@ -1,3 +1,10 @@
 {
-  "users": []
+  "users": [
+    {
+      "email": "nicolugo0503@gmail.com",
+      "password": "x",
+      "display_name": "Admin",
+      "operator_id": "operator_F5E2C5BA"
+    }
+  ]
 }

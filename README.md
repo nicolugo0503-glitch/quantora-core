@@ -1,4 +1,4 @@
-# QNT30325B — Quantora Performance Engine Completion
+# QNT30326B — Quantora Real Multi-Operator System
 
 This package extends QNT30324C with completed performance-layer endpoints and UI wiring.
 

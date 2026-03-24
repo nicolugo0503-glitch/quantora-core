@@ -19,7 +19,7 @@ PROJECT_DIR = BACKEND_DIR.parent
 ARTIFACTS_DIR = BACKEND_DIR / "artifacts"
 FRONTEND_DIR = PROJECT_DIR / "frontend"
 
-app = FastAPI(title="Quantora QNT30325B Performance Engine Completion", version="30325B")
+app = FastAPI(title="Quantora QNT30326B Real Multi-Operator System", version="30326B")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -66,7 +66,7 @@ def as_float(value, default=0.0):
 
 
 def empty_session():
-    return {"logged_in": False, "display_name": None, "operator_id": None, "email": None, "is_admin": False}
+    return {"logged_in": False, "display_name": None, "operator_id": None, "selected_operator_id": None, "email": None, "is_admin": False}
 
 
 def default_users_data():
@@ -513,16 +513,30 @@ def get_operator_by_id(operator_id):
 def get_operator_state_by_id(operator_id):
     user = get_operator_by_id(operator_id)
     state = load_json(state_filename(operator_id), {})
-    state = migrate_operator_state(state, operator_id, user.get("display_name"))
+    state = migrate_operator_state(state, user.get("operator_id"), user.get("display_name"))
     save_operator_state(state)
     return state
 
 
 def resolve_operator_context(session):
     session_payload = session_view(session)
-    operator_id = session_payload.get("operator_id")
+    operator_id = session_payload.get("selected_operator_id") or session_payload.get("operator_id")
     if operator_id:
-        return session_payload
+        try:
+            user = get_operator_by_id(operator_id)
+            repaired = {
+                **session_payload,
+                "operator_id": user.get("operator_id"),
+                "selected_operator_id": session_payload.get("selected_operator_id") or user.get("operator_id"),
+                "display_name": user.get("display_name"),
+                "email": session_payload.get("email") or user.get("email"),
+                "is_admin": bool(session_payload.get("is_admin") or user_is_admin_email(session_payload.get("email") or user.get("email"))),
+                "logged_in": True,
+            }
+            save_session(repaired)
+            return session_view(repaired)
+        except HTTPException:
+            pass
     email = normalize_email(session_payload.get("email"))
     if session_payload.get("logged_in") and email:
         users = users_db()
@@ -532,6 +546,7 @@ def resolve_operator_context(session):
                 **session_payload,
                 "email": user.get("email"),
                 "operator_id": user.get("operator_id"),
+                "selected_operator_id": session_payload.get("selected_operator_id") or user.get("operator_id"),
                 "display_name": user.get("display_name"),
                 "is_admin": user_is_admin_email(user.get("email")),
                 "logged_in": True,
@@ -1511,7 +1526,7 @@ def build_command_center_snapshot(session):
     snapshot = {
         "session": session_payload,
         "north_star": {
-            "mission": "QNT30325B Performance Engine Completion",
+            "mission": "QNT30326B Real Multi-Operator System",
             "system": "Quantora multi-layer institutional trading operating system",
             "timestamp": now_iso(),
         },
@@ -1526,7 +1541,7 @@ def build_command_center_snapshot(session):
             "status": "ok",
             "registered_users": len(users),
             "policies_enabled": len([p for p in governance["policies"] if p.get("enabled")]),
-            "layer": "qnt30325b-performance-engine-completion",
+            "layer": "qnt30326b-real-multi-operator-system",
             "broker_status": broker.get("last_status"),
             "admin_ready": session_payload.get("is_admin"),
         },
@@ -1550,7 +1565,7 @@ def control_tower_view():
     for user in users:
         ensure_state_for_user(user)
         state = load_json(state_filename(user["operator_id"]), {})
-        state = migrate_operator_state(state, operator_id, user.get("display_name"))
+        state = migrate_operator_state(state, user.get("operator_id"), user.get("display_name"))
         monitoring = evaluate_monitoring(state)
         engine = summarize_strategy_engine(state)
         save_operator_state(state)
@@ -1586,6 +1601,47 @@ def control_tower_view():
     totals["remaining_capital"] = round(totals["allocated_capital"] - totals["used_capital"], 2)
     totals["realized_pnl"] = round(totals["realized_pnl"], 2)
     return {"operators": operators, "totals": totals}
+
+
+def build_multi_operator_leaderboard():
+    rows = []
+    for user in users_db().get("users", []):
+        ensure_state_for_user(user)
+        state = get_operator_state_by_id(user["operator_id"])
+        perf = build_performance_snapshot(state)
+        summary = perf.get("summary", {})
+        row = {
+            "operator_id": user.get("operator_id"),
+            "display_name": user.get("display_name"),
+            "email": user.get("email"),
+            "score": round(as_float(summary.get("operator_score"), 0.0), 2),
+            "realized_pnl": round(as_float(summary.get("realized_pnl"), 0.0), 2),
+            "unrealized_pnl": round(as_float(summary.get("unrealized_pnl"), 0.0), 2),
+            "win_rate": round(as_float(summary.get("win_rate"), 0.0), 2),
+            "drawdown_pct": round(as_float(summary.get("current_drawdown_pct"), 0.0), 2),
+            "strategies": len(state.get("strategies", {}).get("strategies", [])),
+            "capital_mode": summary.get("capital_mode"),
+            "capital_label": summary.get("capital_label"),
+            "current_equity": round(as_float(summary.get("current_equity"), 0.0), 2),
+            "risk_breaches": int(summary.get("risk_breaches") or 0),
+        }
+        rows.append(row)
+    rows.sort(key=lambda r: (-r["score"], -r["realized_pnl"], r["drawdown_pct"]))
+    for idx, row in enumerate(rows, start=1):
+        row["rank"] = idx
+    return rows
+
+
+def multi_operator_overview():
+    rows = build_multi_operator_leaderboard()
+    totals = {
+        "operators": len(rows),
+        "active_strategies": sum(r.get("strategies", 0) for r in rows),
+        "total_realized_pnl": round(sum(as_float(r.get("realized_pnl"), 0.0) for r in rows), 2),
+        "avg_score": round(sum(as_float(r.get("score"), 0.0) for r in rows) / len(rows), 2) if rows else 0.0,
+        "broker_mode_operators": sum(1 for r in rows if r.get("capital_mode") == "broker"),
+    }
+    return {"leaderboard": rows, "totals": totals}
 
 
 def submit_approval_request(session, request_type, target, payload, reason):
@@ -1626,7 +1682,7 @@ def apply_approval_request(req, admin_session):
         for user in users_db()["users"]:
             ensure_state_for_user(user)
             state = load_json(state_filename(user["operator_id"]), {})
-            state = migrate_operator_state(state, operator_id, user.get("display_name"))
+            state = migrate_operator_state(state, user.get("operator_id"), user.get("display_name"))
             run_strategies_for_state(state, state["strategy_loop"].get("execution_mode", "internal"), admin_session.get("email"), admin_session.get("operator_id"), "approval.run_all.execute")
     elif req["request_type"] == "loop_start":
         state = get_operator_state_by_id(req["target"])
@@ -1690,6 +1746,10 @@ class AdminLoopRequest(BaseModel):
     operator_id: str
     execution_mode: str = "internal"
     interval_seconds: int = 60
+
+
+class AdminSelectOperatorRequest(BaseModel):
+    operator_id: str
 
 
 class PolicyUpdateRequest(BaseModel):
@@ -1805,7 +1865,7 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 # -------------------------
 @app.get("/health")
 def health():
-    return {"status": "ok", "layer": "qnt30325b-performance-engine-completion"}
+    return {"status": "ok", "layer": "qnt30326b-real-multi-operator-system"}
 
 
 @app.post("/auth/register")
@@ -2324,12 +2384,40 @@ def approvals_decision(payload: ApprovalDecisionRequest, admin=Depends(require_a
     return {"status": req["status"], "request": req}
 
 
+@app.get("/multi-operator/overview")
+def get_multi_operator_overview(admin=Depends(require_admin)):
+    return multi_operator_overview()
+
+
+@app.get("/multi-operator/leaderboard")
+def get_multi_operator_leaderboard(admin=Depends(require_admin)):
+    return {"leaderboard": build_multi_operator_leaderboard()}
+
+
+@app.post("/admin/operator-context/select")
+def admin_operator_context_select(payload: AdminSelectOperatorRequest, admin=Depends(require_admin)):
+    user = get_operator_by_id(payload.operator_id)
+    session = get_session()
+    updated = {
+        **session,
+        "logged_in": True,
+        "email": session.get("email") or admin.get("email"),
+        "is_admin": True,
+        "selected_operator_id": user.get("operator_id"),
+        "operator_id": user.get("operator_id"),
+        "display_name": user.get("display_name"),
+    }
+    save_session(updated)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "admin.operator_context.select", payload.operator_id, {"selected_operator_id": payload.operator_id}, "admin")
+    return {"status": "selected", "session": session_view(updated), "selected_operator": user}
+
+
 @app.get("/version")
 def version():
     return {
-        "mission": "QNT30325B Performance Engine Completion",
-        "layer": "qnt30325b-performance-engine-completion",
-        "frontend": "qnt30325b",
+        "mission": "QNT30326B Real Multi-Operator System",
+        "layer": "qnt30326b-real-multi-operator-system",
+        "frontend": "qnt30326b",
         "cache_policy": NO_CACHE_HEADERS["Cache-Control"],
         "timestamp": now_iso(),
     }
