@@ -1,0 +1,9 @@
+{
+  "email": "operator@example.com",
+  "runs": [
+    {
+      "autonomy_score": 88.0,
+      "timestamp": 1775967386
+    }
+  ]
+}

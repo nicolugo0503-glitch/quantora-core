@@ -1,0 +1,133 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "strategy_allocations": [
+    {
+      "allocation_map_id": "map_alloc_inv_qnt_001_1",
+      "source_allocation_id": "alloc_inv_qnt_001_1",
+      "investor_id": "inv_qnt_001",
+      "investor_name": "Meridian Endowment Fund",
+      "strategy_id": "alpha_core",
+      "strategy_name": "Alpha Core",
+      "sleeve_id": "alpha_core",
+      "allocated_capital": 220000.0,
+      "status": "active",
+      "source": "capital_ledger",
+      "created_at": 1773705600
+    },
+    {
+      "allocation_map_id": "map_alloc_inv_qnt_001_2",
+      "source_allocation_id": "alloc_inv_qnt_001_2",
+      "investor_id": "inv_qnt_001",
+      "investor_name": "Meridian Endowment Fund",
+      "strategy_id": "macro_fx",
+      "strategy_name": "Macro FX",
+      "sleeve_id": "macro_fx",
+      "allocated_capital": 160000.0,
+      "status": "active",
+      "source": "capital_ledger",
+      "created_at": 1773705600
+    },
+    {
+      "allocation_map_id": "map_alloc_inv_qnt_002_1",
+      "source_allocation_id": "alloc_inv_qnt_002_1",
+      "investor_id": "inv_qnt_002",
+      "investor_name": "Aurora Family Office",
+      "strategy_id": "alpha_core",
+      "strategy_name": "Alpha Core",
+      "sleeve_id": "alpha_core",
+      "allocated_capital": 140000.0,
+      "status": "active",
+      "source": "capital_ledger",
+      "created_at": 1773705600
+    },
+    {
+      "allocation_map_id": "map_alloc_inv_qnt_002_2",
+      "source_allocation_id": "alloc_inv_qnt_002_2",
+      "investor_id": "inv_qnt_002",
+      "investor_name": "Aurora Family Office",
+      "strategy_id": "credit_income",
+      "strategy_name": "Credit Income",
+      "sleeve_id": "credit_income",
+      "allocated_capital": 110000.0,
+      "status": "active",
+      "source": "capital_ledger",
+      "created_at": 1773705600
+    },
+    {
+      "allocation_map_id": "map_alloc_inv_qnt_003_1",
+      "source_allocation_id": "alloc_inv_qnt_003_1",
+      "investor_id": "inv_qnt_003",
+      "investor_name": "Northstar Treasury Partners",
+      "strategy_id": "macro_fx",
+      "strategy_name": "Macro FX",
+      "sleeve_id": "macro_fx",
+      "allocated_capital": 100000.0,
+      "status": "active",
+      "source": "capital_ledger",
+      "created_at": 1773705600
+    },
+    {
+      "allocation_map_id": "map_alloc_inv_qnt_003_2",
+      "source_allocation_id": "alloc_inv_qnt_003_2",
+      "investor_id": "inv_qnt_003",
+      "investor_name": "Northstar Treasury Partners",
+      "strategy_id": "treasury_arbitrage",
+      "strategy_name": "Treasury Arbitrage",
+      "sleeve_id": "treasury_arb",
+      "allocated_capital": 90000.0,
+      "status": "active",
+      "source": "capital_ledger",
+      "created_at": 1773705600
+    }
+  ],
+  "trades": [],
+  "strategy_registry": [
+    {
+      "strategy_id": "alpha_core",
+      "strategy_name": "Alpha Core",
+      "sleeve_count": 1,
+      "investor_count": 2,
+      "sleeves": [
+        "alpha_core"
+      ]
+    },
+    {
+      "strategy_id": "credit_income",
+      "strategy_name": "Credit Income",
+      "sleeve_count": 1,
+      "investor_count": 1,
+      "sleeves": [
+        "credit_income"
+      ]
+    },
+    {
+      "strategy_id": "macro_fx",
+      "strategy_name": "Macro FX",
+      "sleeve_count": 1,
+      "investor_count": 2,
+      "sleeves": [
+        "macro_fx"
+      ]
+    },
+    {
+      "strategy_id": "treasury_arbitrage",
+      "strategy_name": "Treasury Arbitrage",
+      "sleeve_count": 1,
+      "investor_count": 1,
+      "sleeves": [
+        "treasury_arb"
+      ]
+    }
+  ],
+  "history": [
+    {
+      "event_id": "hist_sync_1775712869547836292",
+      "type": "allocation_sync",
+      "synced_rows": 6,
+      "manual_rows": 0,
+      "timestamp": 1775712869
+    }
+  ],
+  "created_at": 1775662020,
+  "updated_at": 1775712869
+}

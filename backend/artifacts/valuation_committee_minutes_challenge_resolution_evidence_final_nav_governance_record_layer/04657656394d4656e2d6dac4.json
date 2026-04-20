@@ -1,0 +1,403 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 365,
+    "minimum_score": 96.0,
+    "minimum_minutes_readiness": 0.97,
+    "minimum_challenge_resolution_readiness": 0.97,
+    "minimum_final_record_readiness": 0.96,
+    "maximum_open_challenges": 0,
+    "maximum_unlinked_evidence_gaps": 0
+  },
+  "runs": [
+    {
+      "run_id": "qnt40020_1776223537",
+      "captured_at": "2026-04-15T03:25:37.949140+00:00",
+      "score": 73.0,
+      "band": "FINAL_NAV_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "FINAL_NAV_GOVERNANCE_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "valuation governance posture must be clear before final nav governance record approval",
+        "shadow nav posture must be established before final nav governance is recorded",
+        "pricing source governance posture must be established before final nav governance is recorded",
+        "official books release posture must be clear before final nav governance record issuance"
+      ],
+      "alerts": [
+        "VALUATION_GOVERNANCE_NOT_CLEAR",
+        "SHADOW_NAV_POSTURE_NOT_ESTABLISHED",
+        "SOURCE_GOVERNANCE_NOT_ESTABLISHED",
+        "OFFICIAL_BOOKS_POSTURE_NOT_CLEAR"
+      ],
+      "minutes_readiness": 0.99,
+      "challenge_resolution_readiness": 0.989,
+      "final_record_readiness": 0.987,
+      "open_challenges": 0,
+      "unlinked_evidence_gaps": 0,
+      "context": {
+        "captured_at": "2026-04-15T03:25:37.949029+00:00",
+        "valuation_governance_summary": {
+          "posture": "VALUATION_REMEDIATION_REQUIRED",
+          "score": 89.0,
+          "challenge_count": 12,
+          "override_count": 12
+        },
+        "shadow_nav_summary": {
+          "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+          "score": 86.0,
+          "break_count": 6
+        },
+        "source_governance_summary": {
+          "posture": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+          "score": 86.0,
+          "source_override_count": 6,
+          "open_source_alerts": 2
+        },
+        "official_books_summary": {
+          "posture": "OFFICIAL_RELEASE_WATCH",
+          "score": 92.0
+        }
+      }
+    },
+    {
+      "run_id": "qnt40020_1776223529",
+      "captured_at": "2026-04-15T03:25:29.372905+00:00",
+      "score": 73.0,
+      "band": "FINAL_NAV_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "FINAL_NAV_GOVERNANCE_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "valuation governance posture must be clear before final nav governance record approval",
+        "shadow nav posture must be established before final nav governance is recorded",
+        "pricing source governance posture must be established before final nav governance is recorded",
+        "official books release posture must be clear before final nav governance record issuance"
+      ],
+      "alerts": [
+        "VALUATION_GOVERNANCE_NOT_CLEAR",
+        "SHADOW_NAV_POSTURE_NOT_ESTABLISHED",
+        "SOURCE_GOVERNANCE_NOT_ESTABLISHED",
+        "OFFICIAL_BOOKS_POSTURE_NOT_CLEAR"
+      ],
+      "minutes_readiness": 0.99,
+      "challenge_resolution_readiness": 0.989,
+      "final_record_readiness": 0.987,
+      "open_challenges": 0,
+      "unlinked_evidence_gaps": 0,
+      "context": {
+        "captured_at": "2026-04-15T03:25:29.372799+00:00",
+        "valuation_governance_summary": {
+          "posture": "VALUATION_REMEDIATION_REQUIRED",
+          "score": 89.0,
+          "challenge_count": 10,
+          "override_count": 10
+        },
+        "shadow_nav_summary": {
+          "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+          "score": 86.0,
+          "break_count": 5
+        },
+        "source_governance_summary": {
+          "posture": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+          "score": 86.0,
+          "source_override_count": 5,
+          "open_source_alerts": 2
+        },
+        "official_books_summary": {
+          "posture": "OFFICIAL_RELEASE_WATCH",
+          "score": 92.0
+        }
+      }
+    },
+    {
+      "run_id": "qnt40020_1776223066",
+      "captured_at": "2026-04-15T03:17:46.089808+00:00",
+      "score": 73.0,
+      "band": "FINAL_NAV_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "FINAL_NAV_GOVERNANCE_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "valuation governance posture must be clear before final nav governance record approval",
+        "shadow nav posture must be established before final nav governance is recorded",
+        "pricing source governance posture must be established before final nav governance is recorded",
+        "official books release posture must be clear before final nav governance record issuance"
+      ],
+      "alerts": [
+        "VALUATION_GOVERNANCE_NOT_CLEAR",
+        "SHADOW_NAV_POSTURE_NOT_ESTABLISHED",
+        "SOURCE_GOVERNANCE_NOT_ESTABLISHED",
+        "OFFICIAL_BOOKS_POSTURE_NOT_CLEAR"
+      ],
+      "minutes_readiness": 0.99,
+      "challenge_resolution_readiness": 0.989,
+      "final_record_readiness": 0.987,
+      "open_challenges": 0,
+      "unlinked_evidence_gaps": 0,
+      "context": {
+        "captured_at": "2026-04-15T03:17:46.089778+00:00",
+        "valuation_governance_summary": {
+          "posture": "VALUATION_REMEDIATION_REQUIRED",
+          "score": 89.0,
+          "challenge_count": 8,
+          "override_count": 8
+        },
+        "shadow_nav_summary": {
+          "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+          "score": 86.0,
+          "break_count": 4
+        },
+        "source_governance_summary": {
+          "posture": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+          "score": 86.0,
+          "source_override_count": 4,
+          "open_source_alerts": 2
+        },
+        "official_books_summary": {
+          "posture": "OFFICIAL_RELEASE_WATCH",
+          "score": 92.0
+        }
+      }
+    },
+    {
+      "run_id": "qnt40020_1776222078",
+      "captured_at": "2026-04-15T03:01:18.714422+00:00",
+      "score": 73.0,
+      "band": "FINAL_NAV_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "FINAL_NAV_GOVERNANCE_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "valuation governance posture must be clear before final nav governance record approval",
+        "shadow nav posture must be established before final nav governance is recorded",
+        "pricing source governance posture must be established before final nav governance is recorded",
+        "official books release posture must be clear before final nav governance record issuance"
+      ],
+      "alerts": [
+        "VALUATION_GOVERNANCE_NOT_CLEAR",
+        "SHADOW_NAV_POSTURE_NOT_ESTABLISHED",
+        "SOURCE_GOVERNANCE_NOT_ESTABLISHED",
+        "OFFICIAL_BOOKS_POSTURE_NOT_CLEAR"
+      ],
+      "minutes_readiness": 0.99,
+      "challenge_resolution_readiness": 0.989,
+      "final_record_readiness": 0.987,
+      "open_challenges": 0,
+      "unlinked_evidence_gaps": 0,
+      "context": {
+        "captured_at": "2026-04-15T03:01:18.714385+00:00",
+        "valuation_governance_summary": {
+          "posture": "VALUATION_REMEDIATION_REQUIRED",
+          "score": 89.0,
+          "challenge_count": 6,
+          "override_count": 6
+        },
+        "shadow_nav_summary": {
+          "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+          "score": 86.0,
+          "break_count": 3
+        },
+        "source_governance_summary": {
+          "posture": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+          "score": 86.0,
+          "source_override_count": 3,
+          "open_source_alerts": 2
+        },
+        "official_books_summary": {
+          "posture": "OFFICIAL_RELEASE_WATCH",
+          "score": 92.0
+        }
+      }
+    }
+  ],
+  "alerts": [
+    "VALUATION_GOVERNANCE_NOT_CLEAR",
+    "SHADOW_NAV_POSTURE_NOT_ESTABLISHED",
+    "SOURCE_GOVERNANCE_NOT_ESTABLISHED",
+    "OFFICIAL_BOOKS_POSTURE_NOT_CLEAR"
+  ],
+  "valuation_committee_minutes": [
+    {
+      "recorded_at": "2026-04-15T03:25:37.938148+00:00",
+      "meeting_id": "VAL-COMMITTEE-DEMO",
+      "meeting_date": "2026-04-15",
+      "chair": "Quantora Audit Release Governor",
+      "minutes_hash": "minutes_hash_demo_final_nav_001",
+      "challenge_topics": [
+        "shadow-nav-break",
+        "source-override-review"
+      ]
+    },
+    {
+      "recorded_at": "2026-04-15T03:25:29.365629+00:00",
+      "meeting_id": "VAL-COMMITTEE-DEMO",
+      "meeting_date": "2026-04-15",
+      "chair": "Quantora Auditor Delivery Governor",
+      "minutes_hash": "minutes_hash_demo_final_nav_001",
+      "challenge_topics": [
+        "shadow-nav-break",
+        "source-override-review"
+      ]
+    },
+    {
+      "recorded_at": "2026-04-15T03:17:46.088292+00:00",
+      "meeting_id": "VAL-COMMITTEE-DEMO",
+      "meeting_date": "2026-04-15",
+      "chair": "Quantora Auditor Delivery Governor",
+      "minutes_hash": "minutes_hash_demo_final_nav_001",
+      "challenge_topics": [
+        "shadow-nav-break",
+        "source-override-review"
+      ]
+    },
+    {
+      "recorded_at": "2026-04-15T03:01:18.712065+00:00",
+      "meeting_id": "VAL-COMMITTEE-DEMO",
+      "meeting_date": "2026-04-15",
+      "chair": "Quantora Final NAV Governor",
+      "minutes_hash": "minutes_hash_demo_final_nav_001",
+      "challenge_topics": [
+        "shadow-nav-break",
+        "source-override-review"
+      ]
+    }
+  ],
+  "challenge_resolution_evidence": [
+    {
+      "recorded_at": "2026-04-15T03:25:37.940992+00:00",
+      "challenge_id": "VAL-CHALLENGE-DEMO",
+      "resolution_status": "resolved",
+      "evidence_packet_id": "VAL-EVID-DEMO",
+      "reviewed_by": "Quantora Audit Release Governor",
+      "linked_override_ticket": "VAL-SRC-OVERRIDE-DEMO"
+    },
+    {
+      "recorded_at": "2026-04-15T03:25:29.366798+00:00",
+      "challenge_id": "VAL-CHALLENGE-DEMO",
+      "resolution_status": "resolved",
+      "evidence_packet_id": "VAL-EVID-DEMO",
+      "reviewed_by": "Quantora Auditor Delivery Governor",
+      "linked_override_ticket": "VAL-SRC-OVERRIDE-DEMO"
+    },
+    {
+      "recorded_at": "2026-04-15T03:17:46.088610+00:00",
+      "challenge_id": "VAL-CHALLENGE-DEMO",
+      "resolution_status": "resolved",
+      "evidence_packet_id": "VAL-EVID-DEMO",
+      "reviewed_by": "Quantora Auditor Delivery Governor",
+      "linked_override_ticket": "VAL-SRC-OVERRIDE-DEMO"
+    },
+    {
+      "recorded_at": "2026-04-15T03:01:18.712844+00:00",
+      "challenge_id": "VAL-CHALLENGE-DEMO",
+      "resolution_status": "resolved",
+      "evidence_packet_id": "VAL-EVID-DEMO",
+      "reviewed_by": "Quantora Final NAV Governor",
+      "linked_override_ticket": "VAL-SRC-OVERRIDE-DEMO"
+    }
+  ],
+  "final_nav_governance_records": [
+    {
+      "recorded_at": "2026-04-15T03:25:37.943098+00:00",
+      "record_id": "FINAL-NAV-GOV-DEMO",
+      "nav_cycle_id": "NAV-CYCLE-DEMO",
+      "committee_minutes_id": "VAL-COMMITTEE-DEMO",
+      "official_books_reference": "BOOKS-REL-DEMO",
+      "approved_by": "Quantora Audit Release Governor"
+    },
+    {
+      "recorded_at": "2026-04-15T03:25:29.368546+00:00",
+      "record_id": "FINAL-NAV-GOV-DEMO",
+      "nav_cycle_id": "NAV-CYCLE-DEMO",
+      "committee_minutes_id": "VAL-COMMITTEE-DEMO",
+      "official_books_reference": "BOOKS-REL-DEMO",
+      "approved_by": "Quantora Auditor Delivery Governor"
+    },
+    {
+      "recorded_at": "2026-04-15T03:17:46.088898+00:00",
+      "record_id": "FINAL-NAV-GOV-DEMO",
+      "nav_cycle_id": "NAV-CYCLE-DEMO",
+      "committee_minutes_id": "VAL-COMMITTEE-DEMO",
+      "official_books_reference": "BOOKS-REL-DEMO",
+      "approved_by": "Quantora Auditor Delivery Governor"
+    },
+    {
+      "recorded_at": "2026-04-15T03:01:18.713301+00:00",
+      "record_id": "FINAL-NAV-GOV-DEMO",
+      "nav_cycle_id": "NAV-CYCLE-DEMO",
+      "committee_minutes_id": "VAL-COMMITTEE-DEMO",
+      "official_books_reference": "BOOKS-REL-DEMO",
+      "approved_by": "Quantora Final NAV Governor"
+    }
+  ],
+  "latest_run": {
+    "run_id": "qnt40020_1776223537",
+    "captured_at": "2026-04-15T03:25:37.949140+00:00",
+    "score": 73.0,
+    "band": "FINAL_NAV_GOVERNANCE_REMEDIATION_REQUIRED",
+    "posture": "FINAL_NAV_GOVERNANCE_REMEDIATION_REQUIRED",
+    "operator_review_required": true,
+    "reasons": [
+      "valuation governance posture must be clear before final nav governance record approval",
+      "shadow nav posture must be established before final nav governance is recorded",
+      "pricing source governance posture must be established before final nav governance is recorded",
+      "official books release posture must be clear before final nav governance record issuance"
+    ],
+    "alerts": [
+      "VALUATION_GOVERNANCE_NOT_CLEAR",
+      "SHADOW_NAV_POSTURE_NOT_ESTABLISHED",
+      "SOURCE_GOVERNANCE_NOT_ESTABLISHED",
+      "OFFICIAL_BOOKS_POSTURE_NOT_CLEAR"
+    ],
+    "minutes_readiness": 0.99,
+    "challenge_resolution_readiness": 0.989,
+    "final_record_readiness": 0.987,
+    "open_challenges": 0,
+    "unlinked_evidence_gaps": 0,
+    "context": {
+      "captured_at": "2026-04-15T03:25:37.949029+00:00",
+      "valuation_governance_summary": {
+        "posture": "VALUATION_REMEDIATION_REQUIRED",
+        "score": 89.0,
+        "challenge_count": 12,
+        "override_count": 12
+      },
+      "shadow_nav_summary": {
+        "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+        "score": 86.0,
+        "break_count": 6
+      },
+      "source_governance_summary": {
+        "posture": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+        "score": 86.0,
+        "source_override_count": 6,
+        "open_source_alerts": 2
+      },
+      "official_books_summary": {
+        "posture": "OFFICIAL_RELEASE_WATCH",
+        "score": 92.0
+      }
+    }
+  },
+  "last_context": {
+    "captured_at": "2026-04-15T03:25:37.949029+00:00",
+    "valuation_governance_summary": {
+      "posture": "VALUATION_REMEDIATION_REQUIRED",
+      "score": 89.0,
+      "challenge_count": 12,
+      "override_count": 12
+    },
+    "shadow_nav_summary": {
+      "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+      "score": 86.0,
+      "break_count": 6
+    },
+    "source_governance_summary": {
+      "posture": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+      "score": 86.0,
+      "source_override_count": 6,
+      "open_source_alerts": 2
+    },
+    "official_books_summary": {
+      "posture": "OFFICIAL_RELEASE_WATCH",
+      "score": 92.0
+    }
+  }
+}

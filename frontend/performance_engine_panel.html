@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>QNT30383 Performance Engine</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background: #08101e; color: #ecf1f8; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card { background: #121d31; border: 1px solid #273553; border-radius: 12px; padding: 16px; }
+    button { padding: 10px 14px; border-radius: 8px; border: 0; cursor: pointer; }
+    input, select { padding: 8px; width: 100%; margin-top: 6px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #44527a; background: #0f1530; color: #fff; }
+    pre { white-space: pre-wrap; background: #0a0f22; padding: 12px; border-radius: 8px; border: 1px solid #263257; min-height: 160px; }
+  </style>
+</head>
+<body>
+  <h1>QNT30383 — Performance Engine</h1>
+  <div class="grid">
+    <div class="card">
+      <h3>Portfolio Status</h3>
+      <button onclick="getStatus()">Refresh</button>
+      <pre id="status"></pre>
+    </div>
+    <div class="card">
+      <h3>Ingest Trade</h3>
+      <label>Strategy ID</label>
+      <input id="strategy_id" value="alpha-momo-01" />
+      <label>Symbol</label>
+      <input id="symbol" value="AAPL" />
+      <label>Side</label>
+      <select id="side"><option>buy</option><option>sell</option></select>
+      <label>Quantity</label>
+      <input id="qty" value="10" />
+      <label>Entry Price</label>
+      <input id="entry_price" value="100" />
+      <label>Exit Price</label>
+      <input id="exit_price" value="103" />
+      <label>Fees</label>
+      <input id="fees" value="1.25" />
+      <button onclick="submitTrade()">Submit</button>
+      <pre id="result"></pre>
+    </div>
+  </div>
+<script>
+async function getStatus(){
+  const res = await fetch('/performance/status');
+  const data = await res.json();
+  document.getElementById('status').textContent = JSON.stringify(data, null, 2);
+}
+async function submitTrade(){
+  const payload = {
+    strategy_id: document.getElementById('strategy_id').value,
+    symbol: document.getElementById('symbol').value,
+    side: document.getElementById('side').value,
+    qty: parseFloat(document.getElementById('qty').value),
+    entry_price: parseFloat(document.getElementById('entry_price').value),
+    exit_price: parseFloat(document.getElementById('exit_price').value),
+    fees: parseFloat(document.getElementById('fees').value)
+  };
+  const res = await fetch('/performance/trade/ingest', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json();
+  document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+}
+getStatus();
+</script>
+</body>
+</html>

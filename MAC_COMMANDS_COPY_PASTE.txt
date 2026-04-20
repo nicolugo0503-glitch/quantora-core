@@ -1,0 +1,4 @@
+cd ~/Downloads/QNT30408_ONE_CLICK_DEPLOYABLE
+chmod +x *.command
+xattr -dr com.apple.quarantine *.command 2>/dev/null || true
+./0_START_ALL_MAC.command

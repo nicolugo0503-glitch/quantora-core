@@ -1,0 +1,16 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "system_state": {
+    "mode": "IDLE",
+    "scheduler": "manual",
+    "frequency": "monthly",
+    "kill_switch": false,
+    "capital_state": "CASH",
+    "current_period": "2026-04",
+    "last_cycle": null,
+    "last_cycle_status": null
+  },
+  "cycle_history": [],
+  "created_at": 1775712870,
+  "updated_at": 1775712870
+}

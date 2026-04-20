@@ -1,0 +1,76 @@
+{
+  "fairness_engine": {
+    "enabled": true,
+    "last_updated_at": "2026-03-31T14:39:39Z",
+    "last_review_at": "2026-03-31T14:39:39Z",
+    "last_settlement_at": "2026-03-31T14:39:39Z",
+    "review_count": 1,
+    "settlement_count": 1,
+    "fairness_breaches": 1,
+    "total_slippage_cost": 33.0,
+    "telemetry": [
+      {
+        "timestamp": "2026-03-31T14:39:39Z",
+        "event": "execution.reviewed",
+        "strategy_id": "strat_010",
+        "slippage_bps": 22.0,
+        "fairness_breach": true
+      },
+      {
+        "timestamp": "2026-03-31T14:39:39Z",
+        "event": "capital.settled",
+        "strategy_id": "strat_010",
+        "net_settlement": 547.0
+      }
+    ]
+  },
+  "rules": {
+    "max_slippage_bps": 25.0,
+    "fair_fill_deviation_bps": 15.0,
+    "capital_penalty_multiplier": 1.0,
+    "block_on_fairness_breach": false,
+    "min_settlement_notional": 100.0
+  },
+  "reviews": [
+    {
+      "review_id": "fair_0001",
+      "timestamp": "2026-03-31T14:39:39Z",
+      "strategy_id": "strat_010",
+      "strategy_name": "Momentum Auction A",
+      "side": "buy",
+      "expected_price": 100.0,
+      "fill_price": 100.22,
+      "quantity": 150.0,
+      "slippage_bps": 22.0,
+      "slippage_cost": 33.0,
+      "fairness_breach": true,
+      "blocked": false
+    }
+  ],
+  "settlements": [
+    {
+      "settlement_id": "settle_0001",
+      "timestamp": "2026-03-31T14:39:39Z",
+      "strategy_id": "strat_010",
+      "strategy_name": "Momentum Auction A",
+      "gross_notional": 15000.0,
+      "realized_pnl": 620.0,
+      "slippage_cost": 33.0,
+      "fees": 7.0,
+      "capital_penalty": 33.0,
+      "net_settlement": 547.0
+    }
+  ],
+  "history": [
+    {
+      "timestamp": "2026-03-31T14:39:39Z",
+      "event": "execution.reviewed",
+      "strategy_id": "strat_010"
+    },
+    {
+      "timestamp": "2026-03-31T14:39:39Z",
+      "event": "capital.settled",
+      "strategy_id": "strat_010"
+    }
+  ]
+}

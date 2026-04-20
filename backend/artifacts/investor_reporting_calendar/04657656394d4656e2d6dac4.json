@@ -1,0 +1,28 @@
+{
+  "email": "operator@quantora.test",
+  "events": [
+    {
+      "event_id": "evt_seed_1",
+      "name": "Monthly Statement Pack",
+      "frequency": "monthly",
+      "next_run_at": null,
+      "status": "scheduled",
+      "channel": "portal_simulated",
+      "created_at": 1776223536,
+      "last_run_at": null
+    },
+    {
+      "event_id": "evt_seed_2",
+      "name": "Quarterly LP Update",
+      "frequency": "quarterly",
+      "next_run_at": null,
+      "status": "scheduled",
+      "channel": "portal_simulated",
+      "created_at": 1776223536,
+      "last_run_at": null
+    }
+  ],
+  "history": [],
+  "created_at": 1776223536,
+  "updated_at": 1776223536
+}

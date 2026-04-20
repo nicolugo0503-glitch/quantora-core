@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>QNT50031 - Institutional Live Allocation Escalation + Capacity Ceiling Governance Layer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background:#0f172a; color:#e2e8f0; }
+    .card { background:#111827; border:1px solid #334155; border-radius:12px; padding:20px; max-width:1000px; }
+    h1,h2 { margin-top:0; }
+    code { background:#1e293b; padding:2px 6px; border-radius:6px; }
+    ul { line-height:1.6; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>QNT50031 — Institutional Live Allocation Escalation + Capacity Ceiling Governance Layer</h1>
+    <p>Governed escalation layer for raising strategy allocation beyond initial scale-up while enforcing hard capacity ceilings, risk clearance, treasury headroom, and institutional mandate discipline.</p>
+    <h2>Capabilities</h2>
+    <ul>
+      <li>Synchronizes live scale-up, risk, treasury, performance, and charter posture before any escalation action.</li>
+      <li>Registers escalation cases tied to executed QNT50030 ramp evidence.</li>
+      <li>Approves allocation escalation only within configured ceiling limits.</li>
+      <li>Executes governed escalation events into allocation and execution pathways with audit-grade traceability.</li>
+    </ul>
+    <h2>Primary endpoints</h2>
+    <ul>
+      <li><code>GET /allocation-escalation/health</code></li>
+      <li><code>GET /allocation-escalation/summary</code></li>
+      <li><code>POST /allocation-escalation/register-case</code></li>
+      <li><code>POST /allocation-escalation/approve</code></li>
+      <li><code>POST /allocation-escalation/execute</code></li>
+      <li><code>POST /allocation-escalation/close-case</code></li>
+    </ul>
+  </div>
+</body>
+</html>

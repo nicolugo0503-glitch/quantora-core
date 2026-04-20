@@ -1,0 +1,47 @@
+{
+  "generated_by": "QNT50004",
+  "status": "degraded",
+  "armed": true,
+  "safe_mode_on_trigger": true,
+  "kill_switch_triggered": false,
+  "kill_switch_level": "normal",
+  "trigger_reason": null,
+  "triggered_at": null,
+  "reset_at": null,
+  "thresholds": {
+    "portfolio_drawdown_limit_pct": 0.12,
+    "strategy_drawdown_limit_pct": 0.08,
+    "daily_loss_limit_pct": 0.04,
+    "max_single_order_notional": 250000.0,
+    "max_live_notional": 1500000.0,
+    "max_position_concentration_pct": 0.35,
+    "max_margin_usage_pct": 0.55,
+    "max_latency_ms": 1500
+  },
+  "metrics": {
+    "equity": 1000000.0,
+    "peak_equity": 1000000.0,
+    "portfolio_drawdown_pct": 0.0,
+    "strategy_drawdown_pct": 0.0,
+    "daily_loss_pct": 0.0,
+    "open_notional": 0.0,
+    "largest_position_pct": 0.0,
+    "margin_usage_pct": 0.0,
+    "latency_ms": 35,
+    "venue_connectivity_ok": true,
+    "breach_count": 0
+  },
+  "active_breaches": [],
+  "evaluation_log": [],
+  "trigger_log": [],
+  "override_log": [],
+  "blocked_orders": [],
+  "audit_log": [],
+  "summary": {
+    "kill_switch_triggered": false,
+    "kill_switch_armed": false,
+    "kill_switch_level": "normal",
+    "safe_mode": false,
+    "execution_mode": "live"
+  }
+}

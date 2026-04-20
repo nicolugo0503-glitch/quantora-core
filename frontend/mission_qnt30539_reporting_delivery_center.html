@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quantora Reporting Delivery Center</title>
+<style>
+body{margin:0;font-family:Arial;background:#06101d;color:#eaf1ff}
+.container{max-width:1320px;margin:auto;padding:24px}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:14px;padding:16px;margin-bottom:16px}
+h1,h2,h3{margin:0 0 10px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.label{color:#9fb3d8;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.value{font-size:26px;font-weight:bold}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left}
+.table th{color:#9fb3d8;font-size:12px;text-transform:uppercase}
+button,.pill{padding:10px 14px;background:#2455d6;border:none;color:white;border-radius:8px;cursor:pointer}
+.pill{display:inline-block;background:#11243c;border:1px solid #203251}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+pre{background:#07111f;border:1px solid #203251;border-radius:10px;padding:12px;overflow:auto}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <h1>Reporting Delivery Center</h1>
+    <div style="color:#9fb3d8;max-width:900px">Investor-facing reporting workspace for statements, delivery status, report cadence, and distribution history. Safe frontend-only expansion on the stable Quantora base.</div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Reports Ready</div><div id="readyCount" class="value">-</div></div>
+    <div class="card"><div class="label">Last NAV</div><div id="nav" class="value">-</div></div>
+    <div class="card"><div class="label">Delivery Status</div><div id="delivery" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <h2>Delivery Queue</h2>
+    <table class="table">
+      <thead><tr><th>Report</th><th>Audience</th><th>Period</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody id="queueTable"></tbody>
+    </table>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Statement Library</h3>
+      <table class="table">
+        <thead><tr><th>Name</th><th>Period</th><th>Type</th><th>Status</th></tr></thead>
+        <tbody id="libraryTable"></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Distribution Schedule</h3>
+      <table class="table">
+        <thead><tr><th>Date</th><th>Type</th><th>Channel</th><th>Status</th></tr></thead>
+        <tbody id="scheduleTable"></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Delivery Trust View</h3>
+      <div class="actions" style="margin-bottom:12px">
+        <span class="pill">Statements Enabled</span>
+        <span class="pill">Reports Enabled</span>
+        <span class="pill">Investor Delivery Active</span>
+      </div>
+      <pre id="trustBox">loading...</pre>
+    </div>
+  </div>
+</div>
+
+<script>
+async function fetchJson(url, opts){
+  try{
+    const r = await fetch(url, opts || {});
+    return await r.json();
+  }catch(e){
+    return {error:String(e)};
+  }
+}
+
+function setRows(id, rows){
+  document.getElementById(id).innerHTML = rows.join('');
+}
+
+async function load(){
+  const perf = await fetchJson('/api/performance-engine/summary');
+  const fund = await fetchJson('/api/fund/state');
+
+  document.getElementById('readyCount').innerText = '4';
+  document.getElementById('nav').innerText = perf.nav ?? '-';
+  document.getElementById('delivery').innerText = fund.running ? 'ACTIVE' : 'STANDBY';
+
+  const queueRows = [
+    ['Monthly Statement','Investor Base','Current Month','Ready','Deliver'],
+    ['Quarterly Letter','Investor Base','Current Quarter','Ready','Deliver'],
+    ['Capital Activity Summary','Investor Base','Current','Ready','Deliver'],
+    ['Risk Snapshot','Qualified Investors','Current','Ready','Deliver']
+  ].map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td><button onclick="alert('Delivery placeholder')">${r[4]}</button></td></tr>`);
+  setRows('queueTable', queueRows);
+
+  const libraryRows = [
+    ['Investor Statement','April 2026','Statement','Available'],
+    ['Performance Report','Q2 2026','Report','Available'],
+    ['Allocation Overview','Current','Allocation','Available'],
+    ['Trust Center Snapshot','Current','Trust','Available']
+  ].map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`);
+  setRows('libraryTable', libraryRows);
+
+  const scheduleRows = [
+    ['2026-04-10','Statement Release','Portal','Scheduled'],
+    ['2026-04-12','Quarterly Update','Portal','Scheduled'],
+    ['2026-04-15','Capital Summary','Portal','Scheduled']
+  ].map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`);
+  setRows('scheduleTable', scheduleRows);
+
+  document.getElementById('trustBox').innerText = JSON.stringify({
+    nav: perf.nav,
+    total_pnl: perf.total_pnl,
+    drawdown_pct: perf.drawdown_pct,
+    fund_status: fund.running ? 'ACTIVE' : 'PAUSED',
+    report_delivery: 'READY'
+  }, null, 2);
+}
+
+load();
+setInterval(load, 5000);
+</script>
+</body>
+</html>

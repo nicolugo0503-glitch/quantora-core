@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30573 Investor Communications + LP Update Engine</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,textarea,select{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,textarea,select{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:90px}
+.row{display:grid;grid-template-columns:1fr 2fr auto auto;gap:10px}
+table{width:100%;border-collapse:collapse} th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1100px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30573 · Investor Communications + LP Update Engine</h1>
+        <div style="color:#9fb3d8">Generate and distribute LP-style investor updates using CRM recipients, reporting previews, and reconciliation warnings. This is the investor communications layer for allocator-grade relationship management.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="mission_qnt30572_fundraising_crm.html">Fundraising CRM</a>
+        <a href="mission_qnt30570_admin_console.html">Admin Console</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Updates</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Recipients</div><div id="recipients" class="value">-</div></div>
+    <div class="card"><div class="label">Warnings</div><div id="warnings" class="value">-</div></div>
+    <div class="card"><div class="label">Distributions</div><div id="distributions" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="subject" placeholder="Update subject">
+      <textarea id="body" placeholder="Update body"></textarea>
+      <select id="channel"><option value="portal_simulated">portal_simulated</option><option value="email_simulated">email_simulated</option></select>
+      <button onclick="generateAndSend()">Generate + Distribute</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Latest Update</div>
+    <table>
+      <tbody id="summaryRows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">LP Update Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const latest = await j('/api/lp-updates/latest');
+  const dist = await j('/api/lp-updates/distribution-log');
+  if(!latest.ok){ document.getElementById('raw').textContent = JSON.stringify(latest.data, null, 2); return; }
+  const u = latest.data.update || {};
+  document.getElementById('count').textContent = String(latest.data.total_updates || 0);
+  document.getElementById('recipients').textContent = String(u.recipient_count || 0);
+  document.getElementById('warnings').textContent = String((u.warning_preview || []).length);
+  document.getElementById('distributions').textContent = String((dist.data.events || []).length);
+  const rows = [
+    ['Subject', u.subject || '-'],
+    ['Headline', u.headline || '-'],
+    ['Generated At', new Date((u.generated_at || 0) * 1000).toLocaleString()],
+    ['Recipients', String(u.recipient_count || 0)],
+    ['Latest Distribution', ((u.last_distribution || {}).status || '-')],
+  ];
+  document.getElementById('summaryRows').innerHTML = rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+  document.getElementById('raw').textContent = JSON.stringify({latest:u,distribution_log:dist.data}, null, 2);
+}
+async function generateAndSend(){
+  const gen = await j('/api/lp-updates/generate', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({subject: document.getElementById('subject').value, body: document.getElementById('body').value})});
+  if(!gen.ok){ document.getElementById('raw').textContent = JSON.stringify(gen.data, null, 2); return; }
+  const update = gen.data.update || {};
+  await j('/api/lp-updates/distribute', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({update_id: update.update_id, channel: document.getElementById('channel').value})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

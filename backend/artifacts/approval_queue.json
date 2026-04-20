@@ -1,0 +1,21 @@
+{
+  "requests": [
+    {
+      "request_id": "apr_ec8bb12fc6",
+      "created_at": "2026-03-31T05:26:09Z",
+      "created_by_email": "admin@quantora.local",
+      "created_by_operator_id": "operator_BAE0E004",
+      "request_type": "capital_change",
+      "target": "operator_F5E2C5BA",
+      "payload": {
+        "operator_id": "operator_F5E2C5BA",
+        "allocated_capital": 12000.0
+      },
+      "reason": "Capital change exceeds threshold 5000",
+      "status": "PENDING",
+      "reviewed_at": null,
+      "reviewed_by": null,
+      "notes": ""
+    }
+  ]
+}

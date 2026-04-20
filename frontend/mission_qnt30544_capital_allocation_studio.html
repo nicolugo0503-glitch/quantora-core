@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quantora Capital Allocation Studio</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff}
+.container{max-width:1500px;margin:auto;padding:24px}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:14px;padding:16px;margin-bottom:16px}
+h1,h2,h3{margin:0 0 10px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.label{color:#9fb3d8;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:24px;font-weight:bold}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left}
+.table th{color:#9fb3d8;font-size:12px;text-transform:uppercase}
+button,.pill{padding:10px 14px;background:#2455d6;border:none;color:white;border-radius:8px;cursor:pointer}
+.pill{display:inline-block;background:#11243c;border:1px solid #203251}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+pre{background:#07111f;border:1px solid #203251;border-radius:10px;padding:12px;overflow:auto}
+.bar-wrap{height:12px;background:#11243c;border-radius:999px;overflow:hidden;border:1px solid #203251}
+.bar{height:100%;background:#2455d6}
+.good{color:#10b981}.warn{color:#f59e0b}.bad{color:#ef4444}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <h1>Capital Allocation Studio</h1>
+    <div style="color:#9fb3d8;max-width:980px">Institutional capital-routing view for operator and allocator workflows. This layer presents ranked strategy capital buckets, recommended allocation distribution, and portfolio routing discipline without changing backend structure.</div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Total Capital Routed</div><div id="totalCapital" class="value">-</div></div>
+    <div class="card"><div class="label">Top Allocation</div><div id="topAlloc" class="value">-</div></div>
+    <div class="card"><div class="label">Routing Mode</div><div id="routingMode" class="value">-</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Allocation Ladder</h2>
+      <div id="ladder">loading...</div>
+    </div>
+
+    <div class="card">
+      <h2>Capital Routing Table</h2>
+      <table class="table">
+        <thead><tr><th>Strategy</th><th>Score</th><th>Allocated Capital</th><th>Bucket</th></tr></thead>
+        <tbody id="routingTable"></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Allocator State</h2>
+      <pre id="allocBox">loading...</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Capital Committee Notes</h2>
+    <div id="notes"></div>
+  </div>
+</div>
+
+<script>
+async function fetchJson(url, opts){
+  try{
+    const r = await fetch(url, opts || {});
+    return await r.json();
+  }catch(e){ return {error:String(e)}; }
+}
+
+function fmt(v){
+  if(typeof v !== 'number' || Number.isNaN(v)) return '-';
+  return v.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+function bucket(v){
+  if(v >= 300000) return 'Core';
+  if(v >= 100000) return 'Expansion';
+  return 'Exploratory';
+}
+
+async function load(){
+  const last = await fetchJson('/api/auto-allocator/last');
+  const rows = Array.isArray(last.rows) ? last.rows : [];
+  const total = Number(last.total_capital || 0);
+  const top = rows.length ? Number(rows[0].allocated_capital || 0) : 0;
+
+  document.getElementById('totalCapital').innerText = fmt(total);
+  document.getElementById('topAlloc').innerText = rows.length ? fmt(top) : '-';
+  document.getElementById('routingMode').innerText = last.source || 'Scored';
+
+  const ladder = rows.length ? rows.map(r => {
+    const capital = Number(r.allocated_capital || 0);
+    const pct = total > 0 ? (capital / total) * 100 : 0;
+    return `
+      <div style="margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+          <div>Strategy ${r.strategy_id}</div>
+          <div>${fmt(capital)} (${fmt(pct)}%)</div>
+        </div>
+        <div class="bar-wrap"><div class="bar" style="width:${Math.max(0, Math.min(100, pct))}%"></div></div>
+      </div>
+    `;
+  }).join('') : '<div style="color:#9fb3d8">No allocation records yet.</div>';
+  document.getElementById('ladder').innerHTML = ladder;
+
+  const tableRows = rows.length ? rows.map(r => {
+    const capital = Number(r.allocated_capital || 0);
+    const score = Number(r.score || 0);
+    return `<tr>
+      <td>Strategy ${r.strategy_id}</td>
+      <td class="${score >= 0 ? 'good' : 'bad'}">${fmt(score)}</td>
+      <td>${fmt(capital)}</td>
+      <td>${bucket(capital)}</td>
+    </tr>`;
+  }).join('') : '<tr><td colspan="4">No routed capital yet</td></tr>';
+  document.getElementById('routingTable').innerHTML = tableRows;
+
+  document.getElementById('allocBox').innerText = JSON.stringify(last, null, 2);
+
+  const notes = rows.length ? rows.slice(0,4).map(r => {
+    const capital = Number(r.allocated_capital || 0);
+    const score = Number(r.score || 0);
+    return `<div class="card" style="margin-bottom:10px">
+      <div class="label">Strategy ${r.strategy_id}</div>
+      <div style="font-size:20px;font-weight:800;margin-bottom:8px">${bucket(capital)} Capital Routing</div>
+      <div style="color:#9fb3d8">Allocated <b>${fmt(capital)}</b> based on score <b>${fmt(score)}</b>. This strategy is currently positioned for ${bucket(capital).toLowerCase()} deployment inside the capital-routing stack.</div>
+    </div>`;
+  }).join('') : '<div style="color:#9fb3d8">Capital committee notes will appear once allocations exist.</div>';
+  document.getElementById('notes').innerHTML = notes;
+}
+
+load();
+setInterval(load, 5000);
+</script>
+</body>
+</html>

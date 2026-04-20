@@ -1,0 +1,38 @@
+{
+  "email": "growth@test.quantora",
+  "strategy_allocations": [],
+  "trades": [],
+  "strategy_registry": [],
+  "history": [
+    {
+      "event_id": "hist_sync_1775711778441195912",
+      "type": "allocation_sync",
+      "synced_rows": 0,
+      "manual_rows": 0,
+      "timestamp": 1775711778
+    },
+    {
+      "event_id": "hist_sync_1775711778439277598",
+      "type": "allocation_sync",
+      "synced_rows": 0,
+      "manual_rows": 0,
+      "timestamp": 1775711778
+    },
+    {
+      "event_id": "hist_sync_1775711778430989449",
+      "type": "allocation_sync",
+      "synced_rows": 0,
+      "manual_rows": 0,
+      "timestamp": 1775711778
+    },
+    {
+      "event_id": "hist_sync_1775711778428444829",
+      "type": "allocation_sync",
+      "synced_rows": 0,
+      "manual_rows": 0,
+      "timestamp": 1775711778
+    }
+  ],
+  "created_at": 1775711778,
+  "updated_at": 1775711778
+}

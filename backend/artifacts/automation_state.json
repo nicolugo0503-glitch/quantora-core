@@ -1,0 +1,3378 @@
+{
+  "worker": {
+    "enabled": true,
+    "poll_interval_seconds": 1,
+    "stall_threshold_seconds": 45,
+    "started_at": "2026-03-27T22:29:53Z",
+    "heartbeat_at": "2026-04-15T06:31:47Z",
+    "last_tick_at": "2026-04-15T06:30:15Z",
+    "last_tick_started_at": "2026-04-15T06:31:47Z",
+    "last_status": "stopped",
+    "last_error": "404: Operator not found",
+    "cycle_count": 10,
+    "success_count": 10,
+    "degraded_count": 0,
+    "failure_count": 40,
+    "restart_count": 56,
+    "last_restart_at": "2026-04-15T06:31:47Z",
+    "last_recovered_at": "2026-04-15T06:31:47Z",
+    "last_cycle_duration_ms": 10006,
+    "avg_cycle_duration_ms": 4.1,
+    "loop_lag_seconds": 0.005,
+    "thread_alive": false
+  },
+  "operators": {
+    "operator_F5E2C5BA": {
+      "operator_id": "operator_F5E2C5BA",
+      "enabled": false,
+      "execution_mode": "internal",
+      "market_bias": "neutral",
+      "interval_seconds": 30,
+      "broker_reconcile_enabled": true,
+      "pnl_sync_enabled": true,
+      "failure_pause_seconds": 60,
+      "max_consecutive_failures": 3,
+      "retry_on_failure": true,
+      "max_retry_attempts": 2,
+      "retry_backoff_seconds": 5,
+      "auto_strategy_optimizer_enabled": false,
+      "auto_strategy_optimizer_max_active": 3,
+      "auto_strategy_optimizer_min_score": 55.0,
+      "auto_strategy_optimizer_pause_score": 35.0,
+      "consecutive_failures": 0,
+      "cycle_count": 0,
+      "successful_cycles": 0,
+      "degraded_cycles": 0,
+      "failed_cycles": 0,
+      "total_attempt_count": 0,
+      "last_attempt_count": 0,
+      "last_retry_count": 0,
+      "last_run_at": null,
+      "last_success_at": null,
+      "next_run_at": null,
+      "last_status": "idle",
+      "health_status": "idle",
+      "health_reason": null,
+      "last_error": null,
+      "last_result": {},
+      "last_duration_ms": 0,
+      "avg_duration_ms": 0,
+      "paused_until": null,
+      "recovery_required": false
+    },
+    "operator_B9D19209": {
+      "operator_id": "operator_B9D19209",
+      "enabled": true,
+      "execution_mode": "internal",
+      "market_bias": "neutral",
+      "interval_seconds": 30,
+      "broker_reconcile_enabled": true,
+      "pnl_sync_enabled": true,
+      "failure_pause_seconds": 60,
+      "max_consecutive_failures": 3,
+      "retry_on_failure": true,
+      "max_retry_attempts": 2,
+      "retry_backoff_seconds": 5,
+      "auto_strategy_optimizer_enabled": false,
+      "auto_strategy_optimizer_max_active": 3,
+      "auto_strategy_optimizer_min_score": 55.0,
+      "auto_strategy_optimizer_pause_score": 35.0,
+      "consecutive_failures": 40,
+      "cycle_count": 10,
+      "successful_cycles": 10,
+      "degraded_cycles": 0,
+      "failed_cycles": 40,
+      "total_attempt_count": 130,
+      "last_attempt_count": 1,
+      "last_retry_count": 0,
+      "last_run_at": "2026-04-15T06:30:15Z",
+      "last_success_at": "2026-03-31T05:37:57Z",
+      "next_run_at": "2026-04-15T06:31:47Z",
+      "last_status": "retrying",
+      "health_status": "degraded",
+      "health_reason": "retry 1 of 2 pending",
+      "last_error": "404: Operator not found",
+      "last_result": {
+        "status": "completed",
+        "operator_id": "operator_B9D19209",
+        "executed_count": 0,
+        "signal_count": 0,
+        "market_bias": "neutral",
+        "execution_mode": "internal",
+        "broker_sync": {
+          "timestamp": "2026-03-31T05:37:57Z",
+          "status": "skipped",
+          "reason": "no_broker_exposure",
+          "updated_orders": 0
+        },
+        "alerts_count": 0,
+        "optimizer": {
+          "status": "skipped",
+          "reason": "disabled"
+        },
+        "risk_status": "SAFE",
+        "timestamp": "2026-03-31T05:37:57Z",
+        "stage_metrics": {
+          "strategy_cycle": {
+            "status": "completed",
+            "duration_ms": 0
+          },
+          "broker_reconcile": {
+            "status": "completed",
+            "duration_ms": 0
+          },
+          "monitoring_sync": {
+            "status": "completed",
+            "duration_ms": 0
+          }
+        },
+        "stage_errors": []
+      },
+      "last_duration_ms": 10006,
+      "avg_duration_ms": 4.1,
+      "paused_until": "2026-04-15T06:31:15Z",
+      "recovery_required": true
+    }
+  },
+  "events": [
+    {
+      "event_id": "auto_1776234711395",
+      "timestamp": "2026-04-15T06:31:51Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776234707390",
+      "timestamp": "2026-04-15T06:31:47Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776234707382",
+      "timestamp": "2026-04-15T06:31:47Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 56
+      }
+    },
+    {
+      "event_id": "auto_1776234707378",
+      "timestamp": "2026-04-15T06:31:47Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776234707378",
+      "timestamp": "2026-04-15T06:31:47Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776234637411",
+      "timestamp": "2026-04-15T06:30:37Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776234615262",
+      "timestamp": "2026-04-15T06:30:15Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 40,
+        "attempts_used": 3,
+        "duration_ms": 10006,
+        "paused_until": "2026-04-15T06:31:15Z"
+      }
+    },
+    {
+      "event_id": "auto_1776234610259",
+      "timestamp": "2026-04-15T06:30:10Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776234605256",
+      "timestamp": "2026-04-15T06:30:05Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776234605246",
+      "timestamp": "2026-04-15T06:30:05Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 55
+      }
+    },
+    {
+      "event_id": "auto_1776234605244",
+      "timestamp": "2026-04-15T06:30:05Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776234605244",
+      "timestamp": "2026-04-15T06:30:05Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776233502014",
+      "timestamp": "2026-04-15T06:11:42Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776233498712",
+      "timestamp": "2026-04-15T06:11:38Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776233498702",
+      "timestamp": "2026-04-15T06:11:38Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 54
+      }
+    },
+    {
+      "event_id": "auto_1776233498699",
+      "timestamp": "2026-04-15T06:11:38Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776233498699",
+      "timestamp": "2026-04-15T06:11:38Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776232192013",
+      "timestamp": "2026-04-15T05:49:52Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776232190271",
+      "timestamp": "2026-04-15T05:49:50Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776232185264",
+      "timestamp": "2026-04-15T05:49:45Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776232185255",
+      "timestamp": "2026-04-15T05:49:45Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 53
+      }
+    },
+    {
+      "event_id": "auto_1776232185251",
+      "timestamp": "2026-04-15T05:49:45Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776232185251",
+      "timestamp": "2026-04-15T05:49:45Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776231909419",
+      "timestamp": "2026-04-15T05:45:09Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 39,
+        "attempts_used": 3,
+        "duration_ms": 10007,
+        "paused_until": "2026-04-15T05:46:09Z"
+      }
+    },
+    {
+      "event_id": "auto_1776231904415",
+      "timestamp": "2026-04-15T05:45:04Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776231903489",
+      "timestamp": "2026-04-15T05:45:03Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776231900087",
+      "timestamp": "2026-04-15T05:45:00Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776231900078",
+      "timestamp": "2026-04-15T05:45:00Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 52
+      }
+    },
+    {
+      "event_id": "auto_1776231900075",
+      "timestamp": "2026-04-15T05:45:00Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776231900075",
+      "timestamp": "2026-04-15T05:45:00Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776231899411",
+      "timestamp": "2026-04-15T05:44:59Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776231839773",
+      "timestamp": "2026-04-15T05:43:59Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 38,
+        "attempts_used": 3,
+        "duration_ms": 10012,
+        "paused_until": "2026-04-15T05:44:59Z"
+      }
+    },
+    {
+      "event_id": "auto_1776231834769",
+      "timestamp": "2026-04-15T05:43:54Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776231829761",
+      "timestamp": "2026-04-15T05:43:49Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776231769114",
+      "timestamp": "2026-04-15T05:42:49Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 37,
+        "attempts_used": 3,
+        "duration_ms": 10010,
+        "paused_until": "2026-04-15T05:43:49Z"
+      }
+    },
+    {
+      "event_id": "auto_1776231764111",
+      "timestamp": "2026-04-15T05:42:44Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776231759104",
+      "timestamp": "2026-04-15T05:42:39Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776231559201",
+      "timestamp": "2026-04-15T05:39:19Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 36,
+        "attempts_used": 3,
+        "duration_ms": 10009,
+        "paused_until": "2026-04-15T05:40:19Z"
+      }
+    },
+    {
+      "event_id": "auto_1776231554196",
+      "timestamp": "2026-04-15T05:39:14Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776231549192",
+      "timestamp": "2026-04-15T05:39:09Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776231549181",
+      "timestamp": "2026-04-15T05:39:09Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 51
+      }
+    },
+    {
+      "event_id": "auto_1776231549177",
+      "timestamp": "2026-04-15T05:39:09Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776231549177",
+      "timestamp": "2026-04-15T05:39:09Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776231282601",
+      "timestamp": "2026-04-15T05:34:42Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 35,
+        "attempts_used": 3,
+        "duration_ms": 10008,
+        "paused_until": "2026-04-15T05:35:42Z"
+      }
+    },
+    {
+      "event_id": "auto_1776231277597",
+      "timestamp": "2026-04-15T05:34:37Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776231272593",
+      "timestamp": "2026-04-15T05:34:32Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776231272582",
+      "timestamp": "2026-04-15T05:34:32Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 50
+      }
+    },
+    {
+      "event_id": "auto_1776231272579",
+      "timestamp": "2026-04-15T05:34:32Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776231272578",
+      "timestamp": "2026-04-15T05:34:32Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776230244969",
+      "timestamp": "2026-04-15T05:17:24Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776230241062",
+      "timestamp": "2026-04-15T05:17:21Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776230241050",
+      "timestamp": "2026-04-15T05:17:21Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 49
+      }
+    },
+    {
+      "event_id": "auto_1776230241046",
+      "timestamp": "2026-04-15T05:17:21Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776230241046",
+      "timestamp": "2026-04-15T05:17:21Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776229695062",
+      "timestamp": "2026-04-15T05:08:15Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 48
+      }
+    },
+    {
+      "event_id": "auto_1776229695058",
+      "timestamp": "2026-04-15T05:08:15Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776229695058",
+      "timestamp": "2026-04-15T05:08:15Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776229685486",
+      "timestamp": "2026-04-15T05:08:05Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 34,
+        "attempts_used": 3,
+        "duration_ms": 10009,
+        "paused_until": "2026-04-15T05:09:05Z"
+      }
+    },
+    {
+      "event_id": "auto_1776229680481",
+      "timestamp": "2026-04-15T05:08:00Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776229675477",
+      "timestamp": "2026-04-15T05:07:55Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776229615814",
+      "timestamp": "2026-04-15T05:06:55Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 33,
+        "attempts_used": 3,
+        "duration_ms": 10009,
+        "paused_until": "2026-04-15T05:07:55Z"
+      }
+    },
+    {
+      "event_id": "auto_1776229610810",
+      "timestamp": "2026-04-15T05:06:50Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776229605804",
+      "timestamp": "2026-04-15T05:06:45Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776229545097",
+      "timestamp": "2026-04-15T05:05:45Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 32,
+        "attempts_used": 3,
+        "duration_ms": 10008,
+        "paused_until": "2026-04-15T05:06:45Z"
+      }
+    },
+    {
+      "event_id": "auto_1776229540093",
+      "timestamp": "2026-04-15T05:05:40Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776229535089",
+      "timestamp": "2026-04-15T05:05:35Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776229475401",
+      "timestamp": "2026-04-15T05:04:35Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 31,
+        "attempts_used": 3,
+        "duration_ms": 10008,
+        "paused_until": "2026-04-15T05:05:35Z"
+      }
+    },
+    {
+      "event_id": "auto_1776229470397",
+      "timestamp": "2026-04-15T05:04:30Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776229465393",
+      "timestamp": "2026-04-15T05:04:25Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776229405707",
+      "timestamp": "2026-04-15T05:03:25Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 30,
+        "attempts_used": 3,
+        "duration_ms": 10009,
+        "paused_until": "2026-04-15T05:04:25Z"
+      }
+    },
+    {
+      "event_id": "auto_1776229400702",
+      "timestamp": "2026-04-15T05:03:20Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776229395697",
+      "timestamp": "2026-04-15T05:03:15Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776229395683",
+      "timestamp": "2026-04-15T05:03:15Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 47
+      }
+    },
+    {
+      "event_id": "auto_1776229395680",
+      "timestamp": "2026-04-15T05:03:15Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776229395680",
+      "timestamp": "2026-04-15T05:03:15Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776228218197",
+      "timestamp": "2026-04-15T04:43:38Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 29,
+        "attempts_used": 3,
+        "duration_ms": 10005,
+        "paused_until": "2026-04-15T04:44:38Z"
+      }
+    },
+    {
+      "event_id": "auto_1776228213194",
+      "timestamp": "2026-04-15T04:43:33Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776228208192",
+      "timestamp": "2026-04-15T04:43:28Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776228208185",
+      "timestamp": "2026-04-15T04:43:28Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 46
+      }
+    },
+    {
+      "event_id": "auto_1776228208183",
+      "timestamp": "2026-04-15T04:43:28Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776228208183",
+      "timestamp": "2026-04-15T04:43:28Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776227855490",
+      "timestamp": "2026-04-15T04:37:35Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776227854485",
+      "timestamp": "2026-04-15T04:37:34Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 28,
+        "attempts_used": 3,
+        "duration_ms": 10005,
+        "paused_until": "2026-04-15T04:38:34Z"
+      }
+    },
+    {
+      "event_id": "auto_1776227849481",
+      "timestamp": "2026-04-15T04:37:29Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776227844479",
+      "timestamp": "2026-04-15T04:37:24Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776227844472",
+      "timestamp": "2026-04-15T04:37:24Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 45
+      }
+    },
+    {
+      "event_id": "auto_1776227844470",
+      "timestamp": "2026-04-15T04:37:24Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776227844470",
+      "timestamp": "2026-04-15T04:37:24Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776226724149",
+      "timestamp": "2026-04-15T04:18:44Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 27,
+        "attempts_used": 3,
+        "duration_ms": 10008,
+        "paused_until": "2026-04-15T04:19:44Z"
+      }
+    },
+    {
+      "event_id": "auto_1776226719145",
+      "timestamp": "2026-04-15T04:18:39Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776226714141",
+      "timestamp": "2026-04-15T04:18:34Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776226714133",
+      "timestamp": "2026-04-15T04:18:34Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 44
+      }
+    },
+    {
+      "event_id": "auto_1776226714131",
+      "timestamp": "2026-04-15T04:18:34Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776226714131",
+      "timestamp": "2026-04-15T04:18:34Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776223575459",
+      "timestamp": "2026-04-15T03:26:15Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776223571962",
+      "timestamp": "2026-04-15T03:26:11Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776223571930",
+      "timestamp": "2026-04-15T03:26:11Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 43
+      }
+    },
+    {
+      "event_id": "auto_1776223571924",
+      "timestamp": "2026-04-15T03:26:11Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776223571924",
+      "timestamp": "2026-04-15T03:26:11Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776223553305",
+      "timestamp": "2026-04-15T03:25:53Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776223549903",
+      "timestamp": "2026-04-15T03:25:49Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776223549880",
+      "timestamp": "2026-04-15T03:25:49Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 42
+      }
+    },
+    {
+      "event_id": "auto_1776223549874",
+      "timestamp": "2026-04-15T03:25:49Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776223549874",
+      "timestamp": "2026-04-15T03:25:49Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776223088007",
+      "timestamp": "2026-04-15T03:18:08Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 26,
+        "attempts_used": 3,
+        "duration_ms": 10007,
+        "paused_until": "2026-04-15T03:19:08Z"
+      }
+    },
+    {
+      "event_id": "auto_1776223083005",
+      "timestamp": "2026-04-15T03:18:03Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776223078000",
+      "timestamp": "2026-04-15T03:17:58Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776223077993",
+      "timestamp": "2026-04-15T03:17:57Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 41
+      }
+    },
+    {
+      "event_id": "auto_1776223077991",
+      "timestamp": "2026-04-15T03:17:57Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776223077991",
+      "timestamp": "2026-04-15T03:17:57Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776222107826",
+      "timestamp": "2026-04-15T03:01:47Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 25,
+        "attempts_used": 3,
+        "duration_ms": 10006,
+        "paused_until": "2026-04-15T03:02:47Z"
+      }
+    },
+    {
+      "event_id": "auto_1776222102823",
+      "timestamp": "2026-04-15T03:01:42Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776222097820",
+      "timestamp": "2026-04-15T03:01:37Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776222097810",
+      "timestamp": "2026-04-15T03:01:37Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 40
+      }
+    },
+    {
+      "event_id": "auto_1776222097732",
+      "timestamp": "2026-04-15T03:01:37Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776222097732",
+      "timestamp": "2026-04-15T03:01:37Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776221693836",
+      "timestamp": "2026-04-15T02:54:53Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 39
+      }
+    },
+    {
+      "event_id": "auto_1776221693834",
+      "timestamp": "2026-04-15T02:54:53Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776221693834",
+      "timestamp": "2026-04-15T02:54:53Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776221666458",
+      "timestamp": "2026-04-15T02:54:26Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 24,
+        "attempts_used": 3,
+        "duration_ms": 10005,
+        "paused_until": "2026-04-15T02:55:26Z"
+      }
+    },
+    {
+      "event_id": "auto_1776221661456",
+      "timestamp": "2026-04-15T02:54:21Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776221656453",
+      "timestamp": "2026-04-15T02:54:16Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776221596021",
+      "timestamp": "2026-04-15T02:53:16Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 23,
+        "attempts_used": 3,
+        "duration_ms": 10005,
+        "paused_until": "2026-04-15T02:54:16Z"
+      }
+    },
+    {
+      "event_id": "auto_1776221591018",
+      "timestamp": "2026-04-15T02:53:11Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776221586015",
+      "timestamp": "2026-04-15T02:53:06Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776221526620",
+      "timestamp": "2026-04-15T02:52:06Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 22,
+        "attempts_used": 3,
+        "duration_ms": 10004,
+        "paused_until": "2026-04-15T02:53:06Z"
+      }
+    },
+    {
+      "event_id": "auto_1776221521618",
+      "timestamp": "2026-04-15T02:52:01Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776221516616",
+      "timestamp": "2026-04-15T02:51:56Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776221456233",
+      "timestamp": "2026-04-15T02:50:56Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 21,
+        "attempts_used": 3,
+        "duration_ms": 10005,
+        "paused_until": "2026-04-15T02:51:56Z"
+      }
+    },
+    {
+      "event_id": "auto_1776221451230",
+      "timestamp": "2026-04-15T02:50:51Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776221446228",
+      "timestamp": "2026-04-15T02:50:46Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776221386658",
+      "timestamp": "2026-04-15T02:49:46Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 20,
+        "attempts_used": 3,
+        "duration_ms": 10006,
+        "paused_until": "2026-04-15T02:50:46Z"
+      }
+    },
+    {
+      "event_id": "auto_1776221381654",
+      "timestamp": "2026-04-15T02:49:41Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776221376652",
+      "timestamp": "2026-04-15T02:49:36Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776221376643",
+      "timestamp": "2026-04-15T02:49:36Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 38
+      }
+    },
+    {
+      "event_id": "auto_1776221376642",
+      "timestamp": "2026-04-15T02:49:36Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776221376642",
+      "timestamp": "2026-04-15T02:49:36Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776221086464",
+      "timestamp": "2026-04-15T02:44:46Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776221086098",
+      "timestamp": "2026-04-15T02:44:46Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776221081062",
+      "timestamp": "2026-04-15T02:44:41Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 37
+      }
+    },
+    {
+      "event_id": "auto_1776221081060",
+      "timestamp": "2026-04-15T02:44:41Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776221081060",
+      "timestamp": "2026-04-15T02:44:41Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776221026778",
+      "timestamp": "2026-04-15T02:43:46Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 19,
+        "attempts_used": 3,
+        "duration_ms": 10007,
+        "paused_until": "2026-04-15T02:44:46Z"
+      }
+    },
+    {
+      "event_id": "auto_1776221021775",
+      "timestamp": "2026-04-15T02:43:41Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776221016770",
+      "timestamp": "2026-04-15T02:43:36Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776220956354",
+      "timestamp": "2026-04-15T02:42:36Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 18,
+        "attempts_used": 3,
+        "duration_ms": 10010,
+        "paused_until": "2026-04-15T02:43:36Z"
+      }
+    },
+    {
+      "event_id": "auto_1776220951347",
+      "timestamp": "2026-04-15T02:42:31Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776220946344",
+      "timestamp": "2026-04-15T02:42:26Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776220886937",
+      "timestamp": "2026-04-15T02:41:26Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 17,
+        "attempts_used": 3,
+        "duration_ms": 10005,
+        "paused_until": "2026-04-15T02:42:26Z"
+      }
+    },
+    {
+      "event_id": "auto_1776220881934",
+      "timestamp": "2026-04-15T02:41:21Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776220876931",
+      "timestamp": "2026-04-15T02:41:16Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776220745190",
+      "timestamp": "2026-04-15T02:39:05Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776220740188",
+      "timestamp": "2026-04-15T02:39:00Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776220740181",
+      "timestamp": "2026-04-15T02:39:00Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 36
+      }
+    },
+    {
+      "event_id": "auto_1776220740179",
+      "timestamp": "2026-04-15T02:39:00Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776220740179",
+      "timestamp": "2026-04-15T02:39:00Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776220452380",
+      "timestamp": "2026-04-15T02:34:12Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 16,
+        "attempts_used": 3,
+        "duration_ms": 10006,
+        "paused_until": "2026-04-15T02:35:12Z"
+      }
+    },
+    {
+      "event_id": "auto_1776220447377",
+      "timestamp": "2026-04-15T02:34:07Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776220442373",
+      "timestamp": "2026-04-15T02:34:02Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776220442362",
+      "timestamp": "2026-04-15T02:34:02Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 35
+      }
+    },
+    {
+      "event_id": "auto_1776220442357",
+      "timestamp": "2026-04-15T02:34:02Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776220442357",
+      "timestamp": "2026-04-15T02:34:02Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776220101849",
+      "timestamp": "2026-04-15T02:28:21Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776220098534",
+      "timestamp": "2026-04-15T02:28:18Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776220093532",
+      "timestamp": "2026-04-15T02:28:13Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776220093523",
+      "timestamp": "2026-04-15T02:28:13Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 34
+      }
+    },
+    {
+      "event_id": "auto_1776220093521",
+      "timestamp": "2026-04-15T02:28:13Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776220093521",
+      "timestamp": "2026-04-15T02:28:13Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776219767707",
+      "timestamp": "2026-04-15T02:22:47Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 15,
+        "attempts_used": 3,
+        "duration_ms": 10005,
+        "paused_until": "2026-04-15T02:23:47Z"
+      }
+    },
+    {
+      "event_id": "auto_1776219762704",
+      "timestamp": "2026-04-15T02:22:42Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776219757702",
+      "timestamp": "2026-04-15T02:22:37Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776219757695",
+      "timestamp": "2026-04-15T02:22:37Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 33
+      }
+    },
+    {
+      "event_id": "auto_1776219757690",
+      "timestamp": "2026-04-15T02:22:37Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776219757690",
+      "timestamp": "2026-04-15T02:22:37Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776219406627",
+      "timestamp": "2026-04-15T02:16:46Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776219406315",
+      "timestamp": "2026-04-15T02:16:46Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776219401311",
+      "timestamp": "2026-04-15T02:16:41Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776219401300",
+      "timestamp": "2026-04-15T02:16:41Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 32
+      }
+    },
+    {
+      "event_id": "auto_1776219401297",
+      "timestamp": "2026-04-15T02:16:41Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776219401297",
+      "timestamp": "2026-04-15T02:16:41Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776218917261",
+      "timestamp": "2026-04-15T02:08:37Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 14,
+        "attempts_used": 3,
+        "duration_ms": 10009,
+        "paused_until": "2026-04-15T02:09:37Z"
+      }
+    },
+    {
+      "event_id": "auto_1776218912256",
+      "timestamp": "2026-04-15T02:08:32Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776218907251",
+      "timestamp": "2026-04-15T02:08:27Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776218907240",
+      "timestamp": "2026-04-15T02:08:27Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 31
+      }
+    },
+    {
+      "event_id": "auto_1776218907237",
+      "timestamp": "2026-04-15T02:08:27Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776218907237",
+      "timestamp": "2026-04-15T02:08:27Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776218563825",
+      "timestamp": "2026-04-15T02:02:43Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 13,
+        "attempts_used": 3,
+        "duration_ms": 10006,
+        "paused_until": "2026-04-15T02:03:43Z"
+      }
+    },
+    {
+      "event_id": "auto_1776218558822",
+      "timestamp": "2026-04-15T02:02:38Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776218553818",
+      "timestamp": "2026-04-15T02:02:33Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776218553809",
+      "timestamp": "2026-04-15T02:02:33Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 30
+      }
+    },
+    {
+      "event_id": "auto_1776218553806",
+      "timestamp": "2026-04-15T02:02:33Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776218553806",
+      "timestamp": "2026-04-15T02:02:33Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776218248473",
+      "timestamp": "2026-04-15T01:57:28Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776218248449",
+      "timestamp": "2026-04-15T01:57:28Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 29
+      }
+    },
+    {
+      "event_id": "auto_1776218248444",
+      "timestamp": "2026-04-15T01:57:28Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776218248444",
+      "timestamp": "2026-04-15T01:57:28Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776217438909",
+      "timestamp": "2026-04-15T01:43:58Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776217438801",
+      "timestamp": "2026-04-15T01:43:58Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776217433798",
+      "timestamp": "2026-04-15T01:43:53Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776217433788",
+      "timestamp": "2026-04-15T01:43:53Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 28
+      }
+    },
+    {
+      "event_id": "auto_1776217433785",
+      "timestamp": "2026-04-15T01:43:53Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776217433785",
+      "timestamp": "2026-04-15T01:43:53Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776217358027",
+      "timestamp": "2026-04-15T01:42:38Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776217357838",
+      "timestamp": "2026-04-15T01:42:37Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776217352835",
+      "timestamp": "2026-04-15T01:42:32Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776217352824",
+      "timestamp": "2026-04-15T01:42:32Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 27
+      }
+    },
+    {
+      "event_id": "auto_1776217352822",
+      "timestamp": "2026-04-15T01:42:32Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776217352822",
+      "timestamp": "2026-04-15T01:42:32Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776217338890",
+      "timestamp": "2026-04-15T01:42:18Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776217335288",
+      "timestamp": "2026-04-15T01:42:15Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776217335278",
+      "timestamp": "2026-04-15T01:42:15Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 26
+      }
+    },
+    {
+      "event_id": "auto_1776217335275",
+      "timestamp": "2026-04-15T01:42:15Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776217335275",
+      "timestamp": "2026-04-15T01:42:15Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776217012366",
+      "timestamp": "2026-04-15T01:36:52Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776217008463",
+      "timestamp": "2026-04-15T01:36:48Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776217008453",
+      "timestamp": "2026-04-15T01:36:48Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 25
+      }
+    },
+    {
+      "event_id": "auto_1776217008450",
+      "timestamp": "2026-04-15T01:36:48Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776217008450",
+      "timestamp": "2026-04-15T01:36:48Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776215383283",
+      "timestamp": "2026-04-15T01:09:43Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 12,
+        "attempts_used": 3,
+        "duration_ms": 10007,
+        "paused_until": "2026-04-15T01:10:43Z"
+      }
+    },
+    {
+      "event_id": "auto_1776215378279",
+      "timestamp": "2026-04-15T01:09:38Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776215373276",
+      "timestamp": "2026-04-15T01:09:33Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776215373268",
+      "timestamp": "2026-04-15T01:09:33Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 24
+      }
+    },
+    {
+      "event_id": "auto_1776215373265",
+      "timestamp": "2026-04-15T01:09:33Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776215373265",
+      "timestamp": "2026-04-15T01:09:33Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776215060286",
+      "timestamp": "2026-04-15T01:04:20Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776215059278",
+      "timestamp": "2026-04-15T01:04:19Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 11,
+        "attempts_used": 3,
+        "duration_ms": 10006,
+        "paused_until": "2026-04-15T01:05:19Z"
+      }
+    },
+    {
+      "event_id": "auto_1776215054275",
+      "timestamp": "2026-04-15T01:04:14Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776215049272",
+      "timestamp": "2026-04-15T01:04:09Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776215049260",
+      "timestamp": "2026-04-15T01:04:09Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 23
+      }
+    },
+    {
+      "event_id": "auto_1776215049257",
+      "timestamp": "2026-04-15T01:04:09Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776215049257",
+      "timestamp": "2026-04-15T01:04:09Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776213752049",
+      "timestamp": "2026-04-15T00:42:32Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 10,
+        "attempts_used": 3,
+        "duration_ms": 10006,
+        "paused_until": "2026-04-15T00:43:32Z"
+      }
+    },
+    {
+      "event_id": "auto_1776213747046",
+      "timestamp": "2026-04-15T00:42:27Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776213742043",
+      "timestamp": "2026-04-15T00:42:22Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776213742033",
+      "timestamp": "2026-04-15T00:42:22Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 22
+      }
+    },
+    {
+      "event_id": "auto_1776213742030",
+      "timestamp": "2026-04-15T00:42:22Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776213742030",
+      "timestamp": "2026-04-15T00:42:22Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776213420956",
+      "timestamp": "2026-04-15T00:37:00Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776213415953",
+      "timestamp": "2026-04-15T00:36:55Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776213415932",
+      "timestamp": "2026-04-15T00:36:55Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 21
+      }
+    },
+    {
+      "event_id": "auto_1776213415929",
+      "timestamp": "2026-04-15T00:36:55Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776213415929",
+      "timestamp": "2026-04-15T00:36:55Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776213402409",
+      "timestamp": "2026-04-15T00:36:42Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776213399410",
+      "timestamp": "2026-04-15T00:36:39Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776213399402",
+      "timestamp": "2026-04-15T00:36:39Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 20
+      }
+    },
+    {
+      "event_id": "auto_1776213399399",
+      "timestamp": "2026-04-15T00:36:39Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776213399399",
+      "timestamp": "2026-04-15T00:36:39Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776212585201",
+      "timestamp": "2026-04-15T00:23:05Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776212585182",
+      "timestamp": "2026-04-15T00:23:05Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 19
+      }
+    },
+    {
+      "event_id": "auto_1776212585180",
+      "timestamp": "2026-04-15T00:23:05Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776212585180",
+      "timestamp": "2026-04-15T00:23:05Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776212567577",
+      "timestamp": "2026-04-15T00:22:47Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776212564577",
+      "timestamp": "2026-04-15T00:22:44Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776212564568",
+      "timestamp": "2026-04-15T00:22:44Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 18
+      }
+    },
+    {
+      "event_id": "auto_1776212564564",
+      "timestamp": "2026-04-15T00:22:44Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776212564563",
+      "timestamp": "2026-04-15T00:22:44Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776212247295",
+      "timestamp": "2026-04-15T00:17:27Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 9,
+        "attempts_used": 3,
+        "duration_ms": 10006,
+        "paused_until": "2026-04-15T00:18:27Z"
+      }
+    },
+    {
+      "event_id": "auto_1776212242291",
+      "timestamp": "2026-04-15T00:17:22Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776212237288",
+      "timestamp": "2026-04-15T00:17:17Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776212177755",
+      "timestamp": "2026-04-15T00:16:17Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 8,
+        "attempts_used": 3,
+        "duration_ms": 10008,
+        "paused_until": "2026-04-15T00:17:17Z"
+      }
+    },
+    {
+      "event_id": "auto_1776212172750",
+      "timestamp": "2026-04-15T00:16:12Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776212167747",
+      "timestamp": "2026-04-15T00:16:07Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776212107184",
+      "timestamp": "2026-04-15T00:15:07Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 7,
+        "attempts_used": 3,
+        "duration_ms": 10007,
+        "paused_until": "2026-04-15T00:16:07Z"
+      }
+    },
+    {
+      "event_id": "auto_1776212102181",
+      "timestamp": "2026-04-15T00:15:02Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776212097176",
+      "timestamp": "2026-04-15T00:14:57Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776211917763",
+      "timestamp": "2026-04-15T00:11:57Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776211917753",
+      "timestamp": "2026-04-15T00:11:57Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 17
+      }
+    },
+    {
+      "event_id": "auto_1776211917750",
+      "timestamp": "2026-04-15T00:11:57Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776211917750",
+      "timestamp": "2026-04-15T00:11:57Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776193882991",
+      "timestamp": "2026-04-14T19:11:22Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776193882891",
+      "timestamp": "2026-04-14T19:11:22Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776193877888",
+      "timestamp": "2026-04-14T19:11:17Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776193877877",
+      "timestamp": "2026-04-14T19:11:17Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 16
+      }
+    },
+    {
+      "event_id": "auto_1776193877875",
+      "timestamp": "2026-04-14T19:11:17Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776193877875",
+      "timestamp": "2026-04-14T19:11:17Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776193584589",
+      "timestamp": "2026-04-14T19:06:24Z",
+      "event_type": "worker_stopped",
+      "operator_id": null,
+      "payload": {}
+    },
+    {
+      "event_id": "auto_1776193582580",
+      "timestamp": "2026-04-14T19:06:22Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 6,
+        "attempts_used": 3,
+        "duration_ms": 10005,
+        "paused_until": "2026-04-14T19:07:22Z"
+      }
+    },
+    {
+      "event_id": "auto_1776193577577",
+      "timestamp": "2026-04-14T19:06:17Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776193572574",
+      "timestamp": "2026-04-14T19:06:12Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776193572567",
+      "timestamp": "2026-04-14T19:06:12Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 15
+      }
+    },
+    {
+      "event_id": "auto_1776193572564",
+      "timestamp": "2026-04-14T19:06:12Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776193572564",
+      "timestamp": "2026-04-14T19:06:12Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776153640636",
+      "timestamp": "2026-04-14T08:00:40Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 5,
+        "attempts_used": 3,
+        "duration_ms": 10010,
+        "paused_until": "2026-04-14T08:01:40Z"
+      }
+    },
+    {
+      "event_id": "auto_1776153635631",
+      "timestamp": "2026-04-14T08:00:35Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776153630626",
+      "timestamp": "2026-04-14T08:00:30Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776153570853",
+      "timestamp": "2026-04-14T07:59:30Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 4,
+        "attempts_used": 3,
+        "duration_ms": 10010,
+        "paused_until": "2026-04-14T08:00:30Z"
+      }
+    },
+    {
+      "event_id": "auto_1776153565848",
+      "timestamp": "2026-04-14T07:59:25Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776153560843",
+      "timestamp": "2026-04-14T07:59:20Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776153500047",
+      "timestamp": "2026-04-14T07:58:20Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 3,
+        "attempts_used": 3,
+        "duration_ms": 10009,
+        "paused_until": "2026-04-14T07:59:20Z"
+      }
+    },
+    {
+      "event_id": "auto_1776153495043",
+      "timestamp": "2026-04-14T07:58:15Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776153490038",
+      "timestamp": "2026-04-14T07:58:10Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776153485981",
+      "timestamp": "2026-04-14T07:58:05Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 2,
+        "attempts_used": 3,
+        "duration_ms": 10012,
+        "paused_until": null
+      }
+    },
+    {
+      "event_id": "auto_1776153480974",
+      "timestamp": "2026-04-14T07:58:00Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776153475969",
+      "timestamp": "2026-04-14T07:57:55Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776153475950",
+      "timestamp": "2026-04-14T07:57:55Z",
+      "event_type": "worker_started",
+      "operator_id": null,
+      "payload": {
+        "restart_count": 14
+      }
+    },
+    {
+      "event_id": "auto_1776153475945",
+      "timestamp": "2026-04-14T07:57:55Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776153475945",
+      "timestamp": "2026-04-14T07:57:55Z",
+      "event_type": "operator_recovered",
+      "operator_id": "operator_F5E2C5BA",
+      "payload": {
+        "clear_failures": false,
+        "run_immediately": false
+      }
+    },
+    {
+      "event_id": "auto_1776149188939",
+      "timestamp": "2026-04-14T06:46:28Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 1,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    },
+    {
+      "event_id": "auto_1776149183910",
+      "timestamp": "2026-04-14T06:46:23Z",
+      "event_type": "cycle_error",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "error": "404: Operator not found",
+        "consecutive_failures": 1,
+        "attempts_used": 3,
+        "duration_ms": 10004,
+        "paused_until": null
+      }
+    },
+    {
+      "event_id": "auto_1776149178909",
+      "timestamp": "2026-04-14T06:46:18Z",
+      "event_type": "cycle_retry_scheduled",
+      "operator_id": "operator_B9D19209",
+      "payload": {
+        "attempt": 2,
+        "max_attempts": 3,
+        "retry_backoff_seconds": 5,
+        "error": "404: Operator not found"
+      }
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora Multi-Strategy Control</title>
+  <style>
+    body{margin:0;font-family:Inter,Arial,sans-serif;background:#07111f;color:#e5eefc}
+    .shell{max-width:1400px;margin:0 auto;padding:24px}
+    .panel{background:#0f1d31;border:1px solid #22314e;border-radius:18px;padding:18px;margin-bottom:16px}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    input,select,button{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #22314e;background:#132742;color:#e5eefc}
+    button{background:#2563eb;font-weight:700;cursor:pointer}
+    button.secondary{background:#1d4ed8}
+    table{width:100%;border-collapse:collapse} th,td{padding:9px 10px;border-bottom:1px solid #22314e;text-align:left;font-size:13px}
+    th{color:#9bb0d1;font-size:11px;text-transform:uppercase} .muted{color:#9bb0d1} pre{background:#06101d;border:1px solid #22314e;border-radius:12px;padding:12px;white-space:pre-wrap}
+    @media(max-width:900px){.grid,.grid3{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="panel">
+      <h1 style="margin-top:0">QNT30348 · Multi-Strategy Control</h1>
+      <div class="muted">Rank strategies, auto-enable the strongest set, pause weak performers, and rebalance capital from one panel.</div>
+    </div>
+    <div class="panel">
+      <div class="grid">
+        <input id="email" placeholder="Email">
+        <input id="password" type="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <button class="secondary" onclick="loadStatus()">Refresh</button>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="grid3">
+        <input id="max_active" type="number" value="3" min="1" max="20" placeholder="Max active strategies">
+        <input id="min_score" type="number" value="55" min="0" max="100" placeholder="Min score to enable">
+        <input id="pause_score" type="number" value="35" min="0" max="100" placeholder="Pause below score">
+      </div>
+      <div class="grid3" style="margin-top:12px">
+        <select id="market_bias"><option value="neutral">neutral</option><option value="bullish">bullish</option><option value="bearish">bearish</option></select>
+        <button onclick="optimize()">Optimize Fleet</button>
+        <button class="secondary" onclick="rebalance()">Rebalance Capital</button>
+      </div>
+    </div>
+    <div class="panel"><div id="summary" class="muted">No data loaded.</div></div>
+    <div class="panel"><div id="table"></div></div>
+    <div class="panel"><pre id="out">Ready.</pre></div>
+  </div>
+<script>
+const API='http://127.0.0.1:8010';
+async function j(path, options={}){const r=await fetch(API+path,{headers:{'Content-Type':'application/json'},...options}); const t=await r.text(); let data={raw:t}; try{data=JSON.parse(t)}catch{} if(!r.ok) throw new Error(t); return data;}
+function fmt(n){return Number(n||0).toFixed(2)}
+async function login(){const data=await j('/auth/login',{method:'POST',body:JSON.stringify({email:email.value,password:password.value})}); out.textContent=JSON.stringify(data,null,2); await loadStatus();}
+async function loadStatus(){try{const data=await j(`/multi-strategy/status?max_active_strategies=${max_active.value}&market_bias=${market_bias.value}`); summary.textContent=`Strategies: ${data.summary.total_strategies} | Active: ${data.summary.active_strategies} | Avg Score: ${data.summary.average_score} | Top Score: ${data.summary.top_score}`; table.innerHTML=`<table><thead><tr><th>Rank</th><th>Name</th><th>Symbol</th><th>Status</th><th>Score</th><th>Recommendation</th><th>Realized</th><th>Unrealized</th><th>Win Rate</th><th>Capital Limit</th></tr></thead><tbody>${(data.rankings||[]).map((r,i)=>`<tr><td>${i+1}</td><td>${r.name}</td><td>${r.symbol}</td><td>${r.status}${r.enabled?' / enabled':''}</td><td>${fmt(r.score)}</td><td>${r.recommendation}</td><td>${fmt(r.realized_pnl)}</td><td>${fmt(r.unrealized_pnl)}</td><td>${fmt(r.win_rate)}%</td><td>${fmt(r.capital_limit)}</td></tr>`).join('')}</tbody></table>`; out.textContent=JSON.stringify(data,null,2);}catch(e){out.textContent=String(e)}}
+async function optimize(){try{const data=await j('/multi-strategy/optimize',{method:'POST',body:JSON.stringify({max_active_strategies:Number(max_active.value),min_score_to_enable:Number(min_score.value),pause_below_score:Number(pause_score.value),market_bias:market_bias.value,rebalance_capital:true})}); out.textContent=JSON.stringify(data,null,2); await loadStatus();}catch(e){out.textContent=String(e)}}
+async function rebalance(){try{const data=await j('/multi-strategy/rebalance',{method:'POST',body:JSON.stringify({max_active_strategies:Number(max_active.value),market_bias:market_bias.value})}); out.textContent=JSON.stringify(data,null,2); await loadStatus();}catch(e){out.textContent=String(e)}}
+</script>
+</body>
+</html>

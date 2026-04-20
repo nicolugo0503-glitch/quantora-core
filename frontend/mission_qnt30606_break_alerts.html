@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30606 Automated Break Alert Engine</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1440px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%;min-height:90px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:420px}
+.bad{color:#ef4444}
+.good{color:#10b981}
+@media(max-width:1400px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30606 · Automated Break Alert Engine</h1>
+        <div style="color:#9fb3d8">Scans reconciliation layers and automatically opens alerts for detected breaks across broker, three-way, and lifecycle controls.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30605_alpaca_live_sync.html">Alpaca Live Sync</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Alerts</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Open</div><div id="open" class="value">-</div></div>
+    <div class="card"><div class="label">Acknowledged</div><div id="ack" class="value">-</div></div>
+    <div class="card"><div class="label">Resolved</div><div id="resolved" class="value">-</div></div>
+    <div class="card"><div class="label">High Severity</div><div id="high" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <textarea id="notes" placeholder="Run notes"></textarea>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="runAlerts()">Run Alert Scan</button>
+      <button onclick="ackLatest()">Acknowledge Latest</button>
+      <button onclick="resolveLatest()">Resolve Latest</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Alert Queue</div>
+    <table>
+      <thead><tr><th>Source</th><th>Code</th><th>Severity</th><th>Status</th><th>Message</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Alert Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/break-alerts/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data,null,2); return; }
+  const d = res.data || {};
+  document.getElementById('count').textContent = String(d.alert_count || 0);
+  document.getElementById('open').textContent = String(d.open_count || 0);
+  document.getElementById('ack').textContent = String(d.acknowledged_count || 0);
+  document.getElementById('resolved').textContent = String(d.resolved_count || 0);
+  document.getElementById('high').textContent = String(d.high_severity_count || 0);
+  document.getElementById('rows').innerHTML = (d.alerts || []).map(a =>
+    `<tr><td>${a.source}</td><td>${a.code}</td><td>${a.severity}</td><td>${a.status}</td><td>${a.message}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function runAlerts(){
+  await j('/api/break-alerts/run', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({notes: document.getElementById('notes').value})});
+  await load();
+}
+async function ackLatest(){
+  const res = await j('/api/break-alerts');
+  const latest = (res.data.alerts || [])[0];
+  if(!latest) return;
+  await j('/api/break-alerts/ack', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({alert_id: latest.alert_id})});
+  await load();
+}
+async function resolveLatest(){
+  const res = await j('/api/break-alerts');
+  const latest = (res.data.alerts || [])[0];
+  if(!latest) return;
+  await j('/api/break-alerts/resolve', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({alert_id: latest.alert_id})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

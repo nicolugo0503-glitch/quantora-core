@@ -1,0 +1,36 @@
+{
+  "investors": [
+    {
+      "investor_id": "INV001",
+      "investor_name": "Nicolas Capital"
+    },
+    {
+      "investor_id": "INV002",
+      "investor_name": "Atlas Growth"
+    }
+  ],
+  "ledger_rows": [
+    {
+      "investor_id": "INV001",
+      "fund_id": "FUND1",
+      "shares_delta": 60000.0,
+      "cash_delta": -300000.0,
+      "event_type": "deposit"
+    },
+    {
+      "investor_id": "INV002",
+      "fund_id": "FUND1",
+      "shares_delta": 40000.0,
+      "cash_delta": -200000.0,
+      "event_type": "deposit"
+    }
+  ],
+  "nav_snapshots": [
+    {
+      "fund_id": "FUND1",
+      "nav": 720000.0,
+      "nav_per_share": 7.2,
+      "total_shares": 100000.0
+    }
+  ]
+}

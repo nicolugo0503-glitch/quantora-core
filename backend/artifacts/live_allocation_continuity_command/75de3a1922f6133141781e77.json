@@ -1,0 +1,17 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "priority_strategy_count": 8,
+    "minimum_continuity_score": 78.0,
+    "minimum_clearance_score": 82.0,
+    "minimum_allocation_score": 80.0,
+    "minimum_sharpe_ratio": 0.75,
+    "maximum_drawdown_pct": 12.0,
+    "maximum_volatility_proxy_pct": 18.0,
+    "maximum_correlation_proxy_pct": 72.0,
+    "maximum_concentration_pct": 38.0
+  },
+  "runs": [],
+  "created_at": 1775792718,
+  "updated_at": 1775792718
+}

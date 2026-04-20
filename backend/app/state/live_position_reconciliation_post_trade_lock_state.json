@@ -1,0 +1,67 @@
+{
+  "reconciliation_status": "drift",
+  "lock_status": "blocked",
+  "drift_detected": true,
+  "drift_reason": "latest fill BTCUSDT does not match position snapshot ETHUSDT",
+  "last_reconciled_at": 1776592599,
+  "last_locked_at": 1776592599,
+  "latest_fill_reference": {
+    "symbol": "BTCUSDT",
+    "qty": 0.01,
+    "side": "BUY",
+    "price": 50000
+  },
+  "latest_position_snapshot": {
+    "symbol": "ETHUSDT",
+    "qty": 0.01
+  },
+  "lock_blockers": [
+    "latest fill BTCUSDT does not match position snapshot ETHUSDT"
+  ],
+  "history": [
+    {
+      "event": "reconcile-position",
+      "timestamp": 1776592546,
+      "drift_detected": false,
+      "drift_reason": null
+    },
+    {
+      "event": "lock-trade-state-blocked",
+      "timestamp": 1776592546,
+      "blockers": [
+        "no fill evidence available",
+        "trade confirmation not available"
+      ]
+    },
+    {
+      "event": "reconcile-position",
+      "timestamp": 1776592547,
+      "drift_detected": false,
+      "drift_reason": null
+    },
+    {
+      "event": "reconcile-position",
+      "timestamp": 1776592599,
+      "drift_detected": false,
+      "drift_reason": null
+    },
+    {
+      "event": "lock-trade-state",
+      "timestamp": 1776592599,
+      "lock_reference": "REAL01I_LOCK_1776592599"
+    },
+    {
+      "event": "reconcile-position",
+      "timestamp": 1776592599,
+      "drift_detected": true,
+      "drift_reason": "latest fill BTCUSDT does not match position snapshot ETHUSDT"
+    },
+    {
+      "event": "lock-trade-state-blocked",
+      "timestamp": 1776592599,
+      "blockers": [
+        "latest fill BTCUSDT does not match position snapshot ETHUSDT"
+      ]
+    }
+  ]
+}

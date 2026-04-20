@@ -1,0 +1,64 @@
+{
+  "module": "QNT30648",
+  "name": "Institutional Reporting & Transparency Layer",
+  "created_at": "2026-04-08T23:26:57.509179+00:00",
+  "requirements": [
+    {
+      "requirement_id": "DISC_REQ_001",
+      "entity_id": "PROD_GROWTH_01",
+      "entity_type": "product",
+      "cadence": "monthly",
+      "disclosure_type": "factsheet",
+      "latest_period": "2026-04",
+      "status": "active",
+      "created_at": "2026-04-08T23:26:57.509198+00:00"
+    },
+    {
+      "requirement_id": "DISC_REQ_002",
+      "entity_id": "VEHICLE_ALPHA",
+      "entity_type": "vehicle",
+      "cadence": "quarterly",
+      "disclosure_type": "vehicle_snapshot",
+      "latest_period": "2026-Q1",
+      "status": "active",
+      "created_at": "2026-04-08T23:26:57.509203+00:00"
+    }
+  ],
+  "schedules": [
+    {
+      "schedule_id": "SCHED_001",
+      "entity_id": "PROD_GROWTH_01",
+      "cadence": "monthly",
+      "next_due_date": "2026-05-10",
+      "report_family": "investor_reporting",
+      "status": "scheduled",
+      "created_at": "2026-04-08T23:26:57.509207+00:00"
+    }
+  ],
+  "disclosures": [
+    {
+      "disclosure_id": "PACK_001",
+      "entity_id": "PROD_GROWTH_01",
+      "period": "2026-04",
+      "disclosure_type": "factsheet",
+      "audience": "lp",
+      "content_status": "published",
+      "created_at": "2026-04-08T23:26:57.509210+00:00",
+      "published_at": "2026-04-08T23:26:57.509213+00:00"
+    }
+  ],
+  "deliveries": [
+    {
+      "delivery_id": "DELIV_001",
+      "disclosure_id": "PACK_001",
+      "entity_id": "PROD_GROWTH_01",
+      "recipient_id": "CLIENT_001",
+      "recipient_role": "lp",
+      "delivery_status": "delivered",
+      "viewed": true,
+      "acknowledged": false,
+      "created_at": "2026-04-08T23:26:57.509217+00:00"
+    }
+  ],
+  "acknowledgments": []
+}

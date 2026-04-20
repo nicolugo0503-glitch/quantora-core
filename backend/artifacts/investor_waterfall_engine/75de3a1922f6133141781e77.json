@@ -1,0 +1,76 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "runs": [
+    {
+      "run_id": "waterfall_2026-04",
+      "timestamp": 1775865600,
+      "total_nav": 960000.0,
+      "total_funded_capital": 960000.0,
+      "distributable_profit": 41500.0,
+      "hurdle_rate_pct": 8.0,
+      "hurdle_amount": 76800.0,
+      "gp_carry_pct": 20.0,
+      "gp_carry_amount": 0.0,
+      "lp_distribution_pool": 41500.0,
+      "investor_allocations": [
+        {
+          "investor_id": "inv_qnt_001",
+          "investor_name": "Meridian Endowment Fund",
+          "ownership_pct": 43.75,
+          "funded_capital": 420000.0,
+          "distribution_amount": 18500.0,
+          "account_id": "acct_inv_qnt_001"
+        },
+        {
+          "investor_id": "inv_qnt_002",
+          "investor_name": "Aurora Family Office",
+          "ownership_pct": 31.25,
+          "funded_capital": 300000.0,
+          "distribution_amount": 13200.0,
+          "account_id": "acct_inv_qnt_002"
+        },
+        {
+          "investor_id": "inv_qnt_003",
+          "investor_name": "Northstar Treasury Partners",
+          "ownership_pct": 25.0,
+          "funded_capital": 240000.0,
+          "distribution_amount": 9800.0,
+          "account_id": "acct_inv_qnt_003"
+        }
+      ],
+      "notice_count": 3,
+      "status": "calculated"
+    }
+  ],
+  "distribution_notices": [
+    {
+      "notice_id": "notice_inv_qnt_001_2026-04",
+      "investor_id": "inv_qnt_001",
+      "investor_name": "Meridian Endowment Fund",
+      "distribution_amount": 18500.0,
+      "status": "published",
+      "created_at": 1775865600,
+      "published_at": 1775865600
+    },
+    {
+      "notice_id": "notice_inv_qnt_002_2026-04",
+      "investor_id": "inv_qnt_002",
+      "investor_name": "Aurora Family Office",
+      "distribution_amount": 13200.0,
+      "status": "published",
+      "created_at": 1775865600,
+      "published_at": 1775865600
+    },
+    {
+      "notice_id": "notice_inv_qnt_003_2026-04",
+      "investor_id": "inv_qnt_003",
+      "investor_name": "Northstar Treasury Partners",
+      "distribution_amount": 9800.0,
+      "status": "published",
+      "created_at": 1775865600,
+      "published_at": 1775865600
+    }
+  ],
+  "created_at": 1775662020,
+  "updated_at": 1775662020
+}

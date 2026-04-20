@@ -1,0 +1,266 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30627 Investor Statement Batch Engine</title>
+<style>
+:root{--bg:#f4f5f7;--ink:#0a0e14;--muted:#596579;--line:#d8dfe8;--card:#ffffff;--accent:#101828}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:1520px;margin:auto;padding:28px}
+.hero,.card{background:var(--card);border:1px solid var(--line);border-radius:18px}
+.hero{padding:22px 24px;margin-bottom:16px}.card{padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.value{font-size:28px;font-weight:800;margin-top:8px}
+button,select,input{padding:12px 14px;border-radius:12px;border:1px solid var(--line);font:inherit;background:#fff;color:var(--ink)}
+button{background:var(--accent);color:#fff;border-color:var(--accent);cursor:pointer;font-weight:700}
+button.secondary{background:#fff;color:var(--ink)}
+a.btn{display:inline-block;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink);text-decoration:none;font-weight:700}
+table{width:100%;border-collapse:collapse} th,td{padding:11px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top} th{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.statement{background:#fff;color:#0a0e14;padding:40px;border:1px solid var(--line);border-radius:18px}
+.statement h1,.statement h2,.statement h3,.statement p{margin:0}
+.statement-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}.tile{border:1px solid var(--line);border-radius:14px;padding:14px}.tile .k{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}.tile .v{font-size:22px;font-weight:800;margin-top:8px}
+.two{display:grid;grid-template-columns:1.35fr .95fr;gap:16px}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.pill{display:inline-block;padding:7px 10px;border-radius:999px;border:1px solid var(--line);font-size:12px;font-weight:700}.good{background:#eef7ef}.warn{background:#fff7e8}.locked{background:#eef1f6}
+.small{font-size:12px;color:var(--muted)}
+@media(max-width:1280px){.grid,.stats,.statement-grid,.two{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.grid,.stats,.statement-grid,.two{grid-template-columns:1fr}.wrap{padding:16px}.statement{padding:20px}}
+@media print{body{background:#fff}.wrap{padding:0;max-width:none}.hero,.card,.toolbar{display:none !important}.statement{border:none;border-radius:0;padding:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <div class="label">QNT30627</div>
+        <h1 style="margin:6px 0 8px;font-size:34px">Investor Statement Batch Engine</h1>
+        <p style="max-width:980px;color:var(--muted);font-size:15px;line-height:1.55">Official monthly close engine for multi-investor statement generation, period locking, reconciliation checks, and investor-ready reporting. This is reporting-cycle infrastructure — not a single-investor toy flow.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap" class="toolbar">
+        <a class="btn" href="mission_qnt30624_capital_ledger.html">Capital Ledger</a>
+        <a class="btn" href="mission_qnt30625_waterfall.html">Waterfall</a>
+        <a class="btn" href="mission_qnt30626_equalization.html">Equalization</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card toolbar">
+    <div class="grid">
+      <div><div class="label">Reporting Period</div><input id="period" placeholder="YYYY-MM"></div>
+      <div><div class="label">Investor Statement</div><select id="investorSelect"><option value="">Select investor</option></select></div>
+      <div style="display:flex;align-items:end"><button onclick="generateBatch()">Generate Batch</button></div>
+      <div style="display:flex;align-items:end"><button class="secondary" onclick="lockPeriod()">Lock Period</button></div>
+      <div style="display:flex;align-items:end"><button class="secondary" onclick="seedDemo()">Bootstrap Demo</button></div>
+      <div style="display:flex;align-items:end"><button class="secondary" onclick="window.print()">Print Current Statement</button></div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="card"><div class="label">Periods</div><div id="periodCount" class="value">-</div></div>
+    <div class="card"><div class="label">Locked Periods</div><div id="lockedPeriods" class="value">-</div></div>
+    <div class="card"><div class="label">Statements</div><div id="statementCount" class="value">-</div></div>
+    <div class="card"><div class="label">Period NAV</div><div id="periodNav" class="value">-</div></div>
+    <div class="card"><div class="label">Period Return</div><div id="periodReturn" class="value">-</div></div>
+  </div>
+
+  <div class="two">
+    <div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+          <div>
+            <div class="label">Batch Registry</div>
+            <div class="small">Immutable period snapshots once locked.</div>
+          </div>
+          <div id="reconPill" class="pill">Reconciliation: -</div>
+        </div>
+        <table style="margin-top:14px">
+          <thead><tr><th>Period</th><th>Status</th><th>Statements</th><th>Total NAV</th><th>Net Return</th><th>Distributions</th></tr></thead>
+          <tbody id="periodRows"></tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="label">Selected Period Payload</div>
+        <pre id="raw" style="background:#f7f8fa;border:1px solid var(--line);border-radius:14px;padding:12px;overflow:auto;max-height:350px"></pre>
+      </div>
+    </div>
+
+    <div>
+      <div id="statementStage" class="statement">
+        <div style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-start">
+          <div>
+            <div class="label">Official Investor Statement</div>
+            <h1 id="stmtName" style="margin-top:8px;font-size:34px">No statement selected</h1>
+            <p id="stmtMeta" class="small" style="margin-top:8px"></p>
+          </div>
+          <div style="text-align:right">
+            <div class="pill locked" id="stmtStatus">Awaiting batch generation</div>
+            <div class="small" id="stmtGenerated" style="margin-top:10px"></div>
+          </div>
+        </div>
+
+        <div class="statement-grid">
+          <div class="tile"><div class="k">Committed Capital</div><div id="sCommitted" class="v">-</div></div>
+          <div class="tile"><div class="k">Funded Capital</div><div id="sFunded" class="v">-</div></div>
+          <div class="tile"><div class="k">Ending NAV</div><div id="sNav" class="v">-</div></div>
+          <div class="tile"><div class="k">Ownership</div><div id="sOwn" class="v">-</div></div>
+          <div class="tile"><div class="k">Beginning NAV</div><div id="sBegin" class="v">-</div></div>
+          <div class="tile"><div class="k">Net Return</div><div id="sReturn" class="v">-</div></div>
+          <div class="tile"><div class="k">Period Return %</div><div id="sReturnPct" class="v">-</div></div>
+          <div class="tile"><div class="k">TWR</div><div id="sTwr" class="v">-</div></div>
+        </div>
+
+        <div class="two" style="grid-template-columns:1.05fr .95fr;gap:14px">
+          <div>
+            <h2 style="font-size:18px;margin-bottom:12px">Strategy Allocation Breakdown</h2>
+            <table>
+              <thead><tr><th>Strategy</th><th>Sleeve</th><th>Capital</th><th>PnL</th><th>Return %</th></tr></thead>
+              <tbody id="allocRows"></tbody>
+            </table>
+          </div>
+          <div>
+            <h2 style="font-size:18px;margin-bottom:12px">Statement Context</h2>
+            <table>
+              <tbody>
+                <tr><th>Account ID</th><td id="cAccount" class="mono"></td></tr>
+                <tr><th>Share Class</th><td id="cClass"></td></tr>
+                <tr><th>Series</th><td id="cSeries"></td></tr>
+                <tr><th>Distribution</th><td id="cDist"></td></tr>
+                <tr><th>Equalization Credit</th><td id="cEq"></td></tr>
+                <tr><th>TWR Status</th><td id="cTwrStatus"></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-top:18px">
+          <h2 style="font-size:18px;margin-bottom:12px">Activity Ledger</h2>
+          <table>
+            <thead><tr><th>Timestamp</th><th>Source</th><th>Type</th><th>Description</th><th>Amount</th></tr></thead>
+            <tbody id="activityRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v || 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function pct(v){ return Number(v || 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}) + '%'; }
+function stamp(ts){ if(!ts) return '-'; const d=new Date(Number(ts)*1000); return d.toISOString().slice(0,10); }
+async function j(url, opts){ const r = await fetch(url, opts || {}); let d={}; try{ d = await r.json(); }catch(_e){} if(!r.ok){ throw new Error((d && (d.detail || d.status)) || ('Request failed: ' + r.status)); } return d; }
+function currentPeriod(){ const n = new Date(); return `${n.getUTCFullYear()}-${String(n.getUTCMonth()+1).padStart(2,'0')}`; }
+let selectedSnapshot = null;
+let selectedStatement = null;
+
+async function refresh(){
+  const period = document.getElementById('period').value || currentPeriod();
+  const data = await j('/api/investor-statements/summary?period=' + encodeURIComponent(period));
+  selectedSnapshot = data.selected_period || null;
+  document.getElementById('periodCount').textContent = String(data.period_count || 0);
+  document.getElementById('lockedPeriods').textContent = String(data.locked_period_count || 0);
+  document.getElementById('statementCount').textContent = String(((selectedSnapshot || {}).summary || {}).statement_count || 0);
+  document.getElementById('periodNav').textContent = money((((selectedSnapshot || {}).summary || {}).total_nav || 0));
+  document.getElementById('periodReturn').textContent = money((((selectedSnapshot || {}).summary || {}).total_net_return || 0));
+  document.getElementById('periodRows').innerHTML = (data.periods || []).map(p =>
+    `<tr onclick="loadPeriod('${p.period}')" style="cursor:pointer"><td>${p.period}</td><td>${p.status}</td><td>${p.statement_count}</td><td>${money(p.total_nav)}</td><td>${money(p.total_net_return)}</td><td>${money(p.total_distributions)}</td></tr>`
+  ).join('') || '<tr><td colspan="6">No reporting periods yet. Generate a batch or bootstrap demo data.</td></tr>';
+  const recon = ((selectedSnapshot || {}).reconciliation || {});
+  const pill = document.getElementById('reconPill');
+  pill.textContent = 'Reconciliation: ' + (recon.status || '-');
+  pill.className = 'pill ' + (recon.status === 'pass' ? 'good' : (recon.status === 'warning' ? 'warn' : 'locked'));
+  document.getElementById('raw').textContent = JSON.stringify(selectedSnapshot || data, null, 2);
+
+  const investorSelect = document.getElementById('investorSelect');
+  const currentValue = investorSelect.value;
+  const statements = ((selectedSnapshot || {}).statements || {});
+  const ids = Object.keys(statements);
+  investorSelect.innerHTML = '<option value="">Select investor</option>' + ids.map(id => `<option value="${id}">${statements[id].investor.legal_name}</option>`).join('');
+  if(currentValue && statements[currentValue]) investorSelect.value = currentValue;
+  else if(ids.length && !investorSelect.value){ investorSelect.value = ids[0]; }
+  if(investorSelect.value){ renderStatement(statements[investorSelect.value]); }
+  else { renderStatement(null); }
+}
+
+async function loadPeriod(period){
+  document.getElementById('period').value = period;
+  await refresh();
+}
+
+async function generateBatch(){
+  const period = document.getElementById('period').value || currentPeriod();
+  await j('/api/investor-statements/generate', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({period})});
+  await refresh();
+}
+
+async function lockPeriod(){
+  const period = document.getElementById('period').value || currentPeriod();
+  await j('/api/investor-statements/lock', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({period})});
+  await refresh();
+}
+
+async function seedDemo(){
+  const period = document.getElementById('period').value || currentPeriod();
+  await j('/api/investor-statements/bootstrap-demo', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({period})});
+  await j('/api/investor-statements/generate', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({period})});
+  await refresh();
+}
+
+function renderStatement(stmt){
+  selectedStatement = stmt;
+  if(!stmt){
+    document.getElementById('stmtName').textContent = 'No statement selected';
+    document.getElementById('stmtMeta').textContent = '';
+    document.getElementById('stmtStatus').textContent = 'Awaiting batch generation';
+    document.getElementById('stmtGenerated').textContent = '';
+    ['sCommitted','sFunded','sNav','sOwn','sBegin','sReturn','sReturnPct','sTwr','cAccount','cClass','cSeries','cDist','cEq','cTwrStatus'].forEach(id => document.getElementById(id).textContent='-');
+    document.getElementById('allocRows').innerHTML = '<tr><td colspan="5">No statement loaded.</td></tr>';
+    document.getElementById('activityRows').innerHTML = '<tr><td colspan="5">No activity.</td></tr>';
+    return;
+  }
+  const cap = stmt.capital_summary || {};
+  const perf = stmt.performance || {};
+  const inv = stmt.investor || {};
+  const water = stmt.waterfall || {};
+  const eq = stmt.equalization || {};
+  const status = (selectedSnapshot || {}).status || 'open';
+  document.getElementById('stmtName').textContent = inv.legal_name || inv.investor_id;
+  document.getElementById('stmtMeta').textContent = `${stmt.period} · ${inv.entity_type || 'investor'} · ${inv.primary_email || ''}`;
+  document.getElementById('stmtStatus').textContent = 'Period ' + status.toUpperCase();
+  document.getElementById('stmtGenerated').textContent = 'Generated ' + stamp(stmt.generated_at);
+  document.getElementById('sCommitted').textContent = money(cap.committed_capital);
+  document.getElementById('sFunded').textContent = money(cap.funded_capital);
+  document.getElementById('sNav').textContent = money(cap.nav);
+  document.getElementById('sOwn').textContent = pct(cap.ownership_pct);
+  document.getElementById('sBegin').textContent = money(perf.beginning_nav);
+  document.getElementById('sReturn').textContent = money(perf.net_return_amount);
+  document.getElementById('sReturnPct').textContent = pct(perf.period_return_pct);
+  document.getElementById('sTwr').textContent = perf.twr_pct == null ? 'Pending' : pct(perf.twr_pct);
+  document.getElementById('cAccount').textContent = inv.account_id || '-';
+  document.getElementById('cClass').textContent = inv.share_class_name || inv.share_class_id || '-';
+  document.getElementById('cSeries').textContent = inv.series_name || '-';
+  document.getElementById('cDist').textContent = money(water.distribution_amount || 0);
+  document.getElementById('cEq').textContent = money(eq.equalization_credit || 0);
+  document.getElementById('cTwrStatus').textContent = perf.twr_status || '-';
+  document.getElementById('allocRows').innerHTML = (stmt.allocations || []).map(a =>
+    `<tr><td>${a.strategy}</td><td>${a.sleeve}</td><td>${money(a.amount)}</td><td>${money(a.pnl_amount)}</td><td>${a.data_quality === 'live' ? pct(a.return_pct) : 'Pending mapping'}</td></tr>`
+  ).join('') || '<tr><td colspan="5">No allocations mapped.</td></tr>';
+  document.getElementById('activityRows').innerHTML = (stmt.activity || []).map(a =>
+    `<tr><td>${stamp(a.timestamp)}</td><td>${a.source}</td><td>${a.type}</td><td>${a.description}</td><td>${money(a.amount)}</td></tr>`
+  ).join('') || '<tr><td colspan="5">No period activity.</td></tr>';
+}
+
+document.getElementById('investorSelect').addEventListener('change', async (e) => {
+  const id = e.target.value;
+  const stmts = ((selectedSnapshot || {}).statements || {});
+  renderStatement(id ? stmts[id] : null);
+});
+
+document.getElementById('period').value = currentPeriod();
+refresh().catch(err => {
+  document.getElementById('raw').textContent = err.message || String(err);
+});
+</script>
+</body>
+</html>

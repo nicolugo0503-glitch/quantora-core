@@ -1,0 +1,25 @@
+{
+  "email": "operator@quantora.test",
+  "operator_profile": {
+    "operator_name": "Quantora Operator",
+    "seat_mode": "supervised",
+    "authority_tier": "institutional",
+    "require_reason_for_resume": true,
+    "default_watch_symbols": [
+      "SPY",
+      "QQQ",
+      "AAPL"
+    ]
+  },
+  "watchlist": [
+    "SPY",
+    "QQQ",
+    "AAPL"
+  ],
+  "active_mode": "supervised",
+  "command_log": [],
+  "incidents": [],
+  "notes": [],
+  "created_at": 1776223536,
+  "updated_at": 1776223536
+}

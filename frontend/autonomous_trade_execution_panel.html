@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quantora QNT30381 Autonomous Trade Execution Engine</title>
+  <style>
+    body { background:#0b1020; color:#e8eefc; font-family:Arial,Helvetica,sans-serif; margin:0; padding:24px; }
+    h1 { margin:0 0 8px; font-size:28px; }
+    p { color:#b9c6ea; }
+    .row { display:flex; gap:16px; flex-wrap:wrap; margin:16px 0; }
+    .card { background:#121937; border:1px solid #24305f; border-radius:14px; padding:16px; flex:1 1 320px; box-shadow:0 8px 28px rgba(0,0,0,.25); }
+    button { background:#4f7cff; color:#fff; border:0; border-radius:10px; padding:10px 14px; cursor:pointer; margin-right:10px; }
+    pre { background:#091126; color:#cfe1ff; padding:14px; border-radius:12px; overflow:auto; min-height:180px; }
+    .pill { display:inline-block; padding:6px 10px; border-radius:999px; background:#1b2750; color:#b6cbff; font-size:12px; margin-right:8px; }
+  </style>
+</head>
+<body>
+  <h1>QNT30381 — Autonomous Trade Execution Engine</h1>
+  <p>Closed loop orchestration from signal intake to capital allocation, execution policy, venue routing, and lifecycle logging.</p>
+  <div>
+    <span class="pill">Signal → Policy → Allocation → Venue → Route → Lifecycle</span>
+    <span class="pill">Paper / Live Dispatch Ready</span>
+  </div>
+  <div class="row">
+    <div class="card">
+      <h3>Engine Controls</h3>
+      <button onclick="getStatus()">Load Status</button>
+      <button onclick="runDemo()">Run Demo Cycle</button>
+      <button onclick="dispatchLatest()">Dispatch Latest</button>
+    </div>
+    <div class="card">
+      <h3>API Surface</h3>
+      <ul>
+        <li>GET /autonomous-execution/status</li>
+        <li>POST /autonomous-execution/controls/update</li>
+        <li>POST /autonomous-execution/signal</li>
+        <li>POST /autonomous-execution/execute</li>
+        <li>POST /autonomous-execution/dispatch</li>
+      </ul>
+    </div>
+  </div>
+  <pre id="out">Awaiting action...</pre>
+  <script>
+    async function getStatus(){
+      const r = await fetch('/autonomous-execution/status');
+      document.getElementById('out').textContent = JSON.stringify(await r.json(), null, 2);
+    }
+    async function runDemo(){
+      await fetch('/autonomous-execution/signal', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({strategy_id:'demo_alpha', symbol:'AAPL', side:'buy', confidence:0.81, target_price:199.4, market_price:198.9, requested_qty:650, urgency:'high', strategy_score:0.84, market_volatility:0.28, execution_quality_score:91.0})
+      });
+      const r = await fetch('/autonomous-execution/execute', {method:'POST'});
+      document.getElementById('out').textContent = JSON.stringify(await r.json(), null, 2);
+    }
+    async function dispatchLatest(){
+      const r = await fetch('/autonomous-execution/dispatch', {method:'POST'});
+      document.getElementById('out').textContent = JSON.stringify(await r.json(), null, 2);
+    }
+  </script>
+</body>
+</html>

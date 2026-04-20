@@ -1,0 +1,14 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "minimum_mobility_score": 74.0,
+    "maximum_transfer_friction": 32.0,
+    "maximum_jurisdiction_constraint": 38.0,
+    "minimum_reserve_release_score": 70.0,
+    "priority_queue_count": 6,
+    "mobility_passport_floor": 72.0
+  },
+  "runs": [],
+  "created_at": 1775713998,
+  "updated_at": 1775713998
+}

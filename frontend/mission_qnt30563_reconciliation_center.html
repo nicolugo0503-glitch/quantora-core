@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30563 Reconciliation Center</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1280px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:26px;font-weight:800;margin-top:6px}
+.good{color:#10b981}.warn{color:#f59e0b}.bad{color:#ef4444}
+button,a{display:inline-block;padding:12px 16px;border-radius:10px;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;border:none;cursor:pointer;margin-right:10px}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+table{width:100%;border-collapse:collapse} th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+@media(max-width:1000px){.grid{grid-template-columns:1fr 1fr}} @media(max-width:600px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30563 · Broker-to-Ledger Reconciliation</h1>
+        <div style="color:#9fb3d8">Reconciles user-scoped ledger truth against live broker truth. Links the current signed-in user to Alpaca state, detects drift, and supports controlled sync from broker.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button onclick="linkBroker()">Link Broker</button>
+        <button onclick="runRecon()">Run Reconciliation</button>
+        <button onclick="syncFromBroker()">Sync From Broker</button>
+        <a href="investor_portal.html">Investor Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Status</div><div id="status" class="value">-</div></div>
+    <div class="card"><div class="label">System Balance</div><div id="systemBalance" class="value">-</div></div>
+    <div class="card"><div class="label">Broker Equity</div><div id="brokerEquity" class="value">-</div></div>
+    <div class="card"><div class="label">Exposure Drift</div><div id="exposureDrift" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="label">Drift Matrix</div>
+    <table>
+      <tbody id="driftRows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Raw Reconciliation Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v || 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function setStatus(s){
+  const el = document.getElementById('status');
+  el.textContent = String(s || '-').toUpperCase();
+  el.className = 'value ' + (s === 'aligned' ? 'good' : (s === 'drift' ? 'warn' : 'bad'));
+}
+async function load(){
+  const r = await fetch('/api/user-reconciliation');
+  const data = await r.json();
+  if(!r.ok){ document.getElementById('raw').textContent = JSON.stringify(data, null, 2); return; }
+  setStatus(data.status);
+  document.getElementById('systemBalance').textContent = money((data.system || {}).balance || 0);
+  document.getElementById('brokerEquity').textContent = money((data.broker || {}).portfolio_value || 0);
+  const driftVal = ((data.drift || {}).allocated_vs_broker_exposure || 0);
+  const driftEl = document.getElementById('exposureDrift');
+  driftEl.textContent = money(driftVal);
+  driftEl.className = 'value ' + (Math.abs(Number(driftVal||0)) <= 1 ? 'good' : 'warn');
+  const rows = [
+    ['Allocated vs Broker Exposure', money((data.drift || {}).allocated_vs_broker_exposure || 0)],
+    ['Available vs Broker Cash', money((data.drift || {}).available_vs_broker_cash || 0)],
+    ['Balance vs Broker Equity', money((data.drift || {}).balance_vs_broker_equity || 0)],
+    ['Broker Unrealized PnL', money((data.drift || {}).unrealized_pnl || 0)],
+    ['Linked Profile', String(((data.profile || {}).linked) ? 'YES' : 'NO')],
+    ['Broker Connected', String(((data.broker || {}).connected) ? 'YES' : 'NO')],
+  ];
+  document.getElementById('driftRows').innerHTML = rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+  document.getElementById('raw').textContent = JSON.stringify(data, null, 2);
+}
+async function linkBroker(){
+  await fetch('/api/user-broker/link', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({broker:'alpaca', paper:true})});
+  await load();
+}
+async function runRecon(){
+  await fetch('/api/user-reconciliation/run', {method:'POST'});
+  await load();
+}
+async function syncFromBroker(){
+  const r = await fetch('/api/user-reconciliation/sync-from-broker', {method:'POST'});
+  const data = await r.json();
+  if(!r.ok){ alert(data.detail || 'Broker sync failed'); }
+  await load();
+}
+load();
+setInterval(load, 6000);
+</script>
+</body>
+</html>

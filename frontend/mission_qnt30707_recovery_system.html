@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>QNT30707 Recovery System</title>
+<style>
+:root{--bg:#071019;--panel:#0d1723;--line:#1b2b40;--text:#edf3fb;--muted:#8ea0b7;--good:#48d597;--bad:#ff6f86;--warn:#ffc857}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#071019,#09131d 55%,#071019);color:var(--text);font-family:Inter,Arial,sans-serif}.wrap{max-width:1520px;margin:0 auto;padding:28px}.hero,.card{background:rgba(13,23,35,.95);border:1px solid var(--line);border-radius:20px;box-shadow:0 22px 54px rgba(0,0,0,.35)}.hero{padding:26px}.label{font-size:11px;color:var(--muted);letter-spacing:.16em;text-transform:uppercase;font-weight:800}.hero h1{margin:10px 0 8px;font-size:42px}.sub{color:var(--muted);max-width:1100px;line-height:1.55}.toolbar,.grid2,.grid3,.grid4{display:grid;gap:14px}.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}.grid4{grid-template-columns:repeat(4,1fr);margin-top:18px}.grid3{grid-template-columns:1fr 1fr 1fr;margin-top:18px}.grid2{grid-template-columns:1fr 1fr;margin-top:18px}.card{padding:18px}.value{font-size:26px;font-weight:800;margin-top:8px}.tiny{font-size:12px;color:var(--muted)}button,input,textarea,select{background:#0b1520;color:var(--text);border:1px solid var(--line);padding:11px 14px;border-radius:12px;font:inherit}.btn{cursor:pointer;font-weight:700}.primary{background:#fff;color:#0a0e14}textarea{min-height:96px;width:100%}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #1a293d;font-size:13px;vertical-align:top}th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}pre{background:#09111a;border:1px solid var(--line);padding:14px;border-radius:14px;min-height:240px;max-height:720px;overflow:auto}.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}@media(max-width:1100px){.grid4,.grid3,.grid2{grid-template-columns:1fr 1fr}}@media(max-width:760px){.grid4,.grid3,.grid2{grid-template-columns:1fr}.wrap{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="label">QNT30707</div>
+    <h1>Recovery System</h1>
+    <div class="sub">Institutional state recovery, safe mode control, and governed restoration for Quantora. Capture trusted state snapshots, validate corruption conditions, force safe mode when integrity breaks, and resume only from a valid state.</div>
+    <div class="toolbar">
+      <button class="btn primary" onclick="bootstrapDemo()">Bootstrap Recovery Demo</button>
+      <button class="btn" onclick="captureState()">Capture State</button>
+      <button class="btn" onclick="validateState()">Validate</button>
+      <button class="btn" onclick="runRecovery()">Run Recovery</button>
+      <button class="btn" onclick="toggleSafeMode(true)">Enter Safe Mode</button>
+      <button class="btn" onclick="toggleSafeMode(false)">Clear Safe Mode</button>
+      <button class="btn" onclick="window.location.href='mission_qnt30706_forensic_audit_system.html'">Open Forensic Audit</button>
+      <button class="btn" onclick="window.location.href='index.html'">Back to Command Center</button>
+    </div>
+  </div>
+
+  <div class="grid4">
+    <div class="card"><div class="label">Recovery Posture</div><div id="posture" class="value">-</div><div class="tiny">Current operational recovery stance</div></div>
+    <div class="card"><div class="label">State Score</div><div id="score" class="value">-</div><div class="tiny">Trusted state confidence</div></div>
+    <div class="card"><div class="label">Safe Mode</div><div id="safeMode" class="value">-</div><div class="tiny">Execution lock and recovery authority</div></div>
+    <div class="card"><div class="label">Snapshots</div><div id="snapshots" class="value">-</div><div class="tiny">Captured valid and invalid states</div></div>
+  </div>
+
+  <div class="grid3">
+    <div class="card">
+      <div class="label">Recovery Controls</div>
+      <select id="mode"><option value="soft">soft recovery</option><option value="hard">hard recovery</option><option value="forensic">forensic recovery</option></select>
+      <input id="trigger" placeholder="Capture trigger" value="manual recovery review" style="margin-top:10px">
+      <textarea id="reason" placeholder="Operator reason / incident note">institutional recovery review</textarea>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+        <button class="btn" onclick="captureState()">Capture</button>
+        <button class="btn" onclick="validateState()">Validate</button>
+        <button class="btn" onclick="runRecovery()">Recover</button>
+      </div>
+    </div>
+    <div class="card"><div class="label">Current Validation</div><pre id="validationBox">Loading...</pre></div>
+    <div class="card"><div class="label">Latest Recovery Run</div><pre id="recoveryBox">Loading...</pre></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><div class="label">Current Context</div><pre id="contextBox">Loading...</pre></div>
+    <div class="card"><div class="label">Latest Valid Snapshot</div><pre id="validSnapshotBox">Loading...</pre></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><div class="label">Snapshots Timeline</div><table><thead><tr><th>ID</th><th>Posture</th><th>Score</th><th>Captured</th></tr></thead><tbody id="snapshotRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+    <div class="card"><div class="label">Recovery Log</div><table><thead><tr><th>Recovery</th><th>Mode</th><th>Status</th><th>Confidence</th></tr></thead><tbody id="recoveryRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+  </div>
+</div>
+<script>
+async function j(url,opt){const r=await fetch(url,opt);const d=await r.json();if(!r.ok) throw new Error(d.detail||'request failed');return d;}
+function cls(v){const t=String(v||'').toLowerCase(); if(t.includes('ready')||t.includes('valid')||t.includes('ok')||t.includes('clear')) return 'good'; if(t.includes('attention')||t.includes('medium')||t.includes('pending')) return 'warn'; return 'bad';}
+function stamp(v){return v?new Date(v).toISOString().replace('T',' ').slice(0,16):'-';}
+function reason(){return document.getElementById('reason').value.trim();}
+function trigger(){return document.getElementById('trigger').value.trim();}
+function mode(){return document.getElementById('mode').value;}
+function render(data){
+  const rs=data.recovery_status||{}; const cv=data.current_validation||{};
+  document.getElementById('posture').textContent=String(rs.posture||'-').toUpperCase(); document.getElementById('posture').className='value '+cls(rs.posture||'blocked');
+  document.getElementById('score').textContent=String(cv.score??'-'); document.getElementById('score').className='value '+cls((cv.valid_state?'valid':(cv.posture||'blocked')));
+  document.getElementById('safeMode').textContent=rs.safe_mode?'ACTIVE':'CLEAR'; document.getElementById('safeMode').className='value '+cls(rs.safe_mode?'blocked':'valid');
+  document.getElementById('snapshots').textContent=String(data.snapshot_count||0); document.getElementById('snapshots').className='value good';
+  document.getElementById('validationBox').textContent=JSON.stringify(cv, null, 2);
+  document.getElementById('recoveryBox').textContent=JSON.stringify(data.latest_recovery_run||{}, null, 2);
+  document.getElementById('contextBox').textContent=JSON.stringify(data.current_context||{}, null, 2);
+  document.getElementById('validSnapshotBox').textContent=JSON.stringify(data.latest_valid_snapshot||{}, null, 2);
+  const snaps=data.state_snapshots||[];
+  document.getElementById('snapshotRows').innerHTML=snaps.length?snaps.slice(0,12).map(s=>`<tr><td>${s.snapshot_id||'-'}</td><td class="${cls((s.validation||{}).posture||'blocked')}">${(s.validation||{}).posture||'-'}</td><td>${(s.validation||{}).score??'-'}</td><td>${stamp(s.captured_at)}</td></tr>`).join(''):'<tr><td colspan="4">No snapshots.</td></tr>';
+  const runs=data.recovery_runs||[];
+  document.getElementById('recoveryRows').innerHTML=runs.length?runs.slice(0,12).map(r=>`<tr><td>${r.recovery_id||'-'}</td><td>${r.mode||'-'}</td><td class="${cls(r.status||'blocked')}">${r.status||'-'}</td><td>${r.confidence??'-'}</td></tr>`).join(''):'<tr><td colspan="4">No recovery runs.</td></tr>';
+}
+async function loadAll(){render(await j('/api/recovery-system/summary'));}
+async function bootstrapDemo(){await j('/api/recovery-system/bootstrap-demo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({reason:reason()})});await loadAll();}
+async function captureState(){await j('/api/recovery-system/capture-state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({trigger:trigger()})});await loadAll();}
+async function validateState(){await j('/api/recovery-system/validate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});await loadAll();}
+async function runRecovery(){await j('/api/recovery-system/recover',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:mode(),reason:reason()})});await loadAll();}
+async function toggleSafeMode(enabled){await j('/api/recovery-system/safe-mode',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({enabled,reason:reason()})});await loadAll();}
+loadAll();
+</script>
+</body>
+</html>

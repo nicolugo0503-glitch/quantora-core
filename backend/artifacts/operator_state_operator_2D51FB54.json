@@ -1,0 +1,638 @@
+{
+  "operator_id": "operator_2D51FB54",
+  "display_name": "Multi Strategy Tester",
+  "capital_decision": {
+    "approved": true,
+    "capital_allocated": 16195
+  },
+  "strategies": {
+    "strategies": [
+      {
+        "strategy_id": "strat_7277e418",
+        "name": "AAPL Momentum",
+        "symbol": "AAPL",
+        "side": "buy",
+        "default_qty": 2,
+        "enabled": true,
+        "status": "running",
+        "capital_limit": 0.0,
+        "execution_mode": "inherit",
+        "created_at": "2026-03-31T05:11:31Z",
+        "updated_at": "2026-03-31T05:11:31Z",
+        "operator_id": "operator_2D51FB54",
+        "last_action": "register",
+        "deleted": false
+      },
+      {
+        "strategy_id": "strat_61bcbf7a",
+        "name": "TSLA Mean Revert",
+        "symbol": "TSLA",
+        "side": "buy",
+        "default_qty": 1,
+        "enabled": true,
+        "status": "running",
+        "capital_limit": 0.0,
+        "execution_mode": "inherit",
+        "created_at": "2026-03-31T05:11:31Z",
+        "updated_at": "2026-03-31T05:11:31Z",
+        "operator_id": "operator_2D51FB54",
+        "last_action": "register",
+        "deleted": false
+      },
+      {
+        "strategy_id": "strat_3b4223e4",
+        "name": "MSFT Trend",
+        "symbol": "MSFT",
+        "side": "buy",
+        "default_qty": 1,
+        "enabled": false,
+        "status": "paused",
+        "capital_limit": 9960.0,
+        "execution_mode": "inherit",
+        "created_at": "2026-03-31T05:11:31Z",
+        "updated_at": "2026-03-31T05:11:31Z",
+        "operator_id": "operator_2D51FB54",
+        "last_action": "multi_strategy_optimize",
+        "deleted": false
+      }
+    ]
+  },
+  "strategy_engine": {
+    "metrics": {
+      "strat_7277e418": {
+        "strategy_id": "strat_7277e418",
+        "orders_count": 1,
+        "buy_orders": 1,
+        "sell_orders": 0,
+        "closed_trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "realized_pnl": 0.0,
+        "unrealized_pnl": -0.0,
+        "gross_notional": 20.0,
+        "current_position_qty": 0.111111,
+        "avg_entry_price": 180.00018,
+        "current_market_value": 20.0,
+        "capital_in_use": 20.0,
+        "last_price": 180.0,
+        "last_run_at": "2026-03-31T05:11:31Z",
+        "last_order_at": "2026-03-31T05:11:31Z",
+        "last_signal_at": "2026-03-31T05:11:31Z",
+        "win_rate": 0.0
+      },
+      "strat_61bcbf7a": {
+        "strategy_id": "strat_61bcbf7a",
+        "orders_count": 1,
+        "buy_orders": 1,
+        "sell_orders": 0,
+        "closed_trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "realized_pnl": 0.0,
+        "unrealized_pnl": 0.0,
+        "gross_notional": 20.0,
+        "current_position_qty": 0.114286,
+        "avg_entry_price": 174.999563,
+        "current_market_value": 20.0,
+        "capital_in_use": 20.0,
+        "last_price": 175.0,
+        "last_run_at": "2026-03-31T05:11:31Z",
+        "last_order_at": "2026-03-31T05:11:31Z",
+        "last_signal_at": "2026-03-31T05:11:31Z",
+        "win_rate": 0.0
+      },
+      "strat_3b4223e4": {
+        "strategy_id": "strat_3b4223e4",
+        "orders_count": 0,
+        "buy_orders": 0,
+        "sell_orders": 0,
+        "closed_trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "realized_pnl": 0.0,
+        "unrealized_pnl": 0.0,
+        "gross_notional": 0.0,
+        "current_position_qty": 0.0,
+        "avg_entry_price": 0.0,
+        "current_market_value": 0.0,
+        "capital_in_use": 0.0,
+        "last_price": 420.0,
+        "last_run_at": null,
+        "last_order_at": null,
+        "last_signal_at": "2026-03-31T05:11:31Z",
+        "win_rate": 0.0
+      }
+    },
+    "logs": [
+      {
+        "log_id": "log_b244b5d072",
+        "timestamp": "2026-03-31T05:11:31Z",
+        "strategy_id": "strat_3b4223e4",
+        "event_type": "optimizer",
+        "message": "MSFT Trend -> paused",
+        "data": {
+          "score": 52.2,
+          "reason": "capacity-or-score-blocked"
+        }
+      },
+      {
+        "log_id": "log_67f19326ac",
+        "timestamp": "2026-03-31T05:11:31Z",
+        "strategy_id": "strat_61bcbf7a",
+        "event_type": "signal_execution",
+        "message": "Constructive bias with no active long position",
+        "data": {
+          "signal_action": "enter_long",
+          "confidence": 0.68
+        }
+      },
+      {
+        "log_id": "log_35bf21b877",
+        "timestamp": "2026-03-31T05:11:31Z",
+        "strategy_id": "strat_61bcbf7a",
+        "event_type": "execution",
+        "message": "TSLA Mean Revert executed buy 0.114286 TSLA via internal",
+        "data": {
+          "order_id": "ord_f92c372faf",
+          "notional": 20.0
+        }
+      },
+      {
+        "log_id": "log_f6165c98c4",
+        "timestamp": "2026-03-31T05:11:31Z",
+        "strategy_id": "strat_7277e418",
+        "event_type": "signal_execution",
+        "message": "Constructive bias with no active long position",
+        "data": {
+          "signal_action": "enter_long",
+          "confidence": 0.76
+        }
+      },
+      {
+        "log_id": "log_93fc201200",
+        "timestamp": "2026-03-31T05:11:31Z",
+        "strategy_id": "strat_7277e418",
+        "event_type": "execution",
+        "message": "AAPL Momentum executed buy 0.111111 AAPL via internal",
+        "data": {
+          "order_id": "ord_1ead4f8381",
+          "notional": 20.0
+        }
+      },
+      {
+        "log_id": "log_ab833d2966",
+        "timestamp": "2026-03-31T05:11:31Z",
+        "strategy_id": "strat_3b4223e4",
+        "event_type": "lifecycle",
+        "message": "MSFT Trend registered",
+        "data": {
+          "strategy_id": "strat_3b4223e4",
+          "name": "MSFT Trend",
+          "symbol": "MSFT",
+          "side": "buy",
+          "default_qty": 1,
+          "enabled": false,
+          "status": "stopped",
+          "capital_limit": 1000.0,
+          "execution_mode": "inherit",
+          "created_at": "2026-03-31T05:11:31Z",
+          "updated_at": "2026-03-31T05:11:31Z",
+          "operator_id": "operator_2D51FB54",
+          "last_action": "register",
+          "deleted": false
+        }
+      },
+      {
+        "log_id": "log_fb3898558c",
+        "timestamp": "2026-03-31T05:11:31Z",
+        "strategy_id": "strat_61bcbf7a",
+        "event_type": "lifecycle",
+        "message": "TSLA Mean Revert registered",
+        "data": {
+          "strategy_id": "strat_61bcbf7a",
+          "name": "TSLA Mean Revert",
+          "symbol": "TSLA",
+          "side": "buy",
+          "default_qty": 1,
+          "enabled": true,
+          "status": "running",
+          "capital_limit": 1500.0,
+          "execution_mode": "inherit",
+          "created_at": "2026-03-31T05:11:31Z",
+          "updated_at": "2026-03-31T05:11:31Z",
+          "operator_id": "operator_2D51FB54",
+          "last_action": "register",
+          "deleted": false
+        }
+      },
+      {
+        "log_id": "log_83e3ac2571",
+        "timestamp": "2026-03-31T05:11:31Z",
+        "strategy_id": "strat_7277e418",
+        "event_type": "lifecycle",
+        "message": "AAPL Momentum registered",
+        "data": {
+          "strategy_id": "strat_7277e418",
+          "name": "AAPL Momentum",
+          "symbol": "AAPL",
+          "side": "buy",
+          "default_qty": 2,
+          "enabled": true,
+          "status": "running",
+          "capital_limit": 2000.0,
+          "execution_mode": "inherit",
+          "created_at": "2026-03-31T05:11:31Z",
+          "updated_at": "2026-03-31T05:11:31Z",
+          "operator_id": "operator_2D51FB54",
+          "last_action": "register",
+          "deleted": false
+        }
+      }
+    ],
+    "last_engine_run_at": null,
+    "last_engine_status": "idle",
+    "signals": {
+      "strat_7277e418": {
+        "strategy_id": "strat_7277e418",
+        "strategy_name": "AAPL Momentum",
+        "symbol": "AAPL",
+        "market_bias": "bullish",
+        "side_bias": "buy",
+        "signal_action": "hold",
+        "order_side": null,
+        "order_qty": 0.0,
+        "current_price": 180.0,
+        "avg_entry_price": 180.0,
+        "position_qty": 0.111111,
+        "pnl_pct": -0.0,
+        "stop_price": 176.4,
+        "take_profit_price": 185.4,
+        "confidence": 0.76,
+        "reason": "Maintain long until stop or target triggers",
+        "generated_at": "2026-03-31T05:11:31Z"
+      },
+      "strat_61bcbf7a": {
+        "strategy_id": "strat_61bcbf7a",
+        "strategy_name": "TSLA Mean Revert",
+        "symbol": "TSLA",
+        "market_bias": "bullish",
+        "side_bias": "buy",
+        "signal_action": "hold",
+        "order_side": null,
+        "order_qty": 0.0,
+        "current_price": 175.0,
+        "avg_entry_price": 175.0,
+        "position_qty": 0.114286,
+        "pnl_pct": 0.0,
+        "stop_price": 171.5,
+        "take_profit_price": 180.25,
+        "confidence": 0.68,
+        "reason": "Maintain long until stop or target triggers",
+        "generated_at": "2026-03-31T05:11:31Z"
+      },
+      "strat_3b4223e4": {
+        "strategy_id": "strat_3b4223e4",
+        "strategy_name": "MSFT Trend",
+        "symbol": "MSFT",
+        "market_bias": "bullish",
+        "side_bias": "buy",
+        "signal_action": "enter_long",
+        "order_side": "buy",
+        "order_qty": 1.0,
+        "current_price": 420.0,
+        "avg_entry_price": 0.0,
+        "position_qty": 0.0,
+        "pnl_pct": 0.0,
+        "stop_price": 0.0,
+        "take_profit_price": 0.0,
+        "confidence": 0.76,
+        "reason": "Constructive bias with no active long position",
+        "generated_at": "2026-03-31T05:11:31Z"
+      }
+    },
+    "last_cycle_at": "2026-03-31T05:11:31Z",
+    "last_cycle_market_bias": "bullish",
+    "last_cycle_status": "completed",
+    "last_decision_snapshot": {
+      "generated_at": "2026-03-31T05:11:31Z",
+      "market_bias": "bullish",
+      "capital": {
+        "allocated_capital": 10000.0,
+        "used_capital": 0,
+        "remaining_capital": 10000.0,
+        "deployment_budget": 10000.0,
+        "deployed_capital": 10001.0
+      },
+      "risk": {
+        "kill_switch_active": false,
+        "breached": false,
+        "risk_multiplier": 1.0,
+        "max_orders_per_run": 3,
+        "max_notional_per_trade": 20.0
+      },
+      "summary": {
+        "signals": 3,
+        "actionable_signals": 3,
+        "executable_signals": 3,
+        "blocked_signals": 0
+      },
+      "decisions": [
+        {
+          "strategy_id": "strat_7277e418",
+          "strategy_name": "AAPL Momentum",
+          "symbol": "AAPL",
+          "market_bias": "bullish",
+          "side_bias": "buy",
+          "signal_action": "enter_long",
+          "order_side": "buy",
+          "order_qty": 2.0,
+          "current_price": 180.0,
+          "avg_entry_price": 0.0,
+          "position_qty": 0.0,
+          "pnl_pct": 0.0,
+          "stop_price": 0.0,
+          "take_profit_price": 0.0,
+          "confidence": 0.76,
+          "reason": "Constructive bias with no active long position",
+          "generated_at": "2026-03-31T05:11:31Z",
+          "decision": "execute",
+          "risk_score": "low",
+          "allocation_pct": 0.002,
+          "recommended_notional": 20.0,
+          "recommended_qty": 0.111111,
+          "decision_generated_at": "2026-03-31T05:11:31Z"
+        },
+        {
+          "strategy_id": "strat_3b4223e4",
+          "strategy_name": "MSFT Trend",
+          "symbol": "MSFT",
+          "market_bias": "bullish",
+          "side_bias": "buy",
+          "signal_action": "enter_long",
+          "order_side": "buy",
+          "order_qty": 1.0,
+          "current_price": 420.0,
+          "avg_entry_price": 0.0,
+          "position_qty": 0.0,
+          "pnl_pct": 0.0,
+          "stop_price": 0.0,
+          "take_profit_price": 0.0,
+          "confidence": 0.76,
+          "reason": "Constructive bias with no active long position",
+          "generated_at": "2026-03-31T05:11:31Z",
+          "decision": "execute",
+          "risk_score": "low",
+          "allocation_pct": 0.002,
+          "recommended_notional": 20.0,
+          "recommended_qty": 0.047619,
+          "decision_generated_at": "2026-03-31T05:11:31Z"
+        },
+        {
+          "strategy_id": "strat_61bcbf7a",
+          "strategy_name": "TSLA Mean Revert",
+          "symbol": "TSLA",
+          "market_bias": "bullish",
+          "side_bias": "buy",
+          "signal_action": "enter_long",
+          "order_side": "buy",
+          "order_qty": 1.0,
+          "current_price": 175.0,
+          "avg_entry_price": 0.0,
+          "position_qty": 0.0,
+          "pnl_pct": 0.0,
+          "stop_price": 0.0,
+          "take_profit_price": 0.0,
+          "confidence": 0.68,
+          "reason": "Constructive bias with no active long position",
+          "generated_at": "2026-03-31T05:11:31Z",
+          "decision": "execute",
+          "risk_score": "low",
+          "allocation_pct": 0.002,
+          "recommended_notional": 20.0,
+          "recommended_qty": 0.114286,
+          "decision_generated_at": "2026-03-31T05:11:31Z"
+        }
+      ],
+      "allocations": [
+        {
+          "strategy_id": "strat_7277e418",
+          "symbol": "AAPL",
+          "share": 0.3455,
+          "assigned_capital": 3455.0,
+          "recommended_qty": 0.111111,
+          "decision": "execute"
+        },
+        {
+          "strategy_id": "strat_3b4223e4",
+          "symbol": "MSFT",
+          "share": 0.3455,
+          "assigned_capital": 3455.0,
+          "recommended_qty": 0.047619,
+          "decision": "execute"
+        },
+        {
+          "strategy_id": "strat_61bcbf7a",
+          "symbol": "TSLA",
+          "share": 0.3091,
+          "assigned_capital": 3091.0,
+          "recommended_qty": 0.114286,
+          "decision": "execute"
+        }
+      ]
+    },
+    "multi_strategy_optimizer": {
+      "last_run_at": "2026-03-31T05:11:31Z",
+      "market_bias": "bullish",
+      "max_active_strategies": 2,
+      "min_score_to_enable": 45.0,
+      "pause_below_score": 30.0,
+      "rebalance_capital": true,
+      "last_changes": [
+        {
+          "strategy_id": "strat_3b4223e4",
+          "name": "MSFT Trend",
+          "enabled": false,
+          "status": "paused",
+          "reason": "capacity-or-score-blocked",
+          "score": 52.2
+        }
+      ],
+      "last_rankings": [
+        {
+          "strategy_id": "strat_7277e418",
+          "name": "AAPL Momentum",
+          "symbol": "AAPL",
+          "enabled": true,
+          "status": "running",
+          "capital_limit": 2000.0,
+          "capital_in_use": 20.0,
+          "realized_pnl": 0.0,
+          "unrealized_pnl": 0.0,
+          "win_rate": 0.0,
+          "orders_count": 1,
+          "closed_trades": 0,
+          "utilization_pct": 1.0,
+          "pnl_efficiency_pct": 0.0,
+          "signal_action": "hold",
+          "signal_confidence": 0.76,
+          "score": 60.3,
+          "recommendation": "hold",
+          "reason": "Maintain long until stop or target triggers"
+        },
+        {
+          "strategy_id": "strat_61bcbf7a",
+          "name": "TSLA Mean Revert",
+          "symbol": "TSLA",
+          "enabled": true,
+          "status": "running",
+          "capital_limit": 1500.0,
+          "capital_in_use": 20.0,
+          "realized_pnl": 0.0,
+          "unrealized_pnl": 0.0,
+          "win_rate": 0.0,
+          "orders_count": 1,
+          "closed_trades": 0,
+          "utilization_pct": 1.33,
+          "pnl_efficiency_pct": 0.0,
+          "signal_action": "hold",
+          "signal_confidence": 0.68,
+          "score": 58.73,
+          "recommendation": "hold",
+          "reason": "Maintain long until stop or target triggers"
+        },
+        {
+          "strategy_id": "strat_3b4223e4",
+          "name": "MSFT Trend",
+          "symbol": "MSFT",
+          "enabled": false,
+          "status": "stopped",
+          "capital_limit": 1000.0,
+          "capital_in_use": 0.0,
+          "realized_pnl": 0.0,
+          "unrealized_pnl": 0.0,
+          "win_rate": 0.0,
+          "orders_count": 0,
+          "closed_trades": 0,
+          "utilization_pct": 0.0,
+          "pnl_efficiency_pct": 0.0,
+          "signal_action": "enter_long",
+          "signal_confidence": 0.76,
+          "score": 52.2,
+          "recommendation": "hold",
+          "reason": "Constructive bias with no active long position"
+        }
+      ]
+    },
+    "multi_strategy_last_rebalance": {
+      "at": "2026-03-31T05:11:31Z",
+      "market_bias": "bullish",
+      "changed": []
+    }
+  },
+  "risk_engine": {
+    "enabled": true,
+    "max_position_notional": 5000.0,
+    "max_total_exposure": 20000.0,
+    "max_drawdown_pct": 12.0,
+    "max_daily_loss": 1500.0,
+    "max_orders_per_run": 3,
+    "max_trades_per_session": 2,
+    "max_notional_per_trade": 20.0,
+    "session_trade_count": 0,
+    "session_started_at": "2026-03-31T05:11:31Z",
+    "live_risk_lock_required": true,
+    "require_broker_for_alpaca": true,
+    "auto_shutdown_on_breach": true,
+    "kill_switch_active": false,
+    "breached": false,
+    "breach_count": 0,
+    "last_breach": null,
+    "last_breach_reason": null,
+    "last_evaluated_at": "2026-04-01T16:02:04Z",
+    "peak_equity": 10000.0,
+    "current_equity": 10000.0,
+    "current_drawdown_pct": 0.0,
+    "day_start_date": "2026-04-01",
+    "day_start_realized_pnl": 0.0,
+    "current_daily_realized_pnl": 0.0,
+    "current_total_exposure": 40.0
+  },
+  "capital_source": {
+    "mode": "internal",
+    "provider": "alpaca",
+    "last_updated_at": null,
+    "last_updated_by": null
+  },
+  "orders": {
+    "orders": [
+      {
+        "order_id": "ord_f92c372faf",
+        "strategy_id": "strat_61bcbf7a",
+        "symbol": "TSLA",
+        "side": "buy",
+        "qty": 0.114286,
+        "notional": 20.0,
+        "status": "filled",
+        "mode": "internal",
+        "broker": "internal",
+        "timestamp": "2026-03-31T05:11:31Z",
+        "strategy_name": "TSLA Mean Revert",
+        "signal_action": "enter_long"
+      },
+      {
+        "order_id": "ord_1ead4f8381",
+        "strategy_id": "strat_7277e418",
+        "symbol": "AAPL",
+        "side": "buy",
+        "qty": 0.111111,
+        "notional": 20.0,
+        "status": "filled",
+        "mode": "internal",
+        "broker": "internal",
+        "timestamp": "2026-03-31T05:11:31Z",
+        "strategy_name": "AAPL Momentum",
+        "signal_action": "enter_long"
+      }
+    ]
+  },
+  "allocator_caps": {
+    "operator": {
+      "operator_id": "operator_2D51FB54",
+      "allocated_capital": 10000.0,
+      "status": "FUNDED",
+      "updated_at": "2026-03-31T05:11:31Z"
+    }
+  },
+  "strategy_loop": {
+    "running": false,
+    "execution_mode": "internal",
+    "interval_seconds": 60,
+    "last_run_at": null,
+    "next_run_at": null,
+    "heartbeat_at": null,
+    "total_runs": 0,
+    "total_signals": 0,
+    "total_orders": 2
+  },
+  "monitoring": {
+    "latest_snapshot": {
+      "timestamp": "2026-04-01T16:02:04Z",
+      "order_count": 2,
+      "used_capital": 40.0,
+      "allocated_capital": 10000.0,
+      "remaining_capital": 9960.0,
+      "utilization_pct": 0.4,
+      "capital_mode": "internal",
+      "capital_label": "internal",
+      "alerts_count": 0,
+      "strategy_realized_pnl": 0.0,
+      "strategy_unrealized_pnl": 0.0,
+      "active_strategies": 2,
+      "risk_breached": false,
+      "drawdown_pct": 0.0,
+      "daily_realized_pnl": 0.0
+    },
+    "alerts": [],
+    "last_evaluated_at": "2026-04-01T16:02:04Z"
+  }
+}

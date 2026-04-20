@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30570 Institutional Admin Console</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input{background:#07111f;color:#fff;border:1px solid #203251}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:380px}
+.row{display:grid;grid-template-columns:1fr 2fr auto auto;gap:10px}
+table{width:100%;border-collapse:collapse} th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+@media(max-width:1100px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30570 · Institutional Admin Console</h1>
+        <div style="color:#9fb3d8">Global investor oversight across balances, KYC, reconciliation, statements, watchlists, and internal notes. This is the institutional supervision layer above investor ops.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="mission_qnt30569_investor_ops_console.html">Investor Ops</a>
+        <a href="index.html">Command Center</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Investors</div><div id="investors" class="value">-</div></div>
+    <div class="card"><div class="label">Total Balance</div><div id="totalBalance" class="value">-</div></div>
+    <div class="card"><div class="label">Total Allocated</div><div id="totalAllocated" class="value">-</div></div>
+    <div class="card"><div class="label">Warnings</div><div id="warnings" class="value">-</div></div>
+    <div class="card"><div class="label">Pending KYC</div><div id="pendingKyc" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="watchEmail" placeholder="Investor email">
+      <input id="noteText" placeholder="Admin note">
+      <button onclick="addWatch()">Add Watchlist</button>
+      <button onclick="addNote()">Add Note</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Investor Oversight Table</div>
+    <table>
+      <thead><tr><th>Email</th><th>Balance</th><th>KYC</th><th>Recon</th><th>Statements</th><th>Warnings</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Oversight Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v || 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/admin-oversight/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  document.getElementById('investors').textContent = String(d.investor_count || 0);
+  document.getElementById('totalBalance').textContent = money(((d.aggregate||{}).total_balance || 0));
+  document.getElementById('totalAllocated').textContent = money(((d.aggregate||{}).total_allocated || 0));
+  document.getElementById('warnings').textContent = String(((d.alerts||{}).reconciliation_warning_count || 0));
+  document.getElementById('pendingKyc').textContent = String(((d.alerts||{}).pending_kyc_count || 0));
+  document.getElementById('rows').innerHTML = (d.investors || []).slice(0,30).map(r =>
+    `<tr><td>${r.email}</td><td>${money(r.balance)}</td><td>${r.kyc_status || '-'}</td><td>${r.reconciliation_status || '-'}</td><td>${r.statement_count || 0}</td><td>${(r.reconciliation_warnings || []).length}</td></tr>`
+  ).join('');
+  const watch = await j('/api/admin-oversight/watchlist');
+  document.getElementById('raw').textContent = JSON.stringify({summary:d, watchlist:watch.data}, null, 2);
+}
+async function addWatch(){
+  const email = document.getElementById('watchEmail').value;
+  await j('/api/admin-oversight/watchlist', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email})});
+  await load();
+}
+async function addNote(){
+  const email = document.getElementById('watchEmail').value;
+  const note = document.getElementById('noteText').value;
+  await j('/api/admin-oversight/note', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email, note})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

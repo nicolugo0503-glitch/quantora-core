@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30608 Autonomous Correction Execution Layer</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1440px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:90px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:420px}
+@media(max-width:1400px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30608 · Autonomous Correction Execution Layer</h1>
+        <div style="color:#9fb3d8">Executes approved remediation actions from the suggestion engine and records operational execution history.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30607_resolution_suggestions.html">Resolution Suggestions</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Executions</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Executed</div><div id="executed" class="value">-</div></div>
+    <div class="card"><div class="label">Failed</div><div id="failed" class="value">-</div></div>
+    <div class="card"><div class="label">Latest Status</div><div id="status" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <input id="alertId" placeholder="Alert ID">
+    <textarea id="notes" placeholder="Execution notes"></textarea>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="runExecution()">Execute Suggested Action</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Execution History</div>
+    <table>
+      <thead><tr><th>Alert ID</th><th>Recommended Action</th><th>Status</th><th>Timestamp</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Execution Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function dt(v){ return v ? new Date(v*1000).toLocaleString() : '-'; }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/correction-execution/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data,null,2); return; }
+  const d = res.data || {};
+  const latest = d.latest_execution || {};
+  document.getElementById('count').textContent = String(d.execution_count || 0);
+  document.getElementById('executed').textContent = String(d.executed_count || 0);
+  document.getElementById('failed').textContent = String(d.failed_count || 0);
+  document.getElementById('status').textContent = String(latest.status || '-');
+  document.getElementById('rows').innerHTML = (d.executions || []).map(e =>
+    `<tr><td>${e.alert_id}</td><td>${e.recommended_action}</td><td>${e.status}</td><td>${dt(e.timestamp)}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function runExecution(){
+  await j('/api/correction-execution/run', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    alert_id: document.getElementById('alertId').value,
+    notes: document.getElementById('notes').value
+  })});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

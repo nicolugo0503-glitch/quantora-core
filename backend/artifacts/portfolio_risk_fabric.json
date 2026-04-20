@@ -1,0 +1,37 @@
+{
+  "enabled": true,
+  "last_updated_at": null,
+  "last_snapshot_at": null,
+  "last_netting_at": null,
+  "limits": {
+    "gross_notional_limit": 500000.0,
+    "net_notional_limit": 250000.0,
+    "single_symbol_limit": 100000.0,
+    "market_limits": {
+      "equities": 250000.0,
+      "crypto": 100000.0,
+      "forex": 150000.0,
+      "futures": 150000.0
+    },
+    "max_correlated_group_exposure": 180000.0,
+    "max_leverage_proxy": 2.5
+  },
+  "positions": {},
+  "hedges": [],
+  "risk_metrics": {
+    "gross_notional": 0.0,
+    "net_notional": 0.0,
+    "largest_symbol_notional": 0.0,
+    "portfolio_leverage_proxy": 0.0,
+    "hedge_coverage_ratio": 0.0
+  },
+  "market_exposure": {},
+  "correlation_exposure": {},
+  "alerts": [],
+  "telemetry": {
+    "snapshots_built": 0,
+    "netting_runs": 0,
+    "limit_breaches": 0,
+    "hedges_recorded": 0
+  }
+}

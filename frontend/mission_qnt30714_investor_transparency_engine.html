@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>QNT30714 Investor Transparency Engine</title>
+<style>
+:root{--bg:#071019;--panel:#0d1723;--line:#1b2b40;--text:#edf3fb;--muted:#8ea0b7;--good:#48d597;--bad:#ff6f86;--warn:#ffc857}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#071019,#09131d 55%,#071019);color:var(--text);font-family:Inter,system-ui,sans-serif}.wrap{max-width:1360px;margin:0 auto;padding:24px}h1{margin:0 0 6px}p{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:14px 0}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:800;margin-top:6px}.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 0}.toolbar input,.toolbar select,.toolbar button{background:#09111a;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:10px 12px}.toolbar button{cursor:pointer}table{width:100%;border-collapse:collapse}th,td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}pre{white-space:pre-wrap;word-break:break-word;background:#08101a;border:1px solid var(--line);border-radius:12px;padding:12px;max-height:320px;overflow:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>QNT30714 Investor Transparency Engine</h1>
+  <p>Governed transparency scoring for investor disclosures, delivery freshness, statement accuracy, and acknowledgement coverage.</p>
+  <div class="toolbar">
+    <button onclick="bootstrapDemo()">Bootstrap Demo</button>
+    <select id="mode"><option value="institutional-monthly">institutional-monthly</option><option value="quarterly-disclosure">quarterly-disclosure</option><option value="incident-exception">incident-exception</option></select>
+    <input id="disclosure" type="number" step="0.1" placeholder="disclosure completeness %" value="91">
+    <input id="coverage" type="number" step="0.1" placeholder="explanation coverage %" value="88">
+    <input id="accuracy" type="number" step="0.1" placeholder="statement accuracy" value="90">
+    <button onclick="evaluateTransparency()">Evaluate Transparency</button>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="label">Transparency Posture</div><div id="posture" class="value">-</div></div>
+    <div class="card"><div class="label">Latest Score</div><div id="score" class="value">-</div></div>
+    <div class="card"><div class="label">Packets</div><div id="packets" class="value">0</div></div>
+    <div class="card"><div class="label">Exceptions</div><div id="exceptions" class="value">0</div></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><div class="label">Current Context</div><pre id="contextBox">Loading...</pre></div>
+    <div class="card"><div class="label">Latest Packet</div><pre id="packetBox">Loading...</pre></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><div class="label">Transparency Packets</div><table><thead><tr><th>Packet</th><th>Mode</th><th>Score</th><th>Posture</th></tr></thead><tbody id="packetRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+    <div class="card"><div class="label">Exceptions</div><table><thead><tr><th>Exception</th><th>Mode</th><th>Score</th><th>Blockers</th></tr></thead><tbody id="exceptionRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+  </div>
+</div>
+<script>
+async function j(url,opt){const r=await fetch(url,opt);const d=await r.json();if(!r.ok) throw new Error(d.detail||'request failed');return d;}
+function cls(v){const t=String(v||'').toLowerCase(); if(t.includes('approved')||t.includes('ready')) return 'good'; if(t.includes('review')||t.includes('safe')) return 'warn'; return 'bad';}
+function render(data){
+ const s=data.investor_transparency_status||{};
+ document.getElementById('posture').textContent=String(s.posture||'-').toUpperCase(); document.getElementById('posture').className='value '+cls(s.posture||'blocked');
+ document.getElementById('score').textContent=String(s.latest_score??'-'); document.getElementById('score').className='value warn';
+ document.getElementById('packets').textContent=String(s.packet_count||0); document.getElementById('packets').className='value good';
+ document.getElementById('exceptions').textContent=String(s.exception_count||0); document.getElementById('exceptions').className='value bad';
+ document.getElementById('contextBox').textContent=JSON.stringify(data.current_context||{}, null, 2);
+ document.getElementById('packetBox').textContent=JSON.stringify(data.latest_packet||{}, null, 2);
+ const packets=data.packets||[];
+ document.getElementById('packetRows').innerHTML=packets.length?packets.map(c=>`<tr><td>${c.packet_id||'-'}</td><td>${c.delivery_mode||'-'}</td><td>${(c.evaluation||{}).score??'-'}</td><td class="${cls((c.evaluation||{}).posture||'blocked')}">${(c.evaluation||{}).posture||'-'}</td></tr>`).join(''):'<tr><td colspan="4">No packets.</td></tr>';
+ const exceptions=data.exceptions||[];
+ document.getElementById('exceptionRows').innerHTML=exceptions.length?exceptions.map(a=>`<tr><td>${a.exception_id||'-'}</td><td>${a.delivery_mode||'-'}</td><td>${a.score??'-'}</td><td>${(a.blockers||[]).join(', ')||'-'}</td></tr>`).join(''):'<tr><td colspan="4">No exceptions.</td></tr>';
+}
+async function loadAll(){render(await j('/api/investor-transparency-engine/summary'));}
+async function bootstrapDemo(){await j('/api/investor-transparency-engine/bootstrap-demo',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});await loadAll();}
+async function evaluateTransparency(){
+ const body={delivery_mode:document.getElementById('mode').value,disclosure_completeness_pct:Number(document.getElementById('disclosure').value||0),explanation_coverage_pct:Number(document.getElementById('coverage').value||0),statement_accuracy_score:Number(document.getElementById('accuracy').value||0),report_freshness_hours:24,acknowledgement_coverage_pct:76,delivery_success_pct:96,unresolved_exceptions:0};
+ await j('/api/investor-transparency-engine/evaluate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});await loadAll();
+}
+loadAll();
+</script>
+</body>
+</html>

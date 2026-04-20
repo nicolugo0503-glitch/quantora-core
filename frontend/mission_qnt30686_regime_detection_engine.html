@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>QNT30686 Regime Detection Engine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { font-family: Arial, sans-serif; margin: 32px; background:#0b1020; color:#e7ecff; }
+    .card { background:#141b34; border:1px solid #2a355f; border-radius:16px; padding:24px; max-width:980px; }
+    h1,h2 { margin-top:0; } ul { line-height:1.6; } code { background:#0d1327; padding:2px 6px; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>QNT30686 — Regime Detection Engine</h1>
+    <p>Institutional engine for classifying live market regime and determining whether capital should expand, defend, review, or hold.</p>
+    <h2>Core functions</h2>
+    <ul>
+      <li>Score regime state using deployment, reallocation, rotation, defense, restoration, continuity, governance, compliance, drawdown, volatility, and concentration.</li>
+      <li>Determine whether the system is in expansion, defensive, transitional, or constrained posture.</li>
+      <li>Persist run history and policy controls for auditability.</li>
+    </ul>
+    <h2>Endpoints</h2>
+    <ul>
+      <li><code>GET /api/regime-detection-engine/summary</code></li>
+      <li><code>POST /api/regime-detection-engine/run</code></li>
+      <li><code>GET /api/regime-detection-engine/audit</code></li>
+      <li><code>POST /api/regime-detection-engine/policy</code></li>
+    </ul>
+  </div>
+</body>
+</html>

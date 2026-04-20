@@ -1,0 +1,15 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_snapshots": 200,
+    "retain_incidents": 120,
+    "auto_capture_on_bootstrap": true,
+    "require_chain_integrity": true,
+    "critical_break_threshold": 1
+  },
+  "snapshots": [],
+  "incidents": [],
+  "acknowledgements": [],
+  "created_at": 1776223536,
+  "updated_at": 1776223536
+}

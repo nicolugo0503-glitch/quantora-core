@@ -1,0 +1,43 @@
+{
+  "investors": [
+    {
+      "investor_id": "INV001",
+      "name": "Nicolas Capital",
+      "status": "active"
+    },
+    {
+      "investor_id": "INV002",
+      "name": "Atlas Family Office",
+      "status": "active"
+    }
+  ],
+  "entries": [
+    {
+      "entry_id": "LE001",
+      "investor_id": "INV001",
+      "fund_id": "FUND1",
+      "entry_type": "deposit",
+      "amount": 250000,
+      "currency": "USD",
+      "note": "Initial subscription"
+    },
+    {
+      "entry_id": "LE002",
+      "investor_id": "INV002",
+      "fund_id": "FUND1",
+      "entry_type": "deposit",
+      "amount": 150000,
+      "currency": "USD",
+      "note": "Initial subscription"
+    },
+    {
+      "entry_id": "LE003",
+      "investor_id": "INV001",
+      "fund_id": "FUND1",
+      "entry_type": "withdrawal",
+      "amount": 25000,
+      "currency": "USD",
+      "note": "Partial redemption"
+    }
+  ]
+}

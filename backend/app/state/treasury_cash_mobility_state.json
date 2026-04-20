@@ -1,0 +1,44 @@
+{
+  "generated_by": "QNT50008",
+  "status": "degraded",
+  "policy": {
+    "base_currency": "USD",
+    "reserve_floor": 25000.0,
+    "reserve_buffer_pct": 0.15,
+    "min_operating_cash": 10000.0,
+    "max_single_transfer_pct_of_available": 0.4,
+    "auto_sync_settlement": true,
+    "settlement_haircut_pct": 0.02,
+    "rebalance_tolerance_pct": 0.1
+  },
+  "accounts": {
+    "operating": {
+      "currency": "USD",
+      "balance": 0.0
+    },
+    "broker_buffer": {
+      "currency": "USD",
+      "balance": 0.0
+    },
+    "custody_reserve": {
+      "currency": "USD",
+      "balance": 0.0
+    }
+  },
+  "external_destinations": {
+    "prime_broker": "IBKR",
+    "crypto_venue": "Binance",
+    "administrator": "Fund Administrator",
+    "investor_settlement": "Investor Settlement Bank"
+  },
+  "pending_transfers": [],
+  "completed_transfers": [],
+  "rejected_transfers": [],
+  "liquidity_snapshots": [],
+  "last_sync": null,
+  "last_rebalance": null,
+  "audit_log": [],
+  "cash_balances": {
+    "operating": 5000000.0
+  }
+}

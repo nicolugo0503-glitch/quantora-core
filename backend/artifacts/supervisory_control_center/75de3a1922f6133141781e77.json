@@ -1,0 +1,33 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "escalation_matrix": {
+    "high": {
+      "level": "L1",
+      "owner_role": "Risk Lead",
+      "target_minutes": 15
+    },
+    "medium": {
+      "level": "L2",
+      "owner_role": "Operations Lead",
+      "target_minutes": 60
+    },
+    "low": {
+      "level": "L3",
+      "owner_role": "Analyst",
+      "target_minutes": 240
+    }
+  },
+  "supervisory_runs": [
+    {
+      "run_id": "sup_1775662020",
+      "timestamp": 1775662020,
+      "open_alert_count": 0,
+      "new_escalation_count": 0,
+      "latest_execution_status": null,
+      "status": "clear"
+    }
+  ],
+  "escalations": [],
+  "created_at": 1775662020,
+  "updated_at": 1775662020
+}

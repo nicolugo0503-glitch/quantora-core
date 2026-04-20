@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30601 Reconciliation Exception Resolution Workflow</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1420px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:84px}
+.row{display:grid;grid-template-columns:1fr 1fr 2fr auto auto auto;gap:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:420px}
+@media(max-width:1300px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30601 · Reconciliation Exception Resolution Workflow</h1>
+        <div style="color:#9fb3d8">Imports reconciliation issues into an exception queue, assigns owners, and resolves discrepancies with a tracked workflow.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30600_reconciliation.html">Reconciliation</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Exceptions</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Open</div><div id="open" class="value">-</div></div>
+    <div class="card"><div class="label">In Review</div><div id="review" class="value">-</div></div>
+    <div class="card"><div class="label">Resolved</div><div id="resolved" class="value">-</div></div>
+    <div class="card"><div class="label">High Severity</div><div id="high" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="adminEmail" placeholder="Investor email for assign">
+      <input id="owner" placeholder="Owner">
+      <textarea id="notes" placeholder="Resolution notes"></textarea>
+      <button onclick="importLatest()">Import Latest</button>
+      <button onclick="assignLatest()">Assign Latest</button>
+      <button onclick="resolveLatest()">Resolve Latest</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Exception Queue</div>
+    <table>
+      <thead><tr><th>Code</th><th>Severity</th><th>Status</th><th>Owner</th><th>Message</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Exception Resolution Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/reconciliation-exceptions/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data,null,2); return; }
+  const d = res.data || {};
+  document.getElementById('count').textContent = String(d.exception_count || 0);
+  document.getElementById('open').textContent = String(d.open_count || 0);
+  document.getElementById('review').textContent = String(d.in_review_count || 0);
+  document.getElementById('resolved').textContent = String(d.resolved_count || 0);
+  document.getElementById('high').textContent = String(d.high_severity_count || 0);
+  document.getElementById('rows').innerHTML = (d.exceptions || []).map(e =>
+    `<tr><td>${e.code}</td><td>${e.severity}</td><td>${e.status}</td><td>${e.owner || ''}</td><td>${e.message}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function importLatest(){
+  await j('/api/reconciliation-exceptions/import-latest', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({})});
+  await load();
+}
+async function assignLatest(){
+  const res = await j('/api/reconciliation-exceptions');
+  const latest = (res.data.exceptions || [])[0];
+  if(!latest) return;
+  await j('/api/reconciliation-exceptions/assign', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email: document.getElementById('adminEmail').value, exception_id: latest.exception_id, owner: document.getElementById('owner').value})});
+  await load();
+}
+async function resolveLatest(){
+  const res = await j('/api/reconciliation-exceptions');
+  const latest = (res.data.exceptions || [])[0];
+  if(!latest) return;
+  await j('/api/reconciliation-exceptions/resolve', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({exception_id: latest.exception_id, resolution_notes: document.getElementById('notes').value})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

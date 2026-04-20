@@ -1,0 +1,2 @@
+QNT30736 integrated into backend/app/main.py and frontend/mission_registry.json.
+Router, mission page, smoke test, and notes included.

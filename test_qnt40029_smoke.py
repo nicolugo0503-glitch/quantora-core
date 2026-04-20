@@ -1,0 +1,18 @@
+import json
+import sys
+from pathlib import Path
+base = Path(__file__).resolve().parent
+sys.path.insert(0, str(base))
+from backend.app import main as app_main
+from backend.app import qnt40028_annual_governance_binder_assembly_board_certification_release_permanent_record_seal_layer_router as depa
+from backend.app import qnt40029_governance_record_retention_schedule_board_retrieval_index_permanent_archive_supervision_layer_router as mod
+email = "operator@quantora.test"
+app_main.save_session({"logged_in": True, "email": email, "display_name": "Quantora Mission Governor", "operator_id": "op_qnt40029", "is_admin": True})
+user = {"email": email, "logged_in": True, "is_admin": True, "display_name": "Quantora Mission Governor"}
+depa.bootstrap_demo(user)
+res = mod.bootstrap_demo(user)
+summary = mod._summary_for_email(email)
+assert res["ok"] is True
+status = summary["governance_record_retention_schedule_board_retrieval_index_permanent_archive_supervision_layer_status"]
+assert status["run_count"] >= 1
+print(json.dumps({"mission": "QNT40029", "posture": status["posture"], "latest_score": status["latest_score"]}, indent=2))

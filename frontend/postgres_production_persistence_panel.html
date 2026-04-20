@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>QNT30394 PostgreSQL Production Persistence</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background: #09101d; color: #eef2fb; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card { background: #121b2f; border: 1px solid #2c3959; border-radius: 12px; padding: 16px; }
+    input, select, button { padding: 10px; border-radius: 8px; }
+    input, select { width: 100%; margin-top: 6px; margin-bottom: 12px; border: 1px solid #44527a; background: #0f1530; color: #fff; }
+    button { border: 0; cursor: pointer; }
+    pre { white-space: pre-wrap; background: #0b1020; border: 1px solid #2a395a; padding: 12px; border-radius: 8px; min-height: 160px; }
+  </style>
+</head>
+<body>
+  <h1>QNT30394 — PostgreSQL Production Persistence</h1>
+  <div class="grid">
+    <div class="card">
+      <h3>Database Status</h3>
+      <button onclick="loadStatus()">Refresh Status</button>
+      <button onclick="applyMigrations()">Apply Migrations</button>
+      <pre id="status_out"></pre>
+    </div>
+    <div class="card">
+      <h3>Create Tenant</h3>
+      <label>Tenant ID</label>
+      <input id="tenant_id" value="tenant-001" />
+      <label>Tenant Name</label>
+      <input id="tenant_name" value="Quantora Capital" />
+      <label>Plan</label>
+      <select id="plan">
+        <option>starter</option>
+        <option>pro</option>
+        <option>institutional</option>
+      </select>
+      <button onclick="createTenant()">Create Tenant</button>
+      <pre id="tenant_out"></pre>
+    </div>
+  </div>
+<script>
+async function loadStatus(){
+  const res = await fetch('/postgres/status');
+  document.getElementById('status_out').textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function applyMigrations(){
+  const res = await fetch('/postgres/migrations/apply', { method: 'POST' });
+  document.getElementById('status_out').textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function createTenant(){
+  const payload = {
+    tenant_id: document.getElementById('tenant_id').value,
+    tenant_name: document.getElementById('tenant_name').value,
+    plan: document.getElementById('plan').value
+  };
+  const res = await fetch('/postgres/tenants/create', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(payload)
+  });
+  document.getElementById('tenant_out').textContent = JSON.stringify(await res.json(), null, 2);
+}
+loadStatus();
+</script>
+</body>
+</html>

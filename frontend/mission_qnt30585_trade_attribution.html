@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30585 Trade Attribution by Investor Sleeve</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,select{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr auto;gap:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1200px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30585 · Trade Attribution by Investor Sleeve</h1>
+        <div style="color:#9fb3d8">Records executed trades against investor sleeves and rolls up notional and PnL by strategy sleeve.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30584_strategy_sleeve_execution.html">Sleeve Execution</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Trades</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Total Notional</div><div id="notional" class="value">-</div></div>
+    <div class="card"><div class="label">Total PnL</div><div id="pnl" class="value">-</div></div>
+    <div class="card"><div class="label">Sleeves</div><div id="sleeves" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="adminEmail" placeholder="Investor email">
+      <input id="sleeveId" placeholder="Sleeve id">
+      <input id="symbol" placeholder="Symbol">
+      <select id="side"><option value="buy">buy</option><option value="sell">sell</option></select>
+      <input id="qty" placeholder="Qty">
+      <input id="price" placeholder="Price">
+      <button onclick="recordTrade()">Record Trade</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Trade Rollup by Sleeve</div>
+    <table>
+      <thead><tr><th>Sleeve</th><th>Strategy</th><th>Trades</th><th>Notional</th><th>PnL</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Trade Attribution Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/trade-attribution/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  document.getElementById('count').textContent = String(d.trade_count || 0);
+  document.getElementById('notional').textContent = money(d.total_notional || 0);
+  document.getElementById('pnl').textContent = money(d.total_pnl || 0);
+  document.getElementById('sleeves').textContent = String((d.sleeves || []).length);
+  document.getElementById('rows').innerHTML = (d.sleeves || []).map(s =>
+    `<tr><td>${s.sleeve_id}</td><td>${s.strategy_name || ''}</td><td>${s.trade_count}</td><td>${money(s.notional)}</td><td>${money(s.pnl)}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function recordTrade(){
+  const payload = {
+    email: document.getElementById('adminEmail').value,
+    sleeve_id: document.getElementById('sleeveId').value,
+    symbol: document.getElementById('symbol').value,
+    side: document.getElementById('side').value,
+    qty: Number(document.getElementById('qty').value || 0),
+    price: Number(document.getElementById('price').value || 0),
+    pnl: 0
+  };
+  await j('/api/trade-attribution/trade', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

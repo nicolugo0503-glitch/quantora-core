@@ -1,0 +1,16 @@
+{
+  "module": "QNT30643",
+  "name": "Institutional Risk Intelligence Layer",
+  "created_at": "2026-04-08T21:05:41.989018+00:00",
+  "risk_actions": [],
+  "snapshots": [
+    {
+      "snapshot_id": "RISK_SNAP_001",
+      "vehicle_id": "VEHICLE_ALPHA",
+      "top_concentration": 0.42,
+      "cluster_count": 2,
+      "fragility_score": 71.4,
+      "timestamp": "2026-04-08T21:05:41.989039+00:00"
+    }
+  ]
+}

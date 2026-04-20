@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30594 Investor Multi-Series NAV Rollforward</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+.row{display:grid;grid-template-columns:2fr 1fr auto auto;gap:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1100px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30594 · Investor Multi-Series NAV Rollforward Engine</h1>
+        <div style="color:#9fb3d8">Builds period-by-period NAV rollforwards across investor series with opening capital, ending NAV, and equalization movement.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30593_equalization.html">Equalization</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Periods</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Locked</div><div id="locked" class="value">-</div></div>
+    <div class="card"><div class="label">Ending NAV</div><div id="ending" class="value">-</div></div>
+    <div class="card"><div class="label">Rollforward Change</div><div id="change" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="periodName" placeholder="Period name">
+      <input id="adminEmail" placeholder="Investor email for lock">
+      <button onclick="generatePeriod()">Generate</button>
+      <button onclick="lockLatest()">Lock Latest</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Latest Rollforward</div>
+    <table>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Rollforward Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/rollforward/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  const p = d.latest_period || {};
+  document.getElementById('count').textContent = String(d.period_count || 0);
+  document.getElementById('locked').textContent = String(d.locked_count || 0);
+  document.getElementById('ending').textContent = money(p.ending_nav || 0);
+  document.getElementById('change').textContent = money(p.net_rollforward_change || 0);
+  const rows = [
+    ['Period', p.period_name || '-'],
+    ['Generated', p.generated_at ? new Date(p.generated_at * 1000).toLocaleString() : '-'],
+    ['Opening Capital', money(p.opening_capital || 0)],
+    ['Equalization Total', money(p.equalization_total || 0)],
+    ['Series Count', String(p.series_count || 0)],
+    ['Status', p.status || 'open']
+  ];
+  document.getElementById('rows').innerHTML = rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function generatePeriod(){
+  await j('/api/rollforward/generate', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({period_name: document.getElementById('periodName').value})});
+  await load();
+}
+async function lockLatest(){
+  const summary = await j('/api/rollforward/summary');
+  const latest = summary.data.latest_period;
+  if(!latest) return;
+  await j('/api/rollforward/lock', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email: document.getElementById('adminEmail').value, period_id: latest.period_id})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

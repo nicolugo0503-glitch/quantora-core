@@ -1,0 +1,47 @@
+{
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/capital/call"
+    },
+    {
+      "method": "POST",
+      "path": "/api/capital/call/fulfill"
+    },
+    {
+      "method": "POST",
+      "path": "/api/redemption/request"
+    },
+    {
+      "method": "POST",
+      "path": "/api/redemption/approve"
+    },
+    {
+      "method": "POST",
+      "path": "/api/redemption/reject"
+    },
+    {
+      "method": "GET",
+      "path": "/api/capital/summary"
+    }
+  ],
+  "workflow_states": {
+    "capital_call": [
+      "pending",
+      "fulfilled"
+    ],
+    "redemption": [
+      "pending",
+      "approved",
+      "rejected"
+    ]
+  },
+  "outputs": [
+    "capital_calls",
+    "redemptions",
+    "pending_counts",
+    "approved_counts",
+    "fulfilled_counts",
+    "rejected_counts"
+  ]
+}

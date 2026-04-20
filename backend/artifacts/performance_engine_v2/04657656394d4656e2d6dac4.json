@@ -1,0 +1,58 @@
+{
+  "email": "operator@quantora.test",
+  "snapshots": [
+    {
+      "date": "2026-04-15",
+      "captured_at": 1776234544,
+      "beginning_nav": 38400000.0,
+      "ending_nav": 38432250.88,
+      "net_flows": 0.0,
+      "pnl_amount": 32250.88,
+      "return_pct": 0.084,
+      "strategy_count": 1,
+      "investor_count": 1
+    }
+  ],
+  "strategy_history": [
+    {
+      "date": "2026-04-15",
+      "strategy": "core",
+      "invested_capital": 23040000.0,
+      "pnl_amount": 32250.88,
+      "allocations": 256,
+      "sleeves": [
+        "main"
+      ],
+      "position_count": 256,
+      "symbols": [
+        "SPY"
+      ],
+      "return_pct": 0.14,
+      "exposure_pct": 60.0,
+      "volatility_pct": 0.049
+    }
+  ],
+  "investor_history": [
+    {
+      "date": "2026-04-15",
+      "investor_id": "lp_demo_001",
+      "investor_name": "Investor",
+      "committed_capital": 250000.0,
+      "funded_capital": 38400000.0,
+      "ending_nav": 38400000.0,
+      "pnl_amount": 32250.88,
+      "return_pct": -100.0,
+      "ownership_pct": 100.0,
+      "net_flows": 38400000.0,
+      "allocation_count": 256,
+      "strategies": [
+        {
+          "strategy": "core",
+          "amount": 23040000.0
+        }
+      ]
+    }
+  ],
+  "created_at": 1776220090,
+  "updated_at": 1776234544
+}

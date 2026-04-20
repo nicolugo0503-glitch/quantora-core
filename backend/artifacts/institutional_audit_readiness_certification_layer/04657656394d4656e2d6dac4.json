@@ -1,0 +1,22 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 180,
+    "minimum_score": 96.0,
+    "require_treasury_confirmed": true,
+    "require_investor_confirmed": true,
+    "require_forensic_clear": true,
+    "require_fund_admin_ready": true,
+    "minimum_audit_coverage_score": 0.985,
+    "minimum_evidence_completeness_score": 0.985,
+    "minimum_traceability_score": 0.98,
+    "max_critical_gaps": 0,
+    "max_material_gaps": 1
+  },
+  "runs": [],
+  "alerts": [],
+  "evidence_snapshots": [],
+  "certifications": [],
+  "latest_run": null,
+  "last_context": {}
+}

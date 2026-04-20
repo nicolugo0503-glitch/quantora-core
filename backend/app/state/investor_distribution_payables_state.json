@@ -1,0 +1,113 @@
+{
+  "generated_by": "QNT50011",
+  "status": "degraded",
+  "policy": {
+    "base_currency": "USD",
+    "require_registered_investor": true,
+    "require_statement_cycle": true,
+    "require_dual_attestation": true,
+    "require_treasury_capacity": true,
+    "require_batch_authority": true,
+    "require_transfer_approved": true,
+    "require_positive_distributable_return": false,
+    "max_unresolved_breaks": 0,
+    "max_distribution_pct_of_equity": 0.25,
+    "distribution_amount_tolerance": 1.0,
+    "release_authority_ttl_seconds": 86400,
+    "auto_sync_sources": true
+  },
+  "distribution_batches": [
+    {
+      "batch_id": "batch_1",
+      "period_id": "2026-04",
+      "statement_cycle_id": "APR-2026",
+      "currency": "USD",
+      "distribution_type": "profit_distribution",
+      "source_nav_date": "2026-04-30"
+    }
+  ],
+  "attestations": [],
+  "authorized_batches": [],
+  "blocked_batches": [],
+  "transfer_links": [],
+  "authorized_payable_releases": [],
+  "executed_payables": [
+    {
+      "batch_id": "batch_1",
+      "investor_id": "INV-001",
+      "investor_name": "Investor One",
+      "amount": 1250.0,
+      "currency": "USD",
+      "executed_at": 1,
+      "treasury_transfer_id": "tx_1"
+    },
+    {
+      "batch_id": "batch_1",
+      "investor_id": "INV-002",
+      "investor_name": "Investor Two",
+      "amount": 1750.0,
+      "currency": "USD",
+      "executed_at": 1,
+      "treasury_transfer_id": "tx_2"
+    }
+  ],
+  "exceptions": [],
+  "last_sync": {
+    "synced_at": 1776439277,
+    "source": "auto",
+    "treasury_available_to_move": 255000.0,
+    "treasury_cash_balance": 300000.0,
+    "treasury_break_count": 0,
+    "settlement_break_count": 0,
+    "settlement_status": "matched",
+    "latest_equity": 100000.0,
+    "nav_per_unit": 1.2345,
+    "performance_as_of_date": "2026-04-30",
+    "cumulative_return_pct": 0.21,
+    "mtd_return_pct": 0.0,
+    "registered_investor_count": 2,
+    "pending_distribution_transfer_count": 0,
+    "completed_distribution_transfer_count": 1
+  },
+  "sync_history": [
+    {
+      "synced_at": 1776439277,
+      "source": "auto",
+      "treasury_available_to_move": 255000.0,
+      "treasury_cash_balance": 300000.0,
+      "treasury_break_count": 0,
+      "settlement_break_count": 0,
+      "settlement_status": "matched",
+      "latest_equity": 100000.0,
+      "nav_per_unit": 1.2345,
+      "performance_as_of_date": "2026-04-30",
+      "cumulative_return_pct": 0.21,
+      "mtd_return_pct": 0.0,
+      "registered_investor_count": 2,
+      "pending_distribution_transfer_count": 0,
+      "completed_distribution_transfer_count": 1
+    }
+  ],
+  "audit_log": [
+    {
+      "event_id": "investor_distribution_payables_audit_1776439277092016784",
+      "event_type": "distribution_context_synced",
+      "timestamp": 1776439277,
+      "synced_at": 1776439277,
+      "source": "auto",
+      "treasury_available_to_move": 255000.0,
+      "treasury_cash_balance": 300000.0,
+      "treasury_break_count": 0,
+      "settlement_break_count": 0,
+      "settlement_status": "matched",
+      "latest_equity": 100000.0,
+      "nav_per_unit": 1.2345,
+      "performance_as_of_date": "2026-04-30",
+      "cumulative_return_pct": 0.21,
+      "mtd_return_pct": 0.0,
+      "registered_investor_count": 2,
+      "pending_distribution_transfer_count": 0,
+      "completed_distribution_transfer_count": 1
+    }
+  ]
+}

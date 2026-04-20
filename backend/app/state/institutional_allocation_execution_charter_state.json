@@ -1,0 +1,29 @@
+{
+  "generated_by": "QNT50025",
+  "status": "degraded",
+  "policy": {
+    "enabled": true,
+    "auto_sync_sources": true,
+    "require_arbitration_context": true,
+    "require_committee_alignment": true,
+    "require_risk_clearance": true,
+    "require_liquidity_support": true,
+    "minimum_policy_alignment_score": 85.0,
+    "minimum_mandate_alignment_score": 82.0,
+    "max_charters_to_keep": 300,
+    "max_mandates_to_keep": 300,
+    "max_directives_to_keep": 500
+  },
+  "last_sync": null,
+  "sync_history": [],
+  "execution_charters": [],
+  "mandates": [],
+  "enforcement_directives": [],
+  "audit_log": [],
+  "directives": [
+    {
+      "directive_id": "dir_001",
+      "status": "approved"
+    }
+  ]
+}

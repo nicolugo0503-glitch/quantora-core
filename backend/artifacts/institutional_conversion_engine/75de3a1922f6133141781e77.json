@@ -1,0 +1,14 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "priority_conversion_count": 8,
+    "minimum_commitment_readiness": 74.0,
+    "minimum_closing_probability": 67.0,
+    "minimum_subscription_completeness": 72.0,
+    "minimum_conversion_score": 76.0,
+    "maximum_friction_score": 30.0
+  },
+  "runs": [],
+  "created_at": 1775715102,
+  "updated_at": 1775715102
+}

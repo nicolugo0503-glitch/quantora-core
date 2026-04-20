@@ -1,0 +1,92 @@
+{
+  "replay_lab": {
+    "enabled": true,
+    "last_updated_at": "2026-03-31T15:08:41Z",
+    "last_replay_at": "2026-03-31T15:08:41Z",
+    "last_attribution_at": "2026-03-31T15:08:41Z",
+    "replay_count": 1,
+    "attribution_count": 1,
+    "fill_count": 3,
+    "telemetry": [
+      {
+        "timestamp": "2026-03-31T15:08:41Z",
+        "event": "execution.replayed",
+        "event_count": 3
+      },
+      {
+        "timestamp": "2026-03-31T15:08:41Z",
+        "event": "fills.attributed",
+        "fill_count": 3
+      }
+    ]
+  },
+  "rules": {
+    "max_replay_events": 500,
+    "slippage_alert_bps": 20.0,
+    "latency_alert_ms": 750.0,
+    "venue_weight_enabled": true,
+    "pnl_weight_enabled": true
+  },
+  "replays": [
+    {
+      "replay_id": "replay_0001",
+      "timestamp": "2026-03-31T15:08:41Z",
+      "order_id": "ord_3001",
+      "symbol": "AAPL",
+      "event_count": 3,
+      "total_quantity": 180.0,
+      "avg_latency_ms": 463.33,
+      "avg_slippage_bps": 12.5,
+      "alerts": {
+        "latency": false,
+        "slippage": false
+      }
+    }
+  ],
+  "attributions": [
+    {
+      "attribution_id": "attr_0001",
+      "timestamp": "2026-03-31T15:08:41Z",
+      "strategy_id": "strat_020",
+      "symbol": "AAPL",
+      "fill_count": 3,
+      "total_quantity": 180.0,
+      "total_realized_pnl": 755.0,
+      "venue_breakdown": [
+        {
+          "venue_id": "alpaca_live",
+          "quantity": 90.0,
+          "realized_pnl": 420.0,
+          "avg_slippage_bps": 11.2,
+          "fill_share_pct": 50.0
+        },
+        {
+          "venue_id": "venue_y",
+          "quantity": 60.0,
+          "realized_pnl": 260.0,
+          "avg_slippage_bps": 13.4,
+          "fill_share_pct": 33.33
+        },
+        {
+          "venue_id": "alpaca_paper",
+          "quantity": 30.0,
+          "realized_pnl": 75.0,
+          "avg_slippage_bps": 16.8,
+          "fill_share_pct": 16.67
+        }
+      ]
+    }
+  ],
+  "history": [
+    {
+      "timestamp": "2026-03-31T15:08:41Z",
+      "event": "execution.replayed",
+      "event_count": 3
+    },
+    {
+      "timestamp": "2026-03-31T15:08:41Z",
+      "event": "fills.attributed",
+      "fill_count": 3
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+Looking in indexes: https://reader:****@packages.applied-caas-gateway1.internal.api.openai.org/artifactory/api/pypi/pypi-public/simple
+Collecting fastapi==0.115.2 (from -r /tmp/qntfix/backend/requirements.txt (line 1))
+  Downloading https://packages.applied-caas-gateway1.internal.api.openai.org/artifactory/api/pypi/pypi-public/packages/packages/c9/14/bbe7776356ef01f830f8085ca3ac2aea59c73727b6ffaa757abeb7d2900b/fastapi-0.115.2-py3-none-any.whl (94 kB)
+Collecting uvicorn==0.30.6 (from -r /tmp/qntfix/backend/requirements.txt (line 2))
+  Downloading https://packages.applied-caas-gateway1.internal.api.openai.org/artifactory/api/pypi/pypi-public/packages/packages/f5/8e/cdc7d6263db313030e4c257dd5ba3909ebc4e4fb53ad62d5f09b1a2f5458/uvicorn-0.30.6-py3-none-any.whl (62 kB)
+Collecting email-validator==2.2.0 (from -r /tmp/qntfix/backend/requirements.txt (line 3))
+  Downloading https://packages.applied-caas-gateway1.internal.api.openai.org/artifactory/api/pypi/pypi-public/packages/packages/d7/ee/bf0adb559ad3c786f12bcbc9296b3f5675f529199bef03e2df281fa1fadb/email_validator-2.2.0-py3-none-any.whl (33 kB)
+Collecting requests==2.32.3 (from -r /tmp/qntfix/backend/requirements.txt (line 4))
+  Downloading https://packages.applied-caas-gateway1.internal.api.openai.org/artifactory/api/pypi/pypi-public/packages/packages/f9/9b/335f9764261e915ed497fcdeb11df5dfd6f7bf257d4a6a2a686d80da4d54/requests-2.32.3-py3-none-any.whl (64 kB)
+Requirement already satisfied: starlette<0.41.0,>=0.37.2 in /opt/pyvenv/lib/python3.13/site-packages (from fastapi==0.115.2->-r /tmp/qntfix/backend/requirements.txt (line 1)) (0.37.2)
+Requirement already satisfied: pydantic!=1.8,!=1.8.1,!=2.0.0,!=2.0.1,!=2.1.0,<3.0.0,>=1.7.4 in /opt/pyvenv/lib/python3.13/site-packages (from fastapi==0.115.2->-r /tmp/qntfix/backend/requirements.txt (line 1)) (2.12.5)
+Requirement already satisfied: typing-extensions>=4.8.0 in /opt/pyvenv/lib/python3.13/site-packages (from fastapi==0.115.2->-r /tmp/qntfix/backend/requirements.txt (line 1)) (4.15.0)
+Requirement already satisfied: click>=7.0 in /opt/pyvenv/lib/python3.13/site-packages (from uvicorn==0.30.6->-r /tmp/qntfix/backend/requirements.txt (line 2)) (8.1.8)
+Requirement already satisfied: h11>=0.8 in /opt/pyvenv/lib/python3.13/site-packages (from uvicorn==0.30.6->-r /tmp/qntfix/backend/requirements.txt (line 2)) (0.16.0)
+Requirement already satisfied: dnspython>=2.0.0 in /opt/pyvenv/lib/python3.13/site-packages (from email-validator==2.2.0->-r /tmp/qntfix/backend/requirements.txt (line 3)) (2.8.0)
+Requirement already satisfied: idna>=2.0.0 in /opt/pyvenv/lib/python3.13/site-packages (from email-validator==2.2.0->-r /tmp/qntfix/backend/requirements.txt (line 3)) (3.11)
+Requirement already satisfied: charset-normalizer<4,>=2 in /opt/pyvenv/lib/python3.13/site-packages (from requests==2.32.3->-r /tmp/qntfix/backend/requirements.txt (line 4)) (3.4.4)
+Requirement already satisfied: urllib3<3,>=1.21.1 in /opt/pyvenv/lib/python3.13/site-packages (from requests==2.32.3->-r /tmp/qntfix/backend/requirements.txt (line 4)) (2.6.3)
+Requirement already satisfied: certifi>=2017.4.17 in /opt/pyvenv/lib/python3.13/site-packages (from requests==2.32.3->-r /tmp/qntfix/backend/requirements.txt (line 4)) (2026.1.4)
+Requirement already satisfied: annotated-types>=0.6.0 in /opt/pyvenv/lib/python3.13/site-packages (from pydantic!=1.8,!=1.8.1,!=2.0.0,!=2.0.1,!=2.1.0,<3.0.0,>=1.7.4->fastapi==0.115.2->-r /tmp/qntfix/backend/requirements.txt (line 1)) (0.7.0)
+Requirement already satisfied: pydantic-core==2.41.5 in /opt/pyvenv/lib/python3.13/site-packages (from pydantic!=1.8,!=1.8.1,!=2.0.0,!=2.0.1,!=2.1.0,<3.0.0,>=1.7.4->fastapi==0.115.2->-r /tmp/qntfix/backend/requirements.txt (line 1)) (2.41.5)
+Requirement already satisfied: typing-inspection>=0.4.2 in /opt/pyvenv/lib/python3.13/site-packages (from pydantic!=1.8,!=1.8.1,!=2.0.0,!=2.0.1,!=2.1.0,<3.0.0,>=1.7.4->fastapi==0.115.2->-r /tmp/qntfix/backend/requirements.txt (line 1)) (0.4.2)
+Requirement already satisfied: anyio<5,>=3.4.0 in /opt/pyvenv/lib/python3.13/site-packages (from starlette<0.41.0,>=0.37.2->fastapi==0.115.2->-r /tmp/qntfix/backend/requirements.txt (line 1)) (4.12.1)
+Installing collected packages: uvicorn, requests, email-validator, fastapi
+  Attempting uninstall: uvicorn
+    Found existing installation: uvicorn 0.40.0
+    Uninstalling uvicorn-0.40.0:
+      Successfully uninstalled uvicorn-0.40.0
+  Attempting uninstall: requests
+    Found existing installation: requests 2.32.5
+    Uninstalling requests-2.32.5:
+      Successfully uninstalled requests-2.32.5
+  Attempting uninstall: email-validator
+    Found existing installation: email-validator 2.3.0
+    Uninstalling email-validator-2.3.0:
+      Successfully uninstalled email-validator-2.3.0
+  Attempting uninstall: fastapi
+    Found existing installation: fastapi 0.111.0
+    Uninstalling fastapi-0.111.0:
+      Successfully uninstalled fastapi-0.111.0
+
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+snowflake-connector-python 4.2.0 requires requests<3.0.0,>=2.32.4, but you have requests 2.32.3 which is incompatible.
+gradio 6.5.1 requires starlette<1.0,>=0.40.0, but you have starlette 0.37.2 which is incompatible.
+Successfully installed email-validator-2.2.0 fastapi-0.115.2 requests-2.32.3 uvicorn-0.30.6

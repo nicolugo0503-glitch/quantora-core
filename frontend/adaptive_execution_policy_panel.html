@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30379 Adaptive Execution Policy Brain</title>
+  <style>
+    :root { --bg:#07111f; --panel:#0f1d31; --panel2:#132742; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#60a5fa; }
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .shell{max-width:1360px;margin:0 auto;padding:24px}.panel{background:rgba(15,29,49,.95);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px}
+    .metrics,.row{display:grid;gap:12px}.metrics{grid-template-columns:repeat(4,minmax(0,1fr))}.row{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .metric{background:#0a1526;border:1px solid #1e2d47;border-radius:14px;padding:14px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:26px;font-weight:700;margin-top:8px}
+    textarea{width:100%;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;padding:11px 12px;min-height:240px}
+    button{border:none;background:var(--accent);color:white;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700} button.secondary{background:#1d4ed8}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:280px;white-space:pre-wrap}.tiny{color:var(--muted);font-size:12px}
+    @media(max-width:900px){.metrics,.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">
+      <div>
+        <h1 style="margin:0 0 8px 0;">Adaptive Execution Policy Brain</h1>
+        <div class="tiny">QNT30379 reacts to drift and regime shifts, rewrites routing behavior in real time, and dispatches execution overrides into the venue governor and smart order router.</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="secondary" onclick="window.location.href='index.html'">Command Center</button>
+        <button onclick="loadStatus()">Refresh</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="label">Contexts</div><div class="value" id="m1">-</div></div>
+    <div class="metric"><div class="label">Decisions</div><div class="value" id="m2">-</div></div>
+    <div class="metric"><div class="label">Dispatches</div><div class="value" id="m3">-</div></div>
+    <div class="metric"><div class="label">Halts</div><div class="value" id="m4">-</div></div>
+  </div>
+
+  <div class="row">
+    <div class="panel">
+      <h2 style="margin-top:0">Ingest Market + Execution Context</h2>
+      <textarea id="context_body">{
+  "symbol":"AAPL",
+  "side":"buy",
+  "order_quantity":1500,
+  "urgency":"high",
+  "market_volatility":0.47,
+  "regime_shift":0.21,
+  "liquidity_score":0.28,
+  "slippage_drift_bps":18.5,
+  "latency_drift_ms":410,
+  "fill_rate_delta":-0.14,
+  "drift_triggered":true
+}</textarea>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        <button onclick="ingestContext()">Ingest Context</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2 style="margin-top:0">Decide + Dispatch</h2>
+      <div class="tiny">Compile an adaptive override and push it into the execution stack. Defensive mode shrinks order size and tightens venue selection. Halt mode activates when execution conditions become unacceptable.</div>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="secondary" onclick="decidePolicy()">Decide Policy</button>
+        <button onclick="dispatchOverride()">Dispatch Override</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel"><h2 style="margin-top:0">Output</h2><pre id="out">Loading...</pre></div>
+</div>
+
+<script>
+const API="http://127.0.0.1:8010";
+async function req(path, method="GET", body=null){
+  const r=await fetch(API+path,{method,headers:{"Content-Type":"application/json"},body:body?JSON.stringify(body):null});
+  const d=await r.json();
+  if(!r.ok) throw new Error(JSON.stringify(d));
+  return d;
+}
+function render(data){
+  const d = data.policy_brain || {};
+  document.getElementById("m1").textContent = data.context_count ?? d.context_count ?? "-";
+  document.getElementById("m2").textContent = data.decision_count ?? d.decision_count ?? "-";
+  document.getElementById("m3").textContent = data.dispatch_count ?? d.dispatch_count ?? "-";
+  document.getElementById("m4").textContent = d.halt_count ?? "-";
+  document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+}
+async function loadStatus(){ try{ render(await req("/adaptive-execution/status")); } catch(e){ document.getElementById("out").textContent = String(e); } }
+async function ingestContext(){
+  try{
+    const body = JSON.parse(document.getElementById("context_body").value);
+    const data = await req("/adaptive-execution/context", "POST", body);
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+    await loadStatus();
+  }catch(e){ document.getElementById("out").textContent = String(e); }
+}
+async function decidePolicy(){
+  try{
+    const data = await req("/adaptive-execution/decide", "POST", {});
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+    await loadStatus();
+  }catch(e){ document.getElementById("out").textContent = String(e); }
+}
+async function dispatchOverride(){
+  try{
+    const data = await req("/adaptive-execution/dispatch", "POST", {});
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+    await loadStatus();
+  }catch(e){ document.getElementById("out").textContent = String(e); }
+}
+loadStatus();
+</script>
+</body>
+</html>

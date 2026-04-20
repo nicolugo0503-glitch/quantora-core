@@ -1,0 +1,114 @@
+{
+  "mission_group": "Conversation Missions",
+  "target_area_label": "Added Missions Hub",
+  "buttons": [
+    {
+      "id": "qnt30484",
+      "label": "Fund Stack",
+      "mission_code": "QNT30484",
+      "title": "Fund Stack + Sleeve System",
+      "type": "doc",
+      "relative_path": "MISSIONS/QNT30484_FUND_STACK_SLEEVE_SYSTEM/README.md",
+      "notes": "Fund registry, sleeve hierarchy, strategy mapping."
+    },
+    {
+      "id": "qnt30485",
+      "label": "Investor Ledger",
+      "mission_code": "QNT30485",
+      "title": "Investor Ledger",
+      "type": "doc",
+      "relative_path": "MISSIONS/QNT30485_INVESTOR_LEDGER/README.md",
+      "notes": "Deposits, withdrawals, ownership tracking."
+    },
+    {
+      "id": "qnt30486",
+      "label": "Fund NAV",
+      "mission_code": "QNT30486",
+      "title": "Fund NAV Engine",
+      "type": "doc",
+      "relative_path": "MISSIONS/QNT30486_FUND_NAV_ENGINE/README.md",
+      "notes": "NAV, liabilities, net assets, NAV per share."
+    },
+    {
+      "id": "qnt30487",
+      "label": "Investor Dashboard",
+      "mission_code": "QNT30487",
+      "title": "Investor Dashboard",
+      "type": "doc",
+      "relative_path": "MISSIONS/QNT30487_INVESTOR_DASHBOARD/README.md",
+      "notes": "Investor statements, ownership %, market value."
+    },
+    {
+      "id": "qnt30488",
+      "label": "Monetization",
+      "mission_code": "QNT30488",
+      "title": "Monetization Engine",
+      "type": "doc",
+      "relative_path": "MISSIONS/QNT30488_MONETIZATION_ENGINE/README.md",
+      "notes": "Subscriptions, management fees, performance fees."
+    },
+    {
+      "id": "qnt30489",
+      "label": "System Integration",
+      "mission_code": "QNT30489",
+      "title": "System Integration Layer",
+      "type": "doc",
+      "relative_path": "MISSIONS/QNT30489_SYSTEM_INTEGRATION_LAYER/README.md",
+      "notes": "Capital lifecycle orchestration layer."
+    },
+    {
+      "id": "qnt30490",
+      "label": "Live Bridge",
+      "mission_code": "QNT30490",
+      "title": "Live Data + Execution Bridge",
+      "type": "doc",
+      "relative_path": "MISSIONS/QNT30490_LIVE_DATA_EXECUTION_BRIDGE/README.md",
+      "notes": "Broker order and position normalization."
+    },
+    {
+      "id": "qnt30491",
+      "label": "Activation Runtime",
+      "mission_code": "QNT30491",
+      "title": "System Activation Layer",
+      "type": "doc",
+      "relative_path": "MISSIONS/QNT30491_SYSTEM_ACTIVATION_LAYER/README.md",
+      "notes": "Runtime loop, state, logs, safety controls."
+    },
+    {
+      "id": "qnt30492",
+      "label": "Control Panel UI",
+      "mission_code": "QNT30492",
+      "title": "Control Panel UI",
+      "type": "html",
+      "relative_path": "MISSIONS/QNT30492_CONTROL_PANEL_UI/control_panel.html",
+      "notes": "Standalone operator UI v1."
+    },
+    {
+      "id": "qnt30493",
+      "label": "Real Control Panel",
+      "mission_code": "QNT30493",
+      "title": "Real Control Panel Wired",
+      "type": "html",
+      "relative_path": "MISSIONS/QNT30493_REAL_CONTROL_PANEL_WIRED/real_control_panel.html",
+      "notes": "Wired operator panel with state adapter."
+    },
+    {
+      "id": "qnt30494",
+      "label": "Exec Fund Bridge",
+      "mission_code": "QNT30494",
+      "title": "Execution Fund Integration Bridge",
+      "type": "doc",
+      "relative_path": "MISSIONS/QNT30494_EXECUTION_FUND_INTEGRATION_BRIDGE/README.md",
+      "notes": "Fund-aware execution adapter for Alpaca/live broker data."
+    },
+    {
+      "id": "qnt30495",
+      "label": "Fund Visualization",
+      "mission_code": "QNT30495",
+      "title": "Live Fund Visualization",
+      "type": "html",
+      "relative_path": "MISSIONS/QNT30495_LIVE_FUND_VISUALIZATION/fund_visualization.html",
+      "notes": "Fund exposure and NAV input visualization."
+    }
+  ]
+}

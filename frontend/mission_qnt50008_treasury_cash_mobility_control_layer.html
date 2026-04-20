@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QNT50008 — Treasury + Cash Mobility Control Layer</title>
+  <style>
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#07101d;color:#edf4ff}
+    .wrap{max-width:1120px;margin:0 auto;padding:32px}
+    .hero,.card{background:#0d1a2c;border:1px solid #223754;border-radius:18px;padding:24px;box-shadow:0 12px 34px rgba(0,0,0,.28)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:18px}
+    h1,h2{margin:0 0 12px}
+    .eyebrow{letter-spacing:.18em;text-transform:uppercase;color:#89b9ff;font-size:12px}
+    .pill{display:inline-block;padding:8px 12px;border-radius:999px;background:#163457;margin:6px 8px 0 0}
+    ul{padding-left:18px;line-height:1.6}
+    code{background:#091425;padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Quantora • Treasury Command</div>
+      <h1>QNT50008 — Treasury + Cash Mobility Control Layer</h1>
+      <p>Quantora now governs post-settlement liquidity as institutional treasury, not just as execution infrastructure. This layer synchronizes with QNT50007 cash state, enforces reserve buffers, stages and approves treasury transfers, and plans internal rebalancing before cash is dispatched to brokers, custody, administrators, or investor settlement rails.</p>
+      <span class="pill">Liquidity reserve policy</span>
+      <span class="pill">Transfer staging and approvals</span>
+      <span class="pill">Cash mobility governance</span>
+      <span class="pill">Internal treasury rebalancing</span>
+    </section>
+    <div class="grid">
+      <section class="card">
+        <h2>Control Behavior</h2>
+        <ul>
+          <li>Settlement cash and pending obligations are synced into treasury liquidity context before mobility decisions are made.</li>
+          <li>Reserve floors and operating cash targets are preserved before any transfer is released.</li>
+          <li>Transfers exceeding policy thresholds or active reconciliation breaks are forced into review instead of silent execution.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Treasury Accounts</h2>
+        <ul>
+          <li><code>operating</code> maintains internal working cash.</li>
+          <li><code>broker_buffer</code> supports venue funding and execution readiness.</li>
+          <li><code>custody_reserve</code> protects institutional reserve capital.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Endpoints</h2>
+        <ul>
+          <li><code>GET /treasury/health</code></li>
+          <li><code>POST /treasury/sync-settlement</code></li>
+          <li><code>POST /treasury/stage-transfer</code></li>
+          <li><code>POST /treasury/approve-transfer</code></li>
+          <li><code>POST /treasury/execute-transfer</code></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

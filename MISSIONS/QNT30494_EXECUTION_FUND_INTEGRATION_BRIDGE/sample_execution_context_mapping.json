@@ -1,0 +1,66 @@
+{
+  "default_fund_id": "FUND1",
+  "symbol_strategy_map": {
+    "BTCUSD": "STRAT_BTC_MOMO",
+    "ETHUSD": "STRAT_YIELD_LOW_RISK",
+    "SPY": "STRAT_AI_MACRO"
+  },
+  "strategy_sleeve_map": {
+    "STRAT_BTC_MOMO": "SLEEVE_CRYPTO_MOMENTUM",
+    "STRAT_YIELD_LOW_RISK": "SLEEVE_YIELD",
+    "STRAT_AI_MACRO": "SLEEVE_AI_MACRO"
+  },
+  "sleeve_fund_map": {
+    "SLEEVE_CRYPTO_MOMENTUM": "FUND1",
+    "SLEEVE_YIELD": "FUND1",
+    "SLEEVE_AI_MACRO": "FUND2"
+  },
+  "sample_orders": [
+    {
+      "order_id": "ORD1001",
+      "symbol": "BTCUSD",
+      "side": "buy",
+      "qty": 0.25,
+      "status": "new"
+    },
+    {
+      "order_id": "ORD1002",
+      "symbol": "SPY",
+      "side": "sell",
+      "qty": 10,
+      "status": "accepted"
+    }
+  ],
+  "sample_positions": [
+    {
+      "symbol": "BTCUSD",
+      "qty": 1.5,
+      "market_value": 300000.0,
+      "unrealized_pnl": 15000.0,
+      "realized_pnl": 5000.0
+    },
+    {
+      "symbol": "ETHUSD",
+      "qty": 20,
+      "market_value": 180000.0,
+      "unrealized_pnl": 2000.0,
+      "realized_pnl": 1000.0
+    },
+    {
+      "symbol": "SPY",
+      "qty": 50,
+      "market_value": 27500.0,
+      "unrealized_pnl": 400.0,
+      "realized_pnl": 120.0
+    }
+  ],
+  "sample_fills": [
+    {
+      "fill_id": "FIL2001",
+      "order_id": "ORD1001",
+      "symbol": "BTCUSD",
+      "filled_qty": 0.25,
+      "avg_fill_price": 62000.0
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+<h2>QNT30391 Launch Panel</h2>
+<button onclick="status()">Check Status</button>
+<pre id="out"></pre>
+<script>
+async function status(){
+ let r = await fetch('/launch/status');
+ let d = await r.json();
+ document.getElementById('out').innerText = JSON.stringify(d,null,2);
+}
+</script>
+</body>
+</html>

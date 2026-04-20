@@ -1,0 +1,22 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_runs": 180,
+    "min_automation_score": 82.0,
+    "max_open_exceptions": 1,
+    "max_staleness_hours": 48.0,
+    "min_delivery_success_pct": 92.0,
+    "min_template_integrity_score": 88.0,
+    "min_disclosure_completeness_pct": 90.0,
+    "require_transparency_approved": true,
+    "require_delivery_ready": true,
+    "require_fund_admin_ready": true,
+    "require_release_clear": true,
+    "require_operator_review_for_exceptions": true
+  },
+  "runs": [],
+  "exceptions": [],
+  "automation_book": [],
+  "created_at": 1776223536,
+  "updated_at": 1776223536
+}

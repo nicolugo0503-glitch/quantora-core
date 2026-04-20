@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QNT30659 — Institutional Closing Command</title>
+  <style>
+    :root { --bg:#07111f; --panel:#0d1b2d; --panel2:#10233b; --line:#1f3556; --text:#e8eef8; --muted:#9fb3d8; --accent:#5aa9ff; --good:#0f9d58; --warn:#d97706; --bad:#dc2626; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,system-ui,-apple-system,sans-serif; background:linear-gradient(180deg,#07111f,#0a1526); color:var(--text); }
+    .wrap { max-width:1440px; margin:0 auto; padding:24px; }
+    .hero, .panel, .metric { background:rgba(13,27,45,.96); border:1px solid var(--line); border-radius:18px; box-shadow:0 18px 40px rgba(0,0,0,.24); }
+    .hero { padding:24px; margin-bottom:18px; }
+    .label { color:var(--accent); text-transform:uppercase; letter-spacing:.14em; font-size:12px; }
+    .muted { color:var(--muted); }
+    .toolbar { display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; }
+    button, .btn { border:0; border-radius:12px; padding:11px 15px; cursor:pointer; font-weight:700; background:var(--accent); color:#07111f; text-decoration:none; }
+    button.secondary, .btn.secondary { background:#152b46; color:var(--text); border:1px solid var(--line); }
+    .metric-grid, .grid { display:grid; gap:16px; margin-bottom:18px; }
+    .metric-grid { grid-template-columns:repeat(5,1fr); }
+    .grid { grid-template-columns:1.3fr .7fr; }
+    .metric { padding:18px; min-height:124px; }
+    .metric .value { font-size:30px; font-weight:800; margin:8px 0; }
+    .metric .status { color:var(--muted); font-size:12px; }
+    .panel { padding:18px; }
+    .stack { display:grid; gap:16px; }
+    .section-title { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:14px; }
+    .section-title h2 { margin:0; font-size:18px; }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th,td { padding:10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-size:12px; text-transform:uppercase; }
+    .pill { display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid #2a3c60; background:#0a1526; }
+    .good { color:#d1fae5; border-color:#14532d; }
+    .warn { color:#fde68a; border-color:#92400e; }
+    .bad { color:#fecaca; border-color:#7f1d1d; }
+    pre { margin:0; background:var(--panel2); border:1px solid var(--line); border-radius:14px; padding:14px; white-space:pre-wrap; min-height:180px; max-height:420px; overflow:auto; }
+    .tiny { color:var(--muted); font-size:12px; }
+    @media (max-width:1100px){ .metric-grid,.grid{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="label">Institutional Mission</div>
+    <h1 style="margin:8px 0;">QNT30659 — Institutional Closing Command</h1>
+    <div class="muted">This layer transforms conversion-ready institutional demand into final close authority. Quantora now decides which close packets can be sealed, which settlement lanes can be greenlit, and which final releases are authorized to move from governance into funded institutional close execution.</div>
+    <div class="toolbar">
+      <a class="btn" href="index.html">Back to Command Center</a>
+      <button onclick="runLayer()">Run Closing Cycle</button>
+      <button class="secondary" onclick="refreshAll()">Refresh Summary</button>
+    </div>
+  </section>
+
+  <section class="metric-grid">
+    <div class="metric"><div class="label">Closing Posture</div><div class="value" id="posture">-</div><div class="status" id="postureTag"></div></div>
+    <div class="metric"><div class="label">Closing Score</div><div class="value" id="score">-</div><div class="status">Committee-grade close authority</div></div>
+    <div class="metric"><div class="label">Close Volume</div><div class="value" id="pipeline">-</div><div class="status">Governed close target</div></div>
+    <div class="metric"><div class="label">Launch Ready</div><div class="value" id="launchReady">-</div><div class="status">Final release queue</div></div>
+    <div class="metric"><div class="label">Avg Friction</div><div class="value" id="friction">-</div><div class="status">Close execution drag</div></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Close Book</h2><span class="tiny">Institutional closes under command</span></div>
+      <table id="bookTable"><thead><tr><th>Allocator</th><th>Vehicle</th><th>Jurisdiction</th><th>Readiness</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="stack">
+      <div class="panel"><div class="section-title"><h2>Policy</h2><span class="tiny">Closing thresholds</span></div><pre id="policy">Loading…</pre></div>
+      <div class="panel"><div class="section-title"><h2>Overview</h2><span class="tiny">Institutional close posture</span></div><pre id="overview">Loading…</pre></div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Closing Packets</h2><span class="tiny">Packet and release readiness</span></div>
+      <table id="packetTable"><thead><tr><th>Allocator</th><th>Vehicle</th><th>Packet</th><th>Settlement</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="panel">
+      <div class="section-title"><h2>Settlement Matrix</h2><span class="tiny">Treasury and mobility greenlights</span></div>
+      <table id="settlementTable"><thead><tr><th>Allocator</th><th>Vehicle</th><th>Commitment</th><th>Settlement</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel"><div class="section-title"><h2>Final Release Queue</h2><span class="tiny">Committee actions</span></div><pre id="releaseQueue">Loading…</pre></div>
+    <div class="panel"><div class="section-title"><h2>Dependencies</h2><span class="tiny">Conversion, mobility, treasury inputs</span></div><pre id="dependencies">Loading…</pre></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel"><div class="section-title"><h2>Closing Actions</h2><span class="tiny">Executive closing agenda</span></div><pre id="actions">Loading…</pre></div>
+    <div class="panel"><div class="section-title"><h2>Audit Trail</h2><span class="tiny">Latest closing cycle</span></div><pre id="auditTrail">Loading…</pre></div>
+  </section>
+</div>
+<script>
+  const fmtPct = v => `${Number(v||0).toFixed(2)}%`;
+  const fmtMoney = v => `$${Number(v||0).toLocaleString(undefined,{maximumFractionDigits:2})}M`;
+  const pill = (text, cls='') => `<span class="pill ${cls}">${text}</span>`;
+  function severityClass(text='') {
+    const t = String(text).toLowerCase();
+    if (t.includes('constrained') || t.includes('hold') || t.includes('prepare')) return 'bad';
+    if (t.includes('stage') || t.includes('building')) return 'warn';
+    return 'good';
+  }
+  async function getJson(url, opts) {
+    const res = await fetch(url, opts);
+    if (!res.ok) throw new Error(`${url} -> ${res.status}`);
+    return res.json();
+  }
+  function fillTable(id, rows, renderer, colspan=4) {
+    const tbody = document.querySelector(`#${id} tbody`);
+    tbody.innerHTML = rows.length ? rows.map(renderer).join('') : `<tr><td colspan="${colspan}" class="tiny">No rows available.</td></tr>`;
+  }
+  async function refreshAll() {
+    try {
+      const [summary, audit] = await Promise.all([
+        getJson('/api/institutional-closing-command/summary'),
+        getJson('/api/institutional-closing-command/audit')
+      ]);
+      renderSummary(summary, audit);
+    } catch (err) {
+      document.getElementById('auditTrail').textContent = `Institutional closing layer unavailable. ${err.message}`;
+    }
+  }
+  async function runLayer() {
+    const result = await getJson('/api/institutional-closing-command/run', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ trigger:'manual-ui' })
+    });
+    renderSummary(result.summary, { latest_run: result.run, runs:[result.run], run_count:1 });
+  }
+  function renderSummary(summary, audit) {
+    const o = summary.closing_command_overview || {};
+    document.getElementById('posture').textContent = o.closing_command_posture || '-';
+    document.getElementById('postureTag').innerHTML = pill(o.closing_command_posture || 'unknown', severityClass(o.closing_command_posture));
+    document.getElementById('score').textContent = fmtPct(o.closing_command_score || 0);
+    document.getElementById('pipeline').textContent = fmtMoney(o.target_close_volume_millions || 0);
+    document.getElementById('launchReady').textContent = Number(o.launch_ready_count || 0).toLocaleString();
+    document.getElementById('friction').textContent = fmtPct(o.average_execution_friction || 0);
+    fillTable('bookTable', summary.close_book || [], row => `
+      <tr><td>${row.allocator_name || '-'}</td><td>${row.vehicle || '-'}</td><td>${row.jurisdiction || '-'}</td><td>${fmtPct(row.close_readiness_score || 0)}</td><td>${pill(row.status || '-', severityClass(row.status))}</td></tr>`, 5);
+    fillTable('packetTable', summary.closing_packets || [], row => `
+      <tr><td>${row.allocator_name || '-'}</td><td>${row.vehicle || '-'}</td><td>${fmtPct(row.packet_readiness_score || 0)}</td><td>${fmtPct(row.settlement_readiness_score || 0)}</td><td>${pill(row.close_status || '-', severityClass(row.close_status))}</td></tr>`, 5);
+    fillTable('settlementTable', summary.settlement_matrix || [], row => `
+      <tr><td>${row.allocator_name || '-'}</td><td>${row.vehicle || '-'}</td><td>${fmtMoney(row.planned_commitment_millions || 0)}</td><td>${fmtPct(row.settlement_readiness_score || 0)}</td><td>${pill(row.settlement_status || '-', severityClass(row.settlement_status))}</td></tr>`, 5);
+    document.getElementById('policy').textContent = JSON.stringify(summary.policy || {}, null, 2);
+    document.getElementById('overview').textContent = JSON.stringify(summary.closing_command_overview || {}, null, 2);
+    document.getElementById('releaseQueue').textContent = JSON.stringify(summary.final_release_queue || [], null, 2);
+    document.getElementById('dependencies').textContent = JSON.stringify(summary.closing_dependencies || {}, null, 2);
+    document.getElementById('actions').textContent = JSON.stringify(summary.closing_actions || [], null, 2);
+    document.getElementById('auditTrail').textContent = JSON.stringify({ run_count: audit.run_count || 0, latest_run: audit.latest_run || null }, null, 2);
+  }
+  refreshAll();
+</script>
+</body>
+</html>

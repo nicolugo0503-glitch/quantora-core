@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30593 Investor Equalization / Series Accounting</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:90px}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr 2fr auto auto;gap:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1200px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30593 · Investor Equalization / Series Accounting Engine</h1>
+        <div style="color:#9fb3d8">Tracks investor series, subscription capital, NAV per unit, and equalization credit. This is the series-accounting layer on top of NAV and cash activity.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30591_cash_ledger.html">Cash Ledger</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Series</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Active</div><div id="active" class="value">-</div></div>
+    <div class="card"><div class="label">Total Series NAV</div><div id="nav" class="value">-</div></div>
+    <div class="card"><div class="label">Equalization Credit</div><div id="credit" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="adminEmail" placeholder="Investor email">
+      <input id="seriesName" placeholder="Series name">
+      <input id="capital" placeholder="Subscription capital">
+      <textarea id="notes" placeholder="Notes"></textarea>
+      <button onclick="createSeries()">Create Series</button>
+      <button onclick="closeLatest()">Close Latest</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Series Ledger</div>
+    <table>
+      <thead><tr><th>Series</th><th>Units</th><th>Subscription Capital</th><th>Series NAV</th><th>Equalization</th><th>Status</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Equalization Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/equalization-series/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  document.getElementById('count').textContent = String(d.series_count || 0);
+  document.getElementById('active').textContent = String(d.active_series || 0);
+  document.getElementById('nav').textContent = money(d.total_series_nav || 0);
+  document.getElementById('credit').textContent = money(d.total_equalization_credit || 0);
+  document.getElementById('rows').innerHTML = (d.series || []).map(s =>
+    `<tr><td>${s.series_name}</td><td>${Number(s.units||0).toFixed(6)}</td><td>${money(s.subscription_capital)}</td><td>${money(s.series_nav)}</td><td>${money(s.equalization_credit)}</td><td>${s.status}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function createSeries(){
+  const capital = Number(document.getElementById('capital').value || 0);
+  const payload = {
+    email: document.getElementById('adminEmail').value,
+    series_name: document.getElementById('seriesName').value,
+    subscription_capital: capital,
+    units: capital > 0 ? capital : 1,
+    notes: document.getElementById('notes').value
+  };
+  await j('/api/equalization-series/create', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function closeLatest(){
+  const res = await j('/api/equalization-series');
+  const latest = (res.data.series || [])[0];
+  if(!latest){ return; }
+  await j('/api/equalization-series/close', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({series_id: latest.series_id, notes: document.getElementById('notes').value})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30588 Investor Statement Pack Generator</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,select{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+.row{display:grid;grid-template-columns:2fr 1fr auto auto;gap:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1100px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30588 · Investor Statement Pack Generator</h1>
+        <div style="color:#9fb3d8">Builds a full investor pack from statement, pnl, and performance waterfall data. This is the packaging layer for investor-ready reporting delivery.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30587_performance_waterfall.html">Waterfall</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Packs</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Delivered</div><div id="delivered" class="value">-</div></div>
+    <div class="card"><div class="label">Sections</div><div id="sections" class="value">-</div></div>
+    <div class="card"><div class="label">Latest Status</div><div id="status" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="title" placeholder="Pack title">
+      <select id="channel"><option value="portal_simulated">portal_simulated</option><option value="email_simulated">email_simulated</option></select>
+      <button onclick="generatePack()">Generate</button>
+      <button onclick="deliverPack()">Deliver</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Latest Pack Summary</div>
+    <table>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Statement Pack Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/statement-packs/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  const p = d.latest_pack || {};
+  document.getElementById('count').textContent = String(d.pack_count || 0);
+  document.getElementById('delivered').textContent = String(d.delivered_count || 0);
+  document.getElementById('sections').textContent = String((p.sections || []).length);
+  document.getElementById('status').textContent = String(p.delivery_status || '-');
+  const rows = [
+    ['Title', p.title || '-'],
+    ['Generated', p.generated_at ? new Date(p.generated_at * 1000).toLocaleString() : '-'],
+    ['Gross Net PnL', money(((p.waterfall || {}).net_pnl_after_fees || 0))],
+    ['Realized PnL', money(((p.pnl_summary || {}).total_realized_pnl || 0))],
+    ['Unrealized PnL', money(((p.pnl_summary || {}).total_unrealized_pnl || 0))]
+  ];
+  document.getElementById('rows').innerHTML = rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function generatePack(){
+  await j('/api/statement-packs/generate', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({title: document.getElementById('title').value})});
+  await load();
+}
+async function deliverPack(){
+  const res = await j('/api/statement-packs');
+  const latest = (res.data.packs || [])[0];
+  if(!latest){ return; }
+  await j('/api/statement-packs/deliver', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({pack_id: latest.pack_id, channel: document.getElementById('channel').value})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

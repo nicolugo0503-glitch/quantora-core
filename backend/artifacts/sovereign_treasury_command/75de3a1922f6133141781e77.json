@@ -1,0 +1,14 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "minimum_liquidity_coverage_days": 90,
+    "target_reserve_ratio": 18.0,
+    "max_settlement_stress": 35.0,
+    "max_fx_slippage_budget_bps": 28.0,
+    "minimum_treasury_readiness": 72.0,
+    "capital_mobility_floor": 65.0
+  },
+  "runs": [],
+  "created_at": 1775713455,
+  "updated_at": 1775713455
+}

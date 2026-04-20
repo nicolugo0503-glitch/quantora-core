@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — Treasury, Cash, and Liquidity Control Tower</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--panel2:#132742;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(15,29,49,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .sub{color:var(--muted);max-width:980px;line-height:1.5}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    button{border-radius:10px;border:none;background:var(--accent);color:var(--text);padding:10px 12px;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}.stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}
+    th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #274168;background:#0b1a2c;font-size:12px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:180px;white-space:pre-wrap}
+    @media (max-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:1fr}}
+    @media (max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT30452 — Treasury, Cash, and Liquidity Control Tower</h1>
+      <div class="sub">Cash account visibility, liquidity laddering, treasury flow monitoring, and funding forecasts. This is the capital operations layer that keeps the fund liquid, solvent, and deployable.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="loadAll()">Refresh</button>
+      <button onclick="seedAccount()">Seed Account</button>
+      <button onclick="seedBucket()">Seed Bucket</button>
+      <button onclick="seedFlow()">Seed Flow</button>
+      <button onclick="seedForecast()">Seed Forecast</button>
+    </div>
+  </div>
+
+  <div class="grid" id="summaryGrid"></div>
+
+  <div class="layout">
+    <div class="stack">
+      <div class="card">
+        <h2>Cash Accounts</h2>
+        <div class="table-wrap"><table id="accountTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Liquidity Buckets</h2>
+        <div class="table-wrap"><table id="bucketTable"></table></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card">
+        <h2>Treasury Flows</h2>
+        <div class="table-wrap"><table id="flowTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Funding Forecasts</h2>
+        <div class="table-wrap"><table id="forecastTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Treasury Health</h2>
+        <div class="pills" id="healthPills"></div>
+      </div>
+      <div class="card">
+        <h2>Last Action</h2>
+        <pre id="actionOut">No action yet.</pre>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const api=(path, opts={})=>fetch(path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok) throw new Error(d.detail||'request_failed'); return d;});
+const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(Number(v||0));
+function table(el, headers, rows){
+  const thead = `<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  const body = rows.length ? rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${headers.length}">No data</td></tr>`;
+  el.innerHTML = thead + body;
+}
+function renderSummary(summary){
+  const labels = [
+    ['Accounts', summary.accounts_tracked],
+    ['Total Cash', money(summary.total_cash)],
+    ['Available', money(summary.available_cash)],
+    ['Restricted', money(summary.restricted_cash)],
+    ['Near-Term Liquidity', money(summary.near_term_liquidity)],
+    ['Treasury Score', summary.treasury_score]
+  ];
+  document.getElementById('summaryGrid').innerHTML = labels.map(([label,val])=>`<div class="card"><div class="label">${label}</div><div class="value">${val}</div></div>`).join('');
+}
+function pills(target, items){
+  document.getElementById(target).innerHTML = items.map(([label,klass])=>`<span class="pill ${klass}">${label}</span>`).join('');
+}
+async function loadAll(){
+  const data = await api('/workspace/treasury/summary');
+  renderSummary(data.summary);
+  table(document.getElementById('accountTable'),
+    ['Account','Institution','Cash','Available','Restricted','Status'],
+    (data.cash_accounts||[]).map(r=>[r.account_name, r.institution_name, money(r.cash_balance), money(r.available_cash), money(r.restricted_cash), r.status])
+  );
+  table(document.getElementById('bucketTable'),
+    ['Bucket','Amount','Target','Status','Created'],
+    (data.liquidity_buckets||[]).map(r=>[r.bucket_name, money(r.bucket_amount), money(r.target_amount), r.status, r.created_at||'-'])
+  );
+  table(document.getElementById('flowTable'),
+    ['Flow','Direction','Amount','Source','Status','Created'],
+    (data.treasury_flows||[]).map(r=>[r.flow_name, r.flow_direction, money(r.amount), r.source_ref, r.status, r.created_at||'-'])
+  );
+  table(document.getElementById('forecastTable'),
+    ['Forecast','Projected Cash','Min Required','Status','Created'],
+    (data.funding_forecasts||[]).map(r=>[r.forecast_name, money(r.projected_cash), money(r.minimum_required), r.status, r.created_at||'-'])
+  );
+  pills('healthPills', [
+    [`Cash ${data.treasury_health.cash_registry_ready?'Ready':'Missing'}`, data.treasury_health.cash_registry_ready?'good':'warn'],
+    [`Ladder ${data.treasury_health.liquidity_ladder_ready?'Ready':'Missing'}`, data.treasury_health.liquidity_ladder_ready?'good':'warn'],
+    [`Flows ${data.treasury_health.flow_monitoring_ready?'Ready':'Missing'}`, data.treasury_health.flow_monitoring_ready?'good':'warn'],
+    [`Forecast ${data.treasury_health.forecasting_ready?'Ready':'Missing'}`, data.treasury_health.forecasting_ready?'good':'warn'],
+    [`Score ${data.treasury_health.treasury_score}`, data.treasury_health.treasury_score>=85?'good':'warn']
+  ]);
+}
+async function seedAccount(){
+  const res = await api('/workspace/treasury/accounts/create', {method:'POST', body: JSON.stringify({account_name:'Primary Treasury', institution_name:'Mercury', cash_balance:185000, available_cash:160000, restricted_cash:25000, status:'active'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedBucket(){
+  const res = await api('/workspace/treasury/buckets/create', {method:'POST', body: JSON.stringify({bucket_name:'T0', bucket_amount:60000, target_amount:50000, status:'ok'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedFlow(){
+  const res = await api('/workspace/treasury/flows/create', {method:'POST', body: JSON.stringify({flow_name:'Investor Subscription', flow_direction:'inflow', amount:40000, source_ref:'inv_subscription_1', status:'scheduled'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedForecast(){
+  const res = await api('/workspace/treasury/forecasts/create', {method:'POST', body: JSON.stringify({forecast_name:'7-Day Liquidity Forecast', projected_cash:145000, minimum_required:90000, status:'ok'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+loadAll().catch(err => document.getElementById('actionOut').textContent = String(err));
+</script>
+</body>
+</html>

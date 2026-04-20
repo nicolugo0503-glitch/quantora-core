@@ -1,0 +1,12 @@
+{
+  "base_zip": "QUANTORA_FULL_PROJECT_QNT30641_STRATEGY_EXPANSION_LAYER_AUDITED.zip",
+  "output_zip": "QUANTORA_FULL_PROJECT_QNT30643_INSTITUTIONAL_RISK_INTELLIGENCE_LAYER_AUDITED.zip",
+  "checked_at": "2026-04-08T21:05:41.991679+00:00",
+  "checks": {
+    "module_files_present": true,
+    "store_present": true,
+    "mission_page_present": true,
+    "registry_contains_qnt30643": true,
+    "dynamic_loader_preserved": true
+  }
+}

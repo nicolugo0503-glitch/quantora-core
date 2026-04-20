@@ -1,0 +1,1131 @@
+{
+  "locked": true,
+  "generated_by": "QNT30640 locked dynamic nav patch",
+  "missions": [
+    {
+      "code": "QNT-REAL01G",
+      "label": "QNT-REAL01G Broker Session Handshake + Live Connectivity Verification Layer",
+      "path": "mission_qntreal01g_broker_session_handshake_live_connectivity_verification_layer.html"
+    },
+    {
+      "code": "QNT-REAL01A",
+      "label": "QNT-REAL01A Operator Mode + Live Execution Activation",
+      "path": "mission_qntreal01a_operator_mode_live_execution_activation.html"
+    },
+    {
+      "id": "QNT30741",
+      "label": "QNT30741 Institutional Settlement Exception Command Layer",
+      "path": "mission_qnt30741_institutional_settlement_exception_command_layer.html"
+    },
+    {
+      "code": "QNT30617",
+      "label": "QNT30617 Identity Registry",
+      "path": "mission_qnt30617_identity_registry.html"
+    },
+    {
+      "code": "QNT30618",
+      "label": "QNT30618 Preference Center",
+      "path": "mission_qnt30618_preference_center.html"
+    },
+    {
+      "code": "QNT30619",
+      "label": "QNT30619 Notification Campaigns",
+      "path": "mission_qnt30619_notification_campaigns.html"
+    },
+    {
+      "code": "QNT30620",
+      "label": "QNT30620 Investor CRM",
+      "path": "mission_qnt30620_investor_crm.html"
+    },
+    {
+      "code": "QNT30621",
+      "label": "QNT30621 Opportunity Pipeline",
+      "path": "mission_qnt30621_opportunity_pipeline.html"
+    },
+    {
+      "code": "QNT30622",
+      "label": "QNT30622 Meeting Tracker",
+      "path": "mission_qnt30622_meeting_tracker.html"
+    },
+    {
+      "code": "QNT30623",
+      "label": "QNT30623 Onboarding Layer",
+      "path": "mission_qnt30623_onboarding_layer.html"
+    },
+    {
+      "code": "QNT30624",
+      "label": "QNT30624 Capital Ledger",
+      "path": "mission_qnt30624_capital_ledger.html"
+    },
+    {
+      "code": "QNT30625",
+      "label": "QNT30625 Waterfall Engine",
+      "path": "mission_qnt30625_waterfall_engine.html"
+    },
+    {
+      "code": "QNT30626",
+      "label": "QNT30626 Equalization Engine",
+      "path": "mission_qnt30626_equalization_engine.html"
+    },
+    {
+      "code": "QNT30627",
+      "label": "QNT30627 Statement Batch Engine",
+      "path": "mission_qnt30627_statement_batch_engine.html"
+    },
+    {
+      "code": "QNT30628",
+      "label": "QNT30628 Performance Engine",
+      "path": "mission_qnt30628_performance_engine.html"
+    },
+    {
+      "code": "QNT30629",
+      "label": "QNT30629 Strategy Execution Engine",
+      "path": "mission_qnt30629_strategy_execution_engine.html"
+    },
+    {
+      "code": "QNT30630",
+      "label": "QNT30630 Autonomous Allocation Engine",
+      "path": "mission_qnt30630_autonomous_allocation_engine.html"
+    },
+    {
+      "code": "QNT30631",
+      "label": "QNT30631 Broker Integration Layer",
+      "path": "mission_qnt30631_broker_integration_layer.html"
+    },
+    {
+      "code": "QNT30632",
+      "label": "QNT30632 Fully Autonomous Fund Mode",
+      "path": "mission_qnt30632_fully_autonomous_fund_mode.html"
+    },
+    {
+      "code": "QNT30633",
+      "label": "QNT30633 Compliance Audit Governance",
+      "path": "mission_qnt30633_compliance_audit_governance.html"
+    },
+    {
+      "code": "QNT30634",
+      "label": "QNT30634 Multi-Vehicle Architecture",
+      "path": "mission_qnt30634_multi_vehicle.html"
+    },
+    {
+      "code": "QNT30635",
+      "label": "QNT30635 LP Investor Portal",
+      "path": "mission_qnt30635_lp_portal.html"
+    },
+    {
+      "code": "QNT30636",
+      "label": "QNT30636 Operations & Fund Administration",
+      "path": "mission_qnt30636_operations_fund_admin.html"
+    },
+    {
+      "code": "QNT30637",
+      "label": "QNT30637 External Reporting Audit Pack",
+      "path": "mission_qnt30637_external_reporting.html"
+    },
+    {
+      "code": "QNT30638",
+      "label": "QNT30638 Treasury Cash Management Layer",
+      "path": "mission_qnt30638_treasury.html"
+    },
+    {
+      "code": "QNT30639",
+      "label": "QNT30639 Capital Scaling Engine",
+      "path": "mission_qnt30639_capital_scaling.html"
+    },
+    {
+      "code": "QNT30640",
+      "label": "QNT30640 Global Capital Intake System",
+      "path": "mission_qnt30640_capital_intake.html"
+    },
+    {
+      "code": "QNT30641",
+      "label": "QNT30641 Global Strategy Expansion Layer",
+      "path": "mission_qnt30641_strategy_expansion.html"
+    },
+    {
+      "code": "QNT30643",
+      "label": "QNT30643 Institutional Risk Intelligence Layer",
+      "path": "mission_qnt30643_institutional_risk_intelligence.html"
+    },
+    {
+      "code": "QNT30644",
+      "label": "QNT30644 Portfolio Construction",
+      "path": "mission_qnt30644_portfolio_construction.html"
+    },
+    {
+      "code": "QNT30645",
+      "label": "QNT30645 Productization Layer",
+      "path": "mission_qnt30645_productization_layer.html"
+    },
+    {
+      "code": "QNT30646",
+      "label": "QNT30646 Distribution & Capital Channels Layer",
+      "path": "mission_qnt30646_distribution_capital_channels.html"
+    },
+    {
+      "code": "QNT30647",
+      "label": "QNT30647 Institutional Client Coverage Layer",
+      "path": "mission_qnt30647_institutional_client_coverage.html"
+    },
+    {
+      "code": "QNT30648",
+      "label": "QNT30648 Institutional Reporting & Transparency Layer",
+      "path": "mission_qnt30648_institutional_reporting_transparency.html"
+    },
+    {
+      "code": "QNT30649",
+      "label": "QNT30649 Institutional Operating Intelligence Layer",
+      "path": "mission_qnt30649_operating_intelligence.html"
+    },
+    {
+      "code": "QNT30650",
+      "label": "QNT30650 Strategic Decision Layer",
+      "path": "mission_qnt30650_strategic_decision_layer.html"
+    },
+    {
+      "code": "QNT30651",
+      "label": "QNT30651 Autonomous Growth Engine",
+      "path": "mission_qnt30651_autonomous_growth_engine.html"
+    },
+    {
+      "code": "QNT30652",
+      "label": "QNT30652 Institutional Compliance Layer",
+      "path": "mission_qnt30652_institutional_compliance_layer.html"
+    },
+    {
+      "code": "QNT30653",
+      "label": "QNT30653 Multi-Fund Architecture",
+      "path": "mission_qnt30653_multi_fund_architecture.html"
+    },
+    {
+      "code": "QNT30654",
+      "label": "QNT30654 Global Capital Network",
+      "path": "mission_qnt30654_global_capital_network.html"
+    },
+    {
+      "code": "QNT30655",
+      "label": "QNT30655 Sovereign Treasury Command",
+      "path": "mission_qnt30655_sovereign_treasury_command.html"
+    },
+    {
+      "code": "QNT30656",
+      "label": "QNT30656 Capital Mobility Control Plane",
+      "path": "mission_qnt30656_capital_mobility_control_plane.html"
+    },
+    {
+      "code": "QNT30657",
+      "label": "QNT30657 Allocator Command Network",
+      "path": "mission_qnt30657_allocator_command_network.html"
+    },
+    {
+      "code": "QNT30658",
+      "label": "QNT30658 Institutional Conversion Engine",
+      "path": "mission_qnt30658_institutional_conversion_engine.html"
+    },
+    {
+      "code": "QNT30659",
+      "label": "QNT30659 Institutional Closing Command",
+      "path": "mission_qnt30659_institutional_closing_command.html"
+    },
+    {
+      "code": "QNT30660",
+      "label": "QNT30660 Post-Close Capital Activation Grid",
+      "path": "mission_qnt30660_post_close_capital_activation_grid.html"
+    },
+    {
+      "code": "QNT30661",
+      "label": "QNT30661 Live Capital Deployment Orchestrator",
+      "path": "mission_qnt30661_live_capital_deployment_orchestrator.html"
+    },
+    {
+      "code": "QNT30662",
+      "label": "QNT30662 Execution Governance Command",
+      "path": "mission_qnt30662_execution_governance_command.html"
+    },
+    {
+      "code": "QNT30663",
+      "label": "QNT30663 Capital Committee Oversight Mesh",
+      "path": "mission_qnt30663_capital_committee_oversight_mesh.html"
+    },
+    {
+      "code": "QNT30664",
+      "label": "QNT30664 Institutional Release Authority Grid",
+      "path": "mission_qnt30664_institutional_release_authority_grid.html"
+    },
+    {
+      "code": "QNT30665",
+      "label": "QNT30665 Capital Dispatch Supervision Layer",
+      "path": "mission_qnt30665_capital_dispatch_supervision_layer.html"
+    },
+    {
+      "code": "QNT30666",
+      "label": "QNT30666 Live Allocation Control Tower",
+      "path": "mission_qnt30666_live_allocation_control_tower.html"
+    },
+    {
+      "code": "QNT30667",
+      "label": "QNT30667 Allocation Oversight Fabric",
+      "path": "mission_qnt30667_allocation_oversight_fabric.html"
+    },
+    {
+      "code": "QNT30668",
+      "label": "QNT30668 Allocation Escalation Command",
+      "path": "mission_qnt30668_allocation_escalation_command.html"
+    },
+    {
+      "code": "QNT30669",
+      "label": "QNT30669 Allocation Release Convergence Layer",
+      "path": "mission_qnt30669_allocation_release_convergence_layer.html"
+    },
+    {
+      "code": "QNT30670",
+      "label": "QNT30670 Live Allocation Release Authority Mesh",
+      "path": "mission_qnt30670_live_allocation_release_authority_mesh.html"
+    },
+    {
+      "code": "QNT30671",
+      "label": "QNT30671 Live Allocation Clearance Grid",
+      "path": "mission_qnt30671_live_allocation_clearance_grid.html"
+    },
+    {
+      "code": "QNT30672",
+      "label": "QNT30672 Live Allocation Continuity Command",
+      "path": "mission_qnt30672_live_allocation_continuity_command.html"
+    },
+    {
+      "code": "QNT30673",
+      "label": "QNT30673 Live Allocation Finalization Authority",
+      "path": "mission_qnt30673_live_allocation_finalization_authority.html"
+    },
+    {
+      "code": "QNT30674",
+      "label": "QNT30674 Live Allocation Settlement Command",
+      "path": "mission_qnt30674_live_allocation_settlement_command.html"
+    },
+    {
+      "code": "QNT30675",
+      "label": "QNT30675 Live Allocation Reconciliation Command",
+      "path": "mission_qnt30675_live_allocation_reconciliation_command.html"
+    },
+    {
+      "code": "QNT30676",
+      "label": "QNT30676 Live Allocation Close Authority",
+      "path": "mission_qnt30676_live_allocation_close_authority.html"
+    },
+    {
+      "code": "QNT30677",
+      "label": "QNT30677 Live Allocation Post-Close Oversight Layer",
+      "path": "mission_qnt30677_live_allocation_post_close_oversight_layer.html"
+    },
+    {
+      "code": "QNT30678",
+      "label": "QNT30678 Live Allocation Exception Governance Layer",
+      "path": "mission_qnt30678_live_allocation_exception_governance_layer.html"
+    },
+    {
+      "code": "QNT30679",
+      "label": "QNT30679 Live Allocation Remediation Command",
+      "path": "mission_qnt30679_live_allocation_remediation_command.html"
+    },
+    {
+      "code": "QNT30680",
+      "label": "QNT30680 Live Allocation Recovery Authority",
+      "path": "mission_qnt30680_live_allocation_recovery_authority.html"
+    },
+    {
+      "code": "QNT30681",
+      "label": "QNT30681 Capital Restoration Engine",
+      "path": "mission_qnt30681_capital_restoration_engine.html"
+    },
+    {
+      "code": "QNT30682",
+      "label": "QNT30682 Drawdown Defense System",
+      "path": "mission_qnt30682_drawdown_defense_system.html"
+    },
+    {
+      "code": "QNT30683",
+      "label": "QNT30683 Capital Rotation Engine",
+      "path": "mission_qnt30683_capital_rotation_engine.html"
+    },
+    {
+      "code": "QNT30684",
+      "label": "QNT30684 Strategy Reallocation Intelligence",
+      "path": "mission_qnt30684_strategy_reallocation_intelligence.html"
+    },
+    {
+      "code": "QNT30685",
+      "label": "QNT30685 Idle Capital Deployment",
+      "path": "mission_qnt30685_idle_capital_deployment.html"
+    },
+    {
+      "code": "QNT30686",
+      "label": "QNT30686 Regime Detection Engine",
+      "path": "mission_qnt30686_regime_detection_engine.html"
+    },
+    {
+      "code": "QNT30687",
+      "label": "QNT30687 Strategy Selection AI",
+      "path": "mission_qnt30687_strategy_selection_ai.html"
+    },
+    {
+      "code": "QNT30688",
+      "label": "QNT30688 Portfolio Intelligence Brain",
+      "path": "mission_qnt30688_portfolio_intelligence_brain.html"
+    },
+    {
+      "code": "QNT30689",
+      "label": "QNT30689 Multi-Fund Orchestration",
+      "path": "mission_qnt30689_multi_fund_orchestration.html"
+    },
+    {
+      "code": "QNT30690",
+      "label": "QNT30690 Cross-Fund Allocation",
+      "path": "mission_qnt30690_cross_fund_allocation.html"
+    },
+    {
+      "code": "QNT30691",
+      "label": "QNT30691 Global Capital Routing",
+      "path": "mission_qnt30691_global_capital_routing.html"
+    },
+    {
+      "code": "QNT30692",
+      "label": "QNT30692 Audit & Regulatory System",
+      "path": "mission_qnt30692_audit_regulatory_system.html"
+    },
+    {
+      "code": "QNT30693",
+      "label": "QNT30693 Investor Transparency Engine",
+      "path": "mission_qnt30693_investor_transparency_engine.html"
+    },
+    {
+      "code": "QNT30694",
+      "label": "QNT30694 Reporting + Disclosure Automation",
+      "path": "mission_qnt30694_reporting_disclosure_automation.html"
+    },
+    {
+      "code": "QNT30695",
+      "label": "QNT30695 Autonomous Fund Mode",
+      "path": "mission_qnt30695_autonomous_fund_mode.html"
+    },
+    {
+      "code": "QNT30696",
+      "label": "QNT30696 Self-Growing Capital Engine",
+      "path": "mission_qnt30696_self_growing_capital_engine.html"
+    },
+    {
+      "code": "QNT30697",
+      "label": "QNT30697 Executive AI Command Layer",
+      "path": "mission_qnt30697_executive_ai_command_layer.html"
+    },
+    {
+      "code": "QNT30700",
+      "label": "QNT30700 Institutional Release Control",
+      "path": "mission_qnt30700_institutional_release_control.html"
+    },
+    {
+      "code": "QNT30702",
+      "label": "QNT30702 Operator Command Console",
+      "path": "mission_qnt30702_operator_command_console.html"
+    },
+    {
+      "code": "QNT30703",
+      "label": "QNT30703 Live Broker Safety Layer",
+      "path": "mission_qnt30703_live_broker_safety_layer.html"
+    },
+    {
+      "code": "QNT30704",
+      "label": "QNT30704 Investor Delivery Pack System",
+      "path": "mission_qnt30704_investor_delivery_pack_system.html"
+    },
+    {
+      "code": "QNT30705",
+      "label": "QNT30705 Fund Administration Control Center",
+      "path": "mission_qnt30705_fund_admin_control_center.html"
+    },
+    {
+      "code": "QNT30706",
+      "label": "QNT30706 Forensic Audit System",
+      "path": "mission_qnt30706_forensic_audit_system.html"
+    },
+    {
+      "code": "QNT30707",
+      "label": "QNT30707 Recovery System",
+      "path": "mission_qnt30707_recovery_system.html"
+    },
+    {
+      "code": "QNT30708",
+      "label": "QNT30708 Strategy Evolution Engine",
+      "path": "mission_qnt30708_strategy_evolution_engine.html"
+    },
+    {
+      "code": "QNT30709",
+      "label": "QNT30709 Liquidity Intelligence System",
+      "path": "mission_qnt30709_liquidity_intelligence_system.html"
+    },
+    {
+      "code": "QNT30710",
+      "label": "QNT30710 Market Regime Intelligence System",
+      "path": "mission_qnt30710_market_regime_intelligence_system.html"
+    },
+    {
+      "code": "QNT30711",
+      "label": "QNT30711 Capital Rotation Command System",
+      "path": "mission_qnt30711_capital_rotation_command_system.html"
+    },
+    {
+      "code": "QNT30712",
+      "label": "QNT30712 Defensive Systems Command Layer",
+      "path": "mission_qnt30712_defensive_systems_command_layer.html"
+    },
+    {
+      "code": "QNT30713",
+      "label": "QNT30713 Autonomous Allocation Governance Layer",
+      "path": "mission_qnt30713_autonomous_allocation_governance_layer.html"
+    },
+    {
+      "code": "QNT30714",
+      "label": "QNT30714 Investor Transparency Engine",
+      "path": "mission_qnt30714_investor_transparency_engine.html"
+    },
+    {
+      "code": "QNT30715",
+      "label": "QNT30715 Reporting + Disclosure Automation Layer",
+      "path": "mission_qnt30715_reporting_disclosure_automation_layer.html"
+    },
+    {
+      "code": "QNT30716",
+      "label": "QNT30716 Autonomous Fund Mode Readiness Layer",
+      "path": "mission_qnt30716_autonomous_fund_mode_readiness_layer.html"
+    },
+    {
+      "code": "QNT30717",
+      "label": "QNT30717 Self-Growing Capital Engine",
+      "path": "mission_qnt30717_self_growing_capital_engine.html"
+    },
+    {
+      "code": "QNT30718",
+      "label": "QNT30718 Executive AI Command Layer",
+      "path": "mission_qnt30718_executive_ai_command_layer.html"
+    },
+    {
+      "code": "QNT30719",
+      "label": "QNT30719 Executive Decision Memory Layer",
+      "path": "mission_qnt30719_executive_decision_memory_layer.html"
+    },
+    {
+      "code": "QNT30720",
+      "label": "QNT30720 Capital Committee Deliberation Layer",
+      "path": "mission_qnt30720_capital_committee_deliberation_layer.html"
+    },
+    {
+      "code": "QNT30721",
+      "label": "QNT30721 Executive Scenario Arbitration Layer",
+      "path": "mission_qnt30721_executive_scenario_arbitration_layer.html"
+    },
+    {
+      "code": "QNT30722",
+      "label": "QNT30722 Executive Capital Allocation Policy Layer",
+      "path": "mission_qnt30722_executive_capital_allocation_policy_layer.html"
+    },
+    {
+      "code": "QNT30723",
+      "label": "QNT30723 Institutional Allocation Execution Charter Layer",
+      "path": "mission_qnt30723_institutional_allocation_execution_charter_layer.html"
+    },
+    {
+      "code": "QNT30724",
+      "label": "QNT30724 Institutional Mandate Enforcement Layer",
+      "path": "mission_qnt30724_institutional_mandate_enforcement_layer.html"
+    },
+    {
+      "code": "QNT30725",
+      "label": "QNT30725 Institutional Breach Escalation Layer",
+      "path": "mission_qnt30725_institutional_breach_escalation_layer.html"
+    },
+    {
+      "code": "QNT30726",
+      "label": "QNT30726 Institutional Exception Resolution Layer",
+      "path": "mission_qnt30726_institutional_exception_resolution_layer.html"
+    },
+    {
+      "code": "QNT30727",
+      "label": "QNT30727 Institutional Remediation Closure Layer",
+      "path": "mission_qnt30727_institutional_remediation_closure_layer.html"
+    },
+    {
+      "code": "QNT30728",
+      "label": "QNT30728 Institutional Reauthorization Layer",
+      "path": "mission_qnt30728_institutional_reauthorization_layer.html"
+    },
+    {
+      "code": "QNT30729",
+      "label": "QNT30729 Institutional Continuity Restoration Layer",
+      "path": "mission_qnt30729_institutional_continuity_restoration_layer.html"
+    },
+    {
+      "code": "QNT30730",
+      "label": "QNT30730 Institutional Stability Reconfirmation Layer",
+      "path": "mission_qnt30730_institutional_stability_reconfirmation_layer.html"
+    },
+    {
+      "code": "QNT30731",
+      "label": "QNT30731 Institutional Operating Confidence Layer",
+      "path": "mission_qnt30731_institutional_operating_confidence_layer.html"
+    },
+    {
+      "code": "QNT30732",
+      "label": "QNT30732 Institutional Capital Readiness Renewal Layer",
+      "path": "mission_qnt30732_institutional_capital_readiness_renewal_layer.html"
+    },
+    {
+      "code": "QNT30733",
+      "label": "QNT30733 Institutional Capital Deployment Reinstatement Layer",
+      "path": "mission_qnt30733_institutional_capital_deployment_reinstatement_layer.html"
+    },
+    {
+      "code": "QNT30734",
+      "label": "QNT30734 Institutional Deployment Capacity Scaling Layer",
+      "path": "mission_qnt30734_institutional_deployment_capacity_scaling_layer.html"
+    },
+    {
+      "code": "QNT30735",
+      "label": "QNT30735 Institutional Multi-Channel Deployment Orchestration Layer",
+      "path": "mission_qnt30735_institutional_multi_channel_deployment_orchestration_layer.html"
+    },
+    {
+      "code": "QNT30736",
+      "label": "QNT30736 Institutional Cross-Venue Deployment Routing Layer",
+      "path": "mission_qnt30736_institutional_cross_venue_deployment_routing_layer.html"
+    },
+    {
+      "code": "QNT30737",
+      "label": "QNT30737 Institutional Execution Capacity Balancing Layer",
+      "path": "mission_qnt30737_institutional_execution_capacity_balancing_layer.html"
+    },
+    {
+      "code": "QNT30738",
+      "label": "QNT30738 Institutional Execution Quality Assurance Layer",
+      "path": "mission_qnt30738_institutional_execution_quality_assurance_layer.html"
+    },
+    {
+      "code": "QNT30739",
+      "label": "QNT30739 Institutional Post-Trade Control Assurance Layer",
+      "path": "mission_qnt30739_institutional_post_trade_control_assurance_layer.html"
+    },
+    {
+      "code": "QNT30740",
+      "label": "QNT30740 Institutional Settlement Integrity Command Layer",
+      "path": "mission_qnt30740_institutional_settlement_integrity_command_layer.html"
+    },
+    {
+      "code": "QNT30742",
+      "label": "QNT30742 Institutional Settlement Recovery Resolution Layer",
+      "path": "mission_qnt30742_institutional_settlement_recovery_resolution_layer.html"
+    },
+    {
+      "code": "QNT30743",
+      "label": "QNT30743 Institutional Settlement Finalization Authority Layer",
+      "path": "mission_qnt30743_institutional_settlement_finalization_authority_layer.html"
+    },
+    {
+      "code": "QNT30744",
+      "label": "QNT30744 Institutional Cash Reconciliation Closure Layer",
+      "path": "mission_qnt30744_institutional_cash_reconciliation_closure_layer.html"
+    },
+    {
+      "code": "QNT30745",
+      "label": "QNT30745 Institutional Treasury Confirmation Layer",
+      "path": "mission_qnt30745_institutional_treasury_confirmation_layer.html"
+    },
+    {
+      "code": "QNT30746",
+      "label": "QNT30746 Institutional Investor Capital Confirmation Layer",
+      "path": "mission_qnt30746_institutional_investor_capital_confirmation_layer.html"
+    },
+    {
+      "code": "QNT30747",
+      "label": "QNT30747 Institutional Audit Readiness Certification Layer",
+      "path": "mission_qnt30747_institutional_audit_readiness_certification_layer.html"
+    },
+    {
+      "code": "QNT30748",
+      "label": "QNT30748 Institutional External Auditor Interface Layer",
+      "path": "mission_qnt30748_institutional_external_auditor_interface_layer.html"
+    },
+    {
+      "code": "QNT30749",
+      "label": "QNT30749 Institutional Regulator Readiness Interface",
+      "path": "mission_qnt30749_institutional_regulator_readiness_interface.html"
+    },
+    {
+      "code": "QNT30750",
+      "label": "QNT30750 Regulatory Compliance Automation Layer",
+      "path": "mission_qnt30750_regulatory_compliance_automation_layer.html"
+    },
+    {
+      "code": "QNT30751",
+      "label": "QNT30751 Multi-Jurisdiction Governance Layer",
+      "path": "mission_qnt30751_multi_jurisdiction_governance_layer.html"
+    },
+    {
+      "code": "QNT30752",
+      "label": "QNT30752 Institutional Capital Expansion Engine",
+      "path": "mission_qnt30752_institutional_capital_expansion_engine.html"
+    },
+    {
+      "code": "QNT30753",
+      "label": "QNT30753 Global Strategy Deployment Layer",
+      "path": "mission_qnt30753_global_strategy_deployment_layer.html"
+    },
+    {
+      "code": "QNT30754",
+      "label": "QNT30754 Institutional Supervisory Examination Command Layer",
+      "path": "mission_qnt30754_institutional_supervisory_examination_command_layer.html"
+    },
+    {
+      "code": "QNT30755",
+      "label": "QNT30755 Regulatory Filing Submission Orchestration Layer",
+      "path": "mission_qnt30755_regulatory_filing_submission_orchestration_layer.html"
+    },
+    {
+      "code": "QNT30756",
+      "label": "QNT30756 Regulatory Obligation Calendar and Deadline Control Layer",
+      "path": "mission_qnt30756_regulatory_obligation_calendar_deadline_control_layer.html"
+    },
+    {
+      "code": "QNT30757",
+      "label": "QNT30757 Regulatory Breach Escalation and Remediation Command Layer",
+      "path": "mission_qnt30757_regulatory_breach_escalation_remediation_command_layer.html"
+    },
+    {
+      "code": "QNT30758",
+      "label": "QNT30758 Regulatory Enforcement Response and Consent Order Command Layer",
+      "path": "mission_qnt30758_regulatory_enforcement_response_consent_order_command_layer.html"
+    },
+    {
+      "code": "QNT30759",
+      "label": "QNT30759 Regulatory Capital Adequacy Surveillance and Early Warning Layer",
+      "path": "mission_qnt30759_regulatory_capital_adequacy_surveillance_early_warning_layer.html"
+    },
+    {
+      "code": "QNT30760",
+      "label": "QNT30760 Regulatory Liquidity Stress Command and Recovery Layer",
+      "path": "mission_qnt30760_regulatory_liquidity_stress_command_recovery_layer.html"
+    },
+    {
+      "code": "QNT30761",
+      "label": "QNT30761 Regulatory Resolution Planning and Wind-Down Control Layer",
+      "path": "mission_qnt30761_regulatory_resolution_planning_wind_down_control_layer.html"
+    },
+    {
+      "code": "QNT30762",
+      "label": "QNT30762 Recovery and Resolution Scenario Simulation Command Layer",
+      "path": "mission_qnt30762_recovery_resolution_scenario_simulation_command_layer.html"
+    },
+    {
+      "code": "QNT30763",
+      "label": "QNT30763 Regulatory Stress Testing Submission and Supervisory Challenge Layer",
+      "path": "mission_qnt30763_regulatory_stress_testing_submission_supervisory_challenge_layer.html"
+    },
+    {
+      "code": "QNT30764",
+      "label": "QNT30764 Regulatory Model Risk Governance and Validation Oversight Layer",
+      "path": "mission_qnt30764_regulatory_model_risk_governance_validation_oversight_layer.html"
+    },
+    {
+      "code": "QNT30765",
+      "label": "QNT30765 Regulatory Data Lineage, Evidence Provenance, and Attestation Fabric",
+      "path": "mission_qnt30765_regulatory_data_lineage_evidence_provenance_attestation_fabric.html"
+    },
+    {
+      "code": "QNT30766",
+      "label": "QNT30766 Regulatory Records Retention, Legal Hold, and Supervisory Retrieval Command Layer",
+      "path": "mission_qnt30766_regulatory_records_retention_legal_hold_supervisory_retrieval_command_layer.html"
+    },
+    {
+      "code": "QNT30767",
+      "label": "QNT30767 Regulatory Surveillance, Market Abuse Detection, and Trade Conduct Enforcement Layer",
+      "path": "mission_qnt30767_regulatory_surveillance_market_abuse_detection_trade_conduct_enforcement_layer.html"
+    },
+    {
+      "code": "QNT30768",
+      "label": "QNT30768 Best Execution Surveillance, Order Handling Fairness, and Market Conduct Assurance Layer",
+      "path": "mission_qnt30768_best_execution_surveillance_order_handling_fairness_market_conduct_assurance_layer.html"
+    },
+    {
+      "code": "QNT30769",
+      "label": "QNT30769 Cross-Market Transaction Reporting (MiFID / CAT / EMIR) and Regulatory Disclosure Layer",
+      "path": "mission_qnt30769_cross_market_transaction_reporting_regulatory_disclosure_layer.html"
+    },
+    {
+      "code": "QNT30770",
+      "label": "QNT30770 Regulatory Client Asset Safeguarding, Segregation, and Custody Assurance Layer",
+      "path": "mission_qnt30770_regulatory_client_asset_safeguarding_segregation_custody_assurance_layer.html"
+    },
+    {
+      "code": "QNT30771",
+      "label": "QNT30771 Regulatory Client Money Protection, Reserve Formula, and Daily Safeguarding Control Layer",
+      "path": "mission_qnt30771_regulatory_client_money_protection_reserve_formula_daily_safeguarding_control_layer.html"
+    },
+    {
+      "code": "QNT30772",
+      "label": "QNT30772 Regulatory Prime Broker Exposure, Counterparty Safeguarding, and Collateral Protection Layer",
+      "path": "mission_qnt30772_regulatory_prime_broker_exposure_counterparty_safeguarding_collateral_protection_layer.html"
+    },
+    {
+      "code": "QNT30773",
+      "label": "QNT30773 Regulatory Counterparty Concentration Limits, Wrong-Way Risk, and Exposure Escalation Layer",
+      "path": "mission_qnt30773_regulatory_counterparty_concentration_limits_wrong_way_risk_exposure_escalation_layer.html"
+    },
+    {
+      "code": "QNT40002",
+      "label": "QNT40002 Real-Time PnL, Performance Attribution, and Investor Metrics Layer",
+      "path": "mission_qnt40002_real_time_pnl_performance_attribution_investor_metrics_layer.html"
+    },
+    {
+      "code": "QNT40003",
+      "label": "QNT40003 Investor Statement Packs, Capital Account Waterfalls, and LP Performance Distribution Layer",
+      "path": "mission_qnt40003_investor_statement_packs_capital_account_waterfalls_lp_performance_distribution_layer.html"
+    },
+    {
+      "code": "QNT40004",
+      "label": "QNT40004 Investor Onboarding, Subscription Documents, and Capital Account Activation Layer",
+      "path": "mission_qnt40004_investor_onboarding_subscription_documents_capital_account_activation_layer.html"
+    },
+    {
+      "code": "QNT40005",
+      "label": "QNT40005 Investor AML, Accreditation, Suitability, and Admission Approval Layer",
+      "path": "mission_qnt40005_investor_aml_accreditation_suitability_admission_approval_layer.html"
+    },
+    {
+      "code": "QNT40006",
+      "label": "QNT40006 Investor Commitments, Subscription Acceptance, and Capital Call Scheduling Layer",
+      "path": "mission_qnt40006_investor_commitments_subscription_acceptance_capital_call_scheduling_layer.html"
+    },
+    {
+      "code": "QNT40007",
+      "label": "QNT40007 Investor Funding Settlement, Subscription Reconciliation, and Capital Receipt Finalization Layer",
+      "path": "mission_qnt40007_investor_funding_settlement_subscription_reconciliation_capital_receipt_finalization_layer.html"
+    },
+    {
+      "code": "QNT40008",
+      "label": "QNT40008 Investor Equalization, Series Accounting, and NAV Entry Allocation Control Layer",
+      "path": "mission_qnt40008_investor_equalization_series_accounting_nav_entry_allocation_control_layer.html"
+    },
+    {
+      "code": "QNT40009",
+      "label": "QNT40009 Fee Engine (Management Fee, Performance Fee, HWM, Hurdle Rate) and Incentive Allocation Layer",
+      "path": "mission_qnt40009_fee_engine_management_fee_performance_fee_hwm_hurdle_rate_incentive_allocation_layer.html"
+    },
+    {
+      "code": "QNT40010",
+      "label": "QNT40010 Redemption Queue, Liquidity Gating, Side Pocket, and Withdrawal Waterfall Control Layer",
+      "path": "mission_qnt40010_redemption_queue_liquidity_gating_side_pocket_withdrawal_waterfall_control_layer.html"
+    },
+    {
+      "code": "QNT40011",
+      "label": "QNT40011 Redemption Settlement, In-Kind Transfer Control, and Investor Exit Finalization Layer",
+      "path": "mission_qnt40011_redemption_settlement_in_kind_transfer_control_investor_exit_finalization_layer.html"
+    },
+    {
+      "code": "QNT40012",
+      "label": "QNT40012 Dealing Day Lock, NAV Cutoff Enforcement, and Investor Transaction Freeze Control Layer",
+      "path": "mission_qnt40012_dealing_day_lock_nav_cutoff_enforcement_investor_transaction_freeze_control_layer.html"
+    },
+    {
+      "code": "QNT40013",
+      "label": "QNT40013 NAV Publication, Investor Notice Release, and Post-Dealing Confirmation Distribution Layer",
+      "path": "mission_qnt40013_nav_publication_investor_notice_release_post_dealing_confirmation_distribution_layer.html"
+    },
+    {
+      "code": "QNT40014",
+      "label": "QNT40014 Investor NAV Statement Finalization, Delivery Acknowledgement, and Release Governance Layer",
+      "path": "mission_qnt40014_investor_nav_statement_finalization_delivery_acknowledgement_release_governance_layer.html"
+    },
+    {
+      "code": "QNT40015",
+      "label": "QNT40015 Investor Capital Statement Consolidation, Period Close Certification, and LP Book Final Lock Layer",
+      "path": "mission_qnt40015_investor_capital_statement_consolidation_period_close_certification_lp_book_final_lock_layer.html"
+    },
+    {
+      "code": "QNT40016",
+      "label": "QNT40016 Fund Administrator NAV Package Approval, Controller Sign-Off, and Official Books Release Layer",
+      "path": "mission_qnt40016_fund_administrator_nav_package_approval_controller_sign_off_official_books_release_layer.html"
+    },
+    {
+      "code": "QNT40017",
+      "label": "QNT40017 Independent Price Verification, Valuation Committee Challenge, and NAV Fair Value Override Governance Layer",
+      "path": "mission_qnt40017_independent_price_verification_valuation_committee_challenge_nav_fair_value_override_governance_layer.html"
+    },
+    {
+      "code": "QNT40018",
+      "label": "QNT40018 Administrator Shadow NAV, Independent NAV Recalculation, and NAV Break Escalation Layer",
+      "path": "mission_qnt40018_administrator_shadow_nav_independent_nav_recalculation_nav_break_escalation_layer.html"
+    },
+    {
+      "code": "QNT40019",
+      "label": "QNT40019 Pricing Source Hierarchy, Stale Price Exception Control, and Valuation Source Override Governance Layer",
+      "path": "mission_qnt40019_pricing_source_hierarchy_stale_price_exception_control_valuation_source_override_governance_layer.html"
+    },
+    {
+      "code": "QNT40020",
+      "label": "QNT40020 Valuation Committee Minutes, Challenge Resolution Evidence, and Final NAV Governance Record Layer",
+      "path": "mission_qnt40020_valuation_committee_minutes_challenge_resolution_evidence_final_nav_governance_record_layer.html"
+    },
+    {
+      "code": "QNT40021",
+      "label": "QNT40021 Auditor PBC Package Assembly, Valuation Support Binder, and Final NAV Evidence Delivery Layer",
+      "path": "mission_qnt40021_auditor_pbc_package_assembly_valuation_support_binder_final_nav_evidence_delivery_layer.html"
+    },
+    {
+      "code": "QNT40022",
+      "label": "QNT40022 Audit Opinion Readiness, Open Item Clearance, and Financial Statement Release Authorization Layer",
+      "path": "mission_qnt40022_audit_opinion_readiness_open_item_clearance_financial_statement_release_authorization_layer.html"
+    },
+    {
+      "code": "40023",
+      "label": "QNT40023 Financial Statement Issuance, LP Reporting Pack Release, and Audit Closure Record Lock Layer",
+      "path": "mission_qnt40023_financial_statement_issuance_lp_reporting_pack_release_audit_closure_record_lock_layer.html"
+    },
+    {
+      "code": "40024",
+      "label": "QNT40024 Annual Report Assembly, LP Letter Distribution, and Financial Statement Archive Certification Layer",
+      "path": "mission_qnt40024_annual_report_assembly_lp_letter_distribution_financial_statement_archive_certification_layer.html"
+    },
+    {
+      "code": "40025",
+      "label": "QNT40025 Annual Investor Communications Calendar, Board Letter Approval, and Archive Dissemination Control Layer",
+      "path": "mission_qnt40025_annual_investor_communications_calendar_board_letter_approval_archive_dissemination_control_layer.html"
+    },
+    {
+      "code": "40026",
+      "label": "QNT40026 Board Reporting Agenda Control, Annual Meeting Materials Approval, and Investor Communication Governance Lock Layer",
+      "path": "mission_qnt40026_board_reporting_agenda_control_annual_meeting_materials_approval_investor_communication_governance_lock_layer.html"
+    },
+    {
+      "code": "40027",
+      "label": "QNT40027 Board Resolution Archive, Committee Approval Trace, and Annual Governance Evidence Lock Layer",
+      "path": "mission_qnt40027_board_resolution_archive_committee_approval_trace_annual_governance_evidence_lock_layer.html"
+    },
+    {
+      "code": "40028",
+      "label": "QNT40028 Annual Governance Binder Assembly, Board Certification Release, and Permanent Record Seal Layer",
+      "path": "mission_qnt40028_annual_governance_binder_assembly_board_certification_release_permanent_record_seal_layer.html"
+    },
+    {
+      "id": "QNT40029",
+      "title": "Governance Record Retention Schedule, Board Retrieval Index, and Permanent Archive Supervision Layer",
+      "path": "mission_qnt40029_governance_record_retention_schedule_board_retrieval_index_permanent_archive_supervision_layer.html"
+    },
+    {
+      "id": "QNT40030",
+      "title": "Governance Archive Exception Review, Retrieval Breach Escalation, and Supervisory Preservation Override Layer",
+      "path": "mission_qnt40030_governance_archive_exception_review_retrieval_breach_escalation_supervisory_preservation_override_layer.html"
+    },
+    {
+      "id": "QNT40031",
+      "title": "Supervisory Archive Access Ledger, Preservation Directive Tracking, and Governance Record Custody Assurance Layer",
+      "path": "mission_qnt40031_supervisory_archive_access_ledger_preservation_directive_tracking_governance_record_custody_assurance_layer.html"
+    },
+    {
+      "id": "QNT40032",
+      "title": "Supervisory Preservation Order Register, Archive Chain-of-Custody Audit, and Governance Record Access Challenge Resolution Layer",
+      "path": "mission_qnt40032_supervisory_preservation_order_register_archive_chain_of_custody_audit_governance_record_access_challenge_resolution_layer.html"
+    },
+    {
+      "id": "QNT40033",
+      "title": "Supervisory Record Production Register, Access Determination Review, and Governance Archive Disclosure Control Layer",
+      "path": "mission_qnt40033_supervisory_record_production_register_access_determination_review_governance_archive_disclosure_control_layer.html"
+    },
+    {
+      "id": "QNT40034",
+      "title": "Supervisory Production Packet Assembly, Governance Archive Release Approval, and Official Record Disclosure Ledger Layer",
+      "path": "mission_qnt40034_supervisory_production_packet_assembly_governance_archive_release_approval_official_record_disclosure_ledger_layer.html"
+    },
+    {
+      "id": "QNT40035",
+      "title": "Supervisory Production Delivery Certification, Record Disclosure Acknowledgement, and Archive Release Closure Layer",
+      "path": "mission_qnt40035_supervisory_production_delivery_certification_record_disclosure_acknowledgement_archive_release_closure_layer.html"
+    },
+    {
+      "id": "QNT50001",
+      "title": "Live Broker Integration Layer",
+      "path": "mission_qnt50001_live_broker_integration_layer.html"
+    },
+    {
+      "id": "QNT50002",
+      "title": "Real Capital Allocation Engine",
+      "path": "mission_qnt50002_real_capital_allocation_engine.html"
+    },
+    {
+      "id": "QNT50003",
+      "title": "Strategy Deployment Engine",
+      "path": "mission_qnt50003_strategy_deployment_engine.html"
+    },
+    {
+      "id": "QNT50004",
+      "title": "Risk Kill-Switch System",
+      "path": "mission_qnt50004_risk_kill_switch_system.html"
+    },
+    {
+      "id": "QNT50005",
+      "title": "Performance Engine (Institutional)",
+      "path": "mission_qnt50005_performance_engine_institutional.html"
+    },
+    {
+      "id": "QNT50006",
+      "title": "Autonomous Execution Layer",
+      "path": "mission_qnt50006_autonomous_execution_layer.html"
+    },
+    {
+      "id": "QNT50007",
+      "title": "Settlement + Reconciliation Control Layer",
+      "path": "mission_qnt50007_settlement_reconciliation_control_layer.html"
+    },
+    {
+      "id": "QNT50008",
+      "title": "Treasury + Cash Mobility Control Layer",
+      "path": "mission_qnt50008_treasury_cash_mobility_control_layer.html"
+    },
+    {
+      "id": "QNT50009",
+      "title": "Investor Cash Confirmation + Treasury Release Authority",
+      "path": "mission_qnt50009_investor_cash_confirmation_treasury_release_authority.html"
+    },
+    {
+      "id": "QNT50010",
+      "title": "Investor Redemption Settlement + Exit Finalization Authority",
+      "path": "mission_qnt50010_investor_redemption_settlement_exit_finalization_authority.html"
+    },
+    {
+      "id": "QNT50011",
+      "title": "Investor Distribution Waterfall + Payable Release Authority",
+      "path": "mission_qnt50011_investor_distribution_waterfall_payable_release_authority.html"
+    },
+    {
+      "id": "QNT50012",
+      "title": "Period Close Distribution Ledger + Investor Notice Finalization",
+      "path": "mission_qnt50012_period_close_distribution_ledger_investor_notice_finalization.html"
+    },
+    {
+      "id": "QNT50013",
+      "title": "Official Books Release + Distribution Archive Certification Layer",
+      "path": "mission_qnt50013_official_books_release_distribution_archive_certification_layer.html"
+    },
+    {
+      "id": "QNT50014",
+      "title": "Governance Binder Publication + Regulator Retrieval Packet Layer",
+      "path": "mission_qnt50014_governance_binder_publication_regulator_retrieval_packet_layer.html"
+    },
+    {
+      "id": "QNT50015",
+      "title": "Regulatory Disclosure Delivery + Supervisory Acknowledgement Ledger",
+      "path": "mission_qnt50015_regulatory_disclosure_delivery_supervisory_acknowledgement_ledger.html"
+    },
+    {
+      "id": "QNT50018",
+      "title": "Cross-Entity Capital Flow + Intercompany Ledger Engine",
+      "path": "mission_qnt50018_cross_entity_capital_flow_intercompany_ledger_engine.html"
+    },
+    {
+      "id": "QNT50022",
+      "title": "Full Autonomous Hedge Fund Control Loop (End-to-End Self-Operating System)",
+      "path": "mission_qnt50022_full_autonomous_hedge_fund_control_loop_end_to_end_self_operating_system.html"
+    },
+    {
+      "id": "QNT50023",
+      "title": "Executive AI Capital Committee + Decision Memory Layer",
+      "path": "mission_qnt50023_executive_ai_capital_committee_decision_memory_layer.html"
+    },
+    {
+      "id": "QNT50024",
+      "title": "Executive Scenario Arbitration + Allocation Policy Enforcement Layer",
+      "path": "mission_qnt50024_executive_scenario_arbitration_allocation_policy_enforcement_layer.html"
+    },
+    {
+      "id": "QNT50025",
+      "title": "Institutional Allocation Execution Charter + Mandate Enforcement Layer",
+      "path": "mission_qnt50025_institutional_allocation_execution_charter_mandate_enforcement_layer.html"
+    },
+    {
+      "id": "QNT50026",
+      "title": "Institutional Breach Escalation + Exception Resolution Layer",
+      "path": "mission_qnt50026_institutional_breach_escalation_exception_resolution_layer.html"
+    },
+    {
+      "id": "QNT50027",
+      "title": "Autonomous Remediation + Controlled Recovery Orchestration Layer",
+      "path": "mission_qnt50027_autonomous_remediation_controlled_recovery_orchestration_layer.html"
+    },
+    {
+      "code": "QNT50028",
+      "label": "QNT50028 Institutional Reauthorization + Post-Recovery Capital Reinstatement Layer",
+      "path": "mission_qnt50028_institutional_reauthorization_post_recovery_capital_reinstatement_layer.html"
+    },
+    {
+      "code": "QNT50029",
+      "label": "QNT50029 Live Capital Reactivation + Strategy Re-Entry Governance Layer",
+      "path": "mission_qnt50029_live_capital_reactivation_strategy_reentry_governance_layer.html"
+    },
+    {
+      "code": "QNT50030",
+      "label": "QNT50030 Live Strategy Scale-Up + Dynamic Capital Ramp Governance Layer",
+      "path": "mission_qnt50030_live_strategy_scale_up_dynamic_capital_ramp_governance_layer.html"
+    },
+    {
+      "code": "QNT50031",
+      "label": "QNT50031 Institutional Live Allocation Escalation + Capacity Ceiling Governance Layer",
+      "path": "mission_qnt50031_institutional_live_allocation_escalation_capacity_ceiling_governance_layer.html"
+    },
+    {
+      "code": "QNT50033",
+      "label": "QNT50033 Multi-Fund Expansion + New Vehicle Launch Governance Layer",
+      "path": "mission_qnt50033_multi_fund_expansion_new_vehicle_launch_governance_layer.html"
+    },
+    {
+      "code": "QNT50034",
+      "label": "QNT50034 Multi-Vehicle Operating Model + Shared Services Governance Layer",
+      "path": "mission_qnt50034_multi_vehicle_operating_model_shared_services_governance_layer.html"
+    },
+    {
+      "code": "QNT50035",
+      "label": "QNT50035 Multi-Region Operating Expansion + Jurisdictional Service Partition Layer",
+      "path": "mission_qnt50035_multi_region_operating_expansion_jurisdictional_service_partition_layer.html"
+    },
+    {
+      "code": "QNT50036",
+      "label": "QNT50036 Cross-Border Service Routing + Regulatory Boundary Enforcement Layer",
+      "path": "mission_qnt50036_cross_border_service_routing_regulatory_boundary_enforcement_layer.html"
+    },
+    {
+      "code": "QNT-REAL01B",
+      "label": "QNT-REAL01B Live Broker Truth Path",
+      "path": "mission_qntreal01b_live_broker_truth_path.html"
+    },
+    {
+      "code": "QNT-REAL01C",
+      "label": "QNT-REAL01C Real Position / Fill / Broker Sync Authority",
+      "path": "mission_qntreal01c_real_position_fill_broker_sync_authority.html"
+    },
+    {
+      "code": "QNT-REAL01D",
+      "label": "QNT-REAL01D Real PnL / Equity / Exposure Truth Layer",
+      "path": "mission_qntreal01d_real_pnl_equity_exposure_truth_layer.html"
+    },
+    {
+      "code": "QNT-REAL01F",
+      "label": "QNT-REAL01F Live Broker Credential Vault + Execution Authorization Gate",
+      "path": "mission_qntreal01f_live_broker_credential_vault_execution_authorization_gate.html"
+    },
+    {
+      "code": "QNT-REAL01I",
+      "label": "QNT-REAL01I Live Position Reconciliation + Post-Trade State Lock Layer",
+      "path": "mission_qntreal01i_live_position_reconciliation_post_trade_state_lock_layer.html"
+    },
+    {
+      "code": "QNT-REAL01J",
+      "label": "QNT-REAL01J Real Broker Cash / Buying Power / Margin Truth Layer",
+      "path": "mission_qntreal01j_real_broker_cash_buying_power_margin_truth_layer.html"
+    }
+  ]
+}

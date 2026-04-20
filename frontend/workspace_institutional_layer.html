@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QNT30425 Workspace Layer + UI Completion</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#06111f; color:#e9f1ff; margin:0; }
+    .wrap { max-width:1200px; margin:0 auto; padding:24px; }
+    .grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+    .card { background:#0d1f38; border:1px solid #19345c; border-radius:16px; padding:18px; box-shadow:0 10px 24px rgba(0,0,0,.25); }
+    .muted { color:#9fb4d5; font-size:14px; }
+    button { background:#2f6bff; color:#fff; border:none; border-radius:10px; padding:10px 14px; cursor:pointer; }
+    input, select { width:100%; margin-top:8px; padding:10px; border-radius:10px; border:1px solid #28466f; background:#09172a; color:#e9f1ff; box-sizing:border-box; }
+    table { width:100%; border-collapse:collapse; }
+    th, td { text-align:left; padding:10px 8px; border-bottom:1px solid #173153; font-size:14px; }
+    h1, h2, h3 { margin:0 0 12px; }
+    pre { white-space:pre-wrap; word-break:break-word; background:#081423; padding:14px; border-radius:12px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" style="margin-bottom:16px;">
+      <h1>QNT30425 · Workspace Layer + UI Completion</h1>
+      <p class="muted">Organizations, role-based memberships, org-scoped treasury, active workspace switching, and restored missing operator controls for Quantora.</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+        <button onclick="refreshAll()">Refresh Workspace</button>
+        <button onclick="window.open('/workspace/context','_blank')">Open Context JSON</button>
+        <button onclick="window.open('/workspace/organizations','_blank')">Open Organizations JSON</button>
+        <button onclick="window.open('/workspace/roles','_blank')">Open Roles JSON</button>
+        <button onclick="window.location.href='/'">Back to Command Center</button>
+        <button onclick="window.location.href='/org_execution_capital_engine.html'">Org Execution + Capital</button>
+        <button onclick="window.location.href='/ui_control_surface_panel.html'">UI Control Surface</button>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="card"><h2>Active Workspace</h2><div id="active"></div></div>
+      <div class="card"><h2>Organizations</h2><div id="orgs"></div></div>
+      <div class="card">
+        <h2>Create Organization</h2>
+        <input id="org_name" placeholder="Organization name" />
+        <input id="org_slug" placeholder="Slug (optional)" />
+        <input id="org_email" placeholder="Billing email (optional)" />
+        <select id="org_plan"><option>institutional</option><option>pro</option><option>free</option></select>
+        <input id="org_balance" type="number" value="100000" />
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;"><button onclick="createOrg()">Create Workspace</button><button onclick="clearOrgForm()">Clear Form</button></div>
+      </div>
+    </div>
+    <div class="grid" style="margin-top:16px;">
+      <div class="card"><h2>Members</h2><div id="members"></div></div>
+      <div class="card">
+        <h2>Add Member</h2>
+        <input id="member_email" placeholder="user@example.com" />
+        <input id="member_name" placeholder="Display name" />
+        <select id="member_role"><option>owner</option><option>admin</option><option>trader</option><option selected>analyst</option><option>observer</option></select>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;"><button onclick="addMember()">Add Member</button><button onclick="clearMemberForm()">Clear Form</button></div>
+      </div>
+      <div class="card"><h2>Org Treasury</h2><div id="accounts"></div></div>
+    </div>
+    <div class="grid" style="margin-top:16px;">
+      <div class="card">
+        <h2>Isolation Status</h2>
+        <div id="isolation_summary" class="muted">Loading…</div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;"><button onclick="enforceIsolation()">Enforce Strict Isolation</button><button onclick="window.open('/workspace/isolation/status','_blank')">Open Status JSON</button><button onclick="window.open('/workspace/isolation/audit','_blank')">Open Audit JSON</button></div>
+      </div>
+      <div class="card"><h2>Isolation Audit</h2><pre id="audit"></pre></div>
+    </div>
+    <div class="card" style="margin-top:16px;"><h2>Workspace Context</h2><pre id="raw"></pre></div>
+  </div>
+<script>
+let activeOrgId = null;
+async function loadJSON(url, options) { const res = await fetch(url, options); return await res.json(); }
+function esc(v){ return (v ?? '').toString(); }
+async function refreshAll(){
+  const orgs = await loadJSON('/workspace/organizations');
+  const ctx = await loadJSON('/workspace/context');
+  const roles = await loadJSON('/workspace/roles');
+  const isolation = await loadJSON('/workspace/isolation/status');
+  const audit = await loadJSON('/workspace/isolation/audit');
+  activeOrgId = orgs.active_workspace_id;
+  document.getElementById('active').innerHTML = `
+    <h3>${esc((ctx.organization||{}).name || '-')}</h3>
+    <div class="muted">Plan: ${esc((ctx.organization||{}).plan || '-')} · Role: ${esc((ctx.membership||{}).role || '-')}</div>
+    <div class="muted">Billing mode: ${esc((ctx.billing_scope||{}).mode || '-')}</div>
+    <div class="muted">Capital balance: ${esc((ctx.totals||{}).capital_balance || 0)}</div>`;
+  document.getElementById('orgs').innerHTML = `<table><tr><th>Name</th><th>Role</th><th></th></tr>${(orgs.organizations||[]).map(o => `<tr><td>${esc(o.name)}</td><td>${esc(o.role)}</td><td><button onclick="switchOrg('${esc(o.organization_id)}')">${o.is_active ? 'Active' : 'Switch'}</button></td></tr>`).join('')}</table>`;
+  document.getElementById('members').innerHTML = `<table><tr><th>Email</th><th>Role</th></tr>${(ctx.members||[]).map(m => `<tr><td>${esc(m.user_email)}</td><td>${esc(m.role)}</td></tr>`).join('')}</table>`;
+  document.getElementById('accounts').innerHTML = `<table><tr><th>Name</th><th>Balance</th><th>Currency</th></tr>${(ctx.accounts||[]).map(a => `<tr><td>${esc(a.name)}</td><td>${esc(a.balance)}</td><td>${esc(a.currency)}</td></tr>`).join('')}</table>`;
+  document.getElementById('isolation_summary').innerHTML = `Strict isolation: <strong>${esc(isolation.strict_isolation)}</strong><br/>Scoped tables: ${esc((isolation.scoped_tables||[]).join(', ') || 'none')}<br/>Unscoped tables: ${esc((isolation.unscoped_tables||[]).join(', ') || 'none')}`;
+  document.getElementById('audit').textContent = JSON.stringify(audit, null, 2);
+  document.getElementById('raw').textContent = JSON.stringify({orgs, ctx, roles, isolation}, null, 2);
+}
+async function switchOrg(id){ await loadJSON('/workspace/switch', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({organization_id:id})}); refreshAll(); }
+async function createOrg(){ await loadJSON('/workspace/organizations/create', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({name: org_name.value, slug: org_slug.value, billing_email: org_email.value, plan: org_plan.value, initial_balance: Number(org_balance.value || 0)})}); refreshAll(); }
+async function addMember(){ if(!activeOrgId) return; await loadJSON('/workspace/members/add', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({organization_id: activeOrgId, user_email: member_email.value, display_name: member_name.value, role: member_role.value})}); refreshAll(); }
+async function enforceIsolation(){ await loadJSON('/workspace/isolation/enforce', {method:'POST'}); refreshAll(); }
+
+function clearOrgForm(){ org_name.value=''; org_slug.value=''; org_email.value=''; org_plan.value='institutional'; org_balance.value='100000'; }
+function clearMemberForm(){ member_email.value=''; member_name.value=''; member_role.value='analyst'; }
+
+refreshAll();
+</script>
+</body>
+</html>

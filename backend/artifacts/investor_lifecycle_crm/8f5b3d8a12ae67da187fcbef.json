@@ -1,0 +1,36 @@
+{
+  "email": "growth@test.quantora",
+  "relationships": [
+    {
+      "relationship_id": "rel_1775711778",
+      "investor_id": "INV_RIA_002",
+      "owner": "Coverage Desk",
+      "stage": "active",
+      "health": "neutral",
+      "aum_band": "",
+      "region": "",
+      "last_contact_at": null,
+      "next_action": "Schedule diligence call",
+      "notes": "",
+      "created_at": 1775711778,
+      "updated_at": 1775711778
+    },
+    {
+      "relationship_id": "rel_1775711778",
+      "investor_id": "INV_FO_001",
+      "owner": "Coverage Desk",
+      "stage": "qualified",
+      "health": "strong",
+      "aum_band": "",
+      "region": "",
+      "last_contact_at": null,
+      "next_action": "Prepare allocator memo",
+      "notes": "",
+      "created_at": 1775711778,
+      "updated_at": 1775711778
+    }
+  ],
+  "activities": [],
+  "created_at": 1775711778,
+  "updated_at": 1775711778
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>QNT30680 Live Allocation Recovery Authority</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { font-family: Arial, sans-serif; margin: 32px; background:#0b1020; color:#e7ecff; }
+    .card { background:#141b34; border:1px solid #2a355f; border-radius:16px; padding:24px; max-width:980px; }
+    h1,h2 { margin-top:0; }
+    ul { line-height:1.6; }
+    code { background:#0d1327; padding:2px 6px; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>QNT30680 — Live Allocation Recovery Authority</h1>
+    <p>Institutional recovery layer deciding whether impaired live capital should recover, rotate, reduce, exit, or escalate.</p>
+    <h2>Core functions</h2>
+    <ul>
+      <li>Measure drawdown severity and loss persistence from real ledger, pnl, and execution artifacts.</li>
+      <li>Score recovery viability using continuity, remediation, governance, and compliance posture.</li>
+      <li>Emit governed actions: <code>RECOVER</code>, <code>ROTATE</code>, <code>REDUCE</code>, <code>EXIT</code>, <code>ESCALATE</code>.</li>
+      <li>Persist recovery runs and policy controls for auditability.</li>
+    </ul>
+    <h2>Endpoints</h2>
+    <ul>
+      <li><code>GET /api/live-allocation-recovery-authority/summary</code></li>
+      <li><code>POST /api/live-allocation-recovery-authority/run</code></li>
+      <li><code>GET /api/live-allocation-recovery-authority/audit</code></li>
+      <li><code>POST /api/live-allocation-recovery-authority/policy</code></li>
+    </ul>
+  </div>
+</body>
+</html>

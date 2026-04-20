@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — Autonomous Portfolio Rebalancing + Allocation Adjustment</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;--bad:#ef4444;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(15,29,49,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .sub{color:var(--muted);max-width:980px;line-height:1.5}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    button{border-radius:10px;border:none;background:var(--accent);color:var(--text);padding:10px 12px;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}.stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}
+    th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #274168;background:#0b1a2c;font-size:12px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}.bad{color:#fecaca;border-color:#7f1d1d}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:180px;white-space:pre-wrap}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT30483 — Autonomous Portfolio Rebalancing + Allocation Adjustment</h1>
+      <div class="sub">Rebalance cycles, target allocations, drift triggers, and adjustment records. This is the layer that keeps portfolio weights aligned without manual intervention.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="loadAll()">Refresh</button>
+      <button onclick="seedRebalance()">Seed Rebalance</button>
+      <button onclick="seedAllocation()">Seed Allocation</button>
+      <button onclick="seedTrigger()">Seed Trigger</button>
+      <button onclick="seedAdjustment()">Seed Adjustment</button>
+    </div>
+  </div>
+  <div class="grid" id="summaryGrid"></div>
+  <div class="layout">
+    <div class="stack">
+      <div class="card"><h2>Rebalance Cycles</h2><div class="table-wrap"><table id="rebalanceTable"></table></div></div>
+      <div class="card"><h2>Allocations</h2><div class="table-wrap"><table id="allocationTable"></table></div></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h2>Triggers</h2><div class="table-wrap"><table id="triggerTable"></table></div></div>
+      <div class="card"><h2>Adjustments</h2><div class="table-wrap"><table id="adjustmentTable"></table></div></div>
+      <div class="card"><h2>Rebalance Health</h2><div class="pills" id="healthPills"></div></div>
+      <div class="card"><h2>Last Action</h2><pre id="actionOut">No action yet.</pre></div>
+    </div>
+  </div>
+</div>
+<script>
+const api=(path, opts={})=>fetch(path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok) throw new Error(d.detail||'request_failed'); return d;});
+function money(v){return Number(v||0).toFixed(2)}
+function table(el, headers, rows){ const thead=`<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`; const body=rows.length?rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join(''):`<tr><td colspan="${headers.length}">No data</td></tr>`; el.innerHTML=thead+body; }
+function renderSummary(summary){ const labels=[['Rebalances',summary.rebalances_total],['Allocations',summary.allocations_total],['Triggers',summary.triggers_total],['Adjustments',summary.adjustments_total],['Target Cap',money(summary.target_capital_total)],['State',summary.rebalance_state]]; document.getElementById('summaryGrid').innerHTML=labels.map(([l,v])=>`<div class="card"><div class="label">${l}</div><div class="value">${v}</div></div>`).join('');}
+function pills(target, items){ document.getElementById(target).innerHTML=items.map(([l,k])=>`<span class="pill ${k}">${l}</span>`).join(''); }
+async function loadAll(){
+  const data=await api('/workspace/rebalancing-engine/summary');
+  renderSummary(data.summary);
+  table(document.getElementById('rebalanceTable'), ['Rebalance','Mode','Status'], (data.rebalances||[]).map(r=>[r.rebalance_name,r.rebalance_mode,r.status]));
+  table(document.getElementById('allocationTable'), ['Strategy','Target Capital','Weight %','Status'], (data.allocations||[]).map(r=>[r.strategy_name,money(r.target_capital),money(r.weight_percent),r.status]));
+  table(document.getElementById('triggerTable'), ['Trigger','Value','Threshold','Status'], (data.triggers||[]).map(r=>[r.trigger_name,money(r.trigger_value),money(r.threshold_value),r.status]));
+  table(document.getElementById('adjustmentTable'), ['Strategy','Adjusted Capital','Reason','Status'], (data.adjustments||[]).map(r=>[r.strategy_name,money(r.adjusted_capital),r.adjustment_reason,r.status]));
+  const stateClass = data.rebalance_health.rebalance_state === 'REBALANCING' ? 'good' : (data.rebalance_health.rebalance_state === 'MONITORING' ? 'warn' : 'bad');
+  pills('healthPills', [
+    [`Rebalances ${data.rebalance_health.rebalance_registry_ready?'Ready':'Missing'}`, data.rebalance_health.rebalance_registry_ready?'good':'warn'],
+    [`Allocations ${data.rebalance_health.allocation_registry_ready?'Ready':'Missing'}`, data.rebalance_health.allocation_registry_ready?'good':'warn'],
+    [`Triggers ${data.rebalance_health.trigger_registry_ready?'Ready':'Missing'}`, data.rebalance_health.trigger_registry_ready?'good':'warn'],
+    [`Adjustments ${data.rebalance_health.adjustment_registry_ready?'Ready':'Missing'}`, data.rebalance_health.adjustment_registry_ready?'good':'warn'],
+    [`${data.rebalance_health.rebalance_state}`, stateClass]
+  ]);
+}
+async function seedRebalance(){ const res=await api('/workspace/rebalancing-engine/rebalances/create',{method:'POST',body:JSON.stringify({rebalance_name:'Daily Risk Budget Rebalance',rebalance_mode:'risk_budget',status:'active'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedAllocation(){ const res=await api('/workspace/rebalancing-engine/allocations/create',{method:'POST',body:JSON.stringify({strategy_name:'Momentum Alpha',target_capital:180.0,weight_percent:18.0,status:'target'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedTrigger(){ const res=await api('/workspace/rebalancing-engine/triggers/create',{method:'POST',body:JSON.stringify({trigger_name:'Drift Over 3%',trigger_value:3.8,threshold_value:3.0,status:'fired'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedAdjustment(){ const res=await api('/workspace/rebalancing-engine/adjustments/create',{method:'POST',body:JSON.stringify({strategy_name:'Momentum Alpha',adjusted_capital:25.0,adjustment_reason:'drift_correction',status:'applied'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+loadAll().catch(err=>document.getElementById('actionOut').textContent=String(err));
+</script>
+</body>
+</html>

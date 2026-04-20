@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quantora Global System Overview</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff}
+.container{max-width:1500px;margin:auto;padding:24px}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:14px;padding:16px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{color:#9fb3d8;font-size:12px;text-transform:uppercase}
+.value{font-size:22px;font-weight:bold}
+.good{color:#10b981}.warn{color:#f59e0b}.bad{color:#ef4444}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08)}
+pre{background:#07111f;border-radius:10px;padding:12px;border:1px solid #203251}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="card">
+<h1>Global System Overview</h1>
+</div>
+
+<div class="grid">
+<div class="card"><div class="label">NAV</div><div id="nav" class="value">-</div></div>
+<div class="card"><div class="label">PnL</div><div id="pnl" class="value">-</div></div>
+<div class="card"><div class="label">Drawdown</div><div id="dd" class="value">-</div></div>
+<div class="card"><div class="label">Fund State</div><div id="state" class="value">-</div></div>
+</div>
+
+<div class="grid">
+<div class="card"><div class="label">Execution</div><div id="exec" class="value">-</div></div>
+<div class="card"><div class="label">Risk</div><div id="risk" class="value">-</div></div>
+<div class="card"><div class="label">Allocation</div><div id="alloc" class="value">-</div></div>
+<div class="card"><div class="label">Strategies</div><div id="strats" class="value">-</div></div>
+</div>
+
+<div class="card">
+<h2>System Timeline</h2>
+<div id="timeline">loading...</div>
+</div>
+
+<div class="card">
+<h2>Alerts</h2>
+<div id="alerts">loading...</div>
+</div>
+
+</div>
+
+<script>
+async function f(url){
+try{const r=await fetch(url);return await r.json();}catch(e){return {}}
+}
+
+function fmt(v){return (typeof v==='number')?v.toFixed(2):'-'}
+
+async function load(){
+const perf=await f('/api/performance-engine/summary');
+const fund=await f('/api/fund/state');
+const risk=await f('/api/risk/state');
+const exec=await f('/api/execution/history');
+const alloc=await f('/api/auto-allocator/last');
+const score=await f('/api/scoring/state');
+
+document.getElementById('nav').innerText=fmt(perf.nav);
+document.getElementById('pnl').innerText=fmt(perf.total_pnl);
+document.getElementById('dd').innerText=fmt(perf.drawdown_pct)+'%';
+document.getElementById('state').innerText=fund.running?'LIVE':'PAUSED';
+
+document.getElementById('exec').innerText=exec.length?'ACTIVE':'IDLE';
+document.getElementById('risk').innerText=risk.killed?'BLOCKED':'SAFE';
+document.getElementById('alloc').innerText=alloc.source||'STATIC';
+document.getElementById('strats').innerText=Object.keys(score.scores||{}).length;
+
+const timeline = [
+"Execution events: "+(exec.length||0),
+"Last allocation: "+(alloc.source||'none'),
+"Risk state: "+(risk.killed?'blocked':'clear'),
+"NAV update: "+fmt(perf.nav)
+];
+document.getElementById('timeline').innerHTML = timeline.map(x=>'<div>'+x+'</div>').join('');
+
+const alerts=[];
+if(perf.drawdown_pct<-5) alerts.push("High drawdown");
+if(risk.killed) alerts.push("Kill switch active");
+if(!fund.running) alerts.push("Fund paused");
+
+document.getElementById('alerts').innerHTML = alerts.length?alerts.map(a=>'<div>'+a+'</div>').join(''):'No alerts';
+}
+
+setInterval(load,5000);
+load();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+{
+  "policies": [
+    {
+      "policy_id": "POL-001",
+      "name": "Large capital changes require approval",
+      "policy_type": "capital_change",
+      "threshold": 5000,
+      "enabled": true
+    },
+    {
+      "policy_id": "POL-002",
+      "name": "Fleet run-all requires approval",
+      "policy_type": "run_all",
+      "threshold": 1,
+      "enabled": true
+    },
+    {
+      "policy_id": "POL-003",
+      "name": "Loop start below 300s requires approval",
+      "policy_type": "loop_start",
+      "threshold": 300,
+      "enabled": true
+    },
+    {
+      "policy_id": "POL-004",
+      "name": "Live orders above notional guard require escalation",
+      "policy_type": "live_order_notional",
+      "threshold": 2500,
+      "enabled": true
+    },
+    {
+      "policy_id": "POL-005",
+      "name": "Strategy optimizer changes above threshold require oversight",
+      "policy_type": "strategy_rebalance",
+      "threshold": 3,
+      "enabled": true
+    },
+    {
+      "policy_id": "POL-006",
+      "name": "Execution slippage breach must hold order",
+      "policy_type": "execution_slippage",
+      "threshold": 35,
+      "enabled": true
+    }
+  ]
+}

@@ -1,0 +1,1314 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 365,
+    "minimum_score": 96.0,
+    "minimum_annual_governance_binder_readiness": 0.97,
+    "minimum_board_certification_release_readiness": 0.97,
+    "minimum_permanent_record_seal_readiness": 0.97,
+    "maximum_pending_record_exceptions": 0
+  },
+  "runs": [
+    {
+      "run_id": "qnt40028_1776234542",
+      "captured_at": "2026-04-15T06:29:02.281029+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776234537",
+      "captured_at": "2026-04-15T06:28:57.607105+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776234533",
+      "captured_at": "2026-04-15T06:28:53.802091+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776234530",
+      "captured_at": "2026-04-15T06:28:50.164476+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776234438",
+      "captured_at": "2026-04-15T06:27:18.103084+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776234434",
+      "captured_at": "2026-04-15T06:27:14.522217+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776234431",
+      "captured_at": "2026-04-15T06:27:11.144659+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776234427",
+      "captured_at": "2026-04-15T06:27:07.815930+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776234424",
+      "captured_at": "2026-04-15T06:27:04.630058+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776233477",
+      "captured_at": "2026-04-15T06:11:17.172526+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776233474",
+      "captured_at": "2026-04-15T06:11:14.261859+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776233376",
+      "captured_at": "2026-04-15T06:09:36.810492+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776233373",
+      "captured_at": "2026-04-15T06:09:33.969674+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776232178",
+      "captured_at": "2026-04-15T05:49:38.852929+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776232174",
+      "captured_at": "2026-04-15T05:49:34.584901+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776231883",
+      "captured_at": "2026-04-15T05:44:43.481821+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776231879",
+      "captured_at": "2026-04-15T05:44:39.326778+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776231534",
+      "captured_at": "2026-04-15T05:38:54.291200+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776231530",
+      "captured_at": "2026-04-15T05:38:50.340440+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776231262",
+      "captured_at": "2026-04-15T05:34:22.886152+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776231258",
+      "captured_at": "2026-04-15T05:34:18.924122+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776231251",
+      "captured_at": "2026-04-15T05:34:11.003275+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776231246",
+      "captured_at": "2026-04-15T05:34:06.998236+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776230210",
+      "captured_at": "2026-04-15T05:16:50.649000+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776230206",
+      "captured_at": "2026-04-15T05:16:46.629042+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776230198",
+      "captured_at": "2026-04-15T05:16:38.885880+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776230195",
+      "captured_at": "2026-04-15T05:16:35.460917+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776229675",
+      "captured_at": "2026-04-15T05:07:55.483406+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776229672",
+      "captured_at": "2026-04-15T05:07:52.141147+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776229379",
+      "captured_at": "2026-04-15T05:02:59.424505+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776229376",
+      "captured_at": "2026-04-15T05:02:56.056661+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776229368",
+      "captured_at": "2026-04-15T05:02:48.940091+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40028_1776228192",
+      "captured_at": "2026-04-15T04:43:12.186632+00:00",
+      "annual_governance_binder_readiness": 0.99,
+      "board_certification_release_readiness": 0.99,
+      "permanent_record_seal_readiness": 0.99,
+      "pending_record_exceptions": 0,
+      "score": 86.0,
+      "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual governance evidence lock posture must be established before permanent record seal",
+        "board communication governance posture must be established before board certification release"
+      ],
+      "alerts": [
+        "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    }
+  ],
+  "alerts": [
+    {
+      "captured_at": "2026-04-15T06:29:02.281036+00:00",
+      "code": "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED"
+    },
+    {
+      "captured_at": "2026-04-15T06:29:02.281038+00:00",
+      "code": "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+    }
+  ],
+  "annual_governance_binders": [
+    {
+      "id": "annual_governance_binder_1776234542",
+      "captured_at": "2026-04-15T06:29:02.276309+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776234537",
+      "captured_at": "2026-04-15T06:28:57.601981+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776234533",
+      "captured_at": "2026-04-15T06:28:53.797977+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776234530",
+      "captured_at": "2026-04-15T06:28:50.159678+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776234438",
+      "captured_at": "2026-04-15T06:27:18.099052+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776234434",
+      "captured_at": "2026-04-15T06:27:14.518512+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776234431",
+      "captured_at": "2026-04-15T06:27:11.140231+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776234427",
+      "captured_at": "2026-04-15T06:27:07.811741+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776234424",
+      "captured_at": "2026-04-15T06:27:04.627025+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776233477",
+      "captured_at": "2026-04-15T06:11:17.169346+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776233474",
+      "captured_at": "2026-04-15T06:11:14.258860+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776233376",
+      "captured_at": "2026-04-15T06:09:36.806302+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776233373",
+      "captured_at": "2026-04-15T06:09:33.967180+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776232178",
+      "captured_at": "2026-04-15T05:49:38.848441+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776232174",
+      "captured_at": "2026-04-15T05:49:34.578606+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776231883",
+      "captured_at": "2026-04-15T05:44:43.476810+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776231879",
+      "captured_at": "2026-04-15T05:44:39.322496+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776231534",
+      "captured_at": "2026-04-15T05:38:54.286986+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776231530",
+      "captured_at": "2026-04-15T05:38:50.336343+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776231262",
+      "captured_at": "2026-04-15T05:34:22.881317+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776231258",
+      "captured_at": "2026-04-15T05:34:18.920065+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776231250",
+      "captured_at": "2026-04-15T05:34:10.997222+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776231246",
+      "captured_at": "2026-04-15T05:34:06.994309+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776230210",
+      "captured_at": "2026-04-15T05:16:50.644016+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776230206",
+      "captured_at": "2026-04-15T05:16:46.621109+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776230198",
+      "captured_at": "2026-04-15T05:16:38.882189+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776230195",
+      "captured_at": "2026-04-15T05:16:35.457263+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776229675",
+      "captured_at": "2026-04-15T05:07:55.479766+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776229672",
+      "captured_at": "2026-04-15T05:07:52.136946+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776229379",
+      "captured_at": "2026-04-15T05:02:59.419968+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776229376",
+      "captured_at": "2026-04-15T05:02:56.052584+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776229368",
+      "captured_at": "2026-04-15T05:02:48.936306+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_binder_1776228192",
+      "captured_at": "2026-04-15T04:43:12.181957+00:00",
+      "binder_name": "annual governance binder FY2025",
+      "annual_governance_binder_readiness": 0.99
+    }
+  ],
+  "board_certification_releases": [
+    {
+      "id": "board_certification_release_1776234542",
+      "captured_at": "2026-04-15T06:29:02.277465+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776234537",
+      "captured_at": "2026-04-15T06:28:57.603570+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776234533",
+      "captured_at": "2026-04-15T06:28:53.799052+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776234530",
+      "captured_at": "2026-04-15T06:28:50.161038+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776234438",
+      "captured_at": "2026-04-15T06:27:18.100035+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776234434",
+      "captured_at": "2026-04-15T06:27:14.519452+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776234431",
+      "captured_at": "2026-04-15T06:27:11.141525+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776234427",
+      "captured_at": "2026-04-15T06:27:07.812823+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776234424",
+      "captured_at": "2026-04-15T06:27:04.627898+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776233477",
+      "captured_at": "2026-04-15T06:11:17.170160+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776233474",
+      "captured_at": "2026-04-15T06:11:14.259750+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776233376",
+      "captured_at": "2026-04-15T06:09:36.807390+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776233373",
+      "captured_at": "2026-04-15T06:09:33.967947+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776232178",
+      "captured_at": "2026-04-15T05:49:38.849561+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776232174",
+      "captured_at": "2026-04-15T05:49:34.579938+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776231883",
+      "captured_at": "2026-04-15T05:44:43.478378+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776231879",
+      "captured_at": "2026-04-15T05:44:39.323605+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776231534",
+      "captured_at": "2026-04-15T05:38:54.288145+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776231530",
+      "captured_at": "2026-04-15T05:38:50.337350+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776231262",
+      "captured_at": "2026-04-15T05:34:22.882656+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776231258",
+      "captured_at": "2026-04-15T05:34:18.921164+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776231250",
+      "captured_at": "2026-04-15T05:34:10.998982+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776231246",
+      "captured_at": "2026-04-15T05:34:06.995488+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776230210",
+      "captured_at": "2026-04-15T05:16:50.645287+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776230206",
+      "captured_at": "2026-04-15T05:16:46.622045+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776230198",
+      "captured_at": "2026-04-15T05:16:38.883113+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776230195",
+      "captured_at": "2026-04-15T05:16:35.458190+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776229675",
+      "captured_at": "2026-04-15T05:07:55.480877+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776229672",
+      "captured_at": "2026-04-15T05:07:52.138111+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776229379",
+      "captured_at": "2026-04-15T05:02:59.421040+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776229376",
+      "captured_at": "2026-04-15T05:02:56.053517+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776229368",
+      "captured_at": "2026-04-15T05:02:48.937511+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    },
+    {
+      "id": "board_certification_release_1776228192",
+      "captured_at": "2026-04-15T04:43:12.182791+00:00",
+      "certification_name": "board certification release FY2025",
+      "board_certification_release_readiness": 0.99
+    }
+  ],
+  "permanent_record_seals": [
+    {
+      "id": "permanent_record_seal_1776234542",
+      "captured_at": "2026-04-15T06:29:02.278832+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776234537",
+      "captured_at": "2026-04-15T06:28:57.604886+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776234533",
+      "captured_at": "2026-04-15T06:28:53.800226+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776234530",
+      "captured_at": "2026-04-15T06:28:50.162397+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776234438",
+      "captured_at": "2026-04-15T06:27:18.101006+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776234434",
+      "captured_at": "2026-04-15T06:27:14.520509+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776234431",
+      "captured_at": "2026-04-15T06:27:11.142708+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776234427",
+      "captured_at": "2026-04-15T06:27:07.814044+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776234424",
+      "captured_at": "2026-04-15T06:27:04.628642+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776233477",
+      "captured_at": "2026-04-15T06:11:17.171014+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776233474",
+      "captured_at": "2026-04-15T06:11:14.260501+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776233376",
+      "captured_at": "2026-04-15T06:09:36.808542+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776233373",
+      "captured_at": "2026-04-15T06:09:33.968536+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776232178",
+      "captured_at": "2026-04-15T05:49:38.850768+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776232174",
+      "captured_at": "2026-04-15T05:49:34.581134+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776231883",
+      "captured_at": "2026-04-15T05:44:43.479609+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776231879",
+      "captured_at": "2026-04-15T05:44:39.324804+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776231534",
+      "captured_at": "2026-04-15T05:38:54.289209+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776231530",
+      "captured_at": "2026-04-15T05:38:50.338512+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776231262",
+      "captured_at": "2026-04-15T05:34:22.883813+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776231258",
+      "captured_at": "2026-04-15T05:34:18.922255+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776231251",
+      "captured_at": "2026-04-15T05:34:11.000643+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776231246",
+      "captured_at": "2026-04-15T05:34:06.996573+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776230210",
+      "captured_at": "2026-04-15T05:16:50.646724+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776230206",
+      "captured_at": "2026-04-15T05:16:46.627265+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776230198",
+      "captured_at": "2026-04-15T05:16:38.884128+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776230195",
+      "captured_at": "2026-04-15T05:16:35.459034+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776229675",
+      "captured_at": "2026-04-15T05:07:55.481985+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776229672",
+      "captured_at": "2026-04-15T05:07:52.139552+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776229379",
+      "captured_at": "2026-04-15T05:02:59.422413+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776229376",
+      "captured_at": "2026-04-15T05:02:56.055244+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776229368",
+      "captured_at": "2026-04-15T05:02:48.938534+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    },
+    {
+      "id": "permanent_record_seal_1776228192",
+      "captured_at": "2026-04-15T04:43:12.183856+00:00",
+      "seal_name": "permanent record seal FY2025",
+      "permanent_record_seal_readiness": 0.99
+    }
+  ],
+  "latest_run": {
+    "run_id": "qnt40028_1776234542",
+    "captured_at": "2026-04-15T06:29:02.281029+00:00",
+    "annual_governance_binder_readiness": 0.99,
+    "board_certification_release_readiness": 0.99,
+    "permanent_record_seal_readiness": 0.99,
+    "pending_record_exceptions": 0,
+    "score": 86.0,
+    "band": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+    "posture": "PERMANENT_RECORD_SEAL_REMEDIATION_REQUIRED",
+    "reasons": [
+      "annual governance evidence lock posture must be established before permanent record seal",
+      "board communication governance posture must be established before board certification release"
+    ],
+    "alerts": [
+      "ANNUAL_GOVERNANCE_EVIDENCE_LOCK_POSTURE_NOT_ESTABLISHED",
+      "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+    ],
+    "operator_review_required": true
+  },
+  "last_context": {
+    "captured_at": "2026-04-15T06:29:02.280994+00:00",
+    "dep_a_summary": {
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "score": 86.0
+    },
+    "dep_b_summary": {
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "score": 86.0
+    }
+  }
+}

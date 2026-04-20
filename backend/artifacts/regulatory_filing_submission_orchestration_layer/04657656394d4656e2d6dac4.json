@@ -1,0 +1,23 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 180,
+    "minimum_score": 96.0,
+    "require_regulator_ready": true,
+    "require_compliance_automated": true,
+    "require_multi_jurisdiction_clear": true,
+    "require_supervisory_exam_ready": true,
+    "minimum_submission_integrity_score": 0.99,
+    "minimum_evidence_linkage_score": 0.985,
+    "minimum_regulator_ack_readiness_score": 0.98,
+    "max_pending_submissions": 2,
+    "max_rejected_submissions": 0
+  },
+  "runs": [],
+  "alerts": [],
+  "filing_queue": [],
+  "submissions": [],
+  "acknowledgements": [],
+  "latest_run": null,
+  "last_context": {}
+}

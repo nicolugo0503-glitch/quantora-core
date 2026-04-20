@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>QNT50025 - Institutional Allocation Execution Charter + Mandate Enforcement Layer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background:#0f172a; color:#e2e8f0; }
+    .card { background:#111827; border:1px solid #334155; border-radius:12px; padding:20px; max-width:1000px; }
+    h1,h2 { margin-top:0; }
+    code { background:#1e293b; padding:2px 6px; border-radius:6px; }
+    ul { line-height:1.6; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>QNT50025 — Institutional Allocation Execution Charter + Mandate Enforcement Layer</h1>
+    <p>Institutional governance layer that converts executive arbitration into execution charters, scoped mandates, and enforceable directives before capital can move downstream.</p>
+    <h2>Capabilities</h2>
+    <ul>
+      <li>Synchronizes executive arbitration, committee, risk, treasury, control-loop, and intercompany posture.</li>
+      <li>Registers execution charters that define governed execution scope, allowed actions, and hard notional limits.</li>
+      <li>Creates institutional mandates linked to charters for strategy-specific capital deployment authority.</li>
+      <li>Issues or blocks downstream directives using arbitration status, liquidity support, risk posture, and mandate alignment.</li>
+    </ul>
+    <h2>Primary endpoints</h2>
+    <ul>
+      <li><code>GET /institutional-charter/health</code></li>
+      <li><code>GET /institutional-charter/summary</code></li>
+      <li><code>POST /institutional-charter/register-charter</code></li>
+      <li><code>POST /institutional-charter/register-mandate</code></li>
+      <li><code>POST /institutional-charter/enforce-mandate</code></li>
+      <li><code>POST /institutional-charter/reset</code></li>
+    </ul>
+  </div>
+</body>
+</html>

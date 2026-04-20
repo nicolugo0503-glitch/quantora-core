@@ -1,0 +1,16 @@
+{
+  "email": "operator@example.com",
+  "accounts": [
+    {
+      "broker": "paper",
+      "status": "connected"
+    }
+  ],
+  "orders": [],
+  "runs": [
+    {
+      "routing_score": 90.0,
+      "timestamp": 1775967386
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "configure": {
+    "armed": true,
+    "safe_mode_on_trigger": true,
+    "thresholds": {
+      "portfolio_drawdown_limit_pct": 0.1,
+      "daily_loss_limit_pct": 0.035,
+      "max_single_order_notional": 200000
+    }
+  },
+  "metrics": {
+    "equity": 880000,
+    "peak_equity": 1000000,
+    "portfolio_drawdown_pct": 0.12,
+    "daily_loss_pct": 0.045,
+    "venue_connectivity_ok": true
+  }
+}

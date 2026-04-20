@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QNT30643 Institutional Risk Intelligence Layer</title>
+<style>
+:root { --bg:#06101d; --panel:#0f1d31; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#2563eb; --good:#10b981; --warn:#f59e0b; --bad:#ef4444; }
+* { box-sizing:border-box; } body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#040b15 0%,#0a1424 100%); color:var(--text); }
+.wrap { max-width:1400px; margin:0 auto; padding:24px; } .hero,.panel { background:rgba(15,29,49,.96); border:1px solid var(--line); border-radius:18px; padding:20px; box-shadow:0 10px 30px rgba(0,0,0,.18); }
+.hero { margin-bottom:18px; } .muted { color:var(--muted); line-height:1.6; } .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin-top:18px; }
+.metric { background:#0a1526; border:1px solid #1e2d47; border-radius:14px; padding:14px; } .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+.value { font-size:26px; font-weight:700; margin-top:8px; } .stack { display:grid; grid-template-columns:1.35fr 1fr; gap:16px; margin-top:18px; }
+.toolbar { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; } a.btn { background:var(--accent); color:white; padding:10px 14px; border-radius:10px; text-decoration:none; font-weight:700; display:inline-block; }
+table { width:100%; border-collapse:collapse; margin-top:10px; font-size:14px; } th,td { padding:10px; border-bottom:1px solid #1e2d47; text-align:left; vertical-align:top; }
+th { color:var(--muted); font-size:12px; text-transform:uppercase; } .pill { display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid #2a3c60; }
+.ok { color:#d1fae5; background:rgba(16,185,129,.1); } .warn { color:#fde68a; background:rgba(245,158,11,.1); } .bad { color:#fecaca; background:rgba(239,68,68,.12); }
+pre { margin:0; background:#06101d; color:#dbeafe; border:1px solid #1e2d47; border-radius:14px; min-height:180px; padding:14px; white-space:pre-wrap; }
+@media (max-width:1000px) { .grid,.stack { grid-template-columns:1fr; } }
+</style></head><body><div class="wrap">
+<section class="hero"><div class="label">Institutional Mission</div><h1 style="margin:8px 0;">QNT30643 — Institutional Risk Intelligence Layer</h1>
+<div class="muted">Quantora's anticipatory risk brain. This layer detects concentration, dependency clusters, stress vulnerability, and fragility before capital is deployed, then gates actions through explainable approve, cap, or block decisions.</div>
+<div class="toolbar"><a class="btn" href="index.html">Back to Command Center</a></div></section>
+<section class="grid">
+<div class="metric"><div class="label">Top Concentration</div><div class="value">42%</div></div>
+<div class="metric"><div class="label">Dependency Clusters</div><div class="value">2</div></div>
+<div class="metric"><div class="label">Fragility Score</div><div class="value">71.4</div></div>
+<div class="metric"><div class="label">Risk Gate State</div><div class="value">Cap</div></div>
+</section>
+<section class="stack">
+<div class="panel"><h2 style="margin-top:0;">Concentration Map</h2>
+<table><thead><tr><th>Exposure</th><th>Weight</th><th>Status</th></tr></thead><tbody>
+<tr><td>STRAT_BTC_MOMO</td><td>42%</td><td><span class="pill warn">elevated</span></td></tr>
+<tr><td>STRAT_MACRO_EXT_01</td><td>31%</td><td><span class="pill ok">within band</span></td></tr>
+<tr><td>CASH_RESERVE</td><td>27%</td><td><span class="pill ok">buffer active</span></td></tr>
+</tbody></table></div>
+<div class="panel"><h2 style="margin-top:0;">Correlation / Dependency Clusters</h2>
+<table><thead><tr><th>Cluster</th><th>Correlation</th><th>Action</th></tr></thead><tbody>
+<tr><td>Crypto Beta Stack</td><td>0.81</td><td><span class="pill warn">cap incremental exposure</span></td></tr>
+<tr><td>Macro Trend Pair</td><td>0.77</td><td><span class="pill warn">monitor</span></td></tr>
+</tbody></table></div></section>
+<section class="stack">
+<div class="panel"><h2 style="margin-top:0;">Stress Scenario Pack</h2>
+<pre>[
+  {"scenario":"volatility_shock","loss_pct":17.0},
+  {"scenario":"liquidity_stress","loss_pct":9.8},
+  {"scenario":"reserve_drain","loss_pct":3.0}
+]</pre></div>
+<div class="panel"><h2 style="margin-top:0;">Risk Gate / Audit</h2>
+<pre>{
+  "vehicle_id": "VEHICLE_ALPHA",
+  "action_type": "allocation",
+  "decision": "cap",
+  "reason": "concentration or dependency risk elevated",
+  "hard_constraints": ["governance_active","treasury_reserve_enforced"]
+}</pre></div></section></div></body></html>

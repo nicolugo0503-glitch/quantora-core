@@ -1,0 +1,110 @@
+{
+  "smart_order_router": {
+    "last_updated_at": "2026-03-31T16:08:21Z",
+    "enabled": true,
+    "last_route_at": "2026-03-31T16:08:21Z",
+    "last_split_at": "2026-03-31T16:08:21Z",
+    "route_count": 1,
+    "split_count": 1,
+    "fallback_routes": 0,
+    "telemetry": [
+      {
+        "timestamp": "2026-03-31T16:08:21Z",
+        "event": "venues.ingested",
+        "venue_count": 3
+      },
+      {
+        "timestamp": "2026-03-31T16:08:21Z",
+        "event": "venues.ingested",
+        "venue_count": 3
+      },
+      {
+        "timestamp": "2026-03-31T16:08:21Z",
+        "event": "order.routed",
+        "order_id": "sig_0001",
+        "child_orders": 1
+      }
+    ]
+  },
+  "rules": {
+    "max_child_orders": 2,
+    "min_venue_score": 75.0,
+    "prefer_lower_slippage": true,
+    "prefer_lower_latency": true,
+    "reserve_liquidity_buffer_pct": 0.55
+  },
+  "venues": [
+    {
+      "venue_id": "lit_nyse",
+      "venue_name": "Lit NYSE",
+      "quality_score": 93.0,
+      "avg_slippage_bps": 2.8,
+      "avg_latency_ms": 29.0,
+      "available_liquidity": 2200.0,
+      "flagged": false
+    },
+    {
+      "venue_id": "lit_nasdaq",
+      "venue_name": "Lit NASDAQ",
+      "quality_score": 89.5,
+      "avg_slippage_bps": 3.6,
+      "avg_latency_ms": 26.0,
+      "available_liquidity": 1800.0,
+      "flagged": false
+    },
+    {
+      "venue_id": "dark_pool_x",
+      "venue_name": "Dark Pool X",
+      "quality_score": 56.0,
+      "avg_slippage_bps": 10.2,
+      "avg_latency_ms": 71.0,
+      "available_liquidity": 3100.0,
+      "flagged": true
+    }
+  ],
+  "routes": [
+    {
+      "route_id": "sor_0001",
+      "timestamp": "2026-03-31T16:08:21Z",
+      "order_id": "sig_0001",
+      "symbol": "AAPL",
+      "side": "buy",
+      "requested_quantity": 631.9515,
+      "child_orders": [
+        {
+          "venue_id": "lit_nyse",
+          "venue_name": "Lit NYSE",
+          "quantity": 631.9515,
+          "quality_score": 93.0,
+          "avg_slippage_bps": 2.8,
+          "avg_latency_ms": 29.0
+        }
+      ],
+      "unfilled_quantity": 0.0,
+      "fallback_used": false
+    }
+  ],
+  "history": [
+    {
+      "timestamp": "2026-03-31T16:08:19Z",
+      "event": "adaptive_execution.override_dispatched",
+      "decision_id": "policy_0002",
+      "mode": "defensive"
+    },
+    {
+      "timestamp": "2026-03-31T16:08:21Z",
+      "event": "venues.ingested",
+      "venue_count": 3
+    },
+    {
+      "timestamp": "2026-03-31T16:08:21Z",
+      "event": "venues.ingested",
+      "venue_count": 3
+    },
+    {
+      "timestamp": "2026-03-31T16:08:21Z",
+      "event": "order.routed",
+      "order_id": "sig_0001"
+    }
+  ]
+}

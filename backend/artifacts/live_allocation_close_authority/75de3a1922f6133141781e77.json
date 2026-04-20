@@ -1,0 +1,14 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "minimum_close_score": 86.0,
+    "minimum_reconciliation_score": 84.0,
+    "minimum_settlement_score": 84.0,
+    "minimum_finalization_score": 83.0,
+    "minimum_documentation_completion_pct": 92.0,
+    "maximum_exception_pressure": 24.0
+  },
+  "runs": [],
+  "created_at": 1775795940,
+  "updated_at": 1775795940
+}

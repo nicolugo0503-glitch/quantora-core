@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QNT50009 — Investor Cash Confirmation + Treasury Release Authority</title>
+  <style>
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#07101d;color:#edf4ff}
+    .wrap{max-width:1120px;margin:0 auto;padding:32px}
+    .hero,.card{background:#0d1a2c;border:1px solid #223754;border-radius:18px;padding:24px;box-shadow:0 12px 34px rgba(0,0,0,.28)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:18px}
+    h1,h2{margin:0 0 12px}
+    .eyebrow{letter-spacing:.18em;text-transform:uppercase;color:#89b9ff;font-size:12px}
+    .pill{display:inline-block;padding:8px 12px;border-radius:999px;background:#163457;margin:6px 8px 0 0}
+    ul{padding-left:18px;line-height:1.6}
+    code{background:#091425;padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Quantora • Investor Treasury Governance</div>
+      <h1>QNT50009 — Investor Cash Confirmation + Treasury Release Authority</h1>
+      <p>Quantora now places an institutional release-authority gate between treasury approval and investor cash movement. Redemptions, distributions, and capital-return flows must pass investor registration, bank-instruction verification, dual acknowledgement, statement alignment, and treasury-capacity checks before treasury execution is allowed to proceed.</p>
+      <span class="pill">Investor cash release authority</span>
+      <span class="pill">Dual acknowledgement workflow</span>
+      <span class="pill">Treasury transfer binding</span>
+      <span class="pill">Audit-grade release control</span>
+    </section>
+    <div class="grid">
+      <section class="card">
+        <h2>Release Discipline</h2>
+        <ul>
+          <li>Only investor-directed treasury transfers require the QNT50009 authority gate.</li>
+          <li>Bank instruction verification and statement alignment are recorded at the investor level.</li>
+          <li>Treasury execution is blocked until an active release authority exists for the transfer.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Control Flow</h2>
+        <ul>
+          <li><code>register-investor</code> establishes confirmation posture.</li>
+          <li><code>request-release</code> binds the investor to an approved treasury transfer.</li>
+          <li><code>acknowledge</code> captures operations and investor confirmation evidence.</li>
+          <li><code>authorize-release</code> issues expiring release authority for execution.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Endpoints</h2>
+        <ul>
+          <li><code>GET /investor-cash-confirmation/health</code></li>
+          <li><code>POST /investor-cash-confirmation/register-investor</code></li>
+          <li><code>POST /investor-cash-confirmation/request-release</code></li>
+          <li><code>POST /investor-cash-confirmation/acknowledge</code></li>
+          <li><code>POST /investor-cash-confirmation/authorize-release</code></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

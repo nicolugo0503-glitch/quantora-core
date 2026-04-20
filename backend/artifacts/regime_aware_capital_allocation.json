@@ -1,0 +1,80 @@
+{
+  "allocator": {
+    "enabled": true,
+    "last_updated_at": "2026-03-31T16:08:21Z",
+    "last_context_at": "2026-03-31T16:08:21Z",
+    "last_decision_at": "2026-03-31T16:08:21Z",
+    "last_dispatch_at": "2026-03-31T16:08:21Z",
+    "context_count": 1,
+    "decision_count": 1,
+    "dispatch_count": 1,
+    "telemetry": [
+      {
+        "timestamp": "2026-03-31T16:08:21Z",
+        "event": "allocator.context_ingested",
+        "strategy_id": "mean_reversion_us_eq",
+        "regime": "elevated"
+      }
+    ]
+  },
+  "policy": {
+    "base_capital_usd": 1000000.0,
+    "max_allocation_pct": 0.22,
+    "min_allocation_pct": 0.02,
+    "normal_risk_multiplier": 1.0,
+    "stressed_risk_multiplier": 0.72,
+    "crisis_risk_multiplier": 0.35,
+    "execution_penalty_weight": 0.25,
+    "strategy_weight": 0.45,
+    "regime_weight": 0.3,
+    "reserve_buffer_pct": 0.12,
+    "halt_on_severe_drift": true
+  },
+  "contexts": [
+    {
+      "context_id": "alloc_ctx_1774973301",
+      "timestamp": "2026-03-31T16:08:21Z",
+      "strategy_id": "mean_reversion_us_eq",
+      "symbol": "AAPL",
+      "market_volatility": 0.31,
+      "regime_label": "elevated",
+      "execution_quality_score": 93.0,
+      "strategy_score": 0.88,
+      "drift_severity": 0.0,
+      "adaptive_mode": "defensive",
+      "requested_capital_usd": 0.0
+    }
+  ],
+  "decisions": [
+    {
+      "allocation_id": "alloc_0001",
+      "timestamp": "2026-03-31T16:08:21Z",
+      "strategy_id": "mean_reversion_us_eq",
+      "symbol": "AAPL",
+      "regime_label": "elevated",
+      "adaptive_mode": "defensive",
+      "target_allocation_pct": 0.22,
+      "capital_base_usd": 1000000.0,
+      "gross_capital_usd": 220000.0,
+      "reserve_buffer_usd": 26400.0,
+      "deployable_capital_usd": 193600.0,
+      "execution_quality_score": 93.0,
+      "strategy_score": 0.88,
+      "drift_severity": 0.0,
+      "halted": false
+    }
+  ],
+  "dispatches": [
+    {
+      "dispatch_id": "alloc_dispatch_0001",
+      "timestamp": "2026-03-31T16:08:21Z",
+      "allocation_id": "alloc_0001",
+      "strategy_id": "mean_reversion_us_eq",
+      "symbol": "AAPL",
+      "deployable_capital_usd": 193600.0,
+      "halted": false,
+      "status": "capital_released"
+    }
+  ],
+  "history": []
+}

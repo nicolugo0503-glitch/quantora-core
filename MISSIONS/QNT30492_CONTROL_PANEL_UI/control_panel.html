@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Quantora Control Panel</title>
+<style>
+body { font-family: Arial; background:#0b0f1a; color:#fff; }
+.panel { border:1px solid #333; padding:15px; margin:10px; border-radius:8px; }
+button { padding:10px; margin:5px; }
+</style>
+</head>
+<body>
+
+<h1>QUANTORA CONTROL PANEL</h1>
+
+<div class="panel">
+<h2>System Controls</h2>
+<button onclick="alert('Start')">Start</button>
+<button onclick="alert('Pause')">Pause</button>
+<button onclick="alert('Kill')">Kill Switch</button>
+</div>
+
+<div class="panel">
+<h2>Live Metrics</h2>
+<p>NAV: <span id="nav">--</span></p>
+<p>PnL: <span id="pnl">--</span></p>
+</div>
+
+<div class="panel">
+<h2>Investor Overview</h2>
+<p>AUM: --</p>
+<p>Investors: --</p>
+</div>
+
+<div class="panel">
+<h2>Revenue</h2>
+<p>Fees: --</p>
+</div>
+
+<script>
+document.getElementById("nav").innerText = "SIMULATION";
+</script>
+
+</body>
+</html>

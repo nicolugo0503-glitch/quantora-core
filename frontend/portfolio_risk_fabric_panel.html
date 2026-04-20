@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30355 Portfolio Risk Fabric</title>
+  <style>
+    :root { --bg:#07111f; --panel:#0f1d31; --panel2:#132742; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#60a5fa; --good:#34d399; --warn:#f59e0b; --bad:#fb7185; }
+    * { box-sizing:border-box; } body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#040b15 0%,#0a1424 100%); color:var(--text); }
+    .shell { max-width:1400px; margin:0 auto; padding:24px; } .panel { background:rgba(15,29,49,.95); border:1px solid var(--line); border-radius:18px; padding:16px; margin-bottom:16px; }
+    .hero { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+    .sub { color:var(--muted); max-width:850px; line-height:1.5; }
+    .grid { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px; }
+    .metric { background:#0a1526; border:1px solid #1e2d47; border-radius:14px; padding:14px; }
+    .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .value { font-size:26px; font-weight:700; margin-top:8px; }
+    .two { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    input, select, button { width:100%; border:1px solid var(--line); background:var(--panel2); color:var(--text); border-radius:10px; padding:11px 12px; }
+    button { background:var(--accent); font-weight:700; cursor:pointer; }
+    pre { background:#06101d; border:1px solid #1e2d47; border-radius:14px; min-height:220px; max-height:540px; overflow:auto; padding:14px; white-space:pre-wrap; }
+    .row { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:10px; margin-bottom:10px; }
+    .row5 { display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:10px; margin-bottom:10px; }
+    .tiny { color:var(--muted); font-size:12px; }
+    @media (max-width:980px){ .grid,.row,.row5,.two{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="panel hero">
+      <div>
+        <h1 style="margin:0 0 8px 0;">Portfolio Risk Fabric + Cross-Market Exposure Netting</h1>
+        <div class="sub">Normalize exposures across markets, compute gross and net portfolio risk, detect correlated concentration, and quantify netting offsets before Quantora scales capital across venues.</div>
+      </div>
+      <div style="min-width:220px;">
+        <button onclick="window.location.href='index.html'">Back to Command Center</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="grid">
+        <div class="metric"><div class="label">Positions</div><div class="value" id="m_positions">-</div></div>
+        <div class="metric"><div class="label">Gross Notional</div><div class="value" id="m_gross">-</div></div>
+        <div class="metric"><div class="label">Net Notional</div><div class="value" id="m_net">-</div></div>
+        <div class="metric"><div class="label">Leverage Proxy</div><div class="value" id="m_lev">-</div></div>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="panel">
+        <h2 style="margin-top:0;">Upsert Exposure</h2>
+        <div class="row5">
+          <input id="symbol" placeholder="Symbol" value="AAPL">
+          <select id="market"><option>equities</option><option>crypto</option><option>forex</option><option>futures</option></select>
+          <select id="side"><option>long</option><option>short</option></select>
+          <input id="qty" type="number" value="100">
+          <input id="mark_price" type="number" value="180">
+        </div>
+        <div class="row">
+          <input id="fx_rate" type="number" value="1">
+          <input id="beta" type="number" value="1.1" step="0.01">
+          <input id="strategy_id" placeholder="Strategy ID" value="strat_aapl">
+          <input id="hedge_tag" placeholder="Hedge Tag (optional)">
+        </div>
+        <button onclick="upsertExposure()">Upsert Exposure</button>
+        <div class="tiny" style="margin-top:8px;">Use hedge tags for offset legs so coverage ratios become visible in portfolio risk snapshots.</div>
+      </div>
+
+      <div class="panel">
+        <h2 style="margin-top:0;">Controls</h2>
+        <div class="row">
+          <button onclick="loadStatus()">Refresh Status</button>
+          <button onclick="runNetting()">Evaluate Netting</button>
+          <button onclick="runLimits()">Evaluate Limits</button>
+          <button onclick="seedDemo()">Seed Demo Book</button>
+        </div>
+        <pre id="output">Loading...</pre>
+      </div>
+    </div>
+  </div>
+
+<script>
+const adminHeaders = {"Content-Type":"application/json","X-Quantora-Email":"nicolugo0503@gmail.com"};
+
+async function api(path, method="GET", body=null){
+  const res = await fetch(path, {method, headers:adminHeaders, body: body ? JSON.stringify(body) : null});
+  const data = await res.json();
+  if(!res.ok){ throw new Error(JSON.stringify(data)); }
+  return data;
+}
+function fmt(v){ return typeof v === "number" ? v.toLocaleString(undefined,{maximumFractionDigits:2}) : (v ?? "-"); }
+function show(data){
+  document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+}
+async function loadStatus(){
+  const data = await api("/portfolio-risk/status");
+  const s = data.summary || {};
+  document.getElementById("m_positions").textContent = fmt(s.positions);
+  document.getElementById("m_gross").textContent = fmt((s.risk_metrics||{}).gross_notional);
+  document.getElementById("m_net").textContent = fmt((s.risk_metrics||{}).net_notional);
+  document.getElementById("m_lev").textContent = fmt((s.risk_metrics||{}).portfolio_leverage_proxy);
+  show(data);
+}
+async function upsertExposure(){
+  const body = {
+    symbol: symbol.value, market: market.value, side: side.value,
+    qty: Number(qty.value), mark_price: Number(mark_price.value),
+    fx_rate: Number(fx_rate.value), beta: Number(beta.value),
+    strategy_id: strategy_id.value || null, hedge_tag: hedge_tag.value || null
+  };
+  show(await api("/portfolio-risk/exposures/upsert","POST",body));
+  await loadStatus();
+}
+async function runNetting(){ show(await api("/portfolio-risk/netting/evaluate","POST",{})); await loadStatus(); }
+async function runLimits(){ show(await api("/portfolio-risk/limits/evaluate","POST",{})); await loadStatus(); }
+async function seedDemo(){
+  const demo = [
+    {symbol:"AAPL", market:"equities", side:"long", qty:100, mark_price:180, fx_rate:1, beta:1.1, strategy_id:"strat_aapl"},
+    {symbol:"ES1!", market:"futures", side:"short", qty:1, mark_price:18000, fx_rate:1, beta:0.9, strategy_id:"hedge_es", hedge_tag:"index_hedge"},
+    {symbol:"BTCUSD", market:"crypto", side:"long", qty:0.75, mark_price:68000, fx_rate:1, beta:1.4, strategy_id:"strat_btc"},
+    {symbol:"EURUSD", market:"forex", side:"short", qty:50000, mark_price:1.08, fx_rate:1, beta:0.2, strategy_id:"usd_hedge", hedge_tag:"fx_overlay"}
+  ];
+  for (const item of demo){ await api("/portfolio-risk/exposures/upsert","POST",item); }
+  await loadStatus();
+}
+loadStatus().catch(err => { document.getElementById("output").textContent = String(err); });
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "operator": "investor_ops_committee",
+  "transfer_id": "trf_example_investor_redemption",
+  "investor_id": "INVESTOR_001",
+  "gross_redemption_amount": 12000.0,
+  "cash_paid_amount": 12000.0,
+  "statement_cycle_id": "APR_2026",
+  "dealing_reference": "REDEMPTION_2026_04_17",
+  "notes": "close investor redemption after treasury execution"
+}

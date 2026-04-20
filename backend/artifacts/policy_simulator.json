@@ -1,0 +1,14 @@
+{
+  "version": "30360",
+  "last_simulation_at": null,
+  "last_compile_at": null,
+  "simulations": [],
+  "compiled_requests": [],
+  "policies": {
+    "live_notional_limit": 25000.0,
+    "max_estimated_slippage_bps": 28.0,
+    "max_strategy_rebalance_pct": 0.18,
+    "max_net_exposure_usd": 150000.0,
+    "approval_expiry_minutes": 20
+  }
+}

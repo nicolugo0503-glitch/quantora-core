@@ -1,0 +1,11 @@
+{
+  "notes": [],
+  "regime_history": [],
+  "telemetry": {
+    "notes_ingested": 0,
+    "snapshots_built": 0,
+    "allocator_evaluations": 0,
+    "last_snapshot_at": null,
+    "last_regime": "unknown"
+  }
+}

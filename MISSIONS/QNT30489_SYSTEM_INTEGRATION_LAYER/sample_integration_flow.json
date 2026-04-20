@@ -1,0 +1,23 @@
+{
+  "fund_id": "FUND1",
+  "capital": 1000000,
+  "nav_inputs": {
+    "cash": 250000,
+    "liabilities": 10000,
+    "shares": 100000,
+    "starting_nav": 1000000,
+    "net_profit": 120000,
+    "positions": [
+      {
+        "strategy_id": "STRAT1",
+        "market_value": 300000,
+        "unrealized_pnl": 10000
+      },
+      {
+        "strategy_id": "STRAT2",
+        "market_value": 200000,
+        "unrealized_pnl": 5000
+      }
+    ]
+  }
+}

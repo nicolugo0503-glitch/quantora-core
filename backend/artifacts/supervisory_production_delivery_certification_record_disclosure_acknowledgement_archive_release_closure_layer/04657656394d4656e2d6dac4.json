@@ -1,0 +1,137 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 365,
+    "minimum_score": 96.0,
+    "minimum_delivery_certification_readiness": 0.97,
+    "minimum_disclosure_acknowledgement_readiness": 0.97,
+    "minimum_archive_release_closure_readiness": 0.97,
+    "maximum_open_closure_issues": 0
+  },
+  "runs": [
+    {
+      "run_id": "qnt40035_1776233477",
+      "captured_at": "2026-04-15T06:11:17.194784+00:00",
+      "delivery_certification_readiness": 0.99,
+      "disclosure_acknowledgement_readiness": 0.99,
+      "archive_release_closure_readiness": 0.99,
+      "open_closure_issues": 0,
+      "score": 100.0,
+      "band": "ARCHIVE_RELEASE_CLOSURE_STRONG",
+      "posture": "ARCHIVE_RELEASE_CLOSURE_STRONG",
+      "reasons": [],
+      "alerts": [],
+      "operator_review_required": false
+    },
+    {
+      "run_id": "qnt40035_1776233376",
+      "captured_at": "2026-04-15T06:09:36.832351+00:00",
+      "delivery_certification_readiness": 0.99,
+      "disclosure_acknowledgement_readiness": 0.99,
+      "archive_release_closure_readiness": 0.99,
+      "open_closure_issues": 0,
+      "score": 100.0,
+      "band": "ARCHIVE_RELEASE_CLOSURE_STRONG",
+      "posture": "ARCHIVE_RELEASE_CLOSURE_STRONG",
+      "reasons": [],
+      "alerts": [],
+      "operator_review_required": false
+    },
+    {
+      "run_id": "qnt40035_1776232178",
+      "captured_at": "2026-04-15T05:49:38.878467+00:00",
+      "delivery_certification_readiness": 0.99,
+      "disclosure_acknowledgement_readiness": 0.99,
+      "archive_release_closure_readiness": 0.99,
+      "open_closure_issues": 0,
+      "score": 100.0,
+      "band": "ARCHIVE_RELEASE_CLOSURE_STRONG",
+      "posture": "ARCHIVE_RELEASE_CLOSURE_STRONG",
+      "reasons": [],
+      "alerts": [],
+      "operator_review_required": false
+    }
+  ],
+  "alerts": [],
+  "delivery_certifications": [
+    {
+      "id": "delivery_certification_1776233477",
+      "captured_at": "2026-04-15T06:11:17.193220+00:00",
+      "certification_name": "supervisory production delivery certification FY2025",
+      "delivery_certification_readiness": 0.99
+    },
+    {
+      "id": "delivery_certification_1776233376",
+      "captured_at": "2026-04-15T06:09:36.830574+00:00",
+      "certification_name": "supervisory production delivery certification FY2025",
+      "delivery_certification_readiness": 0.99
+    },
+    {
+      "id": "delivery_certification_1776232178",
+      "captured_at": "2026-04-15T05:49:38.876328+00:00",
+      "certification_name": "supervisory production delivery certification FY2025",
+      "delivery_certification_readiness": 0.99
+    }
+  ],
+  "disclosure_acknowledgements": [
+    {
+      "id": "disclosure_acknowledgement_1776233477",
+      "captured_at": "2026-04-15T06:11:17.193706+00:00",
+      "acknowledgement_name": "official record disclosure acknowledgement FY2025",
+      "disclosure_acknowledgement_readiness": 0.99
+    },
+    {
+      "id": "disclosure_acknowledgement_1776233376",
+      "captured_at": "2026-04-15T06:09:36.831250+00:00",
+      "acknowledgement_name": "official record disclosure acknowledgement FY2025",
+      "disclosure_acknowledgement_readiness": 0.99
+    },
+    {
+      "id": "disclosure_acknowledgement_1776232178",
+      "captured_at": "2026-04-15T05:49:38.876995+00:00",
+      "acknowledgement_name": "official record disclosure acknowledgement FY2025",
+      "disclosure_acknowledgement_readiness": 0.99
+    }
+  ],
+  "archive_release_closures": [
+    {
+      "id": "archive_release_closure_1776233477",
+      "captured_at": "2026-04-15T06:11:17.194157+00:00",
+      "closure_name": "archive release closure FY2025",
+      "archive_release_closure_readiness": 0.99
+    },
+    {
+      "id": "archive_release_closure_1776233376",
+      "captured_at": "2026-04-15T06:09:36.831708+00:00",
+      "closure_name": "archive release closure FY2025",
+      "archive_release_closure_readiness": 0.99
+    },
+    {
+      "id": "archive_release_closure_1776232178",
+      "captured_at": "2026-04-15T05:49:38.877675+00:00",
+      "closure_name": "archive release closure FY2025",
+      "archive_release_closure_readiness": 0.99
+    }
+  ],
+  "latest_run": {
+    "run_id": "qnt40035_1776233477",
+    "captured_at": "2026-04-15T06:11:17.194784+00:00",
+    "delivery_certification_readiness": 0.99,
+    "disclosure_acknowledgement_readiness": 0.99,
+    "archive_release_closure_readiness": 0.99,
+    "open_closure_issues": 0,
+    "score": 100.0,
+    "band": "ARCHIVE_RELEASE_CLOSURE_STRONG",
+    "posture": "ARCHIVE_RELEASE_CLOSURE_STRONG",
+    "reasons": [],
+    "alerts": [],
+    "operator_review_required": false
+  },
+  "last_context": {
+    "captured_at": "2026-04-15T06:11:17.194767+00:00",
+    "dep_a_summary": {
+      "posture": "OFFICIAL_RECORD_DISCLOSURE_LEDGER_STRONG",
+      "score": 100.0
+    }
+  }
+}

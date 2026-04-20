@@ -1,0 +1,49 @@
+{
+  "runtime": {
+    "status": "simulation-fallback",
+    "cycle_count": 12,
+    "nav": 734500.0,
+    "active_fund": "FUND1",
+    "pnl": 23000.0,
+    "last_updated": "2026-04-06T00:00:00Z",
+    "kill_switch": false,
+    "paused": false
+  },
+  "funds_summary": {
+    "sleeves": [
+      {
+        "sleeve": "Crypto Momentum",
+        "capital": 500000.0
+      },
+      {
+        "sleeve": "Low Risk Yield",
+        "capital": 300000.0
+      },
+      {
+        "sleeve": "AI Signals",
+        "capital": 200000.0
+      }
+    ]
+  },
+  "investor_overview": {
+    "rows": [
+      {
+        "investor": "Nicolas Capital",
+        "fund": "FUND1",
+        "market_value": 432000.0,
+        "ownership_pct": 60.0
+      },
+      {
+        "investor": "Atlas Growth",
+        "fund": "FUND1",
+        "market_value": 288000.0,
+        "ownership_pct": 40.0
+      }
+    ]
+  },
+  "exposure_summary": {
+    "pnl": 23000.0,
+    "market_value": 507500.0,
+    "source": "qnt30502-default-store"
+  }
+}

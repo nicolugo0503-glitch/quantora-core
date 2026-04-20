@@ -1,0 +1,15 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "max_fund_count": 6,
+    "min_seed_nav": 250000.0,
+    "cross_fund_rebalance_floor": 65.0,
+    "max_strategy_overlap_pct": 42.0,
+    "target_cash_buffer_pct": 12.0,
+    "jurisdiction_diversification_floor": 2
+  },
+  "funds": [],
+  "runs": [],
+  "created_at": 1775712892,
+  "updated_at": 1775712892
+}

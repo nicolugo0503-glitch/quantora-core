@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quantora Operator Mode</title>
+  <style>
+    :root { --bg:#08111f; --panel:#0f1b2d; --muted:#8fa3bf; --text:#ecf4ff; --accent:#4cc9f0; --ok:#22c55e; --warn:#f59e0b; --bad:#ef4444; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family: Inter, Arial, sans-serif; background:linear-gradient(180deg,#07111d,#0b1423 45%,#0d1727); color:var(--text); }
+    .wrap { max-width:1280px; margin:0 auto; padding:24px; }
+    .hero, .panel { background:rgba(15,27,45,.92); border:1px solid rgba(143,163,191,.18); border-radius:20px; box-shadow:0 20px 50px rgba(0,0,0,.25); }
+    .hero { padding:24px; margin-bottom:20px; }
+    .title { display:flex; justify-content:space-between; gap:18px; align-items:flex-start; flex-wrap:wrap; }
+    h1 { margin:0 0 6px; font-size:34px; }
+    .sub { color:var(--muted); max-width:860px; line-height:1.5; }
+    .toolbar { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+    button, .linkbtn { border:none; border-radius:12px; padding:12px 14px; font-weight:700; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; }
+    .primary { background:var(--accent); color:#07111d; }
+    .secondary { background:#14243a; color:var(--text); border:1px solid rgba(143,163,191,.18); }
+    .danger { background:var(--bad); color:white; }
+    .ghost { background:transparent; color:var(--muted); border:1px solid rgba(143,163,191,.18); }
+    .grid { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:16px; }
+    .panel { padding:18px; }
+    .kpi { font-size:28px; font-weight:800; margin-top:8px; }
+    .label { color:var(--muted); font-size:13px; text-transform:uppercase; letter-spacing:.08em; }
+    .status { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; font-weight:700; font-size:13px; }
+    .ok { background:rgba(34,197,94,.15); color:#8af0ad; }
+    .warn { background:rgba(245,158,11,.15); color:#ffd37a; }
+    .bad { background:rgba(239,68,68,.15); color:#ffabab; }
+    .section { margin-top:18px; }
+    .section h2 { margin:0 0 12px; font-size:18px; }
+    .twocol { display:grid; grid-template-columns:1.3fr .7fr; gap:16px; margin-top:16px; }
+    .list { display:grid; gap:10px; }
+    .row { display:flex; justify-content:space-between; gap:12px; padding:10px 0; border-bottom:1px solid rgba(143,163,191,.12); }
+    .row:last-child { border-bottom:none; }
+    .small { color:var(--muted); font-size:13px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .pill { padding:4px 8px; border-radius:999px; background:#14243a; color:var(--text); font-size:12px; }
+    input, select { background:#08111f; color:var(--text); border:1px solid rgba(143,163,191,.18); border-radius:10px; padding:8px 10px; min-width:140px; }
+    .actions { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px; }
+    @media (max-width: 980px) { .grid, .twocol, .actions { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="title">
+        <div>
+          <div class="label">QNT-REAL01A</div>
+          <h1>Operator Mode</h1>
+          <div class="sub">The institutional backbone stays intact. This cockpit surfaces only the controls that matter for daily operation: trade, performance, strategy, and risk.</div>
+        </div>
+        <div id="heroStatus" class="status warn">Loading operator status</div>
+      </div>
+      <div class="toolbar">
+        <button class="primary" onclick="refreshAll()">Refresh</button>
+        <button class="secondary" onclick="setExecutionMode('paper')">Set Paper Mode</button>
+        <button class="secondary" onclick="setExecutionMode('live')">Set Live Mode</button>
+        <button class="secondary" onclick="setSafeMode(true)">Enable Safe Mode</button>
+        <button class="secondary" onclick="setSafeMode(false)">Disable Safe Mode</button>
+        <button class="secondary" onclick="validateBrokerTruth()">Validate Broker Path</button>
+        <button class="secondary" onclick="armLivePath(true)">Arm Live Path</button>
+        <button class="danger" onclick="triggerKillSwitch()">Trigger Kill Switch</button>
+        <button class="ghost" onclick="resetKillSwitch()">Reset Kill Switch</button>
+        <a class="linkbtn secondary" href="institutional_console.html">Open Institutional Console</a>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="panel">
+        <div class="label">Trade</div>
+        <div class="kpi" id="tradeMode">-</div>
+        <div class="small" id="tradeBroker">Broker: -</div>
+        <div class="small" id="tradeBrokerTruth">Broker truth: -</div>
+        <div class="small" id="tradeFills">Fills: -</div>
+      </div>
+      <div class="panel">
+        <div class="label">Performance</div>
+        <div class="kpi" id="pnlValue">-</div>
+        <div class="small" id="capitalValue">Capital: -</div>
+        <div class="small" id="drawdownValue">Drawdown: -</div>
+      </div>
+      <div class="panel">
+        <div class="label">Strategy</div>
+        <div class="kpi" id="strategyCount">-</div>
+        <div class="small" id="strategyRegime">Regime: -</div>
+        <div class="small" id="strategyDeployments">Deployments: -</div>
+      </div>
+      <div class="panel">
+        <div class="label">Risk</div>
+        <div class="kpi" id="riskState">-</div>
+        <div class="small" id="riskReason">Reason: -</div>
+        <div class="small" id="readinessValue">Live readiness: -</div>
+      </div>
+    </div>
+
+    <div class="twocol section">
+      <div class="panel">
+        <h2>Operator Focus</h2>
+        <div class="list" id="focusList"></div>
+      </div>
+      <div class="panel">
+        <h2>Critical Actions</h2>
+        <div class="actions">
+          <button class="secondary" onclick="setExecutionMode('paper')">Paper</button>
+          <button class="secondary" onclick="setExecutionMode('live')">Live</button>
+          <button class="secondary" onclick="setSafeMode(true)">Safe On</button>
+          <button class="secondary" onclick="setSafeMode(false)">Safe Off</button>
+          <button class="secondary" onclick="validateBrokerTruth()">Validate</button>
+          <button class="danger" onclick="triggerKillSwitch()">Kill Switch</button>
+          <button class="ghost" onclick="window.location.href='institutional_console.html'">Advanced</button>
+        </div>
+        <div class="section small" id="actionFeedback">No action yet.</div>
+      </div>
+    </div>
+
+
+    <div class="twocol section">
+      <div class="panel">
+        <h2>Manual Order Entry</h2>
+        <div class="list">
+          <div class="row"><div><strong>Symbol</strong></div><div><input id="oeSymbol" value="BTCUSDT" /></div></div>
+          <div class="row"><div><strong>Side</strong></div><div><select id="oeSide"><option>BUY</option><option>SELL</option></select></div></div>
+          <div class="row"><div><strong>Qty</strong></div><div><input id="oeQty" type="number" step="0.0001" value="0.01" /></div></div>
+          <div class="row"><div><strong>Order Type</strong></div><div><select id="oeType"><option>MARKET</option><option>LIMIT</option></select></div></div>
+          <div class="row"><div><strong>Limit Price</strong></div><div><input id="oePrice" type="number" step="0.0001" placeholder="optional" /></div></div>
+        </div>
+        <div class="actions section">
+          <button class="secondary" onclick="previewOrderEntry()">Preview</button>
+          <button class="danger" onclick="submitOrderEntry()">Submit Order</button>
+          <button class="ghost" onclick="resetOrderEntry()">Reset Surface</button>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Order Entry Status</h2>
+        <div id="orderEntryStatus" class="small">No order preview yet.</div>
+      </div>
+    </div>
+
+    <div class="twocol section">
+      <div class="panel">
+        <h2>Top Strategies</h2>
+        <div id="strategyList" class="list"></div>
+      </div>
+      <div class="panel">
+        <h2>Latest Fill</h2>
+        <div id="latestFill" class="small">No fills recorded.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function normalizeBase(base) {
+      if (!base || base === '/') return '';
+      return String(base).replace(/\/$/, '');
+    }
+
+    function dirnamePath(pathname) {
+      const path = pathname || '/';
+      if (path.endsWith('/')) return path.slice(0, -1) || '';
+      const idx = path.lastIndexOf('/');
+      return idx > 0 ? path.slice(0, idx) : '';
+    }
+
+    function isLocalOrigin() {
+      const host = window.location.hostname || '';
+      return host === 'localhost' || host === '127.0.0.1';
+    }
+
+    function resolveApiBases() {
+      const url = new URL(window.location.href);
+      const origin = window.location.origin;
+      const queryBase = url.searchParams.get('api_base');
+      const storedBase = window.localStorage.getItem('quantora_api_base');
+      const explicitBase = window.QUANTORA_API_BASE;
+      const pathBase = dirnamePath(window.location.pathname);
+      const bases = [];
+
+      [queryBase, explicitBase, storedBase].filter(Boolean).forEach(v => bases.push(normalizeBase(v)));
+
+      if (origin && origin !== 'null') {
+        bases.push('');
+        bases.push(normalizeBase(origin));
+        if (pathBase) {
+          bases.push(normalizeBase(origin + pathBase));
+        }
+        bases.push(normalizeBase(origin + '/api'));
+      }
+
+      if (isLocalOrigin()) {
+        bases.push('http://127.0.0.1:8000');
+        bases.push('http://localhost:8000');
+      }
+
+      return [...new Set(bases.filter(v => v !== null && v !== undefined))];
+    }
+
+    const API_BASES = resolveApiBases();
+    let ACTIVE_API_BASE = API_BASES[0] || '';
+    const PRODUCTION_API_LOCK = !isLocalOrigin();
+    let LAST_API_ERROR = 'not probed yet';
+
+    async function fetchJson(path, options) {
+      let lastError = null;
+      for (const base of API_BASES) {
+        const url = `${base}${path}`;
+        try {
+          const res = await fetch(url, {
+            headers: { 'Content-Type': 'application/json' },
+            ...options,
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) {
+            lastError = new Error(`${data.detail || data.message || `request failed (${res.status})`} @ ${url}`);
+            continue;
+          }
+          ACTIVE_API_BASE = base;
+          LAST_API_ERROR = '';
+          return data;
+        } catch (err) {
+          lastError = new Error(`${err.message} @ ${url}`);
+        }
+      }
+      LAST_API_ERROR = lastError ? lastError.message : 'request failed';
+      throw lastError || new Error('request failed');
+    }
+
+    async function probeApi() {
+      let lastError = null;
+      for (const base of API_BASES) {
+        const healthUrl = `${base}/health`;
+        const operatorUrl = `${base}/operator/health`;
+        try {
+          const healthRes = await fetch(healthUrl, { headers: { 'Accept': 'application/json' } });
+          if (!healthRes.ok) throw new Error(`health ${healthRes.status} @ ${healthUrl}`);
+          const operatorRes = await fetch(operatorUrl, { headers: { 'Accept': 'application/json' } });
+          if (!operatorRes.ok) throw new Error(`operator ${operatorRes.status} @ ${operatorUrl}`);
+          ACTIVE_API_BASE = base;
+          LAST_API_ERROR = '';
+          try { window.localStorage.setItem('quantora_api_base', base); } catch (e) {}
+          return { ok: true, base, healthUrl, operatorUrl };
+        } catch (err) {
+          lastError = new Error(err.message || `probe failed @ ${operatorUrl}`);
+        }
+      }
+      LAST_API_ERROR = lastError ? lastError.message : 'probe failed';
+      throw lastError || new Error('probe failed');
+    }
+
+    function money(v) {
+      return new Intl.NumberFormat('en-US', { style:'currency', currency:'USD', maximumFractionDigits:2 }).format(Number(v || 0));
+    }
+
+    function pct(v) { return `${Number(v || 0).toFixed(2)}%`; }
+
+    function setHero(status, tone='warn') {
+      const el = document.getElementById('heroStatus');
+      el.className = `status ${tone}`;
+      el.textContent = status;
+    }
+
+    function renderSummary(data) {
+      const exec = data.execution || {};
+      const perf = data.performance || {};
+      const strat = data.strategy || {};
+      const risk = data.risk || {};
+      const cap = data.capital || {};
+      const readiness = data.live_readiness || {};
+
+      document.getElementById('tradeMode').textContent = `${String(exec.mode || '-').toUpperCase()}${exec.safe_mode ? ' / SAFE' : ''}`;
+      document.getElementById('tradeBroker').textContent = `Broker: ${exec.active_broker || '-'}`;
+      document.getElementById('tradeBrokerTruth').textContent = `Broker truth: ${(data.broker_truth || {}).selected_broker || exec.active_broker || '-'} • armed ${((data.broker_truth || {}).live_path_armed ? 'yes' : 'no')}`;
+      document.getElementById('tradeFills').textContent = `Orders ${exec.orders_count || 0} • Fills ${exec.fills_count || 0}`;
+      document.getElementById('pnlValue').textContent = pct(perf.net_return || 0);
+      document.getElementById('capitalValue').textContent = `Equity ${money(perf.current_equity || cap.balance)} • Available ${money(cap.available)}`;
+      document.getElementById('drawdownValue').textContent = `Drawdown ${pct(perf.drawdown_pct || 0)} • PnL ${money(perf.daily_pnl_value || 0)} • UPL ${money(perf.unrealized_pnl || 0)}`;
+      document.getElementById('strategyCount').textContent = `${strat.active_profile_count || 0} active`;
+      document.getElementById('strategyRegime').textContent = `Regime: ${strat.current_regime || '-'}`;
+      document.getElementById('strategyDeployments').textContent = `Deployments: ${strat.deployment_count || 0}`;
+      document.getElementById('riskState').textContent = risk.kill_switch_triggered ? 'TRIGGERED' : (risk.armed ? 'ARMED' : 'NORMAL');
+      document.getElementById('riskReason').textContent = `Reason: ${risk.trigger_reason || 'none'}`;
+      document.getElementById('readinessValue').textContent = `Live readiness: ${readiness.ready ? 'READY' : 'BLOCKED'}`;
+
+      const tone = readiness.ready ? 'ok' : (risk.kill_switch_triggered ? 'bad' : 'warn');
+      const blockers = (readiness.blockers || []).length ? ` • ${readiness.blockers.join(' | ')}` : '';
+      const apiLabel = ACTIVE_API_BASE || 'same-origin';
+      setHero(`Mode ${String(exec.mode || 'paper').toUpperCase()} • ${readiness.ready ? 'LIVE READY' : 'NOT LIVE READY'} • API ${apiLabel}${blockers}`, tone);
+
+      const focusList = document.getElementById('focusList');
+      focusList.innerHTML = '';
+      [
+        ['Capital', `${money(cap.balance)} balance / ${money(cap.available)} available / ${money(cap.allocated)} allocated`],
+        ['Execution', `${exec.active_broker || '-'} broker • ${exec.fills_count || 0} fills`],
+        ['Risk', risk.kill_switch_triggered ? `Kill switch ${risk.kill_switch_level || 'triggered'}` : `Kill switch clear • ${pct(perf.drawdown_pct || 0)} drawdown`],
+        ['Autonomy', data.autonomy?.enabled ? `Enabled • Queue ${data.autonomy.queue_count || 0}` : 'Disabled'],
+      ].forEach(([k,v]) => {
+        const row = document.createElement('div');
+        row.className = 'row';
+        row.innerHTML = `<div><strong>${k}</strong><div class="small">${v}</div></div>`;
+        focusList.appendChild(row);
+      });
+
+      const strategyList = document.getElementById('strategyList');
+      strategyList.innerHTML = '';
+      (strat.profiles || []).slice(0,4).forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'row';
+        row.innerHTML = `<div><strong>${item.name || item.strategy_id}</strong><div class="small">${item.symbol || '-'} • readiness ${(Number(item.deployment_readiness || 0) * 100).toFixed(0)}%</div></div><div class="pill">${item.status || 'unknown'}</div>`;
+        strategyList.appendChild(row);
+      });
+      if (!strategyList.children.length) strategyList.innerHTML = '<div class="small">No strategies found.</div>';
+
+      const orderEntry = data.order_entry || {};
+      document.getElementById('orderEntryStatus').innerHTML = `Surface ${orderEntry.surface_status || '-'} • submissions ${orderEntry.submission_count || 0} • blocked ${orderEntry.blocked_count || 0}`;
+      const latest = exec.latest_fill;
+      document.getElementById('latestFill').innerHTML = latest
+        ? `<div class="mono">${latest.symbol || '-'} ${latest.side || '-'} ${latest.filled_qty || '-'} @ ${latest.fill_price || '-'}</div><div class="small">Strategy ${latest.strategy_id || '-'} • Broker ${latest.broker || '-'} • ${latest.status || '-'}</div>`
+        : 'No fills recorded.';
+    }
+
+
+    function getOrderEntryPayload() {
+      const priceValue = document.getElementById('oePrice').value;
+      return {
+        symbol: document.getElementById('oeSymbol').value.trim().toUpperCase(),
+        side: document.getElementById('oeSide').value,
+        qty: Number(document.getElementById('oeQty').value || 0),
+        order_type: document.getElementById('oeType').value,
+        price: priceValue ? Number(priceValue) : null
+      };
+    }
+
+    async function previewOrderEntry() {
+      try {
+        const result = await fetchJson('/order-entry/preview', { method: 'POST', body: JSON.stringify(getOrderEntryPayload()) });
+        document.getElementById('orderEntryStatus').textContent = `Preview ${result.preview.symbol} ${result.preview.side} ${result.preview.qty} • blockers: ${(result.preview.blockers || []).join(' | ') || 'none'}`;
+        document.getElementById('actionFeedback').textContent = 'Order preview ready.';
+        await refreshAll();
+      } catch (err) {
+        document.getElementById('actionFeedback').textContent = `Preview failed via ${ACTIVE_API_BASE || 'same-origin'}: ${err.message}`;
+      }
+    }
+
+    async function submitOrderEntry() {
+      try {
+        const result = await fetchJson('/order-entry/submit', { method: 'POST', body: JSON.stringify(getOrderEntryPayload()) });
+        document.getElementById('orderEntryStatus').textContent = `Submitted ${result.execution.symbol || result.envelope.symbol} ${result.execution.side || result.envelope.side} ${result.execution.filled_qty || result.envelope.qty}`;
+        document.getElementById('actionFeedback').textContent = 'Order submitted.';
+        await refreshAll();
+      } catch (err) {
+        document.getElementById('actionFeedback').textContent = `Submit failed via ${ACTIVE_API_BASE || 'same-origin'}: ${err.message}`;
+      }
+    }
+
+    async function resetOrderEntry() {
+      try {
+        await fetchJson('/order-entry/reset', { method: 'POST', body: JSON.stringify({}) });
+        document.getElementById('orderEntryStatus').textContent = 'Order entry surface reset.';
+        await refreshAll();
+      } catch (err) {
+        document.getElementById('actionFeedback').textContent = `Reset failed via ${ACTIVE_API_BASE || 'same-origin'}: ${err.message}`;
+      }
+    }
+
+    async function refreshAll() {
+      try {
+        await probeApi();
+        const summary = await fetchJson('/operator/summary');
+        renderSummary(summary);
+        document.getElementById('actionFeedback').textContent = 'State refreshed.';
+      } catch (err) {
+        const lockLabel = PRODUCTION_API_LOCK ? ' [production api lock active]' : '';
+        setHero(`Operator API unavailable via ${ACTIVE_API_BASE || 'same-origin'}: ${LAST_API_ERROR || err.message}${lockLabel}`, 'bad');
+        document.getElementById('actionFeedback').textContent = LAST_API_ERROR || err.message;
+      }
+    }
+
+    async function postAction(path, payload) {
+      try {
+        const result = await fetchJson(path, { method: 'POST', body: JSON.stringify(payload) });
+        document.getElementById('actionFeedback').textContent = `Action ok: ${JSON.stringify(result)}`;
+        await refreshAll();
+      } catch (err) {
+        document.getElementById('actionFeedback').textContent = `Action failed via ${ACTIVE_API_BASE || 'same-origin'}: ${err.message}`;
+      }
+    }
+
+    function setExecutionMode(mode) { return postAction('/operator/mode', { mode }); }
+    function setSafeMode(enabled) { return postAction('/operator/safe-mode', { enabled }); }
+    function triggerKillSwitch() { return postAction('/operator/kill-switch', { action:'trigger', reason:'manual operator trigger from cockpit' }); }
+    function resetKillSwitch() { return postAction('/operator/kill-switch', { action:'reset' }); }
+    function validateBrokerTruth() { return postAction('/broker-truth/validate', {}); }
+    function armLivePath(enabled) { return postAction('/broker-truth/arm-live-path', { enabled }); }
+
+    refreshAll();
+    setInterval(refreshAll, 15000);
+  </script>
+</body>
+</html>

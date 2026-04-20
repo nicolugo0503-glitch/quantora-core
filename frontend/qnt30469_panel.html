@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — Platform API + External Integration Gateway</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(15,29,49,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .sub{color:var(--muted);max-width:980px;line-height:1.5}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    button{border-radius:10px;border:none;background:var(--accent);color:var(--text);padding:10px 12px;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}.stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}
+    th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #274168;background:#0b1a2c;font-size:12px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:180px;white-space:pre-wrap}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT30469 — Platform API + External Integration Gateway</h1>
+      <div class="sub">API clients, external endpoints, webhook events, and usage telemetry. This is the integration layer that lets Quantora operate as infrastructure, not just software.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="loadAll()">Refresh</button>
+      <button onclick="seedClient()">Seed API Client</button>
+      <button onclick="seedEndpoint()">Seed Endpoint</button>
+      <button onclick="seedWebhook()">Seed Webhook</button>
+      <button onclick="seedUsage()">Seed Usage Log</button>
+    </div>
+  </div>
+  <div class="grid" id="summaryGrid"></div>
+  <div class="layout">
+    <div class="stack">
+      <div class="card"><h2>API Clients</h2><div class="table-wrap"><table id="clientTable"></table></div></div>
+      <div class="card"><h2>Integration Endpoints</h2><div class="table-wrap"><table id="endpointTable"></table></div></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h2>Webhook Events</h2><div class="table-wrap"><table id="webhookTable"></table></div></div>
+      <div class="card"><h2>API Usage Logs</h2><div class="table-wrap"><table id="usageTable"></table></div></div>
+      <div class="card"><h2>Gateway Health</h2><div class="pills" id="healthPills"></div></div>
+      <div class="card"><h2>Last Action</h2><pre id="actionOut">No action yet.</pre></div>
+    </div>
+  </div>
+</div>
+<script>
+const api=(path, opts={})=>fetch(path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok) throw new Error(d.detail||'request_failed'); return d;});
+function table(el, headers, rows){ const thead=`<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`; const body=rows.length?rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join(''):`<tr><td colspan="${headers.length}">No data</td></tr>`; el.innerHTML=thead+body; }
+function renderSummary(summary){ const labels=[['Clients',summary.api_clients_total],['Active',summary.api_clients_active],['Endpoints',summary.integration_endpoints_total],['Live',summary.integration_endpoints_live],['Calls',summary.api_calls_total],['Score',summary.gateway_score]]; document.getElementById('summaryGrid').innerHTML=labels.map(([l,v])=>`<div class="card"><div class="label">${l}</div><div class="value">${v}</div></div>`).join('');}
+function pills(target, items){ document.getElementById(target).innerHTML=items.map(([l,k])=>`<span class="pill ${k}">${l}</span>`).join(''); }
+async function loadAll(){
+  const data=await api('/workspace/platform-gateway/summary');
+  renderSummary(data.summary);
+  table(document.getElementById('clientTable'), ['Client','Scope','Status','Created'], (data.api_clients||[]).map(r=>[r.client_name,r.scope,r.status,r.created_at||'-']));
+  table(document.getElementById('endpointTable'), ['Endpoint','Provider','Status','Created'], (data.integration_endpoints||[]).map(r=>[r.endpoint_name,r.provider_name,r.status,r.created_at||'-']));
+  table(document.getElementById('webhookTable'), ['Event','Target','Status','Created'], (data.webhook_events||[]).map(r=>[r.event_name,r.target_url,r.status,r.created_at||'-']));
+  table(document.getElementById('usageTable'), ['Client','Route','Status','Latency ms','Created'], (data.api_usage_logs||[]).map(r=>[r.client_name,r.route_name,r.status,r.latency_ms,r.created_at||'-']));
+  pills('healthPills', [
+    [`Clients ${data.gateway_health.client_registry_ready?'Ready':'Missing'}`, data.gateway_health.client_registry_ready?'good':'warn'],
+    [`Endpoints ${data.gateway_health.endpoint_registry_ready?'Ready':'Missing'}`, data.gateway_health.endpoint_registry_ready?'good':'warn'],
+    [`Webhooks ${data.gateway_health.webhook_engine_ready?'Ready':'Missing'}`, data.gateway_health.webhook_engine_ready?'good':'warn'],
+    [`Usage ${data.gateway_health.usage_tracking_ready?'Ready':'Missing'}`, data.gateway_health.usage_tracking_ready?'good':'warn'],
+    [`Score ${data.gateway_health.gateway_score}`, data.gateway_health.gateway_score>=85?'good':'warn']
+  ]);
+}
+async function seedClient(){ const res=await api('/workspace/platform-gateway/clients/create',{method:'POST',body:JSON.stringify({client_name:'Institutional Reporting API',scope:'read_only',status:'active'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedEndpoint(){ const res=await api('/workspace/platform-gateway/endpoints/create',{method:'POST',body:JSON.stringify({endpoint_name:'Prime Broker Position Feed',provider_name:'PrimeBrokerX',status:'live'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedWebhook(){ const res=await api('/workspace/platform-gateway/webhooks/create',{method:'POST',body:JSON.stringify({event_name:'nav.published',target_url:'https://example.com/webhooks/nav',status:'delivered'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedUsage(){ const res=await api('/workspace/platform-gateway/usage/create',{method:'POST',body:JSON.stringify({client_name:'Institutional Reporting API',route_name:'/api/v1/reports/nav',status:'success',latency_ms:142})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+loadAll().catch(err=>document.getElementById('actionOut').textContent=String(err));
+</script>
+</body>
+</html>

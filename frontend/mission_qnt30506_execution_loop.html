@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>QNT30506 Scheduler</title></head>
+<body style="font-family:Arial,Helvetica,sans-serif;background:#08111f;color:#eef4ff;padding:24px">
+  <h1>QNT30506 — Execution Loop Scheduler</h1>
+  <p>This page exposes the scheduler endpoints integrated in QNT30531.</p>
+  <button onclick="refreshState()">Refresh State</button>
+  <pre id="out">loading...</pre>
+  <script>
+    async function refreshState(){
+      try {
+        const r = await fetch('/api/runtime/loop-state');
+        const d = await r.json();
+        document.getElementById('out').innerText = JSON.stringify(d,null,2);
+      } catch(e) {
+        document.getElementById('out').innerText = JSON.stringify({error:String(e)},null,2);
+      }
+    }
+    refreshState();
+  </script>
+</body>
+</html>

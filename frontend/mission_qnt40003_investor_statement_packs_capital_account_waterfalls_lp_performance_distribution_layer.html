@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QNT40003 Investor Statement Packs, Capital Account Waterfalls, and LP Performance Distribution Layer</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background:#0b1020; color:#e8ecf3; }
+    .card { background:#121a30; border:1px solid #263252; border-radius:16px; padding:20px; max-width:980px; }
+    button { padding:10px 14px; border-radius:10px; border:0; background:#6ea8fe; cursor:pointer; margin-right:10px; margin-bottom:10px; }
+    pre { white-space:pre-wrap; background:#0a1326; padding:14px; border-radius:12px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>QNT40003 — Investor Statement Packs, Capital Account Waterfalls, and LP Performance Distribution Layer</h1>
+    <p>Institutionalize LP reporting release, capital account waterfall capture, investor statement pack generation, and acknowledged distribution evidence.</p>
+    <button id="bootstrap">Run Bootstrap Demo</button>
+    <button id="summary">Load Summary</button>
+    <pre id="out">Waiting...</pre>
+  </div>
+  <script>
+    async function call(path, method='GET', body=null) {
+      const res = await fetch(path, { method, headers: {'Content-Type':'application/json'}, body: body ? JSON.stringify(body) : null });
+      return res.json();
+    }
+    const out = document.getElementById('out');
+    document.getElementById('bootstrap').onclick = async () => {
+      out.textContent = 'Running bootstrap demo...';
+      try {
+        const data = await call('/api/investor-statement-packs-capital-account-waterfalls-lp-performance-distribution-layer/bootstrap-demo','POST',{});
+        out.textContent = JSON.stringify(data, null, 2);
+      } catch (e) {
+        out.textContent = String(e);
+      }
+    };
+    document.getElementById('summary').onclick = async () => {
+      out.textContent = 'Loading summary...';
+      try {
+        const data = await call('/api/investor-statement-packs-capital-account-waterfalls-lp-performance-distribution-layer/summary');
+        out.textContent = JSON.stringify(data, null, 2);
+      } catch (e) {
+        out.textContent = String(e);
+      }
+    };
+  </script>
+</body>
+</html>

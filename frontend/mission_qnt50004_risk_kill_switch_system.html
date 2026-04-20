@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QNT50004 — Risk Kill-Switch System</title>
+  <style>
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#07101d;color:#edf4ff}
+    .wrap{max-width:1120px;margin:0 auto;padding:32px}
+    .hero,.card{background:#0d1a2c;border:1px solid #223754;border-radius:18px;padding:24px;box-shadow:0 12px 34px rgba(0,0,0,.28)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:18px}
+    h1,h2{margin:0 0 12px}
+    .eyebrow{letter-spacing:.18em;text-transform:uppercase;color:#89b9ff;font-size:12px}
+    .pill{display:inline-block;padding:8px 12px;border-radius:999px;background:#163457;margin:6px 8px 0 0}
+    ul{padding-left:18px;line-height:1.6}
+    code{background:#091425;padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Quantora • Capital Protection First</div>
+      <h1>QNT50004 — Risk Kill-Switch System</h1>
+      <p>Quantora now enforces a capital protection nerve center that can hard-stop execution when drawdown, daily loss, concentration, margin, or venue health moves outside institutional policy. This is not advisory. It is a mandatory control layer wired directly into the execution path.</p>
+      <span class="pill">Drawdown enforcement</span>
+      <span class="pill">Live execution hard-stop</span>
+      <span class="pill">Safe mode fallback</span>
+      <span class="pill">Override ledger</span>
+    </section>
+    <div class="grid">
+      <section class="card">
+        <h2>Protection Logic</h2>
+        <ul>
+          <li>Portfolio drawdown, strategy drawdown, daily loss, notional, concentration, margin, and venue connectivity are evaluated continuously.</li>
+          <li>Critical breaches trigger an immediate kill-switch and force execution back into paper-safe mode.</li>
+          <li>Pre-trade checks block oversized orders before they can reach a broker.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Governance</h2>
+        <ul>
+          <li>Every trigger, blocked order, reset, and override is written into a dedicated audit trail.</li>
+          <li>Overrides require operator attribution and a control ticket.</li>
+          <li>The kill-switch synchronizes execution, allocation, and deployment layers into the same safety posture.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Endpoints</h2>
+        <ul>
+          <li><code>GET /risk/health</code></li>
+          <li><code>GET /risk/summary</code></li>
+          <li><code>POST /risk/configure</code></li>
+          <li><code>POST /risk/metrics</code></li>
+          <li><code>POST /risk/arm</code></li>
+          <li><code>POST /risk/disarm</code></li>
+          <li><code>POST /risk/override</code></li>
+          <li><code>GET /risk/triggers</code></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

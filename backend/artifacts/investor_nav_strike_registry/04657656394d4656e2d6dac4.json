@@ -1,0 +1,21 @@
+{
+  "email": "operator@quantora.test",
+  "valuations": [
+    {
+      "valuation_id": "val_1776220060",
+      "valuation_date": "2026-04-15",
+      "official_nav": 0.0,
+      "opening_capital": 0.0,
+      "rollforward_change": 0.0,
+      "equalization_total": 0.0,
+      "dealing_day_id": "deal_1776220060",
+      "cutoff_status": "applied",
+      "status": "official",
+      "struck_at": 1776220060,
+      "finalized_at": 1776220060,
+      "notes": "official nav finalized for dealing day lock"
+    }
+  ],
+  "created_at": 1776220060,
+  "updated_at": 1776220060
+}

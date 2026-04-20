@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>QNT50029 - Live Capital Reactivation + Strategy Re-Entry Governance Layer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background:#0f172a; color:#e2e8f0; }
+    .card { background:#111827; border:1px solid #334155; border-radius:12px; padding:20px; max-width:1000px; }
+    h1,h2 { margin-top:0; }
+    code { background:#1e293b; padding:2px 6px; border-radius:6px; }
+    ul { line-height:1.6; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>QNT50029 — Live Capital Reactivation + Strategy Re-Entry Governance Layer</h1>
+    <p>Governed strategy re-entry layer for reactivating capital only after post-recovery reinstatement, risk clearance, treasury capacity checks, and strategy profile validation.</p>
+    <h2>Capabilities</h2>
+    <ul>
+      <li>Synchronizes post-recovery reinstatement, strategy deployment, treasury, and risk posture before re-entry.</li>
+      <li>Registers strategy reactivation cases linked to executed reauthorization evidence.</li>
+      <li>Approves re-entry in paper or live mode subject to safe-mode and policy constraints.</li>
+      <li>Executes capital release into the execution queue with audit-grade traceability.</li>
+    </ul>
+    <h2>Primary endpoints</h2>
+    <ul>
+      <li><code>GET /strategy-reentry/health</code></li>
+      <li><code>GET /strategy-reentry/summary</code></li>
+      <li><code>POST /strategy-reentry/register-reactivation</code></li>
+      <li><code>POST /strategy-reentry/approve-reentry</code></li>
+      <li><code>POST /strategy-reentry/execute-reentry</code></li>
+      <li><code>POST /strategy-reentry/close-reactivation</code></li>
+    </ul>
+  </div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QNT30639 — Capital Scaling Engine</title>
+<style>
+:root {
+  --bg:#06101d; --panel:#0d1b2f; --panel2:#0a1526; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#2563eb; --good:#16a34a; --warn:#f59e0b;
+}
+* { box-sizing:border-box; }
+body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#040b15 0%,#081427 100%); color:var(--text); }
+.wrap { max-width:1420px; margin:0 auto; padding:22px; }
+.hero, .card { background:rgba(13,27,47,.96); border:1px solid var(--line); border-radius:18px; box-shadow:0 14px 36px rgba(0,0,0,.22); }
+.hero { padding:24px; display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+.hero h1 { margin:8px 0 10px; font-size:42px; line-height:1.05; }
+.eyebrow { color:var(--muted); text-transform:uppercase; letter-spacing:.12em; font-size:12px; }
+.sub { color:var(--muted); max-width:900px; line-height:1.6; }
+.actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+.btn { display:inline-flex; align-items:center; gap:8px; border:none; text-decoration:none; background:var(--accent); color:#fff; padding:11px 14px; border-radius:12px; font-weight:700; cursor:pointer; }
+.btn.secondary { background:#132540; border:1px solid var(--line); color:var(--text); }
+.layout { display:grid; grid-template-columns: 1.55fr .95fr; gap:16px; margin-top:16px; }
+.card { padding:18px; }
+.stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:16px; }
+.stat { background:var(--panel2); border:1px solid #1b2c48; border-radius:14px; padding:14px; min-height:86px; }
+.k { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+.v { margin-top:10px; font-size:28px; font-weight:800; }
+.grid2 { display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-top:16px; }
+h2, h3 { margin:0 0 12px; }
+table { width:100%; border-collapse:collapse; font-size:14px; }
+th, td { border-bottom:1px solid #1c2d49; padding:12px 10px; text-align:left; vertical-align:top; }
+th { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+.badge { display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; font-weight:700; background:#10213a; border:1px solid #284066; color:#cde0ff; }
+.ok { color:#b8ffcf; }
+.warn { color:#ffe4a3; }
+.muted { color:var(--muted); line-height:1.6; }
+.audit { margin-top:16px; }
+.footer-note { color:var(--muted); margin-top:16px; font-size:13px; }
+@media (max-width: 1080px) {
+  .layout { grid-template-columns:1fr; }
+  .stats { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Institutional Mission Console</div>
+      <h1>QNT30639 — Capital Scaling Engine</h1>
+      <div class="sub">Scale capital inflows into reserve-aware deployment plans across vehicles while preserving risk controls, investor tier logic, and treasury discipline.</div>
+      <div class="actions">
+        <a class="btn" href="index.html">Back to Command Center</a>
+        <button class="btn secondary" onclick="window.print()">Export View</button>
+      </div>
+      <div class="stats"><div class="stat"><div class="k">Queued Inflows</div><div class="v">23</div></div><div class="stat"><div class="k">Deployable This Cycle</div><div class="v">$5.7M</div></div><div class="stat"><div class="k">Reserve Floor</div><div class="v">12.0%</div></div><div class="stat"><div class="k">Vehicles Impacted</div><div class="v">4</div></div></div>
+    </div>
+  </section>
+
+  <div class="layout">
+    <div>
+      <section class="card">
+        <div class="eyebrow">Operational Queue</div>
+        <h2>Scaling Plan Queue</h2>
+        <table>
+          <thead><tr><th>Vehicle</th><th>New Inflow</th><th>Tier Mix</th><th>Reserve Impact</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Quantora Global Fund I</td><td>$2,200,000</td><td>Institutional-heavy</td><td>Within Range</td><td>Ready</td></tr>
+<tr><td>Quantora Core Vehicle</td><td>$900,000</td><td>Priority mix</td><td>Within Range</td><td>Ready</td></tr>
+<tr><td>Quantora Income Vehicle</td><td>$1,100,000</td><td>Qualified-heavy</td><td>Reserve Tight</td><td>Review</td></tr>
+<tr><td>Quantora Tactical Vehicle</td><td>$1,500,000</td><td>Institutional-only</td><td>Within Range</td><td>Ready</td></tr>
+
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card audit">
+        <div class="eyebrow">Audit Trail</div>
+        <h2>Recent Registry Events</h2>
+        <table>
+          <thead>
+            <tr><th>Timestamp</th><th>Event</th><th>Reference</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>2026-04-08 16:05:00Z</td><td>inflow_batch_loaded</td><td>BATCH-3901</td><td>Complete</td></tr>
+<tr><td>2026-04-08 16:06:14Z</td><td>tier_mix_resolved</td><td>PLAN-3901</td><td>Complete</td></tr>
+<tr><td>2026-04-08 16:08:51Z</td><td>reserve_pressure_check</td><td>PLAN-3901</td><td>Complete</td></tr>
+<tr><td>2026-04-08 16:09:23Z</td><td>deployment_plan_finalized</td><td>PLAN-3901</td><td>Ready</td></tr>
+
+          </tbody>
+        </table>
+        <div class="footer-note">This mission page is structured as an operational console, not a placeholder shell. It is meant to be wired to live data sources as the next integration pass lands.</div>
+      </section>
+    </div>
+
+    <div>
+      <section class="card"><div class="eyebrow">Scaling Logic</div><h3>Tier-Aware Deployment</h3><div class="muted"><div class='muted'>The engine transforms approved inflow into deployment windows by vehicle, tier profile, reserve floor pressure, and mandate compatibility.</div></div></section><section class="card"><div class="eyebrow">Treasury Link</div><h3>Reserve-Protected Growth</h3><div class="muted"><div class='muted'>No scaling plan becomes active if it violates vehicle reserve policy, liquidity thresholds, or cross-vehicle treasury constraints.</div></div></section><section class="card"><div class="eyebrow">Audit</div><h3>Growth With Traceability</h3><div class="muted"><div class='muted'>Every scaling output stores the input inflows, tier mix, policy constraints, and final deployment recommendation.</div></div></section>
+    </div>
+  </div>
+</div>
+</body>
+</html>

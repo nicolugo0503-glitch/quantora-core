@@ -1,0 +1,14 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "priority_release_case_count": 8,
+    "minimum_release_readiness_score": 85.0,
+    "minimum_authority_clearance_score": 82.0,
+    "minimum_committee_alignment_score": 80.0,
+    "minimum_mobility_alignment_score": 76.0,
+    "maximum_release_friction_score": 24.0
+  },
+  "runs": [],
+  "created_at": 1775719592,
+  "updated_at": 1775719592
+}

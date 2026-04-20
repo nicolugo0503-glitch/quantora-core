@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30569 Investor Ops Console</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1280px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:24px;font-weight:800;margin-top:6px}
+button,a,input,select{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select{background:#07111f;color:#fff;border:1px solid #203251}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px}
+table{width:100%;border-collapse:collapse} th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+@media(max-width:1000px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30569 · Investor Ops Console + Admin Review</h1>
+        <div style="color:#9fb3d8">Operational visibility layer across capital, performance, funding, reporting, and reconciliation, with review-request workflows for investor support and admin decisions.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30564_reporting_center.html">Statements</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Balance</div><div id="balance" class="value">-</div></div>
+    <div class="card"><div class="label">KYC</div><div id="kyc" class="value">-</div></div>
+    <div class="card"><div class="label">Reconciliation</div><div id="recon" class="value">-</div></div>
+    <div class="card"><div class="label">Statements</div><div id="statements" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <select id="reviewType">
+        <option value="general">general</option>
+        <option value="funding">funding</option>
+        <option value="reconciliation">reconciliation</option>
+        <option value="reporting">reporting</option>
+      </select>
+      <input id="reviewTitle" placeholder="Review title">
+      <input id="reviewNotes" placeholder="Notes">
+      <button onclick="requestReview()">Request Review</button>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="approveLatest()">Approve Latest</button>
+      <button onclick="rejectLatest()">Reject Latest</button>
+      <button onclick="refreshAll()">Refresh</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Latest Reviews</div>
+    <table>
+      <thead><tr><th>ID</th><th>Type</th><th>Status</th><th>Title</th></tr></thead>
+      <tbody id="reviewRows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Ops Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const summary = await j('/api/investor-ops/summary');
+  const reviews = await j('/api/investor-admin/reviews');
+  if(!summary.ok){ document.getElementById('raw').textContent = JSON.stringify(summary.data, null, 2); return; }
+  const s = summary.data || {};
+  document.getElementById('balance').textContent = '$' + Number(((s.capital||{}).balance || 0)).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('kyc').textContent = String(((s.funding||{}).kyc_status || '-')).toUpperCase();
+  document.getElementById('recon').textContent = String(((s.reconciliation||{}).status || '-')).toUpperCase();
+  document.getElementById('statements').textContent = String(((s.reporting||{}).statements || 0));
+  document.getElementById('reviewRows').innerHTML = ((reviews.data.reviews || []).slice(0,10)).map(r => `<tr><td>${r.review_id}</td><td>${r.type}</td><td>${r.status}</td><td>${r.title}</td></tr>`).join('');
+  document.getElementById('raw').textContent = JSON.stringify({summary:s,reviews:reviews.data}, null, 2);
+}
+async function requestReview(){
+  const payload = {
+    type: document.getElementById('reviewType').value,
+    title: document.getElementById('reviewTitle').value || 'Investor review request',
+    notes: document.getElementById('reviewNotes').value || ''
+  };
+  await j('/api/investor-admin/review-request', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function approveLatest(){
+  const reviews = await j('/api/investor-admin/reviews');
+  const latest = (reviews.data.reviews || [])[0];
+  if(!latest){ return; }
+  await j('/api/investor-admin/review-decision', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({review_id: latest.review_id, decision:'approved', review_notes:'Approved in ops console'})});
+  await load();
+}
+async function rejectLatest(){
+  const reviews = await j('/api/investor-admin/reviews');
+  const latest = (reviews.data.reviews || [])[0];
+  if(!latest){ return; }
+  await j('/api/investor-admin/review-decision', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({review_id: latest.review_id, decision:'rejected', review_notes:'Rejected in ops console'})});
+  await load();
+}
+async function refreshAll(){ await load(); }
+load();
+</script>
+</body>
+</html>

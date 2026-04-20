@@ -1,0 +1,26 @@
+{
+  "generated_by": "QNT50010",
+  "status": "degraded",
+  "policy": {
+    "base_currency": "USD",
+    "require_executed_transfer": true,
+    "require_release_authority": true,
+    "require_dual_attestation": true,
+    "require_reconciliation_clear": true,
+    "require_cash_paid_match": true,
+    "allow_in_kind_component": true,
+    "amount_tolerance": 1.0,
+    "max_unresolved_settlement_breaks": 0,
+    "exit_authority_ttl_seconds": 172800,
+    "auto_sync_sources": true
+  },
+  "registered_cases": [],
+  "attestations": [],
+  "authorized_exit_finalizations": [],
+  "blocked_cases": [],
+  "finalized_exits": [],
+  "exceptions": [],
+  "last_sync": null,
+  "sync_history": [],
+  "audit_log": []
+}

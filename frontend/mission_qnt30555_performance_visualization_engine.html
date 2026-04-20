@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quantora Performance Visualization Engine</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff}
+.wrap{max-width:1320px;margin:auto;padding:28px}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:12px}
+.label{color:#9fb3d8;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:28px;font-weight:800;margin-top:6px}
+.good{color:#10b981}.warn{color:#f59e0b}.bad{color:#ef4444}
+button{padding:12px 16px;border:none;border-radius:10px;background:#2455d6;color:white;font-weight:700;cursor:pointer}
+canvas{width:100%;height:320px;background:#07111f;border:1px solid #203251;border-radius:12px;display:block}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:340px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+small{color:#9fb3d8}
+@media(max-width:1000px){.grid,.grid2{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30555 · Performance Visualization Engine</h1>
+        <div style="color:#9fb3d8;max-width:900px">
+          Institutional performance layer for real capital state. Tracks balance history, net invested capital, PnL, and return profile off the backend ledger and QNT30553 capital engine.
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button onclick="capture()">Capture Snapshot</button>
+        <button onclick="window.location.href='mission_qnt30549_investor_dashboard_minimal.html'">Investor Dashboard</button>
+        <button onclick="window.location.href='mission_qnt30553_real_capital_engine.html'">Real Capital</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Current Balance</div><div id="balance" class="value">-</div></div>
+    <div class="card"><div class="label">Net Invested Capital</div><div id="netFlow" class="value">-</div></div>
+    <div class="card"><div class="label">PnL</div><div id="pnl" class="value">-</div></div>
+    <div class="card"><div class="label">Return %</div><div id="ret" class="value">-</div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="label">Equity Curve</div>
+      <canvas id="curve" width="860" height="320"></canvas>
+      <small>Blue = balance · Green = net invested capital</small>
+    </div>
+    <div class="card">
+      <div class="label">Attribution Summary</div>
+      <table>
+        <tbody id="attribRows"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="label">Snapshot Series</div>
+      <table>
+        <thead><tr><th>Time</th><th>Balance</th><th>Net Flow</th><th>PnL</th><th>Return</th></tr></thead>
+        <tbody id="seriesRows"></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="label">Raw Current Snapshot</div>
+      <pre id="raw">loading...</pre>
+    </div>
+  </div>
+</div>
+
+<script>
+function money(v){ return '$' + Number(v || 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function pct(v){ return Number(v || 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}) + '%'; }
+function ts(v){ try{return new Date(Number(v||0)*1000).toLocaleString()}catch(e){return '-'} }
+async function f(url, opts){ const r = await fetch(url, opts || {cache:'no-store'}); return await r.json(); }
+
+function draw(series){
+  const canvas = document.getElementById('curve');
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle = '#07111f';
+  ctx.fillRect(0,0,w,h);
+
+  ctx.strokeStyle = '#203251';
+  ctx.lineWidth = 1;
+  for(let i=1;i<5;i++){
+    const y = (h/5) * i;
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(w, y);
+    ctx.stroke();
+  }
+
+  if(!series.length) return;
+
+  const values = series.flatMap(x => [Number(x.balance||0), Number(x.net_invested_capital||0)]);
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const span = (max - min) || 1;
+
+  function yFor(v){ return h - (((v - min) / span) * (h - 40)) - 20; }
+  function xFor(i){ return (w / Math.max(series.length - 1, 1)) * i; }
+
+  ctx.strokeStyle = '#2f6bff';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  series.forEach((p, i) => {
+    const x = xFor(i), y = yFor(Number(p.balance||0));
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+
+  ctx.strokeStyle = '#34d399';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  series.forEach((p, i) => {
+    const x = xFor(i), y = yFor(Number(p.net_invested_capital||0));
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+}
+
+async function load(){
+  const seriesData = await f('/api/performance-history/series');
+  const attrib = await f('/api/performance-history/attribution');
+  const current = seriesData.current || {};
+
+  document.getElementById('balance').textContent = money(current.balance);
+  document.getElementById('netFlow').textContent = money(current.net_invested_capital);
+  const pnlEl = document.getElementById('pnl');
+  pnlEl.textContent = money(current.pnl_value);
+  pnlEl.className = 'value ' + (Number(current.pnl_value||0) >= 0 ? 'good' : 'bad');
+  const retEl = document.getElementById('ret');
+  retEl.textContent = pct(current.return_pct);
+  retEl.className = 'value ' + (Number(current.return_pct||0) >= 0 ? 'good' : 'bad');
+
+  const series = seriesData.series || [];
+  draw(series);
+
+  document.getElementById('seriesRows').innerHTML = series.slice().reverse().slice(0,12).map(row =>
+    `<tr><td>${ts(row.timestamp)}</td><td>${money(row.balance)}</td><td>${money(row.net_invested_capital)}</td><td>${money(row.pnl_value)}</td><td>${pct(row.return_pct)}</td></tr>`
+  ).join('');
+
+  const rows = [
+    ['Deposits', money(attrib.flow_breakdown?.deposits || 0)],
+    ['Withdrawals', money(attrib.flow_breakdown?.withdrawals || 0)],
+    ['Allocations', money(attrib.flow_breakdown?.allocations || 0)],
+    ['Deallocations', money(attrib.flow_breakdown?.deallocations || 0)],
+    ['Ledger Points', String(attrib.series_points || 0)],
+    ['Deposit Count', String(attrib.activity_counts?.deposits || 0)],
+    ['Withdrawal Count', String(attrib.activity_counts?.withdrawals || 0)],
+    ['Return', pct(attrib.return_pct || 0)],
+  ];
+  document.getElementById('attribRows').innerHTML = rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+  document.getElementById('raw').textContent = JSON.stringify(current, null, 2);
+}
+
+async function capture(){
+  await f('/api/performance-history/snapshot', {method:'POST'});
+  await load();
+}
+
+load();
+setInterval(load, 6000);
+</script>
+</body>
+</html>

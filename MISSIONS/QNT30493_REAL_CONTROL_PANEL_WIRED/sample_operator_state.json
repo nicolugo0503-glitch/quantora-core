@@ -1,0 +1,67 @@
+{
+  "funds": [
+    "FUND1",
+    "FUND2"
+  ],
+  "runtime": {
+    "status": "idle",
+    "activeFund": "FUND1",
+    "cycleCount": 0,
+    "navSnapshot": {
+      "nav": 720000.0,
+      "gross_assets": 730000.0,
+      "liabilities": 10000.0,
+      "nav_per_share": 7.2
+    },
+    "totalPnl": 23000.0,
+    "executionSnapshot": {
+      "open_orders": [
+        {
+          "id": "ORD001"
+        },
+        {
+          "id": "ORD002"
+        }
+      ]
+    },
+    "sleeveAllocations": {
+      "Crypto Momentum": 500000.0,
+      "Low Risk Yield": 300000.0,
+      "AI Signals": 200000.0
+    },
+    "dashboard": [
+      {
+        "investor_name": "Nicolas Capital",
+        "fund_id": "FUND1",
+        "market_value": 432000.0,
+        "ownership_pct": 60.0
+      },
+      {
+        "investor_name": "Atlas Growth",
+        "fund_id": "FUND1",
+        "market_value": 288000.0,
+        "ownership_pct": 40.0
+      }
+    ],
+    "fees": [
+      {
+        "fee_type": "management_fee",
+        "amount": 1200.0
+      },
+      {
+        "fee_type": "management_fee",
+        "amount": 800.0
+      },
+      {
+        "fee_type": "performance_fee",
+        "amount": 16000.0
+      },
+      {
+        "fee_type": "performance_fee",
+        "amount": 10666.67
+      }
+    ],
+    "mrr": 3098.0,
+    "eventLog": []
+  }
+}

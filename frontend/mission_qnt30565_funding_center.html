@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30565 Funding Rails</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1280px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:26px;font-weight:800;margin-top:6px}
+button,a,select,input{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select{width:100%;background:#07111f;color:#fff;border:1px solid #203251}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px}
+@media(max-width:1000px){.grid,.row{grid-template-columns:1fr 1fr}} @media(max-width:600px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30565 · Funding Rails / Payment Onboarding</h1>
+        <div style="color:#9fb3d8">Simulated funding rails layer for investor onboarding. Adds payment methods, KYC state, deposit intents, and controlled confirmation into the user ledger.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30564_reporting_center.html">Statements</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Methods</div><div id="methods" class="value">-</div></div>
+    <div class="card"><div class="label">KYC Status</div><div id="kyc" class="value">-</div></div>
+    <div class="card"><div class="label">Completed Deposits</div><div id="deposits" class="value">-</div></div>
+    <div class="card"><div class="label">Completed Amount</div><div id="amount" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <select id="methodType">
+        <option value="bank">Bank</option>
+        <option value="wire">Wire</option>
+        <option value="card">Card</option>
+      </select>
+      <input id="methodNickname" placeholder="Nickname">
+      <input id="depositAmount" placeholder="Deposit amount">
+      <button onclick="addMethod()">Add Method</button>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="startKyc()">Start KYC</button>
+      <button onclick="approveKyc()">Approve KYC</button>
+      <button onclick="createIntent()">Create Deposit Intent</button>
+      <button onclick="confirmLatest()">Confirm Latest Intent</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Funding Summary</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v || 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok, data:d}; }
+
+async function load(){
+  const res = await j('/api/user-funding/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const s = res.data.summary || {};
+  const p = res.data.profile || {};
+  document.getElementById('methods').textContent = String(s.payment_methods || 0);
+  document.getElementById('kyc').textContent = String(p.kyc_status || '-').toUpperCase();
+  document.getElementById('deposits').textContent = String(s.completed_deposits || 0);
+  document.getElementById('amount').textContent = money(s.total_completed_amount || 0);
+  document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2);
+}
+async function addMethod(){
+  const payload = {method_type: document.getElementById('methodType').value, nickname: document.getElementById('methodNickname').value || document.getElementById('methodType').value.toUpperCase()};
+  await j('/api/user-funding/method', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function startKyc(){ await j('/api/user-funding/kyc/start', {method:'POST'}); await load(); }
+async function approveKyc(){ await j('/api/user-funding/kyc/approve', {method:'POST'}); await load(); }
+async function createIntent(){
+  const payload = {amount: Number(document.getElementById('depositAmount').value || 0)};
+  await j('/api/user-funding/deposit-intent', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function confirmLatest(){
+  const intents = await j('/api/user-funding/intents');
+  const latest = (intents.data.payment_intents || [])[0];
+  if(!latest){ alert('No intent to confirm'); return; }
+  await j('/api/user-funding/deposit-confirm', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({intent_id: latest.intent_id})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

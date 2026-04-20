@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>QNT30632 Autonomous Fund Mode</title>
+<style>
+:root{--bg:#071019;--panel:#0d1723;--line:#1b2b40;--text:#edf3fb;--muted:#8ea0b7;--good:#48d597;--bad:#ff6f86;--warn:#ffc857}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#071019,#09131d 55%,#071019);color:var(--text);font-family:Inter,Arial,sans-serif}.wrap{max-width:1480px;margin:0 auto;padding:28px}.hero,.card{background:rgba(13,23,35,.95);border:1px solid var(--line);border-radius:20px;box-shadow:0 22px 54px rgba(0,0,0,.35)}.hero{padding:26px}.label{font-size:11px;color:var(--muted);letter-spacing:.16em;text-transform:uppercase;font-weight:800}.hero h1{margin:10px 0 8px;font-size:42px}.sub{color:var(--muted);max-width:1040px;line-height:1.55}.toolbar,.form-grid{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}button,input,select{background:#0b1520;color:var(--text);border:1px solid var(--line);padding:11px 14px;border-radius:12px;font:inherit}.btn{cursor:pointer;font-weight:700}.primary{background:#fff;color:#0a0e14}.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:18px}.split{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;margin-top:18px}.triple{display:grid;grid-template-columns:1.05fr .95fr .95fr;gap:18px;margin-top:18px}.card{padding:18px}.value{font-size:26px;font-weight:800;margin-top:8px}.tiny{font-size:12px;color:var(--muted)}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #1a293d;font-size:13px;vertical-align:top}th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}pre{background:#09111a;border:1px solid var(--line);padding:14px;border-radius:14px;min-height:280px;max-height:680px;overflow:auto}.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}@media(max-width:1100px){.stats,.split,.triple{grid-template-columns:1fr 1fr}}@media(max-width:760px){.stats,.split,.triple{grid-template-columns:1fr}.wrap{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="label">QNT30632</div>
+    <h1>Fully Autonomous Fund Mode</h1>
+    <div class="sub">Closed-loop operation across allocation, execution, performance, and investor statements. Quantora now runs a governed capital cycle with health checks, audit history, and interruptible system state.</div>
+    <div class="toolbar">
+      <button class="btn primary" onclick="bootstrapDemo()">Bootstrap Autonomous Demo</button>
+      <button class="btn" onclick="runCycle()">Run Autonomous Cycle</button>
+      <button class="btn" onclick="toggleKill()">Toggle System Kill Switch</button>
+      <button class="btn" onclick="loadAll()">Refresh</button>
+      <button class="btn" onclick="window.location.href='mission_qnt30631_broker_integration.html'">Open Broker Layer</button>
+      <button class="btn" onclick="window.location.href='index.html'">Back to Command Center</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="card"><div class="label">System Mode</div><div id="mode" class="value">-</div><div class="tiny">IDLE / RUNNING / PAUSED / ERROR</div></div>
+    <div class="card"><div class="label">Cycles</div><div id="cycleCount" class="value">-</div><div class="tiny">Completed autonomous operating loops</div></div>
+    <div class="card"><div class="label">Executed Orders</div><div id="executedOrders" class="value">-</div><div class="tiny">Latest cycle broker output</div></div>
+    <div class="card"><div class="label">Current NAV</div><div id="currentNav" class="value">-</div><div class="tiny">Performance engine current NAV</div></div>
+    <div class="card"><div class="label">Statements</div><div id="statementCount" class="value">-</div><div class="tiny">Latest generated investor records</div></div>
+  </div>
+
+  <div class="split">
+    <div class="card">
+      <div class="label">Autonomy Controls</div>
+      <div class="form-grid">
+        <select id="scheduler"><option value="manual">manual</option><option value="timed">timed</option></select>
+        <select id="frequency"><option value="daily">daily</option><option value="weekly">weekly</option><option value="monthly">monthly</option></select>
+        <input id="period" placeholder="2026-04" />
+        <button class="btn" onclick="saveState()">Save State</button>
+      </div>
+      <div id="stateText" class="tiny" style="margin-top:10px">Loading state…</div>
+      <div class="tiny" style="margin-top:6px">Kill switch pauses cycles before any capital movement.</div>
+    </div>
+    <div class="card">
+      <div class="label">Cycle Snapshot</div>
+      <pre id="summaryBox">Loading...</pre>
+    </div>
+  </div>
+
+  <div class="triple">
+    <div class="card"><div class="label">Cycle History</div><table><thead><tr><th>Period</th><th>Status</th><th>Orders</th><th>Statements</th><th>Completed</th></tr></thead><tbody id="cycleRows"><tr><td colspan="5">Loading...</td></tr></tbody></table></div>
+    <div class="card"><div class="label">Latest Allocation Plan</div><table><thead><tr><th>Strategy</th><th>Status</th><th>Target</th><th>Action</th></tr></thead><tbody id="planRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+    <div class="card"><div class="label">Health + Broker</div><table><thead><tr><th>Subsystem</th><th>Status</th><th>Detail</th></tr></thead><tbody id="healthRows"><tr><td colspan="3">Loading...</td></tr></tbody></table></div>
+  </div>
+</div>
+<script>
+const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(Number(v||0));
+const stamp=ts=>ts?new Date(Number(ts)*1000).toISOString().replace('T',' ').slice(0,16):'-';
+async function j(url,opt){const r=await fetch(url,opt);const d=await r.json();if(!r.ok) throw new Error(d.detail||'request failed');return d;}
+function render(data){const state=data.system_state||{}; const perf=data.performance||{}; const latest=data.latest_cycle||{}; document.getElementById('mode').textContent=state.mode||'-'; document.getElementById('cycleCount').textContent=data.cycle_count||0; document.getElementById('executedOrders').textContent=(latest.broker_execution||{}).executed_orders||0; document.getElementById('currentNav').textContent=money(perf.current_nav); document.getElementById('statementCount').textContent=(latest.statements||{}).statement_count||0; document.getElementById('scheduler').value=state.scheduler||'manual'; document.getElementById('frequency').value=state.frequency||'monthly'; document.getElementById('period').value=state.current_period||''; document.getElementById('stateText').textContent=`Scheduler: ${state.scheduler||'-'} | Frequency: ${state.frequency||'-'} | Kill switch: ${state.kill_switch?'ON':'OFF'}`; document.getElementById('summaryBox').textContent=JSON.stringify(data,null,2);
+  const cycles=data.cycle_history||[]; document.getElementById('cycleRows').innerHTML=cycles.length?cycles.map(c=>`<tr><td>${c.period}</td><td class="${c.status==='completed'?'good':'warn'}">${c.status}</td><td>${(c.broker_execution||{}).executed_orders||0}</td><td>${(c.statements||{}).statement_count||0}</td><td>${stamp(c.completed_at)}</td></tr>`).join(''):'<tr><td colspan="5">No cycles recorded.</td></tr>';
+  const strategies=(latest.allocation_plan||{}).strategies||[]; document.getElementById('planRows').innerHTML=strategies.length?strategies.map(r=>`<tr><td>${r.strategy_name||r.strategy_id}</td><td class="${r.status==='eligible'?'good':'warn'}">${r.status}</td><td>${money(r.target_capital)}</td><td>${r.rebalance_action||'-'}</td></tr>`).join(''):'<tr><td colspan="4">No plan yet.</td></tr>';
+  const health=data.health||{}; const broker=data.broker_summary||{}; const rows=Object.entries(health.checks||{}).map(([k,v])=>`<tr><td>${k}</td><td class="${v==='ok'?'good':'bad'}">${v}</td><td>-</td></tr>`); rows.push(`<tr><td>broker mode</td><td class="warn">${broker.mode||'-'}</td><td>${broker.order_count||0} orders / ${broker.fill_count||0} fills</td></tr>`); document.getElementById('healthRows').innerHTML=rows.join('');
+}
+async function loadAll(){ render(await j('/api/autonomous-fund/summary')); }
+async function bootstrapDemo(){ await j('/api/autonomous-fund/bootstrap-demo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})}); await loadAll(); }
+async function runCycle(){ await j('/api/autonomous-fund/run-cycle',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({period:document.getElementById('period').value||undefined})}); await loadAll(); }
+async function saveState(){ await j('/api/autonomous-fund/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({scheduler:document.getElementById('scheduler').value,frequency:document.getElementById('frequency').value,current_period:document.getElementById('period').value||undefined})}); await loadAll(); }
+async function toggleKill(){ const data=await j('/api/autonomous-fund/summary'); await j('/api/autonomous-fund/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kill_switch:!(data.system_state||{}).kill_switch})}); await loadAll(); }
+loadAll();
+</script>
+</body>
+</html>

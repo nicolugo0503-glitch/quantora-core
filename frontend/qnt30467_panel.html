@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — Distribution Flywheel + Referral Growth Engine</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(15,29,49,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .sub{color:var(--muted);max-width:980px;line-height:1.5}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    button{border-radius:10px;border:none;background:var(--accent);color:var(--text);padding:10px 12px;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}.stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}
+    th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #274168;background:#0b1a2c;font-size:12px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:180px;white-space:pre-wrap}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT30467 — Distribution Flywheel + Referral Growth Engine</h1>
+      <div class="sub">Referral programs, lead conversion, growth loops, and acquisition campaigns. This is the compounding distribution layer that scales Quantora beyond direct outreach.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="loadAll()">Refresh</button>
+      <button onclick="seedProgram()">Seed Program</button>
+      <button onclick="seedLead()">Seed Referral Lead</button>
+      <button onclick="seedLoop()">Seed Growth Loop</button>
+      <button onclick="seedCampaign()">Seed Campaign</button>
+    </div>
+  </div>
+  <div class="grid" id="summaryGrid"></div>
+  <div class="layout">
+    <div class="stack">
+      <div class="card"><h2>Referral Programs</h2><div class="table-wrap"><table id="programTable"></table></div></div>
+      <div class="card"><h2>Referral Leads</h2><div class="table-wrap"><table id="leadTable"></table></div></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h2>Growth Loops</h2><div class="table-wrap"><table id="loopTable"></table></div></div>
+      <div class="card"><h2>Acquisition Campaigns</h2><div class="table-wrap"><table id="campaignTable"></table></div></div>
+      <div class="card"><h2>Growth Health</h2><div class="pills" id="healthPills"></div></div>
+      <div class="card"><h2>Last Action</h2><pre id="actionOut">No action yet.</pre></div>
+    </div>
+  </div>
+</div>
+<script>
+const api=(path, opts={})=>fetch(path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok) throw new Error(d.detail||'request_failed'); return d;});
+function money(v){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(Number(v||0));}
+function table(el, headers, rows){ const thead=`<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`; const body=rows.length?rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join(''):`<tr><td colspan="${headers.length}">No data</td></tr>`; el.innerHTML=thead+body; }
+function renderSummary(summary){ const labels=[['Programs',summary.programs_total],['Active',summary.programs_active],['Referral Leads',summary.referral_leads_total],['Converted',summary.referral_leads_converted],['Loops',summary.growth_loops_total],['Score',summary.growth_score]]; document.getElementById('summaryGrid').innerHTML=labels.map(([l,v])=>`<div class="card"><div class="label">${l}</div><div class="value">${v}</div></div>`).join('');}
+function pills(target, items){ document.getElementById(target).innerHTML=items.map(([l,k])=>`<span class="pill ${k}">${l}</span>`).join(''); }
+async function loadAll(){
+  const data=await api('/workspace/distribution-growth/summary');
+  renderSummary(data.summary);
+  table(document.getElementById('programTable'), ['Program','Reward','Status','Created'], (data.referral_programs||[]).map(r=>[r.program_name,r.reward_type,r.status,r.created_at||'-']));
+  table(document.getElementById('leadTable'), ['Referrer','Lead','Est. Value','Status','Created'], (data.referral_leads||[]).map(r=>[r.referrer_name,r.lead_name,money(r.estimated_value),r.status,r.created_at||'-']));
+  table(document.getElementById('loopTable'), ['Loop','Channel','Status','Created'], (data.growth_loops||[]).map(r=>[r.loop_name,r.channel,r.status,r.created_at||'-']));
+  table(document.getElementById('campaignTable'), ['Campaign','Channel','Spend','ROI','Status'], (data.acquisition_campaigns||[]).map(r=>[r.campaign_name,r.channel,money(r.spend),r.roi,r.status]));
+  pills('healthPills', [
+    [`Programs ${data.growth_health.program_registry_ready?'Ready':'Missing'}`, data.growth_health.program_registry_ready?'good':'warn'],
+    [`Leads ${data.growth_health.lead_registry_ready?'Ready':'Missing'}`, data.growth_health.lead_registry_ready?'good':'warn'],
+    [`Loops ${data.growth_health.loop_registry_ready?'Ready':'Missing'}`, data.growth_health.loop_registry_ready?'good':'warn'],
+    [`Campaigns ${data.growth_health.campaign_registry_ready?'Ready':'Missing'}`, data.growth_health.campaign_registry_ready?'good':'warn'],
+    [`Score ${data.growth_health.growth_score}`, data.growth_health.growth_score>=85?'good':'warn']
+  ]);
+}
+async function seedProgram(){ const res=await api('/workspace/distribution-growth/programs/create',{method:'POST',body:JSON.stringify({program_name:'Allocator Referral Program',reward_type:'revenue_share',status:'active'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedLead(){ const res=await api('/workspace/distribution-growth/leads/create',{method:'POST',body:JSON.stringify({referrer_name:'Northstar Capital',lead_name:'Andromeda Family Office',estimated_value:300000,status:'converted'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedLoop(){ const res=await api('/workspace/distribution-growth/loops/create',{method:'POST',body:JSON.stringify({loop_name:'Investor Report Share Loop',channel:'portal_referral',status:'active'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedCampaign(){ const res=await api('/workspace/distribution-growth/campaigns/create',{method:'POST',body:JSON.stringify({campaign_name:'Institutional Launch Campaign',channel:'linkedin',spend:4500,roi:1.8,status:'active'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+loadAll().catch(err=>document.getElementById('actionOut').textContent=String(err));
+</script>
+</body>
+</html>

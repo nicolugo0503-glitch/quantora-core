@@ -1,0 +1,32 @@
+{
+  "enabled": true,
+  "last_snapshot_at": null,
+  "last_rebalance_at": null,
+  "treasury": {
+    "total_capital_usd": 100000.0,
+    "reserve_ratio_target": 0.18,
+    "min_reserve_usd": 15000.0,
+    "reserve_balance_usd": 18000.0,
+    "deployed_capital_usd": 0.0,
+    "available_to_deploy_usd": 82000.0,
+    "buffer_mode": "dynamic",
+    "treasury_score": 100.0
+  },
+  "allocation_policy": {
+    "max_strategy_weight": 0.35,
+    "min_strategy_weight": 0.05,
+    "max_deploy_ratio": 0.82,
+    "risk_haircut_enabled": true,
+    "profit_recycle_ratio": 0.5,
+    "drawdown_buffer_ratio": 0.12
+  },
+  "strategy_budgets": {},
+  "proposals": [],
+  "alerts": [],
+  "telemetry": {
+    "snapshots_built": 0,
+    "rebalance_runs": 0,
+    "treasury_updates": 0,
+    "reserve_releases": 0
+  }
+}

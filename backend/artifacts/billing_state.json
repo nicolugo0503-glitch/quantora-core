@@ -1,0 +1,193 @@
+{
+  "mission": "QNT30417",
+  "checkout_sessions": [
+    {
+      "checkout_session_id": "cs_1086f141519b47ceb0",
+      "operator_id": "operator_BAE0E004",
+      "email": "admin@quantora.local",
+      "plan": "pro",
+      "status": "open",
+      "created_at": "2026-04-03T15:50:16Z",
+      "success_url": "/billing?checkout=success",
+      "cancel_url": "/billing?checkout=cancel",
+      "checkout_url": "/billing/checkout/simulated?session_id=cs_880fc9a3dae3407b8f",
+      "price": {
+        "price_usd": 299,
+        "interval": "month"
+      }
+    },
+    {
+      "checkout_session_id": "cs_2bb5cf25a92746c3ac",
+      "operator_id": "operator_BAE0E004",
+      "email": "admin@quantora.local",
+      "plan": "pro",
+      "status": "open",
+      "created_at": "2026-04-03T15:49:56Z",
+      "success_url": "/billing?checkout=success",
+      "cancel_url": "/billing?checkout=cancel",
+      "checkout_url": "/billing/checkout/simulated?session_id=cs_6c57f617d3ef4524a5",
+      "price": {
+        "price_usd": 299,
+        "interval": "month"
+      }
+    }
+  ],
+  "portal_sessions": [],
+  "webhooks": [
+    {
+      "webhook_id": "wh_0898af33978f44b494",
+      "event_type": "manual.promote",
+      "created_at": "2026-04-03T16:32:53Z",
+      "payload": {
+        "operator_id": "operator_F5E2C5BA",
+        "plan": "institutional",
+        "subscription_status": "active",
+        "stripe_customer_id": "cus_f6ff47fbd3",
+        "subscription_id": "sub_16706413d5",
+        "current_period_end": "2026-05-03"
+      }
+    },
+    {
+      "webhook_id": "wh_bd2f8cc3797e4fae8a",
+      "event_type": "manual.promote",
+      "created_at": "2026-04-03T16:32:37Z",
+      "payload": {
+        "operator_id": "operator_F5E2C5BA",
+        "plan": "institutional",
+        "subscription_status": "active",
+        "stripe_customer_id": "cus_f6ff47fbd3",
+        "subscription_id": "sub_16706413d5",
+        "current_period_end": "2026-05-03"
+      }
+    },
+    {
+      "webhook_id": "wh_c168f7884829464a9f",
+      "event_type": "manual.promote",
+      "created_at": "2026-04-03T16:32:17Z",
+      "payload": {
+        "operator_id": "operator_F5E2C5BA",
+        "plan": "institutional",
+        "subscription_status": "active",
+        "stripe_customer_id": "cus_f6ff47fbd3",
+        "subscription_id": "sub_16706413d5",
+        "current_period_end": "2026-05-03"
+      }
+    },
+    {
+      "webhook_id": "wh_bff922fb60564b0394",
+      "event_type": "invoice.paid",
+      "created_at": "2026-04-03T15:50:16Z",
+      "payload": {
+        "operator_id": "operator_BAE0E004",
+        "plan": "institutional",
+        "subscription_status": "active",
+        "stripe_customer_id": "cus_8943929c21",
+        "subscription_id": "sub_0ca660d599",
+        "current_period_end": "2026-05-03"
+      }
+    },
+    {
+      "webhook_id": "wh_2bcc7c734ee041598a",
+      "event_type": "invoice.paid",
+      "created_at": "2026-04-03T15:50:05Z",
+      "payload": {
+        "operator_id": "operator_BAE0E004",
+        "plan": "institutional",
+        "subscription_status": "active",
+        "stripe_customer_id": "cus_8943929c21",
+        "subscription_id": "sub_0ca660d599",
+        "current_period_end": "2026-05-03"
+      }
+    },
+    {
+      "webhook_id": "wh_20234b5fac124cf2a6",
+      "event_type": "invoice.paid",
+      "created_at": "2026-04-03T15:49:56Z",
+      "payload": {
+        "operator_id": "operator_BAE0E004",
+        "plan": "institutional",
+        "subscription_status": "active",
+        "stripe_customer_id": "cus_8943929c21",
+        "subscription_id": "sub_0ca660d599",
+        "current_period_end": "2026-05-03"
+      }
+    }
+  ],
+  "audit": [
+    {
+      "audit_id": "bill_90eb094fce87",
+      "kind": "webhook_recorded",
+      "created_at": "2026-04-03T16:32:53Z",
+      "payload": {
+        "event_type": "manual.promote",
+        "operator_id": "operator_F5E2C5BA"
+      }
+    },
+    {
+      "audit_id": "bill_d3a5ebb960c6",
+      "kind": "webhook_recorded",
+      "created_at": "2026-04-03T16:32:37Z",
+      "payload": {
+        "event_type": "manual.promote",
+        "operator_id": "operator_F5E2C5BA"
+      }
+    },
+    {
+      "audit_id": "bill_6ea7e7d3fcc1",
+      "kind": "webhook_recorded",
+      "created_at": "2026-04-03T16:32:17Z",
+      "payload": {
+        "event_type": "manual.promote",
+        "operator_id": "operator_F5E2C5BA"
+      }
+    },
+    {
+      "audit_id": "bill_0f0a7a2a1286",
+      "kind": "webhook_recorded",
+      "created_at": "2026-04-03T15:50:16Z",
+      "payload": {
+        "event_type": "invoice.paid",
+        "operator_id": "operator_BAE0E004"
+      }
+    },
+    {
+      "audit_id": "bill_83fb3ab097fa",
+      "kind": "checkout_session_created",
+      "created_at": "2026-04-03T15:50:16Z",
+      "payload": {
+        "operator_id": "operator_BAE0E004",
+        "plan": "pro"
+      }
+    },
+    {
+      "audit_id": "bill_2222e7cd6afb",
+      "kind": "webhook_recorded",
+      "created_at": "2026-04-03T15:50:05Z",
+      "payload": {
+        "event_type": "invoice.paid",
+        "operator_id": "operator_BAE0E004"
+      }
+    },
+    {
+      "audit_id": "bill_cbcc9471c96d",
+      "kind": "webhook_recorded",
+      "created_at": "2026-04-03T15:49:56Z",
+      "payload": {
+        "event_type": "invoice.paid",
+        "operator_id": "operator_BAE0E004"
+      }
+    },
+    {
+      "audit_id": "bill_628fd19e2e10",
+      "kind": "checkout_session_created",
+      "created_at": "2026-04-03T15:49:56Z",
+      "payload": {
+        "operator_id": "operator_BAE0E004",
+        "plan": "pro"
+      }
+    }
+  ],
+  "metrics": {
+    "last_computed_at": null
+  }
+}

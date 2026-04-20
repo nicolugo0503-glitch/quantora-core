@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30624 Capital Allocation Engine + Live Investor Capital Ledger</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1480px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:20px;font-weight:800;margin-top:6px}
+button,a,input,select,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:80px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:380px}
+@media(max-width:1400px){.grid{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30624 · Capital Allocation Engine + Live Investor Capital Ledger</h1>
+        <div style="color:#9fb3d8">Creates investor capital accounts, tracks funding entries, computes ownership, and records live strategy allocations.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30623_onboarding.html">Onboarding</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Accounts</div><div id="accounts" class="value">-</div></div>
+    <div class="card"><div class="label">Entries</div><div id="entries" class="value">-</div></div>
+    <div class="card"><div class="label">Allocations</div><div id="allocations" class="value">-</div></div>
+    <div class="card"><div class="label">Committed</div><div id="committed" class="value">-</div></div>
+    <div class="card"><div class="label">Funded</div><div id="funded" class="value">-</div></div>
+    <div class="card"><div class="label">Unfunded</div><div id="unfunded" class="value">-</div></div>
+    <div class="card"><div class="label">NAV</div><div id="nav" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <input id="investorId" placeholder="Investor ID">
+    <input id="committedCapital" placeholder="Committed capital" style="margin-top:12px">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="createAccount()">Create Account</button>
+      <button onclick="recalculateLedger()">Recalculate Ledger</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <input id="entryAmount" placeholder="Entry amount">
+    <select id="entryType" style="margin-top:12px">
+      <option value="funding">funding</option>
+      <option value="profit">profit</option>
+      <option value="withdrawal">withdrawal</option>
+      <option value="fee">fee</option>
+      <option value="loss">loss</option>
+    </select>
+    <textarea id="entryDescription" placeholder="Entry description" style="margin-top:12px"></textarea>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="addEntry()">Add Ledger Entry</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <input id="strategy" placeholder="Strategy" value="core">
+    <input id="sleeve" placeholder="Sleeve" style="margin-top:12px" value="main">
+    <input id="allocationAmount" placeholder="Allocation amount" style="margin-top:12px">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="addAllocation()">Allocate Capital</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Capital Accounts</div>
+    <table>
+      <thead><tr><th>Investor</th><th>Committed</th><th>Funded</th><th>Unfunded</th><th>NAV</th><th>Ownership %</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Capital Ledger Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v || 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/capital-ledger/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data,null,2); return; }
+  const d = res.data || {};
+  document.getElementById('accounts').textContent = String(d.account_count || 0);
+  document.getElementById('entries').textContent = String(d.entry_count || 0);
+  document.getElementById('allocations').textContent = String(d.allocation_count || 0);
+  document.getElementById('committed').textContent = money(d.total_committed_capital || 0);
+  document.getElementById('funded').textContent = money(d.total_funded_capital || 0);
+  document.getElementById('unfunded').textContent = money(d.total_unfunded_capital || 0);
+  document.getElementById('nav').textContent = money(d.total_nav || 0);
+  document.getElementById('rows').innerHTML = (d.accounts || []).map(a =>
+    `<tr><td>${a.investor_name || a.investor_id}</td><td>${money(a.committed_capital)}</td><td>${money(a.funded_capital)}</td><td>${money(a.unfunded_capital)}</td><td>${money(a.nav)}</td><td>${Number(a.ownership_pct || 0).toFixed(4)}%</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function createAccount(){
+  await j('/api/capital-ledger/account', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    investor_id: document.getElementById('investorId').value,
+    committed_capital: Number(document.getElementById('committedCapital').value || 0)
+  })});
+  await load();
+}
+async function addEntry(){
+  await j('/api/capital-ledger/entry', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    investor_id: document.getElementById('investorId').value,
+    amount: Number(document.getElementById('entryAmount').value || 0),
+    entry_type: document.getElementById('entryType').value,
+    description: document.getElementById('entryDescription').value
+  })});
+  await load();
+}
+async function addAllocation(){
+  await j('/api/capital-ledger/allocation', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    investor_id: document.getElementById('investorId').value,
+    strategy: document.getElementById('strategy').value,
+    sleeve: document.getElementById('sleeve').value,
+    amount: Number(document.getElementById('allocationAmount').value || 0)
+  })});
+  await load();
+}
+async function recalculateLedger(){
+  await j('/api/capital-ledger/recalculate', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

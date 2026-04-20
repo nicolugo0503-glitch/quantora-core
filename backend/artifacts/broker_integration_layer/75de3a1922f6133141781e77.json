@@ -1,0 +1,17 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "settings": {
+    "mode": "paper",
+    "paper_slippage_bps": 8.0,
+    "max_order_notional": 250000.0,
+    "max_strategy_exposure_pct": 45.0,
+    "kill_switch": false,
+    "allow_live_execution": false
+  },
+  "orders": [],
+  "fills": [],
+  "positions": {},
+  "audit_log": [],
+  "created_at": 1775712870,
+  "updated_at": 1775712870
+}

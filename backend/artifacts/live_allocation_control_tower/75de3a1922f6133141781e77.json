@@ -1,0 +1,14 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "priority_allocation_case_count": 8,
+    "minimum_allocation_readiness_score": 87.0,
+    "minimum_control_authority_score": 85.0,
+    "minimum_strategy_alignment_score": 82.0,
+    "minimum_execution_alignment_score": 80.0,
+    "maximum_allocation_stress_score": 22.0
+  },
+  "runs": [],
+  "created_at": 1775721729,
+  "updated_at": 1775721729
+}

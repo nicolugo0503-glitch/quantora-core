@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30583 Real Portfolio Allocation Engine</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1100px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30583 · Real Portfolio Allocation Engine</h1>
+        <div style="color:#9fb3d8">Maps investor NAV into strategy-level target allocations and rebalance states. This is the bridge from ownership state into actual portfolio construction logic.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30582_nav_registry.html">NAV Registry</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Total NAV</div><div id="totalNav" class="value">-</div></div>
+    <div class="card"><div class="label">Allocated NAV</div><div id="allocatedNav" class="value">-</div></div>
+    <div class="card"><div class="label">Unallocated NAV</div><div id="unallocatedNav" class="value">-</div></div>
+    <div class="card"><div class="label">Strategies</div><div id="strategyCount" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="adminEmail" placeholder="Investor email (admin weight set)">
+      <input id="s1" placeholder="Trend %">
+      <input id="s2" placeholder="MeanRev %">
+      <input id="s3" placeholder="Macro %">
+      <button onclick="setWeights()">Set Weights</button>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="rebalance()">Rebalance</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Strategy Allocations</div>
+    <table>
+      <thead><tr><th>Strategy</th><th>Target %</th><th>Allocated Amount</th><th>Status</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Allocation Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/portfolio-allocation/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data,null,2); return; }
+  const d = res.data || {};
+  document.getElementById('totalNav').textContent = money(d.total_nav || 0);
+  document.getElementById('allocatedNav').textContent = money(d.allocated_nav || 0);
+  document.getElementById('unallocatedNav').textContent = money(d.unallocated_nav || 0);
+  document.getElementById('strategyCount').textContent = String(d.strategy_count || 0);
+  document.getElementById('rows').innerHTML = (d.strategies || []).map(s =>
+    `<tr><td>${s.name}</td><td>${Number(s.target_pct||0).toFixed(2)}%</td><td>${money(s.allocated_amount)}</td><td>${s.status}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function setWeights(){
+  const email = document.getElementById('adminEmail').value;
+  const weights = [
+    {strategy_id:'strat_trend', target_pct:Number(document.getElementById('s1').value || 0)},
+    {strategy_id:'strat_meanrev', target_pct:Number(document.getElementById('s2').value || 0)},
+    {strategy_id:'strat_macro', target_pct:Number(document.getElementById('s3').value || 0)},
+    {strategy_id:'strat_cash', target_pct:Math.max(0, 100 - (Number(document.getElementById('s1').value || 0)+Number(document.getElementById('s2').value || 0)+Number(document.getElementById('s3').value || 0)))}
+  ];
+  await j('/api/portfolio-allocation/weights', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email, weights})});
+  await load();
+}
+async function rebalance(){
+  await j('/api/portfolio-allocation/rebalance', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({note:'manual rebalance from UI'})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

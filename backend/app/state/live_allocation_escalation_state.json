@@ -1,0 +1,31 @@
+{
+  "generated_by": "QNT50031",
+  "status": "degraded",
+  "policy": {
+    "enabled": true,
+    "auto_sync_sources": true,
+    "require_scale_execution": true,
+    "require_risk_clearance": true,
+    "require_capacity_headroom": true,
+    "require_charter_alignment": false,
+    "allow_live_escalation": false,
+    "default_capacity_ceiling_pct": 0.4,
+    "default_escalation_step_pct": 0.05,
+    "max_escalation_cases": 250,
+    "max_escalation_events": 500,
+    "max_audit_events": 500
+  },
+  "last_sync": null,
+  "sync_history": [],
+  "escalation_cases": [],
+  "escalation_events": [
+    {
+      "escalation_event_id": "esc_evt_001",
+      "status": "executed",
+      "strategy_id": "stat_1",
+      "symbol": "BTCUSDT",
+      "broker": "paper"
+    }
+  ],
+  "audit_log": []
+}

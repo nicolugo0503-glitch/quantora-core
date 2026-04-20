@@ -1,0 +1,1 @@
+# QNT30643 Audit Notes\n\n- full merged project base used from audited QNT30641 zip\n- risk intelligence module added under modules/risk_intelligence\n- mission registry updated with QNT30643\n- institutional risk console page added\n- dynamic mission loader preserved\n- archive audited before shipping\n

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QNT30702 Operator Command Console</title>
+  <style>
+    :root{--bg:#07101d;--card:#101b31;--muted:#90a6cd;--line:#243353;--text:#edf3ff;--good:#0fbf7f;--warn:#ffb020;--bad:#ff5d5d}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#07101d,#0c1730 58%,#0b1327);color:var(--text)}
+    .wrap{max-width:1200px;margin:0 auto;padding:34px 20px 74px}.hero,.two,.three{display:grid;gap:18px}.hero{grid-template-columns:1.25fr .95fr}.two{grid-template-columns:1fr 1fr}.three{grid-template-columns:repeat(3,1fr)}
+    .card{background:rgba(16,27,49,.94);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 22px 60px rgba(0,0,0,.28)}
+    .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}h1{margin:.35rem 0 0;font-size:34px}p{color:#cad7f1;line-height:1.58}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}.stat{padding:16px;border-radius:16px;background:#0d1529;border:1px solid var(--line)}.label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.value{font-size:27px;font-weight:700;margin-top:8px}
+    .list{display:flex;flex-direction:column;gap:10px;margin-top:14px}.row{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:14px;background:#0d1529;border:1px solid var(--line)}
+    code{background:#0d1529;padding:2px 6px;border-radius:6px;border:1px solid var(--line);color:#d8e4ff}.pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:8px 12px;font-weight:700}.good{background:rgba(15,191,127,.14);color:#90f0c8}.warn{background:rgba(255,176,32,.14);color:#ffd37e}.bad{background:rgba(255,93,93,.14);color:#ffb8b8}
+    @media (max-width:980px){.hero,.two,.three,.grid{grid-template-columns:1fr 1fr}}@media (max-width:720px){.hero,.two,.three,.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="card">
+        <div class="eyebrow">Human Supervision Layer</div>
+        <h1>QNT30702 — Operator Command Console</h1>
+        <p>This mission gives Quantora a real operator seat. It centralizes emergency stop authority, execution pause and resume control, override posture, release approvals, release deployment, rollback directives, and operator notes inside one auditable command surface.</p>
+        <div class="grid">
+          <div class="stat"><div class="label">Emergency Stop</div><div class="value">Live</div></div>
+          <div class="stat"><div class="label">Execution Pause</div><div class="value">Governed</div></div>
+          <div class="stat"><div class="label">Release Decisions</div><div class="value">Integrated</div></div>
+          <div class="stat"><div class="label">Audit Trail</div><div class="value">Stored</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="eyebrow">Core Endpoints</div>
+        <div class="list">
+          <div class="row"><span><code>GET /api/operator-command-console/summary</code></span></div>
+          <div class="row"><span><code>POST /api/operator-command-console/command</code></span></div>
+          <div class="row"><span><code>POST /api/operator-command-console/operator-profile</code></span></div>
+          <div class="row"><span><code>POST /api/operator-command-console/watchlist</code></span></div>
+          <div class="row"><span><code>POST /api/operator-command-console/bootstrap-demo</code></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two" style="margin-top:18px">
+      <div class="card">
+        <div class="eyebrow">Command Actions</div>
+        <div class="list">
+          <div class="row"><span>Emergency stop</span><span class="pill bad">Kill switch + pause</span></div>
+          <div class="row"><span>Resume execution</span><span class="pill warn">Reason required</span></div>
+          <div class="row"><span>Require override</span><span class="pill warn">Manual approval posture</span></div>
+          <div class="row"><span>Approve / deploy release</span><span class="pill good">Linked to QNT30700</span></div>
+          <div class="row"><span>Rollback release</span><span class="pill bad">Emergency authority</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="eyebrow">Institutional Rules</div>
+        <div class="list">
+          <div class="row"><span>No anonymous interventions</span><strong>LOG EVERYTHING</strong></div>
+          <div class="row"><span>Resume after kill switch</span><strong>REASON REQUIRED</strong></div>
+          <div class="row"><span>Release deployment</span><strong>USE GOVERNED PATH</strong></div>
+          <div class="row"><span>Rollback event</span><strong>PAUSE EXECUTION</strong></div>
+          <div class="row"><span>Operator seat mode</span><strong>SUPERVISED</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="three" style="margin-top:18px">
+      <div class="card"><div class="eyebrow">Safety Bridge</div><p>The console writes directly into the live broker safety controls so emergency stop, pause, and override posture become immediate execution-level directives.</p></div>
+      <div class="card"><div class="eyebrow">Governance Bridge</div><p>The console can approve, deploy, and roll back governed releases without bypassing the institutional release registry.</p></div>
+      <div class="card"><div class="eyebrow">Operator Memory</div><p>Command history, incidents, notes, and watchlist state are stored for auditability and future supervision decisions.</p></div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quantora Investor Dashboard</title>
+<style>
+:root{
+  --bg:#070d17;
+  --panel:#0d1726;
+  --line:#1d2a42;
+  --text:#eef4ff;
+  --muted:#9eb0cf;
+  --accent:#2f5dff;
+  --good:#12b981;
+  --warn:#f59e0b;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#050b14 0%,#09111e 100%);color:var(--text)}
+.wrap{max-width:1240px;margin:0 auto;padding:28px}
+.hero,.card{background:rgba(13,23,38,.96);border:1px solid var(--line);border-radius:20px;box-shadow:0 14px 32px rgba(0,0,0,.18)}
+.hero{padding:28px;margin-bottom:18px;display:flex;justify-content:space-between;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.title{font-size:34px;font-weight:800;margin:0 0 8px}
+.sub{max-width:720px;color:var(--muted);line-height:1.55}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{padding:12px 16px;border-radius:12px;border:1px solid #3f6fff;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+.btn.secondary{background:#101c2f;border-color:var(--line)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}
+.card{padding:18px}
+.label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.value{font-size:30px;font-weight:800}
+.good{color:var(--good)} .warn{color:var(--warn)}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+.chart-wrap{background:#07101d;border:1px solid var(--line);border-radius:16px;padding:14px}
+canvas{width:100%;height:260px;display:block}
+.row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.row:last-child{border-bottom:none}
+.muted{color:var(--muted)}
+.pill{display:inline-block;padding:8px 10px;border-radius:999px;background:#11233d;border:1px solid var(--line);font-size:12px;font-weight:700}
+@media (max-width:1000px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr}}
+@media (max-width:700px){.kpis{grid-template-columns:1fr}.title{font-size:26px}}
+</style>
+  <script src="quantora_sync.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <div class="title">Quantora Investor Dashboard</div>
+      <div class="sub">A premium capital view designed for clarity. Track your balance, performance, and system posture without technical noise. QNT30553 now syncs this dashboard to the backend capital ledger so the balance shown here is no longer local-only.</div>
+    </div>
+    <div class="actions">
+      <button class="btn" onclick="window.location.href='mission_qnt30551_funding_flow.html'">Deposit</button>
+      <button class="btn secondary" onclick="window.location.href='mission_qnt30551_funding_flow.html'">Withdraw</button>
+      <a class="btn secondary" href="mission_qnt30555_performance_visualization_engine.html">Performance Engine</a><a class="btn secondary" href="index.html">Back to Core</a>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="card"><div class="label">Total Balance</div><div id="balance" class="value">-</div></div>
+    <div class="card"><div class="label">Allocated</div><div id="allocated" class="value">-</div></div>
+    <div class="card"><div class="label">Available</div><div id="available" class="value">-</div></div>
+    <div class="card"><div class="label">Total Return</div><div id="return" class="value">-</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="label">Performance</div>
+      <div class="chart-wrap">
+        <canvas id="perfChart" width="760" height="260"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="label">System Status</div>
+      <div class="row"><div>AI Management</div><div id="aiState" class="pill">-</div></div>
+      <div class="row"><div>Risk Control</div><div id="riskState" class="pill">-</div></div>
+      <div class="row"><div>Execution</div><div id="execState" class="pill">-</div></div>
+      <div class="row"><div>Fund Mode</div><div id="fundState" class="pill">-</div></div>
+      <div class="row"><div class="muted">Today</div><div id="todayMove" class="value" style="font-size:22px">-</div></div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+function fmtMoney(v){ return '$' + Number(v || 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fmtPct(v){ return Number(v || 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}) + '%'; }
+async function f(url){ try{return await (await fetch(url,{cache:'no-store'})).json()}catch{return{}} }
+
+function drawLine(values){
+  const canvas=document.getElementById('perfChart');
+  const ctx=canvas.getContext('2d');
+  const w=canvas.width,h=canvas.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='#07101d'; ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle='#1d2a42'; ctx.lineWidth=1;
+  for(let i=1;i<4;i++){ const y=(h/4)*i; ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke(); }
+  if(!values.length) return;
+  const min=Math.min(...values), max=Math.max(...values), span=(max-min)||1;
+  ctx.strokeStyle='#2f5dff'; ctx.lineWidth=3; ctx.beginPath();
+  values.forEach((v,i)=>{ const x=(w/(values.length-1||1))*i; const y=h-((v-min)/span)*(h-30)-15; i?ctx.lineTo(x,y):ctx.moveTo(x,y); });
+  ctx.stroke();
+}
+
+async function load(){
+  const capital = await window.QuantoraSync.fetchCapital();
+  const perfHist = await f('/api/performance-history/series');
+  const perf = await f('/api/performance-engine/summary');
+  const risk = await f('/api/risk/state');
+  const exec = await f('/api/execution/history');
+  const fund = await f('/api/fund/state');
+
+  const current = perfHist.current || {};
+  const series = (perfHist.series || []).map(x => Number(x.balance || 0));
+  document.getElementById('balance').textContent = fmtMoney(capital.balance || current.balance || 0);
+  document.getElementById('allocated').textContent = fmtMoney(capital.allocated || current.allocated || 0);
+  document.getElementById('available').textContent = fmtMoney(capital.available || current.available || 0);
+
+  const retEl = document.getElementById('return');
+  retEl.textContent = fmtPct(current.return_pct || 0);
+  retEl.className = 'value ' + (Number(current.return_pct||0) >= 0 ? 'good' : 'warn');
+
+  document.getElementById('aiState').textContent = fund.running ? 'ACTIVE' : 'STANDBY';
+  document.getElementById('riskState').textContent = risk.killed ? 'LOCKED' : 'CONTROLLED';
+  document.getElementById('execState').textContent = Array.isArray(exec) && exec.length ? 'RUNNING' : 'IDLE';
+  document.getElementById('fundState').textContent = fund.running ? 'LIVE' : 'PAUSED';
+  document.getElementById('todayMove').textContent = fmtMoney(current.pnl_value || perf.total_pnl || 0);
+
+  drawLine(series.length ? series : [Number(capital.balance||0), Number(capital.balance||0)]);
+}
+window.QuantoraSync.subscribe(load);
+load();
+setInterval(load, 5000);
+</script>
+</script>
+
+</body>
+</html>

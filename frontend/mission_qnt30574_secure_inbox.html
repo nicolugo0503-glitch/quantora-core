@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30574 Investor Portal Messaging + Secure Inbox</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:90px}
+.row{display:grid;grid-template-columns:1fr 2fr auto;gap:10px}
+table{width:100%;border-collapse:collapse} th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1100px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30574 · Investor Portal Messaging + Secure Inbox</h1>
+        <div style="color:#9fb3d8">Secure investor communications layer for support, diligence follow-ups, operations questions, and admin replies. Threads live inside the investor portal.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30573_lp_update_engine.html">LP Updates</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Threads</div><div id="threadCount" class="value">-</div></div>
+    <div class="card"><div class="label">Open</div><div id="openCount" class="value">-</div></div>
+    <div class="card"><div class="label">Closed</div><div id="closedCount" class="value">-</div></div>
+    <div class="card"><div class="label">Messages</div><div id="messageCount" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="subject" placeholder="Thread subject">
+      <textarea id="message" placeholder="Message"></textarea>
+      <button onclick="createThread()">Open Thread</button>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <input id="threadId" placeholder="Thread id">
+      <textarea id="replyBody" placeholder="Reply body"></textarea>
+      <button onclick="replyThread()">Reply</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Inbox Threads</div>
+    <table>
+      <thead><tr><th>ID</th><th>Subject</th><th>Status</th><th>Messages</th><th>Preview</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Inbox Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/inbox');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const threads = res.data.threads || [];
+  const open = threads.filter(t => t.status === 'open').length;
+  const closed = threads.filter(t => t.status === 'closed').length;
+  const messages = threads.reduce((n,t) => n + ((t.messages || []).length), 0);
+  document.getElementById('threadCount').textContent = String(threads.length);
+  document.getElementById('openCount').textContent = String(open);
+  document.getElementById('closedCount').textContent = String(closed);
+  document.getElementById('messageCount').textContent = String(messages);
+  document.getElementById('rows').innerHTML = threads.slice(0,30).map(t => {
+    const preview = ((t.messages || [])[0] || {}).body || '';
+    return `<tr><td>${t.thread_id}</td><td>${t.subject}</td><td>${t.status}</td><td>${(t.messages || []).length}</td><td>${preview}</td></tr>`;
+  }).join('');
+  document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2);
+}
+async function createThread(){
+  const payload = {subject: document.getElementById('subject').value, message: document.getElementById('message').value};
+  await j('/api/inbox/thread', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function replyThread(){
+  const payload = {thread_id: document.getElementById('threadId').value, body: document.getElementById('replyBody').value};
+  await j('/api/inbox/reply', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

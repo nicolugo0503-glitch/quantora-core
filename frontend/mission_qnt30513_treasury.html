@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30513 Treasury</title>
+  <style>
+    :root { --bg:#08111f; --panel:#0e1a2b; --border:#1f3556; --text:#eef4ff; --muted:#9bb0ce; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; background:var(--bg); color:var(--text); padding:24px; }
+    .btn { display:inline-block; color:#fff; background:#2455d6; border:1px solid #3f6fff; border-radius:10px; padding:10px 14px; text-decoration:none; font-weight:700; cursor:pointer; }
+    .btn.secondary { background:#12233b; border-color:var(--border); }
+    .panel { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:16px; }
+    .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+    .muted { color:var(--muted); }
+    input, select, pre { width:100%; background:#07111f; border:1px solid var(--border); border-radius:10px; padding:12px; color:var(--text); }
+    label { display:block; margin-bottom:8px; color:var(--muted); }
+    .formgrid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+    @media (max-width:900px) { .grid, .formgrid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px">
+    <div>
+      <h1 style="margin:0 0 6px">QNT30513 — Treasury + Cash Management</h1>
+      <div class="muted">Fund cash visibility, reserves, releases, and ledger tracking.</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn secondary" href="conversation_missions_hub.html">Back to Missions Hub</a>
+      <a class="btn" href="index.html">Back to Command Center</a>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="formgrid">
+      <div><label>Fund ID</label><input id="fundId" value="FUND1"></div>
+      <div><label>Event Type</label><select id="eventType"><option>deposit</option><option>withdrawal</option><option>credit</option><option>debit</option></select></div>
+      <div><label>Amount</label><input id="amount" type="number" value="10000"></div>
+      <div><label>Note</label><input id="note" value="manual treasury entry"></div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+      <a class="btn" href="#" onclick="postCashEvent();return false;">Record Cash Event</a>
+      <a class="btn secondary" href="#" onclick="reserveCash();return false;">Reserve Cash</a>
+      <a class="btn secondary" href="#" onclick="releaseCash();return false;">Release Cash</a>
+      <a class="btn secondary" href="#" onclick="refreshAll();return false;">Refresh</a>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h2 style="margin-top:0">Cash Summary</h2>
+      <pre id="summaryBox">loading...</pre>
+    </div>
+    <div class="panel">
+      <h2 style="margin-top:0">Cash Ledger</h2>
+      <pre id="ledgerBox">loading...</pre>
+    </div>
+  </div>
+
+  <script>
+    async function fetchJson(url, options) {
+      try {
+        const res = await fetch(url, options || {});
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return await res.json();
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function getPayload() {
+      return {
+        fund_id: document.getElementById('fundId').value,
+        event_type: document.getElementById('eventType').value,
+        amount: Number(document.getElementById('amount').value || 0),
+        note: document.getElementById('note').value || ''
+      };
+    }
+
+    async function postCashEvent() {
+      const p = getPayload();
+      await fetchJson('/api/treasury/cash-event', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(p)
+      });
+      refreshAll();
+    }
+
+    async function reserveCash() {
+      const p = getPayload();
+      await fetchJson('/api/treasury/reserve', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ fund_id: p.fund_id, amount: p.amount, note: p.note })
+      });
+      refreshAll();
+    }
+
+    async function releaseCash() {
+      const p = getPayload();
+      await fetchJson('/api/treasury/release', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ fund_id: p.fund_id, amount: p.amount, note: p.note })
+      });
+      refreshAll();
+    }
+
+    async function refreshAll() {
+      const fundId = document.getElementById('fundId').value;
+      const summary = await fetchJson('/api/treasury/summary?fund_id=' + encodeURIComponent(fundId));
+      const ledger = await fetchJson('/api/treasury/ledger?fund_id=' + encodeURIComponent(fundId) + '&limit=100');
+
+      document.getElementById('summaryBox').textContent = JSON.stringify(summary || { error: 'treasury summary endpoint not found yet' }, null, 2);
+      document.getElementById('ledgerBox').textContent = JSON.stringify(ledger || { error: 'treasury ledger endpoint not found yet' }, null, 2);
+    }
+
+    refreshAll();
+  </script>
+</body>
+</html>

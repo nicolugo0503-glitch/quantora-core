@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>QNT30645 Productization Layer</title>
+  <style>
+    :root { --bg:#06101d; --panel:#0f1d31; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#2563eb; --good:#10b981; --warn:#f59e0b; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#040b15 0%,#0a1424 100%); color:var(--text); }
+    .wrap { max-width:1400px; margin:0 auto; padding:24px; }
+    .hero,.panel { background:rgba(15,29,49,.96); border:1px solid var(--line); border-radius:18px; padding:20px; box-shadow:0 10px 30px rgba(0,0,0,.18); }
+    .hero { margin-bottom:18px; }
+    .muted { color:var(--muted); line-height:1.6; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin-top:18px; }
+    .metric { background:#0a1526; border:1px solid #1e2d47; border-radius:14px; padding:14px; }
+    .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .value { font-size:26px; font-weight:700; margin-top:8px; }
+    .stack { display:grid; grid-template-columns:1.35fr 1fr; gap:16px; margin-top:18px; }
+    .toolbar { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    a.btn { background:var(--accent); color:white; padding:10px 14px; border-radius:10px; text-decoration:none; font-weight:700; display:inline-block; }
+    table { width:100%; border-collapse:collapse; margin-top:10px; font-size:14px; }
+    th,td { padding:10px; border-bottom:1px solid #1e2d47; text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-size:12px; text-transform:uppercase; }
+    .pill { display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid #2a3c60; }
+    .ok { color:#d1fae5; background:rgba(16,185,129,.1); }
+    .warn { color:#fde68a; background:rgba(245,158,11,.1); }
+    pre { margin:0; background:#06101d; color:#dbeafe; border:1px solid #1e2d47; border-radius:14px; min-height:160px; padding:14px; white-space:pre-wrap; }
+    @media (max-width:1000px) { .grid,.stack { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="label">Institutional Mission</div>
+    <h1 style="margin:8px 0;">QNT30645 — Productization Layer</h1>
+    <div class="muted">Convert Quantora portfolios into investable products with offering terms, subscription routing, launch control, and product-level governance hooks.</div>
+    <div class="toolbar"><a class="btn" href="index.html">Back to Command Center</a></div>
+  </section>
+
+  <section class="grid">
+    <div class="metric"><div class="label">Products</div><div class="value">1</div></div>
+    <div class="metric"><div class="label">Draft Offerings</div><div class="value">1</div></div>
+    <div class="metric"><div class="label">Subscription Queue</div><div class="value">0</div></div>
+    <div class="metric"><div class="label">Launch State</div><div class="value">Draft</div></div>
+  </section>
+
+  <section class="stack">
+    <div class="panel">
+      <h2 style="margin-top:0;">Product Registry</h2>
+      <table>
+        <thead><tr><th>Product</th><th>Portfolio</th><th>Vehicle</th><th>Structure</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Quantora Growth Vehicle</td><td>PORT_GROWTH_01</td><td>VEHICLE_ALPHA</td><td>Fund</td><td><span class="pill warn">draft</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel">
+      <h2 style="margin-top:0;">Offering Terms</h2>
+      <pre>{
+  "minimum_commitment": 10000,
+  "investor_tier": "qualified",
+  "liquidity_terms": "monthly",
+  "fee_schedule": "2 and 20",
+  "distribution_policy": "reinvest"
+}</pre>
+    </div>
+  </section>
+
+  <section class="stack">
+    <div class="panel">
+      <h2 style="margin-top:0;">Subscription Routing</h2>
+      <pre>[
+  {
+    "product_id": "PROD_GROWTH_01",
+    "status": "ready_for_subscription_pipeline",
+    "routing": "capital_intake -> onboarding -> ledger"
+  }
+]</pre>
+    </div>
+    <div class="panel">
+      <h2 style="margin-top:0;">Launch Control</h2>
+      <pre>{
+  "readiness_checks": [
+    "portfolio_mapped",
+    "vehicle_linked",
+    "offering_terms_defined",
+    "governance_hooks_ready"
+  ],
+  "launch_status": "draft"
+}</pre>
+    </div>
+  </section>
+</div>
+</body>
+</html>

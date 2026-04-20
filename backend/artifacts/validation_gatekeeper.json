@@ -1,0 +1,138 @@
+{
+  "validation_grid": {
+    "enabled": true,
+    "last_updated_at": "2026-03-31T07:57:43Z",
+    "last_validation_at": "2026-03-31T07:57:43Z",
+    "last_promotion_review_at": "2026-03-31T07:57:43Z",
+    "total_candidates_reviewed": 3,
+    "approved_candidates": 1,
+    "rejected_candidates": 1,
+    "watchlist_candidates": 1,
+    "telemetry": [
+      {
+        "timestamp": "2026-03-31T07:57:43Z",
+        "event": "candidate.validated",
+        "candidate_id": "cand_1001",
+        "verdict": "APPROVED"
+      },
+      {
+        "timestamp": "2026-03-31T07:57:43Z",
+        "event": "candidate.validated",
+        "candidate_id": "cand_1002",
+        "verdict": "WATCHLIST"
+      },
+      {
+        "timestamp": "2026-03-31T07:57:43Z",
+        "event": "candidate.validated",
+        "candidate_id": "cand_1003",
+        "verdict": "REJECTED"
+      }
+    ]
+  },
+  "rules": {
+    "min_promotion_score": 70.0,
+    "min_backtest_win_rate": 0.56,
+    "max_drawdown_pct": 12.0,
+    "min_edge_score": 60.0,
+    "min_stability_score": 62.0,
+    "require_risk_budget_cap": 2.0,
+    "watchlist_band": 5.0
+  },
+  "reviews": [
+    {
+      "review_id": "review_0001",
+      "timestamp": "2026-03-31T07:57:43Z",
+      "candidate_id": "cand_1001",
+      "strategy_name": "Momentum Core Variant 1",
+      "promotion_score": 72.4,
+      "backtest_win_rate": 0.58,
+      "max_drawdown": 9.8,
+      "edge_score": 66.0,
+      "stability_score": 68.5,
+      "risk_budget_pct": 1.4,
+      "verdict": "APPROVED",
+      "blockers": []
+    },
+    {
+      "review_id": "review_0002",
+      "timestamp": "2026-03-31T07:57:43Z",
+      "candidate_id": "cand_1002",
+      "strategy_name": "Mean Reversion Core Variant 2",
+      "promotion_score": 67.8,
+      "backtest_win_rate": 0.55,
+      "max_drawdown": 10.5,
+      "edge_score": 58.5,
+      "stability_score": 61.0,
+      "risk_budget_pct": 1.8,
+      "verdict": "WATCHLIST",
+      "blockers": [
+        "promotion_score_below_threshold",
+        "backtest_win_rate_below_threshold",
+        "edge_score_below_threshold",
+        "stability_score_below_threshold"
+      ]
+    },
+    {
+      "review_id": "review_0003",
+      "timestamp": "2026-03-31T07:57:43Z",
+      "candidate_id": "cand_1003",
+      "strategy_name": "Crypto Breakout Variant 3",
+      "promotion_score": 61.0,
+      "backtest_win_rate": 0.51,
+      "max_drawdown": 16.2,
+      "edge_score": 54.0,
+      "stability_score": 57.0,
+      "risk_budget_pct": 2.6,
+      "verdict": "REJECTED",
+      "blockers": [
+        "promotion_score_below_threshold",
+        "backtest_win_rate_below_threshold",
+        "max_drawdown_above_limit",
+        "edge_score_below_threshold",
+        "stability_score_below_threshold",
+        "risk_budget_above_cap"
+      ]
+    }
+  ],
+  "watchlist": [
+    {
+      "review_id": "review_0002",
+      "timestamp": "2026-03-31T07:57:43Z",
+      "candidate_id": "cand_1002",
+      "strategy_name": "Mean Reversion Core Variant 2",
+      "promotion_score": 67.8,
+      "backtest_win_rate": 0.55,
+      "max_drawdown": 10.5,
+      "edge_score": 58.5,
+      "stability_score": 61.0,
+      "risk_budget_pct": 1.8,
+      "verdict": "WATCHLIST",
+      "blockers": [
+        "promotion_score_below_threshold",
+        "backtest_win_rate_below_threshold",
+        "edge_score_below_threshold",
+        "stability_score_below_threshold"
+      ]
+    }
+  ],
+  "history": [
+    {
+      "timestamp": "2026-03-31T07:57:43Z",
+      "event": "candidate.validated",
+      "candidate_id": "cand_1001",
+      "verdict": "APPROVED"
+    },
+    {
+      "timestamp": "2026-03-31T07:57:43Z",
+      "event": "candidate.validated",
+      "candidate_id": "cand_1002",
+      "verdict": "WATCHLIST"
+    },
+    {
+      "timestamp": "2026-03-31T07:57:43Z",
+      "event": "candidate.validated",
+      "candidate_id": "cand_1003",
+      "verdict": "REJECTED"
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — Multi-Broker Execution Fabric</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--panel2:#132742;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(15,29,49,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .sub{color:var(--muted);max-width:980px;line-height:1.5}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    button{border-radius:10px;border:none;background:var(--accent);color:var(--text);padding:10px 12px;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}.stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}
+    th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #274168;background:#0b1a2c;font-size:12px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:180px;white-space:pre-wrap}
+    @media (max-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:1fr}}
+    @media (max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT30450 — Multi-Broker Execution Fabric</h1>
+      <div class="sub">Broker registry, routing logic, execution ledger, and failover control. This is the execution infrastructure that prevents single-broker dependency and enables institutional scale.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="loadAll()">Refresh</button>
+      <button onclick="seedBroker()">Seed Broker</button>
+      <button onclick="seedRoute()">Seed Route</button>
+      <button onclick="seedExecution()">Seed Execution</button>
+      <button onclick="seedFailover()">Seed Failover</button>
+    </div>
+  </div>
+
+  <div class="grid" id="summaryGrid"></div>
+
+  <div class="layout">
+    <div class="stack">
+      <div class="card">
+        <h2>Broker Registry</h2>
+        <div class="table-wrap"><table id="brokerTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Routing Fabric</h2>
+        <div class="table-wrap"><table id="routeTable"></table></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card">
+        <h2>Execution Ledger</h2>
+        <div class="table-wrap"><table id="executionTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Failover Events</h2>
+        <div class="table-wrap"><table id="failoverTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Fabric Health</h2>
+        <div class="pills" id="healthPills"></div>
+      </div>
+      <div class="card">
+        <h2>Last Action</h2>
+        <pre id="actionOut">No action yet.</pre>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const api=(path, opts={})=>fetch(path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok) throw new Error(d.detail||'request_failed'); return d;});
+const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(Number(v||0));
+function table(el, headers, rows){
+  const thead = `<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  const body = rows.length ? rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${headers.length}">No data</td></tr>`;
+  el.innerHTML = thead + body;
+}
+function renderSummary(summary){
+  const labels = [
+    ['Brokers', summary.brokers_connected],
+    ['Routes', summary.routes_active],
+    ['Executions', summary.executions_total],
+    ['Success', summary.executions_successful],
+    ['Failovers', summary.failovers_triggered],
+    ['Fabric Score', summary.fabric_score]
+  ];
+  document.getElementById('summaryGrid').innerHTML = labels.map(([label,val])=>`<div class="card"><div class="label">${label}</div><div class="value">${val}</div></div>`).join('');
+}
+function pills(target, items){
+  document.getElementById(target).innerHTML = items.map(([label,klass])=>`<span class="pill ${klass}">${label}</span>`).join('');
+}
+async function loadAll(){
+  const data = await api('/workspace/brokers/summary');
+  renderSummary(data.summary);
+  table(document.getElementById('brokerTable'),
+    ['Broker','Type','Status','Latency','Created'],
+    (data.brokers||[]).map(r=>[r.broker_name, r.broker_type, r.status, `${r.latency_ms} ms`, r.created_at||'-'])
+  );
+  table(document.getElementById('routeTable'),
+    ['Route','Scope','Primary','Secondary','Status'],
+    (data.routes||[]).map(r=>[r.route_name, r.symbol_scope, r.primary_broker, r.secondary_broker||'-', r.status])
+  );
+  table(document.getElementById('executionTable'),
+    ['Broker','Symbol','Side','Notional','Status','Created'],
+    (data.executions||[]).map(r=>[r.broker_name, r.symbol, r.side, money(r.notional_amount), r.status, r.created_at||'-'])
+  );
+  table(document.getElementById('failoverTable'),
+    ['Route','From','To','Reason','Status'],
+    (data.failovers||[]).map(r=>[r.route_name, r.from_broker, r.to_broker, r.reason||'-', r.status])
+  );
+  pills('healthPills', [
+    [`Brokers ${data.fabric_health.broker_registry_ready?'Ready':'Missing'}`, data.fabric_health.broker_registry_ready?'good':'warn'],
+    [`Routing ${data.fabric_health.routing_ready?'Ready':'Missing'}`, data.fabric_health.routing_ready?'good':'warn'],
+    [`Ledger ${data.fabric_health.execution_ledger_ready?'Ready':'Missing'}`, data.fabric_health.execution_ledger_ready?'good':'warn'],
+    [`Failover ${data.fabric_health.failover_ready?'Ready':'Missing'}`, data.fabric_health.failover_ready?'good':'warn'],
+    [`Score ${data.fabric_health.fabric_score}`, data.fabric_health.fabric_score>=85?'good':'warn']
+  ]);
+}
+async function seedBroker(){
+  const res = await api('/workspace/brokers/create', {method:'POST', body: JSON.stringify({broker_name:'Interactive Brokers', broker_type:'execution', status:'active', latency_ms:95})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedRoute(){
+  const res = await api('/workspace/brokers/routes/create', {method:'POST', body: JSON.stringify({route_name:'US Equities Primary', symbol_scope:'US_EQ', primary_broker:'alpaca', secondary_broker:'Interactive Brokers', status:'active'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedExecution(){
+  const res = await api('/workspace/brokers/executions/create', {method:'POST', body: JSON.stringify({broker_name:'alpaca', symbol:'AAPL', side:'buy', notional_amount:5000, status:'filled'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedFailover(){
+  const res = await api('/workspace/brokers/failovers/create', {method:'POST', body: JSON.stringify({route_name:'US Equities Primary', from_broker:'alpaca', to_broker:'Interactive Brokers', reason:'latency spike', status:'triggered'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+loadAll().catch(err => document.getElementById('actionOut').textContent = String(err));
+</script>
+</body>
+</html>

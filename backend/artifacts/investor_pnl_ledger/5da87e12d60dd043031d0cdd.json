@@ -1,0 +1,33 @@
+{
+  "email": "operator@example.com",
+  "positions": [
+    {
+      "position_id": "pos_demo_1",
+      "symbol": "SPY",
+      "qty": 400.0,
+      "avg_price": 540.0,
+      "mark_price": 546.0,
+      "realized_pnl": 0.0,
+      "unrealized_pnl": 2400.0
+    },
+    {
+      "position_id": "pos_demo_2",
+      "symbol": "DX1",
+      "qty": 120.0,
+      "avg_price": 110.0,
+      "mark_price": 111.0,
+      "realized_pnl": 0.0,
+      "unrealized_pnl": 120.0
+    },
+    {
+      "position_id": "pos_demo_3",
+      "symbol": "IEF",
+      "qty": 900.0,
+      "avg_price": 96.0,
+      "mark_price": 96.4,
+      "realized_pnl": 0.0,
+      "unrealized_pnl": 360.0
+    }
+  ],
+  "ledger": []
+}

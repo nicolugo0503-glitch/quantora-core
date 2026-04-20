@@ -1,0 +1,17 @@
+{
+  "frontend_changes": [
+    "qnt30501_live_system_client.js now supports strictLive mode",
+    "mission_qnt30493_real_control.html now exposes a Strict live mode toggle",
+    "fallback can now be explicitly disabled from the UI"
+  ],
+  "backend_changes": [
+    "QNT30504StrictLiveAdapter rejects fallback state when require_live_data=true",
+    "designed to wrap the QNT30503 live system adapter before router binding"
+  ],
+  "true_live_definition": {
+    "runtime": "must not report fallback or missing",
+    "funds": "must contain live sleeve rows",
+    "investors": "must contain live investor rows",
+    "exposure": "must not report fallback source"
+  }
+}

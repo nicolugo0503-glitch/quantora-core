@@ -1,0 +1,124 @@
+{
+  "drift_monitor": {
+    "enabled": true,
+    "last_updated_at": "2026-03-31T15:53:13Z",
+    "last_snapshot_at": "2026-03-31T15:53:13Z",
+    "last_alert_at": "2026-03-31T15:53:13Z",
+    "snapshot_count": 2,
+    "alert_count": 2,
+    "regime_deviation_count": 2,
+    "telemetry": [
+      {
+        "timestamp": "2026-03-31T15:15:37Z",
+        "event": "snapshot.captured",
+        "symbol": "AAPL"
+      },
+      {
+        "timestamp": "2026-03-31T15:15:37Z",
+        "event": "drift.evaluated",
+        "triggered": true
+      },
+      {
+        "timestamp": "2026-03-31T15:53:13Z",
+        "event": "snapshot.captured",
+        "symbol": "AAPL"
+      },
+      {
+        "timestamp": "2026-03-31T15:53:13Z",
+        "event": "drift.evaluated",
+        "triggered": true
+      }
+    ]
+  },
+  "rules": {
+    "max_slippage_drift_bps": 8.0,
+    "max_latency_drift_ms": 180.0,
+    "min_fill_rate_delta": -0.06,
+    "max_volatility_regime_shift": 0.18,
+    "alert_on_regime_mismatch": true
+  },
+  "snapshots": [
+    {
+      "snapshot_id": "snap_0001",
+      "timestamp": "2026-03-31T15:15:37Z",
+      "symbol": "AAPL",
+      "baseline_slippage_bps": 12.0,
+      "current_slippage_bps": 24.5,
+      "baseline_latency_ms": 420.0,
+      "current_latency_ms": 690.0,
+      "baseline_fill_rate": 0.96,
+      "current_fill_rate": 0.87,
+      "baseline_regime_vol": 0.22,
+      "current_regime_vol": 0.46
+    },
+    {
+      "snapshot_id": "snap_0002",
+      "timestamp": "2026-03-31T15:53:13Z",
+      "symbol": "AAPL",
+      "baseline_slippage_bps": 12.0,
+      "current_slippage_bps": 24.5,
+      "baseline_latency_ms": 420.0,
+      "current_latency_ms": 690.0,
+      "baseline_fill_rate": 0.96,
+      "current_fill_rate": 0.87,
+      "baseline_regime_vol": 0.22,
+      "current_regime_vol": 0.46
+    }
+  ],
+  "alerts": [
+    {
+      "alert_id": "alert_0001",
+      "timestamp": "2026-03-31T15:15:37Z",
+      "symbol": "AAPL",
+      "slippage_drift_bps": 12.5,
+      "latency_drift_ms": 270.0,
+      "fill_rate_delta": -0.09,
+      "regime_vol_shift": 0.24,
+      "triggered": true,
+      "reasons": [
+        "slippage_drift",
+        "latency_drift",
+        "fill_rate_degradation",
+        "regime_shift"
+      ]
+    },
+    {
+      "alert_id": "alert_0002",
+      "timestamp": "2026-03-31T15:53:13Z",
+      "symbol": "AAPL",
+      "slippage_drift_bps": 12.5,
+      "latency_drift_ms": 270.0,
+      "fill_rate_delta": -0.09,
+      "regime_vol_shift": 0.24,
+      "triggered": true,
+      "reasons": [
+        "slippage_drift",
+        "latency_drift",
+        "fill_rate_degradation",
+        "regime_shift"
+      ]
+    }
+  ],
+  "history": [
+    {
+      "timestamp": "2026-03-31T15:15:37Z",
+      "event": "snapshot.captured",
+      "symbol": "AAPL"
+    },
+    {
+      "timestamp": "2026-03-31T15:15:37Z",
+      "event": "drift.evaluated",
+      "triggered": true
+    },
+    {
+      "timestamp": "2026-03-31T15:53:13Z",
+      "event": "snapshot.captured",
+      "symbol": "AAPL"
+    },
+    {
+      "timestamp": "2026-03-31T15:53:13Z",
+      "event": "drift.evaluated",
+      "triggered": true
+    }
+  ]
+}

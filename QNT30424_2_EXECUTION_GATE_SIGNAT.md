@@ -1,0 +1,1 @@
+QNT30424.2 fixed execution gate signature bug in workspace submit path.\n\n- fixed billing execution eligibility call to pass a user dict + execution mode\n- moved gate check after broker resolution so paper/live mode is available\n- preserves order-before-broker-write path from QNT30424.1\n

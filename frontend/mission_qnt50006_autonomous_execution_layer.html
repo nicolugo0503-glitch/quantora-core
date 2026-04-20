@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QNT50006 — Autonomous Execution Layer</title>
+  <style>
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#07101d;color:#edf4ff}
+    .wrap{max-width:1120px;margin:0 auto;padding:32px}
+    .hero,.card{background:#0d1a2c;border:1px solid #223754;border-radius:18px;padding:24px;box-shadow:0 12px 34px rgba(0,0,0,.28)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:18px}
+    h1,h2{margin:0 0 12px}
+    .eyebrow{letter-spacing:.18em;text-transform:uppercase;color:#89b9ff;font-size:12px}
+    .pill{display:inline-block;padding:8px 12px;border-radius:999px;background:#163457;margin:6px 8px 0 0}
+    ul{padding-left:18px;line-height:1.6}
+    code{background:#091425;padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Quantora • Autonomous Capital Dispatch</div>
+      <h1>QNT50006 — Autonomous Execution Layer</h1>
+      <p>Quantora now closes the loop from approved deployment tickets to controlled broker submission. This layer ingests the QNT50003 release queue, applies QNT50004 and QNT50005 gating, converts target capital into executable order envelopes, and routes eligible orders through QNT50001 without bypassing safe mode or audit controls.</p>
+      <span class="pill">Release queue ingestion</span>
+      <span class="pill">Risk + performance gating</span>
+      <span class="pill">Autonomous order planning</span>
+      <span class="pill">Controlled execution cycle</span>
+    </section>
+    <div class="grid">
+      <section class="card">
+        <h2>Autonomous Controls</h2>
+        <ul>
+          <li>Execution is policy-gated and disabled by default until explicitly enabled.</li>
+          <li>Live autonomy is blocked when safe mode is on, the broker is paper, or the kill-switch is active.</li>
+          <li>Stress-regime, drawdown, and Sharpe thresholds are enforced before a cycle can execute.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Cycle Behavior</h2>
+        <ul>
+          <li>Approved release tickets are transformed into execution envelopes with capital, quantity, and decision lineage.</li>
+          <li>Increase paths can execute automatically; reduction paths are escalated when inventory context is missing.</li>
+          <li>Every cycle is written into its own audit trail and mirrored into execution audit history.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Endpoints</h2>
+        <ul>
+          <li><code>GET /autonomous-execution/health</code></li>
+          <li><code>POST /autonomous-execution/ingest-release</code></li>
+          <li><code>POST /autonomous-execution/plan-cycle</code></li>
+          <li><code>POST /autonomous-execution/execute-cycle</code></li>
+          <li><code>GET /autonomous-execution/cycles</code></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

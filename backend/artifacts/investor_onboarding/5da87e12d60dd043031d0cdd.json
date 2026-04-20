@@ -1,0 +1,97 @@
+{
+  "email": "operator@example.com",
+  "investors": [
+    {
+      "investor_id": "inv_qnt_001",
+      "name": "Meridian Endowment Fund",
+      "status": "active",
+      "commitment": 500000.0,
+      "checklist": {
+        "nda_signed": true,
+        "subscription_agreement": true,
+        "kyc_completed": true,
+        "accreditation_verified": true,
+        "capital_commitment": true
+      },
+      "documents": [
+        {
+          "doc_id": "sub_inv_qnt_001",
+          "type": "subscription",
+          "name": "Subscription Agreement",
+          "status": "uploaded",
+          "created_at": 1773705600
+        },
+        {
+          "doc_id": "kyc_inv_qnt_001",
+          "type": "kyc",
+          "name": "KYC Package",
+          "status": "uploaded",
+          "created_at": 1773705600
+        }
+      ],
+      "created_at": 1773705600
+    },
+    {
+      "investor_id": "inv_qnt_002",
+      "name": "Aurora Family Office",
+      "status": "active",
+      "commitment": 350000.0,
+      "checklist": {
+        "nda_signed": true,
+        "subscription_agreement": true,
+        "kyc_completed": true,
+        "accreditation_verified": true,
+        "capital_commitment": true
+      },
+      "documents": [
+        {
+          "doc_id": "sub_inv_qnt_002",
+          "type": "subscription",
+          "name": "Subscription Agreement",
+          "status": "uploaded",
+          "created_at": 1773705600
+        },
+        {
+          "doc_id": "kyc_inv_qnt_002",
+          "type": "kyc",
+          "name": "KYC Package",
+          "status": "uploaded",
+          "created_at": 1773705600
+        }
+      ],
+      "created_at": 1773705600
+    },
+    {
+      "investor_id": "inv_qnt_003",
+      "name": "Northstar Treasury Partners",
+      "status": "active",
+      "commitment": 250000.0,
+      "checklist": {
+        "nda_signed": true,
+        "subscription_agreement": true,
+        "kyc_completed": true,
+        "accreditation_verified": true,
+        "capital_commitment": true
+      },
+      "documents": [
+        {
+          "doc_id": "sub_inv_qnt_003",
+          "type": "subscription",
+          "name": "Subscription Agreement",
+          "status": "uploaded",
+          "created_at": 1773705600
+        },
+        {
+          "doc_id": "kyc_inv_qnt_003",
+          "type": "kyc",
+          "name": "KYC Package",
+          "status": "uploaded",
+          "created_at": 1773705600
+        }
+      ],
+      "created_at": 1773705600
+    }
+  ],
+  "created_at": 1775967384,
+  "updated_at": 1775967384
+}

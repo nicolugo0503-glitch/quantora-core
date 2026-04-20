@@ -1,0 +1,111 @@
+{
+  "committee_engine": {
+    "enabled": true,
+    "last_updated_at": "2026-03-31T06:32:03Z",
+    "last_vote_at": "2026-03-31T06:32:03Z",
+    "last_compile_at": "2026-03-31T06:32:03Z",
+    "committee_count": 1,
+    "proposal_count": 1,
+    "vote_count": 2,
+    "approved_count": 1,
+    "rejected_count": 0,
+    "telemetry": []
+  },
+  "committees": [
+    {
+      "committee_id": "capital_committee_primary",
+      "name": "Primary Capital Committee",
+      "quorum": 2,
+      "approval_threshold": 0.6,
+      "members": [
+        {
+          "member_id": "cio",
+          "role": "chair",
+          "weight": 1.5
+        },
+        {
+          "member_id": "risk",
+          "role": "risk",
+          "weight": 1.0
+        },
+        {
+          "member_id": "allocator",
+          "role": "allocator",
+          "weight": 1.0
+        }
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "committee_id": "capital_committee_primary",
+      "title": "Increase NVDA breakout capital",
+      "requested_capital": 50000.0,
+      "strategy_id": "nvda_breakout",
+      "proposal_id": "proposal_0001",
+      "status": "approved",
+      "votes": [
+        {
+          "member_id": "cio",
+          "decision": "approve",
+          "weight": 1.5,
+          "comment": null,
+          "timestamp": "2026-03-31T06:32:03Z"
+        },
+        {
+          "member_id": "risk",
+          "decision": "approve",
+          "weight": 1.0,
+          "comment": null,
+          "timestamp": "2026-03-31T06:32:03Z"
+        }
+      ],
+      "created_at": "2026-03-31T06:32:03Z",
+      "compiled_allocation": {
+        "recommended_capital": 50000.0,
+        "requested_capital": 50000.0,
+        "approve_ratio": 1.0,
+        "yes_weight": 2.5,
+        "no_weight": 0,
+        "compiled_at": "2026-03-31T06:32:03Z",
+        "allocation_action": "increase"
+      }
+    }
+  ],
+  "routing": {
+    "default_quorum": 2,
+    "approval_threshold": 0.6,
+    "auto_compile_on_quorum": true,
+    "allow_tie_reject": true
+  },
+  "history": [
+    {
+      "timestamp": "2026-03-31T06:32:03Z",
+      "event": "committees.upserted",
+      "count": 1
+    },
+    {
+      "timestamp": "2026-03-31T06:32:03Z",
+      "event": "proposal.created",
+      "proposal_id": "proposal_0001"
+    },
+    {
+      "timestamp": "2026-03-31T06:32:03Z",
+      "event": "vote.cast",
+      "proposal_id": "proposal_0001",
+      "member_id": "cio"
+    },
+    {
+      "timestamp": "2026-03-31T06:32:03Z",
+      "event": "vote.cast",
+      "proposal_id": "proposal_0001",
+      "member_id": "risk"
+    },
+    {
+      "timestamp": "2026-03-31T06:32:03Z",
+      "event": "allocation.compiled",
+      "proposal_id": "proposal_0001",
+      "status": "approved"
+    }
+  ]
+}

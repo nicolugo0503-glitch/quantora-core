@@ -1,0 +1,20 @@
+{
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/api/diagnostics/live-validation",
+      "purpose": "full live validation report"
+    },
+    {
+      "method": "GET",
+      "path": "/api/diagnostics/health-summary",
+      "purpose": "lightweight readiness summary"
+    }
+  ],
+  "live_ready_definition": {
+    "runtime_live": "runtime status must not be fallback or missing",
+    "fund_rows_live": "fund summary must contain live sleeve rows",
+    "investor_rows_live": "investor overview must contain live rows",
+    "exposure_live": "exposure source must not be fallback"
+  }
+}

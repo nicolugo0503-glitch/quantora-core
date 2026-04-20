@@ -1,0 +1,100 @@
+{
+  "operator_id": "operator_28129BAC",
+  "display_name": "nico",
+  "capital_decision": {
+    "approved": true,
+    "capital_allocated": 16195
+  },
+  "strategies": {
+    "strategies": []
+  },
+  "strategy_engine": {
+    "metrics": {},
+    "logs": [],
+    "last_engine_run_at": null,
+    "last_engine_status": "idle"
+  },
+  "risk_engine": {
+    "enabled": true,
+    "max_position_notional": 5000.0,
+    "max_total_exposure": 20000.0,
+    "max_drawdown_pct": 12.0,
+    "max_daily_loss": 1500.0,
+    "max_orders_per_run": 3,
+    "require_broker_for_alpaca": true,
+    "auto_shutdown_on_breach": true,
+    "kill_switch_active": false,
+    "breached": false,
+    "breach_count": 0,
+    "last_breach": null,
+    "last_breach_reason": "Broker capital mode selected but broker snapshot is unavailable",
+    "last_evaluated_at": "2026-04-01T16:02:04Z",
+    "peak_equity": 1000.0,
+    "current_equity": 0.0,
+    "current_drawdown_pct": 0.0,
+    "day_start_date": "2026-04-01",
+    "day_start_realized_pnl": 0.0,
+    "current_daily_realized_pnl": 0.0,
+    "current_total_exposure": 0.0,
+    "max_trades_per_session": 2,
+    "max_notional_per_trade": 20.0,
+    "session_trade_count": 0,
+    "session_started_at": "2026-04-01T16:02:04Z",
+    "live_risk_lock_required": true
+  },
+  "capital_source": {
+    "mode": "broker",
+    "provider": "alpaca",
+    "last_updated_at": "2026-03-27T16:10:07Z",
+    "last_updated_by": "n@example.com"
+  },
+  "orders": {
+    "orders": []
+  },
+  "allocator_caps": {
+    "operator": {
+      "operator_id": "operator_28129BAC",
+      "allocated_capital": 1000.0,
+      "status": "FUNDED",
+      "updated_at": "2026-03-27T16:10:07Z"
+    }
+  },
+  "strategy_loop": {
+    "running": false,
+    "execution_mode": "internal",
+    "interval_seconds": 60,
+    "last_run_at": null,
+    "next_run_at": null,
+    "heartbeat_at": null,
+    "total_runs": 0,
+    "total_signals": 0,
+    "total_orders": 0
+  },
+  "monitoring": {
+    "latest_snapshot": {
+      "timestamp": "2026-04-01T16:02:04Z",
+      "order_count": 0,
+      "used_capital": 0.0,
+      "allocated_capital": 0.0,
+      "remaining_capital": 0.0,
+      "utilization_pct": 0.0,
+      "capital_mode": "broker",
+      "capital_label": "alpaca",
+      "alerts_count": 1,
+      "strategy_realized_pnl": 0.0,
+      "strategy_unrealized_pnl": 0.0,
+      "active_strategies": 0,
+      "risk_breached": false,
+      "drawdown_pct": 0.0,
+      "daily_realized_pnl": 0.0
+    },
+    "alerts": [
+      {
+        "level": "warn",
+        "type": "capital-source",
+        "message": "Broker capital mode selected but broker snapshot is unavailable"
+      }
+    ],
+    "last_evaluated_at": "2026-04-01T16:02:04Z"
+  }
+}

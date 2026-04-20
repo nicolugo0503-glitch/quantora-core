@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30596 Investor Dealing Day / NAV Cutoff Control</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,select,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:84px}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr 2fr auto auto auto;gap:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1300px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30596 · Investor Dealing Day / NAV Cutoff Control Engine</h1>
+        <div style="color:#9fb3d8">Controls dealing dates, pending capital activity, and NAV cutoff locking. This is the dealing-day gate for subscriptions and redemptions.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30595_capital_activity.html">Capital Activity</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Dealing Days</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Open</div><div id="open" class="value">-</div></div>
+    <div class="card"><div class="label">Locked</div><div id="locked" class="value">-</div></div>
+    <div class="card"><div class="label">Pending Flow</div><div id="flow" class="value">-</div></div>
+    <div class="card"><div class="label">Cutoff Hour UTC</div><div id="cutoff" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="dealingDate" placeholder="Dealing date YYYY-MM-DD">
+      <input id="adminEmail" placeholder="Investor email for admin actions">
+      <input id="cutoffHour" placeholder="Cutoff hour UTC">
+      <textarea id="notes" placeholder="Notes"></textarea>
+      <button onclick="createDay()">Create Day</button>
+      <button onclick="setPolicy()">Set Policy</button>
+      <button onclick="lockLatest()">Apply Cutoff</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Dealing Day Registry</div>
+    <table>
+      <thead><tr><th>Date</th><th>Status</th><th>Cutoff</th><th>Pending Requests</th><th>Net Pending Flow</th><th>Applied</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Dealing Day Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function dt(v){ return v ? new Date(v*1000).toLocaleString() : '-'; }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/dealing-day/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  const latest = d.latest_dealing_day || {};
+  document.getElementById('count').textContent = String(d.dealing_day_count || 0);
+  document.getElementById('open').textContent = String(d.open_count || 0);
+  document.getElementById('locked').textContent = String(d.locked_count || 0);
+  document.getElementById('flow').textContent = money(latest.net_pending_flow || 0);
+  document.getElementById('cutoff').textContent = String((d.cutoff_policy || {}).cutoff_hour_utc ?? '-');
+  document.getElementById('rows').innerHTML = (d.dealing_days || []).map(x =>
+    `<tr><td>${x.dealing_date}</td><td>${x.status}</td><td>${x.cutoff_status}</td><td>${x.pending_request_count}</td><td>${money(x.net_pending_flow)}</td><td>${dt(x.cutoff_applied_at)}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function createDay(){
+  await j('/api/dealing-day/create', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({dealing_date: document.getElementById('dealingDate').value})});
+  await load();
+}
+async function setPolicy(){
+  const payload = {
+    email: document.getElementById('adminEmail').value,
+    cutoff_hour_utc: Number(document.getElementById('cutoffHour').value || 17),
+    dealing_frequency: 'daily',
+    same_day_processing: true
+  };
+  await j('/api/dealing-day/policy', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function lockLatest(){
+  const res = await j('/api/dealing-day/summary');
+  const latest = res.data.latest_dealing_day;
+  if(!latest) return;
+  await j('/api/dealing-day/apply-cutoff', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email: document.getElementById('adminEmail').value, day_id: latest.day_id, notes: document.getElementById('notes').value})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

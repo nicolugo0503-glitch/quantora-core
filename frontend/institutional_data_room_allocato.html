@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — Institutional Data Room + Allocator Access Layer</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--panel2:#132742;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(15,29,49,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .sub{color:var(--muted);max-width:980px;line-height:1.5}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    button{border-radius:10px;border:none;background:var(--accent);color:var(--text);padding:10px 12px;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}.stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}
+    th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #274168;background:#0b1a2c;font-size:12px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:180px;white-space:pre-wrap}
+    @media (max-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:1fr}}
+    @media (max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT30458 — Institutional Data Room + Allocator Access Layer</h1>
+      <div class="sub">Data room folders, document publishing, allocator access control, and session visibility. This is the institutional access layer that lets serious allocators review Quantora like a real fund.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="loadAll()">Refresh</button>
+      <button onclick="seedFolder()">Seed Folder</button>
+      <button onclick="seedDocument()">Seed Document</button>
+      <button onclick="seedGrant()">Seed Access</button>
+      <button onclick="seedSession()">Seed Session</button>
+    </div>
+  </div>
+
+  <div class="grid" id="summaryGrid"></div>
+
+  <div class="layout">
+    <div class="stack">
+      <div class="card">
+        <h2>Data Room Folders</h2>
+        <div class="table-wrap"><table id="folderTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Published Documents</h2>
+        <div class="table-wrap"><table id="documentTable"></table></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card">
+        <h2>Access Grants</h2>
+        <div class="table-wrap"><table id="grantTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Allocator Sessions</h2>
+        <div class="table-wrap"><table id="sessionTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Room Health</h2>
+        <div class="pills" id="healthPills"></div>
+      </div>
+      <div class="card">
+        <h2>Last Action</h2>
+        <pre id="actionOut">No action yet.</pre>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const api=(path, opts={})=>fetch(path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok) throw new Error(d.detail||'request_failed'); return d;});
+function table(el, headers, rows){
+  const thead = `<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  const body = rows.length ? rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${headers.length}">No data</td></tr>`;
+  el.innerHTML = thead + body;
+}
+function renderSummary(summary){
+  const labels = [
+    ['Folders', summary.folders_total],
+    ['Active Folders', summary.folders_active],
+    ['Documents', summary.documents_total],
+    ['Published Docs', summary.documents_published],
+    ['Active Grants', summary.access_grants_active],
+    ['Room Score', summary.room_score]
+  ];
+  document.getElementById('summaryGrid').innerHTML = labels.map(([label,val])=>`<div class="card"><div class="label">${label}</div><div class="value">${val}</div></div>`).join('');
+}
+function pills(target, items){
+  document.getElementById(target).innerHTML = items.map(([label,klass])=>`<span class="pill ${klass}">${label}</span>`).join('');
+}
+async function loadAll(){
+  const data = await api('/workspace/data-room/summary');
+  renderSummary(data.summary);
+  table(document.getElementById('folderTable'),
+    ['Folder','Type','Status','Created'],
+    (data.folders||[]).map(r=>[r.folder_name, r.folder_type, r.status, r.created_at||'-'])
+  );
+  table(document.getElementById('documentTable'),
+    ['Document','Folder','Type','Status','Created'],
+    (data.documents||[]).map(r=>[r.document_name, r.folder_name, r.document_type, r.status, r.created_at||'-'])
+  );
+  table(document.getElementById('grantTable'),
+    ['Allocator','Scope','Status','Expires','Created'],
+    (data.access_grants||[]).map(r=>[r.allocator_name, r.access_scope, r.status, r.expires_at||'-', r.created_at||'-'])
+  );
+  table(document.getElementById('sessionTable'),
+    ['Allocator','Last Document','Status','Created'],
+    (data.allocator_sessions||[]).map(r=>[r.allocator_name, r.last_document, r.status, r.created_at||'-'])
+  );
+  pills('healthPills', [
+    [`Folders ${data.room_health.folder_registry_ready?'Ready':'Missing'}`, data.room_health.folder_registry_ready?'good':'warn'],
+    [`Docs ${data.room_health.document_registry_ready?'Ready':'Missing'}`, data.room_health.document_registry_ready?'good':'warn'],
+    [`Access ${data.room_health.access_control_ready?'Ready':'Missing'}`, data.room_health.access_control_ready?'good':'warn'],
+    [`Sessions ${data.room_health.allocator_session_ready?'Ready':'Missing'}`, data.room_health.allocator_session_ready?'good':'warn'],
+    [`Score ${data.room_health.room_score}`, data.room_health.room_score>=85?'good':'warn']
+  ]);
+}
+async function seedFolder(){
+  const res = await api('/workspace/data-room/folders/create', {method:'POST', body: JSON.stringify({folder_name:'Allocator DDQ', folder_type:'diligence', status:'active'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedDocument(){
+  const res = await api('/workspace/data-room/documents/create', {method:'POST', body: JSON.stringify({document_name:'Quarterly Fund Tearsheet', folder_name:'Allocator DDQ', document_type:'pdf', status:'published'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedGrant(){
+  const res = await api('/workspace/data-room/access/create', {method:'POST', body: JSON.stringify({allocator_name:'Northstar Capital', access_scope:'ddq_plus_reporting', status:'active', expires_at:'2026-12-31'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedSession(){
+  const res = await api('/workspace/data-room/sessions/create', {method:'POST', body: JSON.stringify({allocator_name:'Northstar Capital', last_document:'Quarterly Fund Tearsheet', status:'active'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+loadAll().catch(err => document.getElementById('actionOut').textContent = String(err));
+</script>
+</body>
+</html>

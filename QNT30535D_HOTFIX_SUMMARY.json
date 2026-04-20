@@ -1,0 +1,6 @@
+{
+  "base_zip": "QUANTORA_FULL_PROJECT_QNT30535C_IMPORT_FIX_FINAL.zip",
+  "fixed_file": "backend/app/qnt30531_integration.py",
+  "issue": "IndentationError: unexpected indent",
+  "fix": "Rewrote qnt30531_integration.py from scratch with clean indentation and optional QNT30533/QNT30534 loading"
+}

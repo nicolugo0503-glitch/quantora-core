@@ -1,0 +1,186 @@
+{
+  "generated_by": "QNT50018",
+  "status": "ready",
+  "policy": {
+    "base_currency": "USD",
+    "auto_sync_sources": true,
+    "require_approval": true,
+    "approval_threshold": 250000.0,
+    "require_treasury_capacity": true,
+    "require_disclosure_acknowledgement": false,
+    "default_settlement_route": "internal_treasury_route",
+    "retention_days": 2555
+  },
+  "last_sync": {
+    "synced_at": 1776442033,
+    "source": "smoke",
+    "treasury_available_to_move": 255000.0,
+    "treasury_cash_balance": 300000.0,
+    "treasury_transfer_count": 1,
+    "latest_treasury_transfer_id": "trf_f5384c46bd99",
+    "latest_treasury_status": "executed",
+    "settlement_pending_count": 0,
+    "settlement_break_count": 0,
+    "latest_settlement_id": "",
+    "latest_settlement_status": "",
+    "supervisory_acknowledgement_count": 1,
+    "latest_acknowledgement_id": "rsa_fc2965648772",
+    "latest_acknowledgement_outcome": "accepted"
+  },
+  "sync_history": [
+    {
+      "synced_at": 1776442033,
+      "source": "smoke",
+      "treasury_available_to_move": 255000.0,
+      "treasury_cash_balance": 300000.0,
+      "treasury_transfer_count": 1,
+      "latest_treasury_transfer_id": "trf_f5384c46bd99",
+      "latest_treasury_status": "executed",
+      "settlement_pending_count": 0,
+      "settlement_break_count": 0,
+      "latest_settlement_id": "",
+      "latest_settlement_status": "",
+      "supervisory_acknowledgement_count": 1,
+      "latest_acknowledgement_id": "rsa_fc2965648772",
+      "latest_acknowledgement_outcome": "accepted"
+    }
+  ],
+  "flow_cases": [
+    {
+      "flow_case_id": "icf_4b240adfaef7",
+      "created_at": 1776442033,
+      "created_by": "smoke",
+      "from_entity": "fund_master",
+      "to_entity": "spv_delta",
+      "amount": 1000.0,
+      "currency": "USD",
+      "purpose": "working capital rebalance",
+      "flow_type": "intercompany_funding",
+      "effective_date": "",
+      "treasury_transfer_id": "",
+      "settlement_id": "",
+      "reference_id": "",
+      "legal_entity_id": "",
+      "counterparty_entity_id": "",
+      "fund_id": "fund_master",
+      "spv_id": "spv_delta",
+      "strategy_id": "",
+      "jurisdiction": "US",
+      "notes": "",
+      "approval_required": true,
+      "status": "settled",
+      "retention_until": 1997194033,
+      "context_snapshot": {
+        "synced_at": 1776442033,
+        "source": "smoke",
+        "treasury_available_to_move": 255000.0,
+        "treasury_cash_balance": 300000.0,
+        "treasury_transfer_count": 1,
+        "latest_treasury_transfer_id": "trf_f5384c46bd99",
+        "latest_treasury_status": "executed",
+        "settlement_pending_count": 0,
+        "settlement_break_count": 0,
+        "latest_settlement_id": "",
+        "latest_settlement_status": "",
+        "supervisory_acknowledgement_count": 1,
+        "latest_acknowledgement_id": "rsa_fc2965648772",
+        "latest_acknowledgement_outcome": "accepted"
+      },
+      "approved_by": "controller",
+      "approved_at": 1776442033,
+      "approval_memo": "",
+      "journal_entry_id": "icj_6e46d0626d05",
+      "posted_at": 1776442033,
+      "settlement_record_id": "ics_ae1b83a7b93a",
+      "settled_at": 1776442033
+    }
+  ],
+  "journal_entries": [
+    {
+      "journal_entry_id": "icj_6e46d0626d05",
+      "flow_case_id": "icf_4b240adfaef7",
+      "posted_at": 1776442033,
+      "posted_by": "ledger_ops",
+      "currency": "USD",
+      "amount": 1000.0,
+      "debit": {
+        "entity": "spv_delta",
+        "account": "due_from_affiliate",
+        "amount": 1000.0
+      },
+      "credit": {
+        "entity": "fund_master",
+        "account": "due_to_affiliate",
+        "amount": 1000.0
+      },
+      "memo": "working capital rebalance",
+      "reference_id": "icf_4b240adfaef7"
+    }
+  ],
+  "settlements": [
+    {
+      "settlement_record_id": "ics_ae1b83a7b93a",
+      "flow_case_id": "icf_4b240adfaef7",
+      "settled_at": 1776442033,
+      "settled_by": "treasury_ops",
+      "treasury_transfer_id": "",
+      "settlement_id": "",
+      "settlement_route": "internal_treasury_route",
+      "amount": 1000.0,
+      "currency": "USD",
+      "memo": ""
+    }
+  ],
+  "exceptions": [],
+  "audit_log": [
+    {
+      "event_id": "intercompany_ledger_audit_1776442033953488630",
+      "event_type": "intercompany_flow_settled",
+      "timestamp": 1776442033,
+      "flow_case_id": "icf_4b240adfaef7",
+      "settlement_record_id": "ics_ae1b83a7b93a"
+    },
+    {
+      "event_id": "intercompany_ledger_audit_1776442033952846802",
+      "event_type": "intercompany_flow_posted",
+      "timestamp": 1776442033,
+      "flow_case_id": "icf_4b240adfaef7",
+      "journal_entry_id": "icj_6e46d0626d05"
+    },
+    {
+      "event_id": "intercompany_ledger_audit_1776442033952171069",
+      "event_type": "intercompany_flow_approved",
+      "timestamp": 1776442033,
+      "flow_case_id": "icf_4b240adfaef7",
+      "approver": "controller"
+    },
+    {
+      "event_id": "intercompany_ledger_audit_1776442033951075272",
+      "event_type": "intercompany_flow_registered",
+      "timestamp": 1776442033,
+      "flow_case_id": "icf_4b240adfaef7",
+      "from_entity": "fund_master",
+      "to_entity": "spv_delta",
+      "amount": 1000.0
+    },
+    {
+      "event_id": "intercompany_ledger_audit_1776442033950533586",
+      "event_type": "intercompany_context_synced",
+      "timestamp": 1776442033,
+      "synced_at": 1776442033,
+      "source": "smoke",
+      "treasury_available_to_move": 255000.0,
+      "treasury_cash_balance": 300000.0,
+      "treasury_transfer_count": 1,
+      "latest_treasury_transfer_id": "trf_f5384c46bd99",
+      "latest_treasury_status": "executed",
+      "settlement_pending_count": 0,
+      "settlement_break_count": 0,
+      "latest_settlement_id": "",
+      "latest_settlement_status": "",
+      "supervisory_acknowledgement_count": 1,
+      "latest_acknowledgement_id": "rsa_fc2965648772",
+      "latest_acknowledgement_outcome": "accepted"
+    }
+  ]
+}

@@ -1,0 +1,374 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 365,
+    "minimum_score": 96.0,
+    "minimum_production_register_readiness": 0.97,
+    "minimum_access_determination_review_readiness": 0.97,
+    "minimum_archive_disclosure_control_readiness": 0.97,
+    "maximum_open_disclosure_exceptions": 0
+  },
+  "runs": [
+    {
+      "run_id": "qnt40033_1776233477",
+      "captured_at": "2026-04-15T06:11:17.189924+00:00",
+      "production_register_readiness": 0.99,
+      "access_determination_review_readiness": 0.99,
+      "archive_disclosure_control_readiness": 0.99,
+      "open_disclosure_exceptions": 0,
+      "score": 92.0,
+      "band": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "posture": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "reasons": [
+        "governance record access challenge posture must be established before archive disclosure control"
+      ],
+      "alerts": [
+        "ACCESS_CHALLENGE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40033_1776233474",
+      "captured_at": "2026-04-15T06:11:14.278547+00:00",
+      "production_register_readiness": 0.99,
+      "access_determination_review_readiness": 0.99,
+      "archive_disclosure_control_readiness": 0.99,
+      "open_disclosure_exceptions": 0,
+      "score": 92.0,
+      "band": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "posture": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "reasons": [
+        "governance record access challenge posture must be established before archive disclosure control"
+      ],
+      "alerts": [
+        "ACCESS_CHALLENGE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40033_1776233376",
+      "captured_at": "2026-04-15T06:09:36.827158+00:00",
+      "production_register_readiness": 0.99,
+      "access_determination_review_readiness": 0.99,
+      "archive_disclosure_control_readiness": 0.99,
+      "open_disclosure_exceptions": 0,
+      "score": 92.0,
+      "band": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "posture": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "reasons": [
+        "governance record access challenge posture must be established before archive disclosure control"
+      ],
+      "alerts": [
+        "ACCESS_CHALLENGE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40033_1776233373",
+      "captured_at": "2026-04-15T06:09:33.980636+00:00",
+      "production_register_readiness": 0.99,
+      "access_determination_review_readiness": 0.99,
+      "archive_disclosure_control_readiness": 0.99,
+      "open_disclosure_exceptions": 0,
+      "score": 92.0,
+      "band": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "posture": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "reasons": [
+        "governance record access challenge posture must be established before archive disclosure control"
+      ],
+      "alerts": [
+        "ACCESS_CHALLENGE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40033_1776232178",
+      "captured_at": "2026-04-15T05:49:38.872730+00:00",
+      "production_register_readiness": 0.99,
+      "access_determination_review_readiness": 0.99,
+      "archive_disclosure_control_readiness": 0.99,
+      "open_disclosure_exceptions": 0,
+      "score": 92.0,
+      "band": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "posture": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "reasons": [
+        "governance record access challenge posture must be established before archive disclosure control"
+      ],
+      "alerts": [
+        "ACCESS_CHALLENGE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40033_1776232174",
+      "captured_at": "2026-04-15T05:49:34.606105+00:00",
+      "production_register_readiness": 0.99,
+      "access_determination_review_readiness": 0.99,
+      "archive_disclosure_control_readiness": 0.99,
+      "open_disclosure_exceptions": 0,
+      "score": 92.0,
+      "band": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "posture": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "reasons": [
+        "governance record access challenge posture must be established before archive disclosure control"
+      ],
+      "alerts": [
+        "ACCESS_CHALLENGE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40033_1776231883",
+      "captured_at": "2026-04-15T05:44:43.503459+00:00",
+      "production_register_readiness": 0.99,
+      "access_determination_review_readiness": 0.99,
+      "archive_disclosure_control_readiness": 0.99,
+      "open_disclosure_exceptions": 0,
+      "score": 92.0,
+      "band": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "posture": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "reasons": [
+        "governance record access challenge posture must be established before archive disclosure control"
+      ],
+      "alerts": [
+        "ACCESS_CHALLENGE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40033_1776231879",
+      "captured_at": "2026-04-15T05:44:39.350178+00:00",
+      "production_register_readiness": 0.99,
+      "access_determination_review_readiness": 0.99,
+      "archive_disclosure_control_readiness": 0.99,
+      "open_disclosure_exceptions": 0,
+      "score": 92.0,
+      "band": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "posture": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "reasons": [
+        "governance record access challenge posture must be established before archive disclosure control"
+      ],
+      "alerts": [
+        "ACCESS_CHALLENGE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40033_1776231534",
+      "captured_at": "2026-04-15T05:38:54.309304+00:00",
+      "production_register_readiness": 0.99,
+      "access_determination_review_readiness": 0.99,
+      "archive_disclosure_control_readiness": 0.99,
+      "open_disclosure_exceptions": 0,
+      "score": 92.0,
+      "band": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "posture": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+      "reasons": [
+        "governance record access challenge posture must be established before archive disclosure control"
+      ],
+      "alerts": [
+        "ACCESS_CHALLENGE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    }
+  ],
+  "alerts": [
+    {
+      "captured_at": "2026-04-15T06:11:17.189929+00:00",
+      "code": "ACCESS_CHALLENGE_POSTURE_NOT_ESTABLISHED"
+    }
+  ],
+  "production_registers": [
+    {
+      "id": "production_register_1776233477",
+      "captured_at": "2026-04-15T06:11:17.187803+00:00",
+      "register_name": "supervisory production register FY2025",
+      "production_register_readiness": 0.99
+    },
+    {
+      "id": "production_register_1776233474",
+      "captured_at": "2026-04-15T06:11:14.274373+00:00",
+      "register_name": "supervisory production register FY2025",
+      "production_register_readiness": 0.99
+    },
+    {
+      "id": "production_register_1776233376",
+      "captured_at": "2026-04-15T06:09:36.825079+00:00",
+      "register_name": "supervisory production register FY2025",
+      "production_register_readiness": 0.99
+    },
+    {
+      "id": "production_register_1776233373",
+      "captured_at": "2026-04-15T06:09:33.978954+00:00",
+      "register_name": "supervisory production register FY2025",
+      "production_register_readiness": 0.99
+    },
+    {
+      "id": "production_register_1776232178",
+      "captured_at": "2026-04-15T05:49:38.870380+00:00",
+      "register_name": "supervisory production register FY2025",
+      "production_register_readiness": 0.99
+    },
+    {
+      "id": "production_register_1776232174",
+      "captured_at": "2026-04-15T05:49:34.603633+00:00",
+      "register_name": "supervisory production register FY2025",
+      "production_register_readiness": 0.99
+    },
+    {
+      "id": "production_register_1776231883",
+      "captured_at": "2026-04-15T05:44:43.500953+00:00",
+      "register_name": "supervisory production register FY2025",
+      "production_register_readiness": 0.99
+    },
+    {
+      "id": "production_register_1776231879",
+      "captured_at": "2026-04-15T05:44:39.347936+00:00",
+      "register_name": "supervisory production register FY2025",
+      "production_register_readiness": 0.99
+    },
+    {
+      "id": "production_register_1776231534",
+      "captured_at": "2026-04-15T05:38:54.307289+00:00",
+      "register_name": "supervisory production register FY2025",
+      "production_register_readiness": 0.99
+    }
+  ],
+  "access_determination_reviews": [
+    {
+      "id": "access_determination_review_1776233477",
+      "captured_at": "2026-04-15T06:11:17.188376+00:00",
+      "review_name": "archive access determination review FY2025",
+      "access_determination_review_readiness": 0.99
+    },
+    {
+      "id": "access_determination_review_1776233474",
+      "captured_at": "2026-04-15T06:11:14.274954+00:00",
+      "review_name": "archive access determination review FY2025",
+      "access_determination_review_readiness": 0.99
+    },
+    {
+      "id": "access_determination_review_1776233376",
+      "captured_at": "2026-04-15T06:09:36.825859+00:00",
+      "review_name": "archive access determination review FY2025",
+      "access_determination_review_readiness": 0.99
+    },
+    {
+      "id": "access_determination_review_1776233373",
+      "captured_at": "2026-04-15T06:09:33.979368+00:00",
+      "review_name": "archive access determination review FY2025",
+      "access_determination_review_readiness": 0.99
+    },
+    {
+      "id": "access_determination_review_1776232178",
+      "captured_at": "2026-04-15T05:49:38.871045+00:00",
+      "review_name": "archive access determination review FY2025",
+      "access_determination_review_readiness": 0.99
+    },
+    {
+      "id": "access_determination_review_1776232174",
+      "captured_at": "2026-04-15T05:49:34.604396+00:00",
+      "review_name": "archive access determination review FY2025",
+      "access_determination_review_readiness": 0.99
+    },
+    {
+      "id": "access_determination_review_1776231883",
+      "captured_at": "2026-04-15T05:44:43.501747+00:00",
+      "review_name": "archive access determination review FY2025",
+      "access_determination_review_readiness": 0.99
+    },
+    {
+      "id": "access_determination_review_1776231879",
+      "captured_at": "2026-04-15T05:44:39.348608+00:00",
+      "review_name": "archive access determination review FY2025",
+      "access_determination_review_readiness": 0.99
+    },
+    {
+      "id": "access_determination_review_1776231534",
+      "captured_at": "2026-04-15T05:38:54.307877+00:00",
+      "review_name": "archive access determination review FY2025",
+      "access_determination_review_readiness": 0.99
+    }
+  ],
+  "archive_disclosure_controls": [
+    {
+      "id": "archive_disclosure_control_1776233477",
+      "captured_at": "2026-04-15T06:11:17.189211+00:00",
+      "control_name": "archive disclosure control FY2025",
+      "archive_disclosure_control_readiness": 0.99
+    },
+    {
+      "id": "archive_disclosure_control_1776233474",
+      "captured_at": "2026-04-15T06:11:14.275531+00:00",
+      "control_name": "archive disclosure control FY2025",
+      "archive_disclosure_control_readiness": 0.99
+    },
+    {
+      "id": "archive_disclosure_control_1776233376",
+      "captured_at": "2026-04-15T06:09:36.826450+00:00",
+      "control_name": "archive disclosure control FY2025",
+      "archive_disclosure_control_readiness": 0.99
+    },
+    {
+      "id": "archive_disclosure_control_1776233373",
+      "captured_at": "2026-04-15T06:09:33.980074+00:00",
+      "control_name": "archive disclosure control FY2025",
+      "archive_disclosure_control_readiness": 0.99
+    },
+    {
+      "id": "archive_disclosure_control_1776232178",
+      "captured_at": "2026-04-15T05:49:38.871806+00:00",
+      "control_name": "archive disclosure control FY2025",
+      "archive_disclosure_control_readiness": 0.99
+    },
+    {
+      "id": "archive_disclosure_control_1776232174",
+      "captured_at": "2026-04-15T05:49:34.605143+00:00",
+      "control_name": "archive disclosure control FY2025",
+      "archive_disclosure_control_readiness": 0.99
+    },
+    {
+      "id": "archive_disclosure_control_1776231883",
+      "captured_at": "2026-04-15T05:44:43.502469+00:00",
+      "control_name": "archive disclosure control FY2025",
+      "archive_disclosure_control_readiness": 0.99
+    },
+    {
+      "id": "archive_disclosure_control_1776231879",
+      "captured_at": "2026-04-15T05:44:39.349243+00:00",
+      "control_name": "archive disclosure control FY2025",
+      "archive_disclosure_control_readiness": 0.99
+    },
+    {
+      "id": "archive_disclosure_control_1776231534",
+      "captured_at": "2026-04-15T05:38:54.308551+00:00",
+      "control_name": "archive disclosure control FY2025",
+      "archive_disclosure_control_readiness": 0.99
+    }
+  ],
+  "latest_run": {
+    "run_id": "qnt40033_1776233477",
+    "captured_at": "2026-04-15T06:11:17.189924+00:00",
+    "production_register_readiness": 0.99,
+    "access_determination_review_readiness": 0.99,
+    "archive_disclosure_control_readiness": 0.99,
+    "open_disclosure_exceptions": 0,
+    "score": 92.0,
+    "band": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+    "posture": "GOVERNANCE_ARCHIVE_DISCLOSURE_WATCH",
+    "reasons": [
+      "governance record access challenge posture must be established before archive disclosure control"
+    ],
+    "alerts": [
+      "ACCESS_CHALLENGE_POSTURE_NOT_ESTABLISHED"
+    ],
+    "operator_review_required": true
+  },
+  "last_context": {
+    "captured_at": "2026-04-15T06:11:17.189904+00:00",
+    "dep_a_summary": {
+      "posture": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "score": 100.0
+    }
+  }
+}

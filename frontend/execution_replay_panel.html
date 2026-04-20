@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30377 Execution Replay</title>
+  <style>
+    :root { --bg:#07111f; --panel:#0f1d31; --panel2:#132742; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#60a5fa; }
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .shell{max-width:1280px;margin:0 auto;padding:24px}.panel{background:rgba(15,29,49,.95);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px}
+    .metrics,.row{display:grid;gap:12px}.metrics{grid-template-columns:repeat(4,minmax(0,1fr))}.row{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .metric{background:#0a1526;border:1px solid #1e2d47;border-radius:14px;padding:14px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:26px;font-weight:700;margin-top:8px}
+    textarea{width:100%;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;padding:11px 12px;min-height:220px}
+    button{border:none;background:var(--accent);color:white;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700} button.secondary{background:#1d4ed8}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:280px;white-space:pre-wrap}.tiny{color:var(--muted);font-size:12px}
+    @media(max-width:900px){.metrics,.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">
+      <div>
+        <h1 style="margin:0 0 8px 0;">Execution Replay Lab + Fill Attribution Engine</h1>
+        <div class="tiny">Replay execution event streams and attribute fill quantity, PnL, and slippage back to individual venues.</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="secondary" onclick="window.location.href='index.html'">Command Center</button>
+        <button onclick="loadStatus()">Refresh</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="label">Replays</div><div class="value" id="m1">-</div></div>
+    <div class="metric"><div class="label">Attributions</div><div class="value" id="m2">-</div></div>
+    <div class="metric"><div class="label">Fill Count</div><div class="value" id="m3">-</div></div>
+    <div class="metric"><div class="label">Replay Count</div><div class="value" id="m4">-</div></div>
+  </div>
+
+  <div class="row">
+    <div class="panel">
+      <h2 style="margin-top:0">Replay Execution</h2>
+      <textarea id="replay_body">{
+  "order_id":"ord_3001",
+  "symbol":"AAPL",
+  "events":[
+    {"quantity":50,"latency_ms":420,"slippage_bps":12.5},
+    {"quantity":70,"latency_ms":510,"slippage_bps":14.2},
+    {"quantity":60,"latency_ms":460,"slippage_bps":10.8}
+  ]
+}</textarea>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        <button onclick="replayExecution()">Replay Execution</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2 style="margin-top:0">Attribute Fills</h2>
+      <textarea id="attr_body">{
+  "strategy_id":"strat_020",
+  "symbol":"AAPL",
+  "fills":[
+    {"venue_id":"alpaca_live","quantity":90,"realized_pnl":420,"slippage_bps":11.2},
+    {"venue_id":"venue_y","quantity":60,"realized_pnl":260,"slippage_bps":13.4},
+    {"venue_id":"alpaca_paper","quantity":30,"realized_pnl":75,"slippage_bps":16.8}
+  ]
+}</textarea>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="secondary" onclick="attributeFills()">Attribute Fills</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel"><h2 style="margin-top:0">Output</h2><pre id="out">Loading...</pre></div>
+</div>
+
+<script>
+const API="http://127.0.0.1:8010";
+async function req(path, method="GET", body=null){
+  const r=await fetch(API+path,{method,headers:{"Content-Type":"application/json"},body:body?JSON.stringify(body):null});
+  const d=await r.json();
+  if(!r.ok) throw new Error(JSON.stringify(d));
+  return d;
+}
+function render(data){
+  const r = data.replay_lab || {};
+  document.getElementById("m1").textContent = data.replay_count ?? "-";
+  document.getElementById("m2").textContent = data.attribution_count ?? "-";
+  document.getElementById("m3").textContent = r.fill_count ?? "-";
+  document.getElementById("m4").textContent = r.replay_count ?? "-";
+  document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+}
+async function loadStatus(){ try{ render(await req("/execution-replay/status")); } catch(e){ document.getElementById("out").textContent = String(e); } }
+async function replayExecution(){
+  try{
+    const body = JSON.parse(document.getElementById("replay_body").value);
+    const data = await req("/execution-replay/replay", "POST", body);
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+    await loadStatus();
+  }catch(e){ document.getElementById("out").textContent = String(e); }
+}
+async function attributeFills(){
+  try{
+    const body = JSON.parse(document.getElementById("attr_body").value);
+    const data = await req("/execution-replay/attribute", "POST", body);
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+    await loadStatus();
+  }catch(e){ document.getElementById("out").textContent = String(e); }
+}
+loadStatus();
+</script>
+</body>
+</html>

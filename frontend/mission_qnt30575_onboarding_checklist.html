@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30575 Investor Tasking + Onboarding Checklist</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+.row{display:grid;grid-template-columns:1fr 2fr auto auto;gap:10px}
+table{width:100%;border-collapse:collapse} th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+.good{color:#10b981}.warn{color:#f59e0b}
+@media(max-width:1100px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30575 · Investor Tasking + Onboarding Checklist</h1>
+        <div style="color:#9fb3d8">Structured onboarding progress engine for investors. Tracks required tasks across compliance, funding, reporting, and communications, with auto-reconciliation against real product activity.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30574_secure_inbox.html">Secure Inbox</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Progress</div><div id="progress" class="value">-</div></div>
+    <div class="card"><div class="label">Completed</div><div id="completed" class="value">-</div></div>
+    <div class="card"><div class="label">Pending</div><div id="pending" class="value">-</div></div>
+    <div class="card"><div class="label">Tasks</div><div id="total" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="taskId" placeholder="Task id">
+      <textarea id="taskNote" placeholder="Optional note"></textarea>
+      <button onclick="completeTask()">Complete</button>
+      <button onclick="reopenTask()">Reopen</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Checklist</div>
+    <table>
+      <thead><tr><th>Task</th><th>Category</th><th>Status</th><th>Completed</th><th>Notes</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Checklist Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+function dt(v){ return v ? new Date(v*1000).toLocaleString() : '-'; }
+async function load(){
+  const res = await j('/api/onboarding-checklist/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  document.getElementById('progress').textContent = String(d.progress_pct || 0) + '%';
+  document.getElementById('completed').textContent = String(d.completed_tasks || 0);
+  document.getElementById('pending').textContent = String(d.pending_tasks || 0);
+  document.getElementById('total').textContent = String(d.total_tasks || 0);
+  document.getElementById('rows').innerHTML = (d.tasks || []).map(t =>
+    `<tr><td>${t.title}</td><td>${t.category}</td><td class="${t.status==='completed'?'good':'warn'}">${t.status}</td><td>${dt(t.completed_at)}</td><td>${t.notes || ''}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function completeTask(){
+  const payload = {task_id: document.getElementById('taskId').value, completed: true, notes: document.getElementById('taskNote').value};
+  await j('/api/onboarding-checklist/task', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function reopenTask(){
+  const payload = {task_id: document.getElementById('taskId').value, completed: false, notes: document.getElementById('taskNote').value};
+  await j('/api/onboarding-checklist/task', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

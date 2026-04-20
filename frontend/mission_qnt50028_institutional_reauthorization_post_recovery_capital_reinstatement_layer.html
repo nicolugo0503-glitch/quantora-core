@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>QNT50028 - Institutional Reauthorization + Post-Recovery Capital Reinstatement Layer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background:#0f172a; color:#e2e8f0; }
+    .card { background:#111827; border:1px solid #334155; border-radius:12px; padding:20px; max-width:1000px; }
+    h1,h2 { margin-top:0; }
+    code { background:#1e293b; padding:2px 6px; border-radius:6px; }
+    ul { line-height:1.6; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>QNT50028 — Institutional Reauthorization + Post-Recovery Capital Reinstatement Layer</h1>
+    <p>Governed post-recovery capital reinstatement layer for restoring capital only after recovery execution, risk clearance, and institutional reauthorization.</p>
+    <h2>Capabilities</h2>
+    <ul>
+      <li>Synchronizes remediation recovery, breach resolution, risk, and treasury posture before reauthorization.</li>
+      <li>Registers reauthorization cases with recovery lineage, requested capital, and target strategy context.</li>
+      <li>Approves reinstatement only when risk is clear, recovery is evidenced, and treasury capacity exists.</li>
+      <li>Executes and closes reinstatement with audit-grade traceability tied to the linked recovery action.</li>
+    </ul>
+    <h2>Primary endpoints</h2>
+    <ul>
+      <li><code>GET /capital-reauthorization/health</code></li>
+      <li><code>GET /capital-reauthorization/summary</code></li>
+      <li><code>POST /capital-reauthorization/register-reauthorization</code></li>
+      <li><code>POST /capital-reauthorization/approve-reinstatement</code></li>
+      <li><code>POST /capital-reauthorization/execute-reinstatement</code></li>
+      <li><code>POST /capital-reauthorization/close-reauthorization</code></li>
+    </ul>
+  </div>
+</body>
+</html>

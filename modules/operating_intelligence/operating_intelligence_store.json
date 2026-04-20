@@ -1,0 +1,61 @@
+{
+  "module": "QNT30649",
+  "name": "Institutional Operating Intelligence Layer",
+  "created_at": "2026-04-09T04:17:03.802440+00:00",
+  "capital_state": "stable",
+  "risk_state": "watch",
+  "reporting_state": "strong",
+  "product_state": "scaling",
+  "capital_raised": 2500000,
+  "capital_deployed": 1800000,
+  "active_products": 1,
+  "active_clients": 1,
+  "risk_alerts": 2,
+  "overdue_obligations": 0,
+  "exceptions": [
+    {
+      "exception_id": "EXC_001",
+      "domain": "risk",
+      "severity": "warning",
+      "entity": "VEHICLE_ALPHA",
+      "message": "Concentration remains elevated in BTC momentum sleeve."
+    },
+    {
+      "exception_id": "EXC_002",
+      "domain": "distribution",
+      "severity": "info",
+      "entity": "PROD_GROWTH_01",
+      "message": "Family office diligence still open with pending follow-up."
+    }
+  ],
+  "dependencies": [
+    {
+      "source_domain": "distribution",
+      "target_domain": "treasury",
+      "status": "watch",
+      "message": "Rising product demand may require reserve adjustment."
+    },
+    {
+      "source_domain": "risk",
+      "target_domain": "allocation",
+      "status": "active",
+      "message": "Risk caps are constraining incremental deployment."
+    }
+  ],
+  "alerts": [
+    {
+      "alert_id": "ALT_001",
+      "severity": "warning",
+      "source_domain": "risk",
+      "entity": "VEHICLE_ALPHA",
+      "recommended_action": "Reduce concentration or cap new deployment."
+    },
+    {
+      "alert_id": "ALT_002",
+      "severity": "info",
+      "source_domain": "transparency",
+      "entity": "PROD_GROWTH_01",
+      "recommended_action": "Track acknowledgment on latest published factsheet."
+    }
+  ]
+}

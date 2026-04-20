@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QNT30704 Investor Delivery Pack System</title>
+  <style>
+    :root{--bg:#07111e;--card:#101b31;--line:#243555;--text:#eef4ff;--muted:#92a8cf;--good:#0fbf7f;--warn:#ffb020;--bad:#ff6a6a}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#07111e,#0b1730 58%,#0b1326);color:var(--text)}
+    .wrap{max-width:1220px;margin:0 auto;padding:34px 20px 70px}.hero,.two,.three{display:grid;gap:18px}.hero{grid-template-columns:1.2fr .95fr}.two{grid-template-columns:1fr 1fr}.three{grid-template-columns:repeat(3,1fr)}
+    .card{background:rgba(16,27,49,.94);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 22px 60px rgba(0,0,0,.28)}
+    .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)} h1{margin:.35rem 0 0;font-size:34px} p{color:#cad7f1;line-height:1.58}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}.stat{padding:16px;border-radius:16px;background:#0d1529;border:1px solid var(--line)}.label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.value{font-size:27px;font-weight:700;margin-top:8px}
+    .list{display:flex;flex-direction:column;gap:10px;margin-top:14px}.row{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:14px;background:#0d1529;border:1px solid var(--line)}
+    code{background:#0d1529;padding:2px 6px;border-radius:6px;border:1px solid var(--line);color:#d8e4ff}.pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:8px 12px;font-weight:700}.good{background:rgba(15,191,127,.14);color:#90f0c8}.warn{background:rgba(255,176,32,.14);color:#ffd37e}.bad{background:rgba(255,106,106,.14);color:#ffb8b8}
+    @media (max-width:980px){.hero,.two,.three,.grid{grid-template-columns:1fr 1fr}}@media (max-width:720px){.hero,.two,.three,.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="card">
+        <div class="eyebrow">Institutional Investor Output</div>
+        <h1>QNT30704 — Investor Delivery Pack System</h1>
+        <p>This mission standardizes investor-facing output into governed delivery packs. It assembles statement content, reporting context, risk posture, delivery controls, and recipient routing into one institutional package ready for portal or secure-email style distribution.</p>
+        <div class="grid">
+          <div class="stat"><div class="label">Templates</div><div class="value">Standardized</div></div>
+          <div class="stat"><div class="label">Recipient Registry</div><div class="value">Integrated</div></div>
+          <div class="stat"><div class="label">Delivery Logging</div><div class="value">Auditable</div></div>
+          <div class="stat"><div class="label">Risk Context</div><div class="value">Embedded</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="eyebrow">Core Endpoints</div>
+        <div class="list">
+          <div class="row"><span><code>GET /api/investor-delivery-pack-system/summary</code></span></div>
+          <div class="row"><span><code>POST /api/investor-delivery-pack-system/build</code></span></div>
+          <div class="row"><span><code>POST /api/investor-delivery-pack-system/deliver</code></span></div>
+          <div class="row"><span><code>POST /api/investor-delivery-pack-system/template</code></span></div>
+          <div class="row"><span><code>POST /api/investor-delivery-pack-system/bootstrap-demo</code></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two" style="margin-top:18px">
+      <div class="card">
+        <div class="eyebrow">Delivery Pack Contents</div>
+        <div class="list">
+          <div class="row"><span>Performance summary + LP statement</span><span class="pill good">included</span></div>
+          <div class="row"><span>Calendar + delivery context</span><span class="pill good">included</span></div>
+          <div class="row"><span>Safety and control posture</span><span class="pill warn">embedded</span></div>
+          <div class="row"><span>Operator note + release context</span><span class="pill warn">governed</span></div>
+          <div class="row"><span>Recipient-specific distribution</span><span class="pill good">standardized</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="eyebrow">Institutional Rules</div>
+        <div class="list">
+          <div class="row"><span>No ad hoc investor output</span><strong>USE TEMPLATES</strong></div>
+          <div class="row"><span>Delivery while safety posture blocked</span><strong>BLOCKED</strong></div>
+          <div class="row"><span>Recipient routing</span><strong>TRACK REGISTRY</strong></div>
+          <div class="row"><span>Distribution event</span><strong>LOG DELIVERY</strong></div>
+          <div class="row"><span>Acknowledgement</span><strong>FOLLOW UP</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="three" style="margin-top:18px">
+      <div class="card"><div class="eyebrow">Statement Bridge</div><p>The system composes its output on top of the underlying statement-pack engine, so investor delivery inherits fund-level performance, waterfall, and PnL context.</p></div>
+      <div class="card"><div class="eyebrow">Governance Bridge</div><p>Safety posture and operator context are embedded into the pack so outward-facing reporting reflects the live control environment of the capital system.</p></div>
+      <div class="card"><div class="eyebrow">Distribution Memory</div><p>Delivery events, acknowledgement state, and recipient routing are stored for future reporting cycles and investor-coverage follow-up.</p></div>
+    </div>
+  </div>
+</body>
+</html>

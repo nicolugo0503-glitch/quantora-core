@@ -1,0 +1,30 @@
+QNT30332 — FULL TRADE AUTOMATION INTEGRATED
+
+Delivered:
+- persistent automation engine with background worker
+- per-operator automation configs and event ledger
+- continuous execution loop scheduling
+- automated strategy intelligence cycles
+- TP/SL execution via signal-driven exits inside every cycle
+- broker reconciliation hook for Alpaca order status sync
+- real-time monitoring + PnL snapshot refresh on each automation tick
+- failure recovery with consecutive-failure pause / circuit-break behavior
+
+New endpoints:
+- GET  /automation/status
+- GET  /automation/events
+- POST /automation/configure
+- POST /automation/start
+- POST /automation/stop
+- POST /automation/tick
+- GET  /automation/operator-sync
+
+Artifacts:
+- backend/automation_engine.py
+- backend/artifacts/automation_state.json (created at runtime)
+- config/automation.example.json
+
+System impact:
+- extends Quantora without schema reset
+- preserves existing execution, strategy, risk, broker, and monitoring layers
+- adds autonomous control plane for continuous execution

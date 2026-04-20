@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30505 Live Diagnostics</title>
+  <style>
+    :root { --bg:#08111f; --panel:#0e1a2b; --border:#1f3556; --text:#eef4ff; --muted:#9bb0ce; --good:#33d17a; --bad:#ff6b6b; --warn:#f6c445; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; background:var(--bg); color:var(--text); padding:24px; }
+    .btn { display:inline-block; color:#fff; background:#2455d6; border:1px solid #3f6fff; border-radius:10px; padding:10px 14px; text-decoration:none; font-weight:700; }
+    .btn.secondary { background:#12233b; border-color:var(--border); }
+    .panel { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:16px; }
+    .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+    .stat { background:rgba(255,255,255,.02); border:1px solid var(--border); border-radius:12px; padding:14px; }
+    .label { color:var(--muted); font-size:13px; margin-bottom:6px; }
+    .value { font-size:24px; font-weight:700; }
+    .good { color:var(--good); } .bad { color:var(--bad); } .warn { color:var(--warn); } .muted { color:var(--muted); }
+    pre { background:#07111f; border:1px solid var(--border); border-radius:10px; padding:14px; overflow:auto; }
+    @media (max-width:900px) { .grid { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:700px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px">
+    <div>
+      <h1 style="margin:0 0 6px">QNT30505 — Live Diagnostics</h1>
+      <div class="muted">Validation page for true live readiness across runtime, funds, investors, and exposure.</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn secondary" href="conversation_missions_hub.html">Back to Missions Hub</a>
+      <a class="btn" href="index.html">Back to Command Center</a>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn" href="#" onclick="refreshDiagnostics();return false;">Refresh Diagnostics</a>
+      <a class="btn secondary" href="mission_qnt30493_real_control.html">Open Real Control Panel</a>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="stat"><div class="label">Live Ready</div><div class="value" id="liveReady">--</div></div>
+    <div class="stat"><div class="label">Runtime Live</div><div class="value" id="runtimeCheck">--</div></div>
+    <div class="stat"><div class="label">Fund Rows Live</div><div class="value" id="fundCheck">--</div></div>
+    <div class="stat"><div class="label">Investor Rows Live</div><div class="value" id="investorCheck">--</div></div>
+  </div>
+
+  <div class="panel">
+    <h2 style="margin-top:0">Exposure Check</h2>
+    <div id="exposureCheck" class="value">--</div>
+    <div class="muted" id="diagnosticsUpdated" style="margin-top:8px"></div>
+  </div>
+
+  <div class="panel">
+    <h2 style="margin-top:0">Full Validation Payload</h2>
+    <pre id="payloadBox">loading...</pre>
+  </div>
+
+  <script>
+    function setCheck(id, ok) {
+      const el = document.getElementById(id);
+      if (ok === true) {
+        el.textContent = 'YES';
+        el.className = 'value good';
+      } else if (ok === false) {
+        el.textContent = 'NO';
+        el.className = 'value bad';
+      } else {
+        el.textContent = '--';
+        el.className = 'value warn';
+      }
+    }
+
+    async function refreshDiagnostics() {
+      let data = null;
+      try {
+        const res = await fetch('/api/diagnostics/live-validation');
+        if (res.ok) data = await res.json();
+      } catch (e) {}
+
+      if (!data) {
+        data = {
+          timestamp: new Date().toISOString(),
+          live_ready: false,
+          checks: {
+            runtime_live: false,
+            fund_rows_live: false,
+            investor_rows_live: false,
+            exposure_live: false
+          },
+          error: 'Diagnostics endpoint not found yet.'
+        };
+      }
+
+      setCheck('liveReady', data.live_ready);
+      setCheck('runtimeCheck', data.checks && data.checks.runtime_live);
+      setCheck('fundCheck', data.checks && data.checks.fund_rows_live);
+      setCheck('investorCheck', data.checks && data.checks.investor_rows_live);
+      setCheck('exposureCheck', data.checks && data.checks.exposure_live);
+
+      document.getElementById('diagnosticsUpdated').textContent = 'Last updated: ' + (data.timestamp || new Date().toISOString());
+      document.getElementById('payloadBox').textContent = JSON.stringify(data, null, 2);
+    }
+
+    refreshDiagnostics();
+    setInterval(refreshDiagnostics, 5000);
+  </script>
+</body>
+</html>

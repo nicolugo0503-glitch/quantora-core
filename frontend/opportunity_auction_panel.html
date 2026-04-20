@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30372 Opportunity Auction</title>
+  <style>
+    :root { --bg:#07111f; --panel:#0f1d31; --panel2:#132742; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#60a5fa; }
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .shell{max-width:1280px;margin:0 auto;padding:24px}.panel{background:rgba(15,29,49,.95);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px}
+    .metrics,.row{display:grid;gap:12px}.metrics{grid-template-columns:repeat(4,minmax(0,1fr))}.row{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .metric{background:#0a1526;border:1px solid #1e2d47;border-radius:14px;padding:14px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:26px;font-weight:700;margin-top:8px}
+    textarea{width:100%;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;padding:11px 12px;min-height:240px}
+    button{border:none;background:var(--accent);color:white;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700} button.secondary{background:#1d4ed8}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:280px;white-space:pre-wrap}.tiny{color:var(--muted);font-size:12px}
+    @media(max-width:900px){.metrics,.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">
+      <div>
+        <h1 style="margin:0 0 8px 0;">Opportunity Arbitration Engine + Cross-Strategy Capital Auction</h1>
+        <div class="tiny">Run a capital auction across validated opportunities, arbitrate bid quality, and award capital to the strongest candidates.</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="secondary" onclick="window.location.href='index.html'">Command Center</button>
+        <button onclick="loadStatus()">Refresh</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="label">Auctions</div><div class="value" id="m1">-</div></div>
+    <div class="metric"><div class="label">Awarded Candidates</div><div class="value" id="m2">-</div></div>
+    <div class="metric"><div class="label">Awarded Capital</div><div class="value" id="m3">-</div></div>
+    <div class="metric"><div class="label">Bid Count</div><div class="value" id="m4">-</div></div>
+  </div>
+
+  <div class="row">
+    <div class="panel">
+      <h2 style="margin-top:0">Run Auction</h2>
+      <textarea id="run_body">{
+  "candidates": [
+    {"candidate_id":"cand_3001","strategy_name":"Momentum Auction A","verdict":"APPROVED","opportunity_score":84.0,"edge_score":73.0,"confidence":0.79,"requested_capital":40000,"priority":true},
+    {"candidate_id":"cand_3002","strategy_name":"Reversion Auction B","verdict":"WATCHLIST","opportunity_score":76.0,"edge_score":66.0,"confidence":0.68,"requested_capital":22000,"priority":false},
+    {"candidate_id":"cand_3003","strategy_name":"Breakout Auction C","verdict":"APPROVED","opportunity_score":81.0,"edge_score":70.0,"confidence":0.74,"requested_capital":30000,"priority":false}
+  ]
+}</textarea>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        <button onclick="runAuction()">Run Auction</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2 style="margin-top:0">Award Capital</h2>
+      <textarea id="award_body">{
+  "available_capital": 55000
+}</textarea>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="secondary" onclick="awardCapital()">Award Capital</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel"><h2 style="margin-top:0">Output</h2><pre id="out">Loading...</pre></div>
+</div>
+
+<script>
+const API="http://127.0.0.1:8010";
+async function req(path, method="GET", body=null){
+  const r=await fetch(API+path,{method,headers:{"Content-Type":"application/json"},body:body?JSON.stringify(body):null});
+  const d=await r.json();
+  if(!r.ok) throw new Error(JSON.stringify(d));
+  return d;
+}
+function render(data){
+  const a = data.auction_engine || {};
+  document.getElementById("m1").textContent = a.auction_count ?? "-";
+  document.getElementById("m2").textContent = a.awarded_candidates ?? "-";
+  document.getElementById("m3").textContent = a.total_awarded_capital ?? "-";
+  document.getElementById("m4").textContent = data.bid_count ?? "-";
+  document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+}
+async function loadStatus(){ try{ render(await req("/opportunity-auction/status")); } catch(e){ document.getElementById("out").textContent = String(e); } }
+async function runAuction(){
+  try{
+    const body = JSON.parse(document.getElementById("run_body").value);
+    const data = await req("/opportunity-auction/run", "POST", body);
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+    await loadStatus();
+  }catch(e){ document.getElementById("out").textContent = String(e); }
+}
+async function awardCapital(){
+  try{
+    const body = JSON.parse(document.getElementById("award_body").value);
+    const data = await req("/opportunity-auction/award", "POST", body);
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+    await loadStatus();
+  }catch(e){ document.getElementById("out").textContent = String(e); }
+}
+loadStatus();
+</script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30419 Unified Dashboard Runtime</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;--bad:#fb7185}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .shell{max-width:1500px;margin:0 auto;padding:24px}.hero,.panel,.metric{background:rgba(15,29,49,.95);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.16)}
+    .hero,.panel,.metric{padding:18px}.hero{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px}.actions{display:flex;gap:10px;flex-wrap:wrap}
+    button{border:0;background:var(--accent);color:#fff;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer}button.secondary{background:#1d4ed8}
+    .metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}.label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    .grid{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}.stack{display:grid;gap:16px}.pills{margin-top:12px}.pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid #274168;font-size:12px;margin-right:8px;margin-bottom:8px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}.bad{color:#fecdd3;border-color:#7c243d}.table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    pre{margin:0;background:#06101d;color:#dbeafe;border:1px solid #1e2d47;border-radius:14px;min-height:140px;max-height:340px;overflow:auto;padding:14px;white-space:pre-wrap}.muted{color:var(--muted)}
+    @media(max-width:1200px){.metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.grid{grid-template-columns:1fr}} @media(max-width:720px){.metrics{grid-template-columns:1fr}.hero{flex-direction:column}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <div class="hero">
+    <div>
+      <h1 style="margin:0 0 10px">QNT30419 · Canonical Unified Dashboard Runtime</h1>
+      <div class="muted">One operator surface for readiness, billing posture, capital state, runtime modules, attribution, and recent activity. This is the canonical top-level operating view above fragmented subpanels.</div>
+      <div id="headlinePills" class="pills"></div>
+    </div>
+    <div class="actions">
+      <button onclick="refreshAll()">Refresh Runtime</button>
+      <button class="secondary" onclick="location.href='index.html'">Command Center</button>
+      <button class="secondary" onclick="location.href='performance_attribution_panel.html'">Attribution</button>
+      <button class="secondary" onclick="location.href='deployment_hardening_panel.html'">Deployment</button>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="label">Readiness</div><div class="value" id="m_readiness">-</div></div>
+    <div class="metric"><div class="label">Plan</div><div class="value" id="m_plan">-</div></div>
+    <div class="metric"><div class="label">Daily Realized PnL</div><div class="value" id="m_pnl">-</div></div>
+    <div class="metric"><div class="label">Allocated Capital</div><div class="value" id="m_allocated">-</div></div>
+    <div class="metric"><div class="label">Active Strategies</div><div class="value" id="m_active">-</div></div>
+    <div class="metric"><div class="label">Runtime Modules</div><div class="value" id="m_modules">-</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="stack">
+      <div class="panel"><h2 style="margin-top:0">Operator Brief</h2><pre id="brief">Loading...</pre></div>
+      <div class="panel"><h2 style="margin-top:0">Recommendations</h2><div id="recommendations"></div></div>
+      <div class="panel"><h2 style="margin-top:0">Recent Activity</h2><div class="table-wrap"><table><thead><tr><th>Type</th><th>Timestamp</th><th>Title</th><th>Detail</th></tr></thead><tbody id="activityRows"></tbody></table></div></div>
+    </div>
+    <div class="stack">
+      <div class="panel"><h2 style="margin-top:0">Top Strategy</h2><pre id="topStrategy">Loading...</pre></div>
+      <div class="panel"><h2 style="margin-top:0">Top Execution Venue</h2><pre id="topVenue">Loading...</pre></div>
+      <div class="panel"><h2 style="margin-top:0">Runtime Module Map</h2><div class="table-wrap"><table><thead><tr><th>Module</th><th>Status</th><th>Critical</th></tr></thead><tbody id="moduleRows"></tbody></table></div></div>
+    </div>
+  </div>
+</div>
+<script>
+async function getJson(path){const r=await fetch(path);const t=await r.text();try{return JSON.parse(t)}catch{return {raw:t,status:r.status}}}
+function cls(v){return ['ok','ready','active'].includes(String(v).toLowerCase())?'good':(['warning','degraded','trialing','past_due'].includes(String(v).toLowerCase())?'warn':'bad')}
+function pill(label,value){return `<span class="pill ${cls(value)}">${label}: ${value}</span>`}
+function money(v){const n=Number(v||0);return isFinite(n)?`$${n.toLocaleString(undefined,{maximumFractionDigits:2})}`:'-'}
+async function refreshAll(){
+  const [sumRes,briefRes,feedRes] = await Promise.all([getJson('/dashboard/runtime-summary'),getJson('/dashboard/operator-brief'),getJson('/dashboard/activity-feed')]);
+  const dashboard=(sumRes.dashboard||{}), head=(dashboard.headline||{}), brief=(briefRes.brief||{}), items=(feedRes.items||[]);
+  document.getElementById('m_readiness').textContent = `${head.readiness_score ?? '-'} · ${head.overall_status || '-'}`;
+  document.getElementById('m_plan').textContent = `${head.plan || '-'} · ${head.subscription_status || '-'}`;
+  document.getElementById('m_pnl').textContent = money(head.daily_realized_pnl);
+  document.getElementById('m_allocated').textContent = money(head.allocated_capital);
+  document.getElementById('m_active').textContent = head.active_strategy_count ?? '-';
+  document.getElementById('m_modules').textContent = head.runtime_module_count ?? '-';
+  document.getElementById('headlinePills').innerHTML = [
+    pill('Environment', head.environment || '-'),
+    pill('Billing', head.billing_mode || '-'),
+    pill('Used Capital', money(head.used_capital)),
+    pill('Remaining', money(head.remaining_capital)),
+    pill('Orders', head.orders_count ?? 0),
+  ].join('');
+  document.getElementById('brief').textContent = JSON.stringify(brief, null, 2);
+  document.getElementById('recommendations').innerHTML = (dashboard.recommendations || []).map(x => `<span class="pill warn">${x}</span>`).join('') || '<span class="pill">No recommendations</span>';
+  document.getElementById('activityRows').innerHTML = items.map(item => `<tr><td>${item.type || '-'}</td><td>${item.timestamp || '-'}</td><td>${item.title || '-'}</td><td>${item.detail || '-'}</td></tr>`).join('');
+  document.getElementById('topStrategy').textContent = JSON.stringify(dashboard.top_strategy || {}, null, 2);
+  document.getElementById('topVenue').textContent = JSON.stringify(dashboard.top_execution_venue || {}, null, 2);
+  document.getElementById('moduleRows').innerHTML = (dashboard.runtime_modules || []).map(m => `<tr><td>${m.module_id || '-'}</td><td>${m.status || '-'}</td><td>${m.critical ? 'yes' : 'no'}</td></tr>`).join('');
+}
+refreshAll();
+</script>
+</body>
+</html>

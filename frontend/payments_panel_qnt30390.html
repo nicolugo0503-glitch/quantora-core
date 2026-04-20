@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html><body style="background:#09101d;color:white;font-family:Arial;padding:20px">
+<h2>QNT30390 Payments</h2>
+<button onclick="status()">Status</button>
+<pre id="out"></pre>
+<script>
+async function status(){
+ let r = await fetch('/payments/status');
+ let d = await r.json();
+ document.getElementById('out').innerText = JSON.stringify(d,null,2);
+}
+status();
+</script>
+</body></html>

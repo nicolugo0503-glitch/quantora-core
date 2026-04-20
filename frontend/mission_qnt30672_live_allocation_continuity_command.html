@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QNT30672 — Live Allocation Continuity Command</title>
+  <style>
+    :root { color-scheme: dark; --bg:#07111f; --panel:#0d1b2a; --panel2:#102235; --line:#1f3550; --text:#e8f0ff; --muted:#9bb0cc; --good:#123a2a; --warn:#4a3512; --bad:#4a1f24; }
+    * { box-sizing:border-box; } body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#07111f,#0b1422 45%,#0d1727); color:var(--text); }
+    .wrap { max-width:1500px; margin:0 auto; padding:24px; }
+    .hero,.panel { background:rgba(13,27,42,.92); border:1px solid var(--line); border-radius:18px; box-shadow:0 16px 50px rgba(0,0,0,.24); }
+    .hero { padding:24px; margin-bottom:18px; } .hero p,.tiny { color:var(--muted); }
+    .actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:16px; }
+    a,button { border:none; border-radius:12px; padding:11px 16px; font-weight:700; cursor:pointer; text-decoration:none; }
+    a,button { background:#58a6ff; color:#04111f; } button.secondary { background:#1d3557; color:#dce8ff; }
+    .metric-grid,.grid { display:grid; gap:16px; margin-bottom:18px; }
+    .metric-grid { grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); }
+    .metric { background:var(--panel2); border:1px solid var(--line); border-radius:16px; padding:16px; }
+    .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .value { font-size:28px; font-weight:800; margin-top:8px; }
+    .grid { grid-template-columns:2fr 1fr; } .stack { display:grid; gap:16px; }
+    .panel { padding:18px; overflow:auto; }
+    .section-title { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
+    .section-title h2 { margin:0; font-size:18px; }
+    table { width:100%; border-collapse:collapse; } th,td { padding:10px 8px; border-bottom:1px solid rgba(255,255,255,.07); text-align:left; font-size:14px; }
+    th { color:#98afd1; font-size:12px; text-transform:uppercase; letter-spacing:.06em; }
+    pre { white-space:pre-wrap; word-break:break-word; margin:0; color:#d7e6ff; }
+    .pill { display:inline-flex; border-radius:999px; padding:4px 10px; font-size:12px; font-weight:700; }
+    .good { background:var(--good); color:#9ef0c2; } .warn { background:var(--warn); color:#ffd27d; } .bad { background:var(--bad); color:#ff9cab; }
+    @media (max-width: 1100px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="tiny">Institutional Layer · QNT30672</div>
+    <h1 style="margin:8px 0;">QNT30672 — Live Allocation Continuity Command</h1>
+    <p>Monitor live allocations after release, detect degradation, and route rebalance / reduce / exit decisions before silent capital decay sets in.</p>
+    <div class="actions">
+      <a href="index.html">Back to Command Center</a>
+      <button onclick="runLayer()">Run Continuity Cycle</button>
+      <button class="secondary" onclick="refreshAll()">Refresh Summary</button>
+    </div>
+  </section>
+  <section class="metric-grid">
+    <div class="metric"><div class="label">Continuity Posture</div><div class="value" id="posture">-</div><div class="status" id="postureTag"></div></div>
+    <div class="metric"><div class="label">Continuity Score</div><div class="value" id="score">-</div><div class="status">Capital survival score</div></div>
+    <div class="metric"><div class="label">Continuity Capital</div><div class="value" id="capital">-</div><div class="status">Capital under continuity supervision</div></div>
+    <div class="metric"><div class="label">Reduce / Exit</div><div class="value" id="reduceExit">-</div><div class="status">Immediate intervention cases</div></div>
+    <div class="metric"><div class="label">Avg Drawdown</div><div class="value" id="drawdown">-</div><div class="status">Continuity drawdown pressure</div></div>
+  </section>
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Monitoring Book</h2><span class="tiny">Live strategy continuity cases</span></div>
+      <table id="bookTable"><thead><tr><th>Strategy</th><th>Allocator</th><th>Capital</th><th>Health</th><th>Drawdown</th><th>Volatility</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="stack">
+      <div class="panel"><div class="section-title"><h2>Policy</h2><span class="tiny">Continuity thresholds</span></div><pre id="policy">Loading…</pre></div>
+      <div class="panel"><div class="section-title"><h2>Overview</h2><span class="tiny">Continuity posture</span></div><pre id="overview">Loading…</pre></div>
+    </div>
+  </section>
+  <section class="grid">
+    <div class="panel"><div class="section-title"><h2>Degradation Signals</h2><span class="tiny">Detected issues</span></div><pre id="signals">Loading…</pre></div>
+    <div class="panel"><div class="section-title"><h2>Continuity Actions</h2><span class="tiny">Decision engine output</span></div><pre id="actions">Loading…</pre></div>
+  </section>
+  <section class="grid">
+    <div class="panel"><div class="section-title"><h2>Dependencies</h2><span class="tiny">Performance, control, clearance, governance, compliance</span></div><pre id="dependencies">Loading…</pre></div>
+    <div class="panel"><div class="section-title"><h2>Audit Trail</h2><span class="tiny">Latest continuity cycle</span></div><pre id="auditTrail">Loading…</pre></div>
+  </section>
+</div>
+<script>
+  const fmtPct = v => `${Number(v||0).toFixed(2)}%`;
+  const fmtMoney = v => `$${Number(v||0).toLocaleString(undefined,{maximumFractionDigits:2})}M`;
+  const pill = (text, cls='') => `<span class="pill ${cls}">${text}</span>`;
+  function severityClass(text='') {
+    const t = String(text).toLowerCase();
+    if (t.includes('hold') || t.includes('exit') || t.includes('constrained')) return 'bad';
+    if (t.includes('reduce') || t.includes('rebalance') || t.includes('review') || t.includes('adjust')) return 'warn';
+    return 'good';
+  }
+  async function getJson(url, opts) {
+    const res = await fetch(url, opts);
+    if (!res.ok) throw new Error(`${url} -> ${res.status}`);
+    return res.json();
+  }
+  function fillTable(id, rows, renderer, colspan=7) {
+    const tbody = document.querySelector(`#${id} tbody`);
+    tbody.innerHTML = rows.length ? rows.map(renderer).join('') : `<tr><td colspan="${colspan}" class="tiny">No rows available.</td></tr>`;
+  }
+  function renderSummary(summary, audit) {
+    const o = summary.live_allocation_continuity_overview || {};
+    document.getElementById('posture').textContent = o.continuity_posture || '-';
+    document.getElementById('postureTag').innerHTML = pill(o.continuity_posture || 'unknown', severityClass(o.continuity_posture));
+    document.getElementById('score').textContent = fmtPct(o.continuity_score);
+    document.getElementById('capital').textContent = fmtMoney(o.continuity_capital_millions);
+    document.getElementById('reduceExit').textContent = `${Number(o.reduce_count||0) + Number(o.exit_count||0)}`;
+    document.getElementById('drawdown').textContent = fmtPct(o.average_drawdown_pct);
+    document.getElementById('policy').textContent = JSON.stringify(summary.policy || {}, null, 2);
+    document.getElementById('overview').textContent = JSON.stringify(o, null, 2);
+    document.getElementById('signals').textContent = JSON.stringify(summary.degradation_signals || [], null, 2);
+    document.getElementById('actions').textContent = JSON.stringify({agenda: summary.continuity_agenda || [], decisions: summary.continuity_actions || []}, null, 2);
+    document.getElementById('dependencies').textContent = JSON.stringify(summary.continuity_dependencies || {}, null, 2);
+    document.getElementById('auditTrail').textContent = JSON.stringify(audit || {}, null, 2);
+    fillTable('bookTable', summary.monitoring_book || [], r => `
+      <tr>
+        <td>${r.strategy_id || '-'}</td>
+        <td>${r.allocator_name || '-'}</td>
+        <td>${fmtMoney(r.invested_capital_millions)}</td>
+        <td>${fmtPct(r.continuity_health_score)}</td>
+        <td>${fmtPct(r.drawdown_pct)}</td>
+        <td>${fmtPct(r.volatility_proxy_pct)}</td>
+        <td>${pill((summary.continuity_actions||[]).find(x => x.continuity_case_id === r.continuity_case_id)?.action || 'MAINTAIN', severityClass((summary.continuity_actions||[]).find(x => x.continuity_case_id === r.continuity_case_id)?.action || 'MAINTAIN'))}</td>
+      </tr>`);
+  }
+  async function refreshAll() {
+    try {
+      const [summary, audit] = await Promise.all([
+        getJson('/api/live-allocation-continuity-command/summary'),
+        getJson('/api/live-allocation-continuity-command/audit')
+      ]);
+      renderSummary(summary, audit);
+    } catch (err) {
+      document.getElementById('auditTrail').textContent = `Continuity unavailable. ${err.message}`;
+    }
+  }
+  async function runLayer() {
+    const result = await getJson('/api/live-allocation-continuity-command/run', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ trigger:'manual-ui' })
+    });
+    renderSummary(result.summary, { latest_run: result.run, runs:[result.run], run_count:1 });
+  }
+  refreshAll();
+</script>
+</body>
+</html>

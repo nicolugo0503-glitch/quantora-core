@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>QNT30402 Cross-Market Portfolio Intelligence Engine</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background: #09101d; color: #eef2fb; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card { background: #121b2f; border: 1px solid #2c3959; border-radius: 12px; padding: 16px; }
+    button, input, select { padding: 10px; border-radius: 8px; }
+    input, select { width: 100%; margin-top: 6px; margin-bottom: 12px; border: 1px solid #44527a; background: #0f1530; color: #fff; }
+    button { border: 0; cursor: pointer; margin-right: 8px; }
+    pre { white-space: pre-wrap; background: #0b1020; border: 1px solid #2a395a; padding: 12px; border-radius: 8px; min-height: 220px; }
+  </style>
+</head>
+<body>
+  <h1>QNT30402 — Cross-Market Portfolio Intelligence Engine</h1>
+  <div class="grid">
+    <div class="card">
+      <h3>Exposures</h3>
+      <label>Market</label>
+      <select id="market">
+        <option>equities</option>
+        <option>crypto</option>
+        <option>forex</option>
+        <option>futures</option>
+      </select>
+      <label>Notional</label>
+      <input id="notional" value="300000" />
+      <label>PnL</label>
+      <input id="pnl" value="7500" />
+      <label>Risk Score</label>
+      <input id="risk_score" value="0.55" />
+      <button onclick="updateExposure()">Update Exposure</button>
+      <button onclick="loadStatus()">Refresh Status</button>
+      <pre id="left"></pre>
+    </div>
+    <div class="card">
+      <h3>Rebalance Intelligence</h3>
+      <button onclick="seedSignal()">Seed Cross-Market Signal</button>
+      <button onclick="recommend()">Recommend Rebalance</button>
+      <pre id="right"></pre>
+    </div>
+  </div>
+<script>
+async function updateExposure(){
+  const payload = {
+    market: document.getElementById('market').value,
+    notional: parseFloat(document.getElementById('notional').value),
+    pnl: parseFloat(document.getElementById('pnl').value),
+    risk_score: parseFloat(document.getElementById('risk_score').value)
+  };
+  const res = await fetch('/cross-market-intelligence/exposure/update', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
+  });
+  document.getElementById('left').textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function loadStatus(){
+  const res = await fetch('/cross-market-intelligence/status');
+  document.getElementById('left').textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function seedSignal(){
+  const res = await fetch('/cross-market-intelligence/signal', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      source_market:'crypto',
+      target_market:'equities',
+      signal_type:'risk_spillover',
+      confidence:0.78,
+      message:'Crypto volatility is spilling into equity beta names'
+    })
+  });
+  document.getElementById('right').textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function recommend(){
+  const res = await fetch('/cross-market-intelligence/rebalance/recommend', { method: 'POST' });
+  document.getElementById('right').textContent = JSON.stringify(await res.json(), null, 2);
+}
+loadStatus();
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{
+  "email": "growth@test.quantora",
+  "opportunities": [
+    {
+      "opportunity_id": "opp_1775711778",
+      "investor_id": "INV_RIA_002",
+      "opportunity_name": "RIA Platform Mandate",
+      "stage": "term_discussion",
+      "target_amount": 500000.0,
+      "probability": 40,
+      "expected_close_date": "",
+      "owner": "Coverage Desk",
+      "source_channel": "",
+      "notes": "",
+      "status": "open",
+      "created_at": 1775711778,
+      "updated_at": 1775711778
+    },
+    {
+      "opportunity_id": "opp_1775711778",
+      "investor_id": "INV_FO_001",
+      "opportunity_name": "Family Office Allocation",
+      "stage": "soft_commit",
+      "target_amount": 750000.0,
+      "probability": 65,
+      "expected_close_date": "",
+      "owner": "Coverage Desk",
+      "source_channel": "",
+      "notes": "",
+      "status": "open",
+      "created_at": 1775711778,
+      "updated_at": 1775711778
+    }
+  ],
+  "milestones": [],
+  "created_at": 1775711778,
+  "updated_at": 1775711778
+}

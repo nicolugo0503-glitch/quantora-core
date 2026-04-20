@@ -1,0 +1,5 @@
+{
+  "regime": "bull",
+  "liquidity_state": "normal",
+  "max_concurrent_strategies": 2
+}

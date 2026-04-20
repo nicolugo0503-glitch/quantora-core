@@ -1,0 +1,14 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "priority_convergence_case_count": 8,
+    "minimum_convergence_readiness_score": 86.0,
+    "minimum_convergence_authority_score": 84.0,
+    "minimum_release_alignment_score": 81.0,
+    "minimum_compliance_alignment_score": 80.0,
+    "maximum_convergence_stress_score": 24.0
+  },
+  "runs": [],
+  "created_at": 1775750492,
+  "updated_at": 1775750492
+}

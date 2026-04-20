@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>QNT30652 Institutional Compliance Layer</title>
+  <style>
+    :root { --bg:#06101d; --panel:#0f1d31; --panel2:#0b1628; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#2563eb; --good:#10b981; --warn:#f59e0b; --bad:#ef4444; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#040b15 0%,#0a1424 100%); color:var(--text); }
+    .wrap { max-width:1540px; margin:0 auto; padding:24px; }
+    .hero,.panel,.metric { background:rgba(15,29,49,.96); border:1px solid var(--line); border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,.18); padding:18px; }
+    .hero { margin-bottom:18px; }
+    .muted { color:var(--muted); line-height:1.55; }
+    .toolbar { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    button,a.btn { border:none; background:var(--accent); color:#fff; padding:10px 14px; border-radius:10px; font-weight:700; text-decoration:none; cursor:pointer; }
+    button.secondary,a.secondary { background:#1d4ed8; }
+    .metric-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:14px; margin-bottom:18px; }
+    .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .value { font-size:28px; font-weight:800; margin-top:8px; }
+    .status { font-size:15px; font-weight:700; margin-top:10px; }
+    .grid { display:grid; grid-template-columns:1.15fr 1fr; gap:16px; margin-bottom:16px; }
+    .stack { display:grid; gap:16px; }
+    .section-title { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px; }
+    .section-title h2 { margin:0; font-size:18px; }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th,td { padding:10px; border-bottom:1px solid #1e2d47; text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-size:12px; text-transform:uppercase; }
+    .pill { display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid #2a3c60; background:#0a1526; }
+    .good { color:#d1fae5; border-color:#14532d; }
+    .warn { color:#fde68a; border-color:#92400e; }
+    .bad { color:#fecaca; border-color:#7f1d1d; }
+    pre { margin:0; background:var(--panel2); border:1px solid #1e2d47; border-radius:14px; padding:14px; white-space:pre-wrap; min-height:180px; max-height:420px; overflow:auto; }
+    .tiny { color:var(--muted); font-size:12px; }
+    @media (max-width:1100px){ .metric-grid,.grid{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="label">Institutional Mission</div>
+    <h1 style="margin:8px 0;">QNT30652 — Institutional Compliance Layer</h1>
+    <div class="muted">This layer governs release authority across KYC, audit integrity, governance pressure, allocator transparency, and jurisdiction controls. It is the supervisory gate for scaling capital, not a checklist widget.</div>
+    <div class="toolbar">
+      <a class="btn" href="index.html">Back to Command Center</a>
+      <button onclick="runLayer()">Run Compliance Cycle</button>
+      <button class="secondary" onclick="refreshAll()">Refresh Summary</button>
+    </div>
+  </section>
+
+  <section class="metric-grid">
+    <div class="metric"><div class="label">Release Status</div><div class="value" id="releaseStatus">-</div><div class="status" id="releaseTag"></div></div>
+    <div class="metric"><div class="label">Readiness Score</div><div class="value" id="readiness">-</div><div class="status" id="readinessTag"></div></div>
+    <div class="metric"><div class="label">Critical Obligations</div><div class="value" id="criticalCount">-</div><div class="status">Institutional blockers</div></div>
+    <div class="metric"><div class="label">Approved Identity Docs</div><div class="value" id="approvedDocs">-</div><div class="status">KYC control coverage</div></div>
+    <div class="metric"><div class="label">Granted Diligence Docs</div><div class="value" id="grantedDocs">-</div><div class="status">Allocator transparency packet</div></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Control Matrix</h2><span class="tiny">Institutional release tests</span></div>
+      <table id="controlTable"><thead><tr><th>Control</th><th>Status</th><th>Metric</th><th>Threshold</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="stack">
+      <div class="panel">
+        <div class="section-title"><h2>Obligations</h2><span class="tiny">Supervisory action queue</span></div>
+        <pre id="obligations">Loading…</pre>
+      </div>
+      <div class="panel">
+        <div class="section-title"><h2>Policy</h2><span class="tiny">Institutional thresholds</span></div>
+        <pre id="policy">Loading…</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Governance Snapshot</h2><span class="tiny">Audit and approval posture</span></div>
+      <pre id="governanceSnapshot">Loading…</pre>
+    </div>
+    <div class="panel">
+      <div class="section-title"><h2>Autonomy Snapshot</h2><span class="tiny">Strategic and growth dependency</span></div>
+      <pre id="autonomySnapshot">Loading…</pre>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Queue & Identity</h2><span class="tiny">Case readiness</span></div>
+      <pre id="queueSnapshot">Loading…</pre>
+    </div>
+    <div class="panel">
+      <div class="section-title"><h2>Jurisdiction & Transparency</h2><span class="tiny">Deployment scope</span></div>
+      <pre id="jurisdictionSnapshot">Loading…</pre>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Compliance Audit Trail</h2><span class="tiny">Latest supervisory cycle</span></div>
+      <pre id="auditTrail">Loading…</pre>
+    </div>
+  </section>
+</div>
+<script>
+  const fmtPct = v => `${Number(v||0).toFixed(2)}%`;
+  const pill = (text, cls='') => `<span class="pill ${cls}">${text}</span>`;
+  async function getJson(url, opts) {
+    const res = await fetch(url, opts);
+    if (!res.ok) throw new Error(`${url} -> ${res.status}`);
+    return res.json();
+  }
+  function severityClass(text='') {
+    const t = String(text).toLowerCase();
+    if (t.includes('fail') || t.includes('block') || t.includes('critical')) return 'bad';
+    if (t.includes('watch') || t.includes('governed')) return 'warn';
+    return 'good';
+  }
+  function fillTable(id, rows, renderer, colspan=4) {
+    const tbody = document.querySelector(`#${id} tbody`);
+    tbody.innerHTML = rows.length ? rows.map(renderer).join('') : `<tr><td colspan="${colspan}" class="tiny">No rows available.</td></tr>`;
+  }
+  async function refreshAll() {
+    try {
+      const [summary, audit] = await Promise.all([
+        getJson('/api/institutional-compliance-layer/summary'),
+        getJson('/api/institutional-compliance-layer/audit')
+      ]);
+      renderSummary(summary, audit);
+    } catch (err) {
+      document.getElementById('auditTrail').textContent = `Institutional Compliance Layer unavailable. ${err.message}`;
+    }
+  }
+  async function runLayer() {
+    const result = await getJson('/api/institutional-compliance-layer/run', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ trigger:'manual-ui' })
+    });
+    renderSummary(result.summary, { latest_run: result.run, runs: [result.run], run_count: 1 });
+  }
+  function renderSummary(summary, audit) {
+    const obligations = summary.obligations || [];
+    const critical = obligations.filter(o => String(o.severity).toLowerCase() === 'critical').length;
+    document.getElementById('releaseStatus').textContent = summary.release_status || '-';
+    document.getElementById('releaseTag').innerHTML = pill(summary.release_status || 'unknown', severityClass(summary.release_status));
+    document.getElementById('readiness').textContent = fmtPct(summary.readiness_score || 0);
+    document.getElementById('readinessTag').innerHTML = pill((summary.readiness_score || 0) >= 85 ? 'institutional threshold cleared' : 'governed release', severityClass((summary.readiness_score || 0) >= 85 ? 'pass' : 'watch'));
+    document.getElementById('criticalCount').textContent = String(critical);
+    document.getElementById('approvedDocs').textContent = String(summary.identity_snapshot?.approved_documents || 0);
+    document.getElementById('grantedDocs').textContent = String(summary.transparency_snapshot?.granted_document_count || 0);
+    fillTable('controlTable', summary.control_matrix || [], row => `
+      <tr>
+        <td>${row.control || '-'}</td>
+        <td>${pill(row.status || '-', severityClass(row.status))}</td>
+        <td>${row.metric || '-'}</td>
+        <td>${row.threshold || '-'}</td>
+      </tr>`, 4);
+    document.getElementById('obligations').textContent = JSON.stringify(obligations, null, 2);
+    document.getElementById('policy').textContent = JSON.stringify(summary.policy || {}, null, 2);
+    document.getElementById('governanceSnapshot').textContent = JSON.stringify(summary.governance_snapshot || {}, null, 2);
+    document.getElementById('autonomySnapshot').textContent = JSON.stringify(summary.autonomy_snapshot || {}, null, 2);
+    document.getElementById('queueSnapshot').textContent = JSON.stringify({
+      queue_snapshot: summary.queue_snapshot || {},
+      identity_snapshot: summary.identity_snapshot || {}
+    }, null, 2);
+    document.getElementById('jurisdictionSnapshot').textContent = JSON.stringify({
+      jurisdiction_snapshot: summary.jurisdiction_snapshot || {},
+      transparency_snapshot: summary.transparency_snapshot || {}
+    }, null, 2);
+    document.getElementById('auditTrail').textContent = JSON.stringify({
+      run_count: audit.run_count || (audit.runs || []).length || 0,
+      latest_run: audit.latest_run || null
+    }, null, 2);
+  }
+  refreshAll();
+</script>
+</body>
+</html>

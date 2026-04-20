@@ -1,0 +1,40 @@
+{
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/onboarding/create"
+    },
+    {
+      "method": "POST",
+      "path": "/api/onboarding/status"
+    },
+    {
+      "method": "POST",
+      "path": "/api/subscription/request"
+    },
+    {
+      "method": "POST",
+      "path": "/api/subscription/approve"
+    },
+    {
+      "method": "POST",
+      "path": "/api/subscription/reject"
+    },
+    {
+      "method": "GET",
+      "path": "/api/onboarding/summary"
+    }
+  ],
+  "workflow_states": {
+    "onboarding": [
+      "pending_review",
+      "approved",
+      "rejected"
+    ],
+    "subscription": [
+      "pending",
+      "approved",
+      "rejected"
+    ]
+  }
+}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QNT30656 Capital Mobility Control Plane</title>
+  <style>
+    :root { --bg:#07111f; --panel:#0f1b2d; --panel2:#0b1526; --text:#e8eefc; --muted:#9db0d0; --accent:#5eead4; --line:#1e2d47; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#07111f,#0b1424 55%,#07101d); color:var(--text); }
+    .wrap { max-width:1440px; margin:0 auto; padding:28px; }
+    .hero,.panel,.metric { background:rgba(15,27,45,.92); border:1px solid var(--line); border-radius:20px; box-shadow:0 18px 44px rgba(0,0,0,.28); }
+    .hero { padding:24px; margin-bottom:18px; }
+    .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.14em; }
+    .muted { color:var(--muted); }
+    .toolbar { display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; }
+    button,.btn { background:var(--accent); color:#06211d; border:none; border-radius:12px; padding:12px 16px; font-weight:700; cursor:pointer; text-decoration:none; }
+    .secondary { background:#12223a; color:var(--text); border:1px solid #27415f; }
+    .metric-grid,.grid { display:grid; gap:16px; }
+    .metric-grid { grid-template-columns:repeat(5,minmax(0,1fr)); margin-bottom:18px; }
+    .metric { padding:18px; min-height:120px; }
+    .metric .value { font-size:28px; font-weight:800; margin-top:8px; }
+    .metric .status { color:var(--muted); margin-top:10px; font-size:13px; }
+    .grid { grid-template-columns:1.35fr 1fr; margin-bottom:18px; }
+    .stack { display:grid; gap:16px; }
+    .panel { padding:18px; }
+    .section-title { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:14px; }
+    .section-title h2 { margin:0; font-size:18px; }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th,td { padding:10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-size:12px; text-transform:uppercase; }
+    .pill { display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid #2a3c60; background:#0a1526; }
+    .good { color:#d1fae5; border-color:#14532d; }
+    .warn { color:#fde68a; border-color:#92400e; }
+    .bad { color:#fecaca; border-color:#7f1d1d; }
+    pre { margin:0; background:var(--panel2); border:1px solid var(--line); border-radius:14px; padding:14px; white-space:pre-wrap; min-height:180px; max-height:420px; overflow:auto; }
+    .tiny { color:var(--muted); font-size:12px; }
+    @media (max-width:1100px){ .metric-grid,.grid{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="label">Institutional Mission</div>
+    <h1 style="margin:8px 0;">QNT30656 — Capital Mobility Control Plane</h1>
+    <div class="muted">This layer converts treasury, fund, and jurisdiction readiness into governed capital movement. Quantora now decides which corridors can actually move capital, which reserve routes must be deferred, and which transfer queues are ready for release.</div>
+    <div class="toolbar">
+      <a class="btn" href="index.html">Back to Command Center</a>
+      <button onclick="runLayer()">Run Mobility Cycle</button>
+      <button class="secondary" onclick="refreshAll()">Refresh Summary</button>
+    </div>
+  </section>
+
+  <section class="metric-grid">
+    <div class="metric"><div class="label">Mobility Posture</div><div class="value" id="mobilityPosture">-</div><div class="status" id="mobilityTag"></div></div>
+    <div class="metric"><div class="label">Control Plane Score</div><div class="value" id="controlPlaneScore">-</div><div class="status">Institution-wide routing control</div></div>
+    <div class="metric"><div class="label">Queued Transfer Capital</div><div class="value" id="queuedCapital">-</div><div class="status">Capital ready for movement</div></div>
+    <div class="metric"><div class="label">Avg Mobility Score</div><div class="value" id="averageMobility">-</div><div class="status">Corridor mobility quality</div></div>
+    <div class="metric"><div class="label">Avg Transfer Friction</div><div class="value" id="averageFriction">-</div><div class="status">Routing drag and constraints</div></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Mobility Corridors</h2><span class="tiny">Where capital can actually move</span></div>
+      <table id="corridorTable"><thead><tr><th>Corridor</th><th>Vehicle</th><th>Mobility</th><th>Friction</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="stack">
+      <div class="panel"><div class="section-title"><h2>Policy</h2><span class="tiny">Mobility thresholds</span></div><pre id="policy">Loading…</pre></div>
+      <div class="panel"><div class="section-title"><h2>Mobility Overview</h2><span class="tiny">Control plane posture</span></div><pre id="overview">Loading…</pre></div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Transfer Queues</h2><span class="tiny">Operational dispatch order</span></div>
+      <table id="queueTable"><thead><tr><th>Corridor</th><th>Bucket</th><th>Capital</th><th>Window</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="panel">
+      <div class="section-title"><h2>Reserve Release Matrix</h2><span class="tiny">Reserve approval supervision</span></div>
+      <table id="releaseTable"><thead><tr><th>Corridor</th><th>Passport</th><th>Release Score</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel"><div class="section-title"><h2>Entity Passports</h2><span class="tiny">Jurisdiction and vehicle clearance</span></div><pre id="passports">Loading…</pre></div>
+    <div class="panel"><div class="section-title"><h2>Dependencies</h2><span class="tiny">Strategic, compliance, network, treasury, and fund stack inputs</span></div><pre id="dependencies">Loading…</pre></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel"><div class="section-title"><h2>Mobility Actions</h2><span class="tiny">Executive routing agenda</span></div><pre id="actions">Loading…</pre></div>
+    <div class="panel"><div class="section-title"><h2>Audit Trail</h2><span class="tiny">Latest control plane cycle</span></div><pre id="auditTrail">Loading…</pre></div>
+  </section>
+</div>
+<script>
+  const fmtPct = v => `${Number(v||0).toFixed(2)}%`;
+  const fmtMoney = v => `$${Number(v||0).toLocaleString(undefined,{maximumFractionDigits:2})}`;
+  const pill = (text, cls='') => `<span class="pill ${cls}">${text}</span>`;
+  function severityClass(text='') {
+    const t = String(text).toLowerCase();
+    if (t.includes('hold') || t.includes('defer') || t.includes('constrained')) return 'bad';
+    if (t.includes('stage') || t.includes('review') || t.includes('governed')) return 'warn';
+    return 'good';
+  }
+  async function getJson(url, opts) {
+    const res = await fetch(url, opts);
+    if (!res.ok) throw new Error(`${url} -> ${res.status}`);
+    return res.json();
+  }
+  function fillTable(id, rows, renderer, colspan=4) {
+    const tbody = document.querySelector(`#${id} tbody`);
+    tbody.innerHTML = rows.length ? rows.map(renderer).join('') : `<tr><td colspan="${colspan}" class="tiny">No rows available.</td></tr>`;
+  }
+  async function refreshAll() {
+    try {
+      const [summary, audit] = await Promise.all([
+        getJson('/api/capital-mobility-control-plane/summary'),
+        getJson('/api/capital-mobility-control-plane/audit')
+      ]);
+      renderSummary(summary, audit);
+    } catch (err) {
+      document.getElementById('auditTrail').textContent = `Mobility layer unavailable. ${err.message}`;
+    }
+  }
+  async function runLayer() {
+    const result = await getJson('/api/capital-mobility-control-plane/run', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ trigger:'manual-ui' })
+    });
+    renderSummary(result.summary, { latest_run: result.run, runs: [result.run], run_count: 1 });
+  }
+  function renderSummary(summary, audit) {
+    const o = summary.mobility_overview || {};
+    document.getElementById('mobilityPosture').textContent = o.mobility_posture || '-';
+    document.getElementById('mobilityTag').innerHTML = pill(o.mobility_posture || 'unknown', severityClass(o.mobility_posture));
+    document.getElementById('controlPlaneScore').textContent = fmtPct(o.control_plane_score || 0);
+    document.getElementById('queuedCapital').textContent = fmtMoney(o.queued_transfer_capital || 0);
+    document.getElementById('averageMobility').textContent = fmtPct(o.average_mobility_score || 0);
+    document.getElementById('averageFriction').textContent = fmtPct(o.average_transfer_friction || 0);
+    fillTable('corridorTable', summary.mobility_corridors || [], row => `
+      <tr><td>${row.corridor_name || '-'}</td><td>${row.launch_vehicle || '-'}</td><td>${fmtPct(row.mobility_score || 0)}</td><td>${fmtPct(row.transfer_friction_score || 0)}</td><td>${pill(row.release_status || '-', severityClass(row.release_status))}</td></tr>`, 5);
+    fillTable('queueTable', summary.transfer_queues || [], row => `
+      <tr><td>${row.corridor_name || '-'}</td><td>${row.liquidity_bucket || '-'}</td><td>${fmtMoney(row.planned_transfer_capital || 0)}</td><td>${row.execution_window_hours || 0}h</td><td>${pill(row.status || '-', severityClass(row.status))}</td></tr>`, 5);
+    fillTable('releaseTable', summary.reserve_release_matrix || [], row => `
+      <tr><td>${row.corridor_name || '-'}</td><td>${row.passport_name || '-'}</td><td>${fmtPct(row.release_score || 0)}</td><td>${pill(row.reserve_release_status || '-', severityClass(row.reserve_release_status))}</td></tr>`, 4);
+    document.getElementById('policy').textContent = JSON.stringify(summary.policy || {}, null, 2);
+    document.getElementById('overview').textContent = JSON.stringify(summary.mobility_overview || {}, null, 2);
+    document.getElementById('passports').textContent = JSON.stringify(summary.entity_passports || [], null, 2);
+    document.getElementById('dependencies').textContent = JSON.stringify(summary.mobility_dependencies || {}, null, 2);
+    document.getElementById('actions').textContent = JSON.stringify(summary.mobility_actions || [], null, 2);
+    document.getElementById('auditTrail').textContent = JSON.stringify({
+      run_count: audit.run_count || (audit.runs || []).length || 0,
+      latest_run: audit.latest_run || null
+    }, null, 2);
+  }
+  refreshAll();
+</script>
+</body>
+</html>

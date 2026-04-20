@@ -1,0 +1,1694 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 365,
+    "minimum_score": 96.0,
+    "minimum_board_resolution_archive_readiness": 0.97,
+    "minimum_committee_approval_trace_readiness": 0.97,
+    "minimum_annual_governance_evidence_lock_readiness": 0.97,
+    "maximum_pending_evidence_exceptions": 0
+  },
+  "runs": [
+    {
+      "run_id": "qnt40027_1776234544",
+      "captured_at": "2026-04-15T06:29:04.716923+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776234540",
+      "captured_at": "2026-04-15T06:29:00.639933+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776234536",
+      "captured_at": "2026-04-15T06:28:56.005514+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776234532",
+      "captured_at": "2026-04-15T06:28:52.365791+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776234528",
+      "captured_at": "2026-04-15T06:28:48.659554+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776234525",
+      "captured_at": "2026-04-15T06:28:45.099917+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776234522",
+      "captured_at": "2026-04-15T06:28:42.932289+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776234440",
+      "captured_at": "2026-04-15T06:27:20.272326+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776234436",
+      "captured_at": "2026-04-15T06:27:16.628939+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776234433",
+      "captured_at": "2026-04-15T06:27:13.164222+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776234429",
+      "captured_at": "2026-04-15T06:27:09.705213+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776234426",
+      "captured_at": "2026-04-15T06:27:06.556959+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776234423",
+      "captured_at": "2026-04-15T06:27:03.371346+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776234420",
+      "captured_at": "2026-04-15T06:27:00.236880+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776234418",
+      "captured_at": "2026-04-15T06:26:58.270130+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776233476",
+      "captured_at": "2026-04-15T06:11:16.000809+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776233472",
+      "captured_at": "2026-04-15T06:11:12.755450+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776233375",
+      "captured_at": "2026-04-15T06:09:35.667429+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776233372",
+      "captured_at": "2026-04-15T06:09:32.892084+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776232177",
+      "captured_at": "2026-04-15T05:49:37.181041+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776232172",
+      "captured_at": "2026-04-15T05:49:32.919553+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776231881",
+      "captured_at": "2026-04-15T05:44:41.759514+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776231877",
+      "captured_at": "2026-04-15T05:44:37.575019+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776231532",
+      "captured_at": "2026-04-15T05:38:52.714585+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776231528",
+      "captured_at": "2026-04-15T05:38:48.680617+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776231261",
+      "captured_at": "2026-04-15T05:34:21.323358+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776231257",
+      "captured_at": "2026-04-15T05:34:17.421354+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776231249",
+      "captured_at": "2026-04-15T05:34:09.361730+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776231245",
+      "captured_at": "2026-04-15T05:34:05.422248+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776230209",
+      "captured_at": "2026-04-15T05:16:49.008991+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776230205",
+      "captured_at": "2026-04-15T05:16:45.206193+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776230197",
+      "captured_at": "2026-04-15T05:16:37.526428+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776230194",
+      "captured_at": "2026-04-15T05:16:34.062600+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776229674",
+      "captured_at": "2026-04-15T05:07:54.163820+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776229670",
+      "captured_at": "2026-04-15T05:07:50.545632+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776229377",
+      "captured_at": "2026-04-15T05:02:57.853697+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776229374",
+      "captured_at": "2026-04-15T05:02:54.768810+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776229367",
+      "captured_at": "2026-04-15T05:02:47.760582+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776229364",
+      "captured_at": "2026-04-15T05:02:44.741815+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776228191",
+      "captured_at": "2026-04-15T04:43:11.344825+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776228189",
+      "captured_at": "2026-04-15T04:43:09.471202+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776228185",
+      "captured_at": "2026-04-15T04:43:05.718700+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40027_1776227832",
+      "captured_at": "2026-04-15T04:37:12.205327+00:00",
+      "board_resolution_archive_readiness": 0.99,
+      "committee_approval_trace_readiness": 0.99,
+      "annual_governance_evidence_lock_readiness": 0.99,
+      "pending_evidence_exceptions": 0,
+      "score": 86.0,
+      "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "board communication governance posture must be established before evidence lock",
+        "annual investor communications posture must be established before governance evidence lock"
+      ],
+      "alerts": [
+        "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    }
+  ],
+  "alerts": [
+    {
+      "captured_at": "2026-04-15T06:29:04.716931+00:00",
+      "code": "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED"
+    },
+    {
+      "captured_at": "2026-04-15T06:29:04.716933+00:00",
+      "code": "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+    }
+  ],
+  "board_resolution_archives": [
+    {
+      "id": "board_resolution_archive_1776234544",
+      "captured_at": "2026-04-15T06:29:04.711495+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776234540",
+      "captured_at": "2026-04-15T06:29:00.633329+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776234536",
+      "captured_at": "2026-04-15T06:28:56.000034+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776234532",
+      "captured_at": "2026-04-15T06:28:52.360225+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776234528",
+      "captured_at": "2026-04-15T06:28:48.654222+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776234525",
+      "captured_at": "2026-04-15T06:28:45.094977+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776234522",
+      "captured_at": "2026-04-15T06:28:42.927276+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776234440",
+      "captured_at": "2026-04-15T06:27:20.268121+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776234436",
+      "captured_at": "2026-04-15T06:27:16.624349+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776234433",
+      "captured_at": "2026-04-15T06:27:13.157161+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776234429",
+      "captured_at": "2026-04-15T06:27:09.700540+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776234426",
+      "captured_at": "2026-04-15T06:27:06.552133+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776234423",
+      "captured_at": "2026-04-15T06:27:03.367102+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776234420",
+      "captured_at": "2026-04-15T06:27:00.231569+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776234418",
+      "captured_at": "2026-04-15T06:26:58.265851+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776233475",
+      "captured_at": "2026-04-15T06:11:15.997506+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776233472",
+      "captured_at": "2026-04-15T06:11:12.745758+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776233375",
+      "captured_at": "2026-04-15T06:09:35.662140+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776233372",
+      "captured_at": "2026-04-15T06:09:32.887510+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776232177",
+      "captured_at": "2026-04-15T05:49:37.175419+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776232172",
+      "captured_at": "2026-04-15T05:49:32.913093+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776231881",
+      "captured_at": "2026-04-15T05:44:41.750763+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776231877",
+      "captured_at": "2026-04-15T05:44:37.569916+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776231532",
+      "captured_at": "2026-04-15T05:38:52.709799+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776231528",
+      "captured_at": "2026-04-15T05:38:48.675882+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776231261",
+      "captured_at": "2026-04-15T05:34:21.316196+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776231257",
+      "captured_at": "2026-04-15T05:34:17.416439+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776231249",
+      "captured_at": "2026-04-15T05:34:09.354961+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776231245",
+      "captured_at": "2026-04-15T05:34:05.415726+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776230209",
+      "captured_at": "2026-04-15T05:16:49.003041+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776230205",
+      "captured_at": "2026-04-15T05:16:45.194380+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776230197",
+      "captured_at": "2026-04-15T05:16:37.521686+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776230194",
+      "captured_at": "2026-04-15T05:16:34.056827+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776229674",
+      "captured_at": "2026-04-15T05:07:54.155435+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776229670",
+      "captured_at": "2026-04-15T05:07:50.541368+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776229377",
+      "captured_at": "2026-04-15T05:02:57.849333+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776229374",
+      "captured_at": "2026-04-15T05:02:54.764021+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776229367",
+      "captured_at": "2026-04-15T05:02:47.756033+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776229364",
+      "captured_at": "2026-04-15T05:02:44.736745+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776228191",
+      "captured_at": "2026-04-15T04:43:11.341610+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776228189",
+      "captured_at": "2026-04-15T04:43:09.469101+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776228185",
+      "captured_at": "2026-04-15T04:43:05.710704+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    },
+    {
+      "id": "board_resolution_archive_1776227832",
+      "captured_at": "2026-04-15T04:37:12.202490+00:00",
+      "archive_name": "board resolution archive FY2025",
+      "board_resolution_archive_readiness": 0.99
+    }
+  ],
+  "committee_approval_traces": [
+    {
+      "id": "committee_approval_trace_1776234544",
+      "captured_at": "2026-04-15T06:29:04.713027+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776234540",
+      "captured_at": "2026-04-15T06:29:00.635028+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776234536",
+      "captured_at": "2026-04-15T06:28:56.001286+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776234532",
+      "captured_at": "2026-04-15T06:28:52.361691+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776234528",
+      "captured_at": "2026-04-15T06:28:48.655196+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776234525",
+      "captured_at": "2026-04-15T06:28:45.096308+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776234522",
+      "captured_at": "2026-04-15T06:28:42.928524+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776234440",
+      "captured_at": "2026-04-15T06:27:20.269003+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776234436",
+      "captured_at": "2026-04-15T06:27:16.625470+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776234433",
+      "captured_at": "2026-04-15T06:27:13.160437+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776234429",
+      "captured_at": "2026-04-15T06:27:09.701778+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776234426",
+      "captured_at": "2026-04-15T06:27:06.553463+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776234423",
+      "captured_at": "2026-04-15T06:27:03.368123+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776234420",
+      "captured_at": "2026-04-15T06:27:00.232963+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776234418",
+      "captured_at": "2026-04-15T06:26:58.266843+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776233475",
+      "captured_at": "2026-04-15T06:11:15.998347+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776233472",
+      "captured_at": "2026-04-15T06:11:12.751228+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776233375",
+      "captured_at": "2026-04-15T06:09:35.664647+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776233372",
+      "captured_at": "2026-04-15T06:09:32.888622+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776232177",
+      "captured_at": "2026-04-15T05:49:37.176803+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776232172",
+      "captured_at": "2026-04-15T05:49:32.914741+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776231881",
+      "captured_at": "2026-04-15T05:44:41.752117+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776231877",
+      "captured_at": "2026-04-15T05:44:37.571270+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776231532",
+      "captured_at": "2026-04-15T05:38:52.711096+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776231528",
+      "captured_at": "2026-04-15T05:38:48.677126+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776231261",
+      "captured_at": "2026-04-15T05:34:21.317553+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776231257",
+      "captured_at": "2026-04-15T05:34:17.417724+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776231249",
+      "captured_at": "2026-04-15T05:34:09.356312+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776231245",
+      "captured_at": "2026-04-15T05:34:05.417576+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776230209",
+      "captured_at": "2026-04-15T05:16:49.004454+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776230205",
+      "captured_at": "2026-04-15T05:16:45.202286+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776230197",
+      "captured_at": "2026-04-15T05:16:37.523017+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776230194",
+      "captured_at": "2026-04-15T05:16:34.058815+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776229674",
+      "captured_at": "2026-04-15T05:07:54.156751+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776229670",
+      "captured_at": "2026-04-15T05:07:50.542739+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776229377",
+      "captured_at": "2026-04-15T05:02:57.850582+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776229374",
+      "captured_at": "2026-04-15T05:02:54.765446+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776229367",
+      "captured_at": "2026-04-15T05:02:47.757264+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776229364",
+      "captured_at": "2026-04-15T05:02:44.739024+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776228191",
+      "captured_at": "2026-04-15T04:43:11.342557+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776228189",
+      "captured_at": "2026-04-15T04:43:09.469600+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776228185",
+      "captured_at": "2026-04-15T04:43:05.711311+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    },
+    {
+      "id": "committee_approval_trace_1776227832",
+      "captured_at": "2026-04-15T04:37:12.203232+00:00",
+      "trace_name": "committee approval trace FY2025",
+      "committee_approval_trace_readiness": 0.99
+    }
+  ],
+  "annual_governance_evidence_locks": [
+    {
+      "id": "annual_governance_evidence_lock_1776234544",
+      "captured_at": "2026-04-15T06:29:04.714232+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776234540",
+      "captured_at": "2026-04-15T06:29:00.636890+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776234536",
+      "captured_at": "2026-04-15T06:28:56.002900+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776234532",
+      "captured_at": "2026-04-15T06:28:52.362928+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776234528",
+      "captured_at": "2026-04-15T06:28:48.656677+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776234525",
+      "captured_at": "2026-04-15T06:28:45.097598+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776234522",
+      "captured_at": "2026-04-15T06:28:42.929799+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776234440",
+      "captured_at": "2026-04-15T06:27:20.270159+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776234436",
+      "captured_at": "2026-04-15T06:27:16.626673+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776234433",
+      "captured_at": "2026-04-15T06:27:13.161745+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776234429",
+      "captured_at": "2026-04-15T06:27:09.702865+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776234426",
+      "captured_at": "2026-04-15T06:27:06.554673+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776234423",
+      "captured_at": "2026-04-15T06:27:03.369248+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776234420",
+      "captured_at": "2026-04-15T06:27:00.234069+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776234418",
+      "captured_at": "2026-04-15T06:26:58.268104+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776233475",
+      "captured_at": "2026-04-15T06:11:15.999121+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776233472",
+      "captured_at": "2026-04-15T06:11:12.752854+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776233375",
+      "captured_at": "2026-04-15T06:09:35.665564+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776233372",
+      "captured_at": "2026-04-15T06:09:32.889940+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776232177",
+      "captured_at": "2026-04-15T05:49:37.178218+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776232172",
+      "captured_at": "2026-04-15T05:49:32.916745+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776231881",
+      "captured_at": "2026-04-15T05:44:41.753363+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776231877",
+      "captured_at": "2026-04-15T05:44:37.572527+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776231532",
+      "captured_at": "2026-04-15T05:38:52.712346+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776231528",
+      "captured_at": "2026-04-15T05:38:48.678342+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776231261",
+      "captured_at": "2026-04-15T05:34:21.320600+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776231257",
+      "captured_at": "2026-04-15T05:34:17.418987+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776231249",
+      "captured_at": "2026-04-15T05:34:09.357906+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776231245",
+      "captured_at": "2026-04-15T05:34:05.419174+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776230209",
+      "captured_at": "2026-04-15T05:16:49.005751+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776230205",
+      "captured_at": "2026-04-15T05:16:45.203764+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776230197",
+      "captured_at": "2026-04-15T05:16:37.524128+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776230194",
+      "captured_at": "2026-04-15T05:16:34.060231+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776229674",
+      "captured_at": "2026-04-15T05:07:54.157799+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776229670",
+      "captured_at": "2026-04-15T05:07:50.543867+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776229377",
+      "captured_at": "2026-04-15T05:02:57.851675+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776229374",
+      "captured_at": "2026-04-15T05:02:54.766581+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776229367",
+      "captured_at": "2026-04-15T05:02:47.758681+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776229364",
+      "captured_at": "2026-04-15T05:02:44.740232+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776228191",
+      "captured_at": "2026-04-15T04:43:11.343183+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776228189",
+      "captured_at": "2026-04-15T04:43:09.470079+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776228185",
+      "captured_at": "2026-04-15T04:43:05.712195+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    },
+    {
+      "id": "annual_governance_evidence_lock_1776227832",
+      "captured_at": "2026-04-15T04:37:12.203975+00:00",
+      "lock_name": "annual governance evidence lock FY2025",
+      "annual_governance_evidence_lock_readiness": 0.99
+    }
+  ],
+  "latest_run": {
+    "run_id": "qnt40027_1776234544",
+    "captured_at": "2026-04-15T06:29:04.716923+00:00",
+    "board_resolution_archive_readiness": 0.99,
+    "committee_approval_trace_readiness": 0.99,
+    "annual_governance_evidence_lock_readiness": 0.99,
+    "pending_evidence_exceptions": 0,
+    "score": 86.0,
+    "band": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+    "posture": "ANNUAL_GOVERNANCE_EVIDENCE_REMEDIATION_REQUIRED",
+    "reasons": [
+      "board communication governance posture must be established before evidence lock",
+      "annual investor communications posture must be established before governance evidence lock"
+    ],
+    "alerts": [
+      "BOARD_COMMUNICATION_GOVERNANCE_POSTURE_NOT_ESTABLISHED",
+      "ANNUAL_INVESTOR_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+    ],
+    "operator_review_required": true
+  },
+  "last_context": {
+    "captured_at": "2026-04-15T06:29:04.716849+00:00",
+    "dep_a_summary": {
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "score": 86.0
+    },
+    "dep_b_summary": {
+      "posture": "ANNUAL_COMMUNICATIONS_CONTROL_REMEDIATION_REQUIRED",
+      "score": 86.0
+    }
+  }
+}

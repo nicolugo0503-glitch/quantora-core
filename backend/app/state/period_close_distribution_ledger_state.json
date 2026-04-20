@@ -1,0 +1,269 @@
+{
+  "generated_by": "QNT50012",
+  "status": "degraded",
+  "policy": {
+    "base_currency": "USD",
+    "require_executed_payables": true,
+    "require_notice_finalization": true,
+    "require_zero_open_breaks": true,
+    "require_period_attestation": true,
+    "notice_delivery_channel": "secure_inbox",
+    "notice_ttl_seconds": 604800,
+    "auto_sync_sources": true
+  },
+  "last_sync": {
+    "synced_at": 1776437328,
+    "source": "auto",
+    "executed_payable_count": 2,
+    "authorized_payable_release_count": 0,
+    "distribution_batch_count": 1,
+    "settlement_break_count": 0,
+    "settlement_status": "matched",
+    "latest_equity": 100000.0,
+    "nav_per_unit": 1.2345,
+    "performance_as_of_date": "2026-04-30",
+    "cumulative_return_pct": 0.21,
+    "investor_exit_finalization_count": 0
+  },
+  "sync_history": [
+    {
+      "synced_at": 1776437328,
+      "source": "auto",
+      "executed_payable_count": 2,
+      "authorized_payable_release_count": 0,
+      "distribution_batch_count": 1,
+      "settlement_break_count": 0,
+      "settlement_status": "matched",
+      "latest_equity": 100000.0,
+      "nav_per_unit": 1.2345,
+      "performance_as_of_date": "2026-04-30",
+      "cumulative_return_pct": 0.21,
+      "investor_exit_finalization_count": 0
+    }
+  ],
+  "period_closes": [
+    {
+      "period_close_id": "pcd_be5a46143f0c",
+      "created_at": 1776437328,
+      "created_by": "ops",
+      "period_id": "2026-04",
+      "statement_cycle_id": "APR-2026",
+      "close_date": "",
+      "notes": "",
+      "ledger_lines": [
+        {
+          "ledger_line_id": "pcl_40dd0b3ae412",
+          "batch_id": "batch_1",
+          "investor_id": "INV-001",
+          "investor_name": "Investor One",
+          "amount": 1250.0,
+          "currency": "USD",
+          "executed_at": 1,
+          "treasury_transfer_id": "tx_1",
+          "period_id": "2026-04",
+          "statement_cycle_id": "APR-2026",
+          "distribution_type": "profit_distribution",
+          "source_nav_date": "2026-04-30",
+          "status": "ledger_finalized",
+          "finalized_at": 1776437328
+        },
+        {
+          "ledger_line_id": "pcl_6507a87355de",
+          "batch_id": "batch_1",
+          "investor_id": "INV-002",
+          "investor_name": "Investor Two",
+          "amount": 1750.0,
+          "currency": "USD",
+          "executed_at": 1,
+          "treasury_transfer_id": "tx_2",
+          "period_id": "2026-04",
+          "statement_cycle_id": "APR-2026",
+          "distribution_type": "profit_distribution",
+          "source_nav_date": "2026-04-30",
+          "status": "ledger_finalized",
+          "finalized_at": 1776437328
+        }
+      ],
+      "investor_notices": [
+        {
+          "notice_id": "ntc_f2d815a84c0e",
+          "investor_id": "INV-001",
+          "investor_name": "Investor One",
+          "period_id": "2026-04",
+          "statement_cycle_id": "APR-2026",
+          "currency": "USD",
+          "total_distribution_amount": 1250.0,
+          "delivery_channel": "secure_inbox",
+          "status": "notice_finalized",
+          "finalized_at": 1776437328,
+          "expires_at": 1777042128,
+          "finalized_by": "ops"
+        },
+        {
+          "notice_id": "ntc_713047cdb011",
+          "investor_id": "INV-002",
+          "investor_name": "Investor Two",
+          "period_id": "2026-04",
+          "statement_cycle_id": "APR-2026",
+          "currency": "USD",
+          "total_distribution_amount": 1750.0,
+          "delivery_channel": "secure_inbox",
+          "status": "notice_finalized",
+          "finalized_at": 1776437328,
+          "expires_at": 1777042128,
+          "finalized_by": "ops"
+        }
+      ],
+      "distribution_total": 3000.0,
+      "investor_count": 2,
+      "ops_attested": true,
+      "finance_attested": true,
+      "status": "closed",
+      "context_snapshot": {
+        "executed_payable_count": 2,
+        "authorized_payable_release_count": 0,
+        "distribution_batch_count": 1,
+        "settlement_break_count": 0,
+        "settlement_status": "matched",
+        "latest_equity": 100000.0,
+        "nav_per_unit": 1.2345,
+        "performance_as_of_date": "2026-04-30",
+        "cumulative_return_pct": 0.21,
+        "investor_exit_finalization_count": 0
+      },
+      "closed_at": 1776437328,
+      "closed_by": "cfo"
+    }
+  ],
+  "ledger_finalizations": [
+    {
+      "ledger_finalization_id": "lgf_8870f5342eb3",
+      "period_close_id": "pcd_be5a46143f0c",
+      "period_id": "2026-04",
+      "approved_by": "controller",
+      "finalized_at": 1776437328,
+      "ledger_line_count": 2,
+      "distribution_total": 3000.0
+    }
+  ],
+  "notice_finalizations": [
+    {
+      "notice_finalization_id": "nff_5f64f9d307b9",
+      "period_close_id": "pcd_be5a46143f0c",
+      "period_id": "2026-04",
+      "investor_id": "INV-002",
+      "investor_name": "Investor Two",
+      "operator": "ops",
+      "finalized_at": 1776437328,
+      "expires_at": 1777042128,
+      "delivery_channel": "secure_inbox",
+      "amount": 1750.0
+    },
+    {
+      "notice_finalization_id": "nff_b4f4ed646f72",
+      "period_close_id": "pcd_be5a46143f0c",
+      "period_id": "2026-04",
+      "investor_id": "INV-001",
+      "investor_name": "Investor One",
+      "operator": "ops",
+      "finalized_at": 1776437328,
+      "expires_at": 1777042128,
+      "delivery_channel": "secure_inbox",
+      "amount": 1250.0
+    }
+  ],
+  "closed_periods": [
+    {
+      "period_close_id": "pcd_be5a46143f0c",
+      "period_id": "2026-04",
+      "closed_by": "cfo",
+      "closed_at": 1776437328,
+      "distribution_total": 3000.0,
+      "investor_count": 2,
+      "notice_count": 2
+    }
+  ],
+  "exceptions": [],
+  "audit_log": [
+    {
+      "event_id": "period_close_distribution_ledger_audit_1776437328918756154",
+      "event_type": "distribution_period_closed",
+      "timestamp": 1776437328,
+      "period_close_id": "pcd_be5a46143f0c",
+      "period_id": "2026-04",
+      "closed_by": "cfo",
+      "closed_at": 1776437328,
+      "distribution_total": 3000.0,
+      "investor_count": 2,
+      "notice_count": 2
+    },
+    {
+      "event_id": "period_close_distribution_ledger_audit_1776437328918201282",
+      "event_type": "investor_notice_finalized",
+      "timestamp": 1776437328,
+      "notice_finalization_id": "nff_5f64f9d307b9",
+      "period_close_id": "pcd_be5a46143f0c",
+      "period_id": "2026-04",
+      "investor_id": "INV-002",
+      "investor_name": "Investor Two",
+      "operator": "ops",
+      "finalized_at": 1776437328,
+      "expires_at": 1777042128,
+      "delivery_channel": "secure_inbox",
+      "amount": 1750.0
+    },
+    {
+      "event_id": "period_close_distribution_ledger_audit_1776437328917332520",
+      "event_type": "investor_notice_finalized",
+      "timestamp": 1776437328,
+      "notice_finalization_id": "nff_b4f4ed646f72",
+      "period_close_id": "pcd_be5a46143f0c",
+      "period_id": "2026-04",
+      "investor_id": "INV-001",
+      "investor_name": "Investor One",
+      "operator": "ops",
+      "finalized_at": 1776437328,
+      "expires_at": 1777042128,
+      "delivery_channel": "secure_inbox",
+      "amount": 1250.0
+    },
+    {
+      "event_id": "period_close_distribution_ledger_audit_1776437328916501933",
+      "event_type": "distribution_ledger_finalized",
+      "timestamp": 1776437328,
+      "ledger_finalization_id": "lgf_8870f5342eb3",
+      "period_close_id": "pcd_be5a46143f0c",
+      "period_id": "2026-04",
+      "approved_by": "controller",
+      "finalized_at": 1776437328,
+      "ledger_line_count": 2,
+      "distribution_total": 3000.0
+    },
+    {
+      "event_id": "period_close_distribution_ledger_audit_1776437328915640001",
+      "event_type": "period_close_registered",
+      "timestamp": 1776437328,
+      "period_close_id": "pcd_be5a46143f0c",
+      "period_id": "2026-04",
+      "distribution_total": 3000.0,
+      "investor_count": 2
+    },
+    {
+      "event_id": "period_close_distribution_ledger_audit_1776437328914144083",
+      "event_type": "period_close_context_synced",
+      "timestamp": 1776437328,
+      "synced_at": 1776437328,
+      "source": "auto",
+      "executed_payable_count": 2,
+      "authorized_payable_release_count": 0,
+      "distribution_batch_count": 1,
+      "settlement_break_count": 0,
+      "settlement_status": "matched",
+      "latest_equity": 100000.0,
+      "nav_per_unit": 1.2345,
+      "performance_as_of_date": "2026-04-30",
+      "cumulative_return_pct": 0.21,
+      "investor_exit_finalization_count": 0
+    }
+  ]
+}

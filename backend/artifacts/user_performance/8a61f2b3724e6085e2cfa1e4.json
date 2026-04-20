@@ -1,0 +1,22 @@
+{
+  "series": [
+    {
+      "timestamp": 1775711166,
+      "balance": 0.0,
+      "available": 0.0,
+      "allocated": 0.0,
+      "net_invested_capital": 0.0,
+      "pnl_value": 0.0,
+      "return_pct": 0.0
+    },
+    {
+      "timestamp": 1775711166,
+      "balance": 2500000.0,
+      "available": 2500000.0,
+      "allocated": 0.0,
+      "net_invested_capital": 2500000.0,
+      "pnl_value": 0.0,
+      "return_pct": 0.0
+    }
+  ]
+}

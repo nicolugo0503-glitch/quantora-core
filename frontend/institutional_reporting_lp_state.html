@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — Institutional Reporting & LP Statements</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--panel2:#132742;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(15,29,49,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .sub{color:var(--muted);max-width:980px;line-height:1.5}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    button{border-radius:10px;border:none;background:var(--accent);color:var(--text);padding:10px 12px;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}.stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}
+    th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #274168;background:#0b1a2c;font-size:12px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:180px;white-space:pre-wrap}
+    @media (max-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:1fr}}
+    @media (max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT30449 — Institutional Reporting & LP Statement Engine</h1>
+      <div class="sub">Fund NAV snapshots, LP statements, reporting cycles, and distribution tracking. This is the investor-grade reporting layer required for institutional trust and recurring capital communication.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="loadAll()">Refresh</button>
+      <button onclick="seedNav()">Seed NAV</button>
+      <button onclick="seedStatement()">Seed Statement</button>
+      <button onclick="seedDistribution()">Seed Distribution</button>
+      <button onclick="seedCycle()">Seed Cycle</button>
+    </div>
+  </div>
+
+  <div class="grid" id="summaryGrid"></div>
+
+  <div class="layout">
+    <div class="stack">
+      <div class="card">
+        <h2>LP Statements</h2>
+        <div class="table-wrap"><table id="statementTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>NAV Snapshots</h2>
+        <div class="table-wrap"><table id="navTable"></table></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card">
+        <h2>Distributions</h2>
+        <div class="table-wrap"><table id="distributionTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Reporting Cycles</h2>
+        <div class="table-wrap"><table id="cycleTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Reporting Health</h2>
+        <div class="pills" id="healthPills"></div>
+      </div>
+      <div class="card">
+        <h2>Last Action</h2>
+        <pre id="actionOut">No action yet.</pre>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const api=(path, opts={})=>fetch(path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok) throw new Error(d.detail||'request_failed'); return d;});
+const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(Number(v||0));
+function table(el, headers, rows){
+  const thead = `<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  const body = rows.length ? rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${headers.length}">No data</td></tr>`;
+  el.innerHTML = thead + body;
+}
+function renderSummary(summary){
+  const labels = [
+    ['Statements', summary.statements_total],
+    ['Delivered', summary.statements_delivered],
+    ['Fund NAV', money(summary.current_fund_nav)],
+    ['Gross PnL', money(summary.current_gross_pnl)],
+    ['Distributions', money(summary.total_distributions)],
+    ['Reporting Score', summary.reporting_score]
+  ];
+  document.getElementById('summaryGrid').innerHTML = labels.map(([label,val])=>`<div class="card"><div class="label">${label}</div><div class="value">${val}</div></div>`).join('');
+}
+function pills(target, items){
+  document.getElementById(target).innerHTML = items.map(([label,klass])=>`<span class="pill ${klass}">${label}</span>`).join('');
+}
+async function loadAll(){
+  const data = await api('/workspace/reporting/summary');
+  renderSummary(data.summary);
+  table(document.getElementById('statementTable'),
+    ['Investor','Type','Period','NAV','PnL','Status'],
+    (data.statements||[]).map(r=>[r.investor_name, r.statement_type, r.period_label, money(r.nav_amount), money(r.pnl_amount), r.delivery_status])
+  );
+  table(document.getElementById('navTable'),
+    ['As Of','Fund NAV','Gross PnL','Net PnL','Created'],
+    (data.nav_snapshots||[]).map(r=>[r.as_of_date||'-', money(r.fund_nav), money(r.gross_pnl), money(r.net_pnl), r.created_at||'-'])
+  );
+  table(document.getElementById('distributionTable'),
+    ['Investor','Type','Amount','Status','Created'],
+    (data.distributions||[]).map(r=>[r.investor_name, r.distribution_type, money(r.amount), r.status, r.created_at||'-'])
+  );
+  table(document.getElementById('cycleTable'),
+    ['Cycle','Period','Status','Expected','Completed','Created'],
+    (data.reporting_cycles||[]).map(r=>[r.cycle_name, r.period_label, r.status, r.statements_expected, r.statements_completed, r.created_at||'-'])
+  );
+  pills('healthPills', [
+    [`NAV ${data.reporting_health.nav_ready?'Ready':'Missing'}`, data.reporting_health.nav_ready?'good':'warn'],
+    [`Statements ${data.reporting_health.statement_engine_ready?'Ready':'Missing'}`, data.reporting_health.statement_engine_ready?'good':'warn'],
+    [`Distributions ${data.reporting_health.distribution_registry_ready?'Ready':'Missing'}`, data.reporting_health.distribution_registry_ready?'good':'warn'],
+    [`Cycles ${data.reporting_health.cycle_management_ready?'Ready':'Missing'}`, data.reporting_health.cycle_management_ready?'good':'warn'],
+    [`Coverage ${Number(data.reporting_health.coverage_percent).toFixed(2)}%`, data.reporting_health.coverage_percent>=80?'good':'warn']
+  ]);
+}
+async function seedNav(){
+  const res = await api('/workspace/reporting/nav/create', {method:'POST', body: JSON.stringify({as_of_date:'2026-04-05', fund_nav:250000, gross_pnl:18000, net_pnl:14500})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedStatement(){
+  const res = await api('/workspace/reporting/statements/create', {method:'POST', body: JSON.stringify({investor_name:'Founding LP', statement_type:'lp_statement', period_label:'MTD', nav_amount:125000, pnl_amount:7200, delivery_status:'queued'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedDistribution(){
+  const res = await api('/workspace/reporting/distributions/create', {method:'POST', body: JSON.stringify({investor_name:'Founding LP', distribution_type:'cash_distribution', amount:5000, status:'scheduled'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedCycle(){
+  const res = await api('/workspace/reporting/cycles/create', {method:'POST', body: JSON.stringify({cycle_name:'April Investor Cycle', period_label:'APR-2026', status:'active', statements_expected:12, statements_completed:3})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+loadAll().catch(err => document.getElementById('actionOut').textContent = String(err));
+</script>
+</body>
+</html>

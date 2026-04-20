@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>QNT30708 Strategy Evolution Engine</title>
+<style>
+:root{--bg:#071019;--panel:#0d1723;--line:#1b2b40;--text:#edf3fb;--muted:#8ea0b7;--good:#48d597;--bad:#ff6f86;--warn:#ffc857}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#071019,#09131d 55%,#071019);color:var(--text);font-family:Inter,system-ui,sans-serif}.wrap{max-width:1360px;margin:0 auto;padding:24px}h1{margin:0 0 6px}p{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:14px 0}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:800;margin-top:6px}.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 0}.toolbar input,.toolbar button,.toolbar select{background:#09111a;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:10px 12px}.toolbar button{cursor:pointer}table{width:100%;border-collapse:collapse}th,td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}pre{white-space:pre-wrap;word-break:break-word;background:#08101a;border:1px solid var(--line);border-radius:12px;padding:12px;max-height:320px;overflow:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>QNT30708 Strategy Evolution Engine</h1>
+  <p>Governed strategy promotion, retirement, and performance-based evolution under recovery, forensic, safety, and fund-admin controls.</p>
+
+  <div class="toolbar">
+    <button onclick="bootstrapDemo()">Bootstrap Demo</button>
+    <input id="strategyName" placeholder="strategy name" value="adaptive-momentum-v2">
+    <input id="liveReturn" type="number" step="0.1" placeholder="live return %" value="18.4">
+    <input id="liveSharpe" type="number" step="0.01" placeholder="live sharpe" value="1.68">
+    <input id="drawdown" type="number" step="0.1" placeholder="max drawdown %" value="5.4">
+    <button onclick="evaluateCandidate()">Evaluate Candidate</button>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Engine Posture</div><div id="posture" class="value">-</div></div>
+    <div class="card"><div class="label">Candidates</div><div id="candidates" class="value">0</div></div>
+    <div class="card"><div class="label">Promotable</div><div id="promotable" class="value">0</div></div>
+    <div class="card"><div class="label">Cycles</div><div id="cycles" class="value">0</div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><div class="label">Current Context</div><pre id="contextBox">Loading...</pre></div>
+    <div class="card"><div class="label">Latest Candidate</div><pre id="candidateBox">Loading...</pre></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><div class="label">Candidate Strategies</div><table><thead><tr><th>Strategy</th><th>Score</th><th>Posture</th><th>Sharpe</th></tr></thead><tbody id="candidateRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+    <div class="card"><div class="label">Promotion Events</div><table><thead><tr><th>Event</th><th>Strategy</th><th>Status</th><th>Score</th></tr></thead><tbody id="promotionRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+  </div>
+</div>
+<script>
+async function j(url,opt){const r=await fetch(url,opt);const d=await r.json();if(!r.ok) throw new Error(d.detail||'request failed');return d;}
+function cls(v){const t=String(v||'').toLowerCase(); if(t.includes('ready')||t.includes('promotable')) return 'good'; if(t.includes('attention')||t.includes('safe')) return 'warn'; return 'bad';}
+function render(data){
+ const s=data.strategy_evolution_status||{};
+ document.getElementById('posture').textContent=String(s.posture||'-').toUpperCase(); document.getElementById('posture').className='value '+cls(s.posture||'blocked');
+ document.getElementById('candidates').textContent=String(s.candidate_count||0); document.getElementById('candidates').className='value good';
+ document.getElementById('promotable').textContent=String(s.promotable_count||0); document.getElementById('promotable').className='value good';
+ document.getElementById('cycles').textContent=String(s.cycle_count||0); document.getElementById('cycles').className='value warn';
+ document.getElementById('contextBox').textContent=JSON.stringify(data.current_context||{}, null, 2);
+ document.getElementById('candidateBox').textContent=JSON.stringify(data.latest_candidate||{}, null, 2);
+ const candidates=data.candidate_strategies||[];
+ document.getElementById('candidateRows').innerHTML=candidates.length?candidates.slice(0,12).map(c=>`<tr><td>${c.strategy_name||'-'}</td><td>${(c.latest_evaluation||{}).score??'-'}</td><td class="${cls((c.latest_evaluation||{}).posture||'blocked')}">${(c.latest_evaluation||{}).posture||'-'}</td><td>${c.live_sharpe??'-'}</td></tr>`).join(''):'<tr><td colspan="4">No candidates.</td></tr>';
+ const promotions=data.promotion_events||[];
+ document.getElementById('promotionRows').innerHTML=promotions.length?promotions.slice(0,12).map(p=>`<tr><td>${p.event_id||'-'}</td><td>${p.strategy_name||'-'}</td><td class="${cls(p.status||'blocked')}">${p.status||'-'}</td><td>${p.score??'-'}</td></tr>`).join(''):'<tr><td colspan="4">No promotions.</td></tr>';
+}
+async function loadAll(){render(await j('/api/strategy-evolution-engine/summary'));}
+async function bootstrapDemo(){await j('/api/strategy-evolution-engine/bootstrap-demo',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});await loadAll();}
+async function evaluateCandidate(){
+ const body={strategy_name:document.getElementById('strategyName').value,live_return_pct:Number(document.getElementById('liveReturn').value||0),live_sharpe:Number(document.getElementById('liveSharpe').value||0),max_drawdown_pct:Number(document.getElementById('drawdown').value||0),win_rate_pct:57,stability_score:88,coverage_score:82};
+ await j('/api/strategy-evolution-engine/evaluate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}); await loadAll();
+}
+loadAll();
+</script>
+</body>
+</html>

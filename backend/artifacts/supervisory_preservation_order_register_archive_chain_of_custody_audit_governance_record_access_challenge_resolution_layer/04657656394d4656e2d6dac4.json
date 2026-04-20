@@ -1,0 +1,393 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 365,
+    "minimum_score": 96.0,
+    "minimum_preservation_order_register_readiness": 0.97,
+    "minimum_chain_of_custody_audit_readiness": 0.97,
+    "minimum_access_challenge_resolution_readiness": 0.97,
+    "maximum_open_access_challenges": 0
+  },
+  "runs": [
+    {
+      "run_id": "qnt40032_1776233477",
+      "captured_at": "2026-04-15T06:11:17.187188+00:00",
+      "preservation_order_register_readiness": 0.99,
+      "chain_of_custody_audit_readiness": 0.99,
+      "access_challenge_resolution_readiness": 0.99,
+      "open_access_challenges": 0,
+      "score": 100.0,
+      "band": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "posture": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "reasons": [],
+      "alerts": [],
+      "operator_review_required": false
+    },
+    {
+      "run_id": "qnt40032_1776233474",
+      "captured_at": "2026-04-15T06:11:14.273846+00:00",
+      "preservation_order_register_readiness": 0.99,
+      "chain_of_custody_audit_readiness": 0.99,
+      "access_challenge_resolution_readiness": 0.99,
+      "open_access_challenges": 0,
+      "score": 100.0,
+      "band": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "posture": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "reasons": [],
+      "alerts": [],
+      "operator_review_required": false
+    },
+    {
+      "run_id": "qnt40032_1776233376",
+      "captured_at": "2026-04-15T06:09:36.824596+00:00",
+      "preservation_order_register_readiness": 0.99,
+      "chain_of_custody_audit_readiness": 0.99,
+      "access_challenge_resolution_readiness": 0.99,
+      "open_access_challenges": 0,
+      "score": 100.0,
+      "band": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "posture": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "reasons": [],
+      "alerts": [],
+      "operator_review_required": false
+    },
+    {
+      "run_id": "qnt40032_1776233373",
+      "captured_at": "2026-04-15T06:09:33.978485+00:00",
+      "preservation_order_register_readiness": 0.99,
+      "chain_of_custody_audit_readiness": 0.99,
+      "access_challenge_resolution_readiness": 0.99,
+      "open_access_challenges": 0,
+      "score": 100.0,
+      "band": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "posture": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "reasons": [],
+      "alerts": [],
+      "operator_review_required": false
+    },
+    {
+      "run_id": "qnt40032_1776232178",
+      "captured_at": "2026-04-15T05:49:38.869599+00:00",
+      "preservation_order_register_readiness": 0.99,
+      "chain_of_custody_audit_readiness": 0.99,
+      "access_challenge_resolution_readiness": 0.99,
+      "open_access_challenges": 0,
+      "score": 100.0,
+      "band": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "posture": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "reasons": [],
+      "alerts": [],
+      "operator_review_required": false
+    },
+    {
+      "run_id": "qnt40032_1776232174",
+      "captured_at": "2026-04-15T05:49:34.602840+00:00",
+      "preservation_order_register_readiness": 0.99,
+      "chain_of_custody_audit_readiness": 0.99,
+      "access_challenge_resolution_readiness": 0.99,
+      "open_access_challenges": 0,
+      "score": 100.0,
+      "band": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "posture": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "reasons": [],
+      "alerts": [],
+      "operator_review_required": false
+    },
+    {
+      "run_id": "qnt40032_1776231883",
+      "captured_at": "2026-04-15T05:44:43.500017+00:00",
+      "preservation_order_register_readiness": 0.99,
+      "chain_of_custody_audit_readiness": 0.99,
+      "access_challenge_resolution_readiness": 0.99,
+      "open_access_challenges": 0,
+      "score": 100.0,
+      "band": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "posture": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "reasons": [],
+      "alerts": [],
+      "operator_review_required": false
+    },
+    {
+      "run_id": "qnt40032_1776231879",
+      "captured_at": "2026-04-15T05:44:39.347135+00:00",
+      "preservation_order_register_readiness": 0.99,
+      "chain_of_custody_audit_readiness": 0.99,
+      "access_challenge_resolution_readiness": 0.99,
+      "open_access_challenges": 0,
+      "score": 100.0,
+      "band": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "posture": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "reasons": [],
+      "alerts": [],
+      "operator_review_required": false
+    },
+    {
+      "run_id": "qnt40032_1776231534",
+      "captured_at": "2026-04-15T05:38:54.306472+00:00",
+      "preservation_order_register_readiness": 0.99,
+      "chain_of_custody_audit_readiness": 0.99,
+      "access_challenge_resolution_readiness": 0.99,
+      "open_access_challenges": 0,
+      "score": 100.0,
+      "band": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "posture": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "reasons": [],
+      "alerts": [],
+      "operator_review_required": false
+    },
+    {
+      "run_id": "qnt40032_1776231530",
+      "captured_at": "2026-04-15T05:38:50.355088+00:00",
+      "preservation_order_register_readiness": 0.99,
+      "chain_of_custody_audit_readiness": 0.99,
+      "access_challenge_resolution_readiness": 0.99,
+      "open_access_challenges": 0,
+      "score": 100.0,
+      "band": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "posture": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "reasons": [],
+      "alerts": [],
+      "operator_review_required": false
+    },
+    {
+      "run_id": "qnt40032_1776231262",
+      "captured_at": "2026-04-15T05:34:22.904729+00:00",
+      "preservation_order_register_readiness": 0.99,
+      "chain_of_custody_audit_readiness": 0.99,
+      "access_challenge_resolution_readiness": 0.99,
+      "open_access_challenges": 0,
+      "score": 100.0,
+      "band": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "posture": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+      "reasons": [],
+      "alerts": [],
+      "operator_review_required": false
+    }
+  ],
+  "alerts": [],
+  "preservation_orders": [
+    {
+      "id": "preservation_order_1776233477",
+      "captured_at": "2026-04-15T06:11:17.185127+00:00",
+      "order_name": "supervisory preservation order register FY2025",
+      "preservation_order_register_readiness": 0.99
+    },
+    {
+      "id": "preservation_order_1776233474",
+      "captured_at": "2026-04-15T06:11:14.272019+00:00",
+      "order_name": "supervisory preservation order register FY2025",
+      "preservation_order_register_readiness": 0.99
+    },
+    {
+      "id": "preservation_order_1776233376",
+      "captured_at": "2026-04-15T06:09:36.820834+00:00",
+      "order_name": "supervisory preservation order register FY2025",
+      "preservation_order_register_readiness": 0.99
+    },
+    {
+      "id": "preservation_order_1776233373",
+      "captured_at": "2026-04-15T06:09:33.976977+00:00",
+      "order_name": "supervisory preservation order register FY2025",
+      "preservation_order_register_readiness": 0.99
+    },
+    {
+      "id": "preservation_order_1776232178",
+      "captured_at": "2026-04-15T05:49:38.867032+00:00",
+      "order_name": "supervisory preservation order register FY2025",
+      "preservation_order_register_readiness": 0.99
+    },
+    {
+      "id": "preservation_order_1776232174",
+      "captured_at": "2026-04-15T05:49:34.600287+00:00",
+      "order_name": "supervisory preservation order register FY2025",
+      "preservation_order_register_readiness": 0.99
+    },
+    {
+      "id": "preservation_order_1776231883",
+      "captured_at": "2026-04-15T05:44:43.497430+00:00",
+      "order_name": "supervisory preservation order register FY2025",
+      "preservation_order_register_readiness": 0.99
+    },
+    {
+      "id": "preservation_order_1776231879",
+      "captured_at": "2026-04-15T05:44:39.344109+00:00",
+      "order_name": "supervisory preservation order register FY2025",
+      "preservation_order_register_readiness": 0.99
+    },
+    {
+      "id": "preservation_order_1776231534",
+      "captured_at": "2026-04-15T05:38:54.304219+00:00",
+      "order_name": "supervisory preservation order register FY2025",
+      "preservation_order_register_readiness": 0.99
+    },
+    {
+      "id": "preservation_order_1776231530",
+      "captured_at": "2026-04-15T05:38:50.352814+00:00",
+      "order_name": "supervisory preservation order register FY2025",
+      "preservation_order_register_readiness": 0.99
+    },
+    {
+      "id": "preservation_order_1776231262",
+      "captured_at": "2026-04-15T05:34:22.902295+00:00",
+      "order_name": "supervisory preservation order register FY2025",
+      "preservation_order_register_readiness": 0.99
+    }
+  ],
+  "chain_of_custody_audits": [
+    {
+      "id": "chain_of_custody_audit_1776233477",
+      "captured_at": "2026-04-15T06:11:17.185776+00:00",
+      "audit_name": "archive chain of custody audit FY2025",
+      "chain_of_custody_audit_readiness": 0.99
+    },
+    {
+      "id": "chain_of_custody_audit_1776233474",
+      "captured_at": "2026-04-15T06:11:14.272568+00:00",
+      "audit_name": "archive chain of custody audit FY2025",
+      "chain_of_custody_audit_readiness": 0.99
+    },
+    {
+      "id": "chain_of_custody_audit_1776233376",
+      "captured_at": "2026-04-15T06:09:36.821681+00:00",
+      "audit_name": "archive chain of custody audit FY2025",
+      "chain_of_custody_audit_readiness": 0.99
+    },
+    {
+      "id": "chain_of_custody_audit_1776233373",
+      "captured_at": "2026-04-15T06:09:33.977389+00:00",
+      "audit_name": "archive chain of custody audit FY2025",
+      "chain_of_custody_audit_readiness": 0.99
+    },
+    {
+      "id": "chain_of_custody_audit_1776232178",
+      "captured_at": "2026-04-15T05:49:38.867750+00:00",
+      "audit_name": "archive chain of custody audit FY2025",
+      "chain_of_custody_audit_readiness": 0.99
+    },
+    {
+      "id": "chain_of_custody_audit_1776232174",
+      "captured_at": "2026-04-15T05:49:34.601088+00:00",
+      "audit_name": "archive chain of custody audit FY2025",
+      "chain_of_custody_audit_readiness": 0.99
+    },
+    {
+      "id": "chain_of_custody_audit_1776231883",
+      "captured_at": "2026-04-15T05:44:43.498243+00:00",
+      "audit_name": "archive chain of custody audit FY2025",
+      "chain_of_custody_audit_readiness": 0.99
+    },
+    {
+      "id": "chain_of_custody_audit_1776231879",
+      "captured_at": "2026-04-15T05:44:39.344990+00:00",
+      "audit_name": "archive chain of custody audit FY2025",
+      "chain_of_custody_audit_readiness": 0.99
+    },
+    {
+      "id": "chain_of_custody_audit_1776231534",
+      "captured_at": "2026-04-15T05:38:54.304880+00:00",
+      "audit_name": "archive chain of custody audit FY2025",
+      "chain_of_custody_audit_readiness": 0.99
+    },
+    {
+      "id": "chain_of_custody_audit_1776231530",
+      "captured_at": "2026-04-15T05:38:50.353494+00:00",
+      "audit_name": "archive chain of custody audit FY2025",
+      "chain_of_custody_audit_readiness": 0.99
+    },
+    {
+      "id": "chain_of_custody_audit_1776231262",
+      "captured_at": "2026-04-15T05:34:22.903056+00:00",
+      "audit_name": "archive chain of custody audit FY2025",
+      "chain_of_custody_audit_readiness": 0.99
+    }
+  ],
+  "access_challenge_resolutions": [
+    {
+      "id": "access_challenge_resolution_1776233477",
+      "captured_at": "2026-04-15T06:11:17.186347+00:00",
+      "challenge_name": "governance record access challenge resolution FY2025",
+      "access_challenge_resolution_readiness": 0.99
+    },
+    {
+      "id": "access_challenge_resolution_1776233474",
+      "captured_at": "2026-04-15T06:11:14.273124+00:00",
+      "challenge_name": "governance record access challenge resolution FY2025",
+      "access_challenge_resolution_readiness": 0.99
+    },
+    {
+      "id": "access_challenge_resolution_1776233376",
+      "captured_at": "2026-04-15T06:09:36.822359+00:00",
+      "challenge_name": "governance record access challenge resolution FY2025",
+      "access_challenge_resolution_readiness": 0.99
+    },
+    {
+      "id": "access_challenge_resolution_1776233373",
+      "captured_at": "2026-04-15T06:09:33.977850+00:00",
+      "challenge_name": "governance record access challenge resolution FY2025",
+      "access_challenge_resolution_readiness": 0.99
+    },
+    {
+      "id": "access_challenge_resolution_1776232178",
+      "captured_at": "2026-04-15T05:49:38.868571+00:00",
+      "challenge_name": "governance record access challenge resolution FY2025",
+      "access_challenge_resolution_readiness": 0.99
+    },
+    {
+      "id": "access_challenge_resolution_1776232174",
+      "captured_at": "2026-04-15T05:49:34.601823+00:00",
+      "challenge_name": "governance record access challenge resolution FY2025",
+      "access_challenge_resolution_readiness": 0.99
+    },
+    {
+      "id": "access_challenge_resolution_1776231883",
+      "captured_at": "2026-04-15T05:44:43.498998+00:00",
+      "challenge_name": "governance record access challenge resolution FY2025",
+      "access_challenge_resolution_readiness": 0.99
+    },
+    {
+      "id": "access_challenge_resolution_1776231879",
+      "captured_at": "2026-04-15T05:44:39.345833+00:00",
+      "challenge_name": "governance record access challenge resolution FY2025",
+      "access_challenge_resolution_readiness": 0.99
+    },
+    {
+      "id": "access_challenge_resolution_1776231534",
+      "captured_at": "2026-04-15T05:38:54.305506+00:00",
+      "challenge_name": "governance record access challenge resolution FY2025",
+      "access_challenge_resolution_readiness": 0.99
+    },
+    {
+      "id": "access_challenge_resolution_1776231530",
+      "captured_at": "2026-04-15T05:38:50.354114+00:00",
+      "challenge_name": "governance record access challenge resolution FY2025",
+      "access_challenge_resolution_readiness": 0.99
+    },
+    {
+      "id": "access_challenge_resolution_1776231262",
+      "captured_at": "2026-04-15T05:34:22.903785+00:00",
+      "challenge_name": "governance record access challenge resolution FY2025",
+      "access_challenge_resolution_readiness": 0.99
+    }
+  ],
+  "latest_run": {
+    "run_id": "qnt40032_1776233477",
+    "captured_at": "2026-04-15T06:11:17.187188+00:00",
+    "preservation_order_register_readiness": 0.99,
+    "chain_of_custody_audit_readiness": 0.99,
+    "access_challenge_resolution_readiness": 0.99,
+    "open_access_challenges": 0,
+    "score": 100.0,
+    "band": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+    "posture": "ACCESS_CHALLENGE_RESOLUTION_STRONG",
+    "reasons": [],
+    "alerts": [],
+    "operator_review_required": false
+  },
+  "last_context": {
+    "captured_at": "2026-04-15T06:11:17.187171+00:00",
+    "dep_a_summary": {
+      "posture": "GOVERNANCE_RECORD_CUSTODY_STRONG",
+      "score": 100.0
+    }
+  }
+}

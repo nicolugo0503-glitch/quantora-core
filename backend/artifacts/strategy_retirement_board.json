@@ -1,0 +1,139 @@
+{
+  "retirement_board": {
+    "enabled": true,
+    "last_updated_at": "2026-03-31T14:09:36Z",
+    "last_review_at": "2026-03-31T14:09:36Z",
+    "last_reclamation_at": "2026-03-31T14:09:36Z",
+    "total_reviews": 3,
+    "retirements": 1,
+    "watchlist_count": 1,
+    "capital_reclaimed": 27600.0,
+    "telemetry": [
+      {
+        "timestamp": "2026-03-31T14:09:36Z",
+        "event": "strategy.reviewed",
+        "strategy_id": "strat_003",
+        "decision": "retire",
+        "reclaimed_capital": 18000.0
+      },
+      {
+        "timestamp": "2026-03-31T14:09:36Z",
+        "event": "strategy.reviewed",
+        "strategy_id": "strat_002",
+        "decision": "watchlist",
+        "reclaimed_capital": 9600.0
+      },
+      {
+        "timestamp": "2026-03-31T14:09:36Z",
+        "event": "strategy.reviewed",
+        "strategy_id": "strat_004",
+        "decision": "hold",
+        "reclaimed_capital": 0.0
+      }
+    ]
+  },
+  "retirement_rules": {
+    "retire_score_threshold": 42.0,
+    "retire_drawdown_threshold": 20.0,
+    "retire_loss_threshold": -10000.0,
+    "watchlist_score_threshold": 55.0,
+    "watchlist_drawdown_threshold": 14.0,
+    "full_reclamation_on_retire": true,
+    "watchlist_reclaim_pct": 0.4
+  },
+  "reviews": [
+    {
+      "review_id": "ret_0001",
+      "timestamp": "2026-03-31T14:09:36Z",
+      "strategy_id": "strat_003",
+      "strategy_name": "Crypto Breakout Variant 3",
+      "performance_score": 39.0,
+      "realized_pnl": -14250.0,
+      "drawdown_pct": 22.4,
+      "current_lane": "limited_live",
+      "current_capital": 18000.0,
+      "decision": "retire",
+      "target_state": "retired",
+      "reclaim_capital": 18000.0,
+      "reason": "retirement_threshold_breached"
+    },
+    {
+      "review_id": "ret_0002",
+      "timestamp": "2026-03-31T14:09:36Z",
+      "strategy_id": "strat_002",
+      "strategy_name": "Mean Reversion Core Variant 2",
+      "performance_score": 53.0,
+      "realized_pnl": -4200.0,
+      "drawdown_pct": 15.0,
+      "current_lane": "scaled_live",
+      "current_capital": 24000.0,
+      "decision": "watchlist",
+      "target_state": "watchlist",
+      "reclaim_capital": 9600.0,
+      "reason": "watchlist_threshold_breached"
+    },
+    {
+      "review_id": "ret_0003",
+      "timestamp": "2026-03-31T14:09:36Z",
+      "strategy_id": "strat_004",
+      "strategy_name": "Trend Core Variant 4",
+      "performance_score": 68.0,
+      "realized_pnl": 6200.0,
+      "drawdown_pct": 8.1,
+      "current_lane": "limited_live",
+      "current_capital": 12000.0,
+      "decision": "hold",
+      "target_state": "limited_live",
+      "reclaim_capital": 0.0,
+      "reason": "stable"
+    }
+  ],
+  "retired_strategies": [
+    {
+      "strategy_id": "strat_003",
+      "strategy_name": "Crypto Breakout Variant 3",
+      "retired_at": "2026-03-31T14:09:36Z",
+      "last_lane": "limited_live",
+      "capital_reclaimed": 18000.0,
+      "reason": "retirement_threshold_breached"
+    }
+  ],
+  "capital_events": [
+    {
+      "event_id": "cap_0001",
+      "timestamp": "2026-03-31T14:09:36Z",
+      "strategy_id": "strat_003",
+      "strategy_name": "Crypto Breakout Variant 3",
+      "decision": "retire",
+      "reclaimed_capital": 18000.0
+    },
+    {
+      "event_id": "cap_0002",
+      "timestamp": "2026-03-31T14:09:36Z",
+      "strategy_id": "strat_002",
+      "strategy_name": "Mean Reversion Core Variant 2",
+      "decision": "watchlist",
+      "reclaimed_capital": 9600.0
+    }
+  ],
+  "history": [
+    {
+      "timestamp": "2026-03-31T14:09:36Z",
+      "event": "strategy.reviewed",
+      "strategy_id": "strat_003",
+      "decision": "retire"
+    },
+    {
+      "timestamp": "2026-03-31T14:09:36Z",
+      "event": "strategy.reviewed",
+      "strategy_id": "strat_002",
+      "decision": "watchlist"
+    },
+    {
+      "timestamp": "2026-03-31T14:09:36Z",
+      "event": "strategy.reviewed",
+      "strategy_id": "strat_004",
+      "decision": "hold"
+    }
+  ]
+}

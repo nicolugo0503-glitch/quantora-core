@@ -1,0 +1,57 @@
+{
+  "email": "growth@test.quantora",
+  "policy": {
+    "launch_floor": 70.0,
+    "channel_activation_floor": 63.0,
+    "autonomy_release_floor": 76.0,
+    "max_launches": 4,
+    "max_sequences": 6
+  },
+  "runs": [
+    {
+      "run_id": "age_1775711778",
+      "trigger": "smoke-test",
+      "timestamp": "2026-04-09T05:16:18.443053+00:00",
+      "autonomy_posture": "growth-watch",
+      "growth_capacity_score": 29.6,
+      "launch_queue": [],
+      "channel_sequences": [],
+      "investor_sequences": [
+        {
+          "relationship_id": "rel_1775711778",
+          "investor_id": "INV_FO_001",
+          "owner": "Coverage Desk",
+          "sequence_type": "advance_commitment",
+          "urgency_score": 90.75,
+          "next_action": "Prepare allocator memo"
+        },
+        {
+          "relationship_id": "rel_1775711778",
+          "investor_id": "INV_RIA_002",
+          "owner": "Coverage Desk",
+          "sequence_type": "advance_commitment",
+          "urgency_score": 71.0,
+          "next_action": "Schedule diligence call"
+        }
+      ],
+      "reinvestment_plan": {
+        "deployable_capital": 0.0,
+        "cash_reserve": 0.0,
+        "growth_budget": 0.0,
+        "product_launch_budget": 0.0,
+        "channel_activation_budget": 0.0,
+        "coverage_budget": 0.0,
+        "contingency_budget": 0.0
+      },
+      "constraints": [
+        {
+          "severity": "warning",
+          "type": "capacity",
+          "message": "Growth capacity below autonomous release threshold; sequence only pre-authorized launches."
+        }
+      ]
+    }
+  ],
+  "created_at": 1775711778,
+  "updated_at": 1775711778
+}

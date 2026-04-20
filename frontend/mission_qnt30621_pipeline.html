@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30621 Investor Opportunity Pipeline + Capital Raise Tracker</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1440px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,select,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:90px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1400px){.grid{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30621 · Investor Opportunity Pipeline + Capital Raise Tracker</h1>
+        <div style="color:#9fb3d8">Tracks capital raise opportunities, stage progression, weighted pipeline, and investor milestones.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30620_crm.html">Investor CRM</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Opportunities</div><div id="opps" class="value">-</div></div>
+    <div class="card"><div class="label">Milestones</div><div id="miles" class="value">-</div></div>
+    <div class="card"><div class="label">Open</div><div id="open" class="value">-</div></div>
+    <div class="card"><div class="label">Committed</div><div id="committed" class="value">-</div></div>
+    <div class="card"><div class="label">Target AUM</div><div id="target" class="value">-</div></div>
+    <div class="card"><div class="label">Weighted Pipeline</div><div id="weighted" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <input id="investorId" placeholder="Investor ID">
+    <input id="opportunityName" placeholder="Opportunity name" style="margin-top:12px">
+    <select id="stage" style="margin-top:12px">
+      <option value="sourced">sourced</option>
+      <option value="meeting_scheduled">meeting_scheduled</option>
+      <option value="dd_in_progress">dd_in_progress</option>
+      <option value="term_discussion">term_discussion</option>
+      <option value="soft_commit">soft_commit</option>
+      <option value="committed">committed</option>
+      <option value="closed_lost">closed_lost</option>
+    </select>
+    <input id="targetAmount" placeholder="Target amount" style="margin-top:12px">
+    <input id="probability" placeholder="Probability %" style="margin-top:12px">
+    <input id="closeDate" placeholder="Expected close date" style="margin-top:12px">
+    <input id="owner" placeholder="Owner" style="margin-top:12px">
+    <textarea id="notes" placeholder="Notes" style="margin-top:12px"></textarea>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="createOpportunity()">Create Opportunity</button>
+      <button onclick="updateLatest()">Update Latest Opportunity</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <input id="milestoneTitle" placeholder="Milestone title">
+    <textarea id="milestoneDetail" placeholder="Milestone detail" style="margin-top:12px"></textarea>
+    <select id="milestoneType" style="margin-top:12px">
+      <option value="meeting">meeting</option>
+      <option value="dd_item">dd_item</option>
+      <option value="commit_signal">commit_signal</option>
+      <option value="general">general</option>
+    </select>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="logMilestone()">Log Milestone On Latest Opportunity</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Opportunity Ledger</div>
+    <table>
+      <thead><tr><th>Name</th><th>Investor</th><th>Stage</th><th>Target</th><th>Probability</th><th>Status</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Pipeline Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/pipeline/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data,null,2); return; }
+  const d = res.data || {};
+  document.getElementById('opps').textContent = String(d.opportunity_count || 0);
+  document.getElementById('miles').textContent = String(d.milestone_count || 0);
+  document.getElementById('open').textContent = String(d.open_count || 0);
+  document.getElementById('committed').textContent = String(d.committed_count || 0);
+  document.getElementById('target').textContent = money(d.total_target_amount || 0);
+  document.getElementById('weighted').textContent = money(d.weighted_pipeline_amount || 0);
+  document.getElementById('rows').innerHTML = (d.opportunities || []).map(o =>
+    `<tr><td>${o.opportunity_name}</td><td>${o.investor_id}</td><td>${o.stage}</td><td>${money(o.target_amount)}</td><td>${o.probability}%</td><td>${o.status}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function createOpportunity(){
+  await j('/api/pipeline/opportunity', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    investor_id: document.getElementById('investorId').value,
+    opportunity_name: document.getElementById('opportunityName').value,
+    stage: document.getElementById('stage').value,
+    target_amount: Number(document.getElementById('targetAmount').value || 0),
+    probability: Number(document.getElementById('probability').value || 0),
+    expected_close_date: document.getElementById('closeDate').value,
+    owner: document.getElementById('owner').value,
+    notes: document.getElementById('notes').value
+  })});
+  await load();
+}
+async function updateLatest(){
+  const res = await j('/api/pipeline/summary');
+  const latest = res.data.latest_opportunity;
+  if(!latest) return;
+  await j('/api/pipeline/stage', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    opportunity_id: latest.opportunity_id,
+    stage: document.getElementById('stage').value,
+    probability: Number(document.getElementById('probability').value || latest.probability || 0),
+    target_amount: Number(document.getElementById('targetAmount').value || latest.target_amount || 0),
+    expected_close_date: document.getElementById('closeDate').value || latest.expected_close_date || '',
+    status: latest.status || 'open'
+  })});
+  await load();
+}
+async function logMilestone(){
+  const res = await j('/api/pipeline/summary');
+  const latest = res.data.latest_opportunity;
+  if(!latest) return;
+  await j('/api/pipeline/milestone', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    opportunity_id: latest.opportunity_id,
+    title: document.getElementById('milestoneTitle').value,
+    detail: document.getElementById('milestoneDetail').value,
+    milestone_type: document.getElementById('milestoneType').value
+  })});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "minimum_reporting_score": 86.0,
+    "minimum_transparency_score": 80.0,
+    "minimum_audit_score": 80.0,
+    "minimum_compliance_score": 82.0,
+    "minimum_disclosure_completeness_pct": 82.0,
+    "minimum_statement_coverage_pct": 80.0,
+    "maximum_exception_pressure": 20.0,
+    "maximum_break_pressure": 18.0,
+    "maximum_drawdown_pct": 14.0,
+    "minimum_report_pack_completeness_pct": 80.0
+  },
+  "runs": [],
+  "created_at": 1775847576,
+  "updated_at": 1775847576
+}

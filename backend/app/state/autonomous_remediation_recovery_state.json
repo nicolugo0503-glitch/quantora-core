@@ -1,0 +1,187 @@
+{
+  "generated_by": "QNT50027",
+  "status": "ready",
+  "policy": {
+    "enabled": true,
+    "auto_sync_sources": true,
+    "require_breach_sync": true,
+    "require_risk_clearance_for_execute": true,
+    "require_supervisory_resolution_for_severe_cases": true,
+    "max_open_actions": 250,
+    "max_recovery_cycles": 500,
+    "max_audit_events": 500
+  },
+  "last_sync": {
+    "synced_at": 1776569381,
+    "source": "smoke",
+    "open_breach_count": 0,
+    "severe_open_breach_count": 0,
+    "latest_case_id": "breach_case_7b5f7e3cc48f",
+    "latest_case_status": "resolved",
+    "latest_case_severity": "severe",
+    "latest_resolution_id": "resolution_4fbca167624a",
+    "latest_resolution_status": "approved",
+    "risk_triggered": false,
+    "risk_level": "normal",
+    "pending_treasury_transfer_count": 0,
+    "control_loop_posture": "ready",
+    "latest_cycle_id": ""
+  },
+  "sync_history": [
+    {
+      "synced_at": 1776569381,
+      "source": "smoke",
+      "open_breach_count": 0,
+      "severe_open_breach_count": 0,
+      "latest_case_id": "breach_case_7b5f7e3cc48f",
+      "latest_case_status": "resolved",
+      "latest_case_severity": "severe",
+      "latest_resolution_id": "resolution_4fbca167624a",
+      "latest_resolution_status": "approved",
+      "risk_triggered": false,
+      "risk_level": "normal",
+      "pending_treasury_transfer_count": 0,
+      "control_loop_posture": "ready",
+      "latest_cycle_id": ""
+    }
+  ],
+  "remediation_actions": [
+    {
+      "action_id": "remediation_action_3fd9dd8df929",
+      "created_at": 1776569381,
+      "operator": "smoke",
+      "case_id": "breach_case_7b5f7e3cc48f",
+      "resolution_id": "resolution_4fbca167624a",
+      "directive_id": "",
+      "title": "Controlled remediation action",
+      "remediation_type": "containment",
+      "priority": "high",
+      "status": "closed",
+      "target_strategy": "",
+      "target_broker": "",
+      "requested_actions": [
+        "reduce exposure",
+        "rebalance treasury buffer"
+      ],
+      "capital_at_risk": 10000.0,
+      "estimated_recovery_pct": 65.0,
+      "requires_human_confirmation": false,
+      "notes": "",
+      "authorized_at": 1776569381,
+      "authorized_by": "smoke",
+      "recovery_instruction": "execute staged recovery",
+      "required_confidence_score": 82.0,
+      "last_cycle_id": "recovery_cycle_d7e8c12f6622",
+      "executed_at": 1776569381,
+      "closed_at": 1776569381,
+      "closed_by": "smoke",
+      "closure_notes": "recovery cycle complete"
+    }
+  ],
+  "recovery_cycles": [
+    {
+      "cycle_id": "recovery_cycle_d7e8c12f6622",
+      "executed_at": 1776569381,
+      "operator": "smoke",
+      "action_id": "remediation_action_3fd9dd8df929",
+      "case_id": "breach_case_7b5f7e3cc48f",
+      "execution_mode": "controlled",
+      "status": "executed",
+      "steps_executed": [
+        "reduce exposure",
+        "rebalance treasury buffer"
+      ],
+      "recovered_capital": 6400.0,
+      "residual_risk_score": 18.0,
+      "result_summary": "partial capital restored"
+    }
+  ],
+  "audit_log": [
+    {
+      "event_id": "autonomous_remediation_recovery_audit_1776569381681664469",
+      "event_type": "autonomous_remediation_closed",
+      "timestamp": 1776569381,
+      "action_id": "remediation_action_3fd9dd8df929",
+      "closed_by": "smoke"
+    },
+    {
+      "event_id": "autonomous_remediation_recovery_audit_1776569381680684495",
+      "event_type": "autonomous_recovery_executed",
+      "timestamp": 1776569381,
+      "cycle_id": "recovery_cycle_d7e8c12f6622",
+      "executed_at": 1776569381,
+      "operator": "smoke",
+      "action_id": "remediation_action_3fd9dd8df929",
+      "case_id": "breach_case_7b5f7e3cc48f",
+      "execution_mode": "controlled",
+      "status": "executed",
+      "steps_executed": [
+        "reduce exposure",
+        "rebalance treasury buffer"
+      ],
+      "recovered_capital": 6400.0,
+      "residual_risk_score": 18.0,
+      "result_summary": "partial capital restored"
+    },
+    {
+      "event_id": "autonomous_remediation_recovery_audit_1776569381679698048",
+      "event_type": "autonomous_recovery_authorized",
+      "timestamp": 1776569381,
+      "action_id": "remediation_action_3fd9dd8df929",
+      "authorized_by": "smoke"
+    },
+    {
+      "event_id": "autonomous_remediation_recovery_audit_1776569381678999189",
+      "event_type": "autonomous_remediation_action_registered",
+      "timestamp": 1776569381,
+      "action_id": "remediation_action_3fd9dd8df929",
+      "created_at": 1776569381,
+      "operator": "smoke",
+      "case_id": "breach_case_7b5f7e3cc48f",
+      "resolution_id": "resolution_4fbca167624a",
+      "directive_id": "",
+      "title": "Controlled remediation action",
+      "remediation_type": "containment",
+      "priority": "high",
+      "status": "registered",
+      "target_strategy": "",
+      "target_broker": "",
+      "requested_actions": [
+        "reduce exposure",
+        "rebalance treasury buffer"
+      ],
+      "capital_at_risk": 10000.0,
+      "estimated_recovery_pct": 65.0,
+      "requires_human_confirmation": false,
+      "notes": ""
+    },
+    {
+      "event_id": "autonomous_remediation_recovery_audit_1776569381678210683",
+      "event_type": "autonomous_remediation_context_synced",
+      "timestamp": 1776569381,
+      "synced_at": 1776569381,
+      "source": "smoke",
+      "open_breach_count": 0,
+      "severe_open_breach_count": 0,
+      "latest_case_id": "breach_case_7b5f7e3cc48f",
+      "latest_case_status": "resolved",
+      "latest_case_severity": "severe",
+      "latest_resolution_id": "resolution_4fbca167624a",
+      "latest_resolution_status": "approved",
+      "risk_triggered": false,
+      "risk_level": "normal",
+      "pending_treasury_transfer_count": 0,
+      "control_loop_posture": "ready",
+      "latest_cycle_id": ""
+    },
+    {
+      "event_id": "autonomous_remediation_recovery_audit_1776569381676882362",
+      "event_type": "autonomous_remediation_reset",
+      "timestamp": 1776569381,
+      "operator": "smoke",
+      "reason": "qnt50027_smoke",
+      "prior_action_count": 0,
+      "prior_cycle_count": 0
+    }
+  ]
+}

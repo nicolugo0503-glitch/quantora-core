@@ -1,0 +1,16 @@
+{
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/performance-engine/record"
+    },
+    {
+      "method": "GET",
+      "path": "/api/performance-engine/summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/performance-engine/history"
+    }
+  ]
+}

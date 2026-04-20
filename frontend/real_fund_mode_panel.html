@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantora - Real Fund Mode</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #0b1020; color: #e8ecf3; }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    h1, h2 { margin: 0 0 12px; }
+    .sub { color: #97a3b6; margin-bottom: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 24px; }
+    .card { background: #121933; border: 1px solid #22315f; border-radius: 16px; padding: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+    .label { color: #97a3b6; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .value { font-size: 28px; font-weight: 700; margin-top: 8px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px 8px; border-bottom: 1px solid #24304f; text-align: left; font-size: 14px; }
+    th { color: #97a3b6; font-weight: 600; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    .toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+    input, select, button { border-radius: 10px; border: 1px solid #31406f; background: #0c1430; color: #fff; padding: 10px 12px; }
+    button { cursor: pointer; background: #2457ff; border: none; }
+    .muted { color: #97a3b6; }
+    @media (max-width: 900px) { .row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>QNT30443 — Real Fund Mode</h1>
+  <div class="sub">Multi-pool capital management, investor tracking, and fund-level operating visibility.</div>
+  <div class="grid" id="summaryGrid"></div>
+  <div class="toolbar">
+    <button onclick="loadAll()">Refresh</button>
+    <button onclick="seedInvestor()">Add Demo Investor</button>
+    <button onclick="seedDeposit()">Add Demo Deposit</button>
+    <button onclick="seedPool()">Create Demo Pool</button>
+  </div>
+  <div class="row">
+    <div class="card">
+      <h2>Capital Pools</h2>
+      <table id="poolsTable"></table>
+    </div>
+    <div class="card">
+      <h2>Investor Registry</h2>
+      <table id="investorsTable"></table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card">
+      <h2>Capital Flows</h2>
+      <table id="flowsTable"></table>
+    </div>
+    <div class="card">
+      <h2>Strategy Allocation View</h2>
+      <table id="allocationsTable"></table>
+    </div>
+  </div>
+</div>
+<script>
+const api = (path, opts={}) => fetch(path, {credentials:'include', headers:{'Content-Type':'application/json'}, ...opts}).then(async r => {
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(data.detail || 'request_failed');
+  return data;
+});
+const money = v => new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(Number(v||0));
+function table(el, headers, rows){
+  const thead = `<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  const body = rows.length ? rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${headers.length}" class="muted">No data</td></tr>`;
+  el.innerHTML = thead + body;
+}
+async function loadAll(){
+  const [summary,pools,investors,flows] = await Promise.all([
+    api('/workspace/fund-mode/summary'),
+    api('/workspace/fund-mode/pools'),
+    api('/workspace/fund-mode/investors'),
+    api('/workspace/fund-mode/flows'),
+  ]);
+  document.getElementById('summaryGrid').innerHTML = [
+    ['Fund NAV', money(summary.summary.fund_nav)],
+    ['Total Pool Capital', money(summary.summary.total_pool_capital)],
+    ['Allocated Capital', money(summary.summary.allocated_capital)],
+    ['Unallocated Capital', money(summary.summary.unallocated_capital)],
+    ['Investors', summary.summary.investor_count],
+    ['Net Flow', money(summary.summary.net_flow)],
+  ].map(([k,v]) => `<div class="card"><div class="label">${k}</div><div class="value">${v}</div></div>`).join('');
+  table(document.getElementById('poolsTable'), ['Pool','Type','Capital','Allocated','Reserve','Available'], pools.pools.map(p => [p.name, p.pool_type_label, money(p.capital_balance), money(p.allocated_capital), money(p.reserve_capital), money(p.available_capital)]));
+  table(document.getElementById('investorsTable'), ['Investor','Status','Committed','Ownership','Equity'], investors.investors.map(i => [i.investor_name, i.status, money(i.committed_capital), `${i.ownership_percent}%`, money(i.current_equity)]));
+  table(document.getElementById('flowsTable'), ['Type','Direction','Amount','Pool','Note'], flows.capital_flows.map(f => [f.flow_type, f.direction, money(f.amount), f.pool_id || '-', f.note || '-']));
+  table(document.getElementById('allocationsTable'), ['Strategy','Allocated Capital'], (summary.strategy_allocations || []).map(s => [s.strategy_key, money(s.allocated_capital)]));
+}
+async function seedInvestor(){ await api('/workspace/fund-mode/investors/add', {method:'POST', body: JSON.stringify({investor_name:'Institutional LP', committed_capital:250000, status:'active', currency:'USD'})}); await loadAll(); }
+async function seedDeposit(){ await api('/workspace/fund-mode/flows/deposit', {method:'POST', body: JSON.stringify({amount:50000, note:'Operator treasury funding'})}); await loadAll(); }
+async function seedPool(){ await api('/workspace/fund-mode/pools/create', {method:'POST', body: JSON.stringify({name:'Investor Sleeve A', pool_type:'investor', capital_balance:150000, reserve_capital:10000})}); await loadAll(); }
+loadAll().catch(err => { console.error(err); alert(err.message); });
+</script>
+</body>
+</html>

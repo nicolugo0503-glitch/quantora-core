@@ -1,0 +1,467 @@
+{
+  "policy_brain": {
+    "enabled": true,
+    "last_updated_at": "2026-03-31T16:08:21Z",
+    "last_context_at": "2026-03-31T16:08:21Z",
+    "last_decision_at": "2026-03-31T16:08:21Z",
+    "last_dispatch_at": "2026-03-31T16:08:19Z",
+    "context_count": 3,
+    "decision_count": 3,
+    "dispatch_count": 2,
+    "halt_count": 0,
+    "telemetry": [
+      {
+        "timestamp": "2026-03-31T15:53:15Z",
+        "event": "context.ingested",
+        "symbol": "AAPL",
+        "regime": "stressed"
+      },
+      {
+        "timestamp": "2026-03-31T15:53:15Z",
+        "event": "policy.decided",
+        "mode": "defensive",
+        "symbol": "AAPL"
+      },
+      {
+        "timestamp": "2026-03-31T15:53:15Z",
+        "event": "override.dispatched",
+        "decision_id": "policy_0001",
+        "mode": "defensive"
+      },
+      {
+        "timestamp": "2026-03-31T16:08:19Z",
+        "event": "context.ingested",
+        "symbol": "AAPL",
+        "regime": "stressed"
+      },
+      {
+        "timestamp": "2026-03-31T16:08:19Z",
+        "event": "policy.decided",
+        "mode": "defensive",
+        "symbol": "AAPL"
+      },
+      {
+        "timestamp": "2026-03-31T16:08:19Z",
+        "event": "override.dispatched",
+        "decision_id": "policy_0002",
+        "mode": "defensive"
+      },
+      {
+        "timestamp": "2026-03-31T16:08:21Z",
+        "event": "context.ingested",
+        "symbol": "AAPL",
+        "regime": "elevated"
+      },
+      {
+        "timestamp": "2026-03-31T16:08:21Z",
+        "event": "policy.decided",
+        "mode": "defensive",
+        "symbol": "AAPL"
+      }
+    ]
+  },
+  "rules": {
+    "max_slippage_drift_bps": 8.0,
+    "max_latency_drift_ms": 180.0,
+    "min_fill_rate_delta": -0.06,
+    "high_volatility_threshold": 0.35,
+    "crisis_volatility_threshold": 0.6,
+    "min_liquidity_score": 0.4,
+    "min_venue_quality_score": 70.0,
+    "default_order_size_multiplier": 1.0,
+    "defensive_order_size_multiplier": 0.6,
+    "halt_order_size_multiplier": 0.0,
+    "default_participation_rate": 0.12,
+    "defensive_participation_rate": 0.05,
+    "max_child_orders_normal": 3,
+    "max_child_orders_defensive": 2,
+    "default_execution_tolerance_bps": 16.0,
+    "stressed_execution_tolerance_bps": 30.0,
+    "enable_auto_halt": true
+  },
+  "contexts": [
+    {
+      "context_id": "ctx_1774972395",
+      "timestamp": "2026-03-31T15:53:15Z",
+      "symbol": "AAPL",
+      "side": "buy",
+      "order_quantity": 1500.0,
+      "urgency": "high",
+      "market_volatility": 0.47,
+      "regime_shift": 0.21,
+      "liquidity_score": 0.28,
+      "slippage_drift_bps": 18.5,
+      "latency_drift_ms": 410.0,
+      "fill_rate_delta": -0.14,
+      "drift_triggered": true,
+      "drift_reasons": [
+        "slippage_drift",
+        "latency_drift",
+        "fill_rate_degradation",
+        "regime_shift"
+      ],
+      "venue_scores": [
+        {
+          "venue_id": "lit_nyse",
+          "quality_score": 92.0,
+          "flagged": false
+        },
+        {
+          "venue_id": "dark_pool_x",
+          "quality_score": 58.0,
+          "flagged": true
+        },
+        {
+          "venue_id": "lit_nasdaq",
+          "quality_score": 88.0,
+          "flagged": false
+        }
+      ],
+      "regime_label": "stressed"
+    },
+    {
+      "context_id": "ctx_1774973299",
+      "timestamp": "2026-03-31T16:08:19Z",
+      "symbol": "AAPL",
+      "side": "buy",
+      "order_quantity": 1500.0,
+      "urgency": "high",
+      "market_volatility": 0.47,
+      "regime_shift": 0.21,
+      "liquidity_score": 0.28,
+      "slippage_drift_bps": 18.5,
+      "latency_drift_ms": 410.0,
+      "fill_rate_delta": -0.14,
+      "drift_triggered": true,
+      "drift_reasons": [
+        "slippage_drift",
+        "latency_drift",
+        "fill_rate_degradation",
+        "regime_shift"
+      ],
+      "venue_scores": [
+        {
+          "venue_id": "lit_nyse",
+          "quality_score": 92.0,
+          "flagged": false
+        },
+        {
+          "venue_id": "dark_pool_x",
+          "quality_score": 58.0,
+          "flagged": true
+        },
+        {
+          "venue_id": "lit_nasdaq",
+          "quality_score": 88.0,
+          "flagged": false
+        }
+      ],
+      "regime_label": "stressed"
+    },
+    {
+      "context_id": "ctx_1774973301",
+      "timestamp": "2026-03-31T16:08:21Z",
+      "symbol": "AAPL",
+      "side": "buy",
+      "order_quantity": 900.0,
+      "urgency": "high",
+      "market_volatility": 0.31,
+      "regime_shift": 0.24,
+      "liquidity_score": 0.77,
+      "slippage_drift_bps": 4.2,
+      "latency_drift_ms": 95.0,
+      "fill_rate_delta": -0.01,
+      "drift_triggered": false,
+      "drift_reasons": [
+        "slippage_drift",
+        "latency_drift",
+        "fill_rate_degradation",
+        "regime_shift"
+      ],
+      "venue_scores": [
+        {
+          "venue_id": "lit_nyse",
+          "venue_name": "Lit NYSE",
+          "quality_score": 93.0,
+          "flagged": false,
+          "avg_slippage_bps": 2.8,
+          "fill_rate": 0.985,
+          "reject_rate": 0.01,
+          "avg_latency_ms": 29.0,
+          "available_liquidity": 2200.0
+        },
+        {
+          "venue_id": "lit_nasdaq",
+          "venue_name": "Lit NASDAQ",
+          "quality_score": 89.5,
+          "flagged": false,
+          "avg_slippage_bps": 3.6,
+          "fill_rate": 0.978,
+          "reject_rate": 0.012,
+          "avg_latency_ms": 26.0,
+          "available_liquidity": 1800.0
+        },
+        {
+          "venue_id": "dark_pool_x",
+          "venue_name": "Dark Pool X",
+          "quality_score": 56.0,
+          "flagged": true,
+          "avg_slippage_bps": 10.2,
+          "fill_rate": 0.84,
+          "reject_rate": 0.06,
+          "avg_latency_ms": 71.0,
+          "available_liquidity": 3100.0
+        }
+      ],
+      "regime_label": "elevated"
+    }
+  ],
+  "decisions": [
+    {
+      "decision_id": "policy_0001",
+      "timestamp": "2026-03-31T15:53:15Z",
+      "symbol": "AAPL",
+      "side": "buy",
+      "regime_label": "stressed",
+      "mode": "defensive",
+      "reasons": [
+        "execution_drift_detected",
+        "volatility_spike",
+        "venue_quality_degradation"
+      ],
+      "order_quantity": 100.0,
+      "adjusted_order_quantity": 60.0,
+      "order_size_multiplier": 0.6,
+      "participation_rate": 0.05,
+      "execution_tolerance_bps": 30.0,
+      "max_child_orders": 2,
+      "venue_mode": "quality_escape",
+      "preferred_venues": [
+        "lit_nyse",
+        "lit_nasdaq"
+      ],
+      "blocked_venues": [
+        "dark_pool_x"
+      ],
+      "drift_summary": {
+        "slippage_drift_bps": 12.5,
+        "latency_drift_ms": 270.0,
+        "fill_rate_delta": -0.09,
+        "regime_shift": 0.24,
+        "drift_triggered": true
+      },
+      "routing_override": {
+        "venue_governor_policy": {
+          "mode": "adaptive_guarded",
+          "max_venues": 1,
+          "min_score": 75.0,
+          "avoid_flagged": true,
+          "fallback_enabled": true,
+          "fallback_venue_id": "lit_nyse"
+        },
+        "smart_order_router_rules": {
+          "max_child_orders": 2,
+          "min_venue_score": 75.0,
+          "prefer_lower_slippage": true,
+          "prefer_lower_latency": true,
+          "reserve_liquidity_buffer_pct": 0.55
+        }
+      }
+    },
+    {
+      "decision_id": "policy_0002",
+      "timestamp": "2026-03-31T16:08:19Z",
+      "symbol": "AAPL",
+      "side": "buy",
+      "regime_label": "stressed",
+      "mode": "defensive",
+      "reasons": [
+        "execution_drift_detected",
+        "volatility_spike",
+        "venue_quality_degradation"
+      ],
+      "order_quantity": 100.0,
+      "adjusted_order_quantity": 60.0,
+      "order_size_multiplier": 0.6,
+      "participation_rate": 0.05,
+      "execution_tolerance_bps": 30.0,
+      "max_child_orders": 2,
+      "venue_mode": "quality_escape",
+      "preferred_venues": [
+        "lit_nyse",
+        "lit_nasdaq"
+      ],
+      "blocked_venues": [
+        "dark_pool_x"
+      ],
+      "drift_summary": {
+        "slippage_drift_bps": 12.5,
+        "latency_drift_ms": 270.0,
+        "fill_rate_delta": -0.09,
+        "regime_shift": 0.24,
+        "drift_triggered": true
+      },
+      "routing_override": {
+        "venue_governor_policy": {
+          "mode": "adaptive_guarded",
+          "max_venues": 1,
+          "min_score": 75.0,
+          "avoid_flagged": true,
+          "fallback_enabled": true,
+          "fallback_venue_id": "lit_nyse"
+        },
+        "smart_order_router_rules": {
+          "max_child_orders": 2,
+          "min_venue_score": 75.0,
+          "prefer_lower_slippage": true,
+          "prefer_lower_latency": true,
+          "reserve_liquidity_buffer_pct": 0.55
+        }
+      }
+    },
+    {
+      "decision_id": "policy_0003",
+      "timestamp": "2026-03-31T16:08:21Z",
+      "symbol": "AAPL",
+      "side": "buy",
+      "regime_label": "stressed",
+      "mode": "defensive",
+      "reasons": [
+        "execution_drift_detected",
+        "volatility_spike",
+        "venue_quality_degradation"
+      ],
+      "order_quantity": 100.0,
+      "adjusted_order_quantity": 60.0,
+      "order_size_multiplier": 0.6,
+      "participation_rate": 0.05,
+      "execution_tolerance_bps": 30.0,
+      "max_child_orders": 2,
+      "venue_mode": "quality_escape",
+      "preferred_venues": [
+        "lit_nyse",
+        "lit_nasdaq"
+      ],
+      "blocked_venues": [
+        "dark_pool_x"
+      ],
+      "drift_summary": {
+        "slippage_drift_bps": 12.5,
+        "latency_drift_ms": 270.0,
+        "fill_rate_delta": -0.09,
+        "regime_shift": 0.24,
+        "drift_triggered": true
+      },
+      "routing_override": {
+        "venue_governor_policy": {
+          "mode": "adaptive_guarded",
+          "max_venues": 1,
+          "min_score": 75.0,
+          "avoid_flagged": true,
+          "fallback_enabled": true,
+          "fallback_venue_id": "lit_nyse"
+        },
+        "smart_order_router_rules": {
+          "max_child_orders": 2,
+          "min_venue_score": 75.0,
+          "prefer_lower_slippage": true,
+          "prefer_lower_latency": true,
+          "reserve_liquidity_buffer_pct": 0.55
+        }
+      }
+    }
+  ],
+  "dispatches": [
+    {
+      "dispatch_id": "dispatch_0001",
+      "timestamp": "2026-03-31T15:53:15Z",
+      "decision_id": "policy_0001",
+      "mode": "defensive",
+      "symbol": "AAPL",
+      "governor_policy": {
+        "mode": "adaptive_guarded",
+        "max_venues": 1,
+        "min_score": 75.0,
+        "avoid_flagged": true,
+        "fallback_enabled": true,
+        "fallback_venue_id": "lit_nyse"
+      },
+      "sor_rules": {
+        "max_child_orders": 2,
+        "min_venue_score": 75.0,
+        "prefer_lower_slippage": true,
+        "prefer_lower_latency": true,
+        "reserve_liquidity_buffer_pct": 0.55
+      },
+      "status": "override_dispatched"
+    },
+    {
+      "dispatch_id": "dispatch_0002",
+      "timestamp": "2026-03-31T16:08:19Z",
+      "decision_id": "policy_0002",
+      "mode": "defensive",
+      "symbol": "AAPL",
+      "governor_policy": {
+        "mode": "adaptive_guarded",
+        "max_venues": 1,
+        "min_score": 75.0,
+        "avoid_flagged": true,
+        "fallback_enabled": true,
+        "fallback_venue_id": "lit_nyse"
+      },
+      "sor_rules": {
+        "max_child_orders": 2,
+        "min_venue_score": 75.0,
+        "prefer_lower_slippage": true,
+        "prefer_lower_latency": true,
+        "reserve_liquidity_buffer_pct": 0.55
+      },
+      "status": "override_dispatched"
+    }
+  ],
+  "history": [
+    {
+      "timestamp": "2026-03-31T15:53:15Z",
+      "event": "context.ingested",
+      "symbol": "AAPL"
+    },
+    {
+      "timestamp": "2026-03-31T15:53:15Z",
+      "event": "policy.decided",
+      "mode": "defensive",
+      "symbol": "AAPL"
+    },
+    {
+      "timestamp": "2026-03-31T15:53:15Z",
+      "event": "override.dispatched",
+      "decision_id": "policy_0001"
+    },
+    {
+      "timestamp": "2026-03-31T16:08:19Z",
+      "event": "context.ingested",
+      "symbol": "AAPL"
+    },
+    {
+      "timestamp": "2026-03-31T16:08:19Z",
+      "event": "policy.decided",
+      "mode": "defensive",
+      "symbol": "AAPL"
+    },
+    {
+      "timestamp": "2026-03-31T16:08:19Z",
+      "event": "override.dispatched",
+      "decision_id": "policy_0002"
+    },
+    {
+      "timestamp": "2026-03-31T16:08:21Z",
+      "event": "context.ingested",
+      "symbol": "AAPL"
+    },
+    {
+      "timestamp": "2026-03-31T16:08:21Z",
+      "event": "policy.decided",
+      "mode": "defensive",
+      "symbol": "AAPL"
+    }
+  ]
+}

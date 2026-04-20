@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QNT50012 — Period Close Distribution Ledger + Investor Notice Finalization</title>
+  <style>
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#07101d;color:#edf4ff}
+    .wrap{max-width:1120px;margin:0 auto;padding:32px}
+    .hero,.card{background:#0d1a2c;border:1px solid #223754;border-radius:18px;padding:24px;box-shadow:0 12px 34px rgba(0,0,0,.28)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:18px}
+    h1,h2{margin:0 0 12px}.eyebrow{letter-spacing:.18em;text-transform:uppercase;color:#89b9ff;font-size:12px}
+    .pill{display:inline-block;padding:8px 12px;border-radius:999px;background:#163457;margin:6px 8px 0 0}
+    ul{padding-left:18px;line-height:1.6} code{background:#091425;padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Quantora • Period Close Distribution Governance</div>
+      <h1>QNT50012 — Period Close Distribution Ledger + Investor Notice Finalization</h1>
+      <p>Quantora now locks executed investor distributions into a period-close ledger, finalizes investor notice packets, and blocks close completion until both accounting and communications evidence are complete.</p>
+      <span class="pill">Period close ledger</span>
+      <span class="pill">Investor notice finalization</span>
+      <span class="pill">Close authority</span>
+      <span class="pill">Audit-ready distribution evidence</span>
+    </section>
+    <div class="grid">
+      <section class="card">
+        <h2>Control Flow</h2>
+        <ul>
+          <li><code>register-close</code> compiles executed payables for a reporting period.</li>
+          <li><code>finalize-ledger</code> seals the accounting ledger once breaks and attestation checks pass.</li>
+          <li><code>finalize-notice</code> finalizes each investor notice packet with channel and expiry metadata.</li>
+          <li><code>close-period</code> locks the period only after ledger and notices are complete.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Institutional Checks</h2>
+        <ul>
+          <li>Open settlement breaks can block ledger finalization.</li>
+          <li>Ops and finance attestation can be required before close.</li>
+          <li>All investor notices must be finalized before period close can be sealed.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Endpoints</h2>
+        <ul>
+          <li><code>GET /period-close-distributions/health</code></li>
+          <li><code>POST /period-close-distributions/register-close</code></li>
+          <li><code>POST /period-close-distributions/finalize-ledger</code></li>
+          <li><code>POST /period-close-distributions/finalize-notice</code></li>
+          <li><code>POST /period-close-distributions/close-period</code></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

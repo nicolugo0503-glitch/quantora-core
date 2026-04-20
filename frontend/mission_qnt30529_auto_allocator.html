@@ -1,0 +1,23 @@
+<html><body><h1>QNT30529 Auto-Allocator</h1>
+<button onclick="run()">Run Auto-Allocation</button>
+<pre id='out'></pre>
+<script>
+async function run(){
+  const ranked = [
+    {strategy_id:1, score:420.5},
+    {strategy_id:2, score:250.25},
+    {strategy_id:3, score:100.0}
+  ];
+  const res = await fetch('/api/auto-allocator/run',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({
+      ranked_strategies: ranked,
+      total_capital: 1000000,
+      top_n: 3
+    })
+  });
+  const d = await res.json();
+  document.getElementById('out').innerText = JSON.stringify(d,null,2);
+}
+</script></body></html>

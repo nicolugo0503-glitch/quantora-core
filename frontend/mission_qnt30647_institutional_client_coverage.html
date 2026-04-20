@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>QNT30647 Institutional Client Coverage Layer</title>
+  <style>
+    :root { --bg:#06101d; --panel:#0f1d31; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#2563eb; --good:#10b981; --warn:#f59e0b; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#040b15 0%,#0a1424 100%); color:var(--text); }
+    .wrap { max-width:1400px; margin:0 auto; padding:24px; }
+    .hero,.panel { background:rgba(15,29,49,.96); border:1px solid var(--line); border-radius:18px; padding:20px; box-shadow:0 10px 30px rgba(0,0,0,.18); }
+    .hero { margin-bottom:18px; }
+    .muted { color:var(--muted); line-height:1.6; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin-top:18px; }
+    .metric { background:#0a1526; border:1px solid #1e2d47; border-radius:14px; padding:14px; }
+    .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .value { font-size:26px; font-weight:700; margin-top:8px; }
+    .stack { display:grid; grid-template-columns:1.35fr 1fr; gap:16px; margin-top:18px; }
+    .toolbar { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    a.btn { background:var(--accent); color:white; padding:10px 14px; border-radius:10px; text-decoration:none; font-weight:700; display:inline-block; }
+    table { width:100%; border-collapse:collapse; margin-top:10px; font-size:14px; }
+    th,td { padding:10px; border-bottom:1px solid #1e2d47; text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-size:12px; text-transform:uppercase; }
+    .pill { display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid #2a3c60; }
+    .ok { color:#d1fae5; background:rgba(16,185,129,.1); }
+    .warn { color:#fde68a; background:rgba(245,158,11,.1); }
+    pre { margin:0; background:#06101d; color:#dbeafe; border:1px solid #1e2d47; border-radius:14px; min-height:160px; padding:14px; white-space:pre-wrap; }
+    @media (max-width:1000px) { .grid,.stack { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="label">Institutional Mission</div>
+    <h1 style="margin:8px 0;">QNT30647 — Institutional Client Coverage Layer</h1>
+    <div class="muted">Manage LPs, family offices, allocators, and institutions with coverage ownership, lifecycle tracking, engagement intelligence, and client health monitoring across the Quantora capital machine.</div>
+    <div class="toolbar"><a class="btn" href="index.html">Back to Command Center</a></div>
+  </section>
+
+  <section class="grid">
+    <div class="metric"><div class="label">Covered Clients</div><div class="value">1</div></div>
+    <div class="metric"><div class="label">Assigned Owners</div><div class="value">1</div></div>
+    <div class="metric"><div class="label">Potential Capital</div><div class="value">$10.0M</div></div>
+    <div class="metric"><div class="label">Client Health</div><div class="value">Stable+</div></div>
+  </section>
+
+  <section class="stack">
+    <div class="panel">
+      <h2 style="margin-top:0;">Client Overview</h2>
+      <table>
+        <thead><tr><th>Client</th><th>Owner</th><th>Stage</th><th>Current Capital</th><th>Potential</th><th>Tier</th></tr></thead>
+        <tbody>
+          <tr><td>Atlas Family Office</td><td>OWNER_IR_01</td><td>diligencing</td><td>$2,500,000</td><td>$10,000,000</td><td><span class="pill ok">tier_1</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel">
+      <h2 style="margin-top:0;">Client Health / Coverage</h2>
+      <pre>{
+  "client_id": "CLIENT_001",
+  "engagement_score": 82,
+  "health_band": "stable",
+  "next_action": "advance diligence -> active investor",
+  "coverage_owner_id": "OWNER_IR_01"
+}</pre>
+    </div>
+  </section>
+
+  <section class="stack">
+    <div class="panel">
+      <h2 style="margin-top:0;">Engagement Timeline</h2>
+      <table>
+        <thead><tr><th>Type</th><th>Summary</th><th>Capital Discussion</th><th>Time</th></tr></thead>
+        <tbody>
+          <tr><td>meeting</td><td>Reviewed Quantora Growth Vehicle diligence pack.</td><td>$2,500,000</td><td>recent</td></tr>
+          <tr><td>follow_up</td><td>Confirmed vehicle eligibility and reporting cadence.</td><td>$0</td><td>recent</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel">
+      <h2 style="margin-top:0;">Capital Potential Panel</h2>
+      <pre>{
+  "current_capital": 2500000,
+  "potential_capital": 10000000,
+  "unrealized_opportunity": 7500000,
+  "coverage_priority": "high"
+}</pre>
+    </div>
+  </section>
+</div>
+</body>
+</html>

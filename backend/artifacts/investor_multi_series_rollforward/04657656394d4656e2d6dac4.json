@@ -1,0 +1,18 @@
+{
+  "email": "operator@quantora.test",
+  "periods": [
+    {
+      "period_id": "rf_1776220060",
+      "period_name": "Current Period Rollforward",
+      "generated_at": 1776220060,
+      "opening_capital": 0,
+      "ending_nav": 0,
+      "equalization_total": 0,
+      "net_rollforward_change": 0,
+      "series_count": 0,
+      "series": []
+    }
+  ],
+  "created_at": 1776220060,
+  "updated_at": 1776220060
+}

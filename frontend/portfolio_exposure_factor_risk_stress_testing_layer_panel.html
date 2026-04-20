@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — Portfolio Exposure, Factor Risk, and Stress Testing</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;--bad:#ef4444;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(15,29,49,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .sub{color:var(--muted);max-width:980px;line-height:1.5}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    button{border-radius:10px;border:none;background:var(--accent);color:var(--text);padding:10px 12px;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}.stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}
+    th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #274168;background:#0b1a2c;font-size:12px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}.bad{color:#fecaca;border-color:#7f1d1d}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:180px;white-space:pre-wrap}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT30477 — Portfolio Exposure, Factor Risk, and Stress Testing</h1>
+      <div class="sub">Exposure buckets, factor loadings, stress scenarios, and concentration flags. This is the risk brain that evaluates capital before execution quality silently degrades.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="loadAll()">Refresh</button>
+      <button onclick="seedExposure()">Seed Exposure</button>
+      <button onclick="seedFactor()">Seed Factor</button>
+      <button onclick="seedStress()">Seed Stress</button>
+      <button onclick="seedConcentration()">Seed Concentration</button>
+    </div>
+  </div>
+  <div class="grid" id="summaryGrid"></div>
+  <div class="layout">
+    <div class="stack">
+      <div class="card"><h2>Exposure Buckets</h2><div class="table-wrap"><table id="exposureTable"></table></div></div>
+      <div class="card"><h2>Factor Loadings</h2><div class="table-wrap"><table id="factorTable"></table></div></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h2>Stress Scenarios</h2><div class="table-wrap"><table id="stressTable"></table></div></div>
+      <div class="card"><h2>Concentration Flags</h2><div class="table-wrap"><table id="concentrationTable"></table></div></div>
+      <div class="card"><h2>Risk Health</h2><div class="pills" id="healthPills"></div></div>
+      <div class="card"><h2>Last Action</h2><pre id="actionOut">No action yet.</pre></div>
+    </div>
+  </div>
+</div>
+<script>
+const api=(path, opts={})=>fetch(path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok) throw new Error(d.detail||'request_failed'); return d;});
+function num(v){return Number(v||0).toFixed(2)}
+function table(el, headers, rows){ const thead=`<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`; const body=rows.length?rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join(''):`<tr><td colspan="${headers.length}">No data</td></tr>`; el.innerHTML=thead+body; }
+function renderSummary(summary){ const labels=[['Gross',num(summary.gross_exposure_total)],['Net',num(summary.net_exposure_total)],['Factors',summary.factor_count],['Stress Fails',summary.stress_failures],['Concentration',summary.concentration_flags],['Score',summary.risk_score]]; document.getElementById('summaryGrid').innerHTML=labels.map(([l,v])=>`<div class="card"><div class="label">${l}</div><div class="value">${v}</div></div>`).join('');}
+function pills(target, items){ document.getElementById(target).innerHTML=items.map(([l,k])=>`<span class="pill ${k}">${l}</span>`).join(''); }
+async function loadAll(){
+  const data=await api('/workspace/portfolio-risk/summary');
+  renderSummary(data.summary);
+  table(document.getElementById('exposureTable'), ['Bucket','Asset Class','Gross','Net','Status'], (data.exposures||[]).map(r=>[r.bucket_name,r.asset_class,num(r.gross_exposure),num(r.net_exposure),r.status]));
+  table(document.getElementById('factorTable'), ['Factor','Score','Direction','Status'], (data.factors||[]).map(r=>[r.factor_name,num(r.factor_score),r.direction,r.status]));
+  table(document.getElementById('stressTable'), ['Scenario','PnL Impact','Capital Impact','Status'], (data.stress_tests||[]).map(r=>[r.scenario_name,num(r.pnl_impact),num(r.capital_impact),r.status]));
+  table(document.getElementById('concentrationTable'), ['Position','Weight %','Status'], (data.concentrations||[]).map(r=>[r.position_name,num(r.weight_percent),r.status]));
+  const stateClass = data.risk_health.risk_state === 'SAFE' ? 'good' : (data.risk_health.risk_state === 'ELEVATED' ? 'warn' : 'bad');
+  pills('healthPills', [
+    [`Exposure ${data.risk_health.exposure_registry_ready?'Ready':'Missing'}`, data.risk_health.exposure_registry_ready?'good':'warn'],
+    [`Factors ${data.risk_health.factor_registry_ready?'Ready':'Missing'}`, data.risk_health.factor_registry_ready?'good':'warn'],
+    [`Stress ${data.risk_health.stress_registry_ready?'Ready':'Missing'}`, data.risk_health.stress_registry_ready?'good':'warn'],
+    [`Concentration ${data.risk_health.concentration_registry_ready?'Ready':'Missing'}`, data.risk_health.concentration_registry_ready?'good':'warn'],
+    [`${data.risk_health.risk_state}`, stateClass]
+  ]);
+}
+async function seedExposure(){ const res=await api('/workspace/portfolio-risk/exposures/create',{method:'POST',body:JSON.stringify({bucket_name:'Flagship Core Book',asset_class:'equities',gross_exposure:1.35,net_exposure:0.82,status:'active'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedFactor(){ const res=await api('/workspace/portfolio-risk/factors/create',{method:'POST',body:JSON.stringify({factor_name:'Momentum',factor_score:0.66,direction:'long',status:'active'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedStress(){ const res=await api('/workspace/portfolio-risk/stress/create',{method:'POST',body:JSON.stringify({scenario_name:'-7% Equity Shock',pnl_impact:-82.5,capital_impact:-8.25,status:'passed'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedConcentration(){ const res=await api('/workspace/portfolio-risk/concentrations/create',{method:'POST',body:JSON.stringify({position_name:'NVDA',weight_percent:14.2,status:'normal'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+loadAll().catch(err=>document.getElementById('actionOut').textContent=String(err));
+</script>
+</body>
+</html>

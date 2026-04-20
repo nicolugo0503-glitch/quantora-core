@@ -1,0 +1,29 @@
+<html><body><h1>QNT30530 Live Fund Mode</h1>
+<button onclick="start()">Start</button>
+<button onclick="stop()">Stop</button>
+<button onclick="tick()">Tick Once</button>
+<pre id='out'></pre>
+<script>
+async function start(){
+  const r = await fetch('/api/fund/start',{method:'POST'});
+  out.innerText = JSON.stringify(await r.json(),null,2);
+}
+async function stop(){
+  const r = await fetch('/api/fund/stop',{method:'POST'});
+  out.innerText = JSON.stringify(await r.json(),null,2);
+}
+async function tick(){
+  const r = await fetch('/api/fund/tick',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({payload:{
+      fund_id:'FUND1',
+      capital:100000,
+      signals:{crypto:0.8,equities:0.5,bonds:0.2},
+      pnl_by_asset:{crypto:1200,equities:-300,bonds:50},
+      dry_run:true
+    }})
+  });
+  out.innerText = JSON.stringify(await r.json(),null,2);
+}
+</script></body></html>

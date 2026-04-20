@@ -1,0 +1,1 @@
+QNT30710 Market Regime Intelligence System integrated into clean deploy base.

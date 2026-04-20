@@ -1,0 +1,22 @@
+{
+  "enabled": true,
+  "last_snapshot_at": null,
+  "last_ingest_at": null,
+  "last_rebalance_at": null,
+  "strategy_memory": {},
+  "attribution_events": [],
+  "meta_allocator": {
+    "promotion_threshold": 72.0,
+    "decay_threshold": 44.0,
+    "capital_boost_ratio": 0.18,
+    "capital_decay_ratio": 0.12,
+    "max_promoted": 3,
+    "min_observations": 3
+  },
+  "telemetry": {
+    "events_ingested": 0,
+    "snapshots_built": 0,
+    "rebalance_runs": 0,
+    "capital_applications": 0
+  }
+}

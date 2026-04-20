@@ -1,0 +1,30 @@
+{
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/multifund/fund"
+    },
+    {
+      "method": "POST",
+      "path": "/api/multifund/portfolio"
+    },
+    {
+      "method": "POST",
+      "path": "/api/multifund/allocation"
+    },
+    {
+      "method": "GET",
+      "path": "/api/multifund/summary"
+    }
+  ],
+  "entities": [
+    "fund",
+    "portfolio",
+    "allocation"
+  ],
+  "outputs": [
+    "fund summary",
+    "portfolio list",
+    "allocation list"
+  ]
+}

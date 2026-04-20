@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QNT30739 Institutional Post-Trade Control Assurance Layer</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background: #0b1020; color: #e8ecf3; }
+    .card { background: #121933; border: 1px solid #26304f; border-radius: 12px; padding: 20px; max-width: 980px; }
+    h1 { margin-top: 0; }
+    button { background: #4f7cff; color: white; border: 0; border-radius: 8px; padding: 10px 14px; cursor: pointer; }
+    pre { white-space: pre-wrap; background: #0d1430; padding: 14px; border-radius: 10px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>QNT30739 — Institutional Post-Trade Control Assurance Layer</h1>
+    <p>This mission governs post-trade control assurance after execution quality review.</p>
+    <button id="bootstrap">Run Bootstrap Demo</button>
+    <pre id="out">Waiting for action...</pre>
+  </div>
+  <script>
+    async function run() {
+      const out = document.getElementById('out');
+      out.textContent = 'Running bootstrap demo...';
+      try {
+        const res = await fetch('/api/institutional-post-trade-control-assurance-layer/bootstrap-demo', { method: 'POST' });
+        const data = await res.json();
+        out.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        out.textContent = 'Request failed: ' + err;
+      }
+    }
+    document.getElementById('bootstrap').addEventListener('click', run);
+  </script>
+</body>
+</html>

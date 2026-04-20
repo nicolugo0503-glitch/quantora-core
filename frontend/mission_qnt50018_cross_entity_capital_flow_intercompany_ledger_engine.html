@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>QNT50018 - Cross-Entity Capital Flow + Intercompany Ledger Engine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background:#0f172a; color:#e2e8f0; }
+    .card { background:#111827; border:1px solid #334155; border-radius:12px; padding:20px; max-width:960px; }
+    h1,h2 { margin-top:0; }
+    code { background:#1e293b; padding:2px 6px; border-radius:6px; }
+    ul { line-height:1.6; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>QNT50018 — Cross-Entity Capital Flow + Intercompany Ledger Engine</h1>
+    <p>Institutional intercompany capital control layer for entity-to-entity cash movement, approval governance, dual-entry posting, and settlement lineage.</p>
+    <h2>Capabilities</h2>
+    <ul>
+      <li>Registers cross-entity capital flows with fund, SPV, strategy, jurisdiction, and legal-entity metadata.</li>
+      <li>Uses treasury mobility context from <code>QNT50008</code> and settlement posture from <code>QNT50007</code>.</li>
+      <li>Creates dual-entry journal records for affiliate receivable/payable positions.</li>
+      <li>Preserves approval, posting, and settlement lineage for audit-grade intercompany traceability.</li>
+    </ul>
+    <h2>Primary endpoints</h2>
+    <ul>
+      <li><code>GET /intercompany-ledger/health</code></li>
+      <li><code>GET /intercompany-ledger/summary</code></li>
+      <li><code>POST /intercompany-ledger/register-flow</code></li>
+      <li><code>POST /intercompany-ledger/approve</code></li>
+      <li><code>POST /intercompany-ledger/post</code></li>
+      <li><code>POST /intercompany-ledger/settle</code></li>
+    </ul>
+  </div>
+</body>
+</html>

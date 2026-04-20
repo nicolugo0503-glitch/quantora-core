@@ -1,0 +1,38 @@
+{
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/treasury/cash-event"
+    },
+    {
+      "method": "POST",
+      "path": "/api/treasury/reserve"
+    },
+    {
+      "method": "POST",
+      "path": "/api/treasury/release"
+    },
+    {
+      "method": "GET",
+      "path": "/api/treasury/summary"
+    },
+    {
+      "method": "GET",
+      "path": "/api/treasury/ledger"
+    }
+  ],
+  "event_types": [
+    "deposit",
+    "withdrawal",
+    "credit",
+    "debit",
+    "reserve_cash",
+    "release_reserved"
+  ],
+  "core_outputs": [
+    "available_cash",
+    "reserved_cash",
+    "total_cash",
+    "ledger_rows"
+  ]
+}

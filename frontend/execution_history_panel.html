@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Quantora Execution History + Attribution</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background: #0d1117; color: #e6edf3; }
+    .card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+    code { background: #21262d; padding: 2px 6px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>QNT30334 — Execution History + Operator Attribution</h1>
+  <div class="card">
+    <h2>History + Reconciliation Layer</h2>
+    <ul>
+      <li>Execution history stream</li>
+      <li>Operator attribution summaries</li>
+      <li>Broker-reconciled realized PnL rollup</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Endpoints</h2>
+    <p><code>GET /execution-history/status</code></p>
+    <p><code>POST /execution-history/record</code></p>
+    <p><code>GET /execution-history/list</code></p>
+    <p><code>GET /execution-history/operator/{operator_id}</code></p>
+    <p><code>GET /execution-history/reconcile</code></p>
+  </div>
+</body>
+</html>

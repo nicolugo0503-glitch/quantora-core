@@ -1,0 +1,8 @@
+{
+  "selected_broker": "paper",
+  "live_path_armed": true,
+  "validation": {
+    "valid": true,
+    "blockers": []
+  }
+}

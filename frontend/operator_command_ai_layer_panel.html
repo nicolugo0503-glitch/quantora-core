@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — Operator Command AI Layer</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--panel2:#132742;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(15,29,49,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .sub{color:var(--muted);max-width:980px;line-height:1.5}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    button{border-radius:10px;border:none;background:var(--accent);color:var(--text);padding:10px 12px;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}.stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}
+    th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #274168;background:#0b1a2c;font-size:12px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:180px;white-space:pre-wrap}
+    @media (max-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:1fr}}
+    @media (max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT30455 — Operator Command AI Layer</h1>
+      <div class="sub">AI copilots, operator command queue, recommendations, and decision memory. This is the operating intelligence layer that turns Quantora into a true command system instead of a passive interface.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="loadAll()">Refresh</button>
+      <button onclick="seedCommand()">Seed Command</button>
+      <button onclick="seedCopilot()">Seed Copilot</button>
+      <button onclick="seedRecommendation()">Seed Recommendation</button>
+      <button onclick="seedDecision()">Seed Decision Log</button>
+    </div>
+  </div>
+
+  <div class="grid" id="summaryGrid"></div>
+
+  <div class="layout">
+    <div class="stack">
+      <div class="card">
+        <h2>Operator Commands</h2>
+        <div class="table-wrap"><table id="commandTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>AI Copilots</h2>
+        <div class="table-wrap"><table id="copilotTable"></table></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card">
+        <h2>Recommendations</h2>
+        <div class="table-wrap"><table id="recommendationTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Decision Logs</h2>
+        <div class="table-wrap"><table id="decisionTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>AI Health</h2>
+        <div class="pills" id="healthPills"></div>
+      </div>
+      <div class="card">
+        <h2>Last Action</h2>
+        <pre id="actionOut">No action yet.</pre>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const api=(path, opts={})=>fetch(path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok) throw new Error(d.detail||'request_failed'); return d;});
+function table(el, headers, rows){
+  const thead = `<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  const body = rows.length ? rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${headers.length}">No data</td></tr>`;
+  el.innerHTML = thead + body;
+}
+function renderSummary(summary){
+  const labels = [
+    ['Commands', summary.commands_total],
+    ['Successful', summary.commands_successful],
+    ['Pending', summary.commands_pending],
+    ['Copilots', summary.copilots_active],
+    ['Recommendations', summary.recommendations_total],
+    ['AI Score', summary.ai_score]
+  ];
+  document.getElementById('summaryGrid').innerHTML = labels.map(([label,val])=>`<div class="card"><div class="label">${label}</div><div class="value">${val}</div></div>`).join('');
+}
+function pills(target, items){
+  document.getElementById(target).innerHTML = items.map(([label,klass])=>`<span class="pill ${klass}">${label}</span>`).join('');
+}
+async function loadAll(){
+  const data = await api('/workspace/operator-ai/summary');
+  renderSummary(data.summary);
+  table(document.getElementById('commandTable'),
+    ['Command','Type','Target','Status','Created'],
+    (data.commands||[]).map(r=>[r.command_name, r.command_type, r.target_system, r.status, r.created_at||'-'])
+  );
+  table(document.getElementById('copilotTable'),
+    ['Copilot','Specialty','Status','Confidence','Created'],
+    (data.copilots||[]).map(r=>[r.copilot_name, r.specialty, r.status, Number(r.confidence_score).toFixed(2), r.created_at||'-'])
+  );
+  table(document.getElementById('recommendationTable'),
+    ['Recommendation','Priority','Status','Target','Created'],
+    (data.recommendations||[]).map(r=>[r.recommendation_name, r.priority, r.status, r.target_ref, r.created_at||'-'])
+  );
+  table(document.getElementById('decisionTable'),
+    ['Decision','Action','Outcome','Created'],
+    (data.decision_logs||[]).map(r=>[r.decision_name, r.operator_action, r.outcome, r.created_at||'-'])
+  );
+  pills('healthPills', [
+    [`Commands ${data.ai_health.command_registry_ready?'Ready':'Missing'}`, data.ai_health.command_registry_ready?'good':'warn'],
+    [`Copilots ${data.ai_health.copilot_registry_ready?'Ready':'Missing'}`, data.ai_health.copilot_registry_ready?'good':'warn'],
+    [`Recs ${data.ai_health.recommendation_engine_ready?'Ready':'Missing'}`, data.ai_health.recommendation_engine_ready?'good':'warn'],
+    [`Memory ${data.ai_health.decision_memory_ready?'Ready':'Missing'}`, data.ai_health.decision_memory_ready?'good':'warn'],
+    [`Score ${data.ai_health.ai_score}`, data.ai_health.ai_score>=85?'good':'warn']
+  ]);
+}
+async function seedCommand(){
+  const res = await api('/workspace/operator-ai/commands/create', {method:'POST', body: JSON.stringify({command_name:'Rebalance Top Strategies', command_type:'capital_action', target_system:'capital_intelligence', status:'queued'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedCopilot(){
+  const res = await api('/workspace/operator-ai/copilots/create', {method:'POST', body: JSON.stringify({copilot_name:'Allocation Copilot', specialty:'capital_allocation', status:'active', confidence_score:87.5})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedRecommendation(){
+  const res = await api('/workspace/operator-ai/recommendations/create', {method:'POST', body: JSON.stringify({recommendation_name:'Shift Capital To Momentum', priority:'high', status:'proposed', target_ref:'momentum_alpha'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedDecision(){
+  const res = await api('/workspace/operator-ai/decisions/create', {method:'POST', body: JSON.stringify({decision_name:'Approved Weekly Rebalance', operator_action:'approved', outcome:'capital_shift_executed'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+loadAll().catch(err => document.getElementById('actionOut').textContent = String(err));
+</script>
+</body>
+</html>

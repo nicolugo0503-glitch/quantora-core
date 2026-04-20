@@ -1,0 +1,38 @@
+{
+  "fixed_zip_base": "QUANTORA_FULL_PROJECT_QNT30530_LIVE_FUND_MODE.zip",
+  "qnt30531_compile_results": [
+    {
+      "file": "backend/app/main.py",
+      "status": "ok"
+    },
+    {
+      "file": "backend/app/qnt30531_integration.py",
+      "status": "ok"
+    },
+    {
+      "file": "MISSIONS/QNT30524_ALPACA_LIVE_BINDING/qnt30524_alpaca_engine.py",
+      "status": "ok"
+    },
+    {
+      "file": "MISSIONS/QNT30530_LIVE_FUND_MODE/qnt30530_live_fund.py",
+      "status": "ok"
+    },
+    {
+      "file": "MISSIONS/QNT30515_INVESTOR_STATEMENTS_DISTRIBUTIONS/qnt30515_router.py",
+      "status": "ok"
+    },
+    {
+      "file": "MISSIONS/QNT30516_FEE_ENGINE/qnt30516_router.py",
+      "status": "ok"
+    },
+    {
+      "file": "MISSIONS/QNT30529_AUTO_ALLOCATOR/qnt30529_auto_allocator.py",
+      "status": "ok"
+    },
+    {
+      "file": "MISSIONS/QNT30529_AUTO_ALLOCATOR/qnt30529_router.py",
+      "status": "ok"
+    }
+  ],
+  "smoke_endpoint": "/api/audit/qnt30531-smoke"
+}

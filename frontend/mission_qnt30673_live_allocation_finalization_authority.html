@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QNT30673 — Live Allocation Finalization Authority</title>
+  <style>
+    :root { color-scheme: dark; --bg:#07111f; --panel:#0d1b2a; --panel2:#102235; --line:#1f3550; --text:#e8f0ff; --muted:#9bb0cc; --good:#123a2a; --warn:#4a3512; --bad:#4a1f24; }
+    * { box-sizing:border-box; } body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#07111f,#0b1422 45%,#0d1727); color:var(--text); }
+    .wrap { max-width:1500px; margin:0 auto; padding:24px; }
+    .hero,.panel { background:rgba(13,27,42,.92); border:1px solid var(--line); border-radius:18px; box-shadow:0 16px 50px rgba(0,0,0,.24); }
+    .hero { padding:24px; margin-bottom:18px; } .hero p,.tiny { color:var(--muted); }
+    .actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:16px; }
+    a,button { border:none; border-radius:12px; padding:11px 16px; font-weight:700; cursor:pointer; text-decoration:none; }
+    a,button { background:#58a6ff; color:#04111f; } button.secondary { background:#1d3557; color:#dce8ff; }
+    .metric-grid,.grid { display:grid; gap:16px; margin-bottom:18px; }
+    .metric-grid { grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); }
+    .metric { background:var(--panel2); border:1px solid var(--line); border-radius:16px; padding:16px; }
+    .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .value { font-size:28px; font-weight:800; margin-top:8px; }
+    .grid { grid-template-columns:2fr 1fr; } .stack { display:grid; gap:16px; }
+    .panel { padding:18px; overflow:auto; }
+    .section-title { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
+    .section-title h2 { margin:0; font-size:18px; }
+    table { width:100%; border-collapse:collapse; } th,td { padding:10px 8px; border-bottom:1px solid rgba(255,255,255,.07); text-align:left; font-size:14px; }
+    th { color:#98afd1; font-size:12px; text-transform:uppercase; letter-spacing:.06em; }
+    pre { white-space:pre-wrap; word-break:break-word; margin:0; color:#d7e6ff; }
+    .pill { display:inline-flex; border-radius:999px; padding:4px 10px; font-size:12px; font-weight:700; }
+    .good { background:var(--good); color:#9ef0c2; } .warn { background:var(--warn); color:#ffd27d; } .bad { background:var(--bad); color:#ff9cab; }
+    @media (max-width: 1100px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="tiny">Institutional Layer · QNT30673</div>
+    <h1 style="margin:8px 0;">QNT30673 — Live Allocation Finalization Authority</h1>
+    <p>Finalize live allocation release after continuity, clearance, governance, and dispatch controls converge into an institutional authorization decision.</p>
+    <div class="actions">
+      <a href="index.html">Back to Command Center</a>
+      <button onclick="runLayer()">Run Finalization Cycle</button>
+      <button class="secondary" onclick="refreshAll()">Refresh Summary</button>
+    </div>
+  </section>
+  <section class="metric-grid">
+    <div class="metric"><div class="label">Finalization Posture</div><div class="value" id="posture">-</div><div class="status" id="postureTag"></div></div>
+    <div class="metric"><div class="label">Finalization Score</div><div class="value" id="score">-</div><div class="status">Average authority score</div></div>
+    <div class="metric"><div class="label">Capital</div><div class="value" id="capital">-</div><div class="status">Capital under finalization authority</div></div>
+    <div class="metric"><div class="label">Finalize</div><div class="value" id="finalizeCount">-</div><div class="status">Ready for live finalization</div></div>
+    <div class="metric"><div class="label">Hold / Rollback</div><div class="value" id="riskCount">-</div><div class="status">Constrained cases</div></div>
+  </section>
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Finalization Book</h2><span class="tiny">Live authorization cases</span></div>
+      <table id="bookTable"><thead><tr><th>Strategy</th><th>Allocator</th><th>Capital</th><th>Score</th><th>Readiness</th><th>Exceptions</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="stack">
+      <div class="panel"><div class="section-title"><h2>Policy</h2><span class="tiny">Finalization thresholds</span></div><pre id="policy">Loading…</pre></div>
+      <div class="panel"><div class="section-title"><h2>Overview</h2><span class="tiny">Authority posture</span></div><pre id="overview">Loading…</pre></div>
+    </div>
+  </section>
+  <section class="grid">
+    <div class="panel"><div class="section-title"><h2>Finalization Decisions</h2><span class="tiny">Decision engine output</span></div><pre id="decisions">Loading…</pre></div>
+    <div class="panel"><div class="section-title"><h2>Dependencies</h2><span class="tiny">Continuity, clearance, dispatch, governance</span></div><pre id="dependencies">Loading…</pre></div>
+  </section>
+  <section class="panel"><div class="section-title"><h2>Audit Trail</h2><span class="tiny">Latest finalization cycle</span></div><pre id="auditTrail">Loading…</pre></div>
+</div>
+<script>
+  const fmtPct = v => `${Number(v||0).toFixed(2)}%`;
+  const fmtMoney = v => `$${Number(v||0).toLocaleString(undefined,{maximumFractionDigits:2})}M`;
+  const pill = (text, cls='') => `<span class="pill ${cls}">${text}</span>`;
+  function severityClass(text='') {
+    const t = String(text).toLowerCase();
+    if (t.includes('rollback') || t.includes('hold') || t.includes('reversal')) return 'bad';
+    if (t.includes('review') || t.includes('constrained')) return 'warn';
+    return 'good';
+  }
+  async function getJson(url, opts) {
+    const res = await fetch(url, opts);
+    if (!res.ok) throw new Error(`${url} -> ${res.status}`);
+    return res.json();
+  }
+  function fillTable(id, rows, renderer, colspan=7) {
+    const tbody = document.querySelector(`#${id} tbody`);
+    tbody.innerHTML = rows.length ? rows.map(renderer).join('') : `<tr><td colspan="${colspan}" class="tiny">No rows available.</td></tr>`;
+  }
+  function renderSummary(summary, audit) {
+    const o = summary.live_allocation_finalization_overview || {};
+    const decisions = summary.finalization_decisions || [];
+    document.getElementById('posture').textContent = o.finalization_posture || '-';
+    document.getElementById('postureTag').innerHTML = pill(o.finalization_posture || 'unknown', severityClass(o.finalization_posture));
+    document.getElementById('score').textContent = fmtPct(o.finalization_score);
+    document.getElementById('capital').textContent = fmtMoney(o.finalization_capital_millions);
+    document.getElementById('finalizeCount').textContent = `${Number(o.finalize_count||0)}`;
+    document.getElementById('riskCount').textContent = `${Number(o.hold_count||0) + Number(o.rollback_count||0)}`;
+    document.getElementById('policy').textContent = JSON.stringify(summary.policy || {}, null, 2);
+    document.getElementById('overview').textContent = JSON.stringify(o, null, 2);
+    document.getElementById('decisions').textContent = JSON.stringify({agenda: summary.finalization_agenda || [], decisions}, null, 2);
+    document.getElementById('dependencies').textContent = JSON.stringify(summary.finalization_dependencies || {}, null, 2);
+    document.getElementById('auditTrail').textContent = JSON.stringify(audit || {}, null, 2);
+    fillTable('bookTable', summary.finalization_book || [], r => `
+      <tr>
+        <td>${r.strategy_id || '-'}</td>
+        <td>${r.allocator_name || '-'}</td>
+        <td>${fmtMoney(r.invested_capital_millions)}</td>
+        <td>${fmtPct(r.finalization_score)}</td>
+        <td>${fmtPct(r.live_readiness_pct)}</td>
+        <td>${Number(r.open_exception_count||0)}</td>
+        <td>${pill((decisions.find(x => x.finalization_case_id === r.finalization_case_id)?.action) || 'FINALIZE', severityClass((decisions.find(x => x.finalization_case_id === r.finalization_case_id)?.action) || 'FINALIZE'))}</td>
+      </tr>`);
+  }
+  async function refreshAll() {
+    try {
+      const [summary, audit] = await Promise.all([
+        getJson('/api/live-allocation-finalization-authority/summary'),
+        getJson('/api/live-allocation-finalization-authority/audit')
+      ]);
+      renderSummary(summary, audit);
+    } catch (err) {
+      document.getElementById('auditTrail').textContent = `Finalization unavailable. ${err.message}`;
+    }
+  }
+  async function runLayer() {
+    const result = await getJson('/api/live-allocation-finalization-authority/run', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ trigger:'manual-ui' })
+    });
+    renderSummary(result.summary, { latest_run: result.run, runs:[result.run], run_count:1 });
+  }
+  refreshAll();
+</script>
+</body>
+</html>

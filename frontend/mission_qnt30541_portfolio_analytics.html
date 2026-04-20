@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quantora Portfolio Analytics</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff}
+.container{max-width:1400px;margin:auto;padding:24px}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:14px;padding:16px;margin-bottom:16px}
+h1,h2{margin:0 0 10px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.label{color:#9fb3d8;font-size:12px;text-transform:uppercase}
+.value{font-size:24px;font-weight:bold}
+canvas{width:100%;height:220px;background:#07111f;border-radius:10px;border:1px solid #203251}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Portfolio Analytics Suite</h1>
+
+<div class="grid">
+<div class="card"><div class="label">NAV</div><div id="nav" class="value">-</div></div>
+<div class="card"><div class="label">Total PnL</div><div id="pnl" class="value">-</div></div>
+<div class="card"><div class="label">Drawdown</div><div id="dd" class="value">-</div></div>
+</div>
+
+<div class="card">
+<h2>NAV Curve</h2>
+<canvas id="navChart"></canvas>
+</div>
+
+<div class="card">
+<h2>PnL Distribution</h2>
+<canvas id="pnlChart"></canvas>
+</div>
+
+</div>
+
+<script>
+async function fetchJson(url){
+try{
+const r=await fetch(url);
+return await r.json();
+}catch(e){return {}}
+}
+
+function drawLine(canvas,data){
+const ctx=canvas.getContext('2d');
+ctx.clearRect(0,0,canvas.width,canvas.height);
+if(!data.length) return;
+const max=Math.max(...data),min=Math.min(...data);
+data.forEach((v,i)=>{
+const x=i*(canvas.width/data.length);
+const y=canvas.height-((v-min)/(max-min||1))*canvas.height;
+if(i===0){ctx.moveTo(x,y);}else{ctx.lineTo(x,y);}
+});
+ctx.strokeStyle="#2455d6";ctx.stroke();
+}
+
+async function load(){
+const perf=await fetchJson('/api/performance-engine/history');
+const summary=await fetchJson('/api/performance-engine/summary');
+
+document.getElementById('nav').innerText=summary.nav||'-';
+document.getElementById('pnl').innerText=summary.total_pnl||'-';
+document.getElementById('dd').innerText=(summary.drawdown_pct||0)+'%';
+
+const navs=(perf||[]).map(x=>x.nav||0);
+drawLine(document.getElementById('navChart'),navs);
+
+const pnls=(perf||[]).map(x=>x.total_pnl||0);
+drawLine(document.getElementById('pnlChart'),pnls);
+}
+
+setInterval(load,5000);
+load();
+</script>
+
+</body>
+</html>

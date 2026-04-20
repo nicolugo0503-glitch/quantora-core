@@ -1,0 +1,44 @@
+{
+  "normalized_frontend_query_routes": [
+    [
+      "/api/broker/orders?limit=50",
+      "/api/broker/orders"
+    ],
+    [
+      "/api/broker/fills?limit=50",
+      "/api/broker/fills"
+    ],
+    [
+      "/api/nav/eod-snapshots?limit=100",
+      "/api/nav/eod-snapshots"
+    ],
+    [
+      "/api/audit/logs?limit=100",
+      "/api/audit/logs"
+    ],
+    [
+      "/api/treasury/summary?fund_id=FUND1",
+      "/api/treasury/summary"
+    ],
+    [
+      "/api/treasury/ledger?fund_id=FUND1&limit=100",
+      "/api/treasury/ledger"
+    ],
+    [
+      "/api/capital/summary?fund_id=FUND1",
+      "/api/capital/summary"
+    ],
+    [
+      "/api/onboarding/summary?fund_id=FUND1",
+      "/api/onboarding/summary"
+    ],
+    [
+      "/api/multifund/summary?fund_id=FUND2",
+      "/api/multifund/summary"
+    ]
+  ],
+  "legacy_routes_added": [
+    "/api/v1/reports/nav"
+  ],
+  "cleanup_goal": "eliminate remaining warning-class mismatches from the QNT30531 full audit"
+}

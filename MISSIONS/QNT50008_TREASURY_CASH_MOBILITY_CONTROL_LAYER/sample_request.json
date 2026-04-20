@@ -1,0 +1,11 @@
+{
+  "operator": "treasury_committee",
+  "decision_id": "treasury_dispatch_001",
+  "transfer_type": "broker_funding",
+  "from_account": "broker_buffer",
+  "destination": "IBKR",
+  "amount": 12500.0,
+  "currency": "USD",
+  "priority": "high",
+  "purpose": "pre-market broker funding window"
+}

@@ -1,0 +1,15 @@
+{
+  "mission": "QNT30332",
+  "layer": "qnt30332-live-market-broker-execution",
+  "alpaca": {
+    "requires_env": [
+      "ALPACA_API_KEY",
+      "ALPACA_SECRET_KEY",
+      "ALPACA_BASE_URL"
+    ]
+  },
+  "routing": {
+    "mode": "paper-first",
+    "governance_approval_required": true
+  }
+}

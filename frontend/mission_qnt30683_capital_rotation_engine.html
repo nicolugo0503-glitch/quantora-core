@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>QNT30683 Capital Rotation Engine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { font-family: Arial, sans-serif; margin: 32px; background:#0b1020; color:#e7ecff; }
+    .card { background:#141b34; border:1px solid #2a355f; border-radius:16px; padding:24px; max-width:980px; }
+    h1,h2 { margin-top:0; } ul { line-height:1.6; } code { background:#0d1327; padding:2px 6px; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>QNT30683 — Capital Rotation Engine</h1>
+    <p>Institutional engine for rotating defended or restored capital into stronger live allocations.</p>
+    <h2>Core functions</h2>
+    <ul>
+      <li>Score rotation viability using drawdown defense, restoration, recovery, continuity, governance, compliance, pnl, and allocation concentration.</li>
+      <li>Determine whether capital should be rotated, rebalanced, reduced, held, or escalated.</li>
+      <li>Persist run history and policy controls for auditability.</li>
+    </ul>
+    <h2>Endpoints</h2>
+    <ul>
+      <li><code>GET /api/capital-rotation-engine/summary</code></li>
+      <li><code>POST /api/capital-rotation-engine/run</code></li>
+      <li><code>GET /api/capital-rotation-engine/audit</code></li>
+      <li><code>POST /api/capital-rotation-engine/policy</code></li>
+    </ul>
+  </div>
+</body>
+</html>

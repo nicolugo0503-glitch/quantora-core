@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30507 Audit Log</title>
+  <style>
+    :root { --bg:#08111f; --panel:#0e1a2b; --border:#1f3556; --text:#eef4ff; --muted:#9bb0ce; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; background:var(--bg); color:var(--text); padding:24px; }
+    .btn { display:inline-block; color:#fff; background:#2455d6; border:1px solid #3f6fff; border-radius:10px; padding:10px 14px; text-decoration:none; font-weight:700; }
+    .btn.secondary { background:#12233b; border-color:var(--border); }
+    .panel { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:16px; }
+    .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+    .muted { color:var(--muted); }
+    pre { background:#07111f; border:1px solid var(--border); border-radius:10px; padding:14px; overflow:auto; }
+    @media (max-width:900px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px">
+    <div>
+      <h1 style="margin:0 0 6px">QNT30507 — Persistent State + Audit Log</h1>
+      <div class="muted">Durable runtime state and append-only operator audit trail.</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn secondary" href="conversation_missions_hub.html">Back to Missions Hub</a>
+      <a class="btn" href="index.html">Back to Command Center</a>
+    </div>
+  </div>
+
+  <div class="panel">
+    <a class="btn" href="#" onclick="refreshAudit();return false;">Refresh Audit</a>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h2 style="margin-top:0">Persisted Runtime State</h2>
+      <pre id="stateBox">loading...</pre>
+    </div>
+    <div class="panel">
+      <h2 style="margin-top:0">Audit Log</h2>
+      <pre id="auditBox">loading...</pre>
+    </div>
+  </div>
+
+  <script>
+    async function fetchJson(url) {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return await res.json();
+      } catch (e) {
+        return null;
+      }
+    }
+
+    async function refreshAudit() {
+      const state = await fetchJson('/api/audit/runtime-state');
+      const logs = await fetchJson('/api/audit/logs?limit=100');
+
+      document.getElementById('stateBox').textContent = JSON.stringify(
+        state || { error: 'Persisted runtime state endpoint not found yet.' },
+        null,
+        2
+      );
+
+      document.getElementById('auditBox').textContent = JSON.stringify(
+        logs || { error: 'Audit logs endpoint not found yet.' },
+        null,
+        2
+      );
+    }
+
+    refreshAudit();
+    setInterval(refreshAudit, 5000);
+  </script>
+</body>
+</html>

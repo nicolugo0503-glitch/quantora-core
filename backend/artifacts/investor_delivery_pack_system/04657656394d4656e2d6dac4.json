@@ -1,0 +1,33 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "default_channel": "portal_simulated",
+    "require_acknowledgement": true,
+    "max_pending_packs": 50,
+    "block_if_safety_posture_blocked": true,
+    "block_if_kill_switch": true
+  },
+  "templates": [
+    {
+      "template_id": "tmpl_institutional_standard",
+      "name": "institutional standard delivery pack",
+      "sections": [
+        "cover_letter",
+        "performance_summary",
+        "lp_statement",
+        "nav_snapshot",
+        "waterfall_summary",
+        "risk_and_controls",
+        "delivery_log"
+      ],
+      "channel": "portal_simulated",
+      "requires_operator_note": true,
+      "distribution_policy": "investor_safe"
+    }
+  ],
+  "recipient_registry": [],
+  "packs": [],
+  "delivery_events": [],
+  "created_at": 1776223536,
+  "updated_at": 1776223536
+}

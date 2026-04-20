@@ -1,0 +1,11 @@
+{
+  "mission": "QNT50007",
+  "capabilities": [
+    "execution_fill_ingestion",
+    "settlement_confirmation",
+    "cash_and_position_ledger_booking",
+    "broker_vs_internal_reconciliation",
+    "break_detection_and_exception_tracking"
+  ],
+  "dependencies": ["QNT50001", "QNT50004", "QNT50005", "QNT50006"]
+}

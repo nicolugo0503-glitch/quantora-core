@@ -1,0 +1,162 @@
+{
+  "generated_by": "QNT50028",
+  "status": "ready",
+  "policy": {
+    "enabled": true,
+    "auto_sync_sources": true,
+    "require_recovery_execution_for_approval": true,
+    "require_closed_action_for_close": true,
+    "require_risk_clearance_for_execution": true,
+    "require_positive_capital_recovered": true,
+    "require_treasury_capacity": true,
+    "max_reauthorization_cases": 250,
+    "max_reinstatement_events": 500,
+    "max_audit_events": 500
+  },
+  "last_sync": {
+    "synced_at": 1776572219,
+    "source": "auto",
+    "latest_action_id": "remediation_action_3fd9dd8df929",
+    "latest_action_status": "closed",
+    "latest_cycle_id": "recovery_cycle_d7e8c12f6622",
+    "latest_recovered_capital": 6400.0,
+    "latest_resolution_id": "resolution_4fbca167624a",
+    "latest_resolution_status": "approved",
+    "open_breach_count": 0,
+    "risk_triggered": false,
+    "risk_level": "normal",
+    "treasury_total_balance": 85000.0,
+    "operating_balance": 30000.0,
+    "broker_buffer_balance": 40000.0
+  },
+  "sync_history": [
+    {
+      "synced_at": 1776572219,
+      "source": "auto",
+      "latest_action_id": "remediation_action_3fd9dd8df929",
+      "latest_action_status": "closed",
+      "latest_cycle_id": "recovery_cycle_d7e8c12f6622",
+      "latest_recovered_capital": 6400.0,
+      "latest_resolution_id": "resolution_4fbca167624a",
+      "latest_resolution_status": "approved",
+      "open_breach_count": 0,
+      "risk_triggered": false,
+      "risk_level": "normal",
+      "treasury_total_balance": 85000.0,
+      "operating_balance": 30000.0,
+      "broker_buffer_balance": 40000.0
+    }
+  ],
+  "reauthorization_cases": [
+    {
+      "reauthorization_id": "reauthorization_f8d6fc95fdfc",
+      "created_at": 1776572219,
+      "operator": "smoke",
+      "title": "Seed post-recovery reinstatement",
+      "action_id": "action_smoke_qnt50030",
+      "cycle_id": "cycle_smoke_qnt50030",
+      "case_id": "",
+      "resolution_id": "resolution_4fbca167624a",
+      "target_strategy": "",
+      "target_broker": "",
+      "requested_capital": 16000.0,
+      "reinstatement_pct": 60.0,
+      "status": "executed",
+      "rationale": "seed for scale-up governance test",
+      "notes": "",
+      "approved_at": 1776572219,
+      "approved_by": "smoke",
+      "approved_capital": 15000.0,
+      "approval_notes": "approved for paper re-entry",
+      "executed_at": 1776572219,
+      "last_event_id": "reinstatement_event_9de1b2100285"
+    }
+  ],
+  "reinstatement_events": [
+    {
+      "event_id": "reinstatement_event_9de1b2100285",
+      "executed_at": 1776572219,
+      "operator": "smoke",
+      "reauthorization_id": "reauthorization_f8d6fc95fdfc",
+      "action_id": "action_smoke_qnt50030",
+      "cycle_id": "cycle_smoke_qnt50030",
+      "execution_mode": "controlled",
+      "destination_account": "broker_buffer",
+      "capital_reinstated": 15000.0,
+      "result_summary": "seeded for scale-up path",
+      "status": "executed"
+    }
+  ],
+  "audit_log": [
+    {
+      "event_id": "reinstatement_event_9de1b2100285",
+      "event_type": "post_recovery_reinstatement_executed",
+      "timestamp": 1776572219,
+      "executed_at": 1776572219,
+      "operator": "smoke",
+      "reauthorization_id": "reauthorization_f8d6fc95fdfc",
+      "action_id": "action_smoke_qnt50030",
+      "cycle_id": "cycle_smoke_qnt50030",
+      "execution_mode": "controlled",
+      "destination_account": "broker_buffer",
+      "capital_reinstated": 15000.0,
+      "result_summary": "seeded for scale-up path",
+      "status": "executed"
+    },
+    {
+      "event_id": "post_recovery_capital_reinstatement_audit_1776572219334227428",
+      "event_type": "post_recovery_reinstatement_approved",
+      "timestamp": 1776572219,
+      "reauthorization_id": "reauthorization_f8d6fc95fdfc",
+      "approved_capital": 15000.0
+    },
+    {
+      "event_id": "post_recovery_capital_reinstatement_audit_1776572219332714034",
+      "event_type": "post_recovery_reauthorization_registered",
+      "timestamp": 1776572219,
+      "reauthorization_id": "reauthorization_f8d6fc95fdfc",
+      "created_at": 1776572219,
+      "operator": "smoke",
+      "title": "Seed post-recovery reinstatement",
+      "action_id": "action_smoke_qnt50030",
+      "cycle_id": "cycle_smoke_qnt50030",
+      "case_id": "",
+      "resolution_id": "resolution_4fbca167624a",
+      "target_strategy": "",
+      "target_broker": "",
+      "requested_capital": 16000.0,
+      "reinstatement_pct": 60.0,
+      "status": "registered",
+      "rationale": "seed for scale-up governance test",
+      "notes": ""
+    },
+    {
+      "event_id": "post_recovery_capital_reinstatement_audit_1776572219331795267",
+      "event_type": "post_recovery_capital_context_synced",
+      "timestamp": 1776572219,
+      "synced_at": 1776572219,
+      "source": "auto",
+      "latest_action_id": "remediation_action_3fd9dd8df929",
+      "latest_action_status": "closed",
+      "latest_cycle_id": "recovery_cycle_d7e8c12f6622",
+      "latest_recovered_capital": 6400.0,
+      "latest_resolution_id": "resolution_4fbca167624a",
+      "latest_resolution_status": "approved",
+      "open_breach_count": 0,
+      "risk_triggered": false,
+      "risk_level": "normal",
+      "treasury_total_balance": 85000.0,
+      "operating_balance": 30000.0,
+      "broker_buffer_balance": 40000.0
+    },
+    {
+      "event_id": "post_recovery_capital_reinstatement_audit_1776572219329952920",
+      "event_type": "post_recovery_capital_reset",
+      "timestamp": 1776572219,
+      "operator": "smoke",
+      "reason": "qnt50030_smoke",
+      "prior_reauthorization_count": 1,
+      "prior_reinstatement_event_count": 1
+    }
+  ]
+}

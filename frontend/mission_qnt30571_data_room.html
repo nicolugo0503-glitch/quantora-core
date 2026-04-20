@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30571 Allocator / LP Data Room</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:90px}
+.row{display:grid;grid-template-columns:1fr 2fr auto;gap:10px}
+table{width:100%;border-collapse:collapse} th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1000px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30571 · Allocator / LP Data Room</h1>
+        <div style="color:#9fb3d8">Due diligence access layer for allocator and LP workflows. Investors can request access to diligence materials, and admins can grant documents and publish notes.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="mission_qnt30570_admin_console.html">Admin Console</a>
+        <a href="investor_portal.html">Investor Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Documents</div><div id="docs" class="value">-</div></div>
+    <div class="card"><div class="label">Requests</div><div id="requests" class="value">-</div></div>
+    <div class="card"><div class="label">Grants</div><div id="grants" class="value">-</div></div>
+    <div class="card"><div class="label">Statements</div><div id="statements" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="docId" placeholder="Document id">
+      <textarea id="docNotes" placeholder="Request or admin note"></textarea>
+      <button onclick="requestDoc()">Request Doc</button>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="grantDoc()">Grant Doc (Admin)</button>
+      <button onclick="addNote()">Add Room Note (Admin)</button>
+      <button onclick="refreshAll()">Refresh</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Available Documents</div>
+    <table>
+      <thead><tr><th>ID</th><th>Title</th><th>Category</th><th>Status</th></tr></thead>
+      <tbody id="docRows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Data Room Packet</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const idx = await j('/api/data-room/index');
+  const access = await j('/api/data-room/access');
+  const packet = await j('/api/data-room/packet');
+  if(!idx.ok){ document.getElementById('raw').textContent = JSON.stringify(idx.data, null, 2); return; }
+  document.getElementById('docs').textContent = String((idx.data.documents || []).length);
+  document.getElementById('requests').textContent = String((access.data.requests || []).length);
+  document.getElementById('grants').textContent = String((access.data.grants || []).length);
+  document.getElementById('statements').textContent = String(packet.data.statement_count || 0);
+  document.getElementById('docRows').innerHTML = (idx.data.documents || []).map(d => `<tr><td>${d.doc_id}</td><td>${d.title}</td><td>${d.category}</td><td>${d.status}</td></tr>`).join('');
+  document.getElementById('raw').textContent = JSON.stringify({index:idx.data,access:access.data,packet:packet.data}, null, 2);
+}
+async function requestDoc(){
+  const payload = {doc_id: document.getElementById('docId').value, notes: document.getElementById('docNotes').value};
+  await j('/api/data-room/request', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function grantDoc(){
+  const me = await j('/api/user/me');
+  const payload = {email: me.data.user.email, doc_id: document.getElementById('docId').value};
+  await j('/api/data-room/admin/grant', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function addNote(){
+  const payload = {title: document.getElementById('docId').value || 'Data room note', body: document.getElementById('docNotes').value};
+  await j('/api/data-room/admin/note', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function refreshAll(){ await load(); }
+load();
+</script>
+</body>
+</html>

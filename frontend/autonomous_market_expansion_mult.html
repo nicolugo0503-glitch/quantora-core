@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>QNT30401 Autonomous Market Expansion & Multi-Asset Routing Layer</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background: #09101d; color: #eef2fb; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card { background: #121b2f; border: 1px solid #2c3959; border-radius: 12px; padding: 16px; }
+    button, input, select { padding: 10px; border-radius: 8px; }
+    input, select { width: 100%; margin-top: 6px; margin-bottom: 12px; border: 1px solid #44527a; background: #0f1530; color: #fff; }
+    button { border: 0; cursor: pointer; margin-right: 8px; }
+    pre { white-space: pre-wrap; background: #0b1020; border: 1px solid #2a395a; padding: 12px; border-radius: 8px; min-height: 220px; }
+  </style>
+</head>
+<body>
+  <h1>QNT30401 — Autonomous Market Expansion & Multi-Asset Routing Layer</h1>
+  <div class="grid">
+    <div class="card">
+      <h3>Seed + Route</h3>
+      <label>Symbol</label>
+      <input id="symbol" value="BTCUSD" />
+      <label>Asset Class</label>
+      <select id="asset_class">
+        <option>crypto</option>
+        <option>equities</option>
+        <option>forex</option>
+        <option>futures</option>
+        <option>options</option>
+      </select>
+      <button onclick="seedInstruments()">Seed Instruments</button>
+      <button onclick="routeOrder()">Route Order</button>
+      <pre id="left"></pre>
+    </div>
+    <div class="card">
+      <h3>Status</h3>
+      <button onclick="loadStatus()">Refresh Status</button>
+      <button onclick="enableForex()">Enable Forex</button>
+      <pre id="right"></pre>
+    </div>
+  </div>
+<script>
+async function seedInstruments(){
+  const payload = {
+    instruments: [
+      {symbol:'AAPL', asset_class:'equities', venue_preferences:['alpaca'], liquidity_score:0.92, execution_quality:0.90, enabled:true},
+      {symbol:'BTCUSD', asset_class:'crypto', venue_preferences:['binance','alpaca'], liquidity_score:0.95, execution_quality:0.88, enabled:true},
+      {symbol:'EURUSD', asset_class:'forex', venue_preferences:['ibkr'], liquidity_score:0.89, execution_quality:0.84, enabled:true}
+    ]
+  };
+  const res = await fetch('/multi-asset-routing/instruments/upsert', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
+  });
+  document.getElementById('left').textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function routeOrder(){
+  const payload = {
+    symbol: document.getElementById('symbol').value,
+    asset_class: document.getElementById('asset_class').value,
+    side: 'buy',
+    qty: 1,
+    urgency: 'normal'
+  };
+  const res = await fetch('/multi-asset-routing/route', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
+  });
+  document.getElementById('left').textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function loadStatus(){
+  const res = await fetch('/multi-asset-routing/status');
+  document.getElementById('right').textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function enableForex(){
+  const res = await fetch('/multi-asset-routing/expand', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({asset_class:'forex', enable:true, reason:'market expansion pilot', operator_id:'governance-admin'})
+  });
+  document.getElementById('right').textContent = JSON.stringify(await res.json(), null, 2);
+}
+loadStatus();
+</script>
+</body>
+</html>

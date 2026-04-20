@@ -1,0 +1,27 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 180,
+    "minimum_score": 96.0,
+    "require_regulator_ready": true,
+    "require_compliance_automated": true,
+    "require_multi_jurisdiction_clear": true,
+    "require_supervisory_exam_ready": true,
+    "require_filing_submission_clear": true,
+    "require_deadline_control_clear": true,
+    "require_breach_command_clear": true,
+    "max_open_enforcement_actions": 0,
+    "max_unanswered_regulator_requests": 0,
+    "minimum_response_timeliness_score": 0.985,
+    "minimum_evidence_completeness_score": 0.985,
+    "minimum_consent_order_readiness_score": 0.985
+  },
+  "runs": [],
+  "alerts": [],
+  "actions": [],
+  "responses": [],
+  "consent_orders": [],
+  "closures": [],
+  "latest_run": null,
+  "last_context": {}
+}

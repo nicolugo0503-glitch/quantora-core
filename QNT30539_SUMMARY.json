@@ -1,0 +1,6 @@
+{
+  "base_zip": "QUANTORA_FULL_PROJECT_QNT30538_INVESTOR_DATA_ROOM.zip",
+  "mission_added": "QNT30539_REPORTING_DELIVERY_CENTER",
+  "frontend_only": true,
+  "new_file": "frontend/mission_qnt30539_reporting_delivery_center.html"
+}

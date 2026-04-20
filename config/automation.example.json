@@ -1,0 +1,18 @@
+{
+  "worker": {
+    "enabled": true,
+    "poll_interval_seconds": 1
+  },
+  "operators": {
+    "operator_F5E2C5BA": {
+      "enabled": true,
+      "execution_mode": "internal",
+      "market_bias": "neutral",
+      "interval_seconds": 30,
+      "broker_reconcile_enabled": true,
+      "pnl_sync_enabled": true,
+      "failure_pause_seconds": 60,
+      "max_consecutive_failures": 3
+    }
+  }
+}

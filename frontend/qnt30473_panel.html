@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — Revenue Operations + Billing Intelligence Layer</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(15,29,49,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .sub{color:var(--muted);max-width:980px;line-height:1.5}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    button{border-radius:10px;border:none;background:var(--accent);color:var(--text);padding:10px 12px;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}.stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}
+    th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #274168;background:#0b1a2c;font-size:12px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:180px;white-space:pre-wrap}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT30473 — Revenue Operations + Billing Intelligence Layer</h1>
+      <div class="sub">Billing accounts, invoices, subscriptions, and collections logs. This is the layer that turns Quantora into a measurable revenue machine.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="loadAll()">Refresh</button>
+      <button onclick="seedAccount()">Seed Billing Account</button>
+      <button onclick="seedInvoice()">Seed Invoice</button>
+      <button onclick="seedSubscription()">Seed Subscription</button>
+      <button onclick="seedCollection()">Seed Collection</button>
+    </div>
+  </div>
+  <div class="grid" id="summaryGrid"></div>
+  <div class="layout">
+    <div class="stack">
+      <div class="card"><h2>Billing Accounts</h2><div class="table-wrap"><table id="accountTable"></table></div></div>
+      <div class="card"><h2>Invoices</h2><div class="table-wrap"><table id="invoiceTable"></table></div></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h2>Subscriptions</h2><div class="table-wrap"><table id="subscriptionTable"></table></div></div>
+      <div class="card"><h2>Collections Logs</h2><div class="table-wrap"><table id="collectionTable"></table></div></div>
+      <div class="card"><h2>Revenue Health</h2><div class="pills" id="healthPills"></div></div>
+      <div class="card"><h2>Last Action</h2><pre id="actionOut">No action yet.</pre></div>
+    </div>
+  </div>
+</div>
+<script>
+const api=(path, opts={})=>fetch(path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok) throw new Error(d.detail||'request_failed'); return d;});
+function money(v){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(Number(v||0));}
+function table(el, headers, rows){ const thead=`<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`; const body=rows.length?rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join(''):`<tr><td colspan="${headers.length}">No data</td></tr>`; el.innerHTML=thead+body; }
+function renderSummary(summary){ const labels=[['Accounts',summary.accounts_total],['Active',summary.accounts_active],['Invoices',summary.invoices_total],['Subscriptions',summary.subscriptions_total],['MRR',money(summary.mrr_total)],['Score',summary.revenue_score]]; document.getElementById('summaryGrid').innerHTML=labels.map(([l,v])=>`<div class="card"><div class="label">${l}</div><div class="value">${v}</div></div>`).join('');}
+function pills(target, items){ document.getElementById(target).innerHTML=items.map(([l,k])=>`<span class="pill ${k}">${l}</span>`).join(''); }
+async function loadAll(){
+  const data=await api('/workspace/revenue-ops/summary');
+  renderSummary(data.summary);
+  table(document.getElementById('accountTable'), ['Account','Type','Status','Created'], (data.billing_accounts||[]).map(r=>[r.account_name,r.account_type,r.status,r.created_at||'-']));
+  table(document.getElementById('invoiceTable'), ['Invoice','Amount','Status','Created'], (data.invoices||[]).map(r=>[r.invoice_name,money(r.invoice_amount),r.status,r.created_at||'-']));
+  table(document.getElementById('subscriptionTable'), ['Subscription','Plan','MRR','Status','Created'], (data.subscriptions||[]).map(r=>[r.subscription_name,r.plan_name,money(r.mrr_amount),r.status,r.created_at||'-']));
+  table(document.getElementById('collectionTable'), ['Account','Collected','Status','Created'], (data.collections_logs||[]).map(r=>[r.account_name,money(r.amount_collected),r.status,r.created_at||'-']));
+  pills('healthPills', [
+    [`Accounts ${data.revenue_health.account_registry_ready?'Ready':'Missing'}`, data.revenue_health.account_registry_ready?'good':'warn'],
+    [`Invoices ${data.revenue_health.invoice_registry_ready?'Ready':'Missing'}`, data.revenue_health.invoice_registry_ready?'good':'warn'],
+    [`Subscriptions ${data.revenue_health.subscription_registry_ready?'Ready':'Missing'}`, data.revenue_health.subscription_registry_ready?'good':'warn'],
+    [`Collections ${data.revenue_health.collections_registry_ready?'Ready':'Missing'}`, data.revenue_health.collections_registry_ready?'good':'warn'],
+    [`Score ${data.revenue_health.revenue_score}`, data.revenue_health.revenue_score>=85?'good':'warn']
+  ]);
+}
+async function seedAccount(){ const res=await api('/workspace/revenue-ops/accounts/create',{method:'POST',body:JSON.stringify({account_name:'Quantora Pro Subscriber',account_type:'subscription',status:'active'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedInvoice(){ const res=await api('/workspace/revenue-ops/invoices/create',{method:'POST',body:JSON.stringify({invoice_name:'Institutional Setup Fee',invoice_amount:5000,status:'paid'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedSubscription(){ const res=await api('/workspace/revenue-ops/subscriptions/create',{method:'POST',body:JSON.stringify({subscription_name:'Quantora Enterprise',plan_name:'Enterprise Annual',mrr_amount:2500,status:'active'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedCollection(){ const res=await api('/workspace/revenue-ops/collections/create',{method:'POST',body:JSON.stringify({account_name:'Quantora Enterprise',amount_collected:2500,status:'collected'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+loadAll().catch(err=>document.getElementById('actionOut').textContent=String(err));
+</script>
+</body>
+</html>

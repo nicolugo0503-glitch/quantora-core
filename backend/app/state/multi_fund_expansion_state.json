@@ -1,0 +1,171 @@
+{
+  "generated_by": "QNT50033",
+  "status": "degraded",
+  "policy": {
+    "enabled": true,
+    "auto_sync_sources": true,
+    "require_escalation_execution": true,
+    "require_risk_clearance": true,
+    "require_treasury_capacity": true,
+    "require_charter_alignment": true,
+    "require_vehicle_readiness": true,
+    "allow_live_launch": false,
+    "max_launch_cases": 250,
+    "max_launch_events": 500,
+    "max_audit_events": 500,
+    "default_seed_capital_floor": 250000.0,
+    "default_capacity_target": 0.2
+  },
+  "last_sync": {
+    "synced_at": 1776577949,
+    "latest_escalation_event_id": "esc_evt_001",
+    "latest_escalation_status": "executed",
+    "risk_triggered": false,
+    "risk_level": "normal",
+    "safe_mode": false,
+    "execution_mode": "live",
+    "treasury_total_balance": 5000000.0,
+    "active_directive_id": "dir_001",
+    "directive_status": "approved"
+  },
+  "sync_history": [
+    {
+      "mission": "QNT50033",
+      "timestamp": 1776577949,
+      "source": "test",
+      "snapshot": {
+        "synced_at": 1776577949,
+        "latest_escalation_event_id": "esc_evt_001",
+        "latest_escalation_status": "executed",
+        "risk_triggered": false,
+        "risk_level": "normal",
+        "safe_mode": false,
+        "execution_mode": "live",
+        "treasury_total_balance": 5000000.0,
+        "active_directive_id": "dir_001",
+        "directive_status": "approved"
+      }
+    }
+  ],
+  "launch_cases": [
+    {
+      "launch_case_id": "launch_case_72dece9d34c6",
+      "created_at": 1776577949,
+      "operator": "qa",
+      "vehicle_name": "Quantora Global Expansion I",
+      "vehicle_type": "fund",
+      "jurisdiction": "Cayman",
+      "launch_reason": "capacity expansion",
+      "strategy_scope": "multi-strategy",
+      "seed_capital_required": 1000000.0,
+      "seed_capital_floor": 250000.0,
+      "target_capacity_pct": 0.3,
+      "escalation_event_id": "esc_evt_001",
+      "directive_id": "dir_001",
+      "launch_mode": "paper",
+      "notes": "",
+      "status": "closed",
+      "approved_at": 1776577949,
+      "approved_by": "qa",
+      "approved_seed_capital": 1000000.0,
+      "approved_vehicle_code": "QGE1",
+      "approval_mode": "paper",
+      "approval_notes": "",
+      "executed_at": 1776577949,
+      "last_launch_event_id": "launch_event_f0b6eafc4c5e",
+      "closed_at": 1776577949,
+      "closed_by": "qa",
+      "closure_notes": "smoke complete"
+    }
+  ],
+  "launch_events": [
+    {
+      "launch_event_id": "launch_event_f0b6eafc4c5e",
+      "executed_at": 1776577949,
+      "operator": "qa",
+      "launch_case_id": "launch_case_72dece9d34c6",
+      "vehicle_name": "Quantora Global Expansion I",
+      "vehicle_type": "fund",
+      "jurisdiction": "Cayman",
+      "execution_mode": "paper",
+      "vehicle_code": "QGE1",
+      "seed_capital_deployed": 1000000.0,
+      "launch_destination": "vehicle_registry",
+      "result_summary": "",
+      "status": "executed"
+    }
+  ],
+  "audit_log": [
+    {
+      "event_id": "multi_fund_expansion_audit_1776577949525327413",
+      "event_type": "multi_fund_expansion_closed",
+      "timestamp": 1776577949,
+      "launch_case_id": "launch_case_72dece9d34c6",
+      "closed_by": "qa"
+    },
+    {
+      "event_id": "multi_fund_expansion_audit_1776577949524423113",
+      "event_type": "multi_fund_expansion_executed",
+      "timestamp": 1776577949,
+      "launch_event_id": "launch_event_f0b6eafc4c5e",
+      "executed_at": 1776577949,
+      "operator": "qa",
+      "launch_case_id": "launch_case_72dece9d34c6",
+      "vehicle_name": "Quantora Global Expansion I",
+      "vehicle_type": "fund",
+      "jurisdiction": "Cayman",
+      "execution_mode": "paper",
+      "vehicle_code": "QGE1",
+      "seed_capital_deployed": 1000000.0,
+      "launch_destination": "vehicle_registry",
+      "result_summary": "",
+      "status": "executed"
+    },
+    {
+      "event_id": "multi_fund_expansion_audit_1776577949523489621",
+      "event_type": "multi_fund_expansion_approved",
+      "timestamp": 1776577949,
+      "launch_case_id": "launch_case_72dece9d34c6",
+      "approval_mode": "paper"
+    },
+    {
+      "event_id": "multi_fund_expansion_audit_1776577949522582145",
+      "event_type": "multi_fund_expansion_registered",
+      "timestamp": 1776577949,
+      "launch_case_id": "launch_case_72dece9d34c6",
+      "created_at": 1776577949,
+      "operator": "qa",
+      "vehicle_name": "Quantora Global Expansion I",
+      "vehicle_type": "fund",
+      "jurisdiction": "Cayman",
+      "launch_reason": "capacity expansion",
+      "strategy_scope": "multi-strategy",
+      "seed_capital_required": 1000000.0,
+      "seed_capital_floor": 250000.0,
+      "target_capacity_pct": 0.3,
+      "escalation_event_id": "esc_evt_001",
+      "directive_id": "dir_001",
+      "launch_mode": "paper",
+      "notes": "",
+      "status": "registered"
+    },
+    {
+      "event_id": "multi_fund_expansion_audit_1776577949521597461",
+      "event_type": "multi_fund_expansion_context_synced",
+      "timestamp": 1776577949,
+      "mission": "QNT50033",
+      "snapshot": {
+        "synced_at": 1776577949,
+        "latest_escalation_event_id": "esc_evt_001",
+        "latest_escalation_status": "executed",
+        "risk_triggered": false,
+        "risk_level": "normal",
+        "safe_mode": false,
+        "execution_mode": "live",
+        "treasury_total_balance": 5000000.0,
+        "active_directive_id": "dir_001",
+        "directive_status": "approved"
+      }
+    }
+  ]
+}

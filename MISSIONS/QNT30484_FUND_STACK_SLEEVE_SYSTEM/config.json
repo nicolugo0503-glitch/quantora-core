@@ -1,0 +1,22 @@
+{
+  "funds": [
+    {
+      "id": "FUND1",
+      "name": "Quantora Alpha Fund"
+    }
+  ],
+  "sleeves": [
+    {
+      "id": "S1",
+      "fund_id": "FUND1",
+      "name": "Crypto Momentum",
+      "target_pct": 50
+    },
+    {
+      "id": "S2",
+      "fund_id": "FUND1",
+      "name": "Low Risk Yield",
+      "target_pct": 50
+    }
+  ]
+}

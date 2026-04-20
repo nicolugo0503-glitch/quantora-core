@@ -1,0 +1,32 @@
+{
+  "selected_symbol": "BTCUSDT",
+  "selected_side": "BUY",
+  "selected_qty": 0.01,
+  "selected_order_type": "MARKET",
+  "selected_price": null,
+  "strategy_id": "OPERATOR_MANUAL",
+  "allocation_id": "REAL01E_DEFAULT",
+  "risk_tag": "OPERATOR",
+  "decision_id": "REAL01E_1776590313",
+  "preview": {
+    "symbol": "BTCUSDT",
+    "side": "BUY",
+    "qty": 0.01,
+    "order_type": "MARKET",
+    "price": null,
+    "notional_estimate": null,
+    "portfolio_value_snapshot": 100000.0,
+    "would_route_live": false,
+    "blockers": [
+      "execution mode is not live",
+      "safe mode enabled",
+      "broker truth validation failed"
+    ],
+    "decision_id": "REAL01E_1776590313"
+  },
+  "last_submission": null,
+  "submission_count": 0,
+  "blocked_count": 1,
+  "last_error": "execution mode is not live; safe mode enabled; broker truth validation failed",
+  "surface_status": "blocked"
+}

@@ -1,0 +1,19 @@
+{
+  "email": "growth@test.quantora",
+  "attestations": [],
+  "breach_snapshots": [
+    {
+      "snapshot_id": "breach_1775712154",
+      "timestamp": 1775712154,
+      "status": "clear",
+      "open_escalation_count": 0,
+      "high_open_escalation_count": 0,
+      "open_alert_count": 0,
+      "high_open_alert_count": 0,
+      "open_escalations": [],
+      "open_alerts": []
+    }
+  ],
+  "created_at": 1775712154,
+  "updated_at": 1775712154
+}

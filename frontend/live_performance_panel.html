@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>Quantora Live Performance Panel</title>
+  <style>
+    body{font-family:Arial,sans-serif;background:#071224;color:#e8f0ff;margin:0;padding:24px}
+    h1{margin:0 0 8px 0;font-size:28px}
+    .sub{color:#9cb3d9;margin-bottom:20px}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));gap:14px;margin-bottom:18px}
+    .card{background:#0f2038;border:1px solid #233a60;border-radius:14px;padding:14px}
+    .label{font-size:12px;color:#8fa8d0;text-transform:uppercase;letter-spacing:.06em}
+    .value{font-size:28px;font-weight:700;margin-top:6px}
+    .row{display:grid;grid-template-columns:2fr 1fr;gap:14px}
+    table{width:100%;border-collapse:collapse}
+    th,td{border-bottom:1px solid #233a60;padding:8px;text-align:left;font-size:14px}
+    button{background:#2f6bff;color:white;border:none;border-radius:10px;padding:10px 14px;cursor:pointer}
+    pre{white-space:pre-wrap;background:#09172b;border:1px solid #233a60;border-radius:12px;padding:12px;max-height:320px;overflow:auto}
+    .ok{color:#52d18f}.warn{color:#ffd166}.bad{color:#ff7b7b}
+  </style>
+</head>
+<body>
+  <h1>Quantora Live Performance Panel</h1>
+  <div class='sub'>Live PnL, equity, truth alignment, and risk-lock visibility for controlled live operation.</div>
+  <div style='margin-bottom:16px'><button onclick='load()'>Refresh Performance</button></div>
+  <div class='grid'>
+    <div class='card'><div class='label'>Current Equity</div><div class='value' id='equity'>-</div></div>
+    <div class='card'><div class='label'>Realized PnL</div><div class='value' id='realized'>-</div></div>
+    <div class='card'><div class='label'>Unrealized PnL</div><div class='value' id='unrealized'>-</div></div>
+    <div class='card'><div class='label'>Truth Guard</div><div class='value' id='guard'>-</div></div>
+  </div>
+  <div class='row'>
+    <div class='card'>
+      <div class='label'>Trade Journal</div>
+      <table>
+        <thead><tr><th>Symbol</th><th>Side</th><th>Qty</th><th>PnL</th></tr></thead>
+        <tbody id='journal'></tbody>
+      </table>
+    </div>
+    <div class='card'>
+      <div class='label'>Risk Lock</div>
+      <pre id='risk'></pre>
+    </div>
+  </div>
+  <div class='row' style='margin-top:14px'>
+    <div class='card'>
+      <div class='label'>Attribution</div>
+      <table>
+        <thead><tr><th>Symbol</th><th>Realized</th><th>Unrealized</th></tr></thead>
+        <tbody id='attrib'></tbody>
+      </table>
+    </div>
+    <div class='card'>
+      <div class='label'>Raw Live Status</div>
+      <pre id='raw'></pre>
+    </div>
+  </div>
+<script>
+async function load(){
+  const r = await fetch('/performance/live-status', {credentials:'include'});
+  const data = await r.json();
+  document.getElementById('equity').textContent = (data.broker_account?.portfolio_value ?? data.summary?.current_equity ?? 0).toFixed(2);
+  document.getElementById('realized').textContent = (data.summary?.realized_pnl ?? 0).toFixed(2);
+  document.getElementById('unrealized').textContent = (data.summary?.unrealized_pnl ?? 0).toFixed(2);
+  const g = data.truth?.guard || 'UNKNOWN';
+  const guardEl = document.getElementById('guard');
+  guardEl.textContent = g;
+  guardEl.className = 'value ' + (g === 'ALIGNED' ? 'ok' : (g === 'IDLE' ? 'warn' : 'bad'));
+  document.getElementById('risk').textContent = JSON.stringify(data.risk_lock || {}, null, 2);
+  document.getElementById('raw').textContent = JSON.stringify(data, null, 2);
+  document.getElementById('journal').innerHTML = (data.trade_journal || []).map(j => `<tr><td>${j.symbol||''}</td><td>${j.side||''}</td><td>${j.qty||''}</td><td>${(j.pnl||0).toFixed ? j.pnl.toFixed(2) : j.pnl||0}</td></tr>`).join('');
+  document.getElementById('attrib').innerHTML = (data.attribution || []).map(a => `<tr><td>${a.symbol||''}</td><td>${Number(a.realized_pnl||0).toFixed(2)}</td><td>${Number(a.unrealized_pnl||0).toFixed(2)}</td></tr>`).join('');
+}
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QNT30429 Org Execution + PnL Attribution Engine</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#06111f; color:#e9f1ff; margin:0; }
+    .wrap { max-width:1400px; margin:0 auto; padding:24px; }
+    .grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
+    .card { background:#0d1f38; border:1px solid #19345c; border-radius:16px; padding:18px; box-shadow:0 10px 24px rgba(0,0,0,.25); }
+    .muted { color:#9fb4d5; font-size:14px; }
+    button { background:#2f6bff; color:#fff; border:none; border-radius:10px; padding:10px 14px; cursor:pointer; }
+    button.secondary { background:#234875; }
+    button.danger { background:#8f2431; }
+    input, select { width:100%; margin-top:8px; padding:10px; border-radius:10px; border:1px solid #28466f; background:#09172a; color:#e9f1ff; box-sizing:border-box; }
+    table { width:100%; border-collapse:collapse; }
+    th, td { text-align:left; padding:10px 8px; border-bottom:1px solid #173153; font-size:14px; vertical-align:top; }
+    h1, h2, h3 { margin:0 0 12px; }
+    pre { white-space:pre-wrap; word-break:break-word; background:#081423; padding:14px; border-radius:12px; }
+    .pill { display:inline-block; padding:6px 10px; border-radius:999px; font-size:12px; margin-right:8px; }
+    .safe { background:#123a22; color:#8bf0a8; }
+    .warning { background:#4a3b10; color:#ffd66b; }
+    .breach { background:#4f1820; color:#ff9fb0; }
+    .actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .actions button { padding:8px 10px; font-size:12px; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card" style="margin-bottom:16px;">
+    <h1>QNT30431 · Operator Brief + Reporting Layer</h1>
+    <p class="muted">Complete merged build with execution, fills, positions, lifecycle, portfolio governance, position exit controls, PnL + attribution, governance workflow, and operator brief reporting integrated into one operator surface.</p>
+    <div class="actions" style="margin-top:12px;">
+      <button onclick="refreshAll()">Refresh Org Engine</button>
+      <button class="secondary" onclick="window.open('/workspace/execution-capital/context','_blank')">Context JSON</button>
+      <button class="secondary" onclick="window.open('/workspace/portfolio/risk','_blank')">Portfolio Risk JSON</button>
+      <button class="secondary" onclick="window.open('/workspace/portfolio/exposure','_blank')">Portfolio Exposure JSON</button>
+      <button class="secondary" onclick="window.open('/workspace/positions','_blank')">Positions JSON</button>
+      <button class="secondary" onclick="window.open('/workspace/pnl/summary','_blank')">PnL Summary JSON</button>
+      <button class="secondary" onclick="window.open('/workspace/attribution/strategies','_blank')">Strategy Attribution JSON</button>
+      <button class="secondary" onclick="window.open('/workspace/attribution/symbols','_blank')">Symbol Attribution JSON</button>
+      <button class="secondary" onclick="window.open('/workspace/governance/pending','_blank')">Pending Approvals JSON</button>
+      <button class="secondary" onclick="window.open('/workspace/governance/history','_blank')">Governance History JSON</button>
+      <button class="secondary" onclick="window.open('/workspace/brief/daily','_blank')">Daily Brief JSON</button>
+      <button class="secondary" onclick="window.open('/workspace/brief/risk','_blank')">Risk Brief JSON</button>
+      <button class="secondary" onclick="window.open('/workspace/brief/strategies','_blank')">Strategy Brief JSON</button>
+      <button class="secondary" onclick="window.open('/workspace/brief/governance','_blank')">Governance Brief JSON</button>
+      <button class="secondary" onclick="window.location.href='/operator_brief.html'">Operator Brief Page</button>
+      <button class="secondary" onclick="window.location.href='/workspace_institutional_layer.html'">Workspace Layer</button>
+      <button class="secondary" onclick="window.location.href='/'">Command Center</button>
+      <button class="secondary" onclick="window.location.href='/ui_control_surface_panel.html'">UI Control Surface</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><h2>Organization Context</h2><div id="ctx"></div></div>
+    <div class="card"><h2>Broker Status</h2><div id="broker"></div></div>
+    <div class="card"><h2>Capital Summary</h2><div id="capital"></div></div>
+    <div class="card"><h2>Portfolio Governance</h2><div id="portfolioRisk"></div></div>
+  </div>
+
+  <div class="grid" style="margin-top:16px;">
+    <div class="card">
+      <h2>Configure Broker</h2>
+      <input id="broker_name" value="alpaca" placeholder="Broker name" />
+      <input id="broker_label" value="primary" placeholder="Account label" />
+      <select id="broker_mode"><option value="paper">paper</option><option value="live">live</option></select>
+      <input id="broker_api_env" value="ALPACA_API_KEY" placeholder="API key env name" />
+      <input id="broker_secret_env" value="ALPACA_SECRET_KEY" placeholder="Secret key env name" />
+      <input id="broker_url" value="https://paper-api.alpaca.markets" placeholder="Base URL" />
+      <div class="actions" style="margin-top:10px;">
+        <button onclick="configureBroker()">Save Broker Profile</button>
+        <button class="secondary" onclick="window.open('/workspace/broker/status','_blank')">Status JSON</button>
+      </div>
+      <div id="broker_status_msg" class="muted" style="margin-top:8px; white-space:pre-wrap;">Ready.</div>
+    </div>
+    <div class="card">
+      <h2>Create Capital Account</h2>
+      <input id="acct_name" value="Strategy Treasury" placeholder="Account name" />
+      <input id="acct_balance" type="number" value="250000" placeholder="Balance" />
+      <input id="acct_currency" value="USD" placeholder="Currency" />
+      <select id="acct_risk"><option value="guarded">guarded</option><option value="aggressive">aggressive</option></select>
+      <div class="actions" style="margin-top:10px;"><button onclick="createAccount()">Create Account</button></div>
+      <div id="account_status" class="muted" style="margin-top:8px; white-space:pre-wrap;">Ready.</div>
+    </div>
+    <div class="card">
+      <h2>Register Strategy</h2>
+      <input id="strategy_key" value="alpha_core" placeholder="Strategy key" />
+      <input id="strategy_name" value="Alpha Core" placeholder="Display name" />
+      <input id="strategy_market" value="multi-asset" placeholder="Market" />
+      <select id="strategy_state"><option value="active">active</option><option value="paused">paused</option></select>
+      <div class="actions" style="margin-top:10px;"><button onclick="registerStrategy()">Register Strategy</button></div>
+      <div id="strategy_status" class="muted" style="margin-top:8px; white-space:pre-wrap;">Ready.</div>
+    </div>
+  </div>
+
+  <div class="grid" style="margin-top:16px;">
+    <div class="card">
+      <h2>Allocate Capital</h2>
+      <input id="alloc_strategy_key" value="alpha_core" placeholder="Strategy key" />
+      <input id="alloc_account_id" placeholder="Account ID" />
+      <input id="alloc_amount" type="number" value="50000" placeholder="Allocated capital" />
+      <input id="alloc_reserve" type="number" value="5000" placeholder="Reserve capital" />
+      <div class="actions" style="margin-top:10px;">
+        <button onclick="allocateCapital()">Allocate Capital</button>
+        <button class="secondary" onclick="window.open('/workspace/capital/allocations','_blank')">Allocations JSON</button>
+      </div>
+      <div id="allocation_status" class="muted" style="margin-top:8px; white-space:pre-wrap;">Ready.</div>
+    </div>
+    <div class="card">
+      <h2>Submit Execution</h2>
+      <input id="exec_strategy_key" value="alpha_core" placeholder="Strategy key" />
+      <input id="exec_account_id" placeholder="Account ID" />
+      <input id="exec_symbol" value="AAPL" placeholder="Symbol" />
+      <select id="exec_side"><option value="buy">buy</option><option value="sell">sell</option></select>
+      <input id="exec_qty" type="number" value="10" placeholder="Qty" />
+      <input id="exec_venue" value="auto" placeholder="Venue" />
+      <div class="actions" style="margin-top:10px;">
+        <button onclick="submitExecution()">Submit Org Execution</button>
+        <button class="secondary" onclick="window.open('/workspace/execution/orders','_blank')">Orders JSON</button>
+        <button class="secondary" onclick="window.open('/workspace/execution/fills','_blank')">Fills JSON</button>
+      </div>
+      <div id="execution_status" class="muted" style="margin-top:8px; white-space:pre-wrap;">Ready.</div>
+    </div>
+    <div class="card">
+      <h2>Risk Controls</h2>
+      <input id="risk_max_position" type="number" value="5000" placeholder="Max position notional" />
+      <input id="risk_max_total" type="number" value="20000" placeholder="Max total exposure" />
+      <input id="risk_max_daily_loss" type="number" value="1500" placeholder="Max daily loss" />
+      <input id="risk_max_trade" type="number" value="20" placeholder="Max notional per trade" />
+      <input id="risk_max_session_trades" type="number" value="2" placeholder="Max trades per session" />
+      <select id="risk_execution_mode"><option value="paper">paper</option><option value="guarded">guarded</option><option value="live">live</option></select>
+      <div class="actions" style="margin-top:10px;">
+        <button onclick="updateRiskControls()">Update Risk Controls</button>
+        <button class="danger" onclick="toggleKillSwitch()">Toggle Kill Switch</button>
+        <button class="secondary" onclick="window.open('/workspace/risk/status','_blank')">Risk JSON</button>
+      </div>
+      <div id="risk_status" class="muted" style="margin-top:8px; white-space:pre-wrap;">Ready.</div>
+    </div>
+  </div>
+
+
+<div class="grid" style="margin-top:16px;">
+  <div class="card">
+    <h2>Submit Approval Request</h2>
+    <select id="approval_action_type">
+      <option value="flatten_all">flatten_all</option>
+      <option value="risk_override">risk_override</option>
+      <option value="live_mode_switch">live_mode_switch</option>
+      <option value="large_allocation_change">large_allocation_change</option>
+      <option value="manual_close_position">manual_close_position</option>
+    </select>
+    <input id="approval_target_type" value="system" placeholder="Target type" />
+    <input id="approval_target_id" placeholder="Target ID (optional)" />
+    <input id="approval_reason" placeholder="Reason" />
+    <div class="actions" style="margin-top:10px;">
+      <button onclick="submitApproval()">Submit Approval</button>
+    </div>
+    <div id="approval_submit_status" class="muted" style="margin-top:8px; white-space:pre-wrap;">Ready.</div>
+  </div>
+  <div class="card">
+    <h2>Approve / Reject Request</h2>
+    <input id="approval_decision_id" placeholder="Approval ID" />
+    <input id="approval_decision_note" placeholder="Decision note" />
+    <div class="actions" style="margin-top:10px;">
+      <button onclick="approveApproval()">Approve</button>
+      <button class="danger" onclick="rejectApproval()">Reject</button>
+    </div>
+    <div id="approval_decision_status" class="muted" style="margin-top:8px; white-space:pre-wrap;">Ready.</div>
+  </div>
+  <div class="card"><h2>Pending Approvals</h2><div id="pendingApprovals"></div></div>
+  <div class="card"><h2>Governance History</h2><div id="governanceHistory"></div></div>
+</div>
+
+  
+  <div class="grid" style="margin-top:16px;">
+    <div class="card"><div class="actions" style="justify-content:space-between;"><h2>Daily Brief</h2><button class="secondary" onclick="window.open('/workspace/brief/daily','_blank')">Raw JSON</button></div><div id="dailyBrief"></div></div>
+    <div class="card"><div class="actions" style="justify-content:space-between;"><h2>Risk Brief</h2><button class="secondary" onclick="window.open('/workspace/brief/risk','_blank')">Raw JSON</button></div><div id="riskBrief"></div></div>
+    <div class="card"><div class="actions" style="justify-content:space-between;"><h2>Strategy Brief</h2><button class="secondary" onclick="window.open('/workspace/brief/strategies','_blank')">Raw JSON</button></div><div id="strategyBrief"></div></div>
+    <div class="card"><div class="actions" style="justify-content:space-between;"><h2>Governance Brief</h2><button class="secondary" onclick="window.open('/workspace/brief/governance','_blank')">Raw JSON</button></div><div id="governanceBrief"></div></div>
+  </div>
+
+
+  <div class="grid" style="margin-top:16px;">
+    <div class="card"><h2>Accounts</h2><div id="accounts"></div></div>
+    <div class="card"><h2>Strategies</h2><div id="strategies"></div></div>
+    <div class="card"><h2>Allocations</h2><div id="allocations"></div></div>
+    <div class="card"><h2>Portfolio Exposure</h2><div id="exposure"></div></div>
+  </div>
+
+  <div class="grid" style="margin-top:16px;">
+    <div class="card"><div class="actions" style="justify-content:space-between;"><h2>Execution Orders</h2><button class="secondary" onclick="window.open('/workspace/execution/orders','_blank')">Raw JSON</button></div><div id="orders"></div></div>
+    <div class="card"><div class="actions" style="justify-content:space-between;"><h2>Fills</h2><button class="secondary" onclick="window.open('/workspace/execution/fills','_blank')">Raw JSON</button></div><div id="fills"></div></div>
+    <div class="card"><div class="actions" style="justify-content:space-between;"><h2>Positions</h2><div class="actions"><button class="secondary" onclick="window.open('/workspace/positions','_blank')">Raw JSON</button><button class="danger" onclick="flattenAll()">Flatten All</button></div></div><div id="position_action_status" class="muted" style="margin-bottom:8px; white-space:pre-wrap;">Ready.</div><div id="positions"></div></div>
+  </div>
+  <div class="grid" style="margin-top:16px;">
+    <div class="card"><div class="actions" style="justify-content:space-between;"><h2>PnL Summary</h2><button class="secondary" onclick="window.open('/workspace/pnl/summary','_blank')">Raw JSON</button></div><div id="pnlSummary"></div></div>
+    <div class="card"><div class="actions" style="justify-content:space-between;"><h2>Strategy Attribution</h2><button class="secondary" onclick="window.open('/workspace/attribution/strategies','_blank')">Raw JSON</button></div><div id="strategyAttribution"></div></div>
+    <div class="card"><div class="actions" style="justify-content:space-between;"><h2>Symbol Attribution</h2><button class="secondary" onclick="window.open('/workspace/attribution/symbols','_blank')">Raw JSON</button></div><div id="symbolAttribution"></div></div>
+  </div>
+  <div class="card" style="margin-top:16px;"><div class="actions" style="justify-content:space-between;"><h2>Lifecycle Events</h2><button class="secondary" onclick="window.open('/workspace/execution/lifecycle','_blank')">Raw JSON</button></div><div id="lifecycle"></div></div>
+</div>
+<script>
+async function loadJSON(url, options){ const r=await fetch(url, options); const data=await r.json().catch(()=>({detail:'invalid_json_response'})); if(!r.ok){ throw new Error(data.detail||data.error||('http_'+r.status)); } return data; }
+function esc(v){ return (v ?? '').toString(); }
+function pretty(obj){ return '<pre>'+esc(JSON.stringify(obj, null, 2))+'</pre>'; }
+function statePill(state){ const cls = ['safe','warning','breach'].includes(state)?state:'safe'; return '<span class="pill '+cls+'">'+esc(state||'safe')+'</span>'; }
+function table(rows, cols){ if(!rows || !rows.length) return '<div class="muted">No rows.</div>'; return '<table><thead><tr>'+cols.map(c=>'<th>'+c.label+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+cols.map(c=>'<td>'+ (c.html ? c.html(r) : esc(typeof c.key==='function'?c.key(r):r[c.key])) +'</td>').join('')+'</tr>').join('')+'</tbody></table>'; }
+function positionActions(position){
+  return `<div class="actions">
+    <button onclick="reducePosition('${esc(position.id)}', 0.25)">Reduce 25%</button>
+    <button onclick="reducePosition('${esc(position.id)}', 0.5)">Reduce 50%</button>
+    <button class="danger" onclick="closePosition('${esc(position.id)}')">Close</button>
+  </div>`;
+}
+async function refreshAll(){
+  const [ctx, broker, cap, strategies, allocations, orders, fills, positions, lifecycle, perf, risk, prisk, exposure, pnl, strategyAttr, symbolAttr, dailyBrief, riskBrief, strategyBrief, governanceBrief] = await Promise.all([
+    loadJSON('/workspace/execution-capital/context'),
+    loadJSON('/workspace/broker/status'),
+    loadJSON('/workspace/capital/summary'),
+    loadJSON('/workspace/strategies'),
+    loadJSON('/workspace/capital/allocations'),
+    loadJSON('/workspace/execution/orders'),
+    loadJSON('/workspace/execution/fills'),
+    loadJSON('/workspace/positions'),
+    loadJSON('/workspace/execution/lifecycle'),
+    loadJSON('/workspace/performance/summary'),
+    loadJSON('/workspace/risk/status'),
+    loadJSON('/workspace/portfolio/risk'),
+    loadJSON('/workspace/portfolio/exposure'),
+    loadJSON('/workspace/pnl/summary'),
+    loadJSON('/workspace/attribution/strategies'),
+    loadJSON('/workspace/attribution/symbols'),
+    loadJSON('/workspace/brief/daily'),
+    loadJSON('/workspace/brief/risk'),
+    loadJSON('/workspace/brief/strategies'),
+    loadJSON('/workspace/brief/governance'),
+    loadJSON('/workspace/governance/pending'),
+    loadJSON('/workspace/governance/history')
+  ]);
+  window.__ctx = ctx;
+  document.getElementById('ctx').innerHTML = pretty({organization: ctx.organization, membership: ctx.membership});
+  document.getElementById('broker').innerHTML = pretty(broker);
+  document.getElementById('capital').innerHTML = pretty(cap);
+  document.getElementById('accounts').innerHTML = table(ctx.accounts || [], [{label:'ID', key:'id'}, {label:'Name', key:'name'}, {label:'Balance', key:'balance'}, {label:'Risk', key:'risk_mode'}]);
+  document.getElementById('strategies').innerHTML = table((strategies.strategies||[]), [{label:'Key', key:'strategy_key'}, {label:'Name', key:'display_name'}, {label:'Status', key:'status'}]);
+  document.getElementById('allocations').innerHTML = table((allocations.allocations||[]), [{label:'Strategy', key:'strategy_key'}, {label:'Account', key:'account_id'}, {label:'Allocated', key:'allocated_capital'}, {label:'Reserve', key:'reserve_capital'}]);
+  document.getElementById('orders').innerHTML = table((orders.orders||[]), [{label:'ID', key:'id'}, {label:'Symbol', key:'symbol'}, {label:'Side', key:'side'}, {label:'Qty', key:'qty'}, {label:'Status', key:'status'}, {label:'Fill Px', key:'fill_price'}]);
+  document.getElementById('fills').innerHTML = table((fills.fills||[]), [{label:'ID', key:'id'}, {label:'Symbol', key:'symbol'}, {label:'Qty', key:'qty'}, {label:'Price', key:'fill_price'}, {label:'Status', key:'status'}]);
+  document.getElementById('positions').innerHTML = table((positions.positions||[]), [
+    {label:'ID', key:'id'},
+    {label:'Symbol', key:'symbol'},
+    {label:'Qty', key:'qty'},
+    {label:'Avg', key:r=>r.avg_price ?? r.average_entry_price ?? r.entry_price},
+    {label:'Current', key:r=>r.current_price ?? r.market_price},
+    {label:'Unrealized PnL', key:'unrealized_pnl'},
+    {label:'Actions', html:positionActions}
+  ]);
+  document.getElementById('lifecycle').innerHTML = table((lifecycle.events||[]), [{label:'Time', key:'created_at'}, {label:'Stage', key:'stage'}, {label:'Order', key:'order_id'}, {label:'Status', key:'stage_status'}, {label:'Payload', key:r=>r.payload_json}]);
+  document.getElementById('portfolioRisk').innerHTML = statePill(prisk.governance_state) + pretty(prisk);
+  document.getElementById('exposure').innerHTML = table((exposure.symbols||[]), [{label:'Symbol', key:'symbol'}, {label:'Abs Exposure', key:'abs_exposure'}, {label:'Share', key:'share_of_exposure'}, {label:'Unrealized PnL', key:'unrealized_pnl'}]);
+  document.getElementById('pnlSummary').innerHTML = pretty(pnl.summary || pnl);
+  document.getElementById('dailyBrief').innerHTML = pretty(dailyBrief.brief || dailyBrief);
+  document.getElementById('riskBrief').innerHTML = pretty(riskBrief.risk || riskBrief);
+  document.getElementById('strategyBrief').innerHTML = pretty(strategyBrief.strategies || strategyBrief);
+  document.getElementById('governanceBrief').innerHTML = pretty(governanceBrief.governance || governanceBrief);
+  document.getElementById('strategyAttribution').innerHTML = table((strategyAttr.strategies||[]), [
+    {label:'Strategy', key:'strategy_key'},
+    {label:'Fills', key:'fill_count'},
+    {label:'Gross Fill Value', key:'gross_fill_value'},
+    {label:'Realized PnL', key:'realized_pnl'},
+    {label:'Unrealized PnL', key:'unrealized_pnl'},
+    {label:'Net PnL', key:'net_pnl'},
+    {label:'Symbols', key:r=>(r.symbols||[]).join(', ')}
+  ]);
+  document.getElementById('pendingApprovals').innerHTML = table((pendingApprovals.pending||[]), [
+    {label:'ID', key:'id'},
+    {label:'Action', key:'action_type'},
+    {label:'Target', key:r=>(r.target_type||'') + (r.target_id ? ':'+r.target_id : '')},
+    {label:'Requested By', key:'requested_by'},
+    {label:'Role', key:'requested_role'},
+    {label:'Status', key:'status'}
+  ]);
+  document.getElementById('governanceHistory').innerHTML = table((governanceHistory.history||[]), [
+    {label:'ID', key:'id'},
+    {label:'Action', key:'action_type'},
+    {label:'Status', key:'status'},
+    {label:'Requested By', key:'requested_by'},
+    {label:'Reviewed By', key:'reviewed_by'},
+    {label:'Note', key:'decision_note'}
+  ]);
+  document.getElementById('symbolAttribution').innerHTML = table((symbolAttr.symbols||[]), [
+    {label:'Symbol', key:'symbol'},
+    {label:'Fills', key:'fill_count'},
+    {label:'Open Qty', key:'open_qty'},
+    {label:'Gross Fill Value', key:'gross_fill_value'},
+    {label:'Realized PnL', key:'realized_pnl'},
+    {label:'Unrealized PnL', key:'unrealized_pnl'},
+    {label:'Net PnL', key:'net_pnl'},
+    {label:'Strategies', key:r=>(r.strategies||[]).join(', ')}
+  ]);
+  document.getElementById('risk_status').textContent = JSON.stringify({execution_mode:risk.execution_mode, kill_switch_active:risk.kill_switch_active, portfolio_governance:prisk.governance_state, recommended_action:prisk.recommended_action, performance: perf.performance || {}, pnl: pnl.summary || {}}, null, 2);
+  if((ctx.accounts||[]).length===1){ alloc_account_id.value = ctx.accounts[0].id; exec_account_id.value = ctx.accounts[0].id; }
+}
+async function configureBroker(){ try { const r=await loadJSON('/workspace/broker/configure',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({broker_name:broker_name.value,account_label:broker_label.value,mode:broker_mode.value,api_key_env:broker_api_env.value,secret_key_env:broker_secret_env.value,base_url:broker_url.value})}); document.getElementById('broker_status_msg').textContent='Broker configured: '+JSON.stringify(r,null,2); await refreshAll(); } catch(e){ document.getElementById('broker_status_msg').textContent='Broker error: '+e.message; } }
+async function createAccount(){ try { const r=await loadJSON('/workspace/capital/accounts/create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:acct_name.value,balance:Number(acct_balance.value||0),currency:acct_currency.value,risk_mode:acct_risk.value})}); document.getElementById('account_status').textContent='Account created: '+JSON.stringify(r,null,2); alloc_account_id.value=r.account_id||alloc_account_id.value; exec_account_id.value=r.account_id||exec_account_id.value; await refreshAll(); } catch(e){ document.getElementById('account_status').textContent='Account error: '+e.message; } }
+async function registerStrategy(){ try { const r=await loadJSON('/workspace/strategies/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({strategy_key:strategy_key.value,display_name:strategy_name.value,market:strategy_market.value,status:strategy_state.value})}); document.getElementById('strategy_status').textContent='Strategy registered: '+JSON.stringify(r,null,2); alloc_strategy_key.value=r.strategy_key||alloc_strategy_key.value; exec_strategy_key.value=r.strategy_key||exec_strategy_key.value; await refreshAll(); } catch(e){ document.getElementById('strategy_status').textContent='Strategy error: '+e.message; } }
+async function allocateCapital(){ try { const acct=alloc_account_id.value || ((window.__ctx && window.__ctx.accounts && window.__ctx.accounts[0]) ? window.__ctx.accounts[0].id : null); const r=await loadJSON('/workspace/capital/allocate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({strategy_key:alloc_strategy_key.value,account_id:acct,allocated_capital:Number(alloc_amount.value||0),reserve_capital:Number(alloc_reserve.value||0)})}); document.getElementById('allocation_status').textContent='Allocation result: '+JSON.stringify(r,null,2); if(acct) exec_account_id.value=acct; await refreshAll(); } catch(e){ document.getElementById('allocation_status').textContent='Allocation error: '+e.message; } }
+async function submitExecution(){ try { let acct=exec_account_id.value || ((window.__ctx && window.__ctx.accounts && window.__ctx.accounts[0]) ? window.__ctx.accounts[0].id : null); if(!acct) throw new Error('organization_account_required'); const r=await loadJSON('/workspace/execution/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({strategy_key:exec_strategy_key.value,account_id:acct,symbol:exec_symbol.value,side:exec_side.value,qty:Number(exec_qty.value||0),venue:exec_venue.value})}); document.getElementById('execution_status').textContent='Execution result: '+JSON.stringify(r,null,2); await refreshAll(); } catch(e){ document.getElementById('execution_status').textContent='Execution error: '+e.message; } }
+async function updateRiskControls(){ try { const r=await loadJSON('/workspace/risk/update',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({max_position_notional:Number(risk_max_position.value||0),max_total_exposure:Number(risk_max_total.value||0),max_daily_loss:Number(risk_max_daily_loss.value||0),max_notional_per_trade:Number(risk_max_trade.value||0),max_trades_per_session:Number(risk_max_session_trades.value||0),execution_mode:risk_execution_mode.value})}); document.getElementById('risk_status').textContent='Risk updated: '+JSON.stringify(r.updated||{},null,2); await refreshAll(); } catch(e){ document.getElementById('risk_status').textContent='Risk update error: '+e.message; } }
+async function toggleKillSwitch(){ try { const r=await loadJSON('/workspace/risk/kill-switch',{method:'POST'}); document.getElementById('risk_status').textContent='Kill switch: '+(r.kill_switch_active ? 'ACTIVE' : 'RELEASED'); await refreshAll(); } catch(e){ document.getElementById('risk_status').textContent='Kill switch error: '+e.message; } }
+async function reducePosition(positionId, percent){ try { const r = await loadJSON('/workspace/positions/reduce',{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({position_id: positionId, percent: percent, venue:'auto'})}); document.getElementById('position_action_status').textContent='Reduce result: '+JSON.stringify(r,null,2); await refreshAll(); } catch(e){ document.getElementById('position_action_status').textContent='Reduce error: '+e.message; } }
+async function closePosition(positionId){ try { const r = await loadJSON('/workspace/positions/close',{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({position_id: positionId, venue:'auto'})}); document.getElementById('position_action_status').textContent='Close result: '+JSON.stringify(r,null,2); await refreshAll(); } catch(e){ document.getElementById('position_action_status').textContent='Close error: '+e.message; } }
+async function flattenAll(){ try { const acct=((window.__ctx && window.__ctx.accounts && window.__ctx.accounts[0]) ? window.__ctx.accounts[0].id : null); const r = await loadJSON('/workspace/positions/flatten',{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({account_id: acct, venue:'auto'})}); document.getElementById('position_action_status').textContent='Flatten result: '+JSON.stringify(r,null,2); await refreshAll(); } catch(e){ document.getElementById('position_action_status').textContent='Flatten error: '+e.message; } }
+
+async function submitApproval(){
+  try {
+    const payload = {
+      action_type: approval_action_type.value,
+      target_type: approval_target_type.value || 'system',
+      target_id: approval_target_id.value || null,
+      reason: approval_reason.value || '',
+      payload: {
+        strategy_key: exec_strategy_key.value || alloc_strategy_key.value || null,
+        symbol: exec_symbol.value || null,
+        side: exec_side.value || null,
+        qty: Number(exec_qty.value || 0)
+      }
+    };
+    const r = await loadJSON('/workspace/governance/submit', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
+    document.getElementById('approval_submit_status').textContent='Approval submitted: '+JSON.stringify(r,null,2);
+    approval_decision_id.value = r.approval_id || approval_decision_id.value;
+    await refreshAll();
+  } catch(e){
+    document.getElementById('approval_submit_status').textContent='Approval submit error: '+e.message;
+  }
+}
+async function approveApproval(){
+  try {
+    const r = await loadJSON('/workspace/governance/approve', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({approval_id: approval_decision_id.value, note: approval_decision_note.value || ''})});
+    document.getElementById('approval_decision_status').textContent='Approval decision: '+JSON.stringify(r,null,2);
+    await refreshAll();
+  } catch(e){
+    document.getElementById('approval_decision_status').textContent='Approval approve error: '+e.message;
+  }
+}
+async function rejectApproval(){
+  try {
+    const r = await loadJSON('/workspace/governance/reject', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({approval_id: approval_decision_id.value, note: approval_decision_note.value || ''})});
+    document.getElementById('approval_decision_status').textContent='Approval decision: '+JSON.stringify(r,null,2);
+    await refreshAll();
+  } catch(e){
+    document.getElementById('approval_decision_status').textContent='Approval reject error: '+e.message;
+  }
+}
+
+refreshAll();
+</script>
+</body>
+</html>

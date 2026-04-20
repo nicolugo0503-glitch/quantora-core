@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — Institutional Investor Portal + Secure Reporting Access</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(15,29,49,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .sub{color:var(--muted);max-width:980px;line-height:1.5}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    button{border-radius:10px;border:none;background:var(--accent);color:var(--text);padding:10px 12px;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}.stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}
+    th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #274168;background:#0b1a2c;font-size:12px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:180px;white-space:pre-wrap}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT30466 — Institutional Investor Portal + Secure Reporting Access</h1>
+      <div class="sub">Investor users, secure report permissions, portal sessions, and delivery tracking. This is the allocator-facing access layer for controlled reporting and recurring investor communication.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="loadAll()">Refresh</button>
+      <button onclick="seedUser()">Seed Investor User</button>
+      <button onclick="seedAccess()">Seed Report Access</button>
+      <button onclick="seedSession()">Seed Session</button>
+      <button onclick="seedDelivery()">Seed Delivery</button>
+    </div>
+  </div>
+  <div class="grid" id="summaryGrid"></div>
+  <div class="layout">
+    <div class="stack">
+      <div class="card"><h2>Portal Users</h2><div class="table-wrap"><table id="userTable"></table></div></div>
+      <div class="card"><h2>Report Access</h2><div class="table-wrap"><table id="accessTable"></table></div></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h2>Portal Sessions</h2><div class="table-wrap"><table id="sessionTable"></table></div></div>
+      <div class="card"><h2>Delivery Logs</h2><div class="table-wrap"><table id="deliveryTable"></table></div></div>
+      <div class="card"><h2>Portal Health</h2><div class="pills" id="healthPills"></div></div>
+      <div class="card"><h2>Last Action</h2><pre id="actionOut">No action yet.</pre></div>
+    </div>
+  </div>
+</div>
+<script>
+const api=(path, opts={})=>fetch(path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok) throw new Error(d.detail||'request_failed'); return d;});
+function table(el, headers, rows){ const thead=`<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`; const body=rows.length?rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join(''):`<tr><td colspan="${headers.length}">No data</td></tr>`; el.innerHTML=thead+body; }
+function renderSummary(summary){ const labels=[['Users',summary.portal_users],['Active',summary.active_users],['Access Rules',summary.report_access_total],['Enabled',summary.report_access_enabled],['Sessions',summary.active_sessions],['Score',summary.portal_score]]; document.getElementById('summaryGrid').innerHTML=labels.map(([l,v])=>`<div class="card"><div class="label">${l}</div><div class="value">${v}</div></div>`).join('');}
+function pills(target, items){ document.getElementById(target).innerHTML=items.map(([l,k])=>`<span class="pill ${k}">${l}</span>`).join(''); }
+async function loadAll(){
+  const data=await api('/workspace/investor-portal/summary');
+  renderSummary(data.summary);
+  table(document.getElementById('userTable'), ['Investor','Tier','Status','Created'], (data.portal_users||[]).map(r=>[r.investor_name,r.access_tier,r.status,r.created_at||'-']));
+  table(document.getElementById('accessTable'), ['Investor','Report','Status','Expires','Created'], (data.report_access||[]).map(r=>[r.investor_name,r.report_name,r.status,r.expires_at||'-',r.created_at||'-']));
+  table(document.getElementById('sessionTable'), ['Investor','Last Page','Status','Created'], (data.portal_sessions||[]).map(r=>[r.investor_name,r.last_page,r.status,r.created_at||'-']));
+  table(document.getElementById('deliveryTable'), ['Investor','Report','Channel','Status','Created'], (data.delivery_logs||[]).map(r=>[r.investor_name,r.report_name,r.channel,r.status,r.created_at||'-']));
+  pills('healthPills', [
+    [`Users ${data.portal_health.user_registry_ready?'Ready':'Missing'}`, data.portal_health.user_registry_ready?'good':'warn'],
+    [`Access ${data.portal_health.report_access_ready?'Ready':'Missing'}`, data.portal_health.report_access_ready?'good':'warn'],
+    [`Sessions ${data.portal_health.session_tracking_ready?'Ready':'Missing'}`, data.portal_health.session_tracking_ready?'good':'warn'],
+    [`Deliveries ${data.portal_health.delivery_tracking_ready?'Ready':'Missing'}`, data.portal_health.delivery_tracking_ready?'good':'warn'],
+    [`Score ${data.portal_health.portal_score}`, data.portal_health.portal_score>=85?'good':'warn']
+  ]);
+}
+async function seedUser(){ const res=await api('/workspace/investor-portal/users/create',{method:'POST',body:JSON.stringify({investor_name:'Northstar Capital',access_tier:'institutional',status:'active'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedAccess(){ const res=await api('/workspace/investor-portal/access/create',{method:'POST',body:JSON.stringify({investor_name:'Northstar Capital',report_name:'Quarterly LP Statement',status:'active',expires_at:'2026-12-31'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedSession(){ const res=await api('/workspace/investor-portal/sessions/create',{method:'POST',body:JSON.stringify({investor_name:'Northstar Capital',last_page:'quarterly-reporting',status:'active'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedDelivery(){ const res=await api('/workspace/investor-portal/deliveries/create',{method:'POST',body:JSON.stringify({investor_name:'Northstar Capital',report_name:'Quarterly LP Statement',channel:'portal',status:'delivered'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+loadAll().catch(err=>document.getElementById('actionOut').textContent=String(err));
+</script>
+</body>
+</html>

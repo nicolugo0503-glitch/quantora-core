@@ -1,0 +1,28 @@
+{
+  "generated_by": "QNT50007",
+  "status": "degraded",
+  "control": {
+    "auto_ingest_fills": true,
+    "auto_reconcile_after_confirm": true,
+    "position_tolerance_qty": 1e-06,
+    "cash_tolerance": 1.0,
+    "notional_tolerance": 1.0,
+    "base_currency": "USD"
+  },
+  "processed_order_ids": [],
+  "pending_settlements": [],
+  "settled_settlements": [],
+  "cash_ledger": [],
+  "position_ledger": [],
+  "positions": {},
+  "cash_balance": 0.0,
+  "last_broker_snapshot": {
+    "positions": {},
+    "cash_balance": 0.0
+  },
+  "last_reconciliation": {
+    "status": "matched"
+  },
+  "reconciliation_breaks": [],
+  "audit_log": []
+}

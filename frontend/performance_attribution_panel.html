@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Quantora Performance Attribution</title>
+<style>
+:root{--bg:#07111f;--panel:#101c30;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;--bad:#fb7185}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}.shell{max-width:1500px;margin:0 auto;padding:24px}.hero,.metric,.panel{background:rgba(15,29,49,.95);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.16)}.hero,.metric,.panel{padding:18px}.hero{margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.muted{color:var(--muted)}.actions{display:flex;gap:10px;flex-wrap:wrap}button{border:0;background:var(--accent);color:white;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer}button.secondary{background:#1d4ed8}.metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}.metric .label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}.metric .value{font-size:28px;font-weight:700;margin-top:8px}.grid{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}.panel h3{margin:0 0 12px}.table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}pre{margin:0;background:#06101d;color:#dbeafe;border:1px solid #1e2d47;border-radius:14px;min-height:140px;max-height:320px;overflow:auto;padding:14px;white-space:pre-wrap}.pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#0b1a2c;border:1px solid #274168;font-size:12px;margin-right:8px;margin-bottom:8px}.good{border-color:#256b53;color:#9ff0ce}.warn{border-color:#8a5a0a;color:#fcd68f}.bad{border-color:#7c243d;color:#fecdd3}@media(max-width:1200px){.metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.grid{grid-template-columns:1fr}}@media(max-width:720px){.metrics{grid-template-columns:1fr}}</style>
+</head>
+<body>
+<div class="shell">
+  <div class="hero">
+    <div>
+      <h1 style="margin:0 0 10px">Quantora QNT30418 · Real Performance Attribution Engine</h1>
+      <div class="muted">Trade-level, strategy-level, execution-level, and portfolio-level attribution from the canonical operator state. This is the trust layer for capital accountability.</div>
+      <div id="briefPills" style="margin-top:12px"></div>
+    </div>
+    <div class="actions">
+      <button onclick="refreshAll()">Refresh Attribution</button>
+      <button class="secondary" onclick="location.href='billing.html'">Billing</button>
+      <button class="secondary" onclick="location.href='index.html'">Command Center</button>
+      <button class="secondary" onclick="window.open('/performance/attribution','_blank')">Open JSON</button>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="label">Regime</div><div class="value" id="m_regime">-</div></div>
+    <div class="metric"><div class="label">Orders</div><div class="value" id="m_orders">-</div></div>
+    <div class="metric"><div class="label">Realized PnL</div><div class="value" id="m_pnl">-</div></div>
+    <div class="metric"><div class="label">Capital Efficiency</div><div class="value" id="m_eff">-</div></div>
+    <div class="metric"><div class="label">Execution Quality</div><div class="value" id="m_quality">-</div></div>
+    <div class="metric"><div class="label">Drawdown</div><div class="value" id="m_dd">-</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h3>Strategy Attribution</h3>
+      <div class="table-wrap"><table><thead><tr><th>Strategy</th><th>Orders</th><th>Realized PnL</th><th>Quality</th><th>Slippage</th><th>Signal</th></tr></thead><tbody id="strategyTable"></tbody></table></div>
+    </div>
+    <div class="panel">
+      <h3>Portfolio Attribution</h3>
+      <div id="portfolioPills"></div>
+      <div class="table-wrap"><table><thead><tr><th>Symbol</th><th>Gross Notional</th><th>Realized PnL</th><th>Orders</th></tr></thead><tbody id="symbolTable"></tbody></table></div>
+    </div>
+    <div class="panel">
+      <h3>Execution Attribution</h3>
+      <div class="table-wrap"><table><thead><tr><th>Venue</th><th>Orders</th><th>Notional</th><th>Slippage</th><th>Latency</th><th>Quality</th></tr></thead><tbody id="executionTable"></tbody></table></div>
+    </div>
+    <div class="panel">
+      <h3>Investor Brief + Recent Trades</h3>
+      <pre id="briefOut">Loading…</pre>
+      <div class="table-wrap" style="margin-top:12px"><table><thead><tr><th>Trade</th><th>Strategy</th><th>Symbol</th><th>Side</th><th>PnL</th><th>Venue</th></tr></thead><tbody id="tradeTable"></tbody></table></div>
+    </div>
+  </div>
+</div>
+<script>
+const $ = (id)=>document.getElementById(id);
+function fmtMoney(v){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Number(v||0))}
+function fmtPct(v){return `${Number(v||0).toFixed(2)}%`}
+function pill(text, cls=''){return `<span class="pill ${cls}">${text}</span>`}
+async function j(url){ const r = await fetch(url); return await r.json(); }
+function render(snapshot){
+  const s = snapshot.summary||{};
+  $('m_regime').textContent = (s.regime_tag||'-').toUpperCase();
+  $('m_orders').textContent = s.orders_analyzed||0;
+  $('m_pnl').textContent = fmtMoney(s.realized_pnl||0);
+  $('m_eff').textContent = fmtPct(s.capital_efficiency_pct||0);
+  $('m_quality').textContent = Number(s.execution_quality_avg||0).toFixed(1);
+  $('m_dd').textContent = fmtPct(s.drawdown_pct||0);
+  $('briefPills').innerHTML = [pill(`top strategy ${s.top_strategy||'n/a'}`, 'good'), pill(`venues ${s.venues_used||0}`, 'warn'), pill(`active strategies ${s.active_strategies||0}`, 'good')].join('');
+  $('portfolioPills').innerHTML = [pill(`allocated ${fmtMoney(s.allocated_capital||0)}`), pill(`used ${fmtMoney(s.used_capital||0)}`), pill(`remaining ${fmtMoney(s.remaining_capital||0)}`), pill(`utilization ${fmtPct(s.utilization_pct||0)}`, 'warn')].join('');
+  $('strategyTable').innerHTML = (snapshot.strategy_attribution||[]).map(x=>`<tr><td>${x.strategy_name}</td><td>${x.orders_count}</td><td>${fmtMoney(x.realized_pnl)}</td><td>${Number(x.avg_execution_quality||0).toFixed(1)}</td><td>${Number(x.avg_slippage_bps||0).toFixed(2)} bps</td><td>${x.promotion_signal}</td></tr>`).join('') || '<tr><td colspan="6">No strategy attribution yet.</td></tr>';
+  $('symbolTable').innerHTML = (snapshot.portfolio_attribution?.contribution_by_symbol||[]).map(x=>`<tr><td>${x.symbol}</td><td>${fmtMoney(x.gross_notional)}</td><td>${fmtMoney(x.realized_pnl)}</td><td>${x.orders_count}</td></tr>`).join('') || '<tr><td colspan="4">No symbol contribution yet.</td></tr>';
+  $('executionTable').innerHTML = (snapshot.execution_attribution?.venues||[]).map(x=>`<tr><td>${x.execution_venue}</td><td>${x.orders_count}</td><td>${fmtMoney(x.filled_notional)}</td><td>${Number(x.avg_slippage_bps||0).toFixed(2)} bps</td><td>${Math.round(x.avg_latency_ms||0)} ms</td><td>${Number(x.avg_execution_quality||0).toFixed(1)}</td></tr>`).join('') || '<tr><td colspan="6">No execution attribution yet.</td></tr>';
+  $('tradeTable').innerHTML = (snapshot.trade_attribution||[]).slice(0,15).map(x=>`<tr><td>${x.trade_id}</td><td>${x.strategy_name}</td><td>${x.symbol}</td><td>${x.side}</td><td>${fmtMoney(x.realized_pnl)}</td><td>${x.venue}</td></tr>`).join('') || '<tr><td colspan="6">No trades yet.</td></tr>';
+  $('briefOut').textContent = JSON.stringify(snapshot.investor_brief||{}, null, 2);
+}
+async function refreshAll(){ render(await j('/performance/attribution')); }
+refreshAll();
+</script>
+</body>
+</html>

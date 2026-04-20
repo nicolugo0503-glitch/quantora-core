@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QNT50005 — Performance Engine (Institutional)</title>
+  <style>
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#07101d;color:#edf4ff}
+    .wrap{max-width:1120px;margin:0 auto;padding:32px}
+    .hero,.card{background:#0d1a2c;border:1px solid #223754;border-radius:18px;padding:24px;box-shadow:0 12px 34px rgba(0,0,0,.28)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:18px}
+    h1,h2{margin:0 0 12px}
+    .eyebrow{letter-spacing:.18em;text-transform:uppercase;color:#89b9ff;font-size:12px}
+    .pill{display:inline-block;padding:8px 12px;border-radius:999px;background:#163457;margin:6px 8px 0 0}
+    ul{padding-left:18px;line-height:1.6}
+    code{background:#091425;padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Quantora • Institutional Performance Control</div>
+      <h1>QNT50005 — Performance Engine (Institutional)</h1>
+      <p>Quantora now computes investor-grade performance intelligence across NAV history, drawdown, volatility, Sharpe, Sortino, Calmar, and strategy attribution. This layer turns execution activity into an auditable capital performance narrative instead of a raw trade log.</p>
+      <span class="pill">Sharpe + Sortino</span>
+      <span class="pill">Drawdown intelligence</span>
+      <span class="pill">Investor metrics</span>
+      <span class="pill">Risk sync</span>
+    </section>
+    <div class="grid">
+      <section class="card">
+        <h2>Performance Logic</h2>
+        <ul>
+          <li>NAV snapshots are normalized into a return series with annualized return and volatility.</li>
+          <li>Max drawdown, current drawdown, best/worst day, and win rate are computed from the equity curve.</li>
+          <li>Strategy attribution aggregates pnl and contribution by strategy for institutional review.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Governance</h2>
+        <ul>
+          <li>Every recompute and snapshot registration is written into a dedicated audit ledger.</li>
+          <li>Latest drawdown and daily loss metrics can be synchronized directly into the QNT50004 risk layer.</li>
+          <li>Investor metrics expose MTD, QTD, YTD, and inception return from the official NAV path.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Endpoints</h2>
+        <ul>
+          <li><code>GET /performance/health</code></li>
+          <li><code>GET /performance/summary</code></li>
+          <li><code>GET /performance/returns</code></li>
+          <li><code>GET /performance/attribution</code></li>
+          <li><code>POST /performance/nav-snapshot</code></li>
+          <li><code>POST /performance/recompute</code></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

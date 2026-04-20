@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30595 Investor Subscription / Redemption Queue</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,select,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:90px}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr 2fr auto auto auto;gap:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1300px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30595 · Investor Subscription / Redemption Queue + Capital Activity Control</h1>
+        <div style="color:#9fb3d8">Controls subscriptions and redemptions through a review and processing queue. This is the capital activity gate before ledger movement.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30594_rollforward.html">Rollforward</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Requests</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Pending</div><div id="pending" class="value">-</div></div>
+    <div class="card"><div class="label">Approved</div><div id="approved" class="value">-</div></div>
+    <div class="card"><div class="label">Processed</div><div id="processed" class="value">-</div></div>
+    <div class="card"><div class="label">Net Flow</div><div id="netflow" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="adminEmail" placeholder="Investor email for review">
+      <select id="activityType"><option value="subscription">subscription</option><option value="redemption">redemption</option></select>
+      <input id="amount" placeholder="Amount">
+      <textarea id="notes" placeholder="Notes"></textarea>
+      <button onclick="submitRequest()">Submit</button>
+      <button onclick="approveLatest()">Approve Latest</button>
+      <button onclick="processLatest()">Process Latest</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Capital Activity Queue</div>
+    <table>
+      <thead><tr><th>Request</th><th>Type</th><th>Amount</th><th>Status</th><th>Created</th><th>Processed</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Capital Activity Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function dt(v){ return v ? new Date(v*1000).toLocaleString() : '-'; }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/capital-activity/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  document.getElementById('count').textContent = String(d.request_count || 0);
+  document.getElementById('pending').textContent = String(d.pending_count || 0);
+  document.getElementById('approved').textContent = String(d.approved_count || 0);
+  document.getElementById('processed').textContent = String(d.processed_count || 0);
+  document.getElementById('netflow').textContent = money((d.total_subscriptions || 0) - (d.total_redemptions || 0));
+  document.getElementById('rows').innerHTML = (d.requests || []).map(r =>
+    `<tr><td>${r.request_id}</td><td>${r.activity_type}</td><td>${money(r.amount)}</td><td>${r.status}</td><td>${dt(r.created_at)}</td><td>${dt(r.processed_at)}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function submitRequest(){
+  const payload = {
+    activity_type: document.getElementById('activityType').value,
+    amount: Number(document.getElementById('amount').value || 0),
+    notes: document.getElementById('notes').value
+  };
+  await j('/api/capital-activity/request', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function approveLatest(){
+  const res = await j('/api/capital-activity');
+  const latest = (res.data.requests || [])[0];
+  if(!latest){ return; }
+  await j('/api/capital-activity/review', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email: document.getElementById('adminEmail').value, request_id: latest.request_id, decision: 'approved', notes: document.getElementById('notes').value})});
+  await load();
+}
+async function processLatest(){
+  const res = await j('/api/capital-activity');
+  const latest = (res.data.requests || []).find(x => x.status === 'approved') || (res.data.requests || [])[0];
+  if(!latest){ return; }
+  await j('/api/capital-activity/process', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({request_id: latest.request_id, notes: document.getElementById('notes').value})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

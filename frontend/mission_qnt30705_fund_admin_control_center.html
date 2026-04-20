@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>QNT30705 Fund Administration Control Center</title>
+<style>
+:root{--bg:#071019;--panel:#0d1723;--line:#1b2b40;--text:#edf3fb;--muted:#8ea0b7;--good:#48d597;--bad:#ff6f86;--warn:#ffc857}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#071019,#09131d 55%,#071019);color:var(--text);font-family:Inter,Arial,sans-serif}.wrap{max-width:1520px;margin:0 auto;padding:28px}.hero,.card{background:rgba(13,23,35,.95);border:1px solid var(--line);border-radius:20px;box-shadow:0 22px 54px rgba(0,0,0,.35)}.hero{padding:26px}.label{font-size:11px;color:var(--muted);letter-spacing:.16em;text-transform:uppercase;font-weight:800}.hero h1{margin:10px 0 8px;font-size:42px}.sub{color:var(--muted);max-width:1100px;line-height:1.55}.toolbar,.grid2,.grid3,.grid4{display:grid;gap:14px}.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}.grid4{grid-template-columns:repeat(4,1fr);margin-top:18px}.grid3{grid-template-columns:1.1fr 1fr 1fr;margin-top:18px}.grid2{grid-template-columns:1fr 1fr;margin-top:18px}.card{padding:18px}.value{font-size:26px;font-weight:800;margin-top:8px}.tiny{font-size:12px;color:var(--muted)}button,input,textarea{background:#0b1520;color:var(--text);border:1px solid var(--line);padding:11px 14px;border-radius:12px;font:inherit}.btn{cursor:pointer;font-weight:700}.primary{background:#fff;color:#0a0e14}textarea{min-height:100px;width:100%}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #1a293d;font-size:13px;vertical-align:top}th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}pre{background:#09111a;border:1px solid var(--line);padding:14px;border-radius:14px;min-height:240px;max-height:720px;overflow:auto}.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}@media(max-width:1100px){.grid4,.grid3,.grid2{grid-template-columns:1fr 1fr}}@media(max-width:760px){.grid4,.grid3,.grid2{grid-template-columns:1fr}.wrap{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="label">QNT30705</div>
+    <h1>Fund Administration Control Center</h1>
+    <div class="sub">Institutional fund administration for Quantora: capital ledger oversight, NAV reconciliation, waterfall linkage, statement coordination, compliance logging, and period close control in one operator surface.</div>
+    <div class="toolbar">
+      <button class="btn primary" onclick="bootstrapDemo()">Bootstrap Fund Admin Demo</button>
+      <button class="btn" onclick="runClose()">Run Period Close</button>
+      <button class="btn" onclick="recordFlow('distribution')">Record Distribution</button>
+      <button class="btn" onclick="recordFlow('subscription')">Record Subscription</button>
+      <button class="btn" onclick="window.location.href='mission_qnt30704_investor_delivery_pack_system.html'">Open Delivery Pack Layer</button>
+      <button class="btn" onclick="window.location.href='index.html'">Back to Command Center</button>
+    </div>
+  </div>
+
+  <div class="grid4">
+    <div class="card"><div class="label">Fund Admin Status</div><div id="readiness" class="value">-</div><div class="tiny">Close and reconciliation posture</div></div>
+    <div class="card"><div class="label">AUM</div><div id="aum" class="value">-</div><div class="tiny">Current fund NAV</div></div>
+    <div class="card"><div class="label">Investors</div><div id="investors" class="value">-</div><div class="tiny">Capital accounts</div></div>
+    <div class="card"><div class="label">NAV Break</div><div id="navBreak" class="value">-</div><div class="tiny">Performance vs ledger reconciliation</div></div>
+  </div>
+
+  <div class="grid3">
+    <div class="card"><div class="label">Capital Summary</div><table><tbody id="capitalRows"></tbody></table></div>
+    <div class="card"><div class="label">Admin Controls</div><textarea id="notes" placeholder="Operator close memo / compliance note"></textarea><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button class="btn" onclick="runClose()">Run Close</button><button class="btn" onclick="recordFlow('distribution')">Distribution</button><button class="btn" onclick="recordFlow('fee')">Fee</button></div><div class="tiny" style="margin-top:10px">Each flow is logged for audit and reflected in the administration timeline.</div></div>
+    <div class="card"><div class="label">Latest Close</div><pre id="closeBox">Loading...</pre></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><div class="label">Institutional Context</div><pre id="contextBox">Loading...</pre></div>
+    <div class="card"><div class="label">Reconciliation + Operations</div><pre id="reconBox">Loading...</pre></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><div class="label">Capital Flows</div><table><thead><tr><th>Type</th><th>Amount</th><th>Recorded</th><th>Notes</th></tr></thead><tbody id="flowRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+    <div class="card"><div class="label">Compliance Events</div><table><thead><tr><th>Type</th><th>Period</th><th>Amount</th><th>Recorded</th></tr></thead><tbody id="complianceRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+  </div>
+</div>
+<script>
+async function j(url,opt){const r=await fetch(url,opt);const d=await r.json();if(!r.ok) throw new Error(d.detail||'request failed');return d;}
+const fmtMoney=v=>'$'+Number(v||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+const stamp=v=>v?(String(v).includes('T')?new Date(v).toISOString().replace('T',' ').slice(0,16):new Date(Number(v)*1000).toISOString().replace('T',' ').slice(0,16)):'-';
+function cls(v){const t=String(v||'').toLowerCase(); if(t.includes('ready')||t.includes('clean')||t.includes('closed')) return 'good'; if(t.includes('attention')||t.includes('pending')) return 'warn'; return 'bad';}
+function notes(){return document.getElementById('notes').value.trim();}
+function render(data){
+  const status=((data.fund_admin_status||{}).readiness||'-').toUpperCase();
+  document.getElementById('readiness').textContent=status; document.getElementById('readiness').className='value '+cls(status);
+  document.getElementById('aum').textContent=fmtMoney(data.aum||0);
+  document.getElementById('aum').className='value good';
+  document.getElementById('investors').textContent=(data.capital_summary||{}).investor_count||0;
+  document.getElementById('navBreak').textContent=fmtMoney((data.reconciliation||{}).nav_difference||0);
+  document.getElementById('navBreak').className='value '+cls((data.reconciliation||{}).status||'break');
+  const cap=data.capital_summary||{};
+  document.getElementById('capitalRows').innerHTML=`<tr><th>Committed</th><td>${fmtMoney(cap.committed_capital)}</td></tr><tr><th>Funded</th><td>${fmtMoney(cap.funded_capital)}</td></tr><tr><th>Unfunded</th><td>${fmtMoney(cap.unfunded_capital)}</td></tr><tr><th>Allocations</th><td>${cap.allocation_count||0}</td></tr><tr><th>Entries</th><td>${cap.entry_count||0}</td></tr>`;
+  document.getElementById('closeBox').textContent=JSON.stringify((data.close_runs||[])[0]||{},null,2);
+  document.getElementById('contextBox').textContent=JSON.stringify(data.institutional_context||{},null,2);
+  document.getElementById('reconBox').textContent=JSON.stringify({reconciliation:data.reconciliation,ops:data.ops_summary,performance:data.performance_summary,waterfall:data.waterfall_summary,statements:data.statement_summary},null,2);
+  const flows=data.capital_flows||[];
+  document.getElementById('flowRows').innerHTML=flows.length?flows.slice(0,12).map(f=>`<tr><td>${f.type||'-'}</td><td>${fmtMoney(f.amount||0)}</td><td>${stamp(f.recorded_at)}</td><td>${f.notes||'-'}</td></tr>`).join(''):'<tr><td colspan="4">No flows recorded.</td></tr>';
+  const events=data.compliance_events||[];
+  document.getElementById('complianceRows').innerHTML=events.length?events.slice(0,12).map(e=>`<tr><td>${e.type||'-'}</td><td>${e.period||'-'}</td><td>${fmtMoney(e.amount||0)}</td><td>${stamp(e.recorded_at)}</td></tr>`).join(''):'<tr><td colspan="4">No compliance events recorded.</td></tr>';
+}
+async function loadAll(){render(await j('/api/fund-admin-control-center/summary'));}
+async function bootstrapDemo(){await j('/api/fund-admin-control-center/bootstrap-demo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({notes:notes()})});await loadAll();}
+async function runClose(){await j('/api/fund-admin-control-center/run-close',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({notes:notes()})});await loadAll();}
+async function recordFlow(type){const amount=type==='distribution'?25000:(type==='subscription'?100000:5000);await j('/api/fund-admin-control-center/record-flow',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type,amount,notes:notes()||('recorded via '+type)})});await loadAll();}
+loadAll();
+</script>
+</body>
+</html>

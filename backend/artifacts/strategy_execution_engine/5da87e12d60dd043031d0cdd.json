@@ -1,0 +1,53 @@
+{
+  "email": "operator@example.com",
+  "strategy_allocations": [
+    {
+      "strategy_id": "alpha_core",
+      "strategy_name": "Alpha Core",
+      "allocated_capital": 520000.0
+    },
+    {
+      "strategy_id": "macro_fx",
+      "strategy_name": "Macro FX",
+      "allocated_capital": 340000.0
+    },
+    {
+      "strategy_id": "rates_defense",
+      "strategy_name": "Rates Defense",
+      "allocated_capital": 210000.0
+    }
+  ],
+  "trades": [
+    {
+      "trade_id": "trd_demo_1",
+      "strategy_id": "alpha_core",
+      "symbol": "SPY",
+      "side": "buy",
+      "qty": 400.0,
+      "entry_price": 540.0,
+      "notional": 216000.0,
+      "status": "open"
+    },
+    {
+      "trade_id": "trd_demo_2",
+      "strategy_id": "macro_fx",
+      "symbol": "DX1",
+      "side": "buy",
+      "qty": 120.0,
+      "entry_price": 110.0,
+      "notional": 13200.0,
+      "status": "open"
+    },
+    {
+      "trade_id": "trd_demo_3",
+      "strategy_id": "rates_defense",
+      "symbol": "IEF",
+      "side": "buy",
+      "qty": 900.0,
+      "entry_price": 96.0,
+      "notional": 86400.0,
+      "status": "open"
+    }
+  ],
+  "history": []
+}

@@ -1,0 +1,20 @@
+<html><body><h1>QNT30523 Execution</h1>
+<button onclick="run()">Run Execution</button>
+<pre id='out'></pre>
+<script>
+async function run(){
+ const res = await fetch('/api/execution/run',{
+  method:'POST',
+  headers:{'Content-Type':'application/json'},
+  body: JSON.stringify({
+    orders:[
+      {symbol:'AAPL',side:'buy',notional:5000},
+      {symbol:'BTCUSD',side:'buy',notional:2000}
+    ],
+    live:false
+  })
+ });
+ const d = await res.json();
+ out.innerText = JSON.stringify(d,null,2);
+}
+</script></body></html>

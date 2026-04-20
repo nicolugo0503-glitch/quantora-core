@@ -1,0 +1,14 @@
+{
+  "email": "qnt30650@test.local",
+  "balance": 2500000.0,
+  "available": 2500000.0,
+  "allocated": 0.0,
+  "history": [
+    {
+      "type": "deposit",
+      "amount": 2500000.0,
+      "timestamp": 1775711166
+    }
+  ],
+  "created_at": 1775711166
+}

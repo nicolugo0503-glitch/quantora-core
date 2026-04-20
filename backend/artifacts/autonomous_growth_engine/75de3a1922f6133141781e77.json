@@ -1,0 +1,13 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "launch_floor": 70.0,
+    "channel_activation_floor": 63.0,
+    "autonomy_release_floor": 76.0,
+    "max_launches": 4,
+    "max_sequences": 6
+  },
+  "runs": [],
+  "created_at": 1775712870,
+  "updated_at": 1775712870
+}

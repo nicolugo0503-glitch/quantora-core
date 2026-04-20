@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QNT30425 UI Control Surface</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#06111f; color:#e9f1ff; margin:0; }
+    .wrap { max-width:1200px; margin:0 auto; padding:24px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+    .card { background:#0d1f38; border:1px solid #19345c; border-radius:16px; padding:18px; }
+    button, a.btn { display:inline-block; margin:6px 6px 0 0; background:#2f6bff; color:#fff; border:none; border-radius:10px; padding:10px 14px; text-decoration:none; cursor:pointer; }
+    .muted { color:#9fb4d5; font-size:14px; }
+    h1,h2{margin:0 0 12px;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" style="margin-bottom:16px;">
+      <h1>QNT30425 · UI Control Surface Completion</h1>
+      <p class="muted">Canonical navigation and missing-button recovery panel for Quantora.</p>
+      <a class="btn" href="/">Back to Command Center</a>
+      <a class="btn" href="/workspace_institutional_layer.html">Workspace Layer</a>
+      <a class="btn" href="/org_execution_capital_engine.html">Org Execution + Capital</a>
+    </div>
+    <div class="grid">
+      <div class="card"><h2>Workspace Controls</h2>
+        <a class="btn" href="/workspace/context" target="_blank">Workspace Context JSON</a>
+        <a class="btn" href="/workspace/organizations" target="_blank">Organizations JSON</a>
+        <a class="btn" href="/workspace/roles" target="_blank">Roles JSON</a>
+        <a class="btn" href="/workspace/isolation/status" target="_blank">Isolation Status JSON</a>
+        <a class="btn" href="/workspace/isolation/audit" target="_blank">Isolation Audit JSON</a>
+      </div>
+      <div class="card"><h2>Execution Controls</h2>
+        <a class="btn" href="/workspace/execution-capital/context" target="_blank">Execution Context JSON</a>
+        <a class="btn" href="/workspace/broker/status" target="_blank">Broker Status JSON</a>
+        <a class="btn" href="/workspace/capital/summary" target="_blank">Capital Summary JSON</a>
+        <a class="btn" href="/workspace/execution/orders" target="_blank">Orders JSON</a>
+        <a class="btn" href="/workspace/execution/fills" target="_blank">Fills JSON</a>
+        <a class="btn" href="/workspace/positions" target="_blank">Positions JSON</a>
+        <a class="btn" href="/workspace/execution/lifecycle" target="_blank">Lifecycle JSON</a>
+      </div>
+      <div class="card"><h2>Deployment Controls</h2>
+        <a class="btn" href="/health" target="_blank">Health</a>
+        <a class="btn" href="/health/deployment" target="_blank">Deployment Health</a>
+        <a class="btn" href="/billing/subscription-status" target="_blank">Billing Status</a>
+        <a class="btn" href="/docs" target="_blank">Swagger Docs</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

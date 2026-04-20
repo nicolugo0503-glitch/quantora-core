@@ -1,0 +1,6 @@
+QNT30723 integrated into clean deploy root.
+- backend router added
+- frontend mission page added
+- mission registry updated
+- main.py import/include updated
+- smoke test added

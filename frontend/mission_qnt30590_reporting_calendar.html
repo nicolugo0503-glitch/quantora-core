@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30590 Investor Reporting Calendar</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,select{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+.row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto auto;gap:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1200px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30590 · Investor Reporting Calendar + Scheduled Distribution Registry</h1>
+        <div style="color:#9fb3d8">Tracks recurring reporting obligations and scheduled distribution events. This is the scheduling layer above report generation and delivery logs.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30589_report_delivery_log.html">Delivery Log</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Events</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Scheduled</div><div id="scheduled" class="value">-</div></div>
+    <div class="card"><div class="label">Executed</div><div id="executed" class="value">-</div></div>
+    <div class="card"><div class="label">History</div><div id="historyCount" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="name" placeholder="Event name">
+      <select id="frequency"><option value="monthly">monthly</option><option value="quarterly">quarterly</option><option value="annual">annual</option></select>
+      <select id="channel"><option value="portal_simulated">portal_simulated</option><option value="email_simulated">email_simulated</option></select>
+      <input id="nextRun" placeholder="Next run at">
+      <button onclick="scheduleEvent()">Schedule</button>
+      <button onclick="runLatest()">Run Latest</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Reporting Events</div>
+    <table>
+      <thead><tr><th>Event</th><th>Frequency</th><th>Channel</th><th>Status</th><th>Last Run</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Calendar Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+function dt(v){ return v ? new Date(v*1000).toLocaleString() : '-'; }
+async function load(){
+  const res = await j('/api/reporting-calendar/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  document.getElementById('count').textContent = String(d.event_count || 0);
+  document.getElementById('scheduled').textContent = String(d.scheduled_count || 0);
+  document.getElementById('executed').textContent = String(d.executed_count || 0);
+  document.getElementById('historyCount').textContent = String((d.history || []).length);
+  document.getElementById('rows').innerHTML = (d.events || []).map(e =>
+    `<tr><td>${e.name}</td><td>${e.frequency}</td><td>${e.channel}</td><td>${e.status}</td><td>${dt(e.last_run_at)}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function scheduleEvent(){
+  const me = await j('/api/user/me');
+  const payload = {
+    email: me.data.user.email,
+    name: document.getElementById('name').value,
+    frequency: document.getElementById('frequency').value,
+    channel: document.getElementById('channel').value,
+    next_run_at: document.getElementById('nextRun').value
+  };
+  await j('/api/reporting-calendar/schedule', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function runLatest(){
+  const res = await j('/api/reporting-calendar');
+  const latest = (res.data.events || [])[0];
+  if(!latest){ return; }
+  await j('/api/reporting-calendar/run', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({event_id: latest.event_id})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

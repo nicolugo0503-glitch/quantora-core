@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quantora Governance System</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background: #09111f; color: #e8eef8; }
+    .card { background: #10192f; border: 1px solid #25365f; border-radius: 14px; padding: 18px; margin-bottom: 18px; }
+    input, select, button { padding: 10px; margin: 6px 0; border-radius: 8px; border: 1px solid #41548a; }
+    button { cursor: pointer; }
+    pre { white-space: pre-wrap; word-break: break-word; background:#08101d; border-radius:12px; padding:12px; border:1px solid #1d2c4e; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    a { color: #8ab4ff; }
+  </style>
+</head>
+<body>
+  <h1>QNT30350 Governance System</h1>
+  <div class="card">
+    <p>Institutional control plane for approvals, policy simulation, and enforcement evaluation.</p>
+    <div class="grid">
+      <label>Event Type
+        <select id="eventType">
+          <option value="capital_change">capital_change</option>
+          <option value="loop_start">loop_start</option>
+          <option value="live_order">live_order</option>
+          <option value="strategy_rebalance">strategy_rebalance</option>
+        </select>
+      </label>
+      <label>Amount / Notional <input id="amount" type="number" value="6000" step="0.01"></label>
+      <label>Interval Seconds <input id="interval" type="number" value="120" step="1"></label>
+      <label>Qty <input id="qty" type="number" value="10" step="0.01"></label>
+      <label>Estimated Slippage (bps) <input id="slippage" type="number" value="42" step="0.1"></label>
+      <label>Execution Mode
+        <select id="mode"><option>internal</option><option>paper</option><option>live</option></select>
+      </label>
+      <label>Max Active Strategies <input id="maxStrategies" type="number" value="4" step="1"></label>
+      <label>Operator ID <input id="operatorId" value=""></label>
+    </div>
+    <button onclick="simulatePolicy()">Simulate Policy</button>
+    <button onclick="runEnforcement()">Evaluate Enforcement</button>
+    <button onclick="refresh()">Refresh Status</button>
+  </div>
+  <div class="card"><h3>Status</h3><pre id="status">loading...</pre></div>
+  <div class="card"><h3>Output</h3><pre id="output">ready</pre></div>
+  <p><a href="/docs" target="_blank">Open API docs</a></p>
+  <script>
+    async function api(path, method='GET', body=null){
+      const res = await fetch(path, {method, headers:{'Content-Type':'application/json'}, body: body ? JSON.stringify(body) : null});
+      return res.json();
+    }
+    function policyPayload(){
+      return {
+        event_type: document.getElementById('eventType').value,
+        amount: Number(document.getElementById('amount').value),
+        interval_seconds: Number(document.getElementById('interval').value),
+        qty: Number(document.getElementById('qty').value),
+        estimated_slippage_bps: Number(document.getElementById('slippage').value),
+        execution_mode: document.getElementById('mode').value,
+        max_active_strategies: Number(document.getElementById('maxStrategies').value),
+      };
+    }
+    async function refresh(){
+      document.getElementById('status').textContent = JSON.stringify(await api('/governance/status'), null, 2);
+    }
+    async function simulatePolicy(){
+      document.getElementById('output').textContent = JSON.stringify(await api('/governance/policy/simulate', 'POST', policyPayload()), null, 2);
+      refresh();
+    }
+    async function runEnforcement(){
+      const body = {operator_id: document.getElementById('operatorId').value || null, include_orders: true, include_approvals: true, include_risk: true};
+      document.getElementById('output').textContent = JSON.stringify(await api('/governance/enforcement/evaluate', 'POST', body), null, 2);
+      refresh();
+    }
+    refresh();
+  </script>
+</body>
+</html>

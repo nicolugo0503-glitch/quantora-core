@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quantora Production Security Center</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff}
+.wrap{max-width:1180px;margin:auto;padding:28px}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.label{color:#9fb3d8;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:24px;font-weight:800;margin-top:6px}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto}
+a{display:inline-block;padding:12px 16px;border-radius:10px;background:#2455d6;color:white;text-decoration:none;font-weight:700}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1 style="margin:0 0 8px">QNT30559 · Production Security Center</h1>
+    <div style="color:#9fb3d8">Security hardening layer added after the full zip audit. This page documents the highest-priority production security controls applied inside the package.</div>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="label">Password Storage</div><div class="value">PBKDF2</div></div>
+    <div class="card"><div class="label">Demo Autologin</div><div class="value">OFF BY DEFAULT</div></div>
+    <div class="card"><div class="label">Env Template</div><div class="value">ADDED</div></div>
+  </div>
+  <div class="card">
+    <div class="label">Applied security controls</div>
+    <pre>- password hashing helpers added
+- register flow stores hashed passwords
+- login verifies hashed passwords
+- plaintext user entries are migrated on login/use
+- demo admin password moved to env-based config
+- demo auto-login disabled unless explicitly enabled
+- .env.example added for broker and auth secrets</pre>
+  </div>
+  <div class="card">
+    <a href="index.html">Back to Command Center</a>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html>
+<body style="background:#09101d;color:white;font-family:Arial;padding:20px">
+<h2>QNT30414 User + Account</h2>
+<input id="email" placeholder="email"><br>
+<input id="password" placeholder="password"><br>
+<button onclick="register()">Register</button>
+<button onclick="login()">Login</button>
+<pre id="out"></pre>
+<script>
+async function register(){
+ let r=await fetch('/auth/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email.value,password:password.value})});
+ out.innerText=JSON.stringify(await r.json(),null,2);
+}
+async function login(){
+ let r=await fetch('/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email.value,password:password.value})});
+ out.innerText=JSON.stringify(await r.json(),null,2);
+}
+</script>
+</body>
+</html>

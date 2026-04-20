@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30375 Venue Governor</title>
+  <style>
+    :root { --bg:#07111f; --panel:#0f1d31; --panel2:#132742; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#60a5fa; }
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .shell{max-width:1280px;margin:0 auto;padding:24px}.panel{background:rgba(15,29,49,.95);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px}
+    .metrics,.row{display:grid;gap:12px}.metrics{grid-template-columns:repeat(4,minmax(0,1fr))}.row{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .metric{background:#0a1526;border:1px solid #1e2d47;border-radius:14px;padding:14px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:26px;font-weight:700;margin-top:8px}
+    textarea{width:100%;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;padding:11px 12px;min-height:220px}
+    button{border:none;background:var(--accent);color:white;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700} button.secondary{background:#1d4ed8}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:280px;white-space:pre-wrap}.tiny{color:var(--muted);font-size:12px}
+    @media(max-width:900px){.metrics,.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">
+      <div>
+        <h1 style="margin:0 0 8px 0;">Venue Selection Governor + Adaptive Routing Policy Engine</h1>
+        <div class="tiny">Use venue quality intelligence to route orders adaptively, avoid flagged venues, and fall back only when policy allows it.</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="secondary" onclick="window.location.href='index.html'">Command Center</button>
+        <button onclick="loadStatus()">Refresh</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="label">Selections</div><div class="value" id="m1">-</div></div>
+    <div class="metric"><div class="label">Blocked Venues</div><div class="value" id="m2">-</div></div>
+    <div class="metric"><div class="label">Fallback Count</div><div class="value" id="m3">-</div></div>
+    <div class="metric"><div class="label">Venue Count</div><div class="value" id="m4">-</div></div>
+  </div>
+
+  <div class="row">
+    <div class="panel">
+      <h2 style="margin-top:0">Ingest Venues</h2>
+      <textarea id="ingest_body">{
+  "venues": [
+    {"venue_id":"alpaca_live","venue_name":"Alpaca Live","quality_score":91.2,"flagged":false,"avg_slippage_bps":11.5,"fill_rate":0.97,"reject_rate":0.02,"avg_latency_ms":380},
+    {"venue_id":"alpaca_paper","venue_name":"Alpaca Paper","quality_score":78.8,"flagged":false,"avg_slippage_bps":18.0,"fill_rate":0.92,"reject_rate":0.05,"avg_latency_ms":510},
+    {"venue_id":"venue_x","venue_name":"Venue X","quality_score":54.0,"flagged":true,"avg_slippage_bps":31.0,"fill_rate":0.82,"reject_rate":0.13,"avg_latency_ms":1020}
+  ]
+}</textarea>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        <button onclick="ingestVenues()">Ingest Venues</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2 style="margin-top:0">Select Venue</h2>
+      <textarea id="select_body">{
+  "order_id":"ord_1001",
+  "symbol":"AAPL",
+  "side":"buy"
+}</textarea>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="secondary" onclick="selectVenue()">Select Venue</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel"><h2 style="margin-top:0">Output</h2><pre id="out">Loading...</pre></div>
+</div>
+
+<script>
+const API="http://127.0.0.1:8010";
+async function req(path, method="GET", body=null){
+  const r=await fetch(API+path,{method,headers:{"Content-Type":"application/json"},body:body?JSON.stringify(body):null});
+  const d=await r.json();
+  if(!r.ok) throw new Error(JSON.stringify(d));
+  return d;
+}
+function render(data){
+  const v = data.venue_governor || {};
+  document.getElementById("m1").textContent = v.selection_count ?? "-";
+  document.getElementById("m2").textContent = v.blocked_venues ?? "-";
+  document.getElementById("m3").textContent = v.fallback_count ?? "-";
+  document.getElementById("m4").textContent = data.venue_count ?? "-";
+  document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+}
+async function loadStatus(){ try{ render(await req("/venue-governor/status")); } catch(e){ document.getElementById("out").textContent = String(e); } }
+async function ingestVenues(){
+  try{
+    const body = JSON.parse(document.getElementById("ingest_body").value);
+    const data = await req("/venue-governor/venues/ingest", "POST", body);
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+    await loadStatus();
+  }catch(e){ document.getElementById("out").textContent = String(e); }
+}
+async function selectVenue(){
+  try{
+    const body = JSON.parse(document.getElementById("select_body").value);
+    const data = await req("/venue-governor/select", "POST", body);
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+    await loadStatus();
+  }catch(e){ document.getElementById("out").textContent = String(e); }
+}
+loadStatus();
+</script>
+</body>
+</html>

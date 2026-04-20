@@ -1,0 +1,22 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_packets": 150,
+    "min_transparency_score": 80.0,
+    "min_disclosure_completeness_pct": 85.0,
+    "min_explanation_coverage_pct": 80.0,
+    "min_statement_accuracy_score": 82.0,
+    "max_report_freshness_hours": 72.0,
+    "min_acknowledgement_coverage_pct": 70.0,
+    "require_forensic_clear": true,
+    "require_recovery_clear": true,
+    "require_delivery_ready": true,
+    "require_fund_admin_ready": true,
+    "require_operator_review_for_exceptions": true
+  },
+  "packets": [],
+  "exceptions": [],
+  "disclosure_book": [],
+  "created_at": 1776223536,
+  "updated_at": 1776223536
+}

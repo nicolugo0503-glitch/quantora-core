@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quantora Execution Monitor Hub</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff}
+.container{max-width:1500px;margin:auto;padding:24px}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:14px;padding:16px;margin-bottom:16px}
+h1,h2,h3{margin:0 0 10px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.label{color:#9fb3d8;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:24px;font-weight:bold}
+.good{color:#10b981}.warn{color:#f59e0b}.bad{color:#ef4444}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left}
+.table th{color:#9fb3d8;font-size:12px;text-transform:uppercase}
+pre{background:#07111f;border:1px solid #203251;border-radius:10px;padding:12px;overflow:auto}
+.pill{display:inline-block;padding:8px 10px;background:#11243c;border:1px solid #203251;border-radius:999px;margin-right:8px}
+.feed-item{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <h1>Execution Monitor Hub</h1>
+    <div style="color:#9fb3d8;max-width:980px">Institutional execution layer for tracking order activity, paper/live status, routing health, and operational execution flow without touching backend structure.</div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Execution Status</div><div id="status" class="value">-</div></div>
+    <div class="card"><div class="label">Orders Observed</div><div id="ordersCount" class="value">-</div></div>
+    <div class="card"><div class="label">Routing Health</div><div id="routingHealth" class="value">-</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Execution Feed</h2>
+      <div id="feed">loading...</div>
+    </div>
+
+    <div class="card">
+      <h2>Order Table</h2>
+      <table class="table">
+        <thead><tr><th>Symbol</th><th>Side</th><th>Notional</th><th>Mode</th></tr></thead>
+        <tbody id="ordersTable"></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Execution State</h2>
+      <div style="margin-bottom:10px">
+        <span class="pill">Order Routing Visible</span>
+        <span class="pill">Execution Layer Active</span>
+      </div>
+      <pre id="execBox">loading...</pre>
+    </div>
+  </div>
+</div>
+
+<script>
+async function fetchJson(url, opts){
+  try{
+    const r = await fetch(url, opts || {});
+    return await r.json();
+  }catch(e){ return {error:String(e)}; }
+}
+function fmt(v){
+  if(typeof v !== 'number' || Number.isNaN(v)) return '-';
+  return v.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+async function load(){
+  const hist = await fetchJson('/api/execution/history');
+  const rows = Array.isArray(hist) ? hist : [];
+  const latest = rows.length ? rows[rows.length-1] : null;
+  const latestOrders = latest ? (latest.orders || []) : [];
+  document.getElementById('status').innerText = rows.length ? 'ACTIVE' : 'IDLE';
+  document.getElementById('status').className = 'value ' + (rows.length ? 'good' : 'warn');
+  document.getElementById('ordersCount').innerText = latestOrders.length || 0;
+  document.getElementById('routingHealth').innerText = latestOrders.length ? 'TRACKED' : 'STANDBY';
+  document.getElementById('routingHealth').className = 'value ' + (latestOrders.length ? 'good' : 'warn');
+  const feedHtml = rows.length ? rows.slice(-8).reverse().map(item => {
+    const orders = item.orders || [];
+    return `<div class="feed-item"><div style="font-weight:700">${orders.length} orders observed</div><div style="color:#9fb3d8">${item.timestamp || ''}</div></div>`;
+  }).join('') : '<div style="color:#9fb3d8">No execution events yet.</div>';
+  document.getElementById('feed').innerHTML = feedHtml;
+  const tableRows = latestOrders.length ? latestOrders.map(o => {
+    const order = o.order || o;
+    return `<tr>
+      <td>${order.symbol || ''}</td>
+      <td>${order.side || ''}</td>
+      <td>${fmt(Number(order.notional || 0))}</td>
+      <td>${o.simulated ? 'Paper' : 'Observed'}</td>
+    </tr>`;
+  }).join('') : '<tr><td colspan="4">No orders yet</td></tr>';
+  document.getElementById('ordersTable').innerHTML = tableRows;
+  document.getElementById('execBox').innerText = JSON.stringify(hist, null, 2);
+}
+load();
+setInterval(load, 5000);
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "mission": "QNT50006",
+  "capabilities": [
+    "release_queue_ingestion",
+    "risk_and_performance_gating",
+    "autonomous_cycle_planning",
+    "controlled_order_routing",
+    "execution_escalation_tracking"
+  ],
+  "dependencies": ["QNT50001", "QNT50003", "QNT50004", "QNT50005"]
+}

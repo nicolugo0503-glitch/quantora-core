@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30347 Automation Stabilization</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;--bad:#fb7185}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .shell{max-width:1280px;margin:0 auto;padding:24px}.panel{background:rgba(15,29,49,.95);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.16);margin-bottom:16px}
+    .hero{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.sub{color:var(--muted);line-height:1.55;max-width:800px}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    input,select,textarea{width:100%;border:1px solid var(--line);background:#132742;color:var(--text);border-radius:10px;padding:11px 12px;outline:none}
+    button{border:none;background:var(--accent);color:#fff;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700}.secondary{background:#1d4ed8}.warn{background:var(--warn);color:#111827}.danger{background:var(--bad)}
+    .row{display:flex;gap:10px;flex-wrap:wrap}.metric{background:#0a1526;border:1px solid #1e2d47;border-radius:14px;padding:12px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:22px;font-weight:700;margin-top:8px}
+    pre{margin:0;background:#06101d;color:#dbeafe;border:1px solid #1e2d47;border-radius:14px;min-height:140px;max-height:360px;overflow:auto;padding:14px;white-space:pre-wrap}
+    .tiny{color:var(--muted);font-size:12px}.good{color:var(--good)}.bad{color:var(--bad)}.warn-text{color:var(--warn)}
+    @media (max-width: 1024px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:1fr}.hero{flex-direction:column}}
+    @media (max-width: 640px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <div class="panel hero">
+    <div>
+      <h1 style="margin:0 0 10px">QNT30347 · Automation Stabilization v2</h1>
+      <div class="sub">Institutional loop controls for retry discipline, degraded-mode recovery, worker heartbeat monitoring, and per-operator health telemetry. This layer protects the live AI decision + capital allocation cycle from transient failure without bypassing Quantora risk controls.</div>
+    </div>
+    <div class="row">
+      <button onclick="refreshAll()">Refresh</button>
+      <button class="secondary" onclick="workerStart()">Start Worker</button>
+      <button class="warn" onclick="workerStop()">Stop Worker</button>
+      <button class="danger" onclick="recoverWorker()">Recover Worker</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="metric"><div class="label">Automation Health</div><div class="value" id="m_health">-</div></div>
+    <div class="metric"><div class="label">Worker Status</div><div class="value" id="m_worker">-</div></div>
+    <div class="metric"><div class="label">Heartbeat Age</div><div class="value" id="m_heartbeat">-</div></div>
+    <div class="metric"><div class="label">Avg Cycle Duration</div><div class="value" id="m_duration">-</div></div>
+  </div>
+
+  <div class="panel">
+    <h2 style="margin-top:0">Operator Automation Config</h2>
+    <div class="grid">
+      <input id="operator_id" placeholder="Operator ID (optional for admin)">
+      <select id="execution_mode"><option value="internal">internal</option><option value="alpaca">alpaca</option></select>
+      <select id="market_bias"><option value="neutral">neutral</option><option value="bullish">bullish</option><option value="bearish">bearish</option></select>
+      <input id="interval_seconds" type="number" value="30" placeholder="Interval seconds">
+      <input id="failure_pause_seconds" type="number" value="60" placeholder="Failure pause seconds">
+      <input id="max_consecutive_failures" type="number" value="3" placeholder="Max consecutive failures">
+      <input id="max_retry_attempts" type="number" value="2" placeholder="Max retry attempts">
+      <input id="retry_backoff_seconds" type="number" value="5" placeholder="Retry backoff seconds">
+    </div>
+    <div class="grid" style="margin-top:12px">
+      <label class="tiny"><input id="broker_reconcile_enabled" type="checkbox" checked> broker reconcile enabled</label>
+      <label class="tiny"><input id="pnl_sync_enabled" type="checkbox" checked> PnL sync enabled</label>
+      <label class="tiny"><input id="retry_on_failure" type="checkbox" checked> retry on failure</label>
+      <label class="tiny"><input id="run_immediately" type="checkbox"> run immediately on recovery</label>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button onclick="configureOperator()">Save Config</button>
+      <button class="secondary" onclick="startOperator()">Start Loop</button>
+      <button class="warn" onclick="stopOperator()">Stop Loop</button>
+      <button class="secondary" onclick="runOnce()">Run Once</button>
+      <button class="secondary" onclick="syncNow()">Sync Now</button>
+      <button class="danger" onclick="recoverOperator()">Recover Operator</button>
+    </div>
+    <div class="tiny" style="margin-top:10px">Recommended live posture: retry enabled, max retry attempts 2, backoff 5s, pause after 3 consecutive failures, broker reconcile ON, PnL sync ON.</div>
+  </div>
+
+  <div class="two">
+    <div class="panel">
+      <h2 style="margin-top:0">Automation Health</h2>
+      <pre id="health_out">Ready.</pre>
+    </div>
+    <div class="panel">
+      <h2 style="margin-top:0">Cycle Metrics</h2>
+      <pre id="metrics_out">Ready.</pre>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="panel">
+      <h2 style="margin-top:0">Automation Status</h2>
+      <pre id="status_out">Ready.</pre>
+    </div>
+    <div class="panel">
+      <h2 style="margin-top:0">Worker Status</h2>
+      <pre id="worker_out">Ready.</pre>
+    </div>
+  </div>
+
+  <div class="two">
+    <div class="panel">
+      <h2 style="margin-top:0">Recent Events</h2>
+      <pre id="events_out">Ready.</pre>
+    </div>
+    <div class="panel">
+      <h2 style="margin-top:0">Stability Status</h2>
+      <pre id="stability_out">Ready.</pre>
+    </div>
+  </div>
+</div>
+<script>
+async function api(path, opts={}) {
+  const res = await fetch(path, {
+    credentials:'include',
+    headers:{'Content-Type':'application/json', ...(opts.headers||{})},
+    ...opts,
+  });
+  let data;
+  try { data = await res.json(); } catch { data = {raw: await res.text()}; }
+  if (!res.ok) throw new Error(JSON.stringify(data, null, 2));
+  return data;
+}
+function payload(){
+  return {
+    operator_id: document.getElementById('operator_id').value || null,
+    execution_mode: document.getElementById('execution_mode').value,
+    market_bias: document.getElementById('market_bias').value,
+    interval_seconds: Number(document.getElementById('interval_seconds').value || 30),
+    broker_reconcile_enabled: document.getElementById('broker_reconcile_enabled').checked,
+    pnl_sync_enabled: document.getElementById('pnl_sync_enabled').checked,
+    failure_pause_seconds: Number(document.getElementById('failure_pause_seconds').value || 60),
+    max_consecutive_failures: Number(document.getElementById('max_consecutive_failures').value || 3),
+    retry_on_failure: document.getElementById('retry_on_failure').checked,
+    max_retry_attempts: Number(document.getElementById('max_retry_attempts').value || 2),
+    retry_backoff_seconds: Number(document.getElementById('retry_backoff_seconds').value || 5),
+  };
+}
+function recoverPayload(){
+  return {
+    operator_id: document.getElementById('operator_id').value || null,
+    restart_worker: true,
+    clear_failures: true,
+    run_immediately: document.getElementById('run_immediately').checked,
+  };
+}
+function out(id, data){ document.getElementById(id).textContent = typeof data === 'string' ? data : JSON.stringify(data, null, 2); }
+async function refreshAll(){
+  try {
+    const [status, worker, events, stability, health, metrics] = await Promise.all([
+      api('/automation/status'),
+      api('/automation/worker-status'),
+      api('/automation/events?limit=25'),
+      api('/stability/status'),
+      api('/automation/health'),
+      api('/automation/cycle-metrics'),
+    ]);
+    out('status_out', status); out('worker_out', worker); out('events_out', events); out('stability_out', stability); out('health_out', health); out('metrics_out', metrics);
+    document.getElementById('m_health').textContent = health.status || '-';
+    document.getElementById('m_worker').textContent = worker.worker?.last_status || '-';
+    document.getElementById('m_heartbeat').textContent = ((worker.worker?.heartbeat_age_seconds ?? '-') + 's');
+    document.getElementById('m_duration').textContent = ((metrics.worker?.avg_cycle_duration_ms ?? '-') + ' ms');
+  } catch (e) {
+    out('status_out', 'Refresh failed\n' + e.message);
+  }
+}
+async function configureOperator(){ try { out('status_out', await api('/automation/configure',{method:'POST', body:JSON.stringify(payload())})); await refreshAll(); } catch(e){ out('status_out', e.message); } }
+async function startOperator(){ try { out('status_out', await api('/automation/start',{method:'POST', body:JSON.stringify(payload())})); await refreshAll(); } catch(e){ out('status_out', e.message); } }
+async function stopOperator(){ try { out('status_out', await api('/automation/stop',{method:'POST', body:JSON.stringify({operator_id: document.getElementById('operator_id').value || null})})); await refreshAll(); } catch(e){ out('status_out', e.message); } }
+async function runOnce(){ try { out('status_out', await api('/automation/run-once',{method:'POST', body:JSON.stringify({operator_id: document.getElementById('operator_id').value || null, force:true})})); await refreshAll(); } catch(e){ out('status_out', e.message); } }
+async function syncNow(){ try { out('stability_out', await api('/stability/sync-now',{method:'POST'})); await refreshAll(); } catch(e){ out('stability_out', e.message); } }
+async function workerStart(){ try { out('worker_out', await api('/automation/worker/start',{method:'POST'})); await refreshAll(); } catch(e){ out('worker_out', e.message); } }
+async function workerStop(){ try { out('worker_out', await api('/automation/worker/stop',{method:'POST'})); await refreshAll(); } catch(e){ out('worker_out', e.message); } }
+async function recoverOperator(){ try { out('health_out', await api('/automation/recover',{method:'POST', body:JSON.stringify(recoverPayload())})); await refreshAll(); } catch(e){ out('health_out', e.message); } }
+async function recoverWorker(){ try { out('worker_out', await api('/automation/recover',{method:'POST', body:JSON.stringify({restart_worker:true, clear_failures:false, run_immediately:false})})); await refreshAll(); } catch(e){ out('worker_out', e.message); } }
+refreshAll();
+setInterval(refreshAll, 5000);
+</script>
+</body>
+</html>

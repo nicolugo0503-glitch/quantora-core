@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30371 Reallocation Board</title>
+  <style>
+    :root { --bg:#07111f; --panel:#0f1d31; --panel2:#132742; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#60a5fa; }
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .shell{max-width:1280px;margin:0 auto;padding:24px}.panel{background:rgba(15,29,49,.95);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px}
+    .metrics,.row{display:grid;gap:12px}.metrics{grid-template-columns:repeat(4,minmax(0,1fr))}.row{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .metric{background:#0a1526;border:1px solid #1e2d47;border-radius:14px;padding:14px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:26px;font-weight:700;margin-top:8px}
+    textarea{width:100%;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;padding:11px 12px;min-height:240px}
+    button{border:none;background:var(--accent);color:white;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700} button.secondary{background:#1d4ed8}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:280px;white-space:pre-wrap}.tiny{color:var(--muted);font-size:12px}
+    @media(max-width:900px){.metrics,.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">
+      <div>
+        <h1 style="margin:0 0 8px 0;">Reclaimed Capital Reallocation Board + Opportunity Queue Engine</h1>
+        <div class="tiny">Rank fresh opportunities against reclaimed capital, build a queue, and reallocate freed capital toward validated higher-edge candidates.</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="secondary" onclick="window.location.href='index.html'">Command Center</button>
+        <button onclick="loadStatus()">Refresh</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="label">Queued</div><div class="value" id="m1">-</div></div>
+    <div class="metric"><div class="label">Approved Reallocations</div><div class="value" id="m2">-</div></div>
+    <div class="metric"><div class="label">Reallocated Capital</div><div class="value" id="m3">-</div></div>
+    <div class="metric"><div class="label">Candidates Ranked</div><div class="value" id="m4">-</div></div>
+  </div>
+
+  <div class="row">
+    <div class="panel">
+      <h2 style="margin-top:0">Refresh Opportunity Queue</h2>
+      <textarea id="queue_body">{
+  "candidates": [
+    {"candidate_id":"cand_2001","strategy_name":"Momentum Expansion A","verdict":"APPROVED","opportunity_score":82.5,"edge_score":71.0,"confidence":0.78,"reclaimed_capital_pool":30000,"priority":true},
+    {"candidate_id":"cand_2002","strategy_name":"Reversion Recovery B","verdict":"WATCHLIST","opportunity_score":74.0,"edge_score":63.5,"confidence":0.66,"reclaimed_capital_pool":18000,"priority":false},
+    {"candidate_id":"cand_2003","strategy_name":"Breakout Flow C","verdict":"APPROVED","opportunity_score":79.2,"edge_score":68.4,"confidence":0.72,"reclaimed_capital_pool":25000,"priority":false}
+  ]
+}</textarea>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        <button onclick="refreshQueue()">Refresh Queue</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2 style="margin-top:0">Execute Reallocation</h2>
+      <textarea id="exec_body">{
+  "candidate_id":"cand_2001",
+  "available_capital":22000
+}</textarea>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="secondary" onclick="executeReallocation()">Execute Reallocation</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel"><h2 style="margin-top:0">Output</h2><pre id="out">Loading...</pre></div>
+</div>
+
+<script>
+const API="http://127.0.0.1:8010";
+async function req(path, method="GET", body=null){
+  const r=await fetch(API+path,{method,headers:{"Content-Type":"application/json"},body:body?JSON.stringify(body):null});
+  const d=await r.json();
+  if(!r.ok) throw new Error(JSON.stringify(d));
+  return d;
+}
+function render(data){
+  const b = data.reallocation_board || {};
+  document.getElementById("m1").textContent = b.queued_opportunities ?? "-";
+  document.getElementById("m2").textContent = b.approved_reallocations ?? "-";
+  document.getElementById("m3").textContent = b.reallocated_capital ?? "-";
+  document.getElementById("m4").textContent = b.total_candidates_ranked ?? "-";
+  document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+}
+async function loadStatus(){ try{ render(await req("/reallocation-board/status")); } catch(e){ document.getElementById("out").textContent = String(e); } }
+async function refreshQueue(){
+  try{
+    const body = JSON.parse(document.getElementById("queue_body").value);
+    const data = await req("/reallocation-board/queue/refresh", "POST", body);
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+    await loadStatus();
+  }catch(e){ document.getElementById("out").textContent = String(e); }
+}
+async function executeReallocation(){
+  try{
+    const body = JSON.parse(document.getElementById("exec_body").value);
+    const data = await req("/reallocation-board/capital/execute", "POST", body);
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+    await loadStatus();
+  }catch(e){ document.getElementById("out").textContent = String(e); }
+}
+loadStatus();
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "email": "growth@test.quantora",
+  "escalation_matrix": {
+    "high": {
+      "level": "L1",
+      "owner_role": "Risk Lead",
+      "target_minutes": 15
+    },
+    "medium": {
+      "level": "L2",
+      "owner_role": "Operations Lead",
+      "target_minutes": 60
+    },
+    "low": {
+      "level": "L3",
+      "owner_role": "Analyst",
+      "target_minutes": 240
+    }
+  },
+  "supervisory_runs": [],
+  "escalations": [],
+  "created_at": 1775712154,
+  "updated_at": 1775712154
+}

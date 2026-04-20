@@ -1,0 +1,30 @@
+{
+  "files": {
+    "orders_file": "data/qnt30508_orders.jsonl",
+    "fills_file": "data/qnt30508_fills.jsonl",
+    "positions_snapshot_file": "data/qnt30508_positions_snapshot.json"
+  },
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/broker/persist-now"
+    },
+    {
+      "method": "GET",
+      "path": "/api/broker/orders"
+    },
+    {
+      "method": "GET",
+      "path": "/api/broker/fills"
+    },
+    {
+      "method": "GET",
+      "path": "/api/broker/positions-snapshot"
+    }
+  ],
+  "alpaca_client_expected_methods": [
+    "get_open_orders",
+    "get_recent_fills",
+    "get_all_positions"
+  ]
+}

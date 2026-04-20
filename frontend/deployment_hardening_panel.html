@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30420 Deployment Hardening</title>
+  <style>
+    :root { --bg:#07111f; --panel:#0f1d31; --panel2:#132742; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#60a5fa; --good:#34d399; --warn:#f59e0b; --bad:#fb7185; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#040b15 0%,#0a1424 100%); color:var(--text); }
+    .shell { max-width:1400px; margin:0 auto; padding:24px; }
+    .hero,.panel,.metric { background:rgba(15,29,49,.95); border:1px solid var(--line); border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,.16); }
+    .hero,.panel,.metric { padding:18px; }
+    .hero { display:flex; justify-content:space-between; gap:12px; margin-bottom:18px; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-bottom:18px; }
+    .stack { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .value { font-size:28px; font-weight:700; margin-top:8px; }
+    button { border:none; background:var(--accent); color:white; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:700; }
+    button.secondary { background:#1d4ed8; }
+    pre { margin:0; background:#06101d; color:#dbeafe; border:1px solid #1e2d47; border-radius:14px; min-height:160px; max-height:520px; overflow:auto; padding:14px; white-space:pre-wrap; }
+    table { width:100%; border-collapse:collapse; font-size:13px; }
+    th,td { padding:9px 10px; border-bottom:1px solid #1e2d47; text-align:left; }
+    th { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+    .table-wrap { overflow:auto; border:1px solid #1e2d47; border-radius:14px; background:#0a1526; }
+    .pill { display:inline-block; padding:6px 10px; border-radius:999px; border:1px solid #274168; font-size:12px; margin-right:8px; }
+    .good { color:#9ff0ce; border-color:#256b53; }
+    .warn { color:#fcd68f; border-color:#8a5a0a; }
+    .bad { color:#fecdd3; border-color:#7c243d; }
+    @media (max-width:1000px){ .grid,.stack{ grid-template-columns:1fr; } .hero{ flex-direction:column; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="hero">
+      <div>
+        <h1 style="margin:0 0 10px">QNT30420 · Production Deployment Hardening</h1>
+        <div style="color:var(--muted);max-width:900px;line-height:1.5;">Startup Doctor, environment validation, safe mode, readiness scoring, and deployment health now sit above the Quantora runtime. This panel is the canonical operator view for production safety posture.</div>
+      </div>
+      <div>
+        <button onclick="refreshAll()">Refresh Readiness</button>
+        <button class="secondary" onclick="window.location.href='index.html'">Back to Command Center</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="metric"><div class="label">Overall Status</div><div class="value" id="overall_status">-</div></div>
+      <div class="metric"><div class="label">Environment</div><div class="value" id="environment">-</div></div>
+      <div class="metric"><div class="label">Billing Mode</div><div class="value" id="billing_mode">-</div></div>
+      <div class="metric"><div class="label">Readiness Score</div><div class="value" id="score">-</div></div>
+    </div>
+
+    <div class="stack">
+      <div class="panel">
+        <h2 style="margin-top:0">Safe Mode</h2>
+        <div id="safe_mode_pills"></div>
+        <pre id="safe_mode_json">Loading...</pre>
+      </div>
+      <div class="panel">
+        <h2 style="margin-top:0">Deployment Report</h2>
+        <pre id="deployment_json">Loading...</pre>
+      </div>
+      <div class="panel">
+        <h2 style="margin-top:0">Section Health</h2>
+        <div class="table-wrap"><table><thead><tr><th>Section</th><th>Status</th><th>Warnings</th><th>Critical</th></tr></thead><tbody id="health_rows"></tbody></table></div>
+      </div>
+      <div class="panel">
+        <h2 style="margin-top:0">Checks</h2>
+        <div class="table-wrap"><table><thead><tr><th>Name</th><th>Status</th><th>Detail</th></tr></thead><tbody id="check_rows"></tbody></table></div>
+      </div>
+    </div>
+  </div>
+<script>
+async function getJson(path){ const r = await fetch(path); const t = await r.text(); try { return JSON.parse(t); } catch { return { raw:t, status:r.status }; } }
+function cls(v){ return v === 'ok' || v === 'ready' ? 'good' : (v === 'warning' || v === 'degraded' ? 'warn' : 'bad'); }
+function pill(label, value){ return `<span class="pill ${cls(value)}">${label}: ${value}</span>`; }
+async function refreshAll(){
+  const [dep, runtime, billing, persistence, execution, attribution] = await Promise.all([
+    getJson('/health/deployment'), getJson('/health/runtime'), getJson('/health/billing'), getJson('/health/persistence'), getJson('/health/execution'), getJson('/health/attribution')
+  ]);
+  document.getElementById('overall_status').textContent = dep.overall_status || '-';
+  document.getElementById('environment').textContent = dep.environment || '-';
+  document.getElementById('billing_mode').textContent = dep.billing_mode || '-';
+  document.getElementById('score').textContent = dep.readiness_score ?? '-';
+  document.getElementById('safe_mode_json').textContent = JSON.stringify(dep.safe_mode || {}, null, 2);
+  document.getElementById('deployment_json').textContent = JSON.stringify(dep, null, 2);
+  const sm = dep.safe_mode || {};
+  document.getElementById('safe_mode_pills').innerHTML = [
+    pill('Mode', sm.mode || 'unknown'),
+    pill('Reporting', sm.reporting_allowed ? 'ok' : 'blocked'),
+    pill('Paper Execution', sm.paper_execution_allowed ? 'ok' : 'blocked'),
+    pill('Live Execution', sm.live_execution_allowed ? 'ok' : 'blocked'),
+    pill('Capital Allocation', sm.capital_allocation_allowed ? 'ok' : 'blocked'),
+  ].join('');
+  const healths = [
+    ['Runtime', runtime], ['Billing/Env', billing], ['Persistence', persistence], ['Execution', execution], ['Attribution', attribution]
+  ];
+  document.getElementById('health_rows').innerHTML = healths.map(([name,h]) => `<tr><td>${name}</td><td>${h.status || '-'}</td><td>${h.warning_count ?? '-'}</td><td>${h.critical_count ?? '-'}</td></tr>`).join('');
+  document.getElementById('check_rows').innerHTML = (dep.checks || []).map(c => `<tr><td>${c.name}</td><td>${c.status}</td><td>${c.detail}</td></tr>`).join('');
+}
+refreshAll();
+</script>
+</body>
+</html>

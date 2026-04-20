@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30617 Investor Identity Registry + Multi-Recipient Delivery Profiles</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1440px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,select,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:90px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1400px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30617 · Investor Identity Registry + Multi-Recipient Delivery Profiles</h1>
+        <div style="color:#9fb3d8">Creates investor identity records and reusable delivery profiles with multiple recipients and channels.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30616_access_control.html">Access Control</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Investors</div><div id="investors" class="value">-</div></div>
+    <div class="card"><div class="label">Profiles</div><div id="profiles" class="value">-</div></div>
+    <div class="card"><div class="label">Active Profiles</div><div id="active" class="value">-</div></div>
+    <div class="card"><div class="label">Recipients</div><div id="recipients" class="value">-</div></div>
+    <div class="card"><div class="label">Latest Profile</div><div id="latest" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <input id="legalName" placeholder="Investor legal name">
+    <input id="primaryEmail" placeholder="Primary email" style="margin-top:12px">
+    <select id="entityType" style="margin-top:12px">
+      <option value="individual">individual</option>
+      <option value="entity">entity</option>
+      <option value="fund">fund</option>
+    </select>
+    <input id="jurisdiction" placeholder="Jurisdiction" style="margin-top:12px">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="createInvestor()">Create Investor</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <input id="profileName" placeholder="Profile name">
+    <input id="investorId" placeholder="Investor ID" style="margin-top:12px">
+    <textarea id="recipientJson" placeholder='Recipients JSON, e.g. [{"name":"Ana","email":"ana@example.com","role":"owner"}]' style="margin-top:12px"></textarea>
+    <input id="channels" placeholder="Channels comma-separated e.g. portal,email_simulated" style="margin-top:12px">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="createProfile()">Create Delivery Profile</button>
+      <button onclick="disableLatest()">Disable Latest Profile</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Delivery Profiles</div>
+    <table>
+      <thead><tr><th>Profile</th><th>Investor ID</th><th>Recipients</th><th>Channels</th><th>Status</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Identity Registry Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/identity-registry/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data,null,2); return; }
+  const d = res.data || {};
+  const latest = d.latest_profile || {};
+  document.getElementById('investors').textContent = String(d.investor_count || 0);
+  document.getElementById('profiles').textContent = String(d.profile_count || 0);
+  document.getElementById('active').textContent = String(d.active_profile_count || 0);
+  document.getElementById('recipients').textContent = String(d.recipient_count || 0);
+  document.getElementById('latest').textContent = String(latest.profile_name || '-');
+  document.getElementById('rows').innerHTML = (d.profiles || []).map(p =>
+    `<tr><td>${p.profile_name}</td><td>${p.investor_id}</td><td>${(p.recipients||[]).length}</td><td>${(p.delivery_channels||[]).join(", ")}</td><td>${p.status}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function createInvestor(){
+  await j('/api/identity-registry/investor', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    legal_name: document.getElementById('legalName').value,
+    primary_email: document.getElementById('primaryEmail').value,
+    entity_type: document.getElementById('entityType').value,
+    jurisdiction: document.getElementById('jurisdiction').value
+  })});
+  await load();
+}
+async function createProfile(){
+  let recipients = [];
+  try { recipients = JSON.parse(document.getElementById('recipientJson').value || '[]'); } catch(e) {}
+  const channels = (document.getElementById('channels').value || 'portal').split(',').map(x => x.trim()).filter(Boolean);
+  await j('/api/identity-registry/profile', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    profile_name: document.getElementById('profileName').value,
+    investor_id: document.getElementById('investorId').value,
+    recipients,
+    delivery_channels: channels
+  })});
+  await load();
+}
+async function disableLatest(){
+  const res = await j('/api/identity-registry/summary');
+  const latest = res.data.latest_profile;
+  if(!latest) return;
+  await j('/api/identity-registry/profile/disable', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({profile_id: latest.profile_id})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

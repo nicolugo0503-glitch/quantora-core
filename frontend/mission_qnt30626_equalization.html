@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30626 Equalization Series Engine + Investor Share-Class Accounting</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1480px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:20px;font-weight:800;margin-top:6px}
+button,a,input,select,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:80px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:380px}
+@media(max-width:1400px){.grid{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30626 · Equalization Series Engine + Investor Share-Class Accounting</h1>
+        <div style="color:#9fb3d8">Manages share classes, investor series accounts, equalization credits, and series revaluation.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30625_waterfall.html">Waterfall Engine</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Share Classes</div><div id="classes" class="value">-</div></div>
+    <div class="card"><div class="label">Series</div><div id="series" class="value">-</div></div>
+    <div class="card"><div class="label">Events</div><div id="events" class="value">-</div></div>
+    <div class="card"><div class="label">Series Capital</div><div id="capital" class="value">-</div></div>
+    <div class="card"><div class="label">Units</div><div id="units" class="value">-</div></div>
+    <div class="card"><div class="label">Eq Credit</div><div id="credit" class="value">-</div></div>
+    <div class="card"><div class="label">Latest Class</div><div id="latest" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <input id="className" placeholder="Class name" value="Class A">
+    <input id="baseNav" placeholder="Base NAV/share" style="margin-top:12px" value="100">
+    <input id="feeRate" placeholder="Fee rate %" style="margin-top:12px" value="2">
+    <input id="currency" placeholder="Currency" style="margin-top:12px" value="USD">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="createShareClass()">Create Share Class</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <input id="investorId" placeholder="Investor ID">
+    <input id="shareClassId" placeholder="Share Class ID" style="margin-top:12px">
+    <input id="seriesName" placeholder="Series name" style="margin-top:12px">
+    <input id="capitalAmount" placeholder="Capital amount" style="margin-top:12px">
+    <input id="navPerShare" placeholder="NAV/share" style="margin-top:12px">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="createSeries()">Create Series Account</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <input id="seriesId" placeholder="Series ID">
+    <select id="eventType" style="margin-top:12px">
+      <option value="performance_allocation">performance_allocation</option>
+      <option value="management_fee">management_fee</option>
+      <option value="credit">credit</option>
+      <option value="subscription_adjustment">subscription_adjustment</option>
+    </select>
+    <input id="basisAmount" placeholder="Basis amount" style="margin-top:12px">
+    <input id="ratePct" placeholder="Rate %" style="margin-top:12px">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="postEvent()">Post Equalization Event</button>
+      <button onclick="revalue()">Revalue Share Class</button>
+    </div>
+    <input id="newNavPerShare" placeholder="New NAV/share for revalue" style="margin-top:12px">
+  </div>
+
+  <div class="card">
+    <div class="label">Series Ledger</div>
+    <table>
+      <thead><tr><th>Investor</th><th>Class</th><th>Capital</th><th>Units</th><th>NAV/share</th><th>Eq Credit</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Equalization Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v || 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/equalization/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data,null,2); return; }
+  const d = res.data || {};
+  document.getElementById('classes').textContent = String(d.share_class_count || 0);
+  document.getElementById('series').textContent = String(d.series_account_count || 0);
+  document.getElementById('events').textContent = String(d.event_count || 0);
+  document.getElementById('capital').textContent = money(d.total_series_capital || 0);
+  document.getElementById('units').textContent = Number(d.total_units || 0).toFixed(6);
+  document.getElementById('credit').textContent = money(d.total_equalization_credit || 0);
+  document.getElementById('latest').textContent = String((d.latest_share_class || {}).class_name || '-');
+  document.getElementById('rows').innerHTML = (d.series_accounts || []).map(s =>
+    `<tr><td>${s.investor_id}</td><td>${s.share_class_id}</td><td>${money(s.capital_amount)}</td><td>${Number(s.units || 0).toFixed(6)}</td><td>${Number(s.nav_per_share || 0).toFixed(6)}</td><td>${money(s.equalization_credit)}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function createShareClass(){
+  await j('/api/equalization/share-class', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    class_name: document.getElementById('className').value,
+    base_nav_per_share: Number(document.getElementById('baseNav').value || 100),
+    fee_rate_pct: Number(document.getElementById('feeRate').value || 0),
+    currency: document.getElementById('currency').value
+  })});
+  await load();
+}
+async function createSeries(){
+  await j('/api/equalization/series', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    investor_id: document.getElementById('investorId').value,
+    share_class_id: document.getElementById('shareClassId').value,
+    series_name: document.getElementById('seriesName').value,
+    capital_amount: Number(document.getElementById('capitalAmount').value || 0),
+    nav_per_share: Number(document.getElementById('navPerShare').value || 0)
+  })});
+  await load();
+}
+async function postEvent(){
+  await j('/api/equalization/event', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    series_id: document.getElementById('seriesId').value,
+    event_type: document.getElementById('eventType').value,
+    basis_amount: Number(document.getElementById('basisAmount').value || 0),
+    rate_pct: Number(document.getElementById('ratePct').value || 0)
+  })});
+  await load();
+}
+async function revalue(){
+  await j('/api/equalization/revalue', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    share_class_id: document.getElementById('shareClassId').value,
+    new_nav_per_share: Number(document.getElementById('newNavPerShare').value || 0)
+  })});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

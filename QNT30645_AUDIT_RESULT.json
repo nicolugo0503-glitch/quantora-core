@@ -1,0 +1,11 @@
+{
+  "base_zip": "QUANTORA_FULL_PROJECT_QNT30644_PORTFOLIO_CONSTRUCTION_LAYER_AUDITED.zip",
+  "output_zip": "QUANTORA_FULL_PROJECT_QNT30645_PRODUCTIZATION_LAYER_AUDITED.zip",
+  "checked_at": "2026-04-08T22:28:12.455094+00:00",
+  "checks": {
+    "module_files_present": true,
+    "mission_page_present": true,
+    "registry_contains_qnt30645": true,
+    "dynamic_loader_preserved": true
+  }
+}

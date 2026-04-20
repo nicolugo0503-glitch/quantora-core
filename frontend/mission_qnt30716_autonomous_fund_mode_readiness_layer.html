@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>QNT30716 Autonomous Fund Mode Readiness Layer</title>
+<style>
+:root{--bg:#071019;--panel:#0d1723;--line:#1b2b40;--text:#edf3fb;--muted:#8ea0b7;--good:#48d597;--bad:#ff6f86;--warn:#ffc857}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#071019,#09131d 55%,#071019);color:var(--text);font-family:Inter,system-ui,sans-serif}.wrap{max-width:1360px;margin:0 auto;padding:24px}h1{margin:0 0 6px}p{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:14px 0}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:800;margin-top:6px}.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 0}.toolbar input,.toolbar select,.toolbar button{background:#09111a;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:10px 12px}.toolbar button{cursor:pointer}table{width:100%;border-collapse:collapse}th,td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}pre{white-space:pre-wrap;word-break:break-word;background:#08101a;border:1px solid var(--line);border-radius:12px;padding:12px;max-height:320px;overflow:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>QNT30716 Autonomous Fund Mode Readiness Layer</h1>
+  <p>Governed readiness scoring for autonomy, resilience, supervision coverage, scenario coverage, and full-fund operational clearance.</p>
+  <div class="toolbar">
+    <button onclick="bootstrapDemo()">Bootstrap Demo</button>
+    <select id="scope"><option value="AUTONOMOUS_FUND_MODE">AUTONOMOUS_FUND_MODE</option><option value="SUPERVISED_AUTONOMOUS_MODE">SUPERVISED_AUTONOMOUS_MODE</option></select>
+    <input id="runbook" type="number" step="0.1" placeholder="runbook completeness" value="94">
+    <input id="autonomy" type="number" step="0.1" placeholder="autonomy band" value="89">
+    <input id="resilience" type="number" step="0.1" placeholder="resilience" value="91">
+    <button onclick="evaluateRun()">Evaluate Readiness</button>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="label">Readiness Posture</div><div id="posture" class="value">-</div></div>
+    <div class="card"><div class="label">Latest Score</div><div id="score" class="value">-</div></div>
+    <div class="card"><div class="label">Runs</div><div id="runs" class="value">0</div></div>
+    <div class="card"><div class="label">Exceptions</div><div id="exceptions" class="value">0</div></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><div class="label">Current Context</div><pre id="contextBox">Loading...</pre></div>
+    <div class="card"><div class="label">Latest Run</div><pre id="runBox">Loading...</pre></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><div class="label">Readiness Runs</div><table><thead><tr><th>Run</th><th>Scope</th><th>Score</th><th>Posture</th></tr></thead><tbody id="runRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+    <div class="card"><div class="label">Exceptions</div><table><thead><tr><th>Exception</th><th>Scope</th><th>Score</th><th>Blockers</th></tr></thead><tbody id="exceptionRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+  </div>
+</div>
+<script>
+async function j(url,opt){const r=await fetch(url,opt);const d=await r.json();if(!r.ok) throw new Error(d.detail||'request failed');return d;}
+function cls(v){const t=String(v||'').toLowerCase(); if(t.includes('approved')||t.includes('ready')) return 'good'; if(t.includes('review')||t.includes('safe')) return 'warn'; return 'bad';}
+function render(data){
+ const s=data.autonomous_fund_mode_readiness_status||{};
+ document.getElementById('posture').textContent=String(s.posture||'-').toUpperCase(); document.getElementById('posture').className='value '+cls(s.posture||'blocked');
+ document.getElementById('score').textContent=String(s.latest_score??'-'); document.getElementById('score').className='value warn';
+ document.getElementById('runs').textContent=String(s.run_count||0); document.getElementById('runs').className='value good';
+ document.getElementById('exceptions').textContent=String(s.exception_count||0); document.getElementById('exceptions').className='value bad';
+ document.getElementById('contextBox').textContent=JSON.stringify(data.current_context||{}, null, 2);
+ document.getElementById('runBox').textContent=JSON.stringify(data.latest_run||{}, null, 2);
+ const runs=data.runs||[];
+ document.getElementById('runRows').innerHTML=runs.length?runs.map(c=>`<tr><td>${c.run_id||'-'}</td><td>${c.mode_scope||'-'}</td><td>${(c.evaluation||{}).score??'-'}</td><td class="${cls((c.evaluation||{}).posture||'blocked')}">${(c.evaluation||{}).posture||'-'}</td></tr>`).join(''):'<tr><td colspan="4">No runs.</td></tr>';
+ const exceptions=data.exceptions||[];
+ document.getElementById('exceptionRows').innerHTML=exceptions.length?exceptions.map(a=>`<tr><td>${a.exception_id||'-'}</td><td>${a.mode_scope||'-'}</td><td>${a.score??'-'}</td><td>${(a.blockers||[]).join(', ')||'-'}</td></tr>`).join(''):'<tr><td colspan="4">No exceptions.</td></tr>';
+}
+async function loadAll(){render(await j('/api/autonomous-fund-mode-readiness-layer/summary'));}
+async function bootstrapDemo(){await j('/api/autonomous-fund-mode-readiness-layer/bootstrap-demo',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});await loadAll();}
+async function evaluateRun(){
+ const body={mode_scope:document.getElementById('scope').value,runbook_completeness_pct:Number(document.getElementById('runbook').value||0),autonomy_band_score:Number(document.getElementById('autonomy').value||0),human_supervision_coverage_pct:96,scenario_coverage_pct:93,resilience_score:Number(document.getElementById('resilience').value||0),open_exceptions:0};
+ await j('/api/autonomous-fund-mode-readiness-layer/evaluate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});await loadAll();
+}
+loadAll();
+</script>
+</body>
+</html>

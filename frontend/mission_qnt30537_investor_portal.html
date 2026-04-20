@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quantora Investor Portal</title>
+<style>
+body{margin:0;font-family:Arial;background:#06101d;color:#eaf1ff}
+.container{max-width:1200px;margin:auto;padding:24px}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:14px;padding:16px;margin-bottom:16px}
+h1{margin:0 0 10px}
+.label{color:#9fb3d8;font-size:12px}
+.value{font-size:24px;font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+button{padding:10px 14px;background:#2455d6;border:none;color:white;border-radius:8px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Investor Portal</h1>
+
+<div class="grid">
+<div class="card"><div class="label">NAV</div><div id="nav" class="value">-</div></div>
+<div class="card"><div class="label">Total Return</div><div id="pnl" class="value">-</div></div>
+<div class="card"><div class="label">Status</div><div id="status" class="value">-</div></div>
+</div>
+
+<div class="card">
+<h3>Account Overview</h3>
+<pre id="account">loading...</pre>
+</div>
+
+<div class="card">
+<h3>Statements</h3>
+<button onclick="loadStatements()">Load Statements</button>
+<pre id="statements"></pre>
+</div>
+
+<div class="card">
+<h3>Actions</h3>
+<button onclick="deposit()">Simulate Deposit</button>
+<button onclick="withdraw()">Simulate Withdrawal</button>
+</div>
+
+</div>
+
+<script>
+async function fetchJson(url,opts){
+try{
+const r=await fetch(url,opts||{});
+return await r.json();
+}catch(e){return {error:e.toString()}}
+}
+
+async function load(){
+const perf=await fetchJson('/api/performance-engine/summary');
+document.getElementById('nav').innerText=perf.nav||'-';
+document.getElementById('pnl').innerText=perf.total_pnl||'-';
+
+const fund=await fetchJson('/api/fund/state');
+document.getElementById('status').innerText=fund.running?'ACTIVE':'PAUSED';
+
+document.getElementById('account').innerText=JSON.stringify({
+nav:perf.nav,
+pnl:perf.total_pnl,
+status:fund.running
+},null,2);
+}
+
+async function loadStatements(){
+document.getElementById('statements').innerText=JSON.stringify({
+reports:["Q1.pdf","Q2.pdf"],
+generated:true
+},null,2);
+}
+
+async function deposit(){
+alert('Deposit simulated');
+}
+
+async function withdraw(){
+alert('Withdrawal simulated');
+}
+
+setInterval(load,5000);
+load();
+</script>
+
+</body>
+</html>

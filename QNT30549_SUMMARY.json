@@ -1,0 +1,6 @@
+{
+  "base_zip": "QUANTORA_FULL_PROJECT_QNT30548_STABILITY_LAYER.zip",
+  "mission_added": "QNT30549_INVESTOR_DASHBOARD_MINIMAL",
+  "frontend_only": true,
+  "new_file": "frontend/mission_qnt30549_investor_dashboard_minimal.html"
+}

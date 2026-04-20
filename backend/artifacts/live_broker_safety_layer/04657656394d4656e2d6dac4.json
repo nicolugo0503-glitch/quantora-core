@@ -1,0 +1,26 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "max_position_size_pct": 0.02,
+    "max_risk_per_trade_pct": 0.01,
+    "max_daily_drawdown_pct": 0.05,
+    "max_total_open_exposure_pct": 0.65,
+    "max_strategy_exposure_pct": 0.25,
+    "max_symbol_exposure_pct": 0.12,
+    "max_correlation_stack": 2,
+    "min_readiness_score": 80.0,
+    "require_stop_loss": true,
+    "require_take_profit": false,
+    "simulation_slippage_bps": 10.0
+  },
+  "controls": {
+    "kill_switch": false,
+    "execution_paused": false,
+    "operator_override_required": false,
+    "broker_connection_required": false
+  },
+  "runs": [],
+  "trade_checks": [],
+  "created_at": 1776223536,
+  "updated_at": 1776223536
+}

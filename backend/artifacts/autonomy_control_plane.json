@@ -1,0 +1,57 @@
+{
+  "enabled": true,
+  "current_mode": "locked",
+  "last_recommended_mode": "locked",
+  "last_transition_at": null,
+  "last_transition_reason": null,
+  "last_evaluated_at": null,
+  "last_cycle_at": null,
+  "last_cycle_status": "idle",
+  "cycle_count": 0,
+  "promotion_score_threshold": 75.0,
+  "demotion_score_threshold": 45.0,
+  "min_approval_clearance": "manager",
+  "delegations": {
+    "operator_F5E2C5BA": {
+      "operator_id": "operator_F5E2C5BA",
+      "tier": "manager",
+      "max_live_notional": 5000.0,
+      "allow_live_orders": true,
+      "allow_strategy_mutations": true,
+      "updated_at": "2026-03-31T05:32:59Z",
+      "updated_by": "admin@quantora.local"
+    }
+  },
+  "telemetry": [
+    {
+      "timestamp": "2026-03-31T05:32:59Z",
+      "operator_id": "operator_F5E2C5BA",
+      "score": 10.0,
+      "recommended_mode": "locked",
+      "requested_mode": null,
+      "execution_mode": "paper",
+      "market_bias": "neutral",
+      "allowed": true
+    },
+    {
+      "timestamp": "2026-03-31T05:32:59Z",
+      "operator_id": "operator_F5E2C5BA",
+      "score": 10.0,
+      "recommended_mode": "locked",
+      "requested_mode": "constrained_autonomy",
+      "execution_mode": "paper",
+      "market_bias": "neutral",
+      "allowed": true
+    },
+    {
+      "timestamp": "2026-03-31T05:32:59Z",
+      "operator_id": "operator_F5E2C5BA",
+      "score": 10.0,
+      "recommended_mode": "locked",
+      "requested_mode": null,
+      "execution_mode": "paper",
+      "market_bias": "neutral",
+      "allowed": true
+    }
+  ]
+}

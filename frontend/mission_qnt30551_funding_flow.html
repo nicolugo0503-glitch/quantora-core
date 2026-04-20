@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quantora Funding Flow</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#050b14;color:#eef4ff}
+.wrap{max-width:900px;margin:auto;padding:30px}
+.card{background:#0c1626;border:1px solid #1c2a44;border-radius:16px;padding:20px;margin-bottom:16px}
+.title{font-size:28px;font-weight:800}
+input{width:100%;padding:12px;border-radius:10px;border:1px solid #1c2a44;background:#07101d;color:white;margin-top:10px}
+button{padding:12px 16px;border-radius:10px;border:none;background:#2f5dff;color:white;font-weight:700;cursor:pointer;margin-top:10px}
+.log{margin-top:10px;font-size:14px;color:#9fb3d8}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:14px}
+.metric{background:#07101d;border:1px solid #1c2a44;border-radius:12px;padding:14px}
+.metric .label{font-size:11px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.metric .value{font-size:24px;font-weight:800;margin-top:6px}
+table{width:100%;border-collapse:collapse;margin-top:8px}
+th,td{padding:10px 8px;border-bottom:1px solid #1c2a44;text-align:left;font-size:14px}
+small{color:#9fb3d8}
+</style>
+<script src="quantora_sync.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="title">Funding Flow</div>
+    <div class="log" id="currentBalance">Loading capital state...</div>
+    <small>QNT30553 now writes deposit and withdrawal actions into the backend capital ledger instead of local-only state.</small>
+    <div class="row">
+      <div class="metric"><div class="label">Balance</div><div id="bal" class="value">-</div></div>
+      <div class="metric"><div class="label">Available</div><div id="avail" class="value">-</div></div>
+      <div class="metric"><div class="label">Allocated</div><div id="alloc" class="value">-</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">Deposit Capital</div>
+    <div>Push new capital into the real ledger.</div>
+    <input id="amount" placeholder="Enter amount (e.g. 10000)">
+    <button onclick="deposit()">Confirm Deposit</button>
+    <div class="log" id="log"></div>
+  </div>
+
+  <div class="card">
+    <div class="title">Withdraw Capital</div>
+    <input id="wamount" placeholder="Enter amount">
+    <button onclick="withdraw()">Confirm Withdraw</button>
+    <div class="log" id="wlog"></div>
+  </div>
+
+  <div class="card">
+    <div class="title">Ledger History</div>
+    <table>
+      <thead><tr><th>Type</th><th>Amount</th><th>Timestamp</th></tr></thead>
+      <tbody id="history"><tr><td colspan="3">Loading...</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+function fmt(v){ return '$' + Number(v || 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}) }
+function ts(v){ try{ return new Date(Number(v||0)*1000).toLocaleString(); }catch(e){ return '-' } }
+
+async function load(){
+  try{
+    const data = await window.QuantoraSync.ledger();
+    document.getElementById('currentBalance').innerText = 'Backend Capital Ledger Live';
+    document.getElementById('bal').innerText = fmt(data.balance);
+    document.getElementById('avail').innerText = fmt(data.available);
+    document.getElementById('alloc').innerText = fmt(data.allocated);
+    const rows = (data.history || []).slice(0,12).map(h =>
+      `<tr><td>${h.type || ''}</td><td>${fmt(h.amount || 0)}</td><td>${ts(h.timestamp)}</td></tr>`
+    ).join('');
+    document.getElementById('history').innerHTML = rows || '<tr><td colspan="3">No ledger entries yet</td></tr>';
+  }catch(e){
+    document.getElementById('currentBalance').innerText = 'Ledger unavailable: ' + String(e.message || e);
+  }
+}
+
+async function deposit(){
+  const amt = Number(document.getElementById('amount').value || 0);
+  if(amt <= 0) return;
+  try{
+    const data = await window.QuantoraSync.deposit(amt);
+    document.getElementById('log').innerText = 'Deposited ' + fmt(amt) + ' → new balance ' + fmt(data.balance);
+    document.getElementById('amount').value = '';
+    await load();
+  }catch(e){
+    document.getElementById('log').innerText = 'Deposit failed: ' + String(e.message || e);
+  }
+}
+
+async function withdraw(){
+  const amt = Number(document.getElementById('wamount').value || 0);
+  if(amt <= 0) return;
+  try{
+    const data = await window.QuantoraSync.withdraw(amt);
+    document.getElementById('wlog').innerText = 'Withdrew ' + fmt(amt) + ' → new balance ' + fmt(data.balance);
+    document.getElementById('wamount').value = '';
+    await load();
+  }catch(e){
+    document.getElementById('wlog').innerText = 'Withdraw blocked: ' + String(e.message || e);
+  }
+}
+
+window.QuantoraSync.subscribe(load);
+load();
+</script>
+</body>
+</html>

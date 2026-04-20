@@ -1,0 +1,107 @@
+{
+  "generated_at": "2026-04-06T00:00:00Z",
+  "missions": [
+    {
+      "code": "QNT30492",
+      "label": "QNT30492 Control Panel",
+      "path": "mission_qnt30492_control_panel.html",
+      "group": "Conversation Missions"
+    },
+    {
+      "code": "QNT30493",
+      "label": "QNT30493 Real Control",
+      "path": "mission_qnt30493_real_control.html",
+      "group": "Conversation Missions"
+    },
+    {
+      "code": "QNT30495",
+      "label": "QNT30495 Fund Viz",
+      "path": "mission_qnt30495_fund_viz.html",
+      "group": "Conversation Missions"
+    },
+    {
+      "code": "QNT30505",
+      "label": "QNT30505 Diagnostics",
+      "path": "mission_qnt30505_live_diagnostics.html",
+      "group": "Conversation Missions"
+    },
+    {
+      "code": "QNT30506",
+      "label": "QNT30506 Scheduler",
+      "path": "mission_qnt30506_execution_loop.html",
+      "group": "Conversation Missions"
+    },
+    {
+      "code": "QNT30507",
+      "label": "QNT30507 Audit",
+      "path": "mission_qnt30507_audit_log.html",
+      "group": "Conversation Missions"
+    },
+    {
+      "code": "QNT30508",
+      "label": "QNT30508 Broker",
+      "path": "mission_qnt30508_broker_persistence.html",
+      "group": "Conversation Missions"
+    },
+    {
+      "code": "QNT30509",
+      "label": "QNT30509 Risk",
+      "path": "mission_qnt30509_risk_guardrails.html",
+      "group": "Conversation Missions"
+    },
+    {
+      "code": "QNT30510",
+      "label": "QNT30510 NAV",
+      "path": "mission_qnt30510_nav_refresh.html",
+      "group": "Conversation Missions"
+    },
+    {
+      "code": "QNT30511",
+      "label": "QNT30511 Recon",
+      "path": "mission_qnt30511_recon.html",
+      "group": "Conversation Missions"
+    },
+    {
+      "code": "QNT30512",
+      "label": "QNT30512 Rebalance",
+      "path": "mission_qnt30512_rebalancing.html",
+      "group": "Conversation Missions"
+    },
+    {
+      "code": "QNT30513",
+      "label": "QNT30513 Treasury",
+      "path": "mission_qnt30513_treasury.html",
+      "group": "Conversation Missions"
+    },
+    {
+      "code": "QNT30514",
+      "label": "QNT30514 Capital",
+      "path": "mission_qnt30514_capital_workflow.html",
+      "group": "Conversation Missions"
+    },
+    {
+      "code": "QNT30515",
+      "label": "QNT30515 Reports",
+      "path": "mission_qnt30515_reports.html",
+      "group": "Conversation Missions"
+    },
+    {
+      "code": "QNT30516",
+      "label": "QNT30516 Fees",
+      "path": "mission_qnt30516_fees.html",
+      "group": "Conversation Missions"
+    },
+    {
+      "code": "QNT30517",
+      "label": "QNT30517 Multi-Fund",
+      "path": "mission_qnt30517_multi_fund.html",
+      "group": "Conversation Missions"
+    },
+    {
+      "code": "QNT30518",
+      "label": "QNT30518 Onboarding",
+      "path": "mission_qnt30518_onboarding.html",
+      "group": "Conversation Missions"
+    }
+  ]
+}

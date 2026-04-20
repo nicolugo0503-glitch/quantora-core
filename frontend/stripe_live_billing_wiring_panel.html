@@ -1,0 +1,9 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><title>QNT30393 Stripe Live Billing Wiring</title></head>
+<body style="background:#09101d;color:white;font-family:Arial;padding:20px">
+<h1>QNT30393 — Stripe Live Billing Wiring</h1>
+<button onclick="loadStatus()">Refresh Status</button>
+<pre id="out"></pre>
+<script>
+async function loadStatus(){ const res=await fetch('/stripe-billing/status'); document.getElementById('out').textContent=JSON.stringify(await res.json(),null,2); }
+loadStatus();
+</script></body></html>

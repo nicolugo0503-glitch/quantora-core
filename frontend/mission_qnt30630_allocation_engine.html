@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>QNT30630 Autonomous Allocation Engine</title>
+<style>
+:root{--bg:#071018;--panel:#0d1722;--panel2:#0f1b28;--line:#203247;--text:#ecf3fb;--muted:#9cb0c3;--good:#7ef0b8;--bad:#ff8f8f;--warn:#ffd27a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#0e2030,#071018 56%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.wrap{max-width:1500px;margin:0 auto;padding:24px}.hero,.card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:20px;box-shadow:0 16px 42px rgba(0,0,0,.24)}
+.hero{padding:24px 26px}.label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}h1{margin:10px 0 8px;font-size:34px}.sub{max-width:1100px;color:var(--muted);line-height:1.6}.toolbar,.form-grid{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}.btn,input{border-radius:12px;border:1px solid var(--line);padding:11px 14px;font:inherit}.btn{background:#151d28;color:var(--text);cursor:pointer;font-weight:700}.btn.primary{background:#fff;color:#05070a}.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:18px}.card{padding:18px}.value{font-size:28px;font-weight:800;margin-top:8px}.tiny{color:var(--muted);font-size:12px}
+.split{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:18px}.triple{display:grid;grid-template-columns:1.05fr .95fr .9fr;gap:18px;margin-top:18px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #1d2633;font-size:13px;vertical-align:top}th{color:var(--muted);font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.08em}pre{background:#09111a;border:1px solid var(--line);padding:14px;border-radius:14px;overflow:auto;color:#dbe7f5;min-height:280px;max-height:560px}
+.pill{display:inline-block;padding:8px 10px;border-radius:999px;border:1px solid var(--line);font-size:12px;color:var(--muted)}.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+@media(max-width:1100px){.split,.triple,.stats{grid-template-columns:1fr 1fr}}@media(max-width:760px){.split,.triple,.stats{grid-template-columns:1fr}.wrap{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="label">QNT30630</div>
+    <h1>Autonomous Allocation Engine</h1>
+    <div class="sub">Institutional capital allocation brain with explainable strategy scoring, hard risk constraints, deployable capital planning, and auditable rebalance decisions. This is the transition from measuring performance to deciding where capital should go next.</div>
+    <div class="toolbar">
+      <button class="btn primary" onclick="bootstrapDemo()">Bootstrap Institutional Demo</button>
+      <button class="btn" onclick="runPlan()">Run Allocation Decision</button>
+      <button class="btn" onclick="loadAll()">Refresh</button>
+      <button class="btn" onclick="window.location.href='mission_qnt30629_strategy_execution_engine.html'">Open Execution Engine</button>
+      <button class="btn" onclick="window.location.href='mission_qnt30628_performance_engine.html'">Open Performance Engine</button>
+      <button class="btn" onclick="window.location.href='index.html'">Back to Command Center</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="card"><div class="label">Total NAV</div><div id="totalNav" class="value">-</div><div class="tiny">Current capital base across investor accounts</div></div>
+    <div class="card"><div class="label">Deployable Capital</div><div id="deployable" class="value">-</div><div class="tiny">Reserve floor preserved before allocation</div></div>
+    <div class="card"><div class="label">Reserve Target</div><div id="reserve" class="value">-</div><div class="tiny">Mandatory idle liquidity buffer</div></div>
+    <div class="card"><div class="label">Eligible / Blocked</div><div id="eligibleCounts" class="value">-</div><div class="tiny">Governed by risk policy</div></div>
+    <div class="card"><div class="label">Latest Decision</div><div id="latestDecision" class="value">-</div><div class="tiny">Persisted allocation committee record</div></div>
+  </div>
+
+  <div class="split">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div>
+          <div class="label">Policy Console</div>
+          <div class="tiny">Hard limits that constrain the allocator.</div>
+        </div>
+        <div id="policyPill" class="pill">Policy not loaded</div>
+      </div>
+      <div class="form-grid">
+        <input id="maxWeight" type="number" step="0.01" value="0.40" placeholder="Max Strategy Weight" />
+        <input id="reserveFloor" type="number" step="0.01" value="0.10" placeholder="Cash Reserve Floor" />
+        <input id="maxDrawdown" type="number" step="0.1" value="25" placeholder="Max Drawdown %" />
+        <input id="maxVolatility" type="number" step="0.1" value="35" placeholder="Max Volatility %" />
+        <input id="minTrades" type="number" step="1" value="2" placeholder="Min Trade Count" />
+        <input id="scoreFloor" type="number" step="0.1" value="20" placeholder="Min Score" />
+        <button class="btn" onclick="savePolicy()">Save Policy</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="label">Decision Snapshot</div>
+      <pre id="summaryBox">Loading...</pre>
+    </div>
+  </div>
+
+  <div class="triple">
+    <div class="card">
+      <div class="label">Strategy Ranking + Targets</div>
+      <table>
+        <thead><tr><th>Strategy</th><th>Score</th><th>Status</th><th>Target</th><th>Delta</th></tr></thead>
+        <tbody id="strategyRows"><tr><td colspan="5">Loading...</td></tr></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="label">Rebalance Actions</div>
+      <table>
+        <thead><tr><th>Strategy</th><th>Current</th><th>Target</th><th>Action</th><th>Why</th></tr></thead>
+        <tbody id="rebalanceRows"><tr><td colspan="5">Loading...</td></tr></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="label">Decision Registry</div>
+      <table>
+        <thead><tr><th>Period</th><th>Created</th><th>Deployable</th><th>Eligible</th><th>Blocked</th></tr></thead>
+        <tbody id="decisionRows"><tr><td colspan="5">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(Number(v||0));
+const pct=v=>`${Number(v||0).toFixed(2)}%`;
+const stamp=ts=>ts?new Date(Number(ts)*1000).toISOString().slice(0,10):'-';
+async function j(url, options){ const r = await fetch(url, options); const d = await r.json(); if(!r.ok) throw new Error(d.detail || 'request failed'); return d; }
+function renderPlan(plan){
+  document.getElementById('totalNav').textContent = money(plan.total_nav);
+  document.getElementById('deployable').textContent = money(plan.deployable_capital);
+  document.getElementById('reserve').textContent = money(plan.cash_reserve_target);
+  document.getElementById('eligibleCounts').textContent = `${plan.eligible_strategy_count} / ${plan.blocked_strategy_count}`;
+  document.getElementById('summaryBox').textContent = JSON.stringify(plan, null, 2);
+  document.getElementById('policyPill').textContent = `max ${pct((plan.policy.max_strategy_weight||0)*100)} | reserve ${pct((plan.policy.cash_reserve_floor||0)*100)}`;
+  document.getElementById('maxWeight').value = Number(plan.policy.max_strategy_weight||0.4).toFixed(2);
+  document.getElementById('reserveFloor').value = Number(plan.policy.cash_reserve_floor||0.1).toFixed(2);
+  document.getElementById('maxDrawdown').value = Number(plan.policy.max_drawdown_pct||25).toFixed(1);
+  document.getElementById('maxVolatility').value = Number(plan.policy.max_volatility_pct||35).toFixed(1);
+  document.getElementById('minTrades').value = Number(plan.policy.min_trade_count||2).toFixed(0);
+  document.getElementById('scoreFloor').value = Number(plan.policy.min_score_to_allocate||20).toFixed(1);
+  const rows = plan.strategies || [];
+  document.getElementById('strategyRows').innerHTML = rows.length ? rows.map(r => `<tr><td>${r.strategy_name}</td><td>${Number(r.score||0).toFixed(1)}</td><td class="${r.status==='eligible'?'good':'warn'}">${r.status}</td><td>${money(r.target_capital)}<div class="tiny">${pct(r.target_weight_pct)}</div></td><td class="${Number(r.rebalance_delta||0)>=0?'good':'bad'}">${money(r.rebalance_delta)}</td></tr>`).join('') : '<tr><td colspan="5">No strategies available.</td></tr>';
+  document.getElementById('rebalanceRows').innerHTML = rows.length ? rows.map(r => `<tr><td>${r.strategy_name}</td><td>${money(r.current_capital)}</td><td>${money(r.target_capital)}</td><td class="${r.rebalance_action==='increase'?'good':(r.rebalance_action==='reduce'?'bad':'warn')}">${r.rebalance_action}</td><td>${(r.blocked_reasons&&r.blocked_reasons.length?r.blocked_reasons:r.reasons||[]).slice(0,2).join(', ')||'-'}</td></tr>`).join('') : '<tr><td colspan="5">No rebalance actions.</td></tr>';
+}
+function renderDecisions(decisions){
+  document.getElementById('latestDecision').textContent = decisions.length ? decisions[0].period : 'none';
+  document.getElementById('decisionRows').innerHTML = decisions.length ? decisions.slice(0,10).map(d => `<tr><td>${d.period}</td><td>${stamp(d.created_at)}</td><td>${money(d.deployable_capital)}</td><td>${d.eligible_strategy_count}</td><td>${d.blocked_strategy_count}</td></tr>`).join('') : '<tr><td colspan="5">No decisions recorded.</td></tr>';
+}
+async function loadAll(){
+  const data = await j('/api/allocation-engine/summary');
+  renderPlan(data.plan || {});
+  const d = await j('/api/allocation-engine/decisions');
+  renderDecisions(d.decisions || []);
+}
+async function runPlan(){
+  await j('/api/allocation-engine/run', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({})});
+  await loadAll();
+}
+async function bootstrapDemo(){
+  await j('/api/allocation-engine/bootstrap-demo', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({months:6})});
+  await loadAll();
+}
+async function savePolicy(){
+  await j('/api/allocation-engine/policy', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    max_strategy_weight: Number(document.getElementById('maxWeight').value || 0.4),
+    cash_reserve_floor: Number(document.getElementById('reserveFloor').value || 0.1),
+    max_drawdown_pct: Number(document.getElementById('maxDrawdown').value || 25),
+    max_volatility_pct: Number(document.getElementById('maxVolatility').value || 35),
+    min_trade_count: Number(document.getElementById('minTrades').value || 2),
+    min_score_to_allocate: Number(document.getElementById('scoreFloor').value || 20)
+  })});
+  await loadAll();
+}
+loadAll();
+</script>
+</body>
+</html>

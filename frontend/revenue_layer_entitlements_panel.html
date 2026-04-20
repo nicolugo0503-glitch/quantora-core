@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>QNT30416 Revenue Layer + SaaS Entitlements</title>
+  <style>
+    body { background:#09101d; color:white; font-family:Arial; padding:20px; }
+    input, select, button { padding:10px; margin:6px 0; border-radius:8px; }
+    input, select { width:320px; display:block; background:#0f1530; color:white; border:1px solid #44527a; }
+    button { border:0; cursor:pointer; margin-right:8px; }
+    pre { background:#0b1020; border:1px solid #2a395a; padding:12px; border-radius:8px; min-height:220px; }
+  </style>
+</head>
+<body>
+<h2>QNT30416 Revenue Layer + SaaS Entitlements</h2>
+<input id="user_id" placeholder="user id">
+<select id="plan">
+  <option>free</option>
+  <option>pro</option>
+  <option>institutional</option>
+</select>
+<input id="feature" placeholder="feature" value="performance_engine">
+<button onclick="loadStatus()">Status</button>
+<button onclick="assign()">Assign Plan</button>
+<button onclick="check()">Check Feature</button>
+<pre id="out"></pre>
+<script>
+async function loadStatus(){
+  const r = await fetch('/entitlements/status');
+  out.innerText = JSON.stringify(await r.json(), null, 2);
+}
+async function assign(){
+  const r = await fetch('/entitlements/assign',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({user_id:user_id.value, plan:plan.value, status:'active'})
+  });
+  out.innerText = JSON.stringify(await r.json(), null, 2);
+}
+async function check(){
+  const r = await fetch('/entitlements/check',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({user_id:user_id.value, feature:feature.value})
+  });
+  out.innerText = JSON.stringify(await r.json(), null, 2);
+}
+loadStatus();
+</script>
+</body>
+</html>

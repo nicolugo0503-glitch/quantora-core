@@ -1,0 +1,328 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 180,
+    "minimum_score": 96.0,
+    "require_filing_orchestration_clear": true,
+    "require_enforcement_response_clear": true,
+    "require_stress_testing_clear": true,
+    "require_model_risk_clear": true,
+    "minimum_lineage_coverage": 0.96,
+    "minimum_provenance_integrity_score": 0.95,
+    "minimum_attestation_completion_score": 0.94,
+    "minimum_evidence_continuity_score": 0.95
+  },
+  "runs": [
+    {
+      "mission": "QNT30765",
+      "evaluated_at": "2026-04-15T03:25:28.472665+00:00",
+      "score": 100.0,
+      "band": "ATTESTATION_FABRIC_READY",
+      "posture": "EVIDENCE_PROVENANCE_CLEAR",
+      "operator_review_required": false,
+      "lineage_coverage": 0.98,
+      "provenance_integrity_score": 0.97,
+      "attestation_completion_score": 0.96,
+      "evidence_continuity_score": 0.97,
+      "unresolved_evidence_gaps": 0,
+      "stale_critical_lineage_objects": 0,
+      "reasons": [],
+      "alerts": [],
+      "context": {
+        "captured_at": "2026-04-15T03:25:28.468881+00:00",
+        "filing_orchestration": {
+          "posture": "UNINITIALIZED",
+          "latest_score": null,
+          "band": "UNSET",
+          "run_count": 0,
+          "alert_count": 0,
+          "filing_queue_count": 0,
+          "submission_count": 0,
+          "acknowledgement_count": 0,
+          "operator_review_required": false
+        },
+        "enforcement_response": {
+          "posture": "UNINITIALIZED",
+          "latest_score": null,
+          "band": "UNSET",
+          "run_count": 0,
+          "alert_count": 0,
+          "action_count": 0,
+          "response_count": 0,
+          "consent_order_count": 0,
+          "closure_count": 0,
+          "operator_review_required": false
+        },
+        "stress_testing": {
+          "posture": "UNINITIALIZED",
+          "latest_score": null,
+          "band": "UNSET",
+          "run_count": 0,
+          "alert_count": 0,
+          "cycle_count": 0,
+          "staged_submission_count": 0,
+          "supervisory_challenge_count": 0,
+          "closed_challenge_count": 0,
+          "operator_review_required": false
+        },
+        "model_risk": {
+          "posture": "UNINITIALIZED",
+          "latest_score": null,
+          "band": "UNSET",
+          "run_count": 0,
+          "alert_count": 0,
+          "model_family_count": 0,
+          "validation_review_count": 0,
+          "governance_action_count": 0,
+          "challenge_closure_count": 0,
+          "operator_review_required": false
+        }
+      }
+    },
+    {
+      "mission": "QNT30765",
+      "evaluated_at": "2026-04-15T03:17:45.797783+00:00",
+      "score": 100.0,
+      "band": "ATTESTATION_FABRIC_READY",
+      "posture": "EVIDENCE_PROVENANCE_CLEAR",
+      "operator_review_required": false,
+      "lineage_coverage": 0.98,
+      "provenance_integrity_score": 0.97,
+      "attestation_completion_score": 0.96,
+      "evidence_continuity_score": 0.97,
+      "unresolved_evidence_gaps": 0,
+      "stale_critical_lineage_objects": 0,
+      "reasons": [],
+      "alerts": [],
+      "context": {
+        "captured_at": "2026-04-15T03:17:45.796664+00:00",
+        "filing_orchestration": {
+          "posture": "UNINITIALIZED",
+          "latest_score": null,
+          "band": "UNSET",
+          "run_count": 0,
+          "alert_count": 0,
+          "filing_queue_count": 0,
+          "submission_count": 0,
+          "acknowledgement_count": 0,
+          "operator_review_required": false
+        },
+        "enforcement_response": {
+          "posture": "UNINITIALIZED",
+          "latest_score": null,
+          "band": "UNSET",
+          "run_count": 0,
+          "alert_count": 0,
+          "action_count": 0,
+          "response_count": 0,
+          "consent_order_count": 0,
+          "closure_count": 0,
+          "operator_review_required": false
+        },
+        "stress_testing": {
+          "posture": "UNINITIALIZED",
+          "latest_score": null,
+          "band": "UNSET",
+          "run_count": 0,
+          "alert_count": 0,
+          "cycle_count": 0,
+          "staged_submission_count": 0,
+          "supervisory_challenge_count": 0,
+          "closed_challenge_count": 0,
+          "operator_review_required": false
+        },
+        "model_risk": {
+          "posture": "UNINITIALIZED",
+          "latest_score": null,
+          "band": "UNSET",
+          "run_count": 0,
+          "alert_count": 0,
+          "model_family_count": 0,
+          "validation_review_count": 0,
+          "governance_action_count": 0,
+          "challenge_closure_count": 0,
+          "operator_review_required": false
+        }
+      }
+    }
+  ],
+  "alerts": [],
+  "lineage_assets": [
+    {
+      "registered_at": "2026-04-15T03:25:28.456726+00:00",
+      "asset_code": "GLOBAL_REGULATORY_SUBMISSION_EVIDENCE_GRAPH",
+      "criticality": "CRITICAL",
+      "owner": "data-governance-office",
+      "status": "ACTIVE"
+    },
+    {
+      "registered_at": "2026-04-15T03:17:45.793704+00:00",
+      "asset_code": "GLOBAL_REGULATORY_SUBMISSION_EVIDENCE_GRAPH",
+      "criticality": "CRITICAL",
+      "owner": "data-governance-office",
+      "status": "ACTIVE"
+    }
+  ],
+  "provenance_checks": [
+    {
+      "recorded_at": "2026-04-15T03:25:28.459833+00:00",
+      "check_code": "PROV_2026_Q4_GLOBAL_REGULATORY_STACK",
+      "scope": "END_TO_END_TRACE",
+      "owner": "evidence-provenance-office",
+      "status": "OPEN"
+    },
+    {
+      "recorded_at": "2026-04-15T03:17:45.794599+00:00",
+      "check_code": "PROV_2026_Q4_GLOBAL_REGULATORY_STACK",
+      "scope": "END_TO_END_TRACE",
+      "owner": "evidence-provenance-office",
+      "status": "OPEN"
+    }
+  ],
+  "attestations": [
+    {
+      "issued_at": "2026-04-15T03:25:28.463196+00:00",
+      "attestation_code": "ATTEST_2026_Q4_GLOBAL_REGULATORY_EVIDENCE_FABRIC",
+      "attestor": "chief-data-officer",
+      "scope": "REGULATORY_EVIDENCE_AND_LINEAGE",
+      "status": "ISSUED"
+    },
+    {
+      "issued_at": "2026-04-15T03:17:45.795358+00:00",
+      "attestation_code": "ATTEST_2026_Q4_GLOBAL_REGULATORY_EVIDENCE_FABRIC",
+      "attestor": "chief-data-officer",
+      "scope": "REGULATORY_EVIDENCE_AND_LINEAGE",
+      "status": "ISSUED"
+    }
+  ],
+  "evidence_gap_closures": [
+    {
+      "closed_at": "2026-04-15T03:25:28.466062+00:00",
+      "gap_code": "TRACE_BREAK_GLOBAL_CAPITAL_SUBMISSION_01",
+      "closure_evidence": "LINEAGE_REFRESH_PROVENANCE_PACKET_AND_ATTESTATION_ACCEPTED",
+      "status": "CLOSED"
+    },
+    {
+      "closed_at": "2026-04-15T03:17:45.796124+00:00",
+      "gap_code": "TRACE_BREAK_GLOBAL_CAPITAL_SUBMISSION_01",
+      "closure_evidence": "LINEAGE_REFRESH_PROVENANCE_PACKET_AND_ATTESTATION_ACCEPTED",
+      "status": "CLOSED"
+    }
+  ],
+  "latest_run": {
+    "mission": "QNT30765",
+    "evaluated_at": "2026-04-15T03:25:28.472665+00:00",
+    "score": 100.0,
+    "band": "ATTESTATION_FABRIC_READY",
+    "posture": "EVIDENCE_PROVENANCE_CLEAR",
+    "operator_review_required": false,
+    "lineage_coverage": 0.98,
+    "provenance_integrity_score": 0.97,
+    "attestation_completion_score": 0.96,
+    "evidence_continuity_score": 0.97,
+    "unresolved_evidence_gaps": 0,
+    "stale_critical_lineage_objects": 0,
+    "reasons": [],
+    "alerts": [],
+    "context": {
+      "captured_at": "2026-04-15T03:25:28.468881+00:00",
+      "filing_orchestration": {
+        "posture": "UNINITIALIZED",
+        "latest_score": null,
+        "band": "UNSET",
+        "run_count": 0,
+        "alert_count": 0,
+        "filing_queue_count": 0,
+        "submission_count": 0,
+        "acknowledgement_count": 0,
+        "operator_review_required": false
+      },
+      "enforcement_response": {
+        "posture": "UNINITIALIZED",
+        "latest_score": null,
+        "band": "UNSET",
+        "run_count": 0,
+        "alert_count": 0,
+        "action_count": 0,
+        "response_count": 0,
+        "consent_order_count": 0,
+        "closure_count": 0,
+        "operator_review_required": false
+      },
+      "stress_testing": {
+        "posture": "UNINITIALIZED",
+        "latest_score": null,
+        "band": "UNSET",
+        "run_count": 0,
+        "alert_count": 0,
+        "cycle_count": 0,
+        "staged_submission_count": 0,
+        "supervisory_challenge_count": 0,
+        "closed_challenge_count": 0,
+        "operator_review_required": false
+      },
+      "model_risk": {
+        "posture": "UNINITIALIZED",
+        "latest_score": null,
+        "band": "UNSET",
+        "run_count": 0,
+        "alert_count": 0,
+        "model_family_count": 0,
+        "validation_review_count": 0,
+        "governance_action_count": 0,
+        "challenge_closure_count": 0,
+        "operator_review_required": false
+      }
+    }
+  },
+  "last_context": {
+    "captured_at": "2026-04-15T03:25:28.468881+00:00",
+    "filing_orchestration": {
+      "posture": "UNINITIALIZED",
+      "latest_score": null,
+      "band": "UNSET",
+      "run_count": 0,
+      "alert_count": 0,
+      "filing_queue_count": 0,
+      "submission_count": 0,
+      "acknowledgement_count": 0,
+      "operator_review_required": false
+    },
+    "enforcement_response": {
+      "posture": "UNINITIALIZED",
+      "latest_score": null,
+      "band": "UNSET",
+      "run_count": 0,
+      "alert_count": 0,
+      "action_count": 0,
+      "response_count": 0,
+      "consent_order_count": 0,
+      "closure_count": 0,
+      "operator_review_required": false
+    },
+    "stress_testing": {
+      "posture": "UNINITIALIZED",
+      "latest_score": null,
+      "band": "UNSET",
+      "run_count": 0,
+      "alert_count": 0,
+      "cycle_count": 0,
+      "staged_submission_count": 0,
+      "supervisory_challenge_count": 0,
+      "closed_challenge_count": 0,
+      "operator_review_required": false
+    },
+    "model_risk": {
+      "posture": "UNINITIALIZED",
+      "latest_score": null,
+      "band": "UNSET",
+      "run_count": 0,
+      "alert_count": 0,
+      "model_family_count": 0,
+      "validation_review_count": 0,
+      "governance_action_count": 0,
+      "challenge_closure_count": 0,
+      "operator_review_required": false
+    }
+  }
+}

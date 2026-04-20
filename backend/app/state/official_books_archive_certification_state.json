@@ -1,0 +1,169 @@
+{
+  "generated_by": "QNT50013",
+  "status": "clear",
+  "policy": {
+    "base_currency": "USD",
+    "require_closed_period": true,
+    "require_notice_finalization": true,
+    "require_archive_certification": true,
+    "require_zero_open_breaks": true,
+    "require_controller_signoff": true,
+    "require_operations_signoff": true,
+    "retain_release_payload_days": 2555,
+    "archive_channel": "governance_binder",
+    "auto_sync_sources": true
+  },
+  "last_sync": {
+    "synced_at": 1776437679,
+    "source": "smoke",
+    "closed_period_count": 1,
+    "latest_closed_period_id": "pcd_be5a46143f0c",
+    "latest_period_id": "2026-04",
+    "latest_closed_at": 1776437328,
+    "latest_distribution_total": 3000.0,
+    "latest_notice_count": 2,
+    "open_settlement_break_count": 0,
+    "settlement_status": "matched",
+    "executed_payable_count": 2
+  },
+  "sync_history": [
+    {
+      "synced_at": 1776437679,
+      "source": "smoke",
+      "closed_period_count": 1,
+      "latest_closed_period_id": "pcd_be5a46143f0c",
+      "latest_period_id": "2026-04",
+      "latest_closed_at": 1776437328,
+      "latest_distribution_total": 3000.0,
+      "latest_notice_count": 2,
+      "open_settlement_break_count": 0,
+      "settlement_status": "matched",
+      "executed_payable_count": 2
+    }
+  ],
+  "books_releases": [
+    {
+      "books_release_id": "obr_a380c7f7e147",
+      "created_at": 1776437679,
+      "created_by": "ops",
+      "period_close_id": "pcd_be5a46143f0c",
+      "period_id": "2026-04",
+      "statement_cycle_id": "APR-2026",
+      "controller": "controller",
+      "operations": "ops",
+      "distribution_total": 3000.0,
+      "investor_count": 2,
+      "notice_count": 2,
+      "archive_channel": "governance_binder",
+      "retention_until": 1997189679,
+      "status": "released",
+      "context_snapshot": {
+        "synced_at": 1776437679,
+        "source": "smoke",
+        "closed_period_count": 1,
+        "latest_closed_period_id": "pcd_be5a46143f0c",
+        "latest_period_id": "2026-04",
+        "latest_closed_at": 1776437328,
+        "latest_distribution_total": 3000.0,
+        "latest_notice_count": 2,
+        "open_settlement_break_count": 0,
+        "settlement_status": "matched",
+        "executed_payable_count": 2
+      },
+      "notes": "smoke registration",
+      "archive_certified_at": 1776437679,
+      "archive_certified_by": "records",
+      "released_at": 1776437679,
+      "released_by": "cfo"
+    }
+  ],
+  "archive_certifications": [
+    {
+      "archive_certification_id": "arc_a0d086dd764e",
+      "books_release_id": "obr_a380c7f7e147",
+      "period_close_id": "pcd_be5a46143f0c",
+      "period_id": "2026-04",
+      "certifier": "records",
+      "archive_channel": "governance_binder",
+      "finalized_at": 1776437679,
+      "artifact_count": 4,
+      "checksum_manifest_id": "chk_2a385f0269",
+      "status": "certified"
+    }
+  ],
+  "official_releases": [
+    {
+      "official_release_id": "ofr_70c7f9c83c51",
+      "books_release_id": "obr_a380c7f7e147",
+      "period_close_id": "pcd_be5a46143f0c",
+      "period_id": "2026-04",
+      "approver": "cfo",
+      "released_at": 1776437679,
+      "distribution_total": 3000.0,
+      "investor_count": 2,
+      "archive_channel": "governance_binder",
+      "retention_until": 1997189679,
+      "status": "released"
+    }
+  ],
+  "exceptions": [],
+  "audit_log": [
+    {
+      "event_id": "official_books_archive_certification_audit_1776437679479748736",
+      "event_type": "official_books_released",
+      "timestamp": 1776437679,
+      "official_release_id": "ofr_70c7f9c83c51",
+      "books_release_id": "obr_a380c7f7e147",
+      "period_close_id": "pcd_be5a46143f0c",
+      "period_id": "2026-04",
+      "approver": "cfo",
+      "released_at": 1776437679,
+      "distribution_total": 3000.0,
+      "investor_count": 2,
+      "archive_channel": "governance_binder",
+      "retention_until": 1997189679,
+      "status": "released"
+    },
+    {
+      "event_id": "official_books_archive_certification_audit_1776437679478710714",
+      "event_type": "distribution_archive_certified",
+      "timestamp": 1776437679,
+      "archive_certification_id": "arc_a0d086dd764e",
+      "books_release_id": "obr_a380c7f7e147",
+      "period_close_id": "pcd_be5a46143f0c",
+      "period_id": "2026-04",
+      "certifier": "records",
+      "archive_channel": "governance_binder",
+      "finalized_at": 1776437679,
+      "artifact_count": 4,
+      "checksum_manifest_id": "chk_2a385f0269",
+      "status": "certified"
+    },
+    {
+      "event_id": "official_books_archive_certification_audit_1776437679477538255",
+      "event_type": "official_books_release_registered",
+      "timestamp": 1776437679,
+      "books_release_id": "obr_a380c7f7e147",
+      "period_close_id": "pcd_be5a46143f0c",
+      "period_id": "2026-04",
+      "distribution_total": 3000.0,
+      "investor_count": 2
+    },
+    {
+      "event_id": "official_books_archive_certification_audit_1776437679476684725",
+      "event_type": "official_books_context_synced",
+      "timestamp": 1776437679,
+      "synced_at": 1776437679,
+      "source": "smoke",
+      "closed_period_count": 1,
+      "latest_closed_period_id": "pcd_be5a46143f0c",
+      "latest_period_id": "2026-04",
+      "latest_closed_at": 1776437328,
+      "latest_distribution_total": 3000.0,
+      "latest_notice_count": 2,
+      "open_settlement_break_count": 0,
+      "settlement_status": "matched",
+      "executed_payable_count": 2
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>QNT30655 Sovereign Treasury Command</title>
+  <style>
+    :root { --bg:#06101d; --panel:#0f1d31; --panel2:#0b1628; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#2563eb; --good:#10b981; --warn:#f59e0b; --bad:#ef4444; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#040b15 0%,#0a1424 100%); color:var(--text); }
+    .wrap { max-width:1540px; margin:0 auto; padding:24px; }
+    .hero,.panel,.metric { background:rgba(15,29,49,.96); border:1px solid var(--line); border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,.18); padding:18px; }
+    .hero { margin-bottom:18px; }
+    .muted { color:var(--muted); line-height:1.55; }
+    .toolbar { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    button,a.btn { border:none; background:var(--accent); color:#fff; padding:10px 14px; border-radius:10px; font-weight:700; text-decoration:none; cursor:pointer; }
+    button.secondary,a.secondary { background:#1d4ed8; }
+    .metric-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:14px; margin-bottom:18px; }
+    .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .value { font-size:28px; font-weight:800; margin-top:8px; }
+    .status { font-size:15px; font-weight:700; margin-top:10px; }
+    .grid { display:grid; grid-template-columns:1.2fr 1fr; gap:16px; margin-bottom:16px; }
+    .stack { display:grid; gap:16px; }
+    .section-title { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px; }
+    .section-title h2 { margin:0; font-size:18px; }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th,td { padding:10px; border-bottom:1px solid #1e2d47; text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-size:12px; text-transform:uppercase; }
+    .pill { display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid #2a3c60; background:#0a1526; }
+    .good { color:#d1fae5; border-color:#14532d; }
+    .warn { color:#fde68a; border-color:#92400e; }
+    .bad { color:#fecaca; border-color:#7f1d1d; }
+    pre { margin:0; background:var(--panel2); border:1px solid #1e2d47; border-radius:14px; padding:14px; white-space:pre-wrap; min-height:180px; max-height:420px; overflow:auto; }
+    .tiny { color:var(--muted); font-size:12px; }
+    @media (max-width:1100px){ .metric-grid,.grid{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="label">Institutional Mission</div>
+    <h1 style="margin:8px 0;">QNT30655 — Sovereign Treasury Command</h1>
+    <div class="muted">This layer turns Quantora into a governed treasury institution with liquidity ladders, FX books, settlement supervision, and reserve routing across global vehicles and capital corridors.</div>
+    <div class="toolbar">
+      <a class="btn" href="index.html">Back to Command Center</a>
+      <button onclick="runLayer()">Run Treasury Cycle</button>
+      <button class="secondary" onclick="refreshAll()">Refresh Summary</button>
+    </div>
+  </section>
+
+  <section class="metric-grid">
+    <div class="metric"><div class="label">Treasury Posture</div><div class="value" id="treasuryPosture">-</div><div class="status" id="treasuryTag"></div></div>
+    <div class="metric"><div class="label">Treasury Readiness</div><div class="value" id="treasuryReadiness">-</div><div class="status">Release governance</div></div>
+    <div class="metric"><div class="label">Reserve Capital</div><div class="value" id="reserveCapital">-</div><div class="status">Buffer command</div></div>
+    <div class="metric"><div class="label">Settlement Stress</div><div class="value" id="settlementStress">-</div><div class="status">Treasury friction</div></div>
+    <div class="metric"><div class="label">Capital Mobility</div><div class="value" id="capitalMobility">-</div><div class="status">Cross-border release</div></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Liquidity Ladder</h2><span class="tiny">Reserve and deployment buckets</span></div>
+      <table id="ladderTable"><thead><tr><th>Bucket</th><th>Days</th><th>Target Capital</th><th>Role</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="stack">
+      <div class="panel"><div class="section-title"><h2>Policy</h2><span class="tiny">Treasury thresholds</span></div><pre id="policy">Loading…</pre></div>
+      <div class="panel"><div class="section-title"><h2>Treasury Overview</h2><span class="tiny">Capital posture</span></div><pre id="overview">Loading…</pre></div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>FX Books</h2><span class="tiny">Cross-border hedge control</span></div>
+      <table id="fxTable"><thead><tr><th>Pair</th><th>Hedge Ratio</th><th>Slippage Budget</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="panel">
+      <div class="section-title"><h2>Settlement Grid</h2><span class="tiny">Operational release windows</span></div>
+      <table id="settlementTable"><thead><tr><th>Corridor</th><th>Vehicle</th><th>Window</th><th>Stress</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel"><div class="section-title"><h2>Funding Routes</h2><span class="tiny">Capital movement plan</span></div><pre id="fundingRoutes">Loading…</pre></div>
+    <div class="panel"><div class="section-title"><h2>Dependencies</h2><span class="tiny">Strategic, compliance, multi-fund, and network inputs</span></div><pre id="dependencies">Loading…</pre></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel"><div class="section-title"><h2>Treasury Actions</h2><span class="tiny">Executive agenda</span></div><pre id="actions">Loading…</pre></div>
+    <div class="panel"><div class="section-title"><h2>Audit Trail</h2><span class="tiny">Latest treasury cycle</span></div><pre id="auditTrail">Loading…</pre></div>
+  </section>
+</div>
+<script>
+  const fmtPct = v => `${Number(v||0).toFixed(2)}%`;
+  const fmtMoney = v => `$${Number(v||0).toLocaleString(undefined,{maximumFractionDigits:2})}`;
+  const pill = (text, cls='') => `<span class="pill ${cls}">${text}</span>`;
+  function severityClass(text='') {
+    const t = String(text).toLowerCase();
+    if (t.includes('watch') || t.includes('hold') || t.includes('guarded')) return 'bad';
+    if (t.includes('monitor')) return 'warn';
+    return 'good';
+  }
+  async function getJson(url, opts) {
+    const res = await fetch(url, opts);
+    if (!res.ok) throw new Error(`${url} -> ${res.status}`);
+    return res.json();
+  }
+  function fillTable(id, rows, renderer, colspan=4) {
+    const tbody = document.querySelector(`#${id} tbody`);
+    tbody.innerHTML = rows.length ? rows.map(renderer).join('') : `<tr><td colspan="${colspan}" class="tiny">No rows available.</td></tr>`;
+  }
+  async function refreshAll() {
+    try {
+      const [summary, audit] = await Promise.all([
+        getJson('/api/sovereign-treasury-command/summary'),
+        getJson('/api/sovereign-treasury-command/audit')
+      ]);
+      renderSummary(summary, audit);
+    } catch (err) {
+      document.getElementById('auditTrail').textContent = `Treasury layer unavailable. ${err.message}`;
+    }
+  }
+  async function runLayer() {
+    const result = await getJson('/api/sovereign-treasury-command/run', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ trigger:'manual-ui' })
+    });
+    renderSummary(result.summary, { latest_run: result.run, runs: [result.run], run_count: 1 });
+  }
+  function renderSummary(summary, audit) {
+    const o = summary.treasury_overview || {};
+    document.getElementById('treasuryPosture').textContent = o.treasury_posture || '-';
+    document.getElementById('treasuryTag').innerHTML = pill(o.treasury_posture || 'unknown', severityClass(o.treasury_posture));
+    document.getElementById('treasuryReadiness').textContent = fmtPct(o.treasury_readiness_score || 0);
+    document.getElementById('reserveCapital').textContent = fmtMoney(o.reserve_capital || 0);
+    document.getElementById('settlementStress').textContent = fmtPct(o.average_settlement_stress || 0);
+    document.getElementById('capitalMobility').textContent = fmtPct(o.capital_mobility_score || 0);
+    fillTable('ladderTable', summary.liquidity_ladder || [], row => `
+      <tr><td>${row.bucket || '-'}</td><td>${row.days || 0}</td><td>${fmtMoney(row.target_capital || 0)}</td><td>${row.role || '-'}</td></tr>`, 4);
+    fillTable('fxTable', summary.fx_books || [], row => `
+      <tr><td>${row.pair || '-'}</td><td>${fmtPct(row.hedge_ratio || 0)}</td><td>${Number(row.slippage_budget_bps || 0).toFixed(2)} bps</td><td>${pill(row.funding_status || '-', severityClass(row.funding_status))}</td></tr>`, 4);
+    fillTable('settlementTable', summary.settlement_grid || [], row => `
+      <tr><td>${row.corridor_name || '-'}</td><td>${row.vehicle || '-'}</td><td>${row.settlement_window_days || 0}d</td><td>${fmtPct(row.settlement_stress_score || 0)}</td><td>${pill(row.status || '-', severityClass(row.status))}</td></tr>`, 5);
+    document.getElementById('policy').textContent = JSON.stringify(summary.policy || {}, null, 2);
+    document.getElementById('overview').textContent = JSON.stringify(summary.treasury_overview || {}, null, 2);
+    document.getElementById('fundingRoutes').textContent = JSON.stringify(summary.funding_routes || [], null, 2);
+    document.getElementById('dependencies').textContent = JSON.stringify(summary.treasury_dependencies || {}, null, 2);
+    document.getElementById('actions').textContent = JSON.stringify(summary.treasury_actions || [], null, 2);
+    document.getElementById('auditTrail').textContent = JSON.stringify({
+      run_count: audit.run_count || (audit.runs || []).length || 0,
+      latest_run: audit.latest_run || null
+    }, null, 2);
+  }
+  refreshAll();
+</script>
+</body>
+</html>

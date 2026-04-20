@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30618 Investor Communication Preference Center + Notice Routing Rules</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1440px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,select,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:90px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1400px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30618 · Investor Communication Preference Center + Notice Routing Rules</h1>
+        <div style="color:#9fb3d8">Manages investor communication preferences and resolves notice delivery channels using routing rules.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30617_identity_registry.html">Identity Registry</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Preferences</div><div id="prefs" class="value">-</div></div>
+    <div class="card"><div class="label">Rules</div><div id="rules" class="value">-</div></div>
+    <div class="card"><div class="label">Enabled Rules</div><div id="enabled" class="value">-</div></div>
+    <div class="card"><div class="label">Latest Language</div><div id="lang" class="value">-</div></div>
+    <div class="card"><div class="label">Latest Rule</div><div id="latestRule" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <input id="investorId" placeholder="Investor ID">
+    <input id="channels" placeholder="Preferred channels comma-separated, e.g. portal,email_simulated" style="margin-top:12px">
+    <select id="language" style="margin-top:12px">
+      <option value="en">en</option>
+      <option value="es">es</option>
+    </select>
+    <select id="window" style="margin-top:12px">
+      <option value="business_hours">business_hours</option>
+      <option value="anytime">anytime</option>
+    </select>
+    <select id="digest" style="margin-top:12px">
+      <option value="daily">daily</option>
+      <option value="weekly">weekly</option>
+      <option value="instant">instant</option>
+    </select>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="savePreferences()">Save Preferences</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <input id="ruleName" placeholder="Rule name">
+    <select id="noticeType" style="margin-top:12px">
+      <option value="general">general</option>
+      <option value="report">report</option>
+      <option value="notice">notice</option>
+      <option value="breach">breach</option>
+    </select>
+    <select id="channel" style="margin-top:12px">
+      <option value="portal">portal</option>
+      <option value="email_simulated">email_simulated</option>
+      <option value="download_pack">download_pack</option>
+    </select>
+    <select id="priority" style="margin-top:12px">
+      <option value="normal">normal</option>
+      <option value="high">high</option>
+    </select>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="createRule()">Create Rule</button>
+      <button onclick="resolveRoute()">Resolve Route</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Routing Rules</div>
+    <table>
+      <thead><tr><th>Rule</th><th>Notice Type</th><th>Channel</th><th>Priority</th><th>Enabled</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Notice Routing Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/notice-routing/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data,null,2); return; }
+  const d = res.data || {};
+  const pref = (d.latest_preference || {}).preferences || {};
+  const rule = d.latest_rule || {};
+  document.getElementById('prefs').textContent = String(d.preference_count || 0);
+  document.getElementById('rules').textContent = String(d.rule_count || 0);
+  document.getElementById('enabled').textContent = String(d.enabled_rule_count || 0);
+  document.getElementById('lang').textContent = String(pref.language || '-');
+  document.getElementById('latestRule').textContent = String(rule.rule_name || '-');
+  document.getElementById('rows').innerHTML = (d.routing_rules || []).map(r =>
+    `<tr><td>${r.rule_name}</td><td>${r.notice_type}</td><td>${r.channel}</td><td>${r.priority}</td><td>${r.enabled}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function savePreferences(){
+  const channels = (document.getElementById('channels').value || 'portal').split(',').map(x => x.trim()).filter(Boolean);
+  const res = await j('/api/notice-routing/preferences', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    investor_id: document.getElementById('investorId').value,
+    preferences: {
+      preferred_channels: channels,
+      language: document.getElementById('language').value,
+      delivery_window: document.getElementById('window').value,
+      digest_mode: document.getElementById('digest').value,
+      urgent_notice_channel: 'email_simulated'
+    }
+  })});
+  document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2);
+  await load();
+}
+async function createRule(){
+  const res = await j('/api/notice-routing/rule', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    rule_name: document.getElementById('ruleName').value,
+    notice_type: document.getElementById('noticeType').value,
+    channel: document.getElementById('channel').value,
+    priority: document.getElementById('priority').value,
+    scope: 'all_investors',
+    enabled: true
+  })});
+  document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2);
+  await load();
+}
+async function resolveRoute(){
+  const res = await j('/api/notice-routing/resolve', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    investor_id: document.getElementById('investorId').value,
+    notice_type: document.getElementById('noticeType').value,
+    urgency: document.getElementById('priority').value === 'high' ? 'urgent' : 'normal'
+  })});
+  document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2);
+}
+load();
+</script>
+</body>
+</html>

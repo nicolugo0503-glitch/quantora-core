@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>QNT30711 Capital Rotation Command System</title>
+<style>
+:root{--bg:#071019;--panel:#0d1723;--line:#1b2b40;--text:#edf3fb;--muted:#8ea0b7;--good:#48d597;--bad:#ff6f86;--warn:#ffc857}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#071019,#09131d 55%,#071019);color:var(--text);font-family:Inter,system-ui,sans-serif}.wrap{max-width:1360px;margin:0 auto;padding:24px}h1{margin:0 0 6px}p{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:14px 0}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:800;margin-top:6px}.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 0}.toolbar input,.toolbar button{background:#09111a;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:10px 12px}.toolbar button{cursor:pointer}table{width:100%;border-collapse:collapse}th,td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}pre{white-space:pre-wrap;word-break:break-word;background:#08101a;border:1px solid var(--line);border-radius:12px;padding:12px;max-height:320px;overflow:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>QNT30711 Capital Rotation Command System</h1>
+  <p>Governed capital reallocation across sleeves using regime, liquidity, recovery, safety, and operator posture.</p>
+  <div class="toolbar">
+    <button onclick="bootstrapDemo()">Bootstrap Demo</button>
+    <input id="shiftPct" type="number" step="0.1" placeholder="capital shift %" value="12.5">
+    <input id="conviction" type="number" step="0.1" placeholder="target conviction" value="80">
+    <input id="execRisk" type="number" step="0.1" placeholder="execution risk" value="22">
+    <button onclick="evaluateCommand()">Evaluate Rotation</button>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="label">Rotation Posture</div><div id="posture" class="value">-</div></div>
+    <div class="card"><div class="label">Latest Score</div><div id="score" class="value">-</div></div>
+    <div class="card"><div class="label">Commands</div><div id="commands" class="value">0</div></div>
+    <div class="card"><div class="label">Alerts</div><div id="alerts" class="value">0</div></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><div class="label">Current Context</div><pre id="contextBox">Loading...</pre></div>
+    <div class="card"><div class="label">Latest Command</div><pre id="commandBox">Loading...</pre></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><div class="label">Rotation Commands</div><table><thead><tr><th>Command</th><th>Target</th><th>Shift %</th><th>Posture</th></tr></thead><tbody id="commandRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+    <div class="card"><div class="label">Alerts</div><table><thead><tr><th>Alert</th><th>Target</th><th>Score</th><th>Blockers</th></tr></thead><tbody id="alertRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+  </div>
+</div>
+<script>
+async function j(url,opt){const r=await fetch(url,opt);const d=await r.json();if(!r.ok) throw new Error(d.detail||'request failed');return d;}
+function cls(v){const t=String(v||'').toLowerCase(); if(t.includes('approved')||t.includes('ready')) return 'good'; if(t.includes('watch')||t.includes('safe')) return 'warn'; return 'bad';}
+function render(data){
+ const s=data.capital_rotation_status||{};
+ document.getElementById('posture').textContent=String(s.posture||'-').toUpperCase(); document.getElementById('posture').className='value '+cls(s.posture||'blocked');
+ document.getElementById('score').textContent=String(s.latest_score??'-'); document.getElementById('score').className='value warn';
+ document.getElementById('commands').textContent=String(s.command_count||0); document.getElementById('commands').className='value good';
+ document.getElementById('alerts').textContent=String(s.alert_count||0); document.getElementById('alerts').className='value bad';
+ document.getElementById('contextBox').textContent=JSON.stringify(data.current_context||{}, null, 2);
+ document.getElementById('commandBox').textContent=JSON.stringify(data.latest_command||{}, null, 2);
+ const commands=data.commands||[];
+ document.getElementById('commandRows').innerHTML=commands.length?commands.map(c=>`<tr><td>${c.command_id||'-'}</td><td>${c.target_sleeve||'-'}</td><td>${c.capital_shift_pct??'-'}</td><td class="${cls((c.evaluation||{}).posture||'blocked')}">${(c.evaluation||{}).posture||'-'}</td></tr>`).join(''):'<tr><td colspan="4">No commands.</td></tr>';
+ const alerts=data.alerts||[];
+ document.getElementById('alertRows').innerHTML=alerts.length?alerts.map(a=>`<tr><td>${a.alert_id||'-'}</td><td>${a.target_sleeve||'-'}</td><td>${a.score??'-'}</td><td>${(a.blockers||[]).join(', ')||'-'}</td></tr>`).join(''):'<tr><td colspan="4">No alerts.</td></tr>';
+}
+async function loadAll(){render(await j('/api/capital-rotation-command-system/summary'));}
+async function bootstrapDemo(){await j('/api/capital-rotation-command-system/bootstrap-demo',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});await loadAll();}
+async function evaluateCommand(){
+ const body={source_sleeve:'reserve-sleeve',target_sleeve:'momentum-sleeve',capital_shift_pct:Number(document.getElementById('shiftPct').value||0),target_conviction_score:Number(document.getElementById('conviction').value||0),execution_risk_score:Number(document.getElementById('execRisk').value||0),source_decay_score:69,diversification_gain_score:72};
+ await j('/api/capital-rotation-command-system/evaluate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});await loadAll();
+}
+loadAll();
+</script>
+</body>
+</html>

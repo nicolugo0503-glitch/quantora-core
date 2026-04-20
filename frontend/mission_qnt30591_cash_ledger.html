@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30591 Investor Cash Ledger</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:90px}
+.row{display:grid;grid-template-columns:1fr 1fr 2fr auto auto;gap:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1200px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30591 · Investor Cash Ledger + Distribution Notice Engine</h1>
+        <div style="color:#9fb3d8">Tracks investor cash notices and processed distributions. This is the cash movement layer for investor distributions and credits.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30590_reporting_calendar.html">Reporting Calendar</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Entries</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Noticed</div><div id="noticed" class="value">-</div></div>
+    <div class="card"><div class="label">Processed</div><div id="processed" class="value">-</div></div>
+    <div class="card"><div class="label">Processed Amount</div><div id="amount" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="adminEmail" placeholder="Investor email">
+      <input id="distributionAmount" placeholder="Amount">
+      <textarea id="notes" placeholder="Notes"></textarea>
+      <button onclick="noticeDistribution()">Notice</button>
+      <button onclick="processLatest()">Process</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Cash Ledger Entries</div>
+    <table>
+      <thead><tr><th>Entry</th><th>Title</th><th>Amount</th><th>Status</th><th>Noticed</th><th>Processed</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Cash Ledger Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function dt(v){ return v ? new Date(v*1000).toLocaleString() : '-'; }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/cash-ledger/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  document.getElementById('count').textContent = String(d.entry_count || 0);
+  document.getElementById('noticed').textContent = String(d.noticed_count || 0);
+  document.getElementById('processed').textContent = String(d.processed_count || 0);
+  document.getElementById('amount').textContent = money(d.processed_amount || 0);
+  document.getElementById('rows').innerHTML = (d.entries || []).map(e =>
+    `<tr><td>${e.entry_id}</td><td>${e.title}</td><td>${money(e.amount)}</td><td>${e.status}</td><td>${dt(e.noticed_at)}</td><td>${dt(e.processed_at)}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function noticeDistribution(){
+  const payload = {
+    email: document.getElementById('adminEmail').value,
+    amount: Number(document.getElementById('distributionAmount').value || 0),
+    notes: document.getElementById('notes').value
+  };
+  await j('/api/cash-ledger/distribution-notice', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function processLatest(){
+  const res = await j('/api/cash-ledger');
+  const latest = (res.data.entries || [])[0];
+  if(!latest){ return; }
+  await j('/api/cash-ledger/process', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({entry_id: latest.entry_id, notes: document.getElementById('notes').value})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 365,
+    "minimum_score": 96.0,
+    "minimum_shadow_nav_readiness": 0.97,
+    "minimum_independent_recalculation_readiness": 0.97,
+    "minimum_nav_break_escalation_readiness": 0.96,
+    "maximum_nav_gap_bps": 5.0,
+    "maximum_open_nav_breaks": 0
+  },
+  "runs": [
+    {
+      "run_id": "qnt40018_1776223537",
+      "captured_at": "2026-04-15T03:25:37.920631+00:00",
+      "score": 86.0,
+      "band": "NAV_BREAK_REMEDIATION_REQUIRED",
+      "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "valuation governance posture must be clear before shadow nav break escalation",
+        "official books release posture must be clear before administrator shadow nav control"
+      ],
+      "alerts": [
+        "VALUATION_GOVERNANCE_NOT_CLEAR",
+        "OFFICIAL_BOOKS_NOT_CLEAR"
+      ],
+      "shadow_nav_readiness": 0.99,
+      "independent_recalculation_readiness": 0.99,
+      "nav_break_escalation_readiness": 0.98,
+      "nav_gap_bps": 3.0,
+      "open_nav_breaks": 0
+    },
+    {
+      "run_id": "qnt40018_1776223529",
+      "captured_at": "2026-04-15T03:25:29.353444+00:00",
+      "score": 86.0,
+      "band": "NAV_BREAK_REMEDIATION_REQUIRED",
+      "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "valuation governance posture must be clear before shadow nav break escalation",
+        "official books release posture must be clear before administrator shadow nav control"
+      ],
+      "alerts": [
+        "VALUATION_GOVERNANCE_NOT_CLEAR",
+        "OFFICIAL_BOOKS_NOT_CLEAR"
+      ],
+      "shadow_nav_readiness": 0.99,
+      "independent_recalculation_readiness": 0.99,
+      "nav_break_escalation_readiness": 0.98,
+      "nav_gap_bps": 3.0,
+      "open_nav_breaks": 0
+    },
+    {
+      "run_id": "qnt40018_1776223066",
+      "captured_at": "2026-04-15T03:17:46.085403+00:00",
+      "score": 86.0,
+      "band": "NAV_BREAK_REMEDIATION_REQUIRED",
+      "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "valuation governance posture must be clear before shadow nav break escalation",
+        "official books release posture must be clear before administrator shadow nav control"
+      ],
+      "alerts": [
+        "VALUATION_GOVERNANCE_NOT_CLEAR",
+        "OFFICIAL_BOOKS_NOT_CLEAR"
+      ],
+      "shadow_nav_readiness": 0.99,
+      "independent_recalculation_readiness": 0.99,
+      "nav_break_escalation_readiness": 0.98,
+      "nav_gap_bps": 3.0,
+      "open_nav_breaks": 0
+    },
+    {
+      "run_id": "qnt40018_1776222078",
+      "captured_at": "2026-04-15T03:01:18.708675+00:00",
+      "score": 86.0,
+      "band": "NAV_BREAK_REMEDIATION_REQUIRED",
+      "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "valuation governance posture must be clear before shadow nav break escalation",
+        "official books release posture must be clear before administrator shadow nav control"
+      ],
+      "alerts": [
+        "VALUATION_GOVERNANCE_NOT_CLEAR",
+        "OFFICIAL_BOOKS_NOT_CLEAR"
+      ],
+      "shadow_nav_readiness": 0.99,
+      "independent_recalculation_readiness": 0.99,
+      "nav_break_escalation_readiness": 0.98,
+      "nav_gap_bps": 3.0,
+      "open_nav_breaks": 0
+    },
+    {
+      "run_id": "qnt40018_1776221678",
+      "captured_at": "2026-04-15T02:54:38.823326+00:00",
+      "score": 86.0,
+      "band": "NAV_BREAK_REMEDIATION_REQUIRED",
+      "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "valuation governance posture must be clear before shadow nav break escalation",
+        "official books release posture must be clear before administrator shadow nav control"
+      ],
+      "alerts": [
+        "VALUATION_GOVERNANCE_NOT_CLEAR",
+        "OFFICIAL_BOOKS_NOT_CLEAR"
+      ],
+      "shadow_nav_readiness": 0.99,
+      "independent_recalculation_readiness": 0.99,
+      "nav_break_escalation_readiness": 0.98,
+      "nav_gap_bps": 3.0,
+      "open_nav_breaks": 0
+    },
+    {
+      "run_id": "qnt40018_1776221341",
+      "captured_at": "2026-04-15T02:49:01.051809+00:00",
+      "score": 86.0,
+      "band": "NAV_BREAK_REMEDIATION_REQUIRED",
+      "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "valuation governance posture must be clear before shadow nav break escalation",
+        "official books release posture must be clear before administrator shadow nav control"
+      ],
+      "alerts": [
+        "VALUATION_GOVERNANCE_NOT_CLEAR",
+        "OFFICIAL_BOOKS_NOT_CLEAR"
+      ],
+      "shadow_nav_readiness": 0.99,
+      "independent_recalculation_readiness": 0.99,
+      "nav_break_escalation_readiness": 0.98,
+      "nav_gap_bps": 3.0,
+      "open_nav_breaks": 0
+    }
+  ],
+  "alerts": [
+    "VALUATION_GOVERNANCE_NOT_CLEAR",
+    "OFFICIAL_BOOKS_NOT_CLEAR"
+  ],
+  "administrator_shadow_navs": [
+    {
+      "shadow_nav_id": "shadnav_1776223537",
+      "captured_at": "2026-04-15T03:25:37.911035+00:00",
+      "valuation_id": "val_1776220060",
+      "official_nav": 1000000.0,
+      "shadow_nav": 999700.0,
+      "nav_gap_bps": 3.0,
+      "status": "matched",
+      "administrator": "Independent Fund Administrator",
+      "notes": "administrator shadow nav captured against official nav"
+    },
+    {
+      "shadow_nav_id": "shadnav_1776223529",
+      "captured_at": "2026-04-15T03:25:29.344895+00:00",
+      "valuation_id": "val_1776220060",
+      "official_nav": 1000000.0,
+      "shadow_nav": 999700.0,
+      "nav_gap_bps": 3.0,
+      "status": "matched",
+      "administrator": "Independent Fund Administrator",
+      "notes": "administrator shadow nav captured against official nav"
+    },
+    {
+      "shadow_nav_id": "shadnav_1776223066",
+      "captured_at": "2026-04-15T03:17:46.083453+00:00",
+      "valuation_id": "val_1776220060",
+      "official_nav": 1000000.0,
+      "shadow_nav": 999700.0,
+      "nav_gap_bps": 3.0,
+      "status": "matched",
+      "administrator": "Independent Fund Administrator",
+      "notes": "administrator shadow nav captured against official nav"
+    },
+    {
+      "shadow_nav_id": "shadnav_1776222078",
+      "captured_at": "2026-04-15T03:01:18.706082+00:00",
+      "valuation_id": "val_1776220060",
+      "official_nav": 1000000.0,
+      "shadow_nav": 999700.0,
+      "nav_gap_bps": 3.0,
+      "status": "matched",
+      "administrator": "Independent Fund Administrator",
+      "notes": "administrator shadow nav captured against official nav"
+    },
+    {
+      "shadow_nav_id": "shadnav_1776221678",
+      "captured_at": "2026-04-15T02:54:38.819015+00:00",
+      "valuation_id": "val_1776220060",
+      "official_nav": 1000000.0,
+      "shadow_nav": 999700.0,
+      "nav_gap_bps": 3.0,
+      "status": "matched",
+      "administrator": "Independent Fund Administrator",
+      "notes": "administrator shadow nav captured against official nav"
+    },
+    {
+      "shadow_nav_id": "shadnav_1776221341",
+      "captured_at": "2026-04-15T02:49:01.050356+00:00",
+      "valuation_id": "val_1776220060",
+      "official_nav": 1000000.0,
+      "shadow_nav": 999700.0,
+      "nav_gap_bps": 3.0,
+      "status": "matched",
+      "administrator": "Independent Fund Administrator",
+      "notes": "administrator shadow nav captured against official nav"
+    }
+  ],
+  "independent_nav_recalculations": [
+    {
+      "recalculation_id": "inr_1776223537",
+      "captured_at": "2026-04-15T03:25:37.914481+00:00",
+      "valuation_id": "val_1776220060",
+      "recalculated_nav": 1000000.0,
+      "status": "completed",
+      "reviewer": "Quantora Audit Release Governor",
+      "notes": "independent nav recalculation completed for administrator challenge support"
+    },
+    {
+      "recalculation_id": "inr_1776223529",
+      "captured_at": "2026-04-15T03:25:29.347684+00:00",
+      "valuation_id": "val_1776220060",
+      "recalculated_nav": 1000000.0,
+      "status": "completed",
+      "reviewer": "Quantora Auditor Delivery Governor",
+      "notes": "independent nav recalculation completed for administrator challenge support"
+    },
+    {
+      "recalculation_id": "inr_1776223066",
+      "captured_at": "2026-04-15T03:17:46.084010+00:00",
+      "valuation_id": "val_1776220060",
+      "recalculated_nav": 1000000.0,
+      "status": "completed",
+      "reviewer": "Quantora Auditor Delivery Governor",
+      "notes": "independent nav recalculation completed for administrator challenge support"
+    },
+    {
+      "recalculation_id": "inr_1776222078",
+      "captured_at": "2026-04-15T03:01:18.706931+00:00",
+      "valuation_id": "val_1776220060",
+      "recalculated_nav": 1000000.0,
+      "status": "completed",
+      "reviewer": "Quantora Final NAV Governor",
+      "notes": "independent nav recalculation completed for administrator challenge support"
+    },
+    {
+      "recalculation_id": "inr_1776221678",
+      "captured_at": "2026-04-15T02:54:38.819553+00:00",
+      "valuation_id": "val_1776220060",
+      "recalculated_nav": 1000000.0,
+      "status": "completed",
+      "reviewer": "Quantora Admin Oversight",
+      "notes": "independent nav recalculation completed for administrator challenge support"
+    },
+    {
+      "recalculation_id": "inr_1776221341",
+      "captured_at": "2026-04-15T02:49:01.050792+00:00",
+      "valuation_id": "val_1776220060",
+      "recalculated_nav": 1000000.0,
+      "status": "completed",
+      "reviewer": "Quantora Admin Oversight",
+      "notes": "independent nav recalculation completed for administrator challenge support"
+    }
+  ],
+  "nav_break_escalations": [
+    {
+      "nav_break_id": "nbk_1776223537",
+      "captured_at": "2026-04-15T03:25:37.916981+00:00",
+      "valuation_id": "val_1776220060",
+      "severity": "watch",
+      "status": "escalated",
+      "escalation_target": "Quantora Valuation Committee and Controller",
+      "notes": "nav break escalated for administrator-shadow-nav mismatch review"
+    },
+    {
+      "nav_break_id": "nbk_1776223529",
+      "captured_at": "2026-04-15T03:25:29.349790+00:00",
+      "valuation_id": "val_1776220060",
+      "severity": "watch",
+      "status": "escalated",
+      "escalation_target": "Quantora Valuation Committee and Controller",
+      "notes": "nav break escalated for administrator-shadow-nav mismatch review"
+    },
+    {
+      "nav_break_id": "nbk_1776223066",
+      "captured_at": "2026-04-15T03:17:46.084466+00:00",
+      "valuation_id": "val_1776220060",
+      "severity": "watch",
+      "status": "escalated",
+      "escalation_target": "Quantora Valuation Committee and Controller",
+      "notes": "nav break escalated for administrator-shadow-nav mismatch review"
+    },
+    {
+      "nav_break_id": "nbk_1776222078",
+      "captured_at": "2026-04-15T03:01:18.707495+00:00",
+      "valuation_id": "val_1776220060",
+      "severity": "watch",
+      "status": "escalated",
+      "escalation_target": "Quantora Valuation Committee and Controller",
+      "notes": "nav break escalated for administrator-shadow-nav mismatch review"
+    },
+    {
+      "nav_break_id": "nbk_1776221678",
+      "captured_at": "2026-04-15T02:54:38.821872+00:00",
+      "valuation_id": "val_1776220060",
+      "severity": "watch",
+      "status": "escalated",
+      "escalation_target": "Quantora Valuation Committee and Controller",
+      "notes": "nav break escalated for administrator-shadow-nav mismatch review"
+    },
+    {
+      "nav_break_id": "nbk_1776221341",
+      "captured_at": "2026-04-15T02:49:01.051098+00:00",
+      "valuation_id": "val_1776220060",
+      "severity": "watch",
+      "status": "escalated",
+      "escalation_target": "Quantora Valuation Committee and Controller",
+      "notes": "nav break escalated for administrator-shadow-nav mismatch review"
+    }
+  ],
+  "latest_run": {
+    "run_id": "qnt40018_1776223537",
+    "captured_at": "2026-04-15T03:25:37.920631+00:00",
+    "score": 86.0,
+    "band": "NAV_BREAK_REMEDIATION_REQUIRED",
+    "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+    "operator_review_required": true,
+    "reasons": [
+      "valuation governance posture must be clear before shadow nav break escalation",
+      "official books release posture must be clear before administrator shadow nav control"
+    ],
+    "alerts": [
+      "VALUATION_GOVERNANCE_NOT_CLEAR",
+      "OFFICIAL_BOOKS_NOT_CLEAR"
+    ],
+    "shadow_nav_readiness": 0.99,
+    "independent_recalculation_readiness": 0.99,
+    "nav_break_escalation_readiness": 0.98,
+    "nav_gap_bps": 3.0,
+    "open_nav_breaks": 0
+  },
+  "last_context": {
+    "captured_at": "2026-04-15T03:25:37.920549+00:00",
+    "valuation_governance_summary": {
+      "posture": "VALUATION_REMEDIATION_REQUIRED",
+      "score": 89.0,
+      "fair_value_override_count": 12,
+      "independent_price_verification_count": 12
+    },
+    "official_books_summary": {
+      "posture": "OFFICIAL_RELEASE_WATCH",
+      "score": 92.0,
+      "official_books_release_count": 17
+    },
+    "nav_summary": {
+      "valuation_count": 1,
+      "official_count": 1,
+      "latest_valuation_id": "val_1776220060",
+      "latest_valuation_status": "official",
+      "latest_official_nav": 0.0,
+      "latest_valuation_date": "2026-04-15"
+    }
+  }
+}

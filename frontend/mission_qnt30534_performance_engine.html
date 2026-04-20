@@ -1,0 +1,44 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>QNT30534 Performance Engine</title>
+      <style>
+        body{font-family:Arial,Helvetica,sans-serif;background:#08111f;color:#eef4ff;padding:24px}
+        button{background:#2455d6;color:#fff;border:1px solid #3f6fff;border-radius:10px;padding:10px 14px;cursor:pointer;margin-right:8px}
+        textarea,pre{width:100%;min-height:220px;background:#07111f;border:1px solid #1f3556;border-radius:10px;padding:14px;color:#eef4ff;overflow:auto}
+      </style>
+    </head>
+    <body>
+      <h1>QNT30534 — Performance + PnL Engine</h1>
+      <button onclick="record()">Record Cycle</button>
+      <button onclick="summary()">Load Summary</button>
+      <button onclick="history()">Load History</button>
+      <textarea id="inputBox">{
+  "positions": {
+    "BTCUSD": 420,
+    "ETHUSD": 180,
+    "SOLUSD": -35
+  },
+  "strategy_id": "core",
+  "realized_pnl": 250,
+  "unrealized_pnl": 315
+}</textarea>
+      <pre id="out">ready</pre>
+      <script>
+        async function post(url, body){
+          const r = await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body: JSON.stringify(body)});
+          return await r.json();
+        }
+        async function get(url){
+          const r = await fetch(url);
+          return await r.json();
+        }
+        function payload(){ return JSON.parse(document.getElementById('inputBox').value); }
+        async function record(){ document.getElementById('out').textContent = JSON.stringify(await post('/api/performance-engine/record', payload()), null, 2); }
+        async function summary(){ document.getElementById('out').textContent = JSON.stringify(await get('/api/performance-engine/summary'), null, 2); }
+        async function history(){ document.getElementById('out').textContent = JSON.stringify(await get('/api/performance-engine/history'), null, 2); }
+      </script>
+    </body>
+    </html>

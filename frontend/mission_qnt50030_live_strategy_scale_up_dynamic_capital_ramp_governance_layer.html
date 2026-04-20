@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>QNT50030 - Live Strategy Scale-Up + Dynamic Capital Ramp Governance Layer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background:#0f172a; color:#e2e8f0; }
+    .card { background:#111827; border:1px solid #334155; border-radius:12px; padding:20px; max-width:1000px; }
+    h1,h2 { margin-top:0; }
+    code { background:#1e293b; padding:2px 6px; border-radius:6px; }
+    ul { line-height:1.6; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>QNT50030 — Live Strategy Scale-Up + Dynamic Capital Ramp Governance Layer</h1>
+    <p>Governed scale-up layer for increasing live strategy capital only after controlled re-entry, risk clearance, treasury capacity checks, and ramp-policy enforcement.</p>
+    <h2>Capabilities</h2>
+    <ul>
+      <li>Synchronizes live re-entry, risk, treasury, strategy deployment, and performance posture before ramp-up.</li>
+      <li>Registers scale cases linked to executed QNT50029 re-entry evidence.</li>
+      <li>Approves dynamic ramp plans in paper or live mode subject to safe-mode and policy constraints.</li>
+      <li>Executes governed capital ramp events into allocation or execution pathways with audit-grade traceability.</li>
+    </ul>
+    <h2>Primary endpoints</h2>
+    <ul>
+      <li><code>GET /strategy-scale-up/health</code></li>
+      <li><code>GET /strategy-scale-up/summary</code></li>
+      <li><code>POST /strategy-scale-up/register-scale-case</code></li>
+      <li><code>POST /strategy-scale-up/approve-ramp</code></li>
+      <li><code>POST /strategy-scale-up/execute-ramp</code></li>
+      <li><code>POST /strategy-scale-up/close-scale-case</code></li>
+    </ul>
+  </div>
+</body>
+</html>

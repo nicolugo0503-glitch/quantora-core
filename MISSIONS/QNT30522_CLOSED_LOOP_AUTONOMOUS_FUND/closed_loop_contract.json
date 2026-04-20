@@ -1,0 +1,22 @@
+{
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/closed-loop/run"
+    },
+    {
+      "method": "GET",
+      "path": "/api/closed-loop/cycles"
+    }
+  ],
+  "loop_steps": [
+    "ingest signals",
+    "ingest pnl by asset",
+    "update adaptive weights",
+    "allocate capital",
+    "generate orders",
+    "execute dry-run or live broker orders",
+    "store cycle history"
+  ],
+  "default_mode": "dry_run"
+}

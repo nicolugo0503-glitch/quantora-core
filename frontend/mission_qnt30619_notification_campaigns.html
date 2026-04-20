@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30619 Investor Notification Campaign Engine + Scheduled Notice Batches</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1440px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,select,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:90px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1400px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30619 · Investor Notification Campaign Engine + Scheduled Notice Batches</h1>
+        <div style="color:#9fb3d8">Creates outbound investor notice campaigns and builds scheduled recipient batches using routing preferences and delivery profiles.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30618_notice_routing.html">Preference Center</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Campaigns</div><div id="campaigns" class="value">-</div></div>
+    <div class="card"><div class="label">Batches</div><div id="batches" class="value">-</div></div>
+    <div class="card"><div class="label">Scheduled</div><div id="scheduled" class="value">-</div></div>
+    <div class="card"><div class="label">Sent</div><div id="sent" class="value">-</div></div>
+    <div class="card"><div class="label">Latest Campaign</div><div id="latest" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <input id="campaignName" placeholder="Campaign name">
+    <select id="noticeType" style="margin-top:12px">
+      <option value="general">general</option>
+      <option value="report">report</option>
+      <option value="notice">notice</option>
+      <option value="breach">breach</option>
+    </select>
+    <select id="urgency" style="margin-top:12px">
+      <option value="normal">normal</option>
+      <option value="urgent">urgent</option>
+    </select>
+    <input id="subject" placeholder="Subject" style="margin-top:12px">
+    <textarea id="message" placeholder="Message" style="margin-top:12px"></textarea>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="createCampaign()">Create Campaign</button>
+      <button onclick="scheduleBatch()">Schedule Latest Batch</button>
+      <button onclick="sendBatch()">Send Latest Batch</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Notice Batches</div>
+    <table>
+      <thead><tr><th>Campaign</th><th>Date</th><th>Deliveries</th><th>Status</th><th>Batch ID</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Campaign Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/notification-campaigns/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data,null,2); return; }
+  const d = res.data || {};
+  document.getElementById('campaigns').textContent = String(d.campaign_count || 0);
+  document.getElementById('batches').textContent = String(d.batch_count || 0);
+  document.getElementById('scheduled').textContent = String(d.scheduled_batch_count || 0);
+  document.getElementById('sent').textContent = String(d.sent_batch_count || 0);
+  document.getElementById('latest').textContent = String((d.latest_campaign || {}).campaign_name || '-');
+  document.getElementById('rows').innerHTML = (d.batches || []).map(b =>
+    `<tr><td>${b.campaign_name}</td><td>${b.date}</td><td>${b.delivery_count}</td><td>${b.status}</td><td>${b.batch_id}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function createCampaign(){
+  const res = await j('/api/notification-campaigns/create', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    campaign_name: document.getElementById('campaignName').value,
+    notice_type: document.getElementById('noticeType').value,
+    urgency: document.getElementById('urgency').value,
+    subject: document.getElementById('subject').value,
+    message: document.getElementById('message').value,
+    target_scope: 'all_active_profiles'
+  })});
+  document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2);
+  await load();
+}
+async function scheduleBatch(){
+  const res = await j('/api/notification-campaigns/summary');
+  const latest = res.data.latest_campaign;
+  if(!latest) return;
+  const out = await j('/api/notification-campaigns/batch', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({campaign_id: latest.campaign_id})});
+  document.getElementById('raw').textContent = JSON.stringify(out.data, null, 2);
+  await load();
+}
+async function sendBatch(){
+  const res = await j('/api/notification-campaigns/summary');
+  const latest = res.data.latest_batch;
+  if(!latest) return;
+  const out = await j('/api/notification-campaigns/batch/send', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({batch_id: latest.batch_id})});
+  document.getElementById('raw').textContent = JSON.stringify(out.data, null, 2);
+  await load();
+}
+load();
+</script>
+</body>
+</html>

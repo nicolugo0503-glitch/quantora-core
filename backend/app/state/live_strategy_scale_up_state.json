@@ -1,0 +1,20 @@
+{
+  "generated_by": "QNT50030",
+  "status": "degraded",
+  "policy": {},
+  "last_sync": {
+    "current_regime": "neutral"
+  },
+  "sync_history": [],
+  "scale_cases": [],
+  "ramp_events": [
+    {
+      "ramp_event_id": "ramp_event_smoke_1",
+      "status": "executed",
+      "symbol": "BTCUSDT",
+      "broker": "binance",
+      "target_weight": 0.12
+    }
+  ],
+  "audit_log": []
+}

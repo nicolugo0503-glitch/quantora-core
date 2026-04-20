@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>QNT50015 - Regulatory Disclosure Delivery + Supervisory Acknowledgement Ledger</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background:#0f172a; color:#e2e8f0; }
+    .card { background:#111827; border:1px solid #334155; border-radius:12px; padding:20px; max-width:960px; }
+    h1,h2 { margin-top:0; }
+    code { background:#1e293b; padding:2px 6px; border-radius:6px; }
+    ul { line-height:1.6; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>QNT50015 — Regulatory Disclosure Delivery + Supervisory Acknowledgement Ledger</h1>
+    <p>Institutional disclosure control layer for delivery of published governance binders and audit-grade supervisory acknowledgement capture.</p>
+    <h2>Capabilities</h2>
+    <ul>
+      <li>Registers disclosure delivery only against real <code>QNT50014</code> published binder evidence.</li>
+      <li>Records delivery receipts with channel and reference lineage.</li>
+      <li>Maintains supervisory acknowledgement ledger with outcome tracking and exception capture.</li>
+      <li>Preserves period, books release, official release, retrieval packet, and binder publication lineage.</li>
+    </ul>
+    <h2>Primary endpoints</h2>
+    <ul>
+      <li><code>GET /regulatory-disclosures/health</code></li>
+      <li><code>GET /regulatory-disclosures/summary</code></li>
+      <li><code>POST /regulatory-disclosures/register-delivery</code></li>
+      <li><code>POST /regulatory-disclosures/record-receipt</code></li>
+      <li><code>POST /regulatory-disclosures/acknowledge</code></li>
+    </ul>
+  </div>
+</body>
+</html>

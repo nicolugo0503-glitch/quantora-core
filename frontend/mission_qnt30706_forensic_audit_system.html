@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>QNT30706 Forensic Audit System</title>
+<style>
+:root{--bg:#071019;--panel:#0d1723;--line:#1b2b40;--text:#edf3fb;--muted:#8ea0b7;--good:#48d597;--bad:#ff6f86;--warn:#ffc857}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#071019,#09131d 55%,#071019);color:var(--text);font-family:Inter,Arial,sans-serif}.wrap{max-width:1520px;margin:0 auto;padding:28px}.hero,.card{background:rgba(13,23,35,.95);border:1px solid var(--line);border-radius:20px;box-shadow:0 22px 54px rgba(0,0,0,.35)}.hero{padding:26px}.label{font-size:11px;color:var(--muted);letter-spacing:.16em;text-transform:uppercase;font-weight:800}.hero h1{margin:10px 0 8px;font-size:42px}.sub{color:var(--muted);max-width:1100px;line-height:1.55}.toolbar,.grid2,.grid3,.grid4{display:grid;gap:14px}.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}.grid4{grid-template-columns:repeat(4,1fr);margin-top:18px}.grid3{grid-template-columns:1fr 1fr 1fr;margin-top:18px}.grid2{grid-template-columns:1fr 1fr;margin-top:18px}.card{padding:18px}.value{font-size:26px;font-weight:800;margin-top:8px}.tiny{font-size:12px;color:var(--muted)}button,input,textarea,select{background:#0b1520;color:var(--text);border:1px solid var(--line);padding:11px 14px;border-radius:12px;font:inherit}.btn{cursor:pointer;font-weight:700}.primary{background:#fff;color:#0a0e14}textarea{min-height:100px;width:100%}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #1a293d;font-size:13px;vertical-align:top}th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}pre{background:#09111a;border:1px solid var(--line);padding:14px;border-radius:14px;min-height:240px;max-height:720px;overflow:auto}.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}@media(max-width:1100px){.grid4,.grid3,.grid2{grid-template-columns:1fr 1fr}}@media(max-width:760px){.grid4,.grid3,.grid2{grid-template-columns:1fr}.wrap{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="label">QNT30706</div>
+    <h1>Forensic Audit System</h1>
+    <div class="sub">Institutional reconstruction and evidence control for Quantora. Capture cross-system snapshots, reconstruct incidents across release, operator, safety, delivery, and fund administration layers, and close incidents with accountable acknowledgements.</div>
+    <div class="toolbar">
+      <button class="btn primary" onclick="bootstrapDemo()">Bootstrap Forensic Demo</button>
+      <button class="btn" onclick="captureSnapshot()">Capture Snapshot</button>
+      <button class="btn" onclick="reconstructIncident()">Reconstruct Incident</button>
+      <button class="btn" onclick="ackLatest()">Close Latest Incident</button>
+      <button class="btn" onclick="window.location.href='mission_qnt30705_fund_admin_control_center.html'">Open Fund Admin Layer</button>
+      <button class="btn" onclick="window.location.href='index.html'">Back to Command Center</button>
+    </div>
+  </div>
+
+  <div class="grid4">
+    <div class="card"><div class="label">Forensic Posture</div><div id="posture" class="value">-</div><div class="tiny">Institutional reconstruction readiness</div></div>
+    <div class="card"><div class="label">Audit Chain</div><div id="chain" class="value">-</div><div class="tiny">Immutable evidence integrity</div></div>
+    <div class="card"><div class="label">Open Incidents</div><div id="incidents" class="value">-</div><div class="tiny">Critical + high severity</div></div>
+    <div class="card"><div class="label">Snapshots</div><div id="snapshots" class="value">-</div><div class="tiny">Cross-system captured states</div></div>
+  </div>
+
+  <div class="grid3">
+    <div class="card"><div class="label">Incident Controls</div><input id="title" placeholder="Incident title" value="Post-trade review anomaly"><input id="trigger" placeholder="Trigger" value="manual forensic review" style="margin-top:10px"><textarea id="note" placeholder="Operator note / finding"></textarea><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button class="btn" onclick="captureSnapshot()">Capture</button><button class="btn" onclick="reconstructIncident()">Reconstruct</button><button class="btn" onclick="ackLatest()">Close Latest</button></div></div>
+    <div class="card"><div class="label">Current Snapshot</div><pre id="snapshotBox">Loading...</pre></div>
+    <div class="card"><div class="label">Latest Incident</div><pre id="incidentBox">Loading...</pre></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><div class="label">System Context</div><pre id="contextBox">Loading...</pre></div>
+    <div class="card"><div class="label">Acknowledgements</div><pre id="ackBox">Loading...</pre></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><div class="label">Snapshots Timeline</div><table><thead><tr><th>ID</th><th>Severity</th><th>Captured</th><th>Safety</th></tr></thead><tbody id="snapshotRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+    <div class="card"><div class="label">Incident Register</div><table><thead><tr><th>Incident</th><th>Severity</th><th>Status</th><th>Reconstructed</th></tr></thead><tbody id="incidentRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+  </div>
+</div>
+<script>
+async function j(url,opt){const r=await fetch(url,opt);const d=await r.json();if(!r.ok) throw new Error(d.detail||'request failed');return d;}
+function cls(v){const t=String(v||'').toLowerCase(); if(t.includes('ready')||t.includes('ok')||t.includes('normal')||t.includes('true')) return 'good'; if(t.includes('attention')||t.includes('medium')||t.includes('pending')) return 'warn'; return 'bad';}
+function stamp(v){return v?new Date(v).toISOString().replace('T',' ').slice(0,16):'-';}
+function note(){return document.getElementById('note').value.trim();}
+function title(){return document.getElementById('title').value.trim();}
+function trigger(){return document.getElementById('trigger').value.trim();}
+function render(data){
+  const fs=data.forensic_status||{}; const cs=data.current_snapshot||{}; const chain=(cs.audit_chain||{}).chain_integrity_ok;
+  document.getElementById('posture').textContent=String(fs.posture||'-').toUpperCase(); document.getElementById('posture').className='value '+cls(fs.posture||'blocked');
+  document.getElementById('chain').textContent=chain?'OK':'FAIL'; document.getElementById('chain').className='value '+cls(String(chain));
+  document.getElementById('incidents').textContent=String((fs.critical_open_count||0)+(fs.high_open_count||0)); document.getElementById('incidents').className='value '+cls(((fs.critical_open_count||0)>0)?'bad':(((fs.high_open_count||0)>0)?'attention':'ready'));
+  document.getElementById('snapshots').textContent=String(data.snapshot_count||0); document.getElementById('snapshots').className='value good';
+  document.getElementById('snapshotBox').textContent=JSON.stringify(data.latest_snapshot||cs, null, 2);
+  document.getElementById('incidentBox').textContent=JSON.stringify(data.latest_incident||{}, null, 2);
+  document.getElementById('contextBox').textContent=JSON.stringify(cs, null, 2);
+  document.getElementById('ackBox').textContent=JSON.stringify(data.acknowledgements||[], null, 2);
+  const snaps=data.snapshots||[];
+  document.getElementById('snapshotRows').innerHTML=snaps.length?snaps.slice(0,12).map(s=>`<tr><td>${s.snapshot_id||'-'}</td><td class="${cls(s.severity||'bad')}">${s.severity||'-'}</td><td>${stamp(s.captured_at)}</td><td>${(s.safety||{}).posture||'-'}</td></tr>`).join(''):'<tr><td colspan="4">No snapshots.</td></tr>';
+  const incidents=data.incidents||[];
+  document.getElementById('incidentRows').innerHTML=incidents.length?incidents.slice(0,12).map(i=>`<tr><td>${i.title||i.incident_id||'-'}</td><td class="${cls(i.severity||'bad')}">${i.severity||'-'}</td><td>${i.status||'-'}</td><td>${stamp(i.reconstructed_at)}</td></tr>`).join(''):'<tr><td colspan="4">No incidents.</td></tr>';
+}
+async function loadAll(){render(await j('/api/forensic-audit-system/summary'));}
+async function bootstrapDemo(){await j('/api/forensic-audit-system/bootstrap-demo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({notes:note()})});await loadAll();}
+async function captureSnapshot(){await j('/api/forensic-audit-system/capture-snapshot',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});await loadAll();}
+async function reconstructIncident(){await j('/api/forensic-audit-system/reconstruct-incident',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:title(),trigger:trigger(),operator_note:note()})});await loadAll();}
+async function ackLatest(){const s=await j('/api/forensic-audit-system/summary'); const latest=(s.incidents||[])[0]; if(!latest){alert('No incident to close'); return;} await j('/api/forensic-audit-system/acknowledge',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({incident_id:latest.incident_id,status:'closed',note:note()||'closed by operator'})}); await loadAll();}
+loadAll();
+</script>
+</body>
+</html>

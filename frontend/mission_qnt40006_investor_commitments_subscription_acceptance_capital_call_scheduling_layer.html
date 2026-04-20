@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QNT40006 Investor Commitments, Subscription Acceptance, and Capital Call Scheduling Layer</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background:#0b1020; color:#e8ecf3; }
+    .card { background:#141a2f; border:1px solid #2b355a; border-radius:12px; padding:20px; max-width:980px; }
+    h1,h2 { margin-top:0; }
+    code { background:#0f1530; padding:2px 6px; border-radius:6px; }
+    ul { line-height:1.6; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>QNT40006 — Investor Commitments, Subscription Acceptance, and Capital Call Scheduling Layer</h1>
+    <p>This mission institutionalizes investor commitment capture, subscription acceptance, and capital call scheduling so committed capital becomes release-ready operating capital.</p>
+    <h2>Command Surface</h2>
+    <ul>
+      <li><code>/summary</code></li>
+      <li><code>/evaluate</code></li>
+      <li><code>/record-commitment</code></li>
+      <li><code>/accept-subscription</code></li>
+      <li><code>/schedule-capital-call</code></li>
+      <li><code>/policy</code></li>
+      <li><code>/bootstrap-demo</code></li>
+    </ul>
+    <h2>Institutional Purpose</h2>
+    <p>Quantora now governs the transition from investor approval to committed capital scheduling. This layer binds onboarding, signed subscriptions, admission records, and capital call issuance into one investor-capital activation control plane.</p>
+  </div>
+</body>
+</html>
+
+cat > test_qnt40006_smoke.py <<'PY'
+import json
+import sys
+from pathlib import Path
+
+base = Path(__file__).resolve().parent
+sys.path.insert(0, str(base))
+from backend.app import main as app_main
+from backend.app import qnt40006_investor_commitments_subscription_acceptance_capital_call_scheduling_layer_router as mod
+
+email = "operator@quantora.test"
+app_main.save_session({
+    "logged_in": True,
+    "email": email,
+    "display_name": "Quantora Operator",
+    "operator_id": "op_qnt40006",
+    "is_admin": True,
+})
+user = {"email": email}
+res = mod.bootstrap_demo(user)
+summary = mod._summary_for_email(email)
+assert res["ok"] is True
+status = summary["investor_commitments_subscription_acceptance_capital_call_scheduling_layer_status"]
+assert status["run_count"] >= 1
+assert status["commitment_event_count"] >= 1
+assert status["capital_call_schedule_event_count"] >= 1
+assert status["posture"] in {"CAPITAL_CALL_SCHEDULING_CLEAR", "SCHEDULING_WATCH", "SCHEDULING_REMEDIATION_REQUIRED", "INSTITUTIONAL_CAPITAL_CALL_READY"}
+print(json.dumps({
+    "mission": "QNT40006",
+    "posture": status["posture"],
+    "latest_score": status["latest_score"],
+}, indent=2))
+PY
+
+python3 - <<'PY'
+from pathlib import Path
+import json
+main_path = Path('backend/app/main.py')
+text = main_path.read_text(encoding='utf-8')
+import_line = 'from .qnt40006_investor_commitments_subscription_acceptance_capital_call_scheduling_layer_router import router as qnt40006_router\n'
+if import_line not in text:
+    anchor = 'from .qnt40005_investor_aml_accreditation_suitability_admission_approval_layer_router import router as qnt40005_router\n'
+    text = text.replace(anchor, anchor + import_line)
+include_line = 'app.include_router(qnt40006_router)\n'
+if include_line not in text:
+    anchor = 'app.include_router(qnt40005_router)\n'
+    text = text.replace(anchor, anchor + include_line)
+main_path.write_text(text, encoding='utf-8')
+
+reg_path = Path('frontend/mission_registry.json')
+reg = json.loads(reg_path.read_text(encoding='utf-8'))
+missions = reg.get('missions', [])
+code = 'QNT40006'
+if not any(m.get('code') == code for m in missions):
+    missions.append({
+        'code': code,
+        'label': 'QNT40006 Investor Commitments, Subscription Acceptance, and Capital Call Scheduling Layer',
+        'path': 'mission_qnt40006_investor_commitments_subscription_acceptance_capital_call_scheduling_layer.html'
+    })
+reg['missions'] = missions
+reg_path.write_text(json.dumps(reg, indent=2), encoding='utf-8')
+PY
+
+echo '[OK] wrote QNT40006 files'

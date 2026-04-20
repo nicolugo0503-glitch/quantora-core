@@ -1,0 +1,412 @@
+{
+  "generated_by": "QNT50003",
+  "status": "degraded",
+  "execution_mode": "live",
+  "safe_mode": false,
+  "current_regime": "neutral",
+  "liquidity_state": "normal",
+  "max_concurrent_strategies": 3,
+  "max_strategy_weight": 0.4,
+  "deployment_profiles": [
+    {
+      "strategy_id": "alpha_trend",
+      "name": "Alpha Trend",
+      "symbol": "BTCUSDT",
+      "asset_class": "crypto",
+      "preferred_regimes": [
+        "bull",
+        "neutral"
+      ],
+      "warmup_required": false,
+      "deployment_readiness": 0.96,
+      "max_live_weight": 0.36,
+      "min_ticket_pct": 0.1,
+      "allowed_brokers": [
+        "binance",
+        "paper"
+      ],
+      "status": "active",
+      "enabled": true
+    },
+    {
+      "strategy_id": "beta_mean_revert",
+      "name": "Beta Mean Revert",
+      "symbol": "ETHUSDT",
+      "asset_class": "crypto",
+      "preferred_regimes": [
+        "neutral",
+        "range"
+      ],
+      "warmup_required": false,
+      "deployment_readiness": 0.88,
+      "max_live_weight": 0.28,
+      "min_ticket_pct": 0.08,
+      "allowed_brokers": [
+        "binance",
+        "paper"
+      ],
+      "status": "standby",
+      "enabled": true
+    },
+    {
+      "strategy_id": "macro_defense",
+      "name": "Macro Defense",
+      "symbol": "USDTUSD",
+      "asset_class": "cash_overlay",
+      "preferred_regimes": [
+        "stress",
+        "bear",
+        "neutral"
+      ],
+      "warmup_required": false,
+      "deployment_readiness": 0.99,
+      "max_live_weight": 0.42,
+      "min_ticket_pct": 0.05,
+      "allowed_brokers": [
+        "ibkr",
+        "paper",
+        "binance"
+      ],
+      "status": "active",
+      "enabled": true
+    }
+  ],
+  "current_plan": {
+    "mission": "QNT50003",
+    "deployment_id": "deploy_plan_1158ad6c87",
+    "decision_id": "deploy_dec_bada5eeaed",
+    "generated_at": 1776402801,
+    "regime": "neutral",
+    "liquidity_state": "normal",
+    "source_allocation_id": "alloc_plan_37b859ebf9",
+    "source_decision_id": "alloc_dec_a8337da99c",
+    "safe_mode": true,
+    "execution_mode": "paper",
+    "max_concurrent_strategies": 3,
+    "deployments": [
+      {
+        "strategy_id": "macro_defense",
+        "name": "Macro Defense",
+        "symbol": "USDTUSD",
+        "asset_class": "cash_overlay",
+        "target_capital": 315000.0,
+        "target_weight": 0.35,
+        "allocation_weight": 0.35,
+        "current_weight": 0.0,
+        "priority_score": 0.51865149,
+        "regime_fit": 1.08,
+        "readiness": 0.99,
+        "preferred_regimes": [
+          "stress",
+          "bear",
+          "neutral"
+        ],
+        "allowed_brokers": [
+          "ibkr",
+          "paper",
+          "binance"
+        ],
+        "warmup_required": false,
+        "routing_action": "activate",
+        "status": "selected"
+      },
+      {
+        "strategy_id": "alpha_trend",
+        "name": "Alpha Trend",
+        "symbol": "BTCUSDT",
+        "asset_class": "crypto",
+        "target_capital": 315000.0,
+        "target_weight": 0.35,
+        "allocation_weight": 0.35,
+        "current_weight": 0.0,
+        "priority_score": 0.4943292,
+        "regime_fit": 1.08,
+        "readiness": 0.96,
+        "preferred_regimes": [
+          "bull",
+          "neutral"
+        ],
+        "allowed_brokers": [
+          "binance",
+          "paper"
+        ],
+        "warmup_required": false,
+        "routing_action": "activate",
+        "status": "selected"
+      },
+      {
+        "strategy_id": "beta_mean_revert",
+        "name": "Beta Mean Revert",
+        "symbol": "ETHUSDT",
+        "asset_class": "crypto",
+        "target_capital": 161262.0,
+        "target_weight": 0.17918,
+        "allocation_weight": 0.17918,
+        "current_weight": 0.0,
+        "priority_score": 0.22462139,
+        "regime_fit": 1.08,
+        "readiness": 0.88,
+        "preferred_regimes": [
+          "neutral",
+          "range"
+        ],
+        "allowed_brokers": [
+          "binance",
+          "paper"
+        ],
+        "warmup_required": false,
+        "routing_action": "activate",
+        "status": "selected"
+      }
+    ],
+    "status": "approved",
+    "approved_at": 1776402801,
+    "approver": "smoke_committee",
+    "approval_notes": "deploy approved"
+  },
+  "active_deployments": [
+    {
+      "strategy_id": "macro_defense",
+      "name": "Macro Defense",
+      "symbol": "USDTUSD",
+      "asset_class": "cash_overlay",
+      "target_capital": 315000.0,
+      "target_weight": 0.35,
+      "allocation_weight": 0.35,
+      "current_weight": 0.0,
+      "priority_score": 0.51865149,
+      "regime_fit": 1.08,
+      "readiness": 0.99,
+      "preferred_regimes": [
+        "stress",
+        "bear",
+        "neutral"
+      ],
+      "allowed_brokers": [
+        "ibkr",
+        "paper",
+        "binance"
+      ],
+      "warmup_required": false,
+      "routing_action": "activate",
+      "status": "active"
+    },
+    {
+      "strategy_id": "alpha_trend",
+      "name": "Alpha Trend",
+      "symbol": "BTCUSDT",
+      "asset_class": "crypto",
+      "target_capital": 315000.0,
+      "target_weight": 0.35,
+      "allocation_weight": 0.35,
+      "current_weight": 0.0,
+      "priority_score": 0.4943292,
+      "regime_fit": 1.08,
+      "readiness": 0.96,
+      "preferred_regimes": [
+        "bull",
+        "neutral"
+      ],
+      "allowed_brokers": [
+        "binance",
+        "paper"
+      ],
+      "warmup_required": false,
+      "routing_action": "activate",
+      "status": "active"
+    },
+    {
+      "strategy_id": "beta_mean_revert",
+      "name": "Beta Mean Revert",
+      "symbol": "ETHUSDT",
+      "asset_class": "crypto",
+      "target_capital": 161262.0,
+      "target_weight": 0.17918,
+      "allocation_weight": 0.17918,
+      "current_weight": 0.0,
+      "priority_score": 0.22462139,
+      "regime_fit": 1.08,
+      "readiness": 0.88,
+      "preferred_regimes": [
+        "neutral",
+        "range"
+      ],
+      "allowed_brokers": [
+        "binance",
+        "paper"
+      ],
+      "warmup_required": false,
+      "routing_action": "activate",
+      "status": "active"
+    }
+  ],
+  "release_queue": [
+    {
+      "deployment_id": "deploy_plan_1158ad6c87",
+      "decision_id": "deploy_dec_bada5eeaed",
+      "tickets": [
+        {
+          "deployment_id": "deploy_plan_1158ad6c87",
+          "decision_id": "deploy_dec_bada5eeaed",
+          "source_allocation_id": "alloc_plan_37b859ebf9",
+          "source_decision_id": "alloc_dec_a8337da99c",
+          "strategy_id": "macro_defense",
+          "symbol": "USDTUSD",
+          "target_capital": 315000.0,
+          "target_weight": 0.35,
+          "routing_action": "activate",
+          "broker": "paper",
+          "regime": "neutral",
+          "risk_tag": "DEPLOY_NEUTRAL",
+          "staged_at": 1776402801
+        },
+        {
+          "deployment_id": "deploy_plan_1158ad6c87",
+          "decision_id": "deploy_dec_bada5eeaed",
+          "source_allocation_id": "alloc_plan_37b859ebf9",
+          "source_decision_id": "alloc_dec_a8337da99c",
+          "strategy_id": "alpha_trend",
+          "symbol": "BTCUSDT",
+          "target_capital": 315000.0,
+          "target_weight": 0.35,
+          "routing_action": "activate",
+          "broker": "paper",
+          "regime": "neutral",
+          "risk_tag": "DEPLOY_NEUTRAL",
+          "staged_at": 1776402801
+        },
+        {
+          "deployment_id": "deploy_plan_1158ad6c87",
+          "decision_id": "deploy_dec_bada5eeaed",
+          "source_allocation_id": "alloc_plan_37b859ebf9",
+          "source_decision_id": "alloc_dec_a8337da99c",
+          "strategy_id": "beta_mean_revert",
+          "symbol": "ETHUSDT",
+          "target_capital": 161262.0,
+          "target_weight": 0.17918,
+          "routing_action": "activate",
+          "broker": "paper",
+          "regime": "neutral",
+          "risk_tag": "DEPLOY_NEUTRAL",
+          "staged_at": 1776402801
+        }
+      ],
+      "approved_at": 1776402801
+    }
+  ],
+  "history": [
+    {
+      "mission": "QNT50003",
+      "deployment_id": "deploy_plan_1158ad6c87",
+      "decision_id": "deploy_dec_bada5eeaed",
+      "generated_at": 1776402801,
+      "regime": "neutral",
+      "liquidity_state": "normal",
+      "source_allocation_id": "alloc_plan_37b859ebf9",
+      "source_decision_id": "alloc_dec_a8337da99c",
+      "safe_mode": true,
+      "execution_mode": "paper",
+      "max_concurrent_strategies": 3,
+      "deployments": [
+        {
+          "strategy_id": "macro_defense",
+          "name": "Macro Defense",
+          "symbol": "USDTUSD",
+          "asset_class": "cash_overlay",
+          "target_capital": 315000.0,
+          "target_weight": 0.35,
+          "allocation_weight": 0.35,
+          "current_weight": 0.0,
+          "priority_score": 0.51865149,
+          "regime_fit": 1.08,
+          "readiness": 0.99,
+          "preferred_regimes": [
+            "stress",
+            "bear",
+            "neutral"
+          ],
+          "allowed_brokers": [
+            "ibkr",
+            "paper",
+            "binance"
+          ],
+          "warmup_required": false,
+          "routing_action": "activate",
+          "status": "selected"
+        },
+        {
+          "strategy_id": "alpha_trend",
+          "name": "Alpha Trend",
+          "symbol": "BTCUSDT",
+          "asset_class": "crypto",
+          "target_capital": 315000.0,
+          "target_weight": 0.35,
+          "allocation_weight": 0.35,
+          "current_weight": 0.0,
+          "priority_score": 0.4943292,
+          "regime_fit": 1.08,
+          "readiness": 0.96,
+          "preferred_regimes": [
+            "bull",
+            "neutral"
+          ],
+          "allowed_brokers": [
+            "binance",
+            "paper"
+          ],
+          "warmup_required": false,
+          "routing_action": "activate",
+          "status": "selected"
+        },
+        {
+          "strategy_id": "beta_mean_revert",
+          "name": "Beta Mean Revert",
+          "symbol": "ETHUSDT",
+          "asset_class": "crypto",
+          "target_capital": 161262.0,
+          "target_weight": 0.17918,
+          "allocation_weight": 0.17918,
+          "current_weight": 0.0,
+          "priority_score": 0.22462139,
+          "regime_fit": 1.08,
+          "readiness": 0.88,
+          "preferred_regimes": [
+            "neutral",
+            "range"
+          ],
+          "allowed_brokers": [
+            "binance",
+            "paper"
+          ],
+          "warmup_required": false,
+          "routing_action": "activate",
+          "status": "selected"
+        }
+      ],
+      "status": "approved",
+      "approved_at": 1776402801,
+      "approver": "smoke_committee",
+      "approval_notes": "deploy approved"
+    }
+  ],
+  "audit_log": [
+    {
+      "event_id": "strategy_deploy_audit_1776402801606296566",
+      "event_type": "deployment_plan_approved",
+      "timestamp": 1776402801,
+      "deployment_id": "deploy_plan_1158ad6c87",
+      "decision_id": "deploy_dec_bada5eeaed",
+      "approver": "smoke_committee",
+      "release_count": 3
+    },
+    {
+      "event_id": "strategy_deploy_audit_1776402801604400196",
+      "event_type": "deployment_plan_proposed",
+      "timestamp": 1776402801,
+      "deployment_id": "deploy_plan_1158ad6c87",
+      "decision_id": "deploy_dec_bada5eeaed",
+      "source_allocation_id": "alloc_plan_37b859ebf9",
+      "regime": "neutral"
+    }
+  ]
+}

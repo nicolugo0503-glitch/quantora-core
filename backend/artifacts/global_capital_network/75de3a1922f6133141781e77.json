@@ -1,0 +1,14 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "target_allocator_count": 24,
+    "min_cross_border_readiness": 72.0,
+    "max_jurisdiction_risk": 38.0,
+    "priority_corridor_count": 5,
+    "reserve_mobility_floor": 58.0,
+    "activation_score_floor": 70.0
+  },
+  "runs": [],
+  "created_at": 1775712869,
+  "updated_at": 1775712869
+}

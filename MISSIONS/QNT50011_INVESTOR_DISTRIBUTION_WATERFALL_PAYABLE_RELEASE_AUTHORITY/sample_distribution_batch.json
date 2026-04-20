@@ -1,0 +1,19 @@
+{
+  "operator": "fund_admin",
+  "batch_name": "APR_2026_MONTHLY_DISTRIBUTION",
+  "distribution_type": "profit_distribution",
+  "total_amount": 25000,
+  "currency": "USD",
+  "period_id": "2026-04",
+  "statement_cycle_id": "APR_2026",
+  "allocations": [
+    {
+      "investor_id": "INVESTOR_001",
+      "weight": 0.6
+    },
+    {
+      "investor_id": "INVESTOR_002",
+      "weight": 0.4
+    }
+  ]
+}

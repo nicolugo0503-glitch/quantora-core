@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30361 Institutional Portfolio Brain</title>
+  <style>
+    :root { --bg:#07111f; --panel:#0f1d31; --panel2:#132742; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#60a5fa; --good:#34d399; --warn:#f59e0b; }
+    * { box-sizing:border-box; } body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#040b15 0%,#0a1424 100%); color:var(--text); }
+    .shell { max-width:1280px; margin:0 auto; padding:24px; } .panel { background:rgba(15,29,49,.95); border:1px solid var(--line); border-radius:18px; padding:18px; margin-bottom:16px; }
+    .hero { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; } .sub { color:var(--muted); max-width:850px; line-height:1.5; }
+    .row { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; } .metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .metric { background:#0a1526; border:1px solid #1e2d47; border-radius:14px; padding:14px; } .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .value { font-size:26px; font-weight:700; margin-top:8px; }
+    input, textarea { width:100%; border:1px solid var(--line); background:var(--panel2); color:var(--text); border-radius:10px; padding:11px 12px; }
+    textarea { min-height:180px; } button { border:none; background:var(--accent); color:#fff; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:700; }
+    button.secondary { background:#1d4ed8; } pre { margin:0; background:#06101d; border:1px solid #1e2d47; border-radius:14px; padding:14px; min-height:260px; white-space:pre-wrap; }
+    .tiny { color:var(--muted); font-size:12px; } @media (max-width:900px){ .row,.metrics{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="panel hero">
+      <div>
+        <h1 style="margin:0 0 8px 0;">Institutional Portfolio Brain</h1>
+        <div class="sub">Cross-strategy coordination layer for ranking strategies, resolving symbol overlap, budgeting capital, and syncing portfolio-wide capital intent into a governed active set.</div>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="secondary" onclick="window.location.href='index.html'">Command Center</button>
+        <button onclick="loadStatus()">Refresh</button>
+      </div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric"><div class="label">Strategies</div><div class="value" id="m1">-</div></div>
+      <div class="metric"><div class="label">Active</div><div class="value" id="m2">-</div></div>
+      <div class="metric"><div class="label">Conflicts</div><div class="value" id="m3">-</div></div>
+      <div class="metric"><div class="label">Diversification</div><div class="value" id="m4">-</div></div>
+    </div>
+
+    <div class="row">
+      <div class="panel">
+        <h2 style="margin-top:0;">Ingest Strategy Snapshot</h2>
+        <div class="tiny">Paste JSON array of strategies.</div>
+        <textarea id="ingest">[
+  {"strategy_name":"AAPL Momentum","market":"equities","symbols":["AAPL","QQQ"],"realized_pnl":1200,"unrealized_pnl":140,"win_rate":0.61,"confidence":0.72,"volatility":0.22,"activity":8,"regime_fit":0.67},
+  {"strategy_name":"NVDA Breakout","market":"equities","symbols":["NVDA"],"realized_pnl":980,"unrealized_pnl":60,"win_rate":0.57,"confidence":0.69,"volatility":0.30,"activity":5,"regime_fit":0.62},
+  {"strategy_name":"BTC Carry","market":"crypto","symbols":["BTCUSD"],"realized_pnl":860,"unrealized_pnl":110,"win_rate":0.59,"confidence":0.66,"volatility":0.35,"activity":4,"regime_fit":0.71},
+  {"strategy_name":"ES Hedge","market":"futures","symbols":["ES"],"realized_pnl":420,"unrealized_pnl":40,"win_rate":0.53,"confidence":0.58,"volatility":0.18,"activity":6,"regime_fit":0.55}
+]</textarea>
+        <div style="display:flex; gap:8px; margin-top:10px;">
+          <input id="regime" value="balanced_trend" />
+          <button onclick="ingest()">Ingest</button>
+        </div>
+      </div>
+      <div class="panel">
+        <h2 style="margin-top:0;">Coordinate + Sync</h2>
+        <div class="tiny">Evaluate overlap, pick active set, and sync capital budgets.</div>
+        <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px;">
+          <input id="max_active" type="number" value="4" />
+          <input id="max_overlap" type="number" value="2" />
+          <input id="conflict_penalty" type="number" value="12.5" step="0.1" />
+          <input id="reserve_pct" type="number" value="0.10" step="0.01" />
+          <input id="total_capital" type="number" value="250000" step="1000" />
+        </div>
+        <div style="display:flex; gap:8px; margin-top:12px;">
+          <button onclick="coordinate()">Coordinate</button>
+          <button class="secondary" onclick="syncAllocator()">Allocator Sync</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2 style="margin-top:0;">Output</h2>
+      <pre id="out">Loading...</pre>
+    </div>
+  </div>
+
+<script>
+const API = "http://127.0.0.1:8010";
+async function req(path, method="GET", body=null){
+  const res = await fetch(API + path, {method, headers:{"Content-Type":"application/json"}, body: body ? JSON.stringify(body) : null});
+  const data = await res.json();
+  if(!res.ok) throw new Error(JSON.stringify(data));
+  return data;
+}
+function renderStatus(data){
+  document.getElementById("m1").textContent = data.strategy_count ?? "-";
+  document.getElementById("m2").textContent = data.active_strategy_count ?? "-";
+  document.getElementById("m3").textContent = data.cross_strategy_conflicts ?? "-";
+  document.getElementById("m4").textContent = ((data.portfolio_brain||{}).diversification_score ?? "-") + "";
+  document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+}
+async function loadStatus(){ try { renderStatus(await req("/portfolio-brain/status")); } catch(e){ document.getElementById("out").textContent = String(e); } }
+async function ingest(){
+  try{
+    const strategies = JSON.parse(document.getElementById("ingest").value);
+    const data = await req("/portfolio-brain/ingest","POST",{strategies, regime_tag:document.getElementById("regime").value});
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+    await loadStatus();
+  } catch(e){ document.getElementById("out").textContent = String(e); }
+}
+async function coordinate(){
+  try{
+    const body = {
+      max_active_strategies: parseInt(document.getElementById("max_active").value, 10),
+      max_symbol_overlap: parseInt(document.getElementById("max_overlap").value, 10),
+      conflict_penalty: parseFloat(document.getElementById("conflict_penalty").value)
+    };
+    const data = await req("/portfolio-brain/coordinate","POST",body);
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+    await loadStatus();
+  } catch(e){ document.getElementById("out").textContent = String(e); }
+}
+async function syncAllocator(){
+  try{
+    const data = await req("/portfolio-brain/allocator-sync","POST",{
+      total_capital: parseFloat(document.getElementById("total_capital").value),
+      reserve_pct: parseFloat(document.getElementById("reserve_pct").value)
+    });
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+    await loadStatus();
+  } catch(e){ document.getElementById("out").textContent = String(e); }
+}
+loadStatus();
+</script>
+</body>
+</html>

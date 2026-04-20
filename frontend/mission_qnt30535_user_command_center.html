@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora User Command Center</title>
+  <style>
+    :root{
+      --bg:#07111f;
+      --panel:#0f1d31;
+      --line:#22314e;
+      --text:#e5eefc;
+      --muted:#9bb0d1;
+      --accent:#2455d6;
+      --good:#10b981;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,Arial,sans-serif;
+      background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);
+      color:var(--text);
+    }
+    .shell{max-width:1600px;margin:0 auto;padding:24px}
+    .hero,.card{
+      background:rgba(15,29,49,.96);
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:0 10px 30px rgba(0,0,0,.16);
+    }
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
+    .title{font-size:32px;font-weight:800;letter-spacing:.02em;margin:0 0 8px}
+    .sub{color:var(--muted);max-width:920px;line-height:1.5}
+    .actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{
+      display:inline-block;
+      text-decoration:none;
+      color:#fff;
+      background:var(--accent);
+      border:1px solid #3f6fff;
+      border-radius:10px;
+      padding:10px 14px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .btn.secondary{background:#12233b;border-color:var(--line)}
+    .kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin-bottom:18px}
+    .card{padding:16px}
+    .label{color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+    .value{font-size:30px;font-weight:800}
+    .value.small{font-size:18px}
+    .grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:14px}
+    .panel-title{font-size:18px;font-weight:800;margin:0 0 10px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.06);text-align:left;font-size:14px}
+    th{color:var(--muted);font-weight:700}
+    pre{
+      margin:0;
+      background:#07111f;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+      overflow:auto;
+      max-height:360px;
+      white-space:pre-wrap;
+      font-size:13px;
+      line-height:1.45;
+    }
+    .status.live{color:var(--good)}
+    .status.paused{color:var(--warn)}
+    .status.bad{color:var(--bad)}
+    @media (max-width:1200px){ .kpis{grid-template-columns:repeat(2,minmax(0,1fr))} .grid{grid-template-columns:1fr} }
+    @media (max-width:700px){ .kpis{grid-template-columns:1fr} .title{font-size:24px} }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="hero">
+      <div>
+        <h1 class="title">Quantora User Command Center</h1>
+        <div class="sub">Institutional product layer for operators and capital owners. This view surfaces live fund status, NAV, PnL, positions, risk, and execution activity without exposing raw mission internals.</div>
+      </div>
+      <div class="actions">
+        <a class="btn secondary" href="index.html">Back to Core</a>
+        <button class="btn" onclick="startFund()">Start</button>
+        <button class="btn secondary" onclick="stopFund()">Stop</button>
+        <button class="btn secondary" onclick="refreshAll()">Refresh</button>
+      </div>
+    </div>
+
+    <div class="kpis">
+      <div class="card"><div class="label">NAV</div><div id="nav" class="value">-</div></div>
+      <div class="card"><div class="label">Total PnL</div><div id="pnl" class="value">-</div></div>
+      <div class="card"><div class="label">Drawdown</div><div id="drawdown" class="value small">-</div></div>
+      <div class="card"><div class="label">Win Rate</div><div id="winrate" class="value small">-</div></div>
+      <div class="card"><div class="label">System Status</div><div id="status" class="value small status paused">-</div></div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2 class="panel-title">Portfolio State</h2>
+        <div id="positionsTableWrap"><div class="sub">Loading portfolio state...</div></div>
+      </div>
+
+      <div class="card">
+        <h2 class="panel-title">Risk State</h2>
+        <pre id="riskBox">loading...</pre>
+      </div>
+
+      <div class="card">
+        <h2 class="panel-title">Execution History</h2>
+        <pre id="executionBox">loading...</pre>
+      </div>
+
+      <div class="card">
+        <h2 class="panel-title">Fund State</h2>
+        <pre id="fundBox">loading...</pre>
+      </div>
+
+      <div class="card">
+        <h2 class="panel-title">Performance Summary</h2>
+        <pre id="perfBox">loading...</pre>
+      </div>
+
+      <div class="card">
+        <h2 class="panel-title">Closed Loop Cycles</h2>
+        <pre id="cyclesBox">loading...</pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function fetchJson(url, options){
+      try{
+        const r = await fetch(url, options || {});
+        const data = await r.json();
+        return { ok:r.ok, status:r.status, data };
+      }catch(e){
+        return { ok:false, status:0, data:{ error:String(e) } };
+      }
+    }
+
+    function fmtNum(v){
+      if (typeof v !== 'number') return '-';
+      return v.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+    }
+
+    function renderPositions(payload){
+      const wrap = document.getElementById('positionsTableWrap');
+      const positions = (payload && payload.positions) || [];
+      if (!positions.length){
+        wrap.innerHTML = '<div class="sub">No open positions yet.</div>';
+        return;
+      }
+      let html = '<table><thead><tr><th>Symbol</th><th>Qty</th><th>Market Value</th><th>Unrealized PnL</th><th>Realized PnL</th></tr></thead><tbody>';
+      for (const row of positions){
+        html += `<tr>
+          <td>${row.symbol ?? ''}</td>
+          <td>${fmtNum(Number(row.qty ?? 0))}</td>
+          <td>${fmtNum(Number(row.market_value ?? 0))}</td>
+          <td>${fmtNum(Number(row.unrealized_pnl ?? 0))}</td>
+          <td>${fmtNum(Number(row.realized_pnl ?? 0))}</td>
+        </tr>`;
+      }
+      html += '</tbody></table>';
+      wrap.innerHTML = html;
+    }
+
+    async function refreshAll(){
+      const [perf, fund, portfolio, risk, execution, cycles] = await Promise.all([
+        fetchJson('/api/performance-engine/summary'),
+        fetchJson('/api/fund/state'),
+        fetchJson('/api/portfolio/state'),
+        fetchJson('/api/risk/state'),
+        fetchJson('/api/execution/history'),
+        fetchJson('/api/closed-loop/cycles'),
+      ]);
+
+      if (perf.ok){
+        document.getElementById('nav').textContent = fmtNum(Number(perf.data.nav ?? 0));
+        document.getElementById('pnl').textContent = fmtNum(Number(perf.data.total_pnl ?? 0));
+        document.getElementById('drawdown').textContent = `${fmtNum(Number(perf.data.drawdown_pct ?? 0))}%`;
+        document.getElementById('winrate').textContent = `${fmtNum(Number((perf.data.win_rate ?? 0) * 100))}%`;
+      } else {
+        document.getElementById('nav').textContent = 'ERR';
+        document.getElementById('pnl').textContent = 'ERR';
+      }
+
+      if (fund.ok){
+        const running = !!fund.data.running;
+        const statusEl = document.getElementById('status');
+        statusEl.textContent = running ? 'LIVE' : 'PAUSED';
+        statusEl.className = 'value small status ' + (running ? 'live' : 'paused');
+        document.getElementById('fundBox').textContent = JSON.stringify(fund.data, null, 2);
+      } else {
+        const statusEl = document.getElementById('status');
+        statusEl.textContent = 'ERROR';
+        statusEl.className = 'value small status bad';
+        document.getElementById('fundBox').textContent = JSON.stringify(fund.data, null, 2);
+      }
+
+      if (portfolio.ok){
+        renderPositions(portfolio.data);
+      } else {
+        document.getElementById('positionsTableWrap').innerHTML = '<div class="sub">Portfolio endpoint unavailable.</div>';
+      }
+
+      document.getElementById('riskBox').textContent = JSON.stringify(risk.data, null, 2);
+      document.getElementById('executionBox').textContent = JSON.stringify(execution.data, null, 2);
+      document.getElementById('perfBox').textContent = JSON.stringify(perf.data, null, 2);
+      document.getElementById('cyclesBox').textContent = JSON.stringify(cycles.data, null, 2);
+    }
+
+    async function startFund(){
+      await fetchJson('/api/fund/start', { method:'POST' });
+      refreshAll();
+    }
+
+    async function stopFund(){
+      await fetchJson('/api/fund/stop', { method:'POST' });
+      refreshAll();
+    }
+
+    refreshAll();
+    setInterval(refreshAll, 5000);
+  </script>
+</body>
+</html>

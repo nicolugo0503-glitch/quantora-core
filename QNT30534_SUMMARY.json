@@ -1,0 +1,14 @@
+{
+  "base_zip_used": "QUANTORA_FULL_PROJECT_QNT30532_WARNING_CLEANUP_PASS.zip",
+  "included_qnt30533": true,
+  "mission_added": "QNT30534_PERFORMANCE_PNL_ENGINE",
+  "new_endpoints": [
+    "/api/signals/generate",
+    "/api/signals/build-tick",
+    "/api/signals/last",
+    "/api/signals/history",
+    "/api/performance-engine/record",
+    "/api/performance-engine/summary",
+    "/api/performance-engine/history"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "priority_close_count": 8,
+    "minimum_close_readiness": 78.0,
+    "minimum_settlement_readiness": 74.0,
+    "minimum_release_authority": 76.0,
+    "maximum_execution_friction": 26.0,
+    "minimum_wire_authority": 72.0
+  },
+  "runs": [],
+  "created_at": 1775715647,
+  "updated_at": 1775715647
+}

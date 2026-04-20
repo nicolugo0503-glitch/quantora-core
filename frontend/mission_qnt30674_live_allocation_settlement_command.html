@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QNT30674 — Live Allocation Settlement Command</title>
+  <style>
+    :root { color-scheme: dark; --bg:#07111f; --panel:#0d1b2a; --panel2:#102235; --line:#1f3550; --text:#e8f0ff; --muted:#9bb0cc; --good:#123a2a; --warn:#4a3512; --bad:#4a1f24; }
+    * { box-sizing:border-box; } body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#07111f,#0b1422 45%,#0d1727); color:var(--text); }
+    .wrap { max-width:1500px; margin:0 auto; padding:24px; }
+    .hero,.panel { background:rgba(13,27,42,.92); border:1px solid var(--line); border-radius:18px; box-shadow:0 16px 50px rgba(0,0,0,.24); }
+    .hero { padding:24px; margin-bottom:18px; } .hero p,.tiny { color:var(--muted); }
+    .actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:16px; }
+    a,button { border:none; border-radius:12px; padding:11px 16px; font-weight:700; cursor:pointer; text-decoration:none; }
+    a,button { background:#58a6ff; color:#04111f; } button.secondary { background:#1d3557; color:#dce8ff; }
+    .metric-grid,.grid { display:grid; gap:16px; margin-bottom:18px; }
+    .metric-grid { grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); }
+    .metric { background:var(--panel2); border:1px solid var(--line); border-radius:16px; padding:16px; }
+    .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .value { font-size:28px; font-weight:800; margin-top:8px; }
+    .grid { grid-template-columns:2fr 1fr; } .stack { display:grid; gap:16px; }
+    .panel { padding:18px; overflow:auto; }
+    .section-title { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
+    .section-title h2 { margin:0; font-size:18px; }
+    table { width:100%; border-collapse:collapse; } th,td { padding:10px 8px; border-bottom:1px solid rgba(255,255,255,.07); text-align:left; font-size:14px; }
+    th { color:#98afd1; font-size:12px; text-transform:uppercase; letter-spacing:.06em; }
+    pre { white-space:pre-wrap; word-break:break-word; margin:0; color:#d7e6ff; }
+    .pill { display:inline-flex; border-radius:999px; padding:4px 10px; font-size:12px; font-weight:700; }
+    .good { background:var(--good); color:#9ef0c2; } .warn { background:var(--warn); color:#ffd27d; } .bad { background:var(--bad); color:#ff9cab; }
+    @media (max-width: 1100px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="tiny">Institutional Layer · QNT30674</div>
+    <h1 style="margin:8px 0;">QNT30674 — Live Allocation Settlement Command</h1>
+    <p>Convert finalized live allocations into supervised settlement actions across treasury, mobility, broker confirmation, and capital accounting control lanes.</p>
+    <div class="actions">
+      <a href="index.html">Back to Command Center</a>
+      <button onclick="runLayer()">Run Settlement Cycle</button>
+      <button class="secondary" onclick="refreshAll()">Refresh Summary</button>
+    </div>
+  </section>
+  <section class="metric-grid">
+    <div class="metric"><div class="label">Settlement Posture</div><div class="value" id="posture">-</div><div class="status" id="postureTag"></div></div>
+    <div class="metric"><div class="label">Settlement Score</div><div class="value" id="score">-</div><div class="status">Average settlement authority score</div></div>
+    <div class="metric"><div class="label">Capital</div><div class="value" id="capital">-</div><div class="status">Capital under settlement command</div></div>
+    <div class="metric"><div class="label">Settle</div><div class="value" id="settleCount">-</div><div class="status">Ready for live settlement</div></div>
+    <div class="metric"><div class="label">Hold / Escalate</div><div class="value" id="riskCount">-</div><div class="status">Constrained settlement cases</div></div>
+  </section>
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Settlement Book</h2><span class="tiny">Live settlement cases</span></div>
+      <table id="bookTable"><thead><tr><th>Strategy</th><th>Allocator</th><th>Capital</th><th>Score</th><th>Cash</th><th>Stress</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="stack">
+      <div class="panel"><div class="section-title"><h2>Policy</h2><span class="tiny">Settlement thresholds</span></div><pre id="policy">Loading…</pre></div>
+      <div class="panel"><div class="section-title"><h2>Overview</h2><span class="tiny">Settlement posture</span></div><pre id="overview">Loading…</pre></div>
+    </div>
+  </section>
+  <section class="grid">
+    <div class="panel"><div class="section-title"><h2>Settlement Decisions</h2><span class="tiny">Decision engine output</span></div><pre id="decisions">Loading…</pre></div>
+    <div class="panel"><div class="section-title"><h2>Dependencies</h2><span class="tiny">Finalization, treasury, mobility, dispatch</span></div><pre id="dependencies">Loading…</pre></div>
+  </section>
+  <section class="panel"><div class="section-title"><h2>Audit Trail</h2><span class="tiny">Latest settlement cycle</span></div><pre id="auditTrail">Loading…</pre></div>
+</div>
+<script>
+  const fmtPct = v => `${Number(v||0).toFixed(2)}%`;
+  const fmtMoney = v => `$${Number(v||0).toLocaleString(undefined,{maximumFractionDigits:2})}M`;
+  const pill = (text, cls='') => `<span class="pill ${cls}">${text}</span>`;
+  function severityClass(text='') {
+    const t = String(text).toLowerCase();
+    if (t.includes('escal') || t.includes('hold')) return 'bad';
+    if (t.includes('review') || t.includes('constrained')) return 'warn';
+    return 'good';
+  }
+  async function getJson(url, opts) {
+    const res = await fetch(url, opts);
+    if (!res.ok) throw new Error(`${url} -> ${res.status}`);
+    return res.json();
+  }
+  function fillTable(id, rows, renderer, colspan=7) {
+    const tbody = document.querySelector(`#${id} tbody`);
+    tbody.innerHTML = rows.length ? rows.map(renderer).join('') : `<tr><td colspan="${colspan}" class="tiny">No rows available.</td></tr>`;
+  }
+  function renderSummary(summary, audit) {
+    const o = summary.live_allocation_settlement_overview || {};
+    const decisions = summary.settlement_decisions || [];
+    document.getElementById('posture').textContent = o.settlement_posture || '-';
+    document.getElementById('postureTag').innerHTML = pill(o.settlement_posture || 'unknown', severityClass(o.settlement_posture));
+    document.getElementById('score').textContent = fmtPct(o.settlement_score);
+    document.getElementById('capital').textContent = fmtMoney(o.settlement_capital_millions);
+    document.getElementById('settleCount').textContent = `${Number(o.settle_count||0)}`;
+    document.getElementById('riskCount').textContent = `${Number(o.hold_count||0) + Number(o.escalate_count||0)}`;
+    document.getElementById('policy').textContent = JSON.stringify(summary.policy || {}, null, 2);
+    document.getElementById('overview').textContent = JSON.stringify(o, null, 2);
+    document.getElementById('decisions').textContent = JSON.stringify({agenda: summary.settlement_agenda || [], decisions}, null, 2);
+    document.getElementById('dependencies').textContent = JSON.stringify(summary.settlement_dependencies || {}, null, 2);
+    document.getElementById('auditTrail').textContent = JSON.stringify(audit || {}, null, 2);
+    fillTable('bookTable', summary.settlement_book || [], r => `
+      <tr>
+        <td>${r.strategy_id || '-'}</td>
+        <td>${r.allocator_name || '-'}</td>
+        <td>${fmtMoney(r.invested_capital_millions)}</td>
+        <td>${fmtPct(r.settlement_score)}</td>
+        <td>${fmtPct(r.cash_coverage_pct)}</td>
+        <td>${fmtPct(r.settlement_stress_score)}</td>
+        <td>${pill((decisions.find(x => x.settlement_case_id === r.settlement_case_id)?.action) || 'SETTLE', severityClass((decisions.find(x => x.settlement_case_id === r.settlement_case_id)?.action) || 'SETTLE'))}</td>
+      </tr>`);
+  }
+  async function refreshAll() {
+    try {
+      const [summary, audit] = await Promise.all([
+        getJson('/api/live-allocation-settlement-command/summary'),
+        getJson('/api/live-allocation-settlement-command/audit')
+      ]);
+      renderSummary(summary, audit);
+    } catch (err) {
+      document.getElementById('auditTrail').textContent = `Settlement unavailable. ${err.message}`;
+    }
+  }
+  async function runLayer() {
+    const result = await getJson('/api/live-allocation-settlement-command/run', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ trigger:'manual-ui' })
+    });
+    renderSummary(result.summary, { latest_run: result.run, runs:[result.run], run_count:1 });
+  }
+  refreshAll();
+</script>
+</body>
+</html>

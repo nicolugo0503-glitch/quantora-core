@@ -1,0 +1,24 @@
+{
+  "baseline_equity": 100000.0,
+  "current_equity": 100000.0,
+  "cash_balance": 100000.0,
+  "positions_market_value": 0.0,
+  "gross_exposure": 0.0,
+  "net_exposure": 0.0,
+  "realized_pnl": 0.0,
+  "unrealized_pnl": 0.0,
+  "daily_pnl": 0.0,
+  "net_return_pct": 0.0,
+  "mark_prices": {
+    "BTCUSDT": 61000.0
+  },
+  "position_snapshots": [],
+  "last_mark_at": 1776589708,
+  "last_recompute_at": 1776589708,
+  "truth_status": "ready",
+  "blockers": [],
+  "currency": "USD",
+  "selected_broker": "paper",
+  "execution_mode": "paper",
+  "safe_mode": true
+}

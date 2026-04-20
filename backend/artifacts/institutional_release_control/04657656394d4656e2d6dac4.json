@@ -1,0 +1,21 @@
+{
+  "email": "operator@quantora.test",
+  "rules": {
+    "require_operator_approval": true,
+    "min_safety_risk_score": 70.0,
+    "max_pending_releases": 10,
+    "block_when_kill_switch": true,
+    "block_when_execution_paused": true,
+    "require_simulation_pass": true
+  },
+  "active_version": "v3.07.03",
+  "stable_version": "v3.07.03",
+  "counter": 0,
+  "release_history": [],
+  "pending_releases": [],
+  "approvals": [],
+  "deployment_events": [],
+  "rollback_events": [],
+  "created_at": 1776223536,
+  "updated_at": 1776223536
+}

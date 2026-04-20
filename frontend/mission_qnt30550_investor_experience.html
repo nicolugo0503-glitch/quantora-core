@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quantora Investor Experience</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#050b14;color:#eef4ff}
+.wrap{max-width:1100px;margin:auto;padding:30px}
+.card{background:#0c1626;border:1px solid #1c2a44;border-radius:18px;padding:20px;margin-bottom:16px}
+.title{font-size:34px;font-weight:800}
+.sub{color:#9fb3d8;margin-top:6px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.value{font-size:26px;font-weight:800}
+.good{color:#10b981}.warn{color:#f59e0b}
+.chart{height:220px;border-radius:14px;background:#07101d;border:1px solid #1c2a44;display:flex;align-items:center;justify-content:center;color:#9fb3d8}
+.pill{padding:8px 12px;border-radius:999px;background:#13233c;border:1px solid #1c2a44;font-weight:700}
+.actions{margin-top:16px;display:flex;gap:10px}
+button{padding:12px 16px;border-radius:10px;border:none;background:#2f5dff;color:white;font-weight:700;cursor:pointer}
+.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center}
+.modal-box{background:#0c1626;padding:20px;border-radius:14px;border:1px solid #1c2a44}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="title">Your Capital is Working</div>
+    <div class="sub">Quantora is actively managing and optimizing your capital in real time.</div>
+  </div>
+
+  <div class="kpis">
+    <div class="card"><div>Total Balance</div><div id="bal" class="value">$-</div></div>
+    <div class="card"><div>Growth</div><div id="growth" class="value good">-</div></div>
+    <div class="card"><div>Today</div><div id="today" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="chart" id="chart">Performance evolving...</div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between">
+      <div>AI Status</div><div id="ai" class="pill">-</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:8px">
+      <div>Risk</div><div id="risk" class="pill">-</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:8px">
+      <div>Execution</div><div id="exec" class="pill">-</div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button onclick="openModal('deposit')">Deposit</button>
+    <button onclick="openModal('withdraw')">Withdraw</button>
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div id="modalText">Action</div>
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<script>
+async function f(url){try{return await (await fetch(url)).json()}catch{return{}}}
+
+function fmt(v){return '$'+(v||0).toLocaleString()}
+
+async function load(){
+  const perf=await f('/api/performance-engine/summary')
+  const fund=await f('/api/fund/state')
+  const risk=await f('/api/risk/state')
+  const exec=await f('/api/execution/history')
+
+  const bal=perf.nav||0
+  const pnl=perf.total_pnl||0
+
+  document.getElementById('bal').innerText=fmt(bal)
+  document.getElementById('growth').innerText=fmt(pnl)
+  document.getElementById('today').innerText=fmt(pnl/10)
+
+  document.getElementById('ai').innerText=fund.running?'Active':'Standby'
+  document.getElementById('risk').innerText=risk.killed?'Protected':'Controlled'
+  document.getElementById('exec').innerText=exec.length?'Running':'Idle'
+}
+load()
+setInterval(load,4000)
+
+function openModal(type){
+  document.getElementById('modal').style.display='flex'
+  document.getElementById('modalText').innerText=type==='deposit'?'Deposit flow (simulated)':'Withdraw flow (simulated)'
+}
+function closeModal(){
+  document.getElementById('modal').style.display='none'
+}
+</script>
+</body>
+</html>

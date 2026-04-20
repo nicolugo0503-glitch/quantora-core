@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30572 Fundraising CRM + Investor Pipeline</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,select,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select,textarea{background:#07111f;color:#fff;border:1px solid #203251}
+textarea{min-height:84px}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:10px}
+table{width:100%;border-collapse:collapse} th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1100px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30572 · Fundraising CRM + Investor Pipeline</h1>
+        <div style="color:#9fb3d8">Allocator and LP pipeline management for institutional capital formation. Track leads, diligence, soft circles, commitments, and funded accounts inside Quantora.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="mission_qnt30571_data_room.html">Data Room</a>
+        <a href="mission_qnt30570_admin_console.html">Admin Console</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Investors</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Target Allocation</div><div id="target" class="value">-</div></div>
+    <div class="card"><div class="label">Committed</div><div id="committed" class="value">-</div></div>
+    <div class="card"><div class="label">Soft Circle</div><div id="soft" class="value">-</div></div>
+    <div class="card"><div class="label">Funded</div><div id="funded" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="name" placeholder="Investor name">
+      <input id="email" placeholder="Investor email">
+      <select id="type"><option value="allocator">allocator</option><option value="lp">lp</option><option value="family_office">family_office</option></select>
+      <input id="targetAllocation" placeholder="Target allocation">
+      <button onclick="addInvestor()">Add Investor</button>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <input id="investorId" placeholder="Investor id">
+      <select id="stage"><option>lead</option><option>contacted</option><option>ddq</option><option>soft_circle</option><option>committed</option><option>funded</option></select>
+      <input id="commitment" placeholder="Committed amount">
+      <textarea id="note" placeholder="Investor note"></textarea>
+      <button onclick="updateInvestor()">Update</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Investor Pipeline</div>
+    <table>
+      <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Stage</th><th>Target</th><th>Committed</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">CRM Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v || 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/fundraising-crm/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  document.getElementById('count').textContent = String(d.investor_count || 0);
+  document.getElementById('target').textContent = money(d.total_target_allocation || 0);
+  document.getElementById('committed').textContent = money(d.total_committed_amount || 0);
+  document.getElementById('soft').textContent = String((d.stage_counts || {}).soft_circle || 0);
+  document.getElementById('funded').textContent = String((d.stage_counts || {}).funded || 0);
+  document.getElementById('rows').innerHTML = (d.investors || []).slice(0,50).map(r =>
+    `<tr><td>${r.investor_id}</td><td>${r.name}</td><td>${r.email}</td><td>${r.stage}</td><td>${money(r.target_allocation)}</td><td>${money(r.committed_amount)}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function addInvestor(){
+  const payload = {
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    type: document.getElementById('type').value,
+    target_allocation: Number(document.getElementById('targetAllocation').value || 0)
+  };
+  await j('/api/fundraising-crm/investor', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function updateInvestor(){
+  const investor_id = document.getElementById('investorId').value;
+  await j('/api/fundraising-crm/stage', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({investor_id, stage: document.getElementById('stage').value})});
+  await j('/api/fundraising-crm/commitment', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({investor_id, committed_amount: Number(document.getElementById('commitment').value || 0)})});
+  if(document.getElementById('note').value){
+    await j('/api/fundraising-crm/note', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({investor_id, note: document.getElementById('note').value})});
+  }
+  await load();
+}
+load();
+</script>
+</body>
+</html>

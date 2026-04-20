@@ -1,0 +1,421 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 180,
+    "minimum_score": 96.0,
+    "require_filing_orchestration_clear": true,
+    "require_enforcement_response_clear": true,
+    "require_stress_testing_clear": true,
+    "require_provenance_clear": true,
+    "minimum_retention_coverage": 0.97,
+    "minimum_hold_integrity_score": 0.96,
+    "minimum_supervisory_retrieval_readiness": 0.95,
+    "minimum_record_index_integrity": 0.96
+  },
+  "runs": [
+    {
+      "mission": "QNT30766",
+      "evaluated_at": "2026-04-15T04:18:21.107009+00:00",
+      "score": 100.0,
+      "band": "SUPERVISORY_RETRIEVAL_COMMAND_READY",
+      "posture": "RECORDS_AND_HOLD_CONTROL_CLEAR",
+      "operator_review_required": false,
+      "retention_coverage": 0.98,
+      "hold_integrity_score": 0.97,
+      "supervisory_retrieval_readiness": 0.96,
+      "record_index_integrity": 0.97,
+      "open_legal_hold_exceptions": 0,
+      "overdue_supervisory_requests": 0,
+      "reasons": [],
+      "alerts": [],
+      "context": {
+        "captured_at": "2026-04-15T04:18:21.106357+00:00",
+        "filing_orchestration": {
+          "posture": "UNINITIALIZED",
+          "latest_score": null,
+          "band": "UNSET",
+          "run_count": 0,
+          "alert_count": 0,
+          "filing_queue_count": 0,
+          "submission_count": 0,
+          "acknowledgement_count": 0,
+          "operator_review_required": false
+        },
+        "enforcement_response": {
+          "posture": "UNINITIALIZED",
+          "latest_score": null,
+          "band": "UNSET",
+          "run_count": 0,
+          "alert_count": 0,
+          "action_count": 0,
+          "response_count": 0,
+          "consent_order_count": 0,
+          "closure_count": 0,
+          "operator_review_required": false
+        },
+        "stress_testing": {
+          "posture": "UNINITIALIZED",
+          "latest_score": null,
+          "band": "UNSET",
+          "run_count": 0,
+          "alert_count": 0,
+          "cycle_count": 0,
+          "staged_submission_count": 0,
+          "supervisory_challenge_count": 0,
+          "closed_challenge_count": 0,
+          "operator_review_required": false
+        },
+        "provenance_fabric": {
+          "posture": "EVIDENCE_PROVENANCE_CLEAR",
+          "latest_score": 100.0,
+          "band": "ATTESTATION_FABRIC_READY",
+          "run_count": 2,
+          "alert_count": 0,
+          "lineage_asset_count": 2,
+          "provenance_check_count": 2,
+          "attestation_count": 2,
+          "evidence_gap_closure_count": 2,
+          "operator_review_required": false
+        }
+      }
+    },
+    {
+      "mission": "QNT30766",
+      "evaluated_at": "2026-04-15T03:25:28.489473+00:00",
+      "score": 100.0,
+      "band": "SUPERVISORY_RETRIEVAL_COMMAND_READY",
+      "posture": "RECORDS_AND_HOLD_CONTROL_CLEAR",
+      "operator_review_required": false,
+      "retention_coverage": 0.98,
+      "hold_integrity_score": 0.97,
+      "supervisory_retrieval_readiness": 0.96,
+      "record_index_integrity": 0.97,
+      "open_legal_hold_exceptions": 0,
+      "overdue_supervisory_requests": 0,
+      "reasons": [],
+      "alerts": [],
+      "context": {
+        "captured_at": "2026-04-15T03:25:28.486096+00:00",
+        "filing_orchestration": {
+          "posture": "UNINITIALIZED",
+          "latest_score": null,
+          "band": "UNSET",
+          "run_count": 0,
+          "alert_count": 0,
+          "filing_queue_count": 0,
+          "submission_count": 0,
+          "acknowledgement_count": 0,
+          "operator_review_required": false
+        },
+        "enforcement_response": {
+          "posture": "UNINITIALIZED",
+          "latest_score": null,
+          "band": "UNSET",
+          "run_count": 0,
+          "alert_count": 0,
+          "action_count": 0,
+          "response_count": 0,
+          "consent_order_count": 0,
+          "closure_count": 0,
+          "operator_review_required": false
+        },
+        "stress_testing": {
+          "posture": "UNINITIALIZED",
+          "latest_score": null,
+          "band": "UNSET",
+          "run_count": 0,
+          "alert_count": 0,
+          "cycle_count": 0,
+          "staged_submission_count": 0,
+          "supervisory_challenge_count": 0,
+          "closed_challenge_count": 0,
+          "operator_review_required": false
+        },
+        "provenance_fabric": {
+          "posture": "EVIDENCE_PROVENANCE_CLEAR",
+          "latest_score": 100.0,
+          "band": "ATTESTATION_FABRIC_READY",
+          "run_count": 2,
+          "alert_count": 0,
+          "lineage_asset_count": 2,
+          "provenance_check_count": 2,
+          "attestation_count": 2,
+          "evidence_gap_closure_count": 2,
+          "operator_review_required": false
+        }
+      }
+    },
+    {
+      "mission": "QNT30766",
+      "evaluated_at": "2026-04-15T03:17:45.801138+00:00",
+      "score": 100.0,
+      "band": "SUPERVISORY_RETRIEVAL_COMMAND_READY",
+      "posture": "RECORDS_AND_HOLD_CONTROL_CLEAR",
+      "operator_review_required": false,
+      "retention_coverage": 0.98,
+      "hold_integrity_score": 0.97,
+      "supervisory_retrieval_readiness": 0.96,
+      "record_index_integrity": 0.97,
+      "open_legal_hold_exceptions": 0,
+      "overdue_supervisory_requests": 0,
+      "reasons": [],
+      "alerts": [],
+      "context": {
+        "captured_at": "2026-04-15T03:17:45.800553+00:00",
+        "filing_orchestration": {
+          "posture": "UNINITIALIZED",
+          "latest_score": null,
+          "band": "UNSET",
+          "run_count": 0,
+          "alert_count": 0,
+          "filing_queue_count": 0,
+          "submission_count": 0,
+          "acknowledgement_count": 0,
+          "operator_review_required": false
+        },
+        "enforcement_response": {
+          "posture": "UNINITIALIZED",
+          "latest_score": null,
+          "band": "UNSET",
+          "run_count": 0,
+          "alert_count": 0,
+          "action_count": 0,
+          "response_count": 0,
+          "consent_order_count": 0,
+          "closure_count": 0,
+          "operator_review_required": false
+        },
+        "stress_testing": {
+          "posture": "UNINITIALIZED",
+          "latest_score": null,
+          "band": "UNSET",
+          "run_count": 0,
+          "alert_count": 0,
+          "cycle_count": 0,
+          "staged_submission_count": 0,
+          "supervisory_challenge_count": 0,
+          "closed_challenge_count": 0,
+          "operator_review_required": false
+        },
+        "provenance_fabric": {
+          "posture": "EVIDENCE_PROVENANCE_CLEAR",
+          "latest_score": 100.0,
+          "band": "ATTESTATION_FABRIC_READY",
+          "run_count": 1,
+          "alert_count": 0,
+          "lineage_asset_count": 1,
+          "provenance_check_count": 1,
+          "attestation_count": 1,
+          "evidence_gap_closure_count": 1,
+          "operator_review_required": false
+        }
+      }
+    }
+  ],
+  "alerts": [],
+  "record_classes": [
+    {
+      "registered_at": "2026-04-15T04:18:21.104207+00:00",
+      "record_class": "GLOBAL_SUPERVISORY_AND_ENFORCEMENT_RECORD_PACKET",
+      "retention_period": "7Y",
+      "custodian": "records-governance-office",
+      "status": "ACTIVE"
+    },
+    {
+      "registered_at": "2026-04-15T03:25:28.475817+00:00",
+      "record_class": "GLOBAL_SUPERVISORY_AND_ENFORCEMENT_RECORD_PACKET",
+      "retention_period": "7Y",
+      "custodian": "records-governance-office",
+      "status": "ACTIVE"
+    },
+    {
+      "registered_at": "2026-04-15T03:17:45.798461+00:00",
+      "record_class": "GLOBAL_SUPERVISORY_AND_ENFORCEMENT_RECORD_PACKET",
+      "retention_period": "7Y",
+      "custodian": "records-governance-office",
+      "status": "ACTIVE"
+    }
+  ],
+  "legal_holds": [
+    {
+      "placed_at": "2026-04-15T04:18:21.104774+00:00",
+      "hold_code": "LH_2026_Q4_GLOBAL_SUPERVISORY_REVIEW",
+      "scope": "REGULATORY_RECORDS_EVIDENCE_AND_COMMUNICATIONS",
+      "owner": "general-counsel-office",
+      "status": "ACTIVE"
+    },
+    {
+      "placed_at": "2026-04-15T03:25:28.478570+00:00",
+      "hold_code": "LH_2026_Q4_GLOBAL_SUPERVISORY_REVIEW",
+      "scope": "REGULATORY_RECORDS_EVIDENCE_AND_COMMUNICATIONS",
+      "owner": "general-counsel-office",
+      "status": "ACTIVE"
+    },
+    {
+      "placed_at": "2026-04-15T03:17:45.798942+00:00",
+      "hold_code": "LH_2026_Q4_GLOBAL_SUPERVISORY_REVIEW",
+      "scope": "REGULATORY_RECORDS_EVIDENCE_AND_COMMUNICATIONS",
+      "owner": "general-counsel-office",
+      "status": "ACTIVE"
+    }
+  ],
+  "supervisory_retrieval_packets": [
+    {
+      "retrieved_at": "2026-04-15T04:18:21.105309+00:00",
+      "request_code": "SUP_REQ_2026_Q4_GLOBAL_RECORDS_PACKET",
+      "requesting_authority": "primary-supervisor",
+      "packet_scope": "FILINGS_ENFORCEMENT_STRESS_TEST_AND_LINEAGE_EVIDENCE",
+      "status": "DELIVERED"
+    },
+    {
+      "retrieved_at": "2026-04-15T03:25:28.481283+00:00",
+      "request_code": "SUP_REQ_2026_Q4_GLOBAL_RECORDS_PACKET",
+      "requesting_authority": "primary-supervisor",
+      "packet_scope": "FILINGS_ENFORCEMENT_STRESS_TEST_AND_LINEAGE_EVIDENCE",
+      "status": "DELIVERED"
+    },
+    {
+      "retrieved_at": "2026-04-15T03:17:45.799450+00:00",
+      "request_code": "SUP_REQ_2026_Q4_GLOBAL_RECORDS_PACKET",
+      "requesting_authority": "primary-supervisor",
+      "packet_scope": "FILINGS_ENFORCEMENT_STRESS_TEST_AND_LINEAGE_EVIDENCE",
+      "status": "DELIVERED"
+    }
+  ],
+  "hold_releases": [
+    {
+      "released_at": "2026-04-15T04:18:21.105834+00:00",
+      "hold_code": "LH_2026_Q4_GLOBAL_SUPERVISORY_REVIEW",
+      "release_basis": "COUNSEL_APPROVAL_AND_SUPERVISORY_CLEARANCE",
+      "status": "RELEASED"
+    },
+    {
+      "released_at": "2026-04-15T03:25:28.483924+00:00",
+      "hold_code": "LH_2026_Q4_GLOBAL_SUPERVISORY_REVIEW",
+      "release_basis": "COUNSEL_APPROVAL_AND_SUPERVISORY_CLEARANCE",
+      "status": "RELEASED"
+    },
+    {
+      "released_at": "2026-04-15T03:17:45.799846+00:00",
+      "hold_code": "LH_2026_Q4_GLOBAL_SUPERVISORY_REVIEW",
+      "release_basis": "COUNSEL_APPROVAL_AND_SUPERVISORY_CLEARANCE",
+      "status": "RELEASED"
+    }
+  ],
+  "latest_run": {
+    "mission": "QNT30766",
+    "evaluated_at": "2026-04-15T04:18:21.107009+00:00",
+    "score": 100.0,
+    "band": "SUPERVISORY_RETRIEVAL_COMMAND_READY",
+    "posture": "RECORDS_AND_HOLD_CONTROL_CLEAR",
+    "operator_review_required": false,
+    "retention_coverage": 0.98,
+    "hold_integrity_score": 0.97,
+    "supervisory_retrieval_readiness": 0.96,
+    "record_index_integrity": 0.97,
+    "open_legal_hold_exceptions": 0,
+    "overdue_supervisory_requests": 0,
+    "reasons": [],
+    "alerts": [],
+    "context": {
+      "captured_at": "2026-04-15T04:18:21.106357+00:00",
+      "filing_orchestration": {
+        "posture": "UNINITIALIZED",
+        "latest_score": null,
+        "band": "UNSET",
+        "run_count": 0,
+        "alert_count": 0,
+        "filing_queue_count": 0,
+        "submission_count": 0,
+        "acknowledgement_count": 0,
+        "operator_review_required": false
+      },
+      "enforcement_response": {
+        "posture": "UNINITIALIZED",
+        "latest_score": null,
+        "band": "UNSET",
+        "run_count": 0,
+        "alert_count": 0,
+        "action_count": 0,
+        "response_count": 0,
+        "consent_order_count": 0,
+        "closure_count": 0,
+        "operator_review_required": false
+      },
+      "stress_testing": {
+        "posture": "UNINITIALIZED",
+        "latest_score": null,
+        "band": "UNSET",
+        "run_count": 0,
+        "alert_count": 0,
+        "cycle_count": 0,
+        "staged_submission_count": 0,
+        "supervisory_challenge_count": 0,
+        "closed_challenge_count": 0,
+        "operator_review_required": false
+      },
+      "provenance_fabric": {
+        "posture": "EVIDENCE_PROVENANCE_CLEAR",
+        "latest_score": 100.0,
+        "band": "ATTESTATION_FABRIC_READY",
+        "run_count": 2,
+        "alert_count": 0,
+        "lineage_asset_count": 2,
+        "provenance_check_count": 2,
+        "attestation_count": 2,
+        "evidence_gap_closure_count": 2,
+        "operator_review_required": false
+      }
+    }
+  },
+  "last_context": {
+    "captured_at": "2026-04-15T04:18:21.106357+00:00",
+    "filing_orchestration": {
+      "posture": "UNINITIALIZED",
+      "latest_score": null,
+      "band": "UNSET",
+      "run_count": 0,
+      "alert_count": 0,
+      "filing_queue_count": 0,
+      "submission_count": 0,
+      "acknowledgement_count": 0,
+      "operator_review_required": false
+    },
+    "enforcement_response": {
+      "posture": "UNINITIALIZED",
+      "latest_score": null,
+      "band": "UNSET",
+      "run_count": 0,
+      "alert_count": 0,
+      "action_count": 0,
+      "response_count": 0,
+      "consent_order_count": 0,
+      "closure_count": 0,
+      "operator_review_required": false
+    },
+    "stress_testing": {
+      "posture": "UNINITIALIZED",
+      "latest_score": null,
+      "band": "UNSET",
+      "run_count": 0,
+      "alert_count": 0,
+      "cycle_count": 0,
+      "staged_submission_count": 0,
+      "supervisory_challenge_count": 0,
+      "closed_challenge_count": 0,
+      "operator_review_required": false
+    },
+    "provenance_fabric": {
+      "posture": "EVIDENCE_PROVENANCE_CLEAR",
+      "latest_score": 100.0,
+      "band": "ATTESTATION_FABRIC_READY",
+      "run_count": 2,
+      "alert_count": 0,
+      "lineage_asset_count": 2,
+      "provenance_check_count": 2,
+      "attestation_count": 2,
+      "evidence_gap_closure_count": 2,
+      "operator_review_required": false
+    }
+  }
+}

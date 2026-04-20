@@ -1,0 +1,15 @@
+{
+  "alpaca": {
+    "base_url": "https://paper-api.alpaca.markets",
+    "paper": true,
+    "api_key": "",
+    "secret_key": "",
+    "connection_mode": "auto",
+    "last_status": "paper_internal",
+    "last_tested_at": "2026-04-15T06:31:47Z",
+    "last_error": null,
+    "account_snapshot": {},
+    "positions_snapshot": [],
+    "orders_snapshot": []
+  }
+}

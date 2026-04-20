@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>QNT30409 Unified API Gateway & Module Router</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background: #09101d; color: #eef2fb; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card { background: #121b2f; border: 1px solid #2c3959; border-radius: 12px; padding: 16px; }
+    button { padding: 10px; border-radius: 8px; border: 0; cursor: pointer; margin-right: 8px; }
+    pre { white-space: pre-wrap; background: #0b1020; border: 1px solid #2a395a; padding: 12px; border-radius: 8px; min-height: 220px; }
+  </style>
+</head>
+<body>
+  <h1>QNT30409 — Unified API Gateway & Module Router</h1>
+  <div class="grid">
+    <div class="card">
+      <h3>Gateway Status</h3>
+      <button onclick="loadStatus()">Refresh Status</button>
+      <button onclick="runDemo()">Run Demo</button>
+      <pre id="left"></pre>
+    </div>
+    <div class="card">
+      <h3>Routes / Requests</h3>
+      <button onclick="loadRoutes()">Load Routes</button>
+      <button onclick="loadRequests()">Load Request Log</button>
+      <pre id="right"></pre>
+    </div>
+  </div>
+<script>
+async function loadStatus(){
+  const res = await fetch('/api-gateway/status');
+  document.getElementById('left').textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function runDemo(){
+  const res = await fetch('/api-gateway/demo/run', { method: 'POST' });
+  document.getElementById('left').textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function loadRoutes(){
+  const res = await fetch('/api-gateway/routes');
+  document.getElementById('right').textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function loadRequests(){
+  const res = await fetch('/api-gateway/request-log');
+  document.getElementById('right').textContent = JSON.stringify(await res.json(), null, 2);
+}
+loadStatus();
+</script>
+</body>
+</html>

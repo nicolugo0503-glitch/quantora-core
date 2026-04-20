@@ -1,0 +1,643 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 365,
+    "minimum_score": 96.0,
+    "minimum_independent_price_verification_readiness": 0.97,
+    "minimum_committee_challenge_readiness": 0.96,
+    "minimum_fair_value_override_governance_readiness": 0.97,
+    "maximum_open_price_gaps": 0,
+    "maximum_open_override_exceptions": 0
+  },
+  "runs": [
+    {
+      "run_id": "qnt40017_1776223537",
+      "captured_at": "2026-04-15T03:25:37.907773+00:00",
+      "score": 89.0,
+      "band": "VALUATION_REMEDIATION_REQUIRED",
+      "posture": "VALUATION_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "official books release posture must be clear before valuation override governance",
+        "dealing day cutoff posture is not aligned with valuation governance"
+      ],
+      "alerts": [
+        "OFFICIAL_BOOKS_NOT_CLEAR",
+        "DEALING_CUTOFF_MISALIGNED"
+      ],
+      "independent_price_verification_readiness": 0.99,
+      "committee_challenge_readiness": 0.98,
+      "fair_value_override_governance_readiness": 0.99,
+      "open_price_gaps": 0,
+      "open_override_exceptions": 0
+    },
+    {
+      "run_id": "qnt40017_1776223537",
+      "captured_at": "2026-04-15T03:25:37.580347+00:00",
+      "score": 89.0,
+      "band": "VALUATION_REMEDIATION_REQUIRED",
+      "posture": "VALUATION_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "official books release posture must be clear before valuation override governance",
+        "dealing day cutoff posture is not aligned with valuation governance"
+      ],
+      "alerts": [
+        "OFFICIAL_BOOKS_NOT_CLEAR",
+        "DEALING_CUTOFF_MISALIGNED"
+      ],
+      "independent_price_verification_readiness": 0.99,
+      "committee_challenge_readiness": 0.98,
+      "fair_value_override_governance_readiness": 0.99,
+      "open_price_gaps": 0,
+      "open_override_exceptions": 0
+    },
+    {
+      "run_id": "qnt40017_1776223529",
+      "captured_at": "2026-04-15T03:25:29.340879+00:00",
+      "score": 89.0,
+      "band": "VALUATION_REMEDIATION_REQUIRED",
+      "posture": "VALUATION_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "official books release posture must be clear before valuation override governance",
+        "dealing day cutoff posture is not aligned with valuation governance"
+      ],
+      "alerts": [
+        "OFFICIAL_BOOKS_NOT_CLEAR",
+        "DEALING_CUTOFF_MISALIGNED"
+      ],
+      "independent_price_verification_readiness": 0.99,
+      "committee_challenge_readiness": 0.98,
+      "fair_value_override_governance_readiness": 0.99,
+      "open_price_gaps": 0,
+      "open_override_exceptions": 0
+    },
+    {
+      "run_id": "qnt40017_1776223529",
+      "captured_at": "2026-04-15T03:25:29.015898+00:00",
+      "score": 89.0,
+      "band": "VALUATION_REMEDIATION_REQUIRED",
+      "posture": "VALUATION_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "official books release posture must be clear before valuation override governance",
+        "dealing day cutoff posture is not aligned with valuation governance"
+      ],
+      "alerts": [
+        "OFFICIAL_BOOKS_NOT_CLEAR",
+        "DEALING_CUTOFF_MISALIGNED"
+      ],
+      "independent_price_verification_readiness": 0.99,
+      "committee_challenge_readiness": 0.98,
+      "fair_value_override_governance_readiness": 0.99,
+      "open_price_gaps": 0,
+      "open_override_exceptions": 0
+    },
+    {
+      "run_id": "qnt40017_1776223066",
+      "captured_at": "2026-04-15T03:17:46.082640+00:00",
+      "score": 89.0,
+      "band": "VALUATION_REMEDIATION_REQUIRED",
+      "posture": "VALUATION_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "official books release posture must be clear before valuation override governance",
+        "dealing day cutoff posture is not aligned with valuation governance"
+      ],
+      "alerts": [
+        "OFFICIAL_BOOKS_NOT_CLEAR",
+        "DEALING_CUTOFF_MISALIGNED"
+      ],
+      "independent_price_verification_readiness": 0.99,
+      "committee_challenge_readiness": 0.98,
+      "fair_value_override_governance_readiness": 0.99,
+      "open_price_gaps": 0,
+      "open_override_exceptions": 0
+    },
+    {
+      "run_id": "qnt40017_1776223066",
+      "captured_at": "2026-04-15T03:17:46.017402+00:00",
+      "score": 89.0,
+      "band": "VALUATION_REMEDIATION_REQUIRED",
+      "posture": "VALUATION_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "official books release posture must be clear before valuation override governance",
+        "dealing day cutoff posture is not aligned with valuation governance"
+      ],
+      "alerts": [
+        "OFFICIAL_BOOKS_NOT_CLEAR",
+        "DEALING_CUTOFF_MISALIGNED"
+      ],
+      "independent_price_verification_readiness": 0.99,
+      "committee_challenge_readiness": 0.98,
+      "fair_value_override_governance_readiness": 0.99,
+      "open_price_gaps": 0,
+      "open_override_exceptions": 0
+    },
+    {
+      "run_id": "qnt40017_1776222078",
+      "captured_at": "2026-04-15T03:01:18.704762+00:00",
+      "score": 89.0,
+      "band": "VALUATION_REMEDIATION_REQUIRED",
+      "posture": "VALUATION_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "official books release posture must be clear before valuation override governance",
+        "dealing day cutoff posture is not aligned with valuation governance"
+      ],
+      "alerts": [
+        "OFFICIAL_BOOKS_NOT_CLEAR",
+        "DEALING_CUTOFF_MISALIGNED"
+      ],
+      "independent_price_verification_readiness": 0.99,
+      "committee_challenge_readiness": 0.98,
+      "fair_value_override_governance_readiness": 0.99,
+      "open_price_gaps": 0,
+      "open_override_exceptions": 0
+    },
+    {
+      "run_id": "qnt40017_1776222078",
+      "captured_at": "2026-04-15T03:01:18.632102+00:00",
+      "score": 89.0,
+      "band": "VALUATION_REMEDIATION_REQUIRED",
+      "posture": "VALUATION_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "official books release posture must be clear before valuation override governance",
+        "dealing day cutoff posture is not aligned with valuation governance"
+      ],
+      "alerts": [
+        "OFFICIAL_BOOKS_NOT_CLEAR",
+        "DEALING_CUTOFF_MISALIGNED"
+      ],
+      "independent_price_verification_readiness": 0.99,
+      "committee_challenge_readiness": 0.98,
+      "fair_value_override_governance_readiness": 0.99,
+      "open_price_gaps": 0,
+      "open_override_exceptions": 0
+    },
+    {
+      "run_id": "qnt40017_1776221678",
+      "captured_at": "2026-04-15T02:54:38.818222+00:00",
+      "score": 89.0,
+      "band": "VALUATION_REMEDIATION_REQUIRED",
+      "posture": "VALUATION_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "official books release posture must be clear before valuation override governance",
+        "dealing day cutoff posture is not aligned with valuation governance"
+      ],
+      "alerts": [
+        "OFFICIAL_BOOKS_NOT_CLEAR",
+        "DEALING_CUTOFF_MISALIGNED"
+      ],
+      "independent_price_verification_readiness": 0.99,
+      "committee_challenge_readiness": 0.98,
+      "fair_value_override_governance_readiness": 0.99,
+      "open_price_gaps": 0,
+      "open_override_exceptions": 0
+    },
+    {
+      "run_id": "qnt40017_1776221341",
+      "captured_at": "2026-04-15T02:49:01.049535+00:00",
+      "score": 89.0,
+      "band": "VALUATION_REMEDIATION_REQUIRED",
+      "posture": "VALUATION_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "official books release posture must be clear before valuation override governance",
+        "dealing day cutoff posture is not aligned with valuation governance"
+      ],
+      "alerts": [
+        "OFFICIAL_BOOKS_NOT_CLEAR",
+        "DEALING_CUTOFF_MISALIGNED"
+      ],
+      "independent_price_verification_readiness": 0.99,
+      "committee_challenge_readiness": 0.98,
+      "fair_value_override_governance_readiness": 0.99,
+      "open_price_gaps": 0,
+      "open_override_exceptions": 0
+    },
+    {
+      "run_id": "qnt40017_1776221338",
+      "captured_at": "2026-04-15T02:48:58.225736+00:00",
+      "score": 89.0,
+      "band": "VALUATION_REMEDIATION_REQUIRED",
+      "posture": "VALUATION_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "official books release posture must be clear before valuation override governance",
+        "dealing day cutoff posture is not aligned with valuation governance"
+      ],
+      "alerts": [
+        "OFFICIAL_BOOKS_NOT_CLEAR",
+        "DEALING_CUTOFF_MISALIGNED"
+      ],
+      "independent_price_verification_readiness": 0.99,
+      "committee_challenge_readiness": 0.98,
+      "fair_value_override_governance_readiness": 0.99,
+      "open_price_gaps": 0,
+      "open_override_exceptions": 0
+    },
+    {
+      "run_id": "qnt40017_1776221069",
+      "captured_at": "2026-04-15T02:44:29.383897+00:00",
+      "score": 89.0,
+      "band": "VALUATION_REMEDIATION_REQUIRED",
+      "posture": "VALUATION_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "official books release posture must be clear before valuation override governance",
+        "dealing day cutoff posture is not aligned with valuation governance"
+      ],
+      "alerts": [
+        "OFFICIAL_BOOKS_NOT_CLEAR",
+        "DEALING_CUTOFF_MISALIGNED"
+      ],
+      "independent_price_verification_readiness": 0.99,
+      "committee_challenge_readiness": 0.98,
+      "fair_value_override_governance_readiness": 0.99,
+      "open_price_gaps": 0,
+      "open_override_exceptions": 0
+    }
+  ],
+  "alerts": [
+    "OFFICIAL_BOOKS_NOT_CLEAR",
+    "DEALING_CUTOFF_MISALIGNED"
+  ],
+  "independent_price_verifications": [
+    {
+      "verification_id": "ipv_1776223537",
+      "captured_at": "2026-04-15T03:25:37.895395+00:00",
+      "valuation_id": "val_1776220060",
+      "valuator": "Independent Pricing Control",
+      "status": "verified",
+      "price_gap_bps": 2.1,
+      "notes": "independent pricing sources reconciled to official valuation"
+    },
+    {
+      "verification_id": "ipv_1776223537",
+      "captured_at": "2026-04-15T03:25:37.558103+00:00",
+      "valuation_id": "val_1776220060",
+      "valuator": "Independent Pricing Control",
+      "status": "verified",
+      "price_gap_bps": 2.1,
+      "notes": "independent pricing sources reconciled to official valuation"
+    },
+    {
+      "verification_id": "ipv_1776223529",
+      "captured_at": "2026-04-15T03:25:29.331060+00:00",
+      "valuation_id": "val_1776220060",
+      "valuator": "Independent Pricing Control",
+      "status": "verified",
+      "price_gap_bps": 2.1,
+      "notes": "independent pricing sources reconciled to official valuation"
+    },
+    {
+      "verification_id": "ipv_1776223529",
+      "captured_at": "2026-04-15T03:25:29.005455+00:00",
+      "valuation_id": "val_1776220060",
+      "valuator": "Independent Pricing Control",
+      "status": "verified",
+      "price_gap_bps": 2.1,
+      "notes": "independent pricing sources reconciled to official valuation"
+    },
+    {
+      "verification_id": "ipv_1776223066",
+      "captured_at": "2026-04-15T03:17:46.080378+00:00",
+      "valuation_id": "val_1776220060",
+      "valuator": "Independent Pricing Control",
+      "status": "verified",
+      "price_gap_bps": 2.1,
+      "notes": "independent pricing sources reconciled to official valuation"
+    },
+    {
+      "verification_id": "ipv_1776223066",
+      "captured_at": "2026-04-15T03:17:46.015001+00:00",
+      "valuation_id": "val_1776220060",
+      "valuator": "Independent Pricing Control",
+      "status": "verified",
+      "price_gap_bps": 2.1,
+      "notes": "independent pricing sources reconciled to official valuation"
+    },
+    {
+      "verification_id": "ipv_1776222078",
+      "captured_at": "2026-04-15T03:01:18.702255+00:00",
+      "valuation_id": "val_1776220060",
+      "valuator": "Independent Pricing Control",
+      "status": "verified",
+      "price_gap_bps": 2.1,
+      "notes": "independent pricing sources reconciled to official valuation"
+    },
+    {
+      "verification_id": "ipv_1776222078",
+      "captured_at": "2026-04-15T03:01:18.628355+00:00",
+      "valuation_id": "val_1776220060",
+      "valuator": "Independent Pricing Control",
+      "status": "verified",
+      "price_gap_bps": 2.1,
+      "notes": "independent pricing sources reconciled to official valuation"
+    },
+    {
+      "verification_id": "ipv_1776221678",
+      "captured_at": "2026-04-15T02:54:38.816270+00:00",
+      "valuation_id": "val_1776220060",
+      "valuator": "Independent Pricing Control",
+      "status": "verified",
+      "price_gap_bps": 2.1,
+      "notes": "independent pricing sources reconciled to official valuation"
+    },
+    {
+      "verification_id": "ipv_1776221341",
+      "captured_at": "2026-04-15T02:49:01.047360+00:00",
+      "valuation_id": "val_1776220060",
+      "valuator": "Independent Pricing Control",
+      "status": "verified",
+      "price_gap_bps": 2.1,
+      "notes": "independent pricing sources reconciled to official valuation"
+    },
+    {
+      "verification_id": "ipv_1776221338",
+      "captured_at": "2026-04-15T02:48:58.223316+00:00",
+      "valuation_id": "val_1776220060",
+      "valuator": "Independent Pricing Control",
+      "status": "verified",
+      "price_gap_bps": 2.1,
+      "notes": "independent pricing sources reconciled to official valuation"
+    },
+    {
+      "verification_id": "ipv_1776221069",
+      "captured_at": "2026-04-15T02:44:29.381540+00:00",
+      "valuation_id": "val_1776220060",
+      "valuator": "Independent Pricing Control",
+      "status": "verified",
+      "price_gap_bps": 2.1,
+      "notes": "independent pricing sources reconciled to official valuation"
+    }
+  ],
+  "valuation_committee_challenges": [
+    {
+      "challenge_id": "vcc_1776223537",
+      "captured_at": "2026-04-15T03:25:37.898094+00:00",
+      "chair": "Quantora Audit Release Governor",
+      "status": "challenged_and_resolved",
+      "issue": "level_3_asset_or_model_price_deviation",
+      "notes": "valuation committee challenge logged with resolution evidence"
+    },
+    {
+      "challenge_id": "vcc_1776223537",
+      "captured_at": "2026-04-15T03:25:37.563519+00:00",
+      "chair": "Quantora Audit Release Governor",
+      "status": "challenged_and_resolved",
+      "issue": "level_3_asset_or_model_price_deviation",
+      "notes": "valuation committee challenge logged with resolution evidence"
+    },
+    {
+      "challenge_id": "vcc_1776223529",
+      "captured_at": "2026-04-15T03:25:29.332952+00:00",
+      "chair": "Quantora Auditor Delivery Governor",
+      "status": "challenged_and_resolved",
+      "issue": "level_3_asset_or_model_price_deviation",
+      "notes": "valuation committee challenge logged with resolution evidence"
+    },
+    {
+      "challenge_id": "vcc_1776223529",
+      "captured_at": "2026-04-15T03:25:29.008328+00:00",
+      "chair": "Quantora Auditor Delivery Governor",
+      "status": "challenged_and_resolved",
+      "issue": "level_3_asset_or_model_price_deviation",
+      "notes": "valuation committee challenge logged with resolution evidence"
+    },
+    {
+      "challenge_id": "vcc_1776223066",
+      "captured_at": "2026-04-15T03:17:46.080877+00:00",
+      "chair": "Quantora Auditor Delivery Governor",
+      "status": "challenged_and_resolved",
+      "issue": "level_3_asset_or_model_price_deviation",
+      "notes": "valuation committee challenge logged with resolution evidence"
+    },
+    {
+      "challenge_id": "vcc_1776223066",
+      "captured_at": "2026-04-15T03:17:46.015636+00:00",
+      "chair": "Quantora Auditor Delivery Governor",
+      "status": "challenged_and_resolved",
+      "issue": "level_3_asset_or_model_price_deviation",
+      "notes": "valuation committee challenge logged with resolution evidence"
+    },
+    {
+      "challenge_id": "vcc_1776222078",
+      "captured_at": "2026-04-15T03:01:18.702857+00:00",
+      "chair": "Quantora Final NAV Governor",
+      "status": "challenged_and_resolved",
+      "issue": "level_3_asset_or_model_price_deviation",
+      "notes": "valuation committee challenge logged with resolution evidence"
+    },
+    {
+      "challenge_id": "vcc_1776222078",
+      "captured_at": "2026-04-15T03:01:18.629276+00:00",
+      "chair": "Quantora Final NAV Governor",
+      "status": "challenged_and_resolved",
+      "issue": "level_3_asset_or_model_price_deviation",
+      "notes": "valuation committee challenge logged with resolution evidence"
+    },
+    {
+      "challenge_id": "vcc_1776221678",
+      "captured_at": "2026-04-15T02:54:38.816757+00:00",
+      "chair": "Quantora Admin Oversight",
+      "status": "challenged_and_resolved",
+      "issue": "level_3_asset_or_model_price_deviation",
+      "notes": "valuation committee challenge logged with resolution evidence"
+    },
+    {
+      "challenge_id": "vcc_1776221341",
+      "captured_at": "2026-04-15T02:49:01.047791+00:00",
+      "chair": "Quantora Admin Oversight",
+      "status": "challenged_and_resolved",
+      "issue": "level_3_asset_or_model_price_deviation",
+      "notes": "valuation committee challenge logged with resolution evidence"
+    },
+    {
+      "challenge_id": "vcc_1776221338",
+      "captured_at": "2026-04-15T02:48:58.223763+00:00",
+      "chair": "Quantora Operator",
+      "status": "challenged_and_resolved",
+      "issue": "level_3_asset_or_model_price_deviation",
+      "notes": "valuation committee challenge logged with resolution evidence"
+    },
+    {
+      "challenge_id": "vcc_1776221069",
+      "captured_at": "2026-04-15T02:44:29.382189+00:00",
+      "chair": "Quantora Operator",
+      "status": "challenged_and_resolved",
+      "issue": "level_3_asset_or_model_price_deviation",
+      "notes": "valuation committee challenge logged with resolution evidence"
+    }
+  ],
+  "fair_value_overrides": [
+    {
+      "override_id": "fvo_1776223537",
+      "captured_at": "2026-04-15T03:25:37.902791+00:00",
+      "valuation_id": "val_1776220060",
+      "override_reason": "fair_value_adjustment_required",
+      "override_delta": 12500.0,
+      "approver": "Quantora Audit Release Governor",
+      "status": "approved",
+      "notes": "fair value override approved under valuation governance policy"
+    },
+    {
+      "override_id": "fvo_1776223537",
+      "captured_at": "2026-04-15T03:25:37.570466+00:00",
+      "valuation_id": "val_1776220060",
+      "override_reason": "fair_value_adjustment_required",
+      "override_delta": 12500.0,
+      "approver": "Quantora Audit Release Governor",
+      "status": "approved",
+      "notes": "fair value override approved under valuation governance policy"
+    },
+    {
+      "override_id": "fvo_1776223529",
+      "captured_at": "2026-04-15T03:25:29.336304+00:00",
+      "valuation_id": "val_1776220060",
+      "override_reason": "fair_value_adjustment_required",
+      "override_delta": 12500.0,
+      "approver": "Quantora Auditor Delivery Governor",
+      "status": "approved",
+      "notes": "fair value override approved under valuation governance policy"
+    },
+    {
+      "override_id": "fvo_1776223529",
+      "captured_at": "2026-04-15T03:25:29.010768+00:00",
+      "valuation_id": "val_1776220060",
+      "override_reason": "fair_value_adjustment_required",
+      "override_delta": 12500.0,
+      "approver": "Quantora Auditor Delivery Governor",
+      "status": "approved",
+      "notes": "fair value override approved under valuation governance policy"
+    },
+    {
+      "override_id": "fvo_1776223066",
+      "captured_at": "2026-04-15T03:17:46.081665+00:00",
+      "valuation_id": "val_1776220060",
+      "override_reason": "fair_value_adjustment_required",
+      "override_delta": 12500.0,
+      "approver": "Quantora Auditor Delivery Governor",
+      "status": "approved",
+      "notes": "fair value override approved under valuation governance policy"
+    },
+    {
+      "override_id": "fvo_1776223066",
+      "captured_at": "2026-04-15T03:17:46.016330+00:00",
+      "valuation_id": "val_1776220060",
+      "override_reason": "fair_value_adjustment_required",
+      "override_delta": 12500.0,
+      "approver": "Quantora Auditor Delivery Governor",
+      "status": "approved",
+      "notes": "fair value override approved under valuation governance policy"
+    },
+    {
+      "override_id": "fvo_1776222078",
+      "captured_at": "2026-04-15T03:01:18.703598+00:00",
+      "valuation_id": "val_1776220060",
+      "override_reason": "fair_value_adjustment_required",
+      "override_delta": 12500.0,
+      "approver": "Quantora Final NAV Governor",
+      "status": "approved",
+      "notes": "fair value override approved under valuation governance policy"
+    },
+    {
+      "override_id": "fvo_1776222078",
+      "captured_at": "2026-04-15T03:01:18.630451+00:00",
+      "valuation_id": "val_1776220060",
+      "override_reason": "fair_value_adjustment_required",
+      "override_delta": 12500.0,
+      "approver": "Quantora Final NAV Governor",
+      "status": "approved",
+      "notes": "fair value override approved under valuation governance policy"
+    },
+    {
+      "override_id": "fvo_1776221678",
+      "captured_at": "2026-04-15T02:54:38.817347+00:00",
+      "valuation_id": "val_1776220060",
+      "override_reason": "fair_value_adjustment_required",
+      "override_delta": 12500.0,
+      "approver": "Quantora Admin Oversight",
+      "status": "approved",
+      "notes": "fair value override approved under valuation governance policy"
+    },
+    {
+      "override_id": "fvo_1776221341",
+      "captured_at": "2026-04-15T02:49:01.048514+00:00",
+      "valuation_id": "val_1776220060",
+      "override_reason": "fair_value_adjustment_required",
+      "override_delta": 12500.0,
+      "approver": "Quantora Admin Oversight",
+      "status": "approved",
+      "notes": "fair value override approved under valuation governance policy"
+    },
+    {
+      "override_id": "fvo_1776221338",
+      "captured_at": "2026-04-15T02:48:58.224379+00:00",
+      "valuation_id": "val_1776220060",
+      "override_reason": "fair_value_adjustment_required",
+      "override_delta": 12500.0,
+      "approver": "Quantora Operator",
+      "status": "approved",
+      "notes": "fair value override approved under valuation governance policy"
+    },
+    {
+      "override_id": "fvo_1776221069",
+      "captured_at": "2026-04-15T02:44:29.382870+00:00",
+      "valuation_id": "val_1776220060",
+      "override_reason": "fair_value_adjustment_required",
+      "override_delta": 12500.0,
+      "approver": "Quantora Operator",
+      "status": "approved",
+      "notes": "fair value override approved under valuation governance policy"
+    }
+  ],
+  "latest_run": {
+    "run_id": "qnt40017_1776223537",
+    "captured_at": "2026-04-15T03:25:37.907773+00:00",
+    "score": 89.0,
+    "band": "VALUATION_REMEDIATION_REQUIRED",
+    "posture": "VALUATION_REMEDIATION_REQUIRED",
+    "operator_review_required": true,
+    "reasons": [
+      "official books release posture must be clear before valuation override governance",
+      "dealing day cutoff posture is not aligned with valuation governance"
+    ],
+    "alerts": [
+      "OFFICIAL_BOOKS_NOT_CLEAR",
+      "DEALING_CUTOFF_MISALIGNED"
+    ],
+    "independent_price_verification_readiness": 0.99,
+    "committee_challenge_readiness": 0.98,
+    "fair_value_override_governance_readiness": 0.99,
+    "open_price_gaps": 0,
+    "open_override_exceptions": 0
+  },
+  "last_context": {
+    "captured_at": "2026-04-15T03:25:37.907710+00:00",
+    "official_books_summary": {
+      "posture": "OFFICIAL_RELEASE_WATCH",
+      "score": 92.0,
+      "official_books_release_count": 17,
+      "controller_sign_off_count": 17
+    },
+    "nav_summary": {
+      "valuation_count": 1,
+      "official_count": 1,
+      "latest_valuation_id": "val_1776220060",
+      "latest_valuation_status": "official",
+      "latest_official_nav": 0.0,
+      "latest_valuation_date": "2026-04-15"
+    },
+    "dealing_summary": {
+      "latest_day_id": "deal_1776220060",
+      "latest_cutoff_status": "applied",
+      "latest_status": "cutoff_locked"
+    }
+  }
+}

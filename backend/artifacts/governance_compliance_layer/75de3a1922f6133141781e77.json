@@ -1,0 +1,22 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policies": {
+    "max_strategy_weight": 0.4,
+    "max_single_order_notional": 250000.0,
+    "max_portfolio_drawdown_pct": 20.0,
+    "max_open_orders": 12,
+    "restricted_symbols": [
+      "GME",
+      "AMC"
+    ],
+    "approved_strategies": [],
+    "approval_required_live_mode": true,
+    "allow_autonomous_cycles": true
+  },
+  "compliance_events": [],
+  "approval_queue": [],
+  "override_log": [],
+  "audit_snapshots": [],
+  "created_at": 1775712870,
+  "updated_at": 1775712870
+}

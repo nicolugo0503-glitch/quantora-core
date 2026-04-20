@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30602 Immutable Audit Trail + Control Evidence Registry</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1420px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,textarea,select{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,textarea,select{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:84px}
+.row{display:grid;grid-template-columns:1.3fr 1fr 2fr auto auto auto;gap:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:420px}
+.good{color:#10b981}
+.bad{color:#ef4444}
+@media(max-width:1300px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30602 · Immutable Audit Trail + Control Evidence Registry</h1>
+        <div style="color:#9fb3d8">Captures reconciliation states, exception states, and manual control evidence in a chained immutable audit record.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30601_exception_resolution.html">Exception Resolution</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Records</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Reconciliation</div><div id="recon" class="value">-</div></div>
+    <div class="card"><div class="label">Exceptions</div><div id="exc" class="value">-</div></div>
+    <div class="card"><div class="label">Evidence</div><div id="evidence" class="value">-</div></div>
+    <div class="card"><div class="label">Chain Integrity</div><div id="integrity" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="title" placeholder="Evidence title">
+      <select id="etype">
+        <option value="manual_note">manual_note</option>
+        <option value="policy_reference">policy_reference</option>
+        <option value="review_memo">review_memo</option>
+      </select>
+      <textarea id="description" placeholder="Evidence description"></textarea>
+      <button onclick="captureRecon()">Capture Reconciliation</button>
+      <button onclick="captureExceptions()">Capture Exceptions</button>
+      <button onclick="addEvidence()">Add Evidence</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Audit Records</div>
+    <table>
+      <thead><tr><th>Type</th><th>Timestamp</th><th>Record Hash</th><th>Previous Hash</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Audit Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function dt(v){ return v ? new Date(v*1000).toLocaleString() : '-'; }
+function short(v){ return v ? String(v).slice(0,16) + '...' : '-'; }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/audit-trail/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data,null,2); return; }
+  const d = res.data || {};
+  document.getElementById('count').textContent = String(d.record_count || 0);
+  document.getElementById('recon').textContent = String(d.reconciliation_record_count || 0);
+  document.getElementById('exc').textContent = String(d.exception_record_count || 0);
+  document.getElementById('evidence').textContent = String(d.evidence_record_count || 0);
+  document.getElementById('integrity').textContent = d.chain_integrity_ok ? 'OK' : 'BROKEN';
+  document.getElementById('integrity').className = 'value ' + (d.chain_integrity_ok ? 'good' : 'bad');
+  document.getElementById('rows').innerHTML = (d.records || []).map(r =>
+    `<tr><td>${r.record_type}</td><td>${dt(r.timestamp)}</td><td>${short(r.record_hash)}</td><td>${short(r.previous_hash)}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function captureRecon(){
+  await j('/api/audit-trail/capture-reconciliation', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({})});
+  await load();
+}
+async function captureExceptions(){
+  await j('/api/audit-trail/capture-exception-state', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({})});
+  await load();
+}
+async function addEvidence(){
+  await j('/api/audit-trail/evidence', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    title: document.getElementById('title').value,
+    description: document.getElementById('description').value,
+    evidence_type: document.getElementById('etype').value
+  })});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

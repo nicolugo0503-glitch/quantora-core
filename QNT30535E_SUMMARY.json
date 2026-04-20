@@ -1,0 +1,10 @@
+{
+  "base_zip": "QUANTORA_FULL_PROJECT_QNT30535D_INTEGRATION_INDENT_FIX.zip",
+  "audited_issue": "IndentationError in qnt30531_integration.py plus unsafe standalone user-layer delivery",
+  "fixes": [
+    "Use QNT30535D repaired integration runtime",
+    "Merge QNT30535 as frontend mission page",
+    "Add registry entry for QNT30535"
+  ],
+  "new_page": "frontend/mission_qnt30535_user_command_center.html"
+}

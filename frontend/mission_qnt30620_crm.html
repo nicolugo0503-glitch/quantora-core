@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30620 Investor Lifecycle CRM + Relationship Activity Ledger</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1440px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,select,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:90px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1400px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30620 · Investor Lifecycle CRM + Relationship Activity Ledger</h1>
+        <div style="color:#9fb3d8">Tracks investor relationship stage, health, ownership, and the full relationship activity ledger.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30619_notification_campaigns.html">Notification Campaigns</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Relationships</div><div id="relationships" class="value">-</div></div>
+    <div class="card"><div class="label">Activities</div><div id="activities" class="value">-</div></div>
+    <div class="card"><div class="label">Prospects</div><div id="prospects" class="value">-</div></div>
+    <div class="card"><div class="label">Active</div><div id="active" class="value">-</div></div>
+    <div class="card"><div class="label">At Risk</div><div id="risk" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <input id="investorId" placeholder="Investor ID">
+    <input id="owner" placeholder="Owner" style="margin-top:12px">
+    <select id="stage" style="margin-top:12px">
+      <option value="prospect">prospect</option>
+      <option value="qualified">qualified</option>
+      <option value="onboarding">onboarding</option>
+      <option value="active">active</option>
+      <option value="at_risk">at_risk</option>
+      <option value="inactive">inactive</option>
+    </select>
+    <select id="health" style="margin-top:12px">
+      <option value="strong">strong</option>
+      <option value="neutral">neutral</option>
+      <option value="watch">watch</option>
+      <option value="at_risk">at_risk</option>
+    </select>
+    <input id="nextAction" placeholder="Next action" style="margin-top:12px">
+    <textarea id="notes" placeholder="Relationship notes" style="margin-top:12px"></textarea>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="createRelationship()">Create Relationship</button>
+      <button onclick="updateLatest()">Update Latest Stage</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <input id="activityType" placeholder="Activity type e.g. call" value="note">
+    <input id="subject" placeholder="Subject" style="margin-top:12px">
+    <textarea id="detail" placeholder="Activity detail" style="margin-top:12px"></textarea>
+    <input id="actor" placeholder="Actor" style="margin-top:12px" value="Operator">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="logActivity()">Log Activity On Latest Relationship</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Relationship Ledger</div>
+    <table>
+      <thead><tr><th>Investor ID</th><th>Owner</th><th>Stage</th><th>Health</th><th>Next Action</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">CRM Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/crm/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data,null,2); return; }
+  const d = res.data || {};
+  const stages = d.stage_counts || {};
+  const health = d.health_counts || {};
+  document.getElementById('relationships').textContent = String(d.relationship_count || 0);
+  document.getElementById('activities').textContent = String(d.activity_count || 0);
+  document.getElementById('prospects').textContent = String(stages.prospect || 0);
+  document.getElementById('active').textContent = String(stages.active || 0);
+  document.getElementById('risk').textContent = String(health.at_risk || 0);
+  document.getElementById('rows').innerHTML = (d.relationships || []).map(r =>
+    `<tr><td>${r.investor_id}</td><td>${r.owner}</td><td>${r.stage}</td><td>${r.health}</td><td>${r.next_action || ''}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function createRelationship(){
+  await j('/api/crm/relationship', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    investor_id: document.getElementById('investorId').value,
+    owner: document.getElementById('owner').value,
+    stage: document.getElementById('stage').value,
+    health: document.getElementById('health').value,
+    next_action: document.getElementById('nextAction').value,
+    notes: document.getElementById('notes').value
+  })});
+  await load();
+}
+async function updateLatest(){
+  const res = await j('/api/crm/summary');
+  const latest = res.data.latest_relationship;
+  if(!latest) return;
+  await j('/api/crm/stage', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    relationship_id: latest.relationship_id,
+    stage: document.getElementById('stage').value,
+    health: document.getElementById('health').value,
+    next_action: document.getElementById('nextAction').value
+  })});
+  await load();
+}
+async function logActivity(){
+  const res = await j('/api/crm/summary');
+  const latest = res.data.latest_relationship;
+  if(!latest) return;
+  await j('/api/crm/activity', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    relationship_id: latest.relationship_id,
+    activity_type: document.getElementById('activityType').value,
+    subject: document.getElementById('subject').value,
+    detail: document.getElementById('detail').value,
+    actor: document.getElementById('actor').value,
+    direction: 'outbound',
+    next_action: document.getElementById('nextAction').value
+  })});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

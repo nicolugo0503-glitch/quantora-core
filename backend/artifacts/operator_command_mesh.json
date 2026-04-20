@@ -1,0 +1,142 @@
+{
+  "command_mesh": {
+    "enabled": true,
+    "last_updated_at": "2026-03-31T06:28:05Z",
+    "last_dispatch_at": "2026-03-31T06:28:05Z",
+    "last_mandate_sync_at": "2026-03-31T06:28:05Z",
+    "command_count": 3,
+    "delegation_count": 1,
+    "blocked_commands": 1,
+    "executed_commands": 2,
+    "telemetry": [
+      {
+        "timestamp": "2026-03-31T06:28:05Z",
+        "event": "command.routed",
+        "status": "pending",
+        "execution_mode": "live",
+        "operator_id": "operator_alpha"
+      },
+      {
+        "timestamp": "2026-03-31T06:28:05Z",
+        "event": "command.routed",
+        "status": "blocked",
+        "execution_mode": "live",
+        "operator_id": "operator_alpha"
+      },
+      {
+        "timestamp": "2026-03-31T06:28:05Z",
+        "event": "command.routed",
+        "status": "executed",
+        "execution_mode": "paper",
+        "operator_id": "operator_alpha"
+      },
+      {
+        "timestamp": "2026-03-31T06:28:05Z",
+        "event": "commands.executed",
+        "count": 1
+      }
+    ]
+  },
+  "operators": [
+    {
+      "operator_id": "operator_alpha",
+      "display_name": "Operator Alpha",
+      "tier": "delegate"
+    }
+  ],
+  "mandates": [
+    {
+      "operator_id": "operator_alpha",
+      "scope": "equities",
+      "allowed_modes": [
+        "paper",
+        "live"
+      ],
+      "max_notional": 15000.0,
+      "active": true,
+      "mandate_id": "mandate_001"
+    }
+  ],
+  "commands": [
+    {
+      "command_id": "cmd_0001",
+      "timestamp": "2026-03-31T06:28:05Z",
+      "operator_id": "operator_alpha",
+      "action": "buy",
+      "symbol": "AAPL",
+      "execution_mode": "live",
+      "priority": "high",
+      "notional": 12000.0,
+      "status": "executed",
+      "reasons": [
+        "approval_required"
+      ],
+      "executed_at": "2026-03-31T06:28:05Z",
+      "execution_note": "delegated_command_mesh_execution"
+    },
+    {
+      "command_id": "cmd_0002",
+      "timestamp": "2026-03-31T06:28:05Z",
+      "operator_id": "operator_alpha",
+      "action": "buy",
+      "symbol": "NVDA",
+      "execution_mode": "live",
+      "priority": "high",
+      "notional": 30000.0,
+      "status": "blocked",
+      "reasons": [
+        "live_mandate_limit_exceeded",
+        "risk_notional_limit_exceeded"
+      ]
+    },
+    {
+      "command_id": "cmd_0003",
+      "timestamp": "2026-03-31T06:28:05Z",
+      "operator_id": "operator_alpha",
+      "action": "sell",
+      "symbol": "TSLA",
+      "execution_mode": "paper",
+      "priority": "normal",
+      "notional": 5000.0,
+      "status": "executed",
+      "reasons": []
+    }
+  ],
+  "routing": {
+    "default_priority": "normal",
+    "require_mandate_for_live": true,
+    "risk_gate_required": true,
+    "approval_gate_required": true,
+    "max_live_notional_per_command": 25000.0
+  },
+  "history": [
+    {
+      "timestamp": "2026-03-31T06:28:05Z",
+      "event": "mandates.upserted",
+      "count": 1
+    },
+    {
+      "timestamp": "2026-03-31T06:28:05Z",
+      "event": "command.routed",
+      "command_id": "cmd_0001",
+      "status": "pending"
+    },
+    {
+      "timestamp": "2026-03-31T06:28:05Z",
+      "event": "command.routed",
+      "command_id": "cmd_0002",
+      "status": "blocked"
+    },
+    {
+      "timestamp": "2026-03-31T06:28:05Z",
+      "event": "command.routed",
+      "command_id": "cmd_0003",
+      "status": "executed"
+    },
+    {
+      "timestamp": "2026-03-31T06:28:05Z",
+      "event": "commands.executed",
+      "count": 1
+    }
+  ]
+}

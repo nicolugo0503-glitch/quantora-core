@@ -1,0 +1,6 @@
+{
+  "base_zip": "QUANTORA_FULL_PROJECT_QNT30544_CAPITAL_ALLOCATION_STUDIO.zip",
+  "mission_added": "QNT30545_EXECUTION_MONITOR_HUB",
+  "frontend_only": true,
+  "new_file": "frontend/mission_qnt30545_execution_monitor_hub.html"
+}

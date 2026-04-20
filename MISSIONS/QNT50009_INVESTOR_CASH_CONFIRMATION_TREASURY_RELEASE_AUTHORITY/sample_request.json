@@ -1,0 +1,8 @@
+{
+  "operator": "investor_ops_committee",
+  "transfer_id": "trf_example_investor_release",
+  "investor_id": "INVESTOR_001",
+  "dealing_reference": "REDEMPTION_2026_04_17",
+  "statement_cycle_id": "APR_2026",
+  "notes": "release request for validated investor redemption"
+}

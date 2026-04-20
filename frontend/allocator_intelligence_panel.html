@@ -1,0 +1,94 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30356 Allocator Intelligence + Treasury Layer</title>
+  <style>
+    :root { --bg:#07111f; --panel:#0f1d31; --panel2:#132742; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#60a5fa; --good:#34d399; --warn:#f59e0b; --bad:#fb7185; }
+    * { box-sizing:border-box; } body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#040b15 0%,#0a1424 100%); color:var(--text); }
+    .shell { max-width:1400px; margin:0 auto; padding:24px; } .panel { background:rgba(15,29,49,.95); border:1px solid var(--line); border-radius:18px; padding:16px; margin-bottom:16px; }
+    .hero { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; } .sub { color:var(--muted); max-width:860px; line-height:1.5; }
+    .grid { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px; }
+    .metric { background:#0a1526; border:1px solid #1e2d47; border-radius:14px; padding:14px; } .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; } .value { font-size:26px; font-weight:700; margin-top:8px; }
+    .two { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .row { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:10px; margin-bottom:10px; }
+    input, select, button { width:100%; border:1px solid var(--line); background:var(--panel2); color:var(--text); border-radius:10px; padding:11px 12px; }
+    button { background:var(--accent); font-weight:700; cursor:pointer; }
+    pre { background:#06101d; border:1px solid #1e2d47; border-radius:14px; min-height:220px; max-height:540px; overflow:auto; padding:14px; white-space:pre-wrap; }
+    .tiny { color:var(--muted); font-size:12px; }
+    @media (max-width:980px){ .grid,.row,.two{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="panel hero">
+      <div>
+        <h1 style="margin:0 0 8px 0;">Allocator Intelligence + Treasury Layer</h1>
+        <div class="sub">Translate portfolio risk into deployable capital, reserve discipline, and governed strategy budgets so Quantora allocates like an institution instead of sizing trades in isolation.</div>
+      </div>
+      <div style="min-width:220px;"><button onclick="window.location.href='index.html'">Back to Command Center</button></div>
+    </div>
+
+    <div class="panel">
+      <div class="grid">
+        <div class="metric"><div class="label">Treasury Score</div><div class="value" id="m_score">-</div></div>
+        <div class="metric"><div class="label">Reserve Balance</div><div class="value" id="m_reserve">-</div></div>
+        <div class="metric"><div class="label">Available Deploy</div><div class="value" id="m_available">-</div></div>
+        <div class="metric"><div class="label">Strategies Budgeted</div><div class="value" id="m_strategies">-</div></div>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="panel">
+        <h2 style="margin-top:0;">Treasury Policy</h2>
+        <div class="row">
+          <input id="total_capital_usd" type="number" value="250000" placeholder="Total Capital USD">
+          <input id="reserve_ratio_target" type="number" step="0.01" value="0.2" placeholder="Reserve Ratio">
+          <input id="min_reserve_usd" type="number" value="30000" placeholder="Min Reserve USD">
+          <input id="max_deploy_ratio" type="number" step="0.01" value="0.8" placeholder="Max Deploy Ratio">
+        </div>
+        <div class="row">
+          <input id="profit_recycle_ratio" type="number" step="0.01" value="0.5" placeholder="Profit Recycle Ratio">
+          <input id="release_amount_usd" type="number" value="5000" placeholder="Reserve Release USD">
+          <select id="market_bias"><option>neutral</option><option>risk_on</option><option>risk_off</option></select>
+          <button onclick="updateTreasury()">Update Treasury</button>
+        </div>
+        <div class="row">
+          <button onclick="proposeRebalance()">Propose Rebalance</button>
+          <button onclick="releaseReserve()">Release Reserve</button>
+          <button onclick="seedDemoBook()">Seed Demo Risk Book</button>
+          <button onclick="loadStatus()">Refresh Status</button>
+        </div>
+        <div class="tiny">Use reserve release only when governance and portfolio risk support incremental deployment.</div>
+      </div>
+
+      <div class="panel">
+        <h2 style="margin-top:0;">Allocator Output</h2>
+        <pre id="output">Loading...</pre>
+      </div>
+    </div>
+  </div>
+<script>
+const adminHeaders = {"Content-Type":"application/json","X-Quantora-Email":"nicolugo0503@gmail.com"};
+async function api(path, method="GET", body=null){ const res = await fetch(path,{method,headers:adminHeaders,body:body?JSON.stringify(body):null}); const data = await res.json(); if(!res.ok){ throw new Error(JSON.stringify(data)); } return data; }
+function fmt(v){ return typeof v === "number" ? v.toLocaleString(undefined,{maximumFractionDigits:2}) : (v ?? "-"); }
+function show(data){ output.textContent = JSON.stringify(data, null, 2); }
+async function loadStatus(){ const data = await api('/allocator-intelligence/status'); const s = data.summary || {}; m_score.textContent = fmt(s.treasury_score); m_reserve.textContent = fmt(s.reserve_balance_usd); m_available.textContent = fmt(s.available_to_deploy_usd); m_strategies.textContent = fmt(s.strategies); show(data); }
+async function updateTreasury(){ show(await api('/allocator-intelligence/treasury/update','POST',{ total_capital_usd:Number(total_capital_usd.value), reserve_ratio_target:Number(reserve_ratio_target.value), min_reserve_usd:Number(min_reserve_usd.value), max_deploy_ratio:Number(max_deploy_ratio.value), profit_recycle_ratio:Number(profit_recycle_ratio.value) })); await loadStatus(); }
+async function proposeRebalance(){ show(await api('/allocator-intelligence/rebalance/propose','POST',{ market_bias: market_bias.value })); await loadStatus(); }
+async function releaseReserve(){ show(await api('/allocator-intelligence/reserves/release','POST',{ amount_usd:Number(release_amount_usd.value), reason:'operator-guided' })); await loadStatus(); }
+async function seedDemoBook(){
+  const demo = [
+    {symbol:'AAPL', market:'equities', side:'long', qty:100, mark_price:180, fx_rate:1, beta:1.1, strategy_id:'strat_aapl'},
+    {symbol:'BTCUSD', market:'crypto', side:'long', qty:0.4, mark_price:68000, fx_rate:1, beta:1.4, strategy_id:'strat_btc'},
+    {symbol:'ES1!', market:'futures', side:'short', qty:1, mark_price:18000, fx_rate:1, beta:0.8, strategy_id:'strat_es', hedge_tag:'index_hedge'}
+  ];
+  for (const item of demo){ await api('/portfolio-risk/exposures/upsert','POST',item); }
+  await loadStatus();
+}
+loadStatus().catch(err => output.textContent = String(err));
+</script>
+</body>
+</html>

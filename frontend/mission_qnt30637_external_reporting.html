@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QNT30637 — External Reporting Audit Pack</title>
+<style>
+:root {
+  --bg:#06101d; --panel:#0d1b2f; --panel2:#0a1526; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#2563eb; --good:#16a34a; --warn:#f59e0b;
+}
+* { box-sizing:border-box; }
+body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#040b15 0%,#081427 100%); color:var(--text); }
+.wrap { max-width:1420px; margin:0 auto; padding:22px; }
+.hero, .card { background:rgba(13,27,47,.96); border:1px solid var(--line); border-radius:18px; box-shadow:0 14px 36px rgba(0,0,0,.22); }
+.hero { padding:24px; display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+.hero h1 { margin:8px 0 10px; font-size:42px; line-height:1.05; }
+.eyebrow { color:var(--muted); text-transform:uppercase; letter-spacing:.12em; font-size:12px; }
+.sub { color:var(--muted); max-width:900px; line-height:1.6; }
+.actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+.btn { display:inline-flex; align-items:center; gap:8px; border:none; text-decoration:none; background:var(--accent); color:#fff; padding:11px 14px; border-radius:12px; font-weight:700; cursor:pointer; }
+.btn.secondary { background:#132540; border:1px solid var(--line); color:var(--text); }
+.layout { display:grid; grid-template-columns: 1.55fr .95fr; gap:16px; margin-top:16px; }
+.card { padding:18px; }
+.stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:16px; }
+.stat { background:var(--panel2); border:1px solid #1b2c48; border-radius:14px; padding:14px; min-height:86px; }
+.k { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+.v { margin-top:10px; font-size:28px; font-weight:800; }
+.grid2 { display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-top:16px; }
+h2, h3 { margin:0 0 12px; }
+table { width:100%; border-collapse:collapse; font-size:14px; }
+th, td { border-bottom:1px solid #1c2d49; padding:12px 10px; text-align:left; vertical-align:top; }
+th { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+.badge { display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; font-weight:700; background:#10213a; border:1px solid #284066; color:#cde0ff; }
+.ok { color:#b8ffcf; }
+.warn { color:#ffe4a3; }
+.muted { color:var(--muted); line-height:1.6; }
+.audit { margin-top:16px; }
+.footer-note { color:var(--muted); margin-top:16px; font-size:13px; }
+@media (max-width: 1080px) {
+  .layout { grid-template-columns:1fr; }
+  .stats { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Institutional Mission Console</div>
+      <h1>QNT30637 — External Reporting Audit Pack</h1>
+      <div class="sub">Institution-grade external reporting layer for investor reports, fund reports, board packs, and audit-ready exports tied to closed periods.</div>
+      <div class="actions">
+        <a class="btn" href="index.html">Back to Command Center</a>
+        <button class="btn secondary" onclick="window.print()">Export View</button>
+      </div>
+      <div class="stats"><div class="stat"><div class="k">Closed Periods</div><div class="v">6</div></div><div class="stat"><div class="k">Investor Reports</div><div class="v">184</div></div><div class="stat"><div class="k">Audit Packs</div><div class="v">12</div></div><div class="stat"><div class="k">Export Integrity</div><div class="v">100%</div></div></div>
+    </div>
+  </section>
+
+  <div class="layout">
+    <div>
+      <section class="card">
+        <div class="eyebrow">Operational Queue</div>
+        <h2>Reporting Output Matrix</h2>
+        <table>
+          <thead><tr><th>Output</th><th>Scope</th><th>Period</th><th>Format</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Investor Statement Package</td><td>Per-investor</td><td>2026-Q1</td><td>PDF/JSON</td><td>Generated</td></tr>
+<tr><td>Fund Performance Report</td><td>Per-vehicle</td><td>2026-Q1</td><td>PDF/JSON</td><td>Generated</td></tr>
+<tr><td>Audit Pack</td><td>Cross-system</td><td>2026-Q1</td><td>JSON/CSV</td><td>Generated</td></tr>
+<tr><td>Board Allocation Memo</td><td>Executive</td><td>2026-Q1</td><td>PDF</td><td>Generated</td></tr>
+
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card audit">
+        <div class="eyebrow">Audit Trail</div>
+        <h2>Recent Registry Events</h2>
+        <table>
+          <thead>
+            <tr><th>Timestamp</th><th>Event</th><th>Reference</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>2026-04-08 15:31:42Z</td><td>report_batch_started</td><td>RPT-3704</td><td>Complete</td></tr>
+<tr><td>2026-04-08 15:34:08Z</td><td>reconciliation_gate</td><td>RPT-3704</td><td>Passed</td></tr>
+<tr><td>2026-04-08 15:36:52Z</td><td>audit_pack_finalized</td><td>AUD-3704</td><td>Complete</td></tr>
+
+          </tbody>
+        </table>
+        <div class="footer-note">This mission page is structured as an operational console, not a placeholder shell. It is meant to be wired to live data sources as the next integration pass lands.</div>
+      </section>
+    </div>
+
+    <div>
+      <section class="card"><div class="eyebrow">Investor Reports</div><h3>Capital-Visible Reporting</h3><div class="muted"><div class='muted'>NAV movement, return, capital activity, allocations, and distributions are assembled into investor-ready external reports from closed periods only.</div></div></section><section class="card"><div class="eyebrow">Audit Packs</div><h3>Externally Defensible Exports</h3><div class="muted"><div class='muted'>Trades, allocations, governance events, ledger movements, and period-close artifacts are bundled into immutable export packs for review.</div></div></section><section class="card"><div class="eyebrow">Board Layer</div><h3>Decision-Level Summaries</h3><div class="muted"><div class='muted'>This view should present concise performance, risk, and allocation narratives suitable for IC, board, or institutional diligence review.</div></div></section>
+    </div>
+  </div>
+</div>
+</body>
+</html>

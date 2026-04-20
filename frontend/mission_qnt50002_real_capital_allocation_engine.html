@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QNT50002 — Real Capital Allocation Engine</title>
+  <style>
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#08111f;color:#ecf3ff}
+    .wrap{max-width:1100px;margin:0 auto;padding:32px}
+    .hero,.card{background:#0f1b2d;border:1px solid #243955;border-radius:18px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:18px}
+    h1,h2{margin:0 0 12px}
+    .eyebrow{letter-spacing:.18em;text-transform:uppercase;color:#87b8ff;font-size:12px}
+    ul{padding-left:18px;line-height:1.6}
+    code{background:#091425;padding:2px 6px;border-radius:6px}
+    .pill{display:inline-block;padding:8px 12px;border-radius:999px;background:#163356;margin:6px 8px 0 0}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Quantora • Live Capital Phase</div>
+      <h1>QNT50002 — Real Capital Allocation Engine</h1>
+      <p>Quantora now has a portfolio-level capital deployment engine that scores strategies, preserves reserves, stages committee approval, and hands approved allocations into the execution trace fabric.</p>
+      <span class="pill">Portfolio-level decisioning</span>
+      <span class="pill">Reserve-aware</span>
+      <span class="pill">Committee approval</span>
+      <span class="pill">Execution handoff ready</span>
+    </section>
+    <div class="grid">
+      <section class="card">
+        <h2>Allocation Controls</h2>
+        <ul>
+          <li>Dynamic reserve target expands under bear or stress regimes</li>
+          <li>Per-strategy caps prevent concentration beyond governance thresholds</li>
+          <li>Strategy scores blend signal, conviction, liquidity, and drawdown health</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Decision Fabric</h2>
+        <ul>
+          <li>Proposed plans remain uncommitted until explicit approval</li>
+          <li>Approved plans create committee log entries and execution handoff tickets</li>
+          <li>Decision identifiers sync into execution memory for audit traceability</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Endpoints</h2>
+        <ul>
+          <li><code>GET /allocation/health</code></li>
+          <li><code>GET /allocation/summary</code></li>
+          <li><code>GET /allocation/strategies</code></li>
+          <li><code>POST /allocation/recommend</code></li>
+          <li><code>POST /allocation/approve</code></li>
+          <li><code>GET /allocation/execution-handoff</code></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

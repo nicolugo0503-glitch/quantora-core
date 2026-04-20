@@ -1,0 +1,14 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "priority_activation_count": 8,
+    "minimum_activation_readiness": 79.0,
+    "minimum_capital_release_score": 75.0,
+    "minimum_strategy_alignment_score": 77.0,
+    "minimum_deployment_readiness": 74.0,
+    "maximum_activation_drag": 24.0
+  },
+  "runs": [],
+  "created_at": 1775717131,
+  "updated_at": 1775717131
+}

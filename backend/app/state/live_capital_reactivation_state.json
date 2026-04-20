@@ -1,0 +1,351 @@
+{
+  "generated_by": "QNT50029",
+  "status": "degraded",
+  "policy": {
+    "enabled": true,
+    "auto_sync_sources": true,
+    "require_reauthorization_execution": true,
+    "require_risk_clearance": true,
+    "require_strategy_profile_match": true,
+    "require_treasury_capacity": true,
+    "allow_live_mode": false,
+    "max_reactivation_cases": 250,
+    "max_reentry_events": 500,
+    "max_audit_events": 500
+  },
+  "last_sync": {
+    "synced_at": 1776572219,
+    "source": "smoke",
+    "latest_reauthorization_id": "reauthorization_f8d6fc95fdfc",
+    "latest_reauthorization_status": "executed",
+    "risk_triggered": false,
+    "risk_level": "normal",
+    "safe_mode": true,
+    "execution_mode": "paper",
+    "current_regime": "neutral",
+    "deployment_profiles": [
+      {
+        "strategy_id": "alpha_trend",
+        "name": "Alpha Trend",
+        "symbol": "BTCUSDT",
+        "asset_class": "crypto",
+        "preferred_regimes": [
+          "bull",
+          "neutral"
+        ],
+        "warmup_required": false,
+        "deployment_readiness": 0.96,
+        "max_live_weight": 0.36,
+        "min_ticket_pct": 0.1,
+        "allowed_brokers": [
+          "binance",
+          "paper"
+        ],
+        "status": "active",
+        "enabled": true
+      },
+      {
+        "strategy_id": "beta_mean_revert",
+        "name": "Beta Mean Revert",
+        "symbol": "ETHUSDT",
+        "asset_class": "crypto",
+        "preferred_regimes": [
+          "neutral",
+          "range"
+        ],
+        "warmup_required": false,
+        "deployment_readiness": 0.88,
+        "max_live_weight": 0.28,
+        "min_ticket_pct": 0.08,
+        "allowed_brokers": [
+          "binance",
+          "paper"
+        ],
+        "status": "standby",
+        "enabled": true
+      },
+      {
+        "strategy_id": "macro_defense",
+        "name": "Macro Defense",
+        "symbol": "USDTUSD",
+        "asset_class": "cash_overlay",
+        "preferred_regimes": [
+          "stress",
+          "bear",
+          "neutral"
+        ],
+        "warmup_required": false,
+        "deployment_readiness": 0.99,
+        "max_live_weight": 0.42,
+        "min_ticket_pct": 0.05,
+        "allowed_brokers": [
+          "ibkr",
+          "paper",
+          "binance"
+        ],
+        "status": "active",
+        "enabled": true
+      }
+    ],
+    "treasury_total_balance": 85000.0,
+    "operating_balance": 30000.0,
+    "broker_buffer_balance": 40000.0
+  },
+  "sync_history": [
+    {
+      "synced_at": 1776572219,
+      "source": "smoke",
+      "latest_reauthorization_id": "reauthorization_f8d6fc95fdfc",
+      "latest_reauthorization_status": "executed",
+      "risk_triggered": false,
+      "risk_level": "normal",
+      "safe_mode": true,
+      "execution_mode": "paper",
+      "current_regime": "neutral",
+      "deployment_profiles": [
+        {
+          "strategy_id": "alpha_trend",
+          "name": "Alpha Trend",
+          "symbol": "BTCUSDT",
+          "asset_class": "crypto",
+          "preferred_regimes": [
+            "bull",
+            "neutral"
+          ],
+          "warmup_required": false,
+          "deployment_readiness": 0.96,
+          "max_live_weight": 0.36,
+          "min_ticket_pct": 0.1,
+          "allowed_brokers": [
+            "binance",
+            "paper"
+          ],
+          "status": "active",
+          "enabled": true
+        },
+        {
+          "strategy_id": "beta_mean_revert",
+          "name": "Beta Mean Revert",
+          "symbol": "ETHUSDT",
+          "asset_class": "crypto",
+          "preferred_regimes": [
+            "neutral",
+            "range"
+          ],
+          "warmup_required": false,
+          "deployment_readiness": 0.88,
+          "max_live_weight": 0.28,
+          "min_ticket_pct": 0.08,
+          "allowed_brokers": [
+            "binance",
+            "paper"
+          ],
+          "status": "standby",
+          "enabled": true
+        },
+        {
+          "strategy_id": "macro_defense",
+          "name": "Macro Defense",
+          "symbol": "USDTUSD",
+          "asset_class": "cash_overlay",
+          "preferred_regimes": [
+            "stress",
+            "bear",
+            "neutral"
+          ],
+          "warmup_required": false,
+          "deployment_readiness": 0.99,
+          "max_live_weight": 0.42,
+          "min_ticket_pct": 0.05,
+          "allowed_brokers": [
+            "ibkr",
+            "paper",
+            "binance"
+          ],
+          "status": "active",
+          "enabled": true
+        }
+      ],
+      "treasury_total_balance": 85000.0,
+      "operating_balance": 30000.0,
+      "broker_buffer_balance": 40000.0
+    }
+  ],
+  "reactivation_cases": [
+    {
+      "reactivation_id": "reactivation_29b19039f02e",
+      "created_at": 1776572219,
+      "operator": "smoke",
+      "title": "Reactivate alpha trend",
+      "reauthorization_id": "reauthorization_f8d6fc95fdfc",
+      "strategy_id": "alpha_trend",
+      "symbol": "BTCUSDT",
+      "broker": "binance",
+      "requested_capital": 10000.0,
+      "requested_weight": 0.1,
+      "reentry_reason": "controlled resumption after recovery",
+      "notes": "",
+      "regime": "neutral",
+      "status": "executed",
+      "approved_at": 1776572219,
+      "approved_by": "smoke",
+      "approved_capital": 9500.0,
+      "approved_weight": 0.09,
+      "approved_mode": "paper",
+      "approval_notes": "paper mode only while safe mode remains enabled",
+      "executed_at": 1776572219,
+      "last_event_id": "reentry_event_335777e9a7fe"
+    }
+  ],
+  "reentry_events": [
+    {
+      "event_id": "reentry_event_335777e9a7fe",
+      "executed_at": 1776572219,
+      "operator": "smoke",
+      "reactivation_id": "reactivation_29b19039f02e",
+      "reauthorization_id": "reauthorization_f8d6fc95fdfc",
+      "strategy_id": "alpha_trend",
+      "symbol": "BTCUSDT",
+      "broker": "binance",
+      "execution_mode": "paper",
+      "capital_activated": 9500.0,
+      "release_to": "execution_queue",
+      "result_summary": "paper re-entry activated",
+      "status": "executed"
+    }
+  ],
+  "audit_log": [
+    {
+      "event_id": "reentry_event_335777e9a7fe",
+      "event_type": "live_capital_reentry_executed",
+      "timestamp": 1776572219,
+      "executed_at": 1776572219,
+      "operator": "smoke",
+      "reactivation_id": "reactivation_29b19039f02e",
+      "reauthorization_id": "reauthorization_f8d6fc95fdfc",
+      "strategy_id": "alpha_trend",
+      "symbol": "BTCUSDT",
+      "broker": "binance",
+      "execution_mode": "paper",
+      "capital_activated": 9500.0,
+      "release_to": "execution_queue",
+      "result_summary": "paper re-entry activated",
+      "status": "executed"
+    },
+    {
+      "event_id": "live_capital_reactivation_audit_1776572219341992944",
+      "event_type": "live_capital_reentry_approved",
+      "timestamp": 1776572219,
+      "reactivation_id": "reactivation_29b19039f02e",
+      "approved_capital": 9500.0,
+      "mode": "paper"
+    },
+    {
+      "event_id": "live_capital_reactivation_audit_1776572219340403693",
+      "event_type": "live_capital_reactivation_registered",
+      "timestamp": 1776572219,
+      "reactivation_id": "reactivation_29b19039f02e",
+      "created_at": 1776572219,
+      "operator": "smoke",
+      "title": "Reactivate alpha trend",
+      "reauthorization_id": "reauthorization_f8d6fc95fdfc",
+      "strategy_id": "alpha_trend",
+      "symbol": "BTCUSDT",
+      "broker": "binance",
+      "requested_capital": 10000.0,
+      "requested_weight": 0.1,
+      "reentry_reason": "controlled resumption after recovery",
+      "notes": "",
+      "regime": "neutral",
+      "status": "registered"
+    },
+    {
+      "event_id": "live_capital_reactivation_audit_1776572219338819890",
+      "event_type": "live_capital_reactivation_context_synced",
+      "timestamp": 1776572219,
+      "synced_at": 1776572219,
+      "source": "smoke",
+      "latest_reauthorization_id": "reauthorization_f8d6fc95fdfc",
+      "latest_reauthorization_status": "executed",
+      "risk_triggered": false,
+      "risk_level": "normal",
+      "safe_mode": true,
+      "execution_mode": "paper",
+      "current_regime": "neutral",
+      "deployment_profiles": [
+        {
+          "strategy_id": "alpha_trend",
+          "name": "Alpha Trend",
+          "symbol": "BTCUSDT",
+          "asset_class": "crypto",
+          "preferred_regimes": [
+            "bull",
+            "neutral"
+          ],
+          "warmup_required": false,
+          "deployment_readiness": 0.96,
+          "max_live_weight": 0.36,
+          "min_ticket_pct": 0.1,
+          "allowed_brokers": [
+            "binance",
+            "paper"
+          ],
+          "status": "active",
+          "enabled": true
+        },
+        {
+          "strategy_id": "beta_mean_revert",
+          "name": "Beta Mean Revert",
+          "symbol": "ETHUSDT",
+          "asset_class": "crypto",
+          "preferred_regimes": [
+            "neutral",
+            "range"
+          ],
+          "warmup_required": false,
+          "deployment_readiness": 0.88,
+          "max_live_weight": 0.28,
+          "min_ticket_pct": 0.08,
+          "allowed_brokers": [
+            "binance",
+            "paper"
+          ],
+          "status": "standby",
+          "enabled": true
+        },
+        {
+          "strategy_id": "macro_defense",
+          "name": "Macro Defense",
+          "symbol": "USDTUSD",
+          "asset_class": "cash_overlay",
+          "preferred_regimes": [
+            "stress",
+            "bear",
+            "neutral"
+          ],
+          "warmup_required": false,
+          "deployment_readiness": 0.99,
+          "max_live_weight": 0.42,
+          "min_ticket_pct": 0.05,
+          "allowed_brokers": [
+            "ibkr",
+            "paper",
+            "binance"
+          ],
+          "status": "active",
+          "enabled": true
+        }
+      ],
+      "treasury_total_balance": 85000.0,
+      "operating_balance": 30000.0,
+      "broker_buffer_balance": 40000.0
+    },
+    {
+      "event_id": "live_capital_reactivation_audit_1776572219336878164",
+      "event_type": "live_capital_reactivation_reset",
+      "timestamp": 1776572219,
+      "operator": "smoke",
+      "reason": "qnt50030_smoke"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>QNT30384 Autonomous Portfolio Manager</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background: #09101f; color: #eef3fb; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card { background: #121c30; border: 1px solid #2a395a; border-radius: 12px; padding: 16px; }
+    input, select, button { padding: 10px; border-radius: 8px; }
+    input, select { width: 100%; margin-top: 6px; margin-bottom: 12px; border: 1px solid #44527a; background: #0f1530; color: #fff; }
+    button { border: 0; cursor: pointer; }
+    pre { white-space: pre-wrap; background: #09101f; border: 1px solid #2a395a; padding: 12px; border-radius: 8px; min-height: 160px; }
+  </style>
+</head>
+<body>
+  <h1>QNT30384 — Autonomous Portfolio Manager</h1>
+  <div class="grid">
+    <div class="card">
+      <h3>Portfolio Status</h3>
+      <button onclick="refreshStatus()">Refresh</button>
+      <pre id="status"></pre>
+    </div>
+    <div class="card">
+      <h3>Upsert Strategy Snapshot</h3>
+      <label>Strategy ID</label>
+      <input id="strategy_id" value="alpha-1" />
+      <label>Realized PnL</label>
+      <input id="realized_pnl" value="12500" />
+      <label>Sharpe</label>
+      <input id="sharpe" value="1.9" />
+      <label>Drawdown</label>
+      <input id="drawdown" value="3500" />
+      <label>Win Rate</label>
+      <input id="win_rate" value="0.62" />
+      <label>Trade Count</label>
+      <input id="trade_count" value="18" />
+      <label>Execution Quality</label>
+      <input id="execution_quality" value="0.86" />
+      <label>Regime Score</label>
+      <input id="regime_score" value="0.71" />
+      <button onclick="upsertStrategy()">Upsert</button>
+      <pre id="result"></pre>
+    </div>
+  </div>
+<script>
+async function refreshStatus(){
+  const res = await fetch('/portfolio-manager/status');
+  const data = await res.json();
+  document.getElementById('status').textContent = JSON.stringify(data, null, 2);
+}
+async function upsertStrategy(){
+  const payload = {
+    strategy_id: document.getElementById('strategy_id').value,
+    realized_pnl: parseFloat(document.getElementById('realized_pnl').value),
+    sharpe: parseFloat(document.getElementById('sharpe').value),
+    drawdown: parseFloat(document.getElementById('drawdown').value),
+    win_rate: parseFloat(document.getElementById('win_rate').value),
+    trade_count: parseInt(document.getElementById('trade_count').value),
+    execution_quality: parseFloat(document.getElementById('execution_quality').value),
+    regime_score: parseFloat(document.getElementById('regime_score').value),
+    active: true
+  };
+  const res = await fetch('/portfolio-manager/strategy/upsert', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json();
+  document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+}
+refreshStatus();
+</script>
+</body>
+</html>

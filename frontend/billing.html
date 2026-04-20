@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Quantora Billing Command</title>
+<style>
+:root{--bg:#07111f;--panel:#101c30;--panel2:#132742;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;--bad:#fb7185}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+.shell{max-width:1360px;margin:0 auto;padding:24px}.hero,.card,.metric{background:rgba(15,29,49,.95);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.16)}
+.hero{padding:20px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.sub{color:var(--muted);max-width:860px;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin:18px 0}.card,.metric{padding:16px}.metric .label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.metric .value{font-size:28px;font-weight:700;margin-top:8px}
+button{border:0;background:var(--accent);color:#fff;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700}button.secondary{background:#1d4ed8}button.warn{background:var(--warn);color:#111827}
+.pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#0b1a2c;border:1px solid #274168;font-size:12px;margin-right:8px;margin-bottom:8px}.good{border-color:#256b53;color:#9ff0ce}.warnpill{border-color:#8a5a0a;color:#fcd68f}.bad{border-color:#7c243d;color:#fecdd3}
+.table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526;margin-top:14px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+pre{margin:0;background:#06101d;color:#dbeafe;border:1px solid #1e2d47;border-radius:14px;min-height:180px;max-height:320px;overflow:auto;padding:14px;white-space:pre-wrap}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}.tiny{font-size:12px;color:var(--muted)}
+@media(max-width:1100px){.grid,.metrics{grid-template-columns:1fr 1fr}} @media(max-width:720px){.hero,.grid,.metrics{grid-template-columns:1fr;display:grid}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="hero">
+    <div>
+      <h1 style="margin:0 0 10px">Quantora Billing Command · QNT30417.1 Live Revenue Activation</h1>
+      <div class="sub">Live Stripe if keys and price IDs are configured. Automatic fallback to simulated mode if production billing secrets are missing. Runtime permissions remain enforced either way.</div>
+      <div id="modePills" style="margin-top:12px"></div>
+    </div>
+    <div class="actions">
+      <button onclick="refreshAll()">Refresh Billing OS</button>
+      <button class="secondary" onclick="openJson()">Open JSON</button>
+      <button class="secondary" onclick="location.href='performance_attribution_panel.html'">Attribution Panel</button>
+      <button class="secondary" onclick="location.href='index.html'">Command Center</button>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="label">Mode</div><div class="value" id="m_mode">-</div></div>
+    <div class="metric"><div class="label">Plan</div><div class="value" id="m_plan">-</div></div>
+    <div class="metric"><div class="label">Subscription</div><div class="value" id="m_status">-</div></div>
+    <div class="metric"><div class="label">MRR</div><div class="value" id="m_mrr">-</div></div>
+    <div class="metric"><div class="label">Active Paid Users</div><div class="value" id="m_active">-</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3 style="margin-top:0">Free</h3>
+      <div class="tiny">Simulation baseline with paper access and account view.</div>
+      <div class="actions"><button onclick="checkout('free')">Set Free</button></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Pro</h3>
+      <div class="tiny">$299/month. Performance, runtime orchestration, attribution access.</div>
+      <div class="actions"><button onclick="checkout('pro')">Start Pro Checkout</button></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Institutional</h3>
+      <div class="tiny">$2500/month. Live execution, governance, treasury, routing, attribution.</div>
+      <div class="actions"><button class="warn" onclick="checkout('institutional')">Start Institutional Checkout</button></div>
+    </div>
+  </div>
+
+  <div class="grid" style="margin-top:18px">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Billing Metrics</h3><button class="secondary" onclick="loadMetrics()">Refresh Metrics</button></div>
+      <div id="metricPills" style="margin-top:12px"></div>
+      <div class="table-wrap"><table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody id="metricsTable"></tbody></table></div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Active Subscribers</h3><button class="secondary" onclick="loadActiveUsers()">Refresh Users</button></div>
+      <div class="table-wrap"><table><thead><tr><th>Operator</th><th>Email</th><th>Plan</th><th>Status</th><th>Period End</th></tr></thead><tbody id="usersTable"></tbody></table></div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Command</h3><button class="secondary" onclick="portal()">Open Portal Session</button></div>
+      <pre id="out">Loading…</pre>
+    </div>
+  </div>
+</div>
+<script>
+const $ = (id)=>document.getElementById(id);
+let statusCache = null;
+
+function pill(text, cls=''){return `<span class="pill ${cls}">${text}</span>`}
+function fmtMoney(v){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Number(v||0))}
+function fmt(v){return v===null||v===undefined||v===''?'-':String(v)}
+async function j(url, opts){ const r = await fetch(url, opts); return await r.json(); }
+
+function renderStatus(data){
+  statusCache = data;
+  $('m_mode').textContent = (data.mode||data.billing?.billing_mode||'-').toUpperCase();
+  $('m_plan').textContent = (data.billing?.plan||'-').toUpperCase();
+  $('m_status').textContent = (data.billing?.subscription_status||'-').toUpperCase();
+  $('m_mrr').textContent = fmtMoney(data.metrics?.mrr_usd || 0);
+  $('m_active').textContent = fmt(data.metrics?.active_paid_subscribers || 0);
+  $('modePills').innerHTML = [
+    pill(`mode ${data.mode||'simulated'}`, data.mode==='live'?'good':'warnpill'),
+    pill(`exec ${data.billing?.is_execution_eligible ? 'enabled' : 'restricted'}`, data.billing?.is_execution_eligible?'good':'bad'),
+    pill(`live ${data.billing?.is_live_execution_eligible ? 'enabled' : 'restricted'}`, data.billing?.is_live_execution_eligible?'good':'bad')
+  ].join('');
+  $('out').textContent = JSON.stringify(data, null, 2);
+}
+
+function renderMetrics(data){
+  const rows = [
+    ['MRR', fmtMoney(data.mrr_usd)],
+    ['Active paid', data.active_paid_subscribers],
+    ['Active pro', data.active_pro],
+    ['Active institutional', data.active_institutional],
+    ['Grace period', data.grace_period_subscribers],
+    ['Churned', data.churned_subscribers],
+    ['Churn rate %', data.churn_rate_pct],
+    ['Failed payments', data.failed_payment_events],
+  ];
+  $('metricsTable').innerHTML = rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+  $('metricPills').innerHTML = [
+    pill(`webhook secret ${data.env?.stripe_webhook_secret_present ? 'present' : 'missing'}`, data.env?.stripe_webhook_secret_present ? 'good':'warnpill'),
+    pill(`publishable key ${data.env?.stripe_publishable_key_present ? 'present' : 'missing'}`, data.env?.stripe_publishable_key_present ? 'good':'warnpill'),
+    pill(`secret key ${data.env?.stripe_secret_key_present ? 'present' : 'missing'}`, data.env?.stripe_secret_key_present ? 'good':'warnpill'),
+    pill(`price ids ${(data.env?.stripe_price_pro_present && data.env?.stripe_price_institutional_present) ? 'ready' : 'missing'}`, (data.env?.stripe_price_pro_present && data.env?.stripe_price_institutional_present) ? 'good':'warnpill'),
+  ].join('');
+}
+
+function renderUsers(data){
+  $('usersTable').innerHTML = (data.items||[]).map(x=>`<tr><td>${fmt(x.operator_id)}</td><td>${fmt(x.email)}</td><td>${fmt(x.plan)}</td><td>${fmt(x.subscription_status)}</td><td>${fmt(x.current_period_end)}</td></tr>`).join('') || '<tr><td colspan="5">No active paid subscribers.</td></tr>';
+}
+
+async function statusLoad(){ renderStatus(await j('/billing/subscription-status')); }
+async function loadMetrics(){ renderMetrics(await j('/billing/metrics')); }
+async function loadActiveUsers(){ renderUsers(await j('/billing/active-users')); }
+async function checkout(plan){
+  const data = await j('/billing/create-checkout-session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan,success_url:'/billing.html?checkout=success',cancel_url:'/billing.html?checkout=cancel'})});
+  $('out').textContent = JSON.stringify(data,null,2);
+  if(data.checkout_session?.checkout_url && data.checkout_session?.mode==='live'){ window.open(data.checkout_session.checkout_url,'_blank'); }
+  await refreshAll();
+}
+async function portal(){
+  const data = await j('/billing/portal-session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({return_url:'/billing.html'})});
+  $('out').textContent = JSON.stringify(data,null,2);
+  if(data.portal_session?.portal_url && data.portal_session?.mode==='live'){ window.open(data.portal_session.portal_url,'_blank'); }
+  await refreshAll();
+}
+function openJson(){ window.open('/billing/subscription-status','_blank'); }
+async function refreshAll(){ await Promise.all([statusLoad(),loadMetrics(),loadActiveUsers()]); }
+refreshAll();
+</script>
+</body>
+</html>

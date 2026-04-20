@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30577 Compliance Review Queue</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,textarea,select{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,textarea,select{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:90px}
+.row{display:grid;grid-template-columns:1fr 1fr 2fr auto;gap:10px}
+table{width:100%;border-collapse:collapse} th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1100px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30577 · Compliance Review Queue + Investor Verification Console</h1>
+        <div style="color:#9fb3d8">Central compliance queue for identity documents, KYC progression, and verification decisions across all investors.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="mission_qnt30576_identity_vault.html">Identity Vault</a>
+        <a href="mission_qnt30570_admin_console.html">Admin Console</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Cases</div><div id="cases" class="value">-</div></div>
+    <div class="card"><div class="label">Verified</div><div id="verified" class="value">-</div></div>
+    <div class="card"><div class="label">Pending Review</div><div id="pending" class="value">-</div></div>
+    <div class="card"><div class="label">Needs Info</div><div id="needsinfo" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="email" placeholder="Investor email">
+      <select id="decision">
+        <option value="approved">approved</option>
+        <option value="rejected">rejected</option>
+        <option value="needs_info">needs_info</option>
+      </select>
+      <textarea id="notes" placeholder="Review notes"></textarea>
+      <button onclick="submitDecision()">Submit Decision</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Compliance Cases</div>
+    <table>
+      <thead><tr><th>Email</th><th>Status</th><th>Uploaded</th><th>Approved</th><th>KYC</th><th>Methods</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Compliance Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/compliance-queue/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  const sc = d.status_counts || {};
+  document.getElementById('cases').textContent = String(d.case_count || 0);
+  document.getElementById('verified').textContent = String(sc.verified || 0);
+  document.getElementById('pending').textContent = String(sc.pending_document_review || 0);
+  document.getElementById('needsinfo').textContent = String(sc.needs_info || 0);
+  document.getElementById('rows').innerHTML = (d.cases || []).slice(0,50).map(c =>
+    `<tr><td>${c.email}</td><td>${c.status}</td><td>${c.identity.uploaded_documents}/${c.identity.total_documents}</td><td>${c.identity.approved_documents}</td><td>${c.funding.kyc_status || '-'}</td><td>${c.funding.payment_methods || 0}</td></tr>`
+  ).join('');
+  const activity = await j('/api/compliance-queue/activity');
+  document.getElementById('raw').textContent = JSON.stringify({summary:d,activity:activity.data}, null, 2);
+}
+async function submitDecision(){
+  const payload = {email: document.getElementById('email').value, decision: document.getElementById('decision').value, notes: document.getElementById('notes').value};
+  await j('/api/compliance-queue/decision', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

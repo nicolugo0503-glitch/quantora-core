@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30587 Investor Performance Waterfall</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto auto;gap:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1200px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30587 · Investor Performance Waterfall + Fee Attribution</h1>
+        <div style="color:#9fb3d8">Converts investor PnL into gross and net performance after management and performance fees. This is the fee attribution layer for investor economics.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30586_pnl_ledger.html">PnL Ledger</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Gross PnL</div><div id="gross" class="value">-</div></div>
+    <div class="card"><div class="label">Mgmt Fee</div><div id="mgmt" class="value">-</div></div>
+    <div class="card"><div class="label">Perf Fee</div><div id="perf" class="value">-</div></div>
+    <div class="card"><div class="label">Net PnL</div><div id="net" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="adminEmail" placeholder="Investor email">
+      <input id="mgmtPct" placeholder="Mgmt fee %">
+      <input id="perfPct" placeholder="Performance fee %">
+      <input id="hurdlePct" placeholder="Hurdle %">
+      <button onclick="setFees()">Set Fees</button>
+      <button onclick="calculateWaterfall()">Calculate</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Latest Waterfall Snapshot</div>
+    <table>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Waterfall Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/performance-waterfall/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  const s = d.latest_snapshot || {};
+  document.getElementById('gross').textContent = money(s.gross_total_pnl || 0);
+  document.getElementById('mgmt').textContent = money(s.management_fee_value || 0);
+  document.getElementById('perf').textContent = money(s.performance_fee_value || 0);
+  document.getElementById('net').textContent = money(s.net_pnl_after_fees || 0);
+  const rows = [
+    ['Gross Realized PnL', money(s.gross_realized_pnl || 0)],
+    ['Gross Unrealized PnL', money(s.gross_unrealized_pnl || 0)],
+    ['Management Fee %', String(s.management_fee_pct || 0) + '%'],
+    ['Performance Fee %', String(s.performance_fee_pct || 0) + '%'],
+    ['Hurdle Rate %', String(s.hurdle_rate_pct || 0) + '%'],
+    ['Snapshot Count', String(d.snapshot_count || 0)]
+  ];
+  document.getElementById('rows').innerHTML = rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function setFees(){
+  const payload = {
+    email: document.getElementById('adminEmail').value,
+    management_fee_pct: Number(document.getElementById('mgmtPct').value || 0),
+    performance_fee_pct: Number(document.getElementById('perfPct').value || 0),
+    hurdle_rate_pct: Number(document.getElementById('hurdlePct').value || 0)
+  };
+  await j('/api/performance-waterfall/fees', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function calculateWaterfall(){
+  await j('/api/performance-waterfall/calculate', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

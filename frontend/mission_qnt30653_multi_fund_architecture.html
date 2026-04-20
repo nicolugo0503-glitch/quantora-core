@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>QNT30653 Multi-Fund Architecture</title>
+  <style>
+    :root { --bg:#06101d; --panel:#0f1d31; --panel2:#0b1628; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#2563eb; --good:#10b981; --warn:#f59e0b; --bad:#ef4444; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#040b15 0%,#0a1424 100%); color:var(--text); }
+    .wrap { max-width:1540px; margin:0 auto; padding:24px; }
+    .hero,.panel,.metric { background:rgba(15,29,49,.96); border:1px solid var(--line); border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,.18); padding:18px; }
+    .hero { margin-bottom:18px; }
+    .muted { color:var(--muted); line-height:1.55; }
+    .toolbar { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    button,a.btn { border:none; background:var(--accent); color:#fff; padding:10px 14px; border-radius:10px; font-weight:700; text-decoration:none; cursor:pointer; }
+    button.secondary,a.secondary { background:#1d4ed8; }
+    .metric-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:14px; margin-bottom:18px; }
+    .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .value { font-size:28px; font-weight:800; margin-top:8px; }
+    .status { font-size:15px; font-weight:700; margin-top:10px; }
+    .grid { display:grid; grid-template-columns:1.2fr 1fr; gap:16px; margin-bottom:16px; }
+    .stack { display:grid; gap:16px; }
+    .section-title { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px; }
+    .section-title h2 { margin:0; font-size:18px; }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th,td { padding:10px; border-bottom:1px solid #1e2d47; text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-size:12px; text-transform:uppercase; }
+    .pill { display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid #2a3c60; background:#0a1526; }
+    .good { color:#d1fae5; border-color:#14532d; }
+    .warn { color:#fde68a; border-color:#92400e; }
+    .bad { color:#fecaca; border-color:#7f1d1d; }
+    pre { margin:0; background:var(--panel2); border:1px solid #1e2d47; border-radius:14px; padding:14px; white-space:pre-wrap; min-height:180px; max-height:420px; overflow:auto; }
+    .tiny { color:var(--muted); font-size:12px; }
+    @media (max-width:1100px){ .metric-grid,.grid{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="label">Institutional Mission</div>
+    <h1 style="margin:8px 0;">QNT30653 — Multi-Fund Architecture</h1>
+    <div class="muted">This layer transforms Quantora from a single capital vehicle into a governed multi-vehicle institution with master, feeder, and sleeve logic, cross-fund allocation routing, and jurisdiction-aware architecture.</div>
+    <div class="toolbar">
+      <a class="btn" href="index.html">Back to Command Center</a>
+      <button onclick="runLayer()">Run Multi-Fund Cycle</button>
+      <button class="secondary" onclick="refreshAll()">Refresh Summary</button>
+    </div>
+  </section>
+
+  <section class="metric-grid">
+    <div class="metric"><div class="label">Operating Model</div><div class="value" id="operatingModel">-</div><div class="status" id="operatingTag"></div></div>
+    <div class="metric"><div class="label">Capital Network Score</div><div class="value" id="networkScore">-</div><div class="status" id="networkTag"></div></div>
+    <div class="metric"><div class="label">Fund Count</div><div class="value" id="fundCount">-</div><div class="status">Institutional vehicles</div></div>
+    <div class="metric"><div class="label">Jurisdictions</div><div class="value" id="jurisdictionCount">-</div><div class="status">Deployment spread</div></div>
+    <div class="metric"><div class="label">Target NAV</div><div class="value" id="targetNav">-</div><div class="status">Cross-fund capital base</div></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Fund Matrix</h2><span class="tiny">Vehicle stack and overlap</span></div>
+      <table id="fundTable"><thead><tr><th>Fund</th><th>Type</th><th>Jurisdiction</th><th>Status</th><th>Target NAV</th><th>Overlap</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="stack">
+      <div class="panel">
+        <div class="section-title"><h2>Policy</h2><span class="tiny">Institutional thresholds</span></div>
+        <pre id="policy">Loading…</pre>
+      </div>
+      <div class="panel">
+        <div class="section-title"><h2>Risk Constraints</h2><span class="tiny">Overlap and reserve discipline</span></div>
+        <pre id="riskConstraints">Loading…</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Cross-Fund Flows</h2><span class="tiny">Inter-vehicle allocation routing</span></div>
+      <table id="flowTable"><thead><tr><th>Source</th><th>Target</th><th>Amount</th><th>Driver</th><th>Confidence</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="panel">
+      <div class="section-title"><h2>Vehicle Stack</h2><span class="tiny">Master, feeder, and sleeve map</span></div>
+      <pre id="vehicleStack">Loading…</pre>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Allocation Dependencies</h2><span class="tiny">Strategic, growth, and compliance inputs</span></div>
+      <pre id="dependencies">Loading…</pre>
+    </div>
+    <div class="panel">
+      <div class="section-title"><h2>Execution Agenda</h2><span class="tiny">Institutional next actions</span></div>
+      <pre id="agenda">Loading…</pre>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Architecture Audit Trail</h2><span class="tiny">Latest multi-fund cycle</span></div>
+      <pre id="auditTrail">Loading…</pre>
+    </div>
+  </section>
+</div>
+<script>
+  const fmtPct = v => `${Number(v||0).toFixed(2)}%`;
+  const fmtMoney = v => `$${Number(v||0).toLocaleString(undefined,{maximumFractionDigits:2})}`;
+  const pill = (text, cls='') => `<span class="pill ${cls}">${text}</span>`;
+  async function getJson(url, opts) {
+    const res = await fetch(url, opts);
+    if (!res.ok) throw new Error(`${url} -> ${res.status}`);
+    return res.json();
+  }
+  function severityClass(text='') {
+    const t = String(text).toLowerCase();
+    if (t.includes('blocked') || t.includes('ring-fence') || t.includes('breach')) return 'bad';
+    if (t.includes('sequenced') || t.includes('foundation') || t.includes('staged')) return 'warn';
+    return 'good';
+  }
+  function fillTable(id, rows, renderer, colspan=5) {
+    const tbody = document.querySelector(`#${id} tbody`);
+    tbody.innerHTML = rows.length ? rows.map(renderer).join('') : `<tr><td colspan="${colspan}" class="tiny">No rows available.</td></tr>`;
+  }
+  async function refreshAll() {
+    try {
+      const [summary, audit] = await Promise.all([
+        getJson('/api/multi-fund-architecture/summary'),
+        getJson('/api/multi-fund-architecture/audit')
+      ]);
+      renderSummary(summary, audit);
+    } catch (err) {
+      document.getElementById('auditTrail').textContent = `Multi-Fund Architecture unavailable. ${err.message}`;
+    }
+  }
+  async function runLayer() {
+    const result = await getJson('/api/multi-fund-architecture/run', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ trigger:'manual-ui' })
+    });
+    renderSummary(result.summary, { latest_run: result.run, runs: [result.run], run_count: 1 });
+  }
+  function renderSummary(summary, audit) {
+    document.getElementById('operatingModel').textContent = summary.operating_model || '-';
+    document.getElementById('operatingTag').innerHTML = pill(summary.operating_model || 'unknown', severityClass(summary.operating_model));
+    document.getElementById('networkScore').textContent = fmtPct(summary.capital_network_score || 0);
+    document.getElementById('networkTag').innerHTML = pill((summary.capital_network_score || 0) >= 75 ? 'institutional network' : 'staged network', severityClass((summary.capital_network_score || 0) >= 75 ? 'institutional' : 'sequenced'));
+    document.getElementById('fundCount').textContent = String(summary.fund_count || 0);
+    document.getElementById('jurisdictionCount').textContent = String(summary.jurisdiction_count || 0);
+    document.getElementById('targetNav').textContent = fmtMoney(summary.total_target_nav || 0);
+    fillTable('fundTable', summary.fund_matrix || [], row => `
+      <tr>
+        <td>${row.fund_name || '-'}</td>
+        <td>${pill(row.fund_type || '-', severityClass(row.fund_type))}</td>
+        <td>${row.jurisdiction || '-'}</td>
+        <td>${pill(row.status || '-', severityClass(row.status))}</td>
+        <td>${fmtMoney(row.target_nav || 0)}</td>
+        <td>${fmtPct(row.strategy_overlap_pct || 0)}</td>
+      </tr>`, 6);
+    fillTable('flowTable', summary.cross_fund_flows || [], row => `
+      <tr>
+        <td>${row.source_fund_name || '-'}</td>
+        <td>${row.target_fund_name || '-'}</td>
+        <td>${fmtMoney(row.amount || 0)}</td>
+        <td>${row.driver || '-'}</td>
+        <td>${fmtPct(row.confidence_score || 0)}</td>
+      </tr>`, 5);
+    document.getElementById('policy').textContent = JSON.stringify(summary.policy || {}, null, 2);
+    document.getElementById('riskConstraints').textContent = JSON.stringify(summary.risk_constraints || {}, null, 2);
+    document.getElementById('vehicleStack').textContent = JSON.stringify(summary.vehicle_stack || {}, null, 2);
+    document.getElementById('dependencies').textContent = JSON.stringify(summary.allocation_dependencies || {}, null, 2);
+    document.getElementById('agenda').textContent = JSON.stringify(summary.execution_agenda || [], null, 2);
+    document.getElementById('auditTrail').textContent = JSON.stringify({
+      run_count: audit.run_count || (audit.runs || []).length || 0,
+      latest_run: audit.latest_run || null
+    }, null, 2);
+  }
+  refreshAll();
+</script>
+</body>
+</html>

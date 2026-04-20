@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — Fund Admin + NAV Reconciliation Engine</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--panel2:#132742;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(15,29,49,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .sub{color:var(--muted);max-width:980px;line-height:1.5}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    button{border-radius:10px;border:none;background:var(--accent);color:var(--text);padding:10px 12px;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}.stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}
+    th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #274168;background:#0b1a2c;font-size:12px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:180px;white-space:pre-wrap}
+    @media (max-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:1fr}}
+    @media (max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT30457 — Fund Admin + NAV Reconciliation Engine</h1>
+      <div class="sub">NAV registry, reconciliation breaks, investor subscription and redemption processing, and close workflows. This is the fund administration layer that keeps books accurate and institution-ready.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="loadAll()">Refresh</button>
+      <button onclick="seedNav()">Seed NAV Entry</button>
+      <button onclick="seedBreak()">Seed Break</button>
+      <button onclick="seedFlow()">Seed Sub/Redemption</button>
+      <button onclick="seedClose()">Seed Admin Close</button>
+    </div>
+  </div>
+
+  <div class="grid" id="summaryGrid"></div>
+
+  <div class="layout">
+    <div class="stack">
+      <div class="card">
+        <h2>NAV Entries</h2>
+        <div class="table-wrap"><table id="navTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Reconciliation Breaks</h2>
+        <div class="table-wrap"><table id="breakTable"></table></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card">
+        <h2>Subscriptions / Redemptions</h2>
+        <div class="table-wrap"><table id="flowTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Admin Closes</h2>
+        <div class="table-wrap"><table id="closeTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Admin Health</h2>
+        <div class="pills" id="healthPills"></div>
+      </div>
+      <div class="card">
+        <h2>Last Action</h2>
+        <pre id="actionOut">No action yet.</pre>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const api=(path, opts={})=>fetch(path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok) throw new Error(d.detail||'request_failed'); return d;});
+const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(Number(v||0));
+function table(el, headers, rows){
+  const thead = `<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  const body = rows.length ? rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${headers.length}">No data</td></tr>`;
+  el.innerHTML = thead + body;
+}
+function renderSummary(summary){
+  const labels = [
+    ['NAV Entries', summary.nav_entries],
+    ['Fund NAV', money(summary.current_fund_nav)],
+    ['Open Breaks', summary.reconciliation_breaks_open],
+    ['Resolved Breaks', summary.reconciliation_breaks_resolved],
+    ['Subscriptions', money(summary.gross_subscriptions)],
+    ['Admin Score', summary.admin_score]
+  ];
+  document.getElementById('summaryGrid').innerHTML = labels.map(([label,val])=>`<div class="card"><div class="label">${label}</div><div class="value">${val}</div></div>`).join('');
+}
+function pills(target, items){
+  document.getElementById(target).innerHTML = items.map(([label,klass])=>`<span class="pill ${klass}">${label}</span>`).join('');
+}
+async function loadAll(){
+  const data = await api('/workspace/fund-admin/summary');
+  renderSummary(data.summary);
+  table(document.getElementById('navTable'),
+    ['As Of','Fund NAV','NAV/Unit','Status','Created'],
+    (data.nav_entries||[]).map(r=>[r.as_of_date||'-', money(r.fund_nav), money(r.nav_per_unit), r.status, r.created_at||'-'])
+  );
+  table(document.getElementById('breakTable'),
+    ['Break','Type','Variance','Status','Created'],
+    (data.reconciliation_breaks||[]).map(r=>[r.break_name, r.break_type, money(r.variance_amount), r.status, r.created_at||'-'])
+  );
+  table(document.getElementById('flowTable'),
+    ['Investor','Type','Amount','Status','Created'],
+    (data.subscriptions_redemptions||[]).map(r=>[r.investor_name, r.flow_type, money(r.amount), r.status, r.created_at||'-'])
+  );
+  table(document.getElementById('closeTable'),
+    ['Close','Period','Status','Steps','Created'],
+    (data.admin_closes||[]).map(r=>[r.close_name, r.period_label, r.status, `${r.completed_steps}/${r.total_steps}`, r.created_at||'-'])
+  );
+  pills('healthPills', [
+    [`NAV ${data.admin_health.nav_registry_ready?'Ready':'Missing'}`, data.admin_health.nav_registry_ready?'good':'warn'],
+    [`Recon ${data.admin_health.reconciliation_ready?'Ready':'Missing'}`, data.admin_health.reconciliation_ready?'good':'warn'],
+    [`Flows ${data.admin_health.flow_registry_ready?'Ready':'Missing'}`, data.admin_health.flow_registry_ready?'good':'warn'],
+    [`Close ${data.admin_health.close_process_ready?'Ready':'Missing'}`, data.admin_health.close_process_ready?'good':'warn'],
+    [`Score ${data.admin_health.admin_score}`, data.admin_health.admin_score>=85?'good':'warn']
+  ]);
+}
+async function seedNav(){
+  const res = await api('/workspace/fund-admin/nav/create', {method:'POST', body: JSON.stringify({as_of_date:'2026-04-05', fund_nav:275000, nav_per_unit:11.24, status:'published'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedBreak(){
+  const res = await api('/workspace/fund-admin/breaks/create', {method:'POST', body: JSON.stringify({break_name:'Broker vs Internal NAV Delta', break_type:'position_recon', variance_amount:1850, status:'open'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedFlow(){
+  const res = await api('/workspace/fund-admin/flows/create', {method:'POST', body: JSON.stringify({investor_name:'Founding LP', flow_type:'subscription', amount:50000, status:'pending'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedClose(){
+  const res = await api('/workspace/fund-admin/closes/create', {method:'POST', body: JSON.stringify({close_name:'April Month-End Close', period_label:'APR-2026', status:'in_progress', completed_steps:5, total_steps:12})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+loadAll().catch(err => document.getElementById('actionOut').textContent = String(err));
+</script>
+</body>
+</html>

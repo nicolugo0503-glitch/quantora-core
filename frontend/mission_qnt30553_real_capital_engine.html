@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quantora Real Capital Engine</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff}
+.wrap{max-width:1200px;margin:auto;padding:28px}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{color:#9fb3d8;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:26px;font-weight:800}
+button{padding:12px 16px;border:none;border-radius:10px;background:#2455d6;color:white;font-weight:700;cursor:pointer}
+input{width:100%;padding:12px;border-radius:10px;border:1px solid #203251;background:#07111f;color:white}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto}
+table{width:100%;border-collapse:collapse} th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}} @media(max-width:600px){.grid{grid-template-columns:1fr}}
+</style>
+<script src="quantora_sync.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1 style="margin:0 0 8px">QNT30553 · Real Capital Engine</h1>
+    <div style="color:#9fb3d8">Backend capital truth layer for investor balances, funding actions, and ledger history. This mission keeps Quantora structure intact and upgrades the UI to real capital state.</div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Balance</div><div id="balance" class="value">-</div></div>
+    <div class="card"><div class="label">Available</div><div id="available" class="value">-</div></div>
+    <div class="card"><div class="label">Allocated</div><div id="allocated" class="value">-</div></div>
+    <div class="card"><div class="label">History Count</div><div id="count" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div style="display:grid;grid-template-columns:1fr 1fr auto auto;gap:10px;align-items:end">
+      <div><div class="label">Amount</div><input id="amount" placeholder="1000"></div>
+      <div><div class="label">Notes</div><input id="note" placeholder="optional operator note (ui only)"></div>
+      <button onclick="doDeposit()">Deposit</button>
+      <button onclick="doWithdraw()">Withdraw</button>
+    </div>
+    <div id="status" style="margin-top:10px;color:#9fb3d8"></div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Ledger History</h2>
+    <table>
+      <thead><tr><th>Type</th><th>Amount</th><th>Timestamp</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Raw Ledger</h2>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function fmt(v){ return '$' + Number(v || 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function ts(v){ try{return new Date(Number(v||0)*1000).toLocaleString()}catch(e){return '-'} }
+
+async function load(){
+  const data = await window.QuantoraSync.ledger();
+  document.getElementById('balance').textContent = fmt(data.balance);
+  document.getElementById('available').textContent = fmt(data.available);
+  document.getElementById('allocated').textContent = fmt(data.allocated);
+  document.getElementById('count').textContent = String((data.history || []).length);
+  document.getElementById('rows').innerHTML = (data.history || []).slice(0,20).map(h =>
+    `<tr><td>${h.type||''}</td><td>${fmt(h.amount||0)}</td><td>${ts(h.timestamp)}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(data, null, 2);
+}
+
+async function doDeposit(){
+  const amt = Number(document.getElementById('amount').value || 0);
+  if(amt <= 0) return;
+  try{ await window.QuantoraSync.deposit(amt); document.getElementById('status').textContent = 'Deposit posted to backend ledger.'; await load(); }catch(e){ document.getElementById('status').textContent = String(e.message || e); }
+}
+async function doWithdraw(){
+  const amt = Number(document.getElementById('amount').value || 0);
+  if(amt <= 0) return;
+  try{ await window.QuantoraSync.withdraw(amt); document.getElementById('status').textContent = 'Withdrawal posted to backend ledger.'; await load(); }catch(e){ document.getElementById('status').textContent = String(e.message || e); }
+}
+window.QuantoraSync.subscribe(load);
+load();
+</script>
+</body>
+</html>

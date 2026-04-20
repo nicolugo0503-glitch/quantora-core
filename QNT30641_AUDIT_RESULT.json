@@ -1,0 +1,12 @@
+{
+  "base_zip": "QUANTORA_QNT30640_UI_AUDITED_PATCH.zip",
+  "output_zip": "QUANTORA_FULL_PROJECT_QNT30641_STRATEGY_EXPANSION_LAYER_AUDITED.zip",
+  "checked_at": "2026-04-08T19:23:41.120154+00:00",
+  "checks": {
+    "module_files_present": true,
+    "store_present": true,
+    "mission_page_present": true,
+    "registry_contains_qnt30641": true,
+    "dynamic_loader_preserved": true
+  }
+}

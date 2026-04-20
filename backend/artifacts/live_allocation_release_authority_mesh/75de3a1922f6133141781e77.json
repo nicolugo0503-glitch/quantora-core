@@ -1,0 +1,14 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "priority_mesh_case_count": 8,
+    "minimum_mesh_readiness_score": 86.0,
+    "minimum_mesh_authority_score": 84.0,
+    "minimum_release_alignment_score": 82.0,
+    "minimum_dispatch_alignment_score": 80.0,
+    "maximum_mesh_stress_score": 24.0
+  },
+  "runs": [],
+  "created_at": 1775752260,
+  "updated_at": 1775752260
+}

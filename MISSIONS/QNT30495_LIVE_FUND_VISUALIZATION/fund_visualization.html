@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Quantora Fund Visualization</title>
+<style>
+body { background:#0b0f1a; color:#fff; font-family:Arial; }
+.panel { border:1px solid #333; margin:10px; padding:15px; border-radius:8px;}
+</style>
+</head>
+<body>
+
+<h1>FUND VISUALIZATION</h1>
+
+<div class="panel">
+<h2>Fund Exposure</h2>
+<table id="exposure"></table>
+</div>
+
+<div class="panel">
+<h2>NAV Inputs</h2>
+<pre id="nav"></pre>
+</div>
+
+<script>
+const sample = {
+  exposure: [
+    {fund_id:"FUND1", market_value:480000, total_pnl:23000},
+    {fund_id:"FUND2", market_value:27500, total_pnl:520}
+  ],
+  nav_inputs: {
+    FUND1: [{strategy_id:"STRAT1", market_value:300000}],
+    FUND2: [{strategy_id:"STRAT2", market_value:27500}]
+  }
+};
+
+let table = document.getElementById("exposure");
+sample.exposure.forEach(r=>{
+  let row = `<tr><td>${r.fund_id}</td><td>${r.market_value}</td><td>${r.total_pnl}</td></tr>`;
+  table.innerHTML += row;
+});
+
+document.getElementById("nav").innerText = JSON.stringify(sample.nav_inputs, null, 2);
+</script>
+
+</body>
+</html>

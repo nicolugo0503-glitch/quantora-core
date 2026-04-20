@@ -1,0 +1,93 @@
+{
+  "email": "operator@example.com",
+  "investors": [
+    {
+      "investor_id": "inv_qnt_001",
+      "legal_name": "Meridian Endowment Fund",
+      "primary_email": "ops@meridianendowment.example",
+      "entity_type": "institution",
+      "jurisdiction": "US",
+      "status": "active",
+      "created_at": 1773705600
+    },
+    {
+      "investor_id": "inv_qnt_002",
+      "legal_name": "Aurora Family Office",
+      "primary_email": "capital@aurorafamily.example",
+      "entity_type": "family_office",
+      "jurisdiction": "UK",
+      "status": "active",
+      "created_at": 1773705600
+    },
+    {
+      "investor_id": "inv_qnt_003",
+      "legal_name": "Northstar Treasury Partners",
+      "primary_email": "ir@northstartreasury.example",
+      "entity_type": "institution",
+      "jurisdiction": "SG",
+      "status": "active",
+      "created_at": 1773705600
+    }
+  ],
+  "profiles": [
+    {
+      "profile_id": "profile_inv_qnt_001",
+      "profile_name": "Meridian Endowment Fund Primary Delivery",
+      "investor_id": "inv_qnt_001",
+      "recipients": [
+        {
+          "name": "Meridian Endowment Fund",
+          "email": "ops@meridianendowment.example",
+          "role": "primary",
+          "active": true
+        }
+      ],
+      "delivery_channels": [
+        "portal",
+        "email"
+      ],
+      "status": "active",
+      "created_at": 1773705600
+    },
+    {
+      "profile_id": "profile_inv_qnt_002",
+      "profile_name": "Aurora Family Office Primary Delivery",
+      "investor_id": "inv_qnt_002",
+      "recipients": [
+        {
+          "name": "Aurora Family Office",
+          "email": "capital@aurorafamily.example",
+          "role": "primary",
+          "active": true
+        }
+      ],
+      "delivery_channels": [
+        "portal",
+        "email"
+      ],
+      "status": "active",
+      "created_at": 1773705600
+    },
+    {
+      "profile_id": "profile_inv_qnt_003",
+      "profile_name": "Northstar Treasury Partners Primary Delivery",
+      "investor_id": "inv_qnt_003",
+      "recipients": [
+        {
+          "name": "Northstar Treasury Partners",
+          "email": "ir@northstartreasury.example",
+          "role": "primary",
+          "active": true
+        }
+      ],
+      "delivery_channels": [
+        "portal",
+        "email"
+      ],
+      "status": "active",
+      "created_at": 1773705600
+    }
+  ],
+  "created_at": 1775967384,
+  "updated_at": 1775967384
+}

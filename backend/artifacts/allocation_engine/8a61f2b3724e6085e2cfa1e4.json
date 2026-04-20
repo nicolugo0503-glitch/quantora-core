@@ -1,0 +1,14 @@
+{
+  "email": "qnt30650@test.local",
+  "policy": {
+    "max_strategy_weight": 0.4,
+    "cash_reserve_floor": 0.1,
+    "max_drawdown_pct": 25.0,
+    "max_volatility_pct": 35.0,
+    "min_trade_count": 2,
+    "min_score_to_allocate": 20.0
+  },
+  "decisions": [],
+  "created_at": 1775711166,
+  "updated_at": 1775711166
+}

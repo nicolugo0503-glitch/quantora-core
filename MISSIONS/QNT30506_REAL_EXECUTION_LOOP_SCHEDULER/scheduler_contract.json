@@ -1,0 +1,28 @@
+{
+  "interval_seconds": 5.0,
+  "control_actions": [
+    "start",
+    "pause",
+    "resume",
+    "kill",
+    "set_interval"
+  ],
+  "scheduler_endpoints": [
+    {
+      "method": "GET",
+      "path": "/api/runtime/loop-state"
+    },
+    {
+      "method": "POST",
+      "path": "/api/runtime/loop-control"
+    }
+  ],
+  "loop_pipeline": [
+    "pull positions/orders",
+    "build execution snapshot",
+    "compute fund summary",
+    "compute investor overview",
+    "compute exposure summary",
+    "store last_result and logs"
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "cases": [
+    {
+      "case_id": "case_qnt30650_at_test_local",
+      "email": "qnt30650@test.local",
+      "identity": {
+        "total_documents": 4,
+        "uploaded_documents": 0,
+        "approved_documents": 0,
+        "pending_review_documents": 0
+      },
+      "funding": {
+        "kyc_status": "not_started",
+        "payment_methods": 0
+      },
+      "status": "missing_documents",
+      "updated_at": 1776216991
+    },
+    {
+      "case_id": "case_growth_at_test_quantora",
+      "email": "growth@test.quantora",
+      "identity": {
+        "total_documents": 4,
+        "uploaded_documents": 0,
+        "approved_documents": 0,
+        "pending_review_documents": 0
+      },
+      "funding": {
+        "kyc_status": "not_started",
+        "payment_methods": 0
+      },
+      "status": "missing_documents",
+      "updated_at": 1776216991
+    },
+    {
+      "case_id": "case_admin_at_quantora_local",
+      "email": "admin@quantora.local",
+      "identity": {
+        "total_documents": 4,
+        "uploaded_documents": 0,
+        "approved_documents": 0,
+        "pending_review_documents": 0
+      },
+      "funding": {
+        "kyc_status": "not_started",
+        "payment_methods": 0
+      },
+      "status": "missing_documents",
+      "updated_at": 1776216991
+    },
+    {
+      "case_id": "case_operator_at_quantora_test",
+      "email": "operator@quantora.test",
+      "identity": {
+        "total_documents": 4,
+        "uploaded_documents": 4,
+        "approved_documents": 4,
+        "pending_review_documents": 0
+      },
+      "funding": {
+        "kyc_status": "approved_simulated",
+        "payment_methods": 4
+      },
+      "status": "verified",
+      "updated_at": 1776216991,
+      "review_decision": "approved",
+      "review_notes": "aml risk cleared",
+      "reviewed_at": 1776216991
+    }
+  ],
+  "activity": [
+    {
+      "email": "operator@quantora.test",
+      "decision": "approved",
+      "notes": "aml risk cleared",
+      "timestamp": 1776216991
+    },
+    {
+      "email": "operator@quantora.test",
+      "decision": "approved",
+      "notes": "aml risk cleared",
+      "timestamp": 1776215341
+    }
+  ]
+}

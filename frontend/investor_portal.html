@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quantora Investor Portal</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#07111f;color:#eef4ff;padding:24px}
+.wrap{max-width:1200px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:18px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:28px;font-weight:800;margin-top:6px}
+button,a{display:inline-block;padding:12px 16px;border-radius:10px;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;border:none;cursor:pointer}
+canvas{width:100%;height:260px;background:#06101d;border:1px solid #203251;border-radius:12px;display:block}
+table{width:100%;border-collapse:collapse} th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+.muted{color:#9fb3d8}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">Investor Portal</h1>
+        <div class="muted" id="who">Loading user...</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="landing.html">Product Entry</a>
+        <a href="index.html">Command Center</a>
+        <a href="mission_qnt30563_reconciliation_center.html">Reconciliation</a>
+        <a href="mission_qnt30564_reporting_center.html">Statements</a>
+        <a href="mission_qnt30569_investor_ops_console.html">Investor Ops</a>
+        <a href="mission_qnt30570_admin_console.html">Admin Console</a>
+        <a href="mission_qnt30571_data_room.html">Data Room</a>
+        <a href="mission_qnt30572_fundraising_crm.html">Fundraising CRM</a>
+        <a href="mission_qnt30573_lp_update_engine.html">LP Updates</a>
+        <a href="mission_qnt30574_secure_inbox.html">Secure Inbox</a>
+        <a href="mission_qnt30575_onboarding_checklist.html">Checklist</a>
+        <a href="mission_qnt30576_identity_vault.html">Identity Vault</a>
+        <a href="mission_qnt30577_compliance_queue.html">Compliance Queue</a>
+        <a href="mission_qnt30578_subscription_esign.html">Subscription Docs</a>
+        <a href="mission_qnt30579_capital_call_engine.html">Capital Calls</a>
+        <a href="mission_qnt30580_allocation_closing.html">Closing Workflow</a>
+        <a href="mission_qnt30581_fund_close_ledger.html">Fund Close</a>
+        <a href="mission_qnt30565_funding_center.html">Funding</a>
+        <a href="mission_qnt30566_payment_provider_center.html">External Rails</a>
+        <a href="mission_qnt30567_live_provider_activation_center.html">Provider Activation</a>
+        <a href="mission_qnt30568_live_external_funding_center.html">Live Funding Deploy</a>
+        <button onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Balance</div><div id="balance" class="value">-</div></div>
+    <div class="card"><div class="label">Available</div><div id="available" class="value">-</div></div>
+    <div class="card"><div class="label">Allocated</div><div id="allocated" class="value">-</div></div>
+    <div class="card"><div class="label">Return %</div><div id="return" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="label">Equity Curve</div>
+    <canvas id="curve" width="900" height="260"></canvas>
+  </div>
+
+  <div class="card">
+    <div class="label">Ledger History</div>
+    <table>
+      <thead><tr><th>Type</th><th>Amount</th><th>Timestamp</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v || 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function pct(v){ return Number(v || 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}) + '%'; }
+function ts(v){ try{return new Date(Number(v||0)*1000).toLocaleString()}catch(e){return '-'} }
+
+function draw(series){
+  const canvas = document.getElementById('curve');
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle = '#06101d'; ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle = '#203251';
+  for(let i=1;i<4;i++){ const y=(h/4)*i; ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke(); }
+  if(!series.length) return;
+  const vals = series.map(x => Number(x.balance||0));
+  const min = Math.min(...vals), max = Math.max(...vals), span = (max-min)||1;
+  ctx.strokeStyle = '#2f6bff'; ctx.lineWidth = 3; ctx.beginPath();
+  series.forEach((p,i)=>{ const x=(w/Math.max(series.length-1,1))*i; const y=h-(((Number(p.balance||0)-min)/span)*(h-30))-15; if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);});
+  ctx.stroke();
+}
+
+async function load(){
+  const meRes = await fetch('/api/user/me');
+  const me = await meRes.json();
+  if(!meRes.ok){ window.location.href = 'onboarding.html'; return; }
+  const perf = await (await fetch('/api/user-performance')).json();
+  document.getElementById('who').textContent = (me.user.display_name || 'Investor') + ' · ' + me.user.email;
+  document.getElementById('balance').textContent = money(me.capital.balance);
+  document.getElementById('available').textContent = money(me.capital.available);
+  document.getElementById('allocated').textContent = money(me.capital.allocated);
+  document.getElementById('return').textContent = pct((perf.current || {}).return_pct || 0);
+  document.getElementById('rows').innerHTML = (me.capital.history || []).slice(0,12).map(r => `<tr><td>${r.type}</td><td>${money(r.amount)}</td><td>${ts(r.timestamp)}</td></tr>`).join('');
+  draw(perf.series || []);
+}
+async function logout(){
+  await fetch('/api/user/logout', {method:'POST'});
+  window.location.href = 'landing.html';
+}
+load();
+</script>
+</body>
+</html>

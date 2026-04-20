@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30510 NAV Refresh</title>
+  <style>
+    :root { --bg:#08111f; --panel:#0e1a2b; --border:#1f3556; --text:#eef4ff; --muted:#9bb0ce; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; background:var(--bg); color:var(--text); padding:24px; }
+    .btn { display:inline-block; color:#fff; background:#2455d6; border:1px solid #3f6fff; border-radius:10px; padding:10px 14px; text-decoration:none; font-weight:700; cursor:pointer; }
+    .btn.secondary { background:#12233b; border-color:var(--border); }
+    .panel { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:16px; }
+    .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+    .muted { color:var(--muted); }
+    pre { background:#07111f; border:1px solid var(--border); border-radius:10px; padding:14px; overflow:auto; }
+    @media (max-width:900px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px">
+    <div>
+      <h1 style="margin:0 0 6px">QNT30510 — Automated NAV Refresh + EOD Snapshots</h1>
+      <div class="muted">Current NAV visibility and end-of-day snapshot archive.</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn secondary" href="conversation_missions_hub.html">Back to Missions Hub</a>
+      <a class="btn" href="index.html">Back to Command Center</a>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn" href="#" onclick="refreshCurrentNav();return false;">Refresh NAV Now</a>
+      <a class="btn secondary" href="#" onclick="forceEod();return false;">Force EOD Snapshot</a>
+      <a class="btn secondary" href="#" onclick="refreshAll();return false;">Refresh View</a>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h2 style="margin-top:0">Current NAV</h2>
+      <pre id="currentNavBox">loading...</pre>
+    </div>
+    <div class="panel">
+      <h2 style="margin-top:0">EOD Snapshots</h2>
+      <pre id="eodBox">loading...</pre>
+    </div>
+  </div>
+
+  <script>
+    async function fetchJson(url, options) {
+      try {
+        const res = await fetch(url, options || {});
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return await res.json();
+      } catch (e) {
+        return null;
+      }
+    }
+
+    async function refreshCurrentNav() {
+      await fetchJson('/api/nav/refresh', { method: 'POST' });
+      refreshAll();
+    }
+
+    async function forceEod() {
+      await fetchJson('/api/nav/eod-snapshot', { method: 'POST' });
+      refreshAll();
+    }
+
+    async function refreshAll() {
+      const current = await fetchJson('/api/nav/current');
+      const eod = await fetchJson('/api/nav/eod-snapshots?limit=100');
+
+      document.getElementById('currentNavBox').textContent = JSON.stringify(current || { error: 'current nav endpoint not found yet' }, null, 2);
+      document.getElementById('eodBox').textContent = JSON.stringify(eod || { error: 'eod snapshots endpoint not found yet' }, null, 2);
+    }
+
+    refreshAll();
+    setInterval(refreshAll, 5000);
+  </script>
+</body>
+</html>

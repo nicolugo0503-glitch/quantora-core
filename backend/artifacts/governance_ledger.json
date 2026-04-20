@@ -1,0 +1,934 @@
+{
+  "events": [
+    {
+      "event_id": "gov_c93386a57b",
+      "timestamp": "2026-04-09T05:16:18Z",
+      "category": "auth",
+      "actor_email": "growth@test.quantora",
+      "actor_operator_id": "operator_B92E00AA",
+      "action": "login",
+      "target": "operator_B92E00AA",
+      "details": {}
+    },
+    {
+      "event_id": "gov_ec21e2a03f",
+      "timestamp": "2026-04-09T05:16:18Z",
+      "category": "auth",
+      "actor_email": "growth@test.quantora",
+      "actor_operator_id": "operator_B92E00AA",
+      "action": "register",
+      "target": "operator_B92E00AA",
+      "details": {
+        "display_name": "Growth Operator"
+      }
+    },
+    {
+      "event_id": "gov_0ad0bac428",
+      "timestamp": "2026-04-09T05:06:06Z",
+      "category": "auth",
+      "actor_email": "qnt30650@test.local",
+      "actor_operator_id": "operator_DB02FEF8",
+      "action": "login",
+      "target": "operator_DB02FEF8",
+      "details": {}
+    },
+    {
+      "event_id": "gov_eb07b4170f",
+      "timestamp": "2026-04-09T05:06:06Z",
+      "category": "auth",
+      "actor_email": "qnt30650@test.local",
+      "actor_operator_id": "operator_DB02FEF8",
+      "action": "register",
+      "target": "operator_DB02FEF8",
+      "details": {
+        "display_name": "QNT Operator"
+      }
+    },
+    {
+      "event_id": "gov_c98f98ebbc",
+      "timestamp": "2026-04-05T05:40:37Z",
+      "category": "auth",
+      "actor_email": "qnt30442_0059de@example.com",
+      "actor_operator_id": "operator_6A073FF9",
+      "action": "register",
+      "target": "operator_6A073FF9",
+      "details": {
+        "display_name": "QNT30442 Tester"
+      }
+    },
+    {
+      "event_id": "gov_f953953c04",
+      "timestamp": "2026-04-05T05:40:19Z",
+      "category": "auth",
+      "actor_email": "qnt30442@example.com",
+      "actor_operator_id": "operator_F9C66D90",
+      "action": "register",
+      "target": "operator_F9C66D90",
+      "details": {
+        "display_name": "QNT30442 Tester"
+      }
+    },
+    {
+      "event_id": "gov_511208d7f8",
+      "timestamp": "2026-04-03T16:32:53Z",
+      "category": "execution",
+      "actor_email": "admin@quantora.local",
+      "actor_operator_id": "operator_BAE0E004",
+      "action": "orders.submit",
+      "target": "operator_BAE0E004",
+      "details": {
+        "order_id": "ord_aba086cf68",
+        "strategy_id": null,
+        "symbol": "AAPL",
+        "side": "buy",
+        "qty": 0.05,
+        "notional": 9.0,
+        "status": "filled",
+        "mode": "paper",
+        "broker": "paper",
+        "timestamp": "2026-04-03T16:32:53Z"
+      }
+    },
+    {
+      "event_id": "gov_60eacdcfd2",
+      "timestamp": "2026-04-03T16:32:53Z",
+      "category": "capital",
+      "actor_email": "admin@quantora.local",
+      "actor_operator_id": "operator_BAE0E004",
+      "action": "allocator.operator_capital.set",
+      "target": "operator_BAE0E004",
+      "details": {
+        "operator_id": "operator_BAE0E004",
+        "allocated_capital": 1000.0,
+        "status": "FUNDED",
+        "updated_at": "2026-04-03T16:32:53Z"
+      }
+    },
+    {
+      "event_id": "gov_4d23705925",
+      "timestamp": "2026-04-01T16:29:53Z",
+      "category": "broker",
+      "actor_email": "admin@quantora.local",
+      "actor_operator_id": "operator_BAE0E004",
+      "action": "broker.alpaca.disconnect",
+      "target": "alpaca",
+      "details": {
+        "mode": "internal"
+      }
+    },
+    {
+      "event_id": "gov_d9f9b6bd8f",
+      "timestamp": "2026-03-31T05:37:57Z",
+      "category": "broker_abstraction",
+      "actor_email": "admin@quantora.local",
+      "actor_operator_id": "operator_BAE0E004",
+      "action": "broker_abstraction.portfolio.expand",
+      "target": "portfolio",
+      "details": {
+        "status": "updated",
+        "allocations": {
+          "equities": 55.0,
+          "crypto": 20.0,
+          "futures": 15.0,
+          "forex": 10.0
+        },
+        "target_markets": [
+          "equities",
+          "crypto",
+          "futures",
+          "forex"
+        ],
+        "allocation_total": 100.0,
+        "within_policy": true,
+        "updated_at": "2026-03-31T05:37:57Z"
+      }
+    },
+    {
+      "event_id": "gov_0d75415902",
+      "timestamp": "2026-03-31T05:37:57Z",
+      "category": "broker_abstraction",
+      "actor_email": "admin@quantora.local",
+      "actor_operator_id": "operator_BAE0E004",
+      "action": "broker_abstraction.route.evaluate",
+      "target": "BTCUSD",
+      "details": {
+        "status": "ok",
+        "generated_at": "2026-03-31T05:37:57Z",
+        "market": "crypto",
+        "market_profile": {
+          "market_id": "crypto",
+          "enabled": true,
+          "symbols": [
+            "BTCUSD",
+            "ETHUSD",
+            "SOLUSD"
+          ],
+          "default_order_type": "limit",
+          "session_profile": "24x7",
+          "risk_multiplier": 1.25
+        },
+        "symbol": "BTCUSD",
+        "side": "buy",
+        "qty": 0.1,
+        "reference_price": 68000.0,
+        "notional": 6800.0,
+        "execution_mode": "paper",
+        "urgency": "balanced",
+        "risk_adjusted_notional": 8500.0,
+        "selected_broker": {
+          "broker_id": "alpaca",
+          "score": 3.018,
+          "fee_bps": 0.8,
+          "latency_ms": 95,
+          "reliability_score": 0.985,
+          "slippage_penalty_bps": 1.5,
+          "market_supported": true
+        },
+        "alternatives": [
+          {
+            "broker_id": "sim-crypto",
+            "score": 7.688,
+            "fee_bps": 4.0,
+            "latency_ms": 70,
+            "reliability_score": 0.965,
+            "slippage_penalty_bps": 3.8,
+            "market_supported": true
+          }
+        ],
+        "default_order_type": "limit",
+        "routing_policy": "best_available"
+      }
+    },
+    {
+      "event_id": "gov_4e77a30dd0",
+      "timestamp": "2026-03-31T05:37:57Z",
+      "category": "broker_abstraction",
+      "actor_email": "admin@quantora.local",
+      "actor_operator_id": "operator_BAE0E004",
+      "action": "broker_abstraction.broker.upsert",
+      "target": "sim-options",
+      "details": {
+        "broker_id": "sim-options",
+        "enabled": true,
+        "markets": [
+          "options"
+        ],
+        "live_supported": false,
+        "paper_supported": true,
+        "base_fee_bps": 2.5,
+        "latency_ms": 80,
+        "reliability_score": 0.97,
+        "slippage_penalty_bps": 2.1,
+        "notes": "options sandbox"
+      }
+    },
+    {
+      "event_id": "gov_460ceb7cbd",
+      "timestamp": "2026-03-31T05:37:57Z",
+      "category": "broker_abstraction",
+      "actor_email": "admin@quantora.local",
+      "actor_operator_id": "operator_BAE0E004",
+      "action": "broker_abstraction.market.upsert",
+      "target": "options",
+      "details": {
+        "market_id": "options",
+        "enabled": true,
+        "symbols": [
+          "SPY_CALL",
+          "QQQ_CALL"
+        ],
+        "default_order_type": "limit",
+        "session_profile": "cash",
+        "risk_multiplier": 1.6
+      }
+    },
+    {
+      "event_id": "gov_d31c0e528f",
+      "timestamp": "2026-03-31T05:37:57Z",
+      "category": "auth",
+      "actor_email": "admin@quantora.local",
+      "actor_operator_id": "operator_BAE0E004",
+      "action": "login",
+      "target": "operator_BAE0E004",
+      "details": {}
+    },
+    {
+      "event_id": "gov_4c096b4dde",
+      "timestamp": "2026-03-31T05:32:59Z",
+      "category": "autonomy",
+      "actor_email": "admin@quantora.local",
+      "actor_operator_id": "operator_BAE0E004",
+      "action": "autonomy.transition",
+      "target": "operator_F5E2C5BA",
+      "details": {
+        "operator_id": "operator_F5E2C5BA",
+        "current_mode": "constrained_autonomy",
+        "recommended_mode": "locked",
+        "decision_reason": "pending approvals present",
+        "score": 10.0,
+        "pending_approvals": 1,
+        "risk_breached": false
+      }
+    },
+    {
+      "event_id": "gov_c88f625b8f",
+      "timestamp": "2026-03-31T05:32:59Z",
+      "category": "autonomy",
+      "actor_email": "admin@quantora.local",
+      "actor_operator_id": "operator_BAE0E004",
+      "action": "autonomy.evaluate",
+      "target": "operator_F5E2C5BA",
+      "details": {
+        "operator_id": "operator_F5E2C5BA",
+        "current_mode": "supervised",
+        "recommended_mode": "locked",
+        "decision_reason": "pending approvals present",
+        "score": 10.0,
+        "pending_approvals": 1,
+        "risk_breached": false
+      }
+    },
+    {
+      "event_id": "gov_7dc0deeb17",
+      "timestamp": "2026-03-31T05:32:59Z",
+      "category": "autonomy",
+      "actor_email": "admin@quantora.local",
+      "actor_operator_id": "operator_BAE0E004",
+      "action": "autonomy.delegation.update",
+      "target": "operator_F5E2C5BA",
+      "details": {
+        "operator_id": "operator_F5E2C5BA",
+        "tier": "manager",
+        "max_live_notional": 5000.0,
+        "allow_live_orders": true,
+        "allow_strategy_mutations": true,
+        "updated_at": "2026-03-31T05:32:59Z",
+        "updated_by": "admin@quantora.local"
+      }
+    },
+    {
+      "event_id": "gov_8ec1fe4ab1",
+      "timestamp": "2026-03-31T05:32:59Z",
+      "category": "auth",
+      "actor_email": "admin@quantora.local",
+      "actor_operator_id": "operator_BAE0E004",
+      "action": "login",
+      "target": "operator_BAE0E004",
+      "details": {}
+    },
+    {
+      "event_id": "gov_8d0721a1a3",
+      "timestamp": "2026-03-31T05:26:09Z",
+      "category": "governance",
+      "actor_email": "admin@quantora.local",
+      "actor_operator_id": "operator_BAE0E004",
+      "action": "governance.enforcement.evaluate",
+      "target": "operator_F5E2C5BA",
+      "details": {
+        "decision": "hold",
+        "hold_reasons": [
+          "pending approvals present"
+        ],
+        "pending_approvals": 1,
+        "risk_breached": false,
+        "recent_order_count": 0,
+        "ledger_events": 38
+      }
+    },
+    {
+      "event_id": "gov_2ac5d07227",
+      "timestamp": "2026-03-31T05:26:09Z",
+      "category": "approval",
+      "actor_email": "admin@quantora.local",
+      "actor_operator_id": "operator_BAE0E004",
+      "action": "approval.requested",
+      "target": "operator_F5E2C5BA",
+      "details": {
+        "request_id": "apr_ec8bb12fc6",
+        "created_at": "2026-03-31T05:26:09Z",
+        "created_by_email": "admin@quantora.local",
+        "created_by_operator_id": "operator_BAE0E004",
+        "request_type": "capital_change",
+        "target": "operator_F5E2C5BA",
+        "payload": {
+          "operator_id": "operator_F5E2C5BA",
+          "allocated_capital": 12000.0
+        },
+        "reason": "Capital change exceeds threshold 5000",
+        "status": "PENDING",
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "notes": ""
+      }
+    },
+    {
+      "event_id": "gov_e73c4217b3",
+      "timestamp": "2026-03-31T05:26:09Z",
+      "category": "governance",
+      "actor_email": "admin@quantora.local",
+      "actor_operator_id": "operator_BAE0E004",
+      "action": "governance.policy.simulate",
+      "target": "live_order",
+      "details": {
+        "status": "ok",
+        "event_type": "live_order",
+        "approved_to_proceed": false,
+        "breaches": [
+          {
+            "policy_id": "POL-004",
+            "policy_type": "live_order_notional",
+            "decision": "escalate",
+            "reason": "live order notional 3500.0 exceeds threshold 2500"
+          },
+          {
+            "policy_id": "POL-006",
+            "policy_type": "execution_slippage",
+            "decision": "hold",
+            "reason": "estimated slippage 42.0 bps exceeds threshold 35"
+          }
+        ],
+        "summary": {
+          "breach_count": 2,
+          "decision": "escalate"
+        }
+      }
+    },
+    {
+      "event_id": "gov_de62be2211",
+      "timestamp": "2026-03-31T05:26:09Z",
+      "category": "auth",
+      "actor_email": "admin@quantora.local",
+      "actor_operator_id": "operator_BAE0E004",
+      "action": "register",
+      "target": "operator_BAE0E004",
+      "details": {
+        "display_name": "Governance Admin"
+      }
+    },
+    {
+      "event_id": "gov_9696280a2d",
+      "timestamp": "2026-03-31T05:16:45Z",
+      "category": "execution",
+      "actor_email": "execopt-16460600@quantora.local",
+      "actor_operator_id": "operator_8A8BAA42",
+      "action": "orders.submit",
+      "target": "operator_8A8BAA42",
+      "details": {
+        "order_id": "ord_8e9dda05f8",
+        "strategy_id": null,
+        "symbol": "AAPL",
+        "side": "buy",
+        "qty": 0.05,
+        "notional": 9.0,
+        "status": "filled",
+        "mode": "paper",
+        "broker": "paper",
+        "timestamp": "2026-03-31T05:16:45Z"
+      }
+    },
+    {
+      "event_id": "gov_89e53bfe92",
+      "timestamp": "2026-03-31T05:16:45Z",
+      "category": "capital",
+      "actor_email": "execopt-16460600@quantora.local",
+      "actor_operator_id": "operator_8A8BAA42",
+      "action": "allocator.operator_capital.set",
+      "target": "operator_8A8BAA42",
+      "details": {
+        "operator_id": "operator_8A8BAA42",
+        "allocated_capital": 15000.0,
+        "status": "FUNDED",
+        "updated_at": "2026-03-31T05:16:45Z"
+      }
+    },
+    {
+      "event_id": "gov_c3a0ec47d2",
+      "timestamp": "2026-03-31T05:16:45Z",
+      "category": "auth",
+      "actor_email": "execopt-16460600@quantora.local",
+      "actor_operator_id": "operator_8A8BAA42",
+      "action": "register",
+      "target": "operator_8A8BAA42",
+      "details": {
+        "display_name": "Execution Optimizer Tester"
+      }
+    },
+    {
+      "event_id": "gov_fa97da13de",
+      "timestamp": "2026-03-31T05:16:35Z",
+      "category": "capital",
+      "actor_email": "execopt-ab74fc3b@quantora.local",
+      "actor_operator_id": "operator_2A8A4FEB",
+      "action": "allocator.operator_capital.set",
+      "target": "operator_2A8A4FEB",
+      "details": {
+        "operator_id": "operator_2A8A4FEB",
+        "allocated_capital": 15000.0,
+        "status": "FUNDED",
+        "updated_at": "2026-03-31T05:16:35Z"
+      }
+    },
+    {
+      "event_id": "gov_f2462758ca",
+      "timestamp": "2026-03-31T05:16:35Z",
+      "category": "auth",
+      "actor_email": "execopt-ab74fc3b@quantora.local",
+      "actor_operator_id": "operator_2A8A4FEB",
+      "action": "register",
+      "target": "operator_2A8A4FEB",
+      "details": {
+        "display_name": "Execution Optimizer Tester"
+      }
+    },
+    {
+      "event_id": "gov_b1b7612cc3",
+      "timestamp": "2026-03-31T05:16:23Z",
+      "category": "capital",
+      "actor_email": "execopt-3723aada@quantora.local",
+      "actor_operator_id": "operator_5EB69AEC",
+      "action": "allocator.operator_capital.set",
+      "target": "operator_5EB69AEC",
+      "details": {
+        "operator_id": "operator_5EB69AEC",
+        "allocated_capital": 15000.0,
+        "status": "FUNDED",
+        "updated_at": "2026-03-31T05:16:23Z"
+      }
+    },
+    {
+      "event_id": "gov_08f5e66458",
+      "timestamp": "2026-03-31T05:16:23Z",
+      "category": "auth",
+      "actor_email": "execopt-3723aada@quantora.local",
+      "actor_operator_id": "operator_5EB69AEC",
+      "action": "register",
+      "target": "operator_5EB69AEC",
+      "details": {
+        "display_name": "Execution Optimizer Tester"
+      }
+    },
+    {
+      "event_id": "gov_dabb353fd3",
+      "timestamp": "2026-03-31T05:16:03Z",
+      "category": "capital",
+      "actor_email": "execopt-13fcdf78@quantora.local",
+      "actor_operator_id": "operator_38D495FE",
+      "action": "allocator.operator_capital.set",
+      "target": "operator_38D495FE",
+      "details": {
+        "operator_id": "operator_38D495FE",
+        "allocated_capital": 15000.0,
+        "status": "FUNDED",
+        "updated_at": "2026-03-31T05:16:03Z"
+      }
+    },
+    {
+      "event_id": "gov_c629d80c7d",
+      "timestamp": "2026-03-31T05:16:03Z",
+      "category": "auth",
+      "actor_email": "execopt-13fcdf78@quantora.local",
+      "actor_operator_id": "operator_38D495FE",
+      "action": "register",
+      "target": "operator_38D495FE",
+      "details": {
+        "display_name": "Execution Optimizer Tester"
+      }
+    },
+    {
+      "event_id": "gov_6c3204156a",
+      "timestamp": "2026-03-31T05:11:31Z",
+      "category": "capital",
+      "actor_email": "multi-d0a5655a@quantora.local",
+      "actor_operator_id": "operator_2D51FB54",
+      "action": "multi_strategy.rebalance",
+      "target": "operator_2D51FB54",
+      "details": {
+        "changed": []
+      }
+    },
+    {
+      "event_id": "gov_cb4c6d3ccb",
+      "timestamp": "2026-03-31T05:11:31Z",
+      "category": "strategy",
+      "actor_email": "multi-d0a5655a@quantora.local",
+      "actor_operator_id": "operator_2D51FB54",
+      "action": "multi_strategy.optimize",
+      "target": "operator_2D51FB54",
+      "details": {
+        "changes": [
+          {
+            "strategy_id": "strat_3b4223e4",
+            "name": "MSFT Trend",
+            "enabled": false,
+            "status": "paused",
+            "reason": "capacity-or-score-blocked",
+            "score": 52.2
+          }
+        ]
+      }
+    },
+    {
+      "event_id": "gov_d07dce66e7",
+      "timestamp": "2026-03-31T05:11:31Z",
+      "category": "strategy",
+      "actor_email": "multi-d0a5655a@quantora.local",
+      "actor_operator_id": "operator_2D51FB54",
+      "action": "strategy.signal_execution",
+      "target": "operator_2D51FB54",
+      "details": {
+        "strategy_id": "strat_61bcbf7a",
+        "signal_action": "enter_long",
+        "order_id": "ord_f92c372faf"
+      }
+    },
+    {
+      "event_id": "gov_fed6e0525b",
+      "timestamp": "2026-03-31T05:11:31Z",
+      "category": "strategy",
+      "actor_email": "multi-d0a5655a@quantora.local",
+      "actor_operator_id": "operator_2D51FB54",
+      "action": "strategy.signal_execution",
+      "target": "operator_2D51FB54",
+      "details": {
+        "strategy_id": "strat_7277e418",
+        "signal_action": "enter_long",
+        "order_id": "ord_1ead4f8381"
+      }
+    },
+    {
+      "event_id": "gov_e7f5504b02",
+      "timestamp": "2026-03-31T05:11:31Z",
+      "category": "strategy",
+      "actor_email": "multi-d0a5655a@quantora.local",
+      "actor_operator_id": "operator_2D51FB54",
+      "action": "strategy.register",
+      "target": "strat_3b4223e4",
+      "details": {
+        "strategy_id": "strat_3b4223e4",
+        "name": "MSFT Trend",
+        "symbol": "MSFT",
+        "side": "buy",
+        "default_qty": 1,
+        "enabled": false,
+        "status": "stopped",
+        "capital_limit": 1000.0,
+        "execution_mode": "inherit",
+        "created_at": "2026-03-31T05:11:31Z",
+        "updated_at": "2026-03-31T05:11:31Z",
+        "operator_id": "operator_2D51FB54",
+        "last_action": "register",
+        "deleted": false
+      }
+    },
+    {
+      "event_id": "gov_ef50b1c6b2",
+      "timestamp": "2026-03-31T05:11:31Z",
+      "category": "strategy",
+      "actor_email": "multi-d0a5655a@quantora.local",
+      "actor_operator_id": "operator_2D51FB54",
+      "action": "strategy.register",
+      "target": "strat_61bcbf7a",
+      "details": {
+        "strategy_id": "strat_61bcbf7a",
+        "name": "TSLA Mean Revert",
+        "symbol": "TSLA",
+        "side": "buy",
+        "default_qty": 1,
+        "enabled": true,
+        "status": "running",
+        "capital_limit": 1500.0,
+        "execution_mode": "inherit",
+        "created_at": "2026-03-31T05:11:31Z",
+        "updated_at": "2026-03-31T05:11:31Z",
+        "operator_id": "operator_2D51FB54",
+        "last_action": "register",
+        "deleted": false
+      }
+    },
+    {
+      "event_id": "gov_e852adac2a",
+      "timestamp": "2026-03-31T05:11:31Z",
+      "category": "strategy",
+      "actor_email": "multi-d0a5655a@quantora.local",
+      "actor_operator_id": "operator_2D51FB54",
+      "action": "strategy.register",
+      "target": "strat_7277e418",
+      "details": {
+        "strategy_id": "strat_7277e418",
+        "name": "AAPL Momentum",
+        "symbol": "AAPL",
+        "side": "buy",
+        "default_qty": 2,
+        "enabled": true,
+        "status": "running",
+        "capital_limit": 2000.0,
+        "execution_mode": "inherit",
+        "created_at": "2026-03-31T05:11:31Z",
+        "updated_at": "2026-03-31T05:11:31Z",
+        "operator_id": "operator_2D51FB54",
+        "last_action": "register",
+        "deleted": false
+      }
+    },
+    {
+      "event_id": "gov_2d23f7410f",
+      "timestamp": "2026-03-31T05:11:31Z",
+      "category": "capital",
+      "actor_email": "multi-d0a5655a@quantora.local",
+      "actor_operator_id": "operator_2D51FB54",
+      "action": "allocator.operator_capital.set",
+      "target": "operator_2D51FB54",
+      "details": {
+        "operator_id": "operator_2D51FB54",
+        "allocated_capital": 10000.0,
+        "status": "FUNDED",
+        "updated_at": "2026-03-31T05:11:31Z"
+      }
+    },
+    {
+      "event_id": "gov_bf7a7cf791",
+      "timestamp": "2026-03-31T05:11:31Z",
+      "category": "auth",
+      "actor_email": "multi-d0a5655a@quantora.local",
+      "actor_operator_id": "operator_2D51FB54",
+      "action": "register",
+      "target": "operator_2D51FB54",
+      "details": {
+        "display_name": "Multi Strategy Tester"
+      }
+    },
+    {
+      "event_id": "gov_15599276b2",
+      "timestamp": "2026-03-31T05:06:08Z",
+      "category": "auth",
+      "actor_email": "stability-594fb190@quantora.local",
+      "actor_operator_id": "operator_B9D19209",
+      "action": "register",
+      "target": "operator_B9D19209",
+      "details": {
+        "display_name": "Stability Tester"
+      }
+    },
+    {
+      "event_id": "gov_073592641b",
+      "timestamp": "2026-03-30T15:56:08Z",
+      "category": "ai",
+      "actor_email": "test@example.com",
+      "actor_operator_id": "operator_96A15C7E",
+      "action": "ai.decision_cycle",
+      "target": "operator_96A15C7E",
+      "details": {
+        "market_bias": "bullish",
+        "executed_count": 1
+      }
+    },
+    {
+      "event_id": "gov_7f83c47eda",
+      "timestamp": "2026-03-30T15:56:08Z",
+      "category": "strategy",
+      "actor_email": "test@example.com",
+      "actor_operator_id": "operator_96A15C7E",
+      "action": "strategy.signal_execution",
+      "target": "operator_96A15C7E",
+      "details": {
+        "strategy_id": "strat_8d4da1a2",
+        "signal_action": "enter_long",
+        "order_id": "ord_00507b6ba0"
+      }
+    },
+    {
+      "event_id": "gov_20b3278341",
+      "timestamp": "2026-03-30T15:56:08Z",
+      "category": "capital",
+      "actor_email": "test@example.com",
+      "actor_operator_id": "operator_96A15C7E",
+      "action": "capital.rebalance",
+      "target": "operator_96A15C7E",
+      "details": {
+        "market_bias": "bullish",
+        "changed": [
+          {
+            "strategy_id": "strat_8d4da1a2",
+            "capital_limit": 1000.0
+          }
+        ]
+      }
+    },
+    {
+      "event_id": "gov_db0d6b6bfe",
+      "timestamp": "2026-03-30T15:56:08Z",
+      "category": "strategy",
+      "actor_email": "test@example.com",
+      "actor_operator_id": "operator_96A15C7E",
+      "action": "strategy.register",
+      "target": "strat_8d4da1a2",
+      "details": {
+        "strategy_id": "strat_8d4da1a2",
+        "name": "AAPL Momentum",
+        "symbol": "AAPL",
+        "side": "buy",
+        "default_qty": 1,
+        "enabled": true,
+        "status": "running",
+        "capital_limit": 0.0,
+        "execution_mode": "internal",
+        "created_at": "2026-03-30T15:56:08Z",
+        "updated_at": "2026-03-30T15:56:08Z",
+        "operator_id": "operator_96A15C7E",
+        "last_action": "register",
+        "deleted": false
+      }
+    },
+    {
+      "event_id": "gov_394f06d1be",
+      "timestamp": "2026-03-30T15:56:08Z",
+      "category": "capital",
+      "actor_email": "test@example.com",
+      "actor_operator_id": "operator_96A15C7E",
+      "action": "allocator.operator_capital.set",
+      "target": "operator_96A15C7E",
+      "details": {
+        "operator_id": "operator_96A15C7E",
+        "allocated_capital": 1000.0,
+        "status": "FUNDED",
+        "updated_at": "2026-03-30T15:56:08Z"
+      }
+    },
+    {
+      "event_id": "gov_2bdd00c5cc",
+      "timestamp": "2026-03-30T15:56:08Z",
+      "category": "auth",
+      "actor_email": "test@example.com",
+      "actor_operator_id": "operator_96A15C7E",
+      "action": "login",
+      "target": "operator_96A15C7E",
+      "details": {}
+    },
+    {
+      "event_id": "gov_fc543175a1",
+      "timestamp": "2026-03-30T15:56:08Z",
+      "category": "auth",
+      "actor_email": "test@example.com",
+      "actor_operator_id": "operator_96A15C7E",
+      "action": "register",
+      "target": "operator_96A15C7E",
+      "details": {
+        "display_name": "Test"
+      }
+    },
+    {
+      "event_id": "gov_93612faf04",
+      "timestamp": "2026-03-27T22:29:53Z",
+      "category": "capital",
+      "actor_email": "stability@quantora.local",
+      "actor_operator_id": "operator_49F1556D",
+      "action": "capital_source.update",
+      "target": "operator_49F1556D",
+      "details": {
+        "mode": "broker",
+        "provider": "alpaca",
+        "last_updated_at": "2026-03-27T22:29:53Z",
+        "last_updated_by": "stability@quantora.local"
+      }
+    },
+    {
+      "event_id": "gov_904751ee2a",
+      "timestamp": "2026-03-27T22:29:53Z",
+      "category": "auth",
+      "actor_email": "stability@quantora.local",
+      "actor_operator_id": "operator_49F1556D",
+      "action": "login",
+      "target": "operator_49F1556D",
+      "details": {}
+    },
+    {
+      "event_id": "gov_b1231e1c80",
+      "timestamp": "2026-03-27T18:04:04Z",
+      "category": "capital",
+      "actor_email": "stability@quantora.local",
+      "actor_operator_id": "operator_49F1556D",
+      "action": "capital_source.update",
+      "target": "operator_49F1556D",
+      "details": {
+        "mode": "broker",
+        "provider": "alpaca",
+        "last_updated_at": "2026-03-27T18:04:04Z",
+        "last_updated_by": "stability@quantora.local"
+      }
+    },
+    {
+      "event_id": "gov_9a1db1063e",
+      "timestamp": "2026-03-27T18:04:04Z",
+      "category": "auth",
+      "actor_email": "stability@quantora.local",
+      "actor_operator_id": "operator_49F1556D",
+      "action": "login",
+      "target": "operator_49F1556D",
+      "details": {}
+    },
+    {
+      "event_id": "gov_60d08ff27a",
+      "timestamp": "2026-03-27T18:04:04Z",
+      "category": "auth",
+      "actor_email": "stability@quantora.local",
+      "actor_operator_id": "operator_49F1556D",
+      "action": "register",
+      "target": "operator_49F1556D",
+      "details": {
+        "display_name": "stability"
+      }
+    },
+    {
+      "event_id": "gov_76bc1850a1",
+      "timestamp": "2026-03-27T16:10:07Z",
+      "category": "capital",
+      "actor_email": "n@example.com",
+      "actor_operator_id": "operator_28129BAC",
+      "action": "capital_source.update",
+      "target": "operator_28129BAC",
+      "details": {
+        "mode": "broker",
+        "provider": "alpaca",
+        "last_updated_at": "2026-03-27T16:10:07Z",
+        "last_updated_by": "n@example.com"
+      }
+    },
+    {
+      "event_id": "gov_0226962396",
+      "timestamp": "2026-03-27T16:10:07Z",
+      "category": "capital",
+      "actor_email": "n@example.com",
+      "actor_operator_id": "operator_28129BAC",
+      "action": "allocator.operator_capital.set",
+      "target": "operator_28129BAC",
+      "details": {
+        "operator_id": "operator_28129BAC",
+        "allocated_capital": 1000.0,
+        "status": "FUNDED",
+        "updated_at": "2026-03-27T16:10:07Z"
+      }
+    },
+    {
+      "event_id": "gov_dbbc9957ad",
+      "timestamp": "2026-03-27T16:10:07Z",
+      "category": "auth",
+      "actor_email": "n@example.com",
+      "actor_operator_id": "operator_28129BAC",
+      "action": "login",
+      "target": "operator_28129BAC",
+      "details": {}
+    },
+    {
+      "event_id": "gov_366015f180",
+      "timestamp": "2026-03-27T16:10:07Z",
+      "category": "auth",
+      "actor_email": "n@example.com",
+      "actor_operator_id": "operator_28129BAC",
+      "action": "register",
+      "target": "operator_28129BAC",
+      "details": {
+        "display_name": "nico"
+      }
+    }
+  ]
+}

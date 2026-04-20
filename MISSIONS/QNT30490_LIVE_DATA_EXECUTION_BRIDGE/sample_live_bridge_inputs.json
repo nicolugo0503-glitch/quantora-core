@@ -1,0 +1,49 @@
+{
+  "fund_id": "FUND1",
+  "capital": 1000000.0,
+  "cash": 250000.0,
+  "liabilities": 10000.0,
+  "total_shares": 100000.0,
+  "starting_nav": 1000000.0,
+  "net_profit": 120000.0,
+  "broker_positions": [
+    {
+      "symbol": "BTCUSD",
+      "qty": 1.5,
+      "market_value": 300000.0,
+      "unrealized_pnl": 15000.0,
+      "realized_pnl": 5000.0
+    },
+    {
+      "symbol": "ETHUSD",
+      "qty": 20.0,
+      "market_value": 180000.0,
+      "unrealized_pnl": 2000.0,
+      "realized_pnl": 1000.0
+    }
+  ],
+  "broker_orders": [
+    {
+      "order_id": "ORD001",
+      "symbol": "BTCUSD",
+      "side": "buy",
+      "qty": 0.2,
+      "status": "filled",
+      "filled_qty": 0.2,
+      "avg_fill_price": 62000.0
+    },
+    {
+      "order_id": "ORD002",
+      "symbol": "ETHUSD",
+      "side": "sell",
+      "qty": 1.5,
+      "status": "open",
+      "filled_qty": 0.0,
+      "avg_fill_price": 0.0
+    }
+  ],
+  "symbol_strategy_map": {
+    "BTCUSD": "STRAT_BTC_MOMO",
+    "ETHUSD": "STRAT_YIELD_LOW_RISK"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "module": "QNT30645",
+  "name": "Productization Layer",
+  "created_at": "2026-04-08T22:28:12.451189+00:00",
+  "products": [
+    {
+      "product_id": "PROD_GROWTH_01",
+      "name": "Quantora Growth Vehicle",
+      "portfolio_id": "PORT_GROWTH_01",
+      "vehicle_id": "VEHICLE_ALPHA",
+      "structure": "fund",
+      "status": "draft",
+      "created_at": "2026-04-08T22:28:12.451214+00:00"
+    }
+  ],
+  "subscriptions": []
+}

@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30578 Subscription Documents + E-Signature Workflow</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,textarea,select{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,textarea,select{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:90px}
+.row{display:grid;grid-template-columns:1fr 2fr auto auto;gap:10px}
+table{width:100%;border-collapse:collapse} th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1100px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30578 · Subscription Documents + E-Signature Workflow</h1>
+        <div style="color:#9fb3d8">Subscription packet, questionnaire, and signature flow for investor onboarding. Tracks sent, awaiting signature, signed, and review states inside the investor portal.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30577_compliance_queue.html">Compliance Queue</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Documents</div><div id="total" class="value">-</div></div>
+    <div class="card"><div class="label">Sent</div><div id="sent" class="value">-</div></div>
+    <div class="card"><div class="label">Signed</div><div id="signed" class="value">-</div></div>
+    <div class="card"><div class="label">Awaiting Signature</div><div id="awaiting" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="docType" placeholder="Document type">
+      <textarea id="docNotes" placeholder="Notes"></textarea>
+      <button onclick="sendDoc()">Send</button>
+      <button onclick="signDoc()">Sign</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Subscription Documents</div>
+    <table>
+      <thead><tr><th>Type</th><th>Title</th><th>Status</th><th>Signature</th><th>Sent</th><th>Signed</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Subscription Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+function dt(v){ return v ? new Date(v*1000).toLocaleString() : '-'; }
+async function load(){
+  const res = await j('/api/subscription-docs/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  document.getElementById('total').textContent = String(d.total_documents || 0);
+  document.getElementById('sent').textContent = String(d.sent_documents || 0);
+  document.getElementById('signed').textContent = String(d.signed_documents || 0);
+  document.getElementById('awaiting').textContent = String(d.awaiting_signature_documents || 0);
+  document.getElementById('rows').innerHTML = (d.documents || []).map(x =>
+    `<tr><td>${x.doc_type}</td><td>${x.title}</td><td>${x.status}</td><td>${x.signature_status}</td><td>${dt(x.sent_at)}</td><td>${dt(x.signed_at)}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function sendDoc(){
+  const payload = {doc_type: document.getElementById('docType').value, notes: document.getElementById('docNotes').value};
+  await j('/api/subscription-docs/send', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function signDoc(){
+  const payload = {doc_type: document.getElementById('docType').value, notes: document.getElementById('docNotes').value};
+  await j('/api/subscription-docs/sign', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

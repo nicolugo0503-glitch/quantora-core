@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>QNT30631 Broker Integration Layer</title>
+<style>
+:root{--bg:#071019;--panel:#0d1723;--line:#1b2b40;--text:#edf3fb;--muted:#8ea0b7;--good:#48d597;--bad:#ff6f86;--warn:#ffc857}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#071019,#09131d 55%,#071019);color:var(--text);font-family:Inter,Arial,sans-serif}.wrap{max-width:1440px;margin:0 auto;padding:28px}.hero,.card{background:rgba(13,23,35,.95);border:1px solid var(--line);border-radius:20px;box-shadow:0 22px 54px rgba(0,0,0,.35)}.hero{padding:26px}.label{font-size:11px;color:var(--muted);letter-spacing:.16em;text-transform:uppercase;font-weight:800}.hero h1{margin:10px 0 8px;font-size:42px}.sub{color:var(--muted);max-width:980px;line-height:1.55}.toolbar,.form-grid{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}button,input,select{background:#0b1520;color:var(--text);border:1px solid var(--line);padding:11px 14px;border-radius:12px;font:inherit}.btn{cursor:pointer;font-weight:700}.primary{background:#fff;color:#0a0e14}.stats,.split{display:grid;gap:14px}.stats{grid-template-columns:repeat(5,1fr);margin-top:18px}.split{grid-template-columns:1.1fr .9fr;margin-top:18px}.triple{display:grid;grid-template-columns:1.05fr .95fr .95fr;gap:18px;margin-top:18px}.card{padding:18px}.value{font-size:26px;font-weight:800;margin-top:8px}.tiny{font-size:12px;color:var(--muted)}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #1a293d;font-size:13px;vertical-align:top}th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}pre{background:#09111a;border:1px solid var(--line);padding:14px;border-radius:14px;min-height:280px;max-height:620px;overflow:auto}.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}@media(max-width:1100px){.stats,.split,.triple{grid-template-columns:1fr 1fr}}@media(max-width:760px){.stats,.split,.triple{grid-template-columns:1fr}.wrap{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="label">QNT30631</div>
+    <h1>Broker Integration Layer</h1>
+    <div class="sub">Deterministic paper execution, guarded live mode stub, order lifecycle management, position tracking, and trade sync back into Quantora's performance and statement stack.</div>
+    <div class="toolbar">
+      <button class="btn primary" onclick="bootstrapDemo()">Bootstrap Execution Flow</button>
+      <button class="btn" onclick="executePlan()">Execute Allocation Plan</button>
+      <button class="btn" onclick="toggleKill()">Toggle Kill Switch</button>
+      <button class="btn" onclick="loadAll()">Refresh</button>
+      <button class="btn" onclick="window.location.href='mission_qnt30632_autonomous_fund_mode.html'">Open Autonomous Fund Mode</button>
+      <button class="btn" onclick="window.location.href='index.html'">Back to Command Center</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="card"><div class="label">Mode</div><div id="mode" class="value">-</div><div class="tiny">Paper by default, live locked</div></div>
+    <div class="card"><div class="label">Orders</div><div id="ordersCount" class="value">-</div><div class="tiny">Submitted through broker abstraction</div></div>
+    <div class="card"><div class="label">Fills</div><div id="fillsCount" class="value">-</div><div class="tiny">Deterministic execution trail</div></div>
+    <div class="card"><div class="label">Gross Exposure</div><div id="grossExposure" class="value">-</div><div class="tiny">Open deployed notional</div></div>
+    <div class="card"><div class="label">Portfolio Return</div><div id="portfolioReturn" class="value">-</div><div class="tiny">Synced from performance engine</div></div>
+  </div>
+
+  <div class="split">
+    <div class="card">
+      <div class="label">Execution Controls</div>
+      <div class="form-grid">
+        <select id="modeSelect"><option value="paper">paper</option><option value="live">live</option></select>
+        <input id="slippage" type="number" step="0.1" value="8" placeholder="Slippage bps" />
+        <input id="maxOrder" type="number" step="1000" value="250000" placeholder="Max order notional" />
+        <input id="maxExposure" type="number" step="0.1" value="45" placeholder="Max strategy exposure %" />
+        <button class="btn" onclick="saveSettings()">Save Controls</button>
+      </div>
+      <div class="tiny" id="killState" style="margin-top:10px">Kill switch: unknown</div>
+      <div class="tiny" style="margin-top:6px">Live mode stays blocked unless explicitly allowed in router settings.</div>
+    </div>
+    <div class="card">
+      <div class="label">Execution Summary</div>
+      <pre id="summaryBox">Loading...</pre>
+    </div>
+  </div>
+
+  <div class="triple">
+    <div class="card"><div class="label">Orders</div><table><thead><tr><th>Strategy</th><th>Symbol</th><th>Side</th><th>Qty</th><th>Status</th></tr></thead><tbody id="ordersRows"><tr><td colspan="5">Loading...</td></tr></tbody></table></div>
+    <div class="card"><div class="label">Positions</div><table><thead><tr><th>Strategy</th><th>Symbol</th><th>Qty</th><th>Avg</th><th>Value</th></tr></thead><tbody id="positionsRows"><tr><td colspan="5">Loading...</td></tr></tbody></table></div>
+    <div class="card"><div class="label">Audit Trail</div><table><thead><tr><th>Event</th><th>When</th><th>Strategy</th><th>Detail</th></tr></thead><tbody id="auditRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+  </div>
+</div>
+<script>
+const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(Number(v||0));
+const pct=v=>`${Number(v||0).toFixed(2)}%`;
+const stamp=ts=>ts?new Date(Number(ts)*1000).toISOString().replace('T',' ').slice(0,16):'-';
+async function j(url,opt){const r=await fetch(url,opt);const d=await r.json();if(!r.ok) throw new Error(d.detail||'request failed');return d;}
+function render(data){const s=data.summary||{}; const cfg=data.settings||{}; document.getElementById('mode').textContent=s.mode||'-'; document.getElementById('ordersCount').textContent=s.order_count||0; document.getElementById('fillsCount').textContent=s.fill_count||0; document.getElementById('grossExposure').textContent=money(s.gross_exposure); document.getElementById('portfolioReturn').textContent=pct(s.portfolio_return_pct); document.getElementById('killState').textContent=`Kill switch: ${cfg.kill_switch?'ON':'OFF'}`; document.getElementById('summaryBox').textContent=JSON.stringify(data,null,2); document.getElementById('modeSelect').value=cfg.mode||'paper'; document.getElementById('slippage').value=cfg.paper_slippage_bps||8; document.getElementById('maxOrder').value=cfg.max_order_notional||250000; document.getElementById('maxExposure').value=cfg.max_strategy_exposure_pct||45;
+  document.getElementById('ordersRows').innerHTML=(data.orders||[]).length?(data.orders||[]).slice(0,30).map(r=>`<tr><td>${r.strategy_name||r.strategy_id}</td><td>${r.symbol}</td><td>${r.side}</td><td>${Number(r.qty||0).toFixed(2)}</td><td class="${r.status==='filled'?'good':'warn'}">${r.status}</td></tr>`).join(''):'<tr><td colspan="5">No orders yet.</td></tr>';
+  document.getElementById('positionsRows').innerHTML=(data.positions||[]).length?(data.positions||[]).map(r=>`<tr><td>${r.strategy_name||r.strategy_id}</td><td>${r.symbol}</td><td>${Number(r.qty||0).toFixed(2)}</td><td>${money(r.avg_price)}</td><td>${money(r.market_value)}</td></tr>`).join(''):'<tr><td colspan="5">No positions.</td></tr>';
+  document.getElementById('auditRows').innerHTML=(data.audit_log||[]).length?(data.audit_log||[]).slice(0,20).map(r=>`<tr><td>${r.type}</td><td>${stamp(r.timestamp)}</td><td>${r.strategy_id||'-'}</td><td>${r.order_id||r.fill_id||'-'}</td></tr>`).join(''):'<tr><td colspan="4">No audit events.</td></tr>';
+}
+async function loadAll(){ render(await j('/api/broker-integration/summary')); }
+async function bootstrapDemo(){ await j('/api/broker-integration/bootstrap-demo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})}); await loadAll(); }
+async function executePlan(){ await j('/api/broker-integration/execute-plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})}); await loadAll(); }
+async function toggleKill(){ const current=(await j('/api/broker-integration/summary')).settings||{}; await j('/api/broker-integration/settings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kill_switch:!current.kill_switch})}); await loadAll(); }
+async function saveSettings(){ await j('/api/broker-integration/settings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:document.getElementById('modeSelect').value,paper_slippage_bps:Number(document.getElementById('slippage').value||8),max_order_notional:Number(document.getElementById('maxOrder').value||250000),max_strategy_exposure_pct:Number(document.getElementById('maxExposure').value||45)})}); await loadAll(); }
+loadAll();
+</script>
+</body>
+</html>

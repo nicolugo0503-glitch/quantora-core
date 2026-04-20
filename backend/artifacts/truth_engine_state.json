@@ -1,0 +1,33 @@
+{
+  "last_sync_at": "2026-03-27T22:29:53Z",
+  "status": "aligned",
+  "truth": {
+    "generated_at": "2026-03-27T22:29:53Z",
+    "truth_source": "local",
+    "positions": [],
+    "counts": {
+      "local_positions": 0,
+      "broker_positions": 0,
+      "truth_positions": 0,
+      "mismatches": 0
+    },
+    "account": {
+      "equity": 0.0,
+      "cash": 0.0,
+      "buying_power": 0.0
+    },
+    "pnl": {
+      "unrealized": 0,
+      "equity": 0.0
+    },
+    "mismatches": []
+  },
+  "guard": {
+    "status": "ALIGNED",
+    "reason": "Broker and Quantora are aligned",
+    "critical_count": 0,
+    "warning_count": 0,
+    "block_new_trades": false
+  },
+  "broker_connected": false
+}

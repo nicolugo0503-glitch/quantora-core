@@ -1,0 +1,43 @@
+<!doctype html>
+        <html>
+        <head>
+        <meta charset="utf-8">
+        <title>Quantora Hardening Audit Center</title>
+        <style>
+        body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff}
+        .wrap{max-width:1180px;margin:auto;padding:28px}
+        .card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+        .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+        .label{color:#9fb3d8;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+        .value{font-size:28px;font-weight:800;margin-top:6px}
+        pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto}
+        a{display:inline-block;padding:12px 16px;border-radius:10px;background:#2455d6;color:white;text-decoration:none;font-weight:700}
+        @media(max-width:900px){.grid{grid-template-columns:1fr}}
+        </style>
+        </head>
+        <body>
+        <div class="wrap">
+          <div class="card">
+            <h1 style="margin:0 0 8px">QNT30558 · Hardening Audit Center</h1>
+            <div style="color:#9fb3d8">Operational summary for the full-package hardening pass performed after the QNT30555 audit.</div>
+          </div>
+          <div class="grid">
+            <div class="card"><div class="label">Auth Artifacts</div><div class="value">SANITIZED</div></div>
+            <div class="card"><div class="label">Session State</div><div class="value">CLEARED</div></div>
+            <div class="card"><div class="label">Runtime Port</div><div class="value">8000</div></div>
+          </div>
+          <div class="card">
+            <div class="label">What changed</div>
+            <pre id="box">- Removed shipped plaintext users
+- Cleared shipped logged-in session
+- Standardized launcher/runtime port configuration
+- Added placeholder pages for previously broken links
+- Added canonical structure manifest
+- Added full hardening report in package root</pre>
+          </div>
+          <div class="card">
+            <a href="index.html">Back to Command Center</a>
+          </div>
+        </div>
+        </body>
+        </html>

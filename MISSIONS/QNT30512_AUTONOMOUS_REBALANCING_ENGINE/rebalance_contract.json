@@ -1,0 +1,22 @@
+{
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/rebalance/build"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rebalance/plan"
+    },
+    {
+      "method": "POST",
+      "path": "/api/rebalance/execute"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rebalance/execution"
+    }
+  ],
+  "default_mode": "dry_run",
+  "drift_tolerance_pct": 2.0
+}

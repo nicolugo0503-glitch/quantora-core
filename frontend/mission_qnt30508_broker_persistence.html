@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30508 Broker Persistence</title>
+  <style>
+    :root { --bg:#08111f; --panel:#0e1a2b; --border:#1f3556; --text:#eef4ff; --muted:#9bb0ce; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; background:var(--bg); color:var(--text); padding:24px; }
+    .btn { display:inline-block; color:#fff; background:#2455d6; border:1px solid #3f6fff; border-radius:10px; padding:10px 14px; text-decoration:none; font-weight:700; cursor:pointer; }
+    .btn.secondary { background:#12233b; border-color:var(--border); }
+    .panel { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:16px; }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .muted { color:var(--muted); }
+    pre { background:#07111f; border:1px solid var(--border); border-radius:10px; padding:14px; overflow:auto; }
+    @media (max-width:900px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px">
+    <div>
+      <h1 style="margin:0 0 6px">QNT30508 — Broker Order / Fill Persistence</h1>
+      <div class="muted">Durable storage for orders, fills, and position snapshots.</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn secondary" href="conversation_missions_hub.html">Back to Missions Hub</a>
+      <a class="btn" href="index.html">Back to Command Center</a>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn" href="#" onclick="persistNow();return false;">Persist Broker State Now</a>
+      <a class="btn secondary" href="#" onclick="refreshAll();return false;">Refresh</a>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h2 style="margin-top:0">Orders</h2>
+      <pre id="ordersBox">loading...</pre>
+    </div>
+    <div class="panel">
+      <h2 style="margin-top:0">Fills</h2>
+      <pre id="fillsBox">loading...</pre>
+    </div>
+    <div class="panel">
+      <h2 style="margin-top:0">Positions Snapshot</h2>
+      <pre id="positionsBox">loading...</pre>
+    </div>
+  </div>
+
+  <script>
+    async function fetchJson(url, options) {
+      try {
+        const res = await fetch(url, options || {});
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return await res.json();
+      } catch (e) {
+        return null;
+      }
+    }
+
+    async function persistNow() {
+      const res = await fetchJson('/api/broker/persist-now', { method: 'POST' });
+      if (!res) alert('Broker persistence endpoint not found yet.');
+      refreshAll();
+    }
+
+    async function refreshAll() {
+      const orders = await fetchJson('/api/broker/orders?limit=50');
+      const fills = await fetchJson('/api/broker/fills?limit=50');
+      const positions = await fetchJson('/api/broker/positions-snapshot');
+
+      document.getElementById('ordersBox').textContent = JSON.stringify(orders || { error: 'orders endpoint not found yet' }, null, 2);
+      document.getElementById('fillsBox').textContent = JSON.stringify(fills || { error: 'fills endpoint not found yet' }, null, 2);
+      document.getElementById('positionsBox').textContent = JSON.stringify(positions || { error: 'positions snapshot endpoint not found yet' }, null, 2);
+    }
+
+    refreshAll();
+    setInterval(refreshAll, 5000);
+  </script>
+</body>
+</html>

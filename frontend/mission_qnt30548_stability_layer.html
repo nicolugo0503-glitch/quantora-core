@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quantora Stability Layer</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff}
+.container{max-width:1520px;margin:auto;padding:24px}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:14px;padding:16px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{color:#9fb3d8;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:bold}
+.good{color:#10b981}.warn{color:#f59e0b}.bad{color:#ef4444}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
+.table th{color:#9fb3d8;font-size:12px;text-transform:uppercase}
+pre{background:#07111f;border-radius:10px;padding:12px;border:1px solid #203251;overflow:auto;max-height:360px}
+button{padding:10px 14px;background:#2455d6;border:none;color:white;border-radius:8px;cursor:pointer;font-weight:700}
+small{color:#9fb3d8}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <h1 style="margin:0 0 10px">Stability Layer</h1>
+    <div style="color:#9fb3d8;max-width:980px">
+      Operator hardening view for endpoint health, runtime consistency, safe fallbacks, and response validation. This mission is intentionally additive and frontend-only so the live structure stays untouched.
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Healthy Endpoints</div><div id="healthyCount" class="value">-</div></div>
+    <div class="card"><div class="label">Warnings</div><div id="warningCount" class="value">-</div></div>
+    <div class="card"><div class="label">Errors</div><div id="errorCount" class="value">-</div></div>
+    <div class="card"><div class="label">System Grade</div><div id="grade" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <div>
+        <h2 style="margin:0 0 6px">Health Matrix</h2>
+        <small>Checks core runtime endpoints and grades the response shape without changing any backend logic.</small>
+      </div>
+      <button onclick="runChecks()">Run Stability Check</button>
+    </div>
+    <table class="table" style="margin-top:12px">
+      <thead><tr><th>Endpoint</th><th>Status</th><th>Shape Check</th><th>Notes</th></tr></thead>
+      <tbody id="healthTable"><tr><td colspan="4">Waiting for first check...</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="grid" style="grid-template-columns:1.2fr 1fr 1fr">
+    <div class="card">
+      <h2 style="margin-top:0">Response Inspector</h2>
+      <pre id="inspector">Run the stability check to inspect the latest endpoint payload.</pre>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0">Hardening Notes</h2>
+      <div id="notes">Waiting for analysis...</div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0">Recommended Actions</h2>
+      <div id="actions">Waiting for analysis...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const endpoints = [
+  { url:'/api/audit/qnt30531-smoke', required:['status','integrated'], label:'Smoke Check' },
+  { url:'/api/fund/state', required:['running'], label:'Fund State' },
+  { url:'/api/performance-engine/summary', required:['nav','total_pnl'], label:'Performance Summary' },
+  { url:'/api/risk/state', required:[], label:'Risk State' },
+  { url:'/api/portfolio/state', required:[], label:'Portfolio State' },
+  { url:'/api/execution/history', required:[], label:'Execution History' },
+  { url:'/api/auto-allocator/last', required:[], label:'Allocator State' },
+  { url:'/api/signals/last', required:[], label:'Signal State' }
+];
+
+async function safeFetch(url){
+  try{
+    const r = await fetch(url);
+    let data = null;
+    try { data = await r.json(); } catch (e) { data = { parse_error:String(e) }; }
+    return { ok:r.ok, status:r.status, data };
+  }catch(e){
+    return { ok:false, status:0, data:{ fetch_error:String(e) } };
+  }
+}
+
+function hasRequired(obj, keys){
+  return keys.every(k => Object.prototype.hasOwnProperty.call(obj || {}, k));
+}
+
+function grade(healthy, warnings, errors){
+  if (errors === 0 && warnings === 0) return 'A';
+  if (errors === 0 && warnings <= 2) return 'B';
+  if (errors <= 1) return 'C';
+  return 'D';
+}
+
+function statusClass(text){
+  if (text === 'OK') return 'good';
+  if (text === 'WARN') return 'warn';
+  return 'bad';
+}
+
+async function runChecks(){
+  const results = [];
+  for (const ep of endpoints){
+    const res = await safeFetch(ep.url);
+    const shapeOk = res.ok && hasRequired(res.data, ep.required);
+    const status = res.ok ? (shapeOk ? 'OK' : 'WARN') : 'ERROR';
+    let notes = res.ok ? 'Endpoint reachable.' : 'Endpoint failed.';
+    if (res.ok && ep.required.length && !shapeOk){
+      notes = 'Response returned but required keys are missing.';
+    }
+    if (res.data && (res.data.fetch_error || res.data.parse_error || res.data.error)){
+      notes += ' ' + (res.data.fetch_error || res.data.parse_error || res.data.error);
+    }
+    results.push({
+      label: ep.label,
+      url: ep.url,
+      status,
+      shape: shapeOk ? 'Valid' : (res.ok ? 'Partial' : 'Unavailable'),
+      notes,
+      payload: res.data
+    });
+  }
+
+  const healthy = results.filter(r => r.status === 'OK').length;
+  const warnings = results.filter(r => r.status === 'WARN').length;
+  const errors = results.filter(r => r.status === 'ERROR').length;
+
+  document.getElementById('healthyCount').textContent = healthy;
+  document.getElementById('healthyCount').className = 'value good';
+  document.getElementById('warningCount').textContent = warnings;
+  document.getElementById('warningCount').className = 'value ' + (warnings ? 'warn' : 'good');
+  document.getElementById('errorCount').textContent = errors;
+  document.getElementById('errorCount').className = 'value ' + (errors ? 'bad' : 'good');
+  const g = grade(healthy, warnings, errors);
+  document.getElementById('grade').textContent = g;
+  document.getElementById('grade').className = 'value ' + (g === 'A' ? 'good' : g === 'B' ? 'warn' : 'bad');
+
+  document.getElementById('healthTable').innerHTML = results.map(r => `
+    <tr>
+      <td><div style="font-weight:700">${r.label}</div><small>${r.url}</small></td>
+      <td class="${statusClass(r.status)}">${r.status}</td>
+      <td>${r.shape}</td>
+      <td>${r.notes}</td>
+    </tr>
+  `).join('');
+
+  const firstProblem = results.find(r => r.status !== 'OK') || results[0];
+  document.getElementById('inspector').textContent = JSON.stringify(firstProblem.payload, null, 2);
+
+  const notes = [];
+  if (errors === 0) notes.push('No hard failures detected across the checked runtime endpoints.');
+  if (warnings > 0) notes.push('Some endpoints return partial payloads; frontend should keep graceful fallbacks active.');
+  if (healthy >= 6) notes.push('Core system health is strong enough for continued product-layer expansion.');
+  if (errors > 0) notes.push('One or more critical runtime endpoints are failing and should be isolated before public exposure.');
+  document.getElementById('notes').innerHTML = notes.map(n => `<div class="card" style="margin-bottom:10px;padding:12px">${n}</div>`).join('');
+
+  const actions = [];
+  actions.push('Keep this mission as the pre-deploy inspection page before every public rollout.');
+  actions.push('Treat WARN responses as schema-cleanup targets, not launch blockers, unless investor-facing views depend on the missing field.');
+  if (errors > 0) actions.push('Do not expose affected flows publicly until the failing endpoints return stable payloads.');
+  document.getElementById('actions').innerHTML = actions.map(n => `<div class="card" style="margin-bottom:10px;padding:12px">${n}</div>`).join('');
+}
+
+runChecks();
+</script>
+</body>
+</html>

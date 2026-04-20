@@ -1,0 +1,25 @@
+{
+  "email": "operator@example.com",
+  "fee_config": {
+    "management_fee_pct": 2.0,
+    "performance_fee_pct": 20.0,
+    "hurdle_rate_pct": 0.0
+  },
+  "snapshots": [
+    {
+      "snapshot_id": "wf_1775964743",
+      "timestamp": 1775964743,
+      "gross_realized_pnl": 0.0,
+      "gross_unrealized_pnl": 2880.0,
+      "gross_total_pnl": 2880.0,
+      "management_fee_pct": 2.0,
+      "performance_fee_pct": 20.0,
+      "hurdle_rate_pct": 0.0,
+      "management_fee_value": 57.6,
+      "performance_fee_value": 576.0,
+      "net_pnl_after_fees": 2246.4
+    }
+  ],
+  "created_at": 1775964743,
+  "updated_at": 1775964743
+}

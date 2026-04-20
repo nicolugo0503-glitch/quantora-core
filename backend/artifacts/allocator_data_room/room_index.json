@@ -1,0 +1,33 @@
+{
+  "documents": [
+    {
+      "doc_id": "ddq_overview",
+      "title": "DDQ Overview",
+      "category": "due_diligence",
+      "status": "available",
+      "updated_at": 1775712154
+    },
+    {
+      "doc_id": "investor_reporting_sample",
+      "title": "Investor Reporting Sample",
+      "category": "reporting",
+      "status": "available",
+      "updated_at": 1775712154
+    },
+    {
+      "doc_id": "funding_process",
+      "title": "Funding Process",
+      "category": "operations",
+      "status": "available",
+      "updated_at": 1775712154
+    },
+    {
+      "doc_id": "reconciliation_controls",
+      "title": "Reconciliation Controls",
+      "category": "risk",
+      "status": "available",
+      "updated_at": 1775712154
+    }
+  ],
+  "notes": []
+}

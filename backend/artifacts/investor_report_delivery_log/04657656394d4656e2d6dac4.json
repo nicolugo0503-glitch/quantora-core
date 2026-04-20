@@ -1,0 +1,5007 @@
+{
+  "email": "operator@quantora.test",
+  "events": [
+    {
+      "event_id": "rptlog_1776234544",
+      "pack_id": "pack_1776234544",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234544,
+      "acknowledged_at": 1776234544,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234544",
+      "pack_id": "pack_1776234543",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234544,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234543",
+      "pack_id": "pack_1776234543",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234543,
+      "acknowledged_at": 1776234543,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234543",
+      "pack_id": "pack_1776234542",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234543,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234542",
+      "pack_id": "pack_1776234542",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234542,
+      "acknowledged_at": 1776234542,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234542",
+      "pack_id": "pack_1776234542",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234542,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234542",
+      "pack_id": "pack_1776234542",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234542,
+      "acknowledged_at": 1776234542,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234541",
+      "pack_id": "pack_1776234541",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234541,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234541",
+      "pack_id": "pack_1776234541",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234541,
+      "acknowledged_at": 1776234541,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234541",
+      "pack_id": "pack_1776234540",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234541,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234540",
+      "pack_id": "pack_1776234540",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234540,
+      "acknowledged_at": 1776234540,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234540",
+      "pack_id": "pack_1776234539",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234540,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234539",
+      "pack_id": "pack_1776234539",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234539,
+      "acknowledged_at": 1776234539,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234539",
+      "pack_id": "pack_1776234538",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234539,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234538",
+      "pack_id": "pack_1776234538",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234538,
+      "acknowledged_at": 1776234538,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234538",
+      "pack_id": "pack_1776234537",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234538,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234537",
+      "pack_id": "pack_1776234537",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234537,
+      "acknowledged_at": 1776234537,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234537",
+      "pack_id": "pack_1776234536",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234537,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234536",
+      "pack_id": "pack_1776234536",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234536,
+      "acknowledged_at": 1776234536,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234536",
+      "pack_id": "pack_1776234535",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234536,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234535",
+      "pack_id": "pack_1776234535",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234535,
+      "acknowledged_at": 1776234535,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234535",
+      "pack_id": "pack_1776234535",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234535,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234535",
+      "pack_id": "pack_1776234535",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234535,
+      "acknowledged_at": 1776234535,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234534",
+      "pack_id": "pack_1776234534",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234534,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234534",
+      "pack_id": "pack_1776234534",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234534,
+      "acknowledged_at": 1776234534,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234534",
+      "pack_id": "pack_1776234533",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234534,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234533",
+      "pack_id": "pack_1776234533",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234533,
+      "acknowledged_at": 1776234533,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234533",
+      "pack_id": "pack_1776234532",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234533,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234532",
+      "pack_id": "pack_1776234532",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234532,
+      "acknowledged_at": 1776234532,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234532",
+      "pack_id": "pack_1776234532",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234532,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234532",
+      "pack_id": "pack_1776234532",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234532,
+      "acknowledged_at": 1776234532,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234532",
+      "pack_id": "pack_1776234531",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234532,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234531",
+      "pack_id": "pack_1776234531",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234531,
+      "acknowledged_at": 1776234531,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234531",
+      "pack_id": "pack_1776234530",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234531,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234530",
+      "pack_id": "pack_1776234530",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234530,
+      "acknowledged_at": 1776234530,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234530",
+      "pack_id": "pack_1776234529",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234530,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234529",
+      "pack_id": "pack_1776234529",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234529,
+      "acknowledged_at": 1776234529,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234529",
+      "pack_id": "pack_1776234529",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234529,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234529",
+      "pack_id": "pack_1776234529",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234529,
+      "acknowledged_at": 1776234529,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234529",
+      "pack_id": "pack_1776234528",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234529,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234528",
+      "pack_id": "pack_1776234528",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234528,
+      "acknowledged_at": 1776234528,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234528",
+      "pack_id": "pack_1776234527",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234528,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234527",
+      "pack_id": "pack_1776234527",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234527,
+      "acknowledged_at": 1776234527,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234527",
+      "pack_id": "pack_1776234526",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234527,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234526",
+      "pack_id": "pack_1776234526",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234526,
+      "acknowledged_at": 1776234527,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234526",
+      "pack_id": "pack_1776234526",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234526,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234526",
+      "pack_id": "pack_1776234526",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234526,
+      "acknowledged_at": 1776234526,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234526",
+      "pack_id": "pack_1776234525",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234526,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234525",
+      "pack_id": "pack_1776234525",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234525,
+      "acknowledged_at": 1776234525,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234525",
+      "pack_id": "pack_1776234524",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234525,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234524",
+      "pack_id": "pack_1776234524",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234524,
+      "acknowledged_at": 1776234524,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234524",
+      "pack_id": "pack_1776234524",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234524,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234524",
+      "pack_id": "pack_1776234524",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234524,
+      "acknowledged_at": 1776234524,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234524",
+      "pack_id": "pack_1776234523",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234524,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234523",
+      "pack_id": "pack_1776234523",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234523,
+      "acknowledged_at": 1776234523,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234523",
+      "pack_id": "pack_1776234522",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234523,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234522",
+      "pack_id": "pack_1776234522",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234522,
+      "acknowledged_at": 1776234522,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234522",
+      "pack_id": "pack_1776234522",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234522,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234522",
+      "pack_id": "pack_1776234522",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234522,
+      "acknowledged_at": 1776234522,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234521",
+      "pack_id": "pack_1776234521",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234521,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234521",
+      "pack_id": "pack_1776234521",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234521,
+      "acknowledged_at": 1776234521,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234521",
+      "pack_id": "pack_1776234520",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234521,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234520",
+      "pack_id": "pack_1776234520",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234520,
+      "acknowledged_at": 1776234520,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234520",
+      "pack_id": "pack_1776234519",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234520,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234519",
+      "pack_id": "pack_1776234519",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234519,
+      "acknowledged_at": 1776234519,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234519",
+      "pack_id": "pack_1776234518",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234519,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234518",
+      "pack_id": "pack_1776234518",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234518,
+      "acknowledged_at": 1776234518,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234518",
+      "pack_id": "pack_1776234518",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234518,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234518",
+      "pack_id": "pack_1776234518",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234518,
+      "acknowledged_at": 1776234518,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234518",
+      "pack_id": "pack_1776234517",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234518,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234517",
+      "pack_id": "pack_1776234517",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234517,
+      "acknowledged_at": 1776234517,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234517",
+      "pack_id": "pack_1776234516",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234517,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234516",
+      "pack_id": "pack_1776234516",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234516,
+      "acknowledged_at": 1776234516,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234516",
+      "pack_id": "pack_1776234516",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234516,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234516",
+      "pack_id": "pack_1776234516",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234516,
+      "acknowledged_at": 1776234516,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234515",
+      "pack_id": "pack_1776234440",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234515,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234440",
+      "pack_id": "pack_1776234440",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234440,
+      "acknowledged_at": 1776234440,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234439",
+      "pack_id": "pack_1776234439",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234439,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234439",
+      "pack_id": "pack_1776234439",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234439,
+      "acknowledged_at": 1776234439,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234439",
+      "pack_id": "pack_1776234438",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234439,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234438",
+      "pack_id": "pack_1776234438",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234438,
+      "acknowledged_at": 1776234438,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234438",
+      "pack_id": "pack_1776234437",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234438,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234437",
+      "pack_id": "pack_1776234437",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234437,
+      "acknowledged_at": 1776234437,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234437",
+      "pack_id": "pack_1776234437",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234437,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234437",
+      "pack_id": "pack_1776234437",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234437,
+      "acknowledged_at": 1776234437,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234437",
+      "pack_id": "pack_1776234436",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234437,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234436",
+      "pack_id": "pack_1776234436",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234436,
+      "acknowledged_at": 1776234436,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234436",
+      "pack_id": "pack_1776234435",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234436,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234435",
+      "pack_id": "pack_1776234435",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234435,
+      "acknowledged_at": 1776234435,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234435",
+      "pack_id": "pack_1776234434",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234435,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234434",
+      "pack_id": "pack_1776234434",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234434,
+      "acknowledged_at": 1776234435,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234434",
+      "pack_id": "pack_1776234434",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234434,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234434",
+      "pack_id": "pack_1776234434",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234434,
+      "acknowledged_at": 1776234434,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234434",
+      "pack_id": "pack_1776234433",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234434,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234433",
+      "pack_id": "pack_1776234433",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234433,
+      "acknowledged_at": 1776234433,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234433",
+      "pack_id": "pack_1776234432",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234433,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234432",
+      "pack_id": "pack_1776234432",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234432,
+      "acknowledged_at": 1776234432,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234432",
+      "pack_id": "pack_1776234432",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234432,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234432",
+      "pack_id": "pack_1776234432",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234432,
+      "acknowledged_at": 1776234432,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234432",
+      "pack_id": "pack_1776234431",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234432,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234431",
+      "pack_id": "pack_1776234431",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234431,
+      "acknowledged_at": 1776234431,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234431",
+      "pack_id": "pack_1776234430",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234431,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234430",
+      "pack_id": "pack_1776234430",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234430,
+      "acknowledged_at": 1776234430,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234430",
+      "pack_id": "pack_1776234430",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234430,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234430",
+      "pack_id": "pack_1776234430",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234430,
+      "acknowledged_at": 1776234430,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234430",
+      "pack_id": "pack_1776234429",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234430,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234429",
+      "pack_id": "pack_1776234429",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234429,
+      "acknowledged_at": 1776234429,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234429",
+      "pack_id": "pack_1776234428",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234429,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234428",
+      "pack_id": "pack_1776234428",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234428,
+      "acknowledged_at": 1776234428,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234428",
+      "pack_id": "pack_1776234428",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234428,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234428",
+      "pack_id": "pack_1776234428",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234428,
+      "acknowledged_at": 1776234428,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234428",
+      "pack_id": "pack_1776234427",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234428,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234427",
+      "pack_id": "pack_1776234427",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234427,
+      "acknowledged_at": 1776234427,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234427",
+      "pack_id": "pack_1776234426",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234427,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234426",
+      "pack_id": "pack_1776234426",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234426,
+      "acknowledged_at": 1776234427,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234426",
+      "pack_id": "pack_1776234426",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234426,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234426",
+      "pack_id": "pack_1776234426",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234426,
+      "acknowledged_at": 1776234426,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234426",
+      "pack_id": "pack_1776234425",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234426,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234425",
+      "pack_id": "pack_1776234425",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234425,
+      "acknowledged_at": 1776234425,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234425",
+      "pack_id": "pack_1776234425",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234425,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234425",
+      "pack_id": "pack_1776234425",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234425,
+      "acknowledged_at": 1776234425,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234425",
+      "pack_id": "pack_1776234424",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234425,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234424",
+      "pack_id": "pack_1776234424",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234424,
+      "acknowledged_at": 1776234424,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234424",
+      "pack_id": "pack_1776234423",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234424,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234423",
+      "pack_id": "pack_1776234423",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234423,
+      "acknowledged_at": 1776234423,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234423",
+      "pack_id": "pack_1776234423",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234423,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234423",
+      "pack_id": "pack_1776234423",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234423,
+      "acknowledged_at": 1776234423,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234423",
+      "pack_id": "pack_1776234422",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234423,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234422",
+      "pack_id": "pack_1776234422",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234422,
+      "acknowledged_at": 1776234422,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234422",
+      "pack_id": "pack_1776234421",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234422,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234421",
+      "pack_id": "pack_1776234421",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234421,
+      "acknowledged_at": 1776234421,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234421",
+      "pack_id": "pack_1776234421",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234421,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234421",
+      "pack_id": "pack_1776234421",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234421,
+      "acknowledged_at": 1776234421,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234421",
+      "pack_id": "pack_1776234420",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234421,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234420",
+      "pack_id": "pack_1776234420",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234420,
+      "acknowledged_at": 1776234420,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234420",
+      "pack_id": "pack_1776234420",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234420,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234420",
+      "pack_id": "pack_1776234420",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234420,
+      "acknowledged_at": 1776234420,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234419",
+      "pack_id": "pack_1776234419",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234419,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234419",
+      "pack_id": "pack_1776234419",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234419,
+      "acknowledged_at": 1776234419,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234419",
+      "pack_id": "pack_1776234418",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234419,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234418",
+      "pack_id": "pack_1776234418",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234418,
+      "acknowledged_at": 1776234418,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234418",
+      "pack_id": "pack_1776234417",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234418,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234417",
+      "pack_id": "pack_1776234417",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234417,
+      "acknowledged_at": 1776234418,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234417",
+      "pack_id": "pack_1776234417",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234417,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234417",
+      "pack_id": "pack_1776234417",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234417,
+      "acknowledged_at": 1776234417,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234417",
+      "pack_id": "pack_1776234416",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234417,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234416",
+      "pack_id": "pack_1776234416",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234416,
+      "acknowledged_at": 1776234416,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234416",
+      "pack_id": "pack_1776234416",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234416,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234416",
+      "pack_id": "pack_1776234416",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234416,
+      "acknowledged_at": 1776234416,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234416",
+      "pack_id": "pack_1776234415",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234416,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234415",
+      "pack_id": "pack_1776234415",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234415,
+      "acknowledged_at": 1776234415,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234415",
+      "pack_id": "pack_1776234414",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234415,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234414",
+      "pack_id": "pack_1776234414",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234414,
+      "acknowledged_at": 1776234414,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234414",
+      "pack_id": "pack_1776234414",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234414,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234414",
+      "pack_id": "pack_1776234414",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234414,
+      "acknowledged_at": 1776234414,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234413",
+      "pack_id": "pack_1776234413",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234413,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234413",
+      "pack_id": "pack_1776234413",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234413,
+      "acknowledged_at": 1776234413,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234413",
+      "pack_id": "pack_1776234412",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234413,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234412",
+      "pack_id": "pack_1776234412",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234412,
+      "acknowledged_at": 1776234412,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234412",
+      "pack_id": "pack_1776234411",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234412,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776234411",
+      "pack_id": "pack_1776234411",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776234411,
+      "acknowledged_at": 1776234411,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776234411",
+      "pack_id": "pack_1776233476",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776234411,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233476",
+      "pack_id": "pack_1776233476",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233476,
+      "acknowledged_at": 1776233477,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233476",
+      "pack_id": "pack_1776233476",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233476,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233476",
+      "pack_id": "pack_1776233476",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233476,
+      "acknowledged_at": 1776233476,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233476",
+      "pack_id": "pack_1776233475",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233476,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233475",
+      "pack_id": "pack_1776233475",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233475,
+      "acknowledged_at": 1776233475,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233475",
+      "pack_id": "pack_1776233475",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233475,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233475",
+      "pack_id": "pack_1776233475",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233475,
+      "acknowledged_at": 1776233475,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233475",
+      "pack_id": "pack_1776233474",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233475,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233474",
+      "pack_id": "pack_1776233474",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233474,
+      "acknowledged_at": 1776233474,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233474",
+      "pack_id": "pack_1776233474",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233474,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233474",
+      "pack_id": "pack_1776233474",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233474,
+      "acknowledged_at": 1776233474,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233473",
+      "pack_id": "pack_1776233473",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233473,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233473",
+      "pack_id": "pack_1776233473",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233473,
+      "acknowledged_at": 1776233473,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233473",
+      "pack_id": "pack_1776233472",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233473,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233472",
+      "pack_id": "pack_1776233472",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233472,
+      "acknowledged_at": 1776233472,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233472",
+      "pack_id": "pack_1776233472",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233472,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233472",
+      "pack_id": "pack_1776233472",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233472,
+      "acknowledged_at": 1776233472,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233471",
+      "pack_id": "pack_1776233471",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233471,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233471",
+      "pack_id": "pack_1776233471",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233471,
+      "acknowledged_at": 1776233471,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233471",
+      "pack_id": "pack_1776233376",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233471,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233376",
+      "pack_id": "pack_1776233376",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233376,
+      "acknowledged_at": 1776233376,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233376",
+      "pack_id": "pack_1776233376",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233376,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233376",
+      "pack_id": "pack_1776233376",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233376,
+      "acknowledged_at": 1776233376,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233375",
+      "pack_id": "pack_1776233375",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233375,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233375",
+      "pack_id": "pack_1776233375",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233375,
+      "acknowledged_at": 1776233375,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233375",
+      "pack_id": "pack_1776233374",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233375,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233374",
+      "pack_id": "pack_1776233374",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233374,
+      "acknowledged_at": 1776233374,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233374",
+      "pack_id": "pack_1776233374",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233374,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233374",
+      "pack_id": "pack_1776233374",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233374,
+      "acknowledged_at": 1776233374,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233374",
+      "pack_id": "pack_1776233373",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233374,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233373",
+      "pack_id": "pack_1776233373",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233373,
+      "acknowledged_at": 1776233373,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233373",
+      "pack_id": "pack_1776233373",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233373,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233373",
+      "pack_id": "pack_1776233373",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233373,
+      "acknowledged_at": 1776233373,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233373",
+      "pack_id": "pack_1776233372",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233373,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233372",
+      "pack_id": "pack_1776233372",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233372,
+      "acknowledged_at": 1776233372,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233372",
+      "pack_id": "pack_1776233372",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233372,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233372",
+      "pack_id": "pack_1776233372",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233372,
+      "acknowledged_at": 1776233372,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233372",
+      "pack_id": "pack_1776233371",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233372,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776233371",
+      "pack_id": "pack_1776233371",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776233371,
+      "acknowledged_at": 1776233371,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776233371",
+      "pack_id": "pack_1776232178",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776233371,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776232178",
+      "pack_id": "pack_1776232178",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776232178,
+      "acknowledged_at": 1776232178,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776232178",
+      "pack_id": "pack_1776232177",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776232178,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776232177",
+      "pack_id": "pack_1776232177",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776232177,
+      "acknowledged_at": 1776232177,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776232177",
+      "pack_id": "pack_1776232176",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776232177,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776232176",
+      "pack_id": "pack_1776232176",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776232176,
+      "acknowledged_at": 1776232176,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776232176",
+      "pack_id": "pack_1776232176",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776232176,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776232176",
+      "pack_id": "pack_1776232176",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776232176,
+      "acknowledged_at": 1776232176,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776232175",
+      "pack_id": "pack_1776232175",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776232175,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776232175",
+      "pack_id": "pack_1776232175",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776232175,
+      "acknowledged_at": 1776232175,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776232175",
+      "pack_id": "pack_1776232174",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776232175,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776232174",
+      "pack_id": "pack_1776232174",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776232174,
+      "acknowledged_at": 1776232174,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776232174",
+      "pack_id": "pack_1776232173",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776232174,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776232173",
+      "pack_id": "pack_1776232173",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776232173,
+      "acknowledged_at": 1776232173,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776232173",
+      "pack_id": "pack_1776232172",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776232173,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776232172",
+      "pack_id": "pack_1776232172",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776232172,
+      "acknowledged_at": 1776232172,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776232172",
+      "pack_id": "pack_1776232171",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776232172,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776232171",
+      "pack_id": "pack_1776232171",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776232171,
+      "acknowledged_at": 1776232171,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776232171",
+      "pack_id": "pack_1776232170",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776232171,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776232170",
+      "pack_id": "pack_1776232170",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776232170,
+      "acknowledged_at": 1776232170,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776232170",
+      "pack_id": "pack_1776231883",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776232170,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231883",
+      "pack_id": "pack_1776231883",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231883,
+      "acknowledged_at": 1776231883,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231883",
+      "pack_id": "pack_1776231882",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231883,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231882",
+      "pack_id": "pack_1776231882",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231882,
+      "acknowledged_at": 1776231882,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231882",
+      "pack_id": "pack_1776231881",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231882,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231881",
+      "pack_id": "pack_1776231881",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231881,
+      "acknowledged_at": 1776231881,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231881",
+      "pack_id": "pack_1776231880",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231881,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231880",
+      "pack_id": "pack_1776231880",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231880,
+      "acknowledged_at": 1776231880,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231880",
+      "pack_id": "pack_1776231879",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231880,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231879",
+      "pack_id": "pack_1776231879",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231879,
+      "acknowledged_at": 1776231879,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231879",
+      "pack_id": "pack_1776231879",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231879,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231879",
+      "pack_id": "pack_1776231879",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231879,
+      "acknowledged_at": 1776231879,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231878",
+      "pack_id": "pack_1776231878",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231878,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231878",
+      "pack_id": "pack_1776231878",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231878,
+      "acknowledged_at": 1776231878,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231878",
+      "pack_id": "pack_1776231877",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231878,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231877",
+      "pack_id": "pack_1776231877",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231877,
+      "acknowledged_at": 1776231877,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231877",
+      "pack_id": "pack_1776231876",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231877,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231876",
+      "pack_id": "pack_1776231876",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231876,
+      "acknowledged_at": 1776231876,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231876",
+      "pack_id": "pack_1776231875",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231876,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231875",
+      "pack_id": "pack_1776231875",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231875,
+      "acknowledged_at": 1776231875,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231875",
+      "pack_id": "pack_1776231534",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231875,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231534",
+      "pack_id": "pack_1776231534",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231534,
+      "acknowledged_at": 1776231534,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231533",
+      "pack_id": "pack_1776231533",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231533,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231533",
+      "pack_id": "pack_1776231533",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231533,
+      "acknowledged_at": 1776231533,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231533",
+      "pack_id": "pack_1776231532",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231533,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231532",
+      "pack_id": "pack_1776231532",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231532,
+      "acknowledged_at": 1776231532,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231532",
+      "pack_id": "pack_1776231531",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231532,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231531",
+      "pack_id": "pack_1776231531",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231531,
+      "acknowledged_at": 1776231531,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231531",
+      "pack_id": "pack_1776231530",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231531,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231530",
+      "pack_id": "pack_1776231530",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231530,
+      "acknowledged_at": 1776231531,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231530",
+      "pack_id": "pack_1776231530",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231530,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231530",
+      "pack_id": "pack_1776231530",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231530,
+      "acknowledged_at": 1776231530,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231529",
+      "pack_id": "pack_1776231529",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231529,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231529",
+      "pack_id": "pack_1776231529",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231529,
+      "acknowledged_at": 1776231529,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231529",
+      "pack_id": "pack_1776231528",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231529,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231528",
+      "pack_id": "pack_1776231528",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231528,
+      "acknowledged_at": 1776231528,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231528",
+      "pack_id": "pack_1776231527",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231528,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231527",
+      "pack_id": "pack_1776231527",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231527,
+      "acknowledged_at": 1776231527,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231527",
+      "pack_id": "pack_1776231526",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231527,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231526",
+      "pack_id": "pack_1776231526",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231526,
+      "acknowledged_at": 1776231526,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231526",
+      "pack_id": "pack_1776231262",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231526,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231262",
+      "pack_id": "pack_1776231262",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231262,
+      "acknowledged_at": 1776231262,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231262",
+      "pack_id": "pack_1776231261",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231262,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231261",
+      "pack_id": "pack_1776231261",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231261,
+      "acknowledged_at": 1776231261,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231261",
+      "pack_id": "pack_1776231261",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231261,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231261",
+      "pack_id": "pack_1776231261",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231261,
+      "acknowledged_at": 1776231261,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231260",
+      "pack_id": "pack_1776231260",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231260,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231260",
+      "pack_id": "pack_1776231260",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231260,
+      "acknowledged_at": 1776231260,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231260",
+      "pack_id": "pack_1776231259",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231260,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231259",
+      "pack_id": "pack_1776231259",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231259,
+      "acknowledged_at": 1776231259,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231259",
+      "pack_id": "pack_1776231258",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231259,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231258",
+      "pack_id": "pack_1776231258",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231258,
+      "acknowledged_at": 1776231258,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231258",
+      "pack_id": "pack_1776231257",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231258,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231257",
+      "pack_id": "pack_1776231257",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231257,
+      "acknowledged_at": 1776231258,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231257",
+      "pack_id": "pack_1776231257",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231257,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231257",
+      "pack_id": "pack_1776231257",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231257,
+      "acknowledged_at": 1776231257,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231257",
+      "pack_id": "pack_1776231256",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231257,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231256",
+      "pack_id": "pack_1776231256",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231256,
+      "acknowledged_at": 1776231256,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231256",
+      "pack_id": "pack_1776231255",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231256,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231255",
+      "pack_id": "pack_1776231255",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231255,
+      "acknowledged_at": 1776231255,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231255",
+      "pack_id": "pack_1776231250",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231255,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231250",
+      "pack_id": "pack_1776231250",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231250,
+      "acknowledged_at": 1776231250,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231250",
+      "pack_id": "pack_1776231249",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231250,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231249",
+      "pack_id": "pack_1776231249",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231249,
+      "acknowledged_at": 1776231249,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231249",
+      "pack_id": "pack_1776231249",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231249,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231249",
+      "pack_id": "pack_1776231249",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231249,
+      "acknowledged_at": 1776231249,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231249",
+      "pack_id": "pack_1776231248",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231249,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231248",
+      "pack_id": "pack_1776231248",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231248,
+      "acknowledged_at": 1776231248,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231248",
+      "pack_id": "pack_1776231247",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231248,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231247",
+      "pack_id": "pack_1776231247",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231247,
+      "acknowledged_at": 1776231247,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231247",
+      "pack_id": "pack_1776231246",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231247,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231246",
+      "pack_id": "pack_1776231246",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231246,
+      "acknowledged_at": 1776231246,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231246",
+      "pack_id": "pack_1776231245",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231246,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231245",
+      "pack_id": "pack_1776231245",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231245,
+      "acknowledged_at": 1776231246,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231245",
+      "pack_id": "pack_1776231245",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231245,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231245",
+      "pack_id": "pack_1776231245",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231245,
+      "acknowledged_at": 1776231245,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231245",
+      "pack_id": "pack_1776231244",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231245,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231244",
+      "pack_id": "pack_1776231244",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231244,
+      "acknowledged_at": 1776231244,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231244",
+      "pack_id": "pack_1776231243",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231244,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776231243",
+      "pack_id": "pack_1776231243",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776231243,
+      "acknowledged_at": 1776231243,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776231243",
+      "pack_id": "pack_1776230210",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776231243,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230210",
+      "pack_id": "pack_1776230210",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230210,
+      "acknowledged_at": 1776230210,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230210",
+      "pack_id": "pack_1776230209",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230210,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230209",
+      "pack_id": "pack_1776230209",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230209,
+      "acknowledged_at": 1776230209,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230209",
+      "pack_id": "pack_1776230208",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230209,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230208",
+      "pack_id": "pack_1776230208",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230208,
+      "acknowledged_at": 1776230208,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230208",
+      "pack_id": "pack_1776230207",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230208,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230207",
+      "pack_id": "pack_1776230207",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230207,
+      "acknowledged_at": 1776230207,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230207",
+      "pack_id": "pack_1776230207",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230207,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230207",
+      "pack_id": "pack_1776230207",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230207,
+      "acknowledged_at": 1776230207,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230207",
+      "pack_id": "pack_1776230206",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230207,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230206",
+      "pack_id": "pack_1776230206",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230206,
+      "acknowledged_at": 1776230206,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230206",
+      "pack_id": "pack_1776230205",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230206,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230205",
+      "pack_id": "pack_1776230205",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230205,
+      "acknowledged_at": 1776230205,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230205",
+      "pack_id": "pack_1776230205",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230205,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230205",
+      "pack_id": "pack_1776230205",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230205,
+      "acknowledged_at": 1776230205,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230204",
+      "pack_id": "pack_1776230204",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230204,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230204",
+      "pack_id": "pack_1776230204",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230204,
+      "acknowledged_at": 1776230204,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230204",
+      "pack_id": "pack_1776230203",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230204,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230203",
+      "pack_id": "pack_1776230203",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230203,
+      "acknowledged_at": 1776230203,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230203",
+      "pack_id": "pack_1776230198",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230203,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230198",
+      "pack_id": "pack_1776230198",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230198,
+      "acknowledged_at": 1776230198,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230198",
+      "pack_id": "pack_1776230198",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230198,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230198",
+      "pack_id": "pack_1776230198",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230198,
+      "acknowledged_at": 1776230198,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230197",
+      "pack_id": "pack_1776230197",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230197,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230197",
+      "pack_id": "pack_1776230197",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230197,
+      "acknowledged_at": 1776230197,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230197",
+      "pack_id": "pack_1776230196",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230197,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230196",
+      "pack_id": "pack_1776230196",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230196,
+      "acknowledged_at": 1776230196,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230196",
+      "pack_id": "pack_1776230195",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230196,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230195",
+      "pack_id": "pack_1776230195",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230195,
+      "acknowledged_at": 1776230195,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230195",
+      "pack_id": "pack_1776230195",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230195,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230195",
+      "pack_id": "pack_1776230195",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230195,
+      "acknowledged_at": 1776230195,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230195",
+      "pack_id": "pack_1776230194",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230195,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230194",
+      "pack_id": "pack_1776230194",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230194,
+      "acknowledged_at": 1776230194,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230194",
+      "pack_id": "pack_1776230193",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230194,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230193",
+      "pack_id": "pack_1776230193",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230193,
+      "acknowledged_at": 1776230193,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230193",
+      "pack_id": "pack_1776230193",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230193,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230193",
+      "pack_id": "pack_1776230193",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230193,
+      "acknowledged_at": 1776230193,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230193",
+      "pack_id": "pack_1776230192",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230193,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776230192",
+      "pack_id": "pack_1776230192",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776230192,
+      "acknowledged_at": 1776230192,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776230192",
+      "pack_id": "pack_1776229675",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776230192,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229675",
+      "pack_id": "pack_1776229675",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229675,
+      "acknowledged_at": 1776229675,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229675",
+      "pack_id": "pack_1776229674",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229675,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229674",
+      "pack_id": "pack_1776229674",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229674,
+      "acknowledged_at": 1776229674,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229674",
+      "pack_id": "pack_1776229673",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229674,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229673",
+      "pack_id": "pack_1776229673",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229673,
+      "acknowledged_at": 1776229674,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229673",
+      "pack_id": "pack_1776229673",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229673,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229673",
+      "pack_id": "pack_1776229673",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229673,
+      "acknowledged_at": 1776229673,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229673",
+      "pack_id": "pack_1776229672",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229673,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229672",
+      "pack_id": "pack_1776229672",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229672,
+      "acknowledged_at": 1776229672,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229672",
+      "pack_id": "pack_1776229671",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229672,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229671",
+      "pack_id": "pack_1776229671",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229671,
+      "acknowledged_at": 1776229672,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229671",
+      "pack_id": "pack_1776229671",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229671,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229671",
+      "pack_id": "pack_1776229671",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229671,
+      "acknowledged_at": 1776229671,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229671",
+      "pack_id": "pack_1776229670",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229671,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229670",
+      "pack_id": "pack_1776229670",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229670,
+      "acknowledged_at": 1776229670,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229670",
+      "pack_id": "pack_1776229669",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229670,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229669",
+      "pack_id": "pack_1776229669",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229669,
+      "acknowledged_at": 1776229669,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229669",
+      "pack_id": "pack_1776229669",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229669,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229669",
+      "pack_id": "pack_1776229669",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229669,
+      "acknowledged_at": 1776229669,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229668",
+      "pack_id": "pack_1776229379",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229668,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229379",
+      "pack_id": "pack_1776229379",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229379,
+      "acknowledged_at": 1776229379,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229379",
+      "pack_id": "pack_1776229378",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229379,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229378",
+      "pack_id": "pack_1776229378",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229378,
+      "acknowledged_at": 1776229378,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229378",
+      "pack_id": "pack_1776229377",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229378,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229377",
+      "pack_id": "pack_1776229377",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229377,
+      "acknowledged_at": 1776229377,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229377",
+      "pack_id": "pack_1776229377",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229377,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229377",
+      "pack_id": "pack_1776229377",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229377,
+      "acknowledged_at": 1776229377,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229377",
+      "pack_id": "pack_1776229376",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229377,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229376",
+      "pack_id": "pack_1776229376",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229376,
+      "acknowledged_at": 1776229376,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229376",
+      "pack_id": "pack_1776229375",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229376,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229375",
+      "pack_id": "pack_1776229375",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229375,
+      "acknowledged_at": 1776229375,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229375",
+      "pack_id": "pack_1776229375",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229375,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229375",
+      "pack_id": "pack_1776229375",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229375,
+      "acknowledged_at": 1776229375,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229375",
+      "pack_id": "pack_1776229374",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229375,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229374",
+      "pack_id": "pack_1776229374",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229374,
+      "acknowledged_at": 1776229374,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229374",
+      "pack_id": "pack_1776229374",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229374,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229374",
+      "pack_id": "pack_1776229374",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229374,
+      "acknowledged_at": 1776229374,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229373",
+      "pack_id": "pack_1776229373",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229373,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229373",
+      "pack_id": "pack_1776229373",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229373,
+      "acknowledged_at": 1776229373,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229373",
+      "pack_id": "pack_1776229368",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229373,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229368",
+      "pack_id": "pack_1776229368",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229368,
+      "acknowledged_at": 1776229368,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229368",
+      "pack_id": "pack_1776229368",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229368,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229368",
+      "pack_id": "pack_1776229368",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229368,
+      "acknowledged_at": 1776229368,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229368",
+      "pack_id": "pack_1776229367",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229368,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229367",
+      "pack_id": "pack_1776229367",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229367,
+      "acknowledged_at": 1776229367,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229367",
+      "pack_id": "pack_1776229366",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229367,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229366",
+      "pack_id": "pack_1776229366",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229366,
+      "acknowledged_at": 1776229367,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229366",
+      "pack_id": "pack_1776229366",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229366,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229366",
+      "pack_id": "pack_1776229366",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229366,
+      "acknowledged_at": 1776229366,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229366",
+      "pack_id": "pack_1776229365",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229366,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229365",
+      "pack_id": "pack_1776229365",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229365,
+      "acknowledged_at": 1776229365,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229365",
+      "pack_id": "pack_1776229365",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229365,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229365",
+      "pack_id": "pack_1776229365",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229365,
+      "acknowledged_at": 1776229365,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229365",
+      "pack_id": "pack_1776229364",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229365,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229364",
+      "pack_id": "pack_1776229364",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229364,
+      "acknowledged_at": 1776229364,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229364",
+      "pack_id": "pack_1776229364",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229364,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229364",
+      "pack_id": "pack_1776229364",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229364,
+      "acknowledged_at": 1776229364,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229364",
+      "pack_id": "pack_1776229363",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229364,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776229363",
+      "pack_id": "pack_1776229363",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776229363,
+      "acknowledged_at": 1776229363,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776229363",
+      "pack_id": "pack_1776228192",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776229363,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776228192",
+      "pack_id": "pack_1776228192",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776228192,
+      "acknowledged_at": 1776228192,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776228192",
+      "pack_id": "pack_1776228191",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776228192,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776228191",
+      "pack_id": "pack_1776228191",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776228191,
+      "acknowledged_at": 1776228191,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776228191",
+      "pack_id": "pack_1776228191",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776228191,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776228191",
+      "pack_id": "pack_1776228191",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776228191,
+      "acknowledged_at": 1776228191,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776228191",
+      "pack_id": "pack_1776228190",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776228191,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776228190",
+      "pack_id": "pack_1776228190",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776228190,
+      "acknowledged_at": 1776228190,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776228190",
+      "pack_id": "pack_1776228190",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776228190,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776228190",
+      "pack_id": "pack_1776228190",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776228190,
+      "acknowledged_at": 1776228190,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776228190",
+      "pack_id": "pack_1776228190",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776228190,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776228190",
+      "pack_id": "pack_1776228190",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776228190,
+      "acknowledged_at": 1776228190,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776228190",
+      "pack_id": "pack_1776228189",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776228190,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776228189",
+      "pack_id": "pack_1776228189",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776228189,
+      "acknowledged_at": 1776228189,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776228189",
+      "pack_id": "pack_1776228189",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776228189,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776228189",
+      "pack_id": "pack_1776228189",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776228189,
+      "acknowledged_at": 1776228189,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776228189",
+      "pack_id": "pack_1776228189",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776228189,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776228189",
+      "pack_id": "pack_1776228189",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776228189,
+      "acknowledged_at": 1776228189,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776228189",
+      "pack_id": "pack_1776228188",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776228189,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776228188",
+      "pack_id": "pack_1776228188",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776228188,
+      "acknowledged_at": 1776228188,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776228188",
+      "pack_id": "pack_1776228185",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776228188,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776228185",
+      "pack_id": "pack_1776228185",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776228185,
+      "acknowledged_at": 1776228185,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776228185",
+      "pack_id": "pack_1776228185",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776228185,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776228185",
+      "pack_id": "pack_1776228185",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776228185,
+      "acknowledged_at": 1776228185,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776228185",
+      "pack_id": "pack_1776228184",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776228185,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776228184",
+      "pack_id": "pack_1776228184",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776228184,
+      "acknowledged_at": 1776228184,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776228184",
+      "pack_id": "pack_1776228184",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776228184,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776228184",
+      "pack_id": "pack_1776228184",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776228184,
+      "acknowledged_at": 1776228184,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776228184",
+      "pack_id": "pack_1776228184",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776228184,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776228184",
+      "pack_id": "pack_1776228184",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776228184,
+      "acknowledged_at": 1776228184,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776228184",
+      "pack_id": "pack_1776228183",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776228184,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776228183",
+      "pack_id": "pack_1776228183",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776228183,
+      "acknowledged_at": 1776228183,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776228183",
+      "pack_id": "pack_1776227832",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776228183,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776227832",
+      "pack_id": "pack_1776227832",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776227832,
+      "acknowledged_at": 1776227832,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776227832",
+      "pack_id": "pack_1776227831",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776227832,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776227831",
+      "pack_id": "pack_1776227831",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776227831,
+      "acknowledged_at": 1776227831,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776227831",
+      "pack_id": "pack_1776227831",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776227831,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776227831",
+      "pack_id": "pack_1776227831",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776227831,
+      "acknowledged_at": 1776227831,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776227831",
+      "pack_id": "pack_1776227831",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776227831,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776227831",
+      "pack_id": "pack_1776227831",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776227831,
+      "acknowledged_at": 1776227831,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776227831",
+      "pack_id": "pack_1776227830",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776227831,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776227830",
+      "pack_id": "pack_1776227830",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776227830,
+      "acknowledged_at": 1776227830,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776227830",
+      "pack_id": "pack_1776227830",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776227830,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776227830",
+      "pack_id": "pack_1776227830",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776227830,
+      "acknowledged_at": 1776227830,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776227830",
+      "pack_id": "pack_1776227827",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776227830,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776227827",
+      "pack_id": "pack_1776227827",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776227827,
+      "acknowledged_at": 1776227827,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776227827",
+      "pack_id": "pack_1776227827",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776227827,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776227827",
+      "pack_id": "pack_1776227827",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776227827,
+      "acknowledged_at": 1776227827,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776227827",
+      "pack_id": "pack_1776227827",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776227827,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776227827",
+      "pack_id": "pack_1776227827",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776227827,
+      "acknowledged_at": 1776227827,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776227827",
+      "pack_id": "pack_1776227826",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776227827,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776227826",
+      "pack_id": "pack_1776227826",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776227826,
+      "acknowledged_at": 1776227826,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776227826",
+      "pack_id": "pack_1776226704",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776227826,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776226704",
+      "pack_id": "pack_1776226704",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776226704,
+      "acknowledged_at": 1776226704,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776226704",
+      "pack_id": "pack_1776226704",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776226704,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776226704",
+      "pack_id": "pack_1776226704",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776226704,
+      "acknowledged_at": 1776226704,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776226704",
+      "pack_id": "pack_1776226704",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776226704,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776226704",
+      "pack_id": "pack_1776226704",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776226704,
+      "acknowledged_at": 1776226704,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776226704",
+      "pack_id": "pack_1776226701",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776226704,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776226701",
+      "pack_id": "pack_1776226701",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776226701,
+      "acknowledged_at": 1776226701,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776226701",
+      "pack_id": "pack_1776226701",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776226701,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776226701",
+      "pack_id": "pack_1776226701",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776226701,
+      "acknowledged_at": 1776226701,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776226701",
+      "pack_id": "pack_1776226698",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776226701,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776226698",
+      "pack_id": "pack_1776226698",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776226698,
+      "acknowledged_at": 1776226698,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776226698",
+      "pack_id": "pack_1776226698",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776226698,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776226698",
+      "pack_id": "pack_1776226698",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776226698,
+      "acknowledged_at": 1776226698,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776226697",
+      "pack_id": "pack_1776226697",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776226697,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776226697",
+      "pack_id": "pack_1776226697",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776226697,
+      "acknowledged_at": 1776226697,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776226697",
+      "pack_id": "pack_1776223538",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776226697,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776223538",
+      "pack_id": "pack_1776223538",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776223538,
+      "acknowledged_at": 1776223538,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776223538",
+      "pack_id": "pack_1776223537",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776223538,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776223537",
+      "pack_id": "pack_1776223537",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776223537,
+      "acknowledged_at": 1776223537,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776223537",
+      "pack_id": "pack_1776223537",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776223537,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776223537",
+      "pack_id": "pack_1776223537",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776223537,
+      "acknowledged_at": 1776223537,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776223537",
+      "pack_id": "pack_1776223537",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776223537,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776223537",
+      "pack_id": "pack_1776223537",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776223537,
+      "acknowledged_at": 1776223537,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776223536",
+      "pack_id": "pack_1776223529",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776223536,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776223529",
+      "pack_id": "pack_1776223529",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776223529,
+      "acknowledged_at": 1776223529,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776223529",
+      "pack_id": "pack_1776223528",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776223529,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776223528",
+      "pack_id": "pack_1776223528",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776223528,
+      "acknowledged_at": 1776223528,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776223528",
+      "pack_id": "pack_1776223528",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776223528,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776223528",
+      "pack_id": "pack_1776223528",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776223528,
+      "acknowledged_at": 1776223528,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776223528",
+      "pack_id": "pack_1776223066",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776223528,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776223066",
+      "pack_id": "pack_1776223066",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776223066,
+      "acknowledged_at": 1776223066,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776223066",
+      "pack_id": "pack_1776223065",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776223066,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776223065",
+      "pack_id": "pack_1776223065",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776223065,
+      "acknowledged_at": 1776223065,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776223065",
+      "pack_id": "pack_1776223065",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776223065,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776223065",
+      "pack_id": "pack_1776223065",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776223065,
+      "acknowledged_at": 1776223065,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776223065",
+      "pack_id": "pack_1776222078",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776223065,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776222078",
+      "pack_id": "pack_1776222078",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776222078,
+      "acknowledged_at": 1776222078,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776222078",
+      "pack_id": "pack_1776222078",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776222078,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776222078",
+      "pack_id": "pack_1776222078",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776222078,
+      "acknowledged_at": 1776222078,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776222078",
+      "pack_id": "pack_1776221678",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776222078,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776221678",
+      "pack_id": "pack_1776221678",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776221678,
+      "acknowledged_at": 1776221678,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776221678",
+      "pack_id": "pack_1776221341",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776221678,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776221341",
+      "pack_id": "pack_1776221341",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776221341,
+      "acknowledged_at": 1776221341,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776221341",
+      "pack_id": "pack_1776221338",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776221341,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    },
+    {
+      "event_id": "rptlog_1776221338",
+      "pack_id": "pack_1776221338",
+      "channel": "portal_simulated",
+      "delivery_status": "delivered",
+      "ack_status": "acknowledged",
+      "delivered_at": 1776221338,
+      "acknowledged_at": 1776221338,
+      "notes": "investor viewed and acknowledged release"
+    },
+    {
+      "event_id": "rptlog_1776221338",
+      "pack_id": "pack_1776221069",
+      "channel": "portal",
+      "delivery_status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776221338,
+      "acknowledged_at": null,
+      "notes": "post-dealing confirmation distribution"
+    }
+  ],
+  "created_at": 1776220087,
+  "updated_at": 1776234544
+}

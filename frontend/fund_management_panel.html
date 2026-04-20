@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Quantora Fund Management</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background: #0f172a; color: #e2e8f0; }
+    .card { border: 1px solid #334155; border-radius: 10px; padding: 16px; margin-bottom: 16px; background: #111827; }
+    input, select, button { padding: 8px; margin: 4px 4px 8px 0; border-radius: 8px; border: 1px solid #475569; }
+    button { cursor: pointer; }
+    code, pre { background: #020617; padding: 8px; border-radius: 8px; display:block; overflow:auto; }
+    .grid { display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    a { color: #93c5fd; }
+  </style>
+</head>
+<body>
+  <h1>QNT30439 — Capital Inflow + Fund Management</h1>
+  <p>Institutional capital intake, treasury movements, and fund account management.</p>
+
+  <div class="card">
+    <button onclick="loadSummary()">Refresh Fund Summary</button>
+    <button onclick="openJson('/workspace/fund/summary')">Open Summary JSON</button>
+    <pre id="summary">No data loaded.</pre>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Add Investor Commitment</h3>
+      <input id="inv_name" placeholder="Investor Name" value="Founding LP" />
+      <input id="inv_amount" placeholder="Amount" value="250000" />
+      <select id="inv_status">
+        <option value="pending">pending</option>
+        <option value="active">active</option>
+      </select>
+      <button onclick="addInvestor()">Add Investor</button>
+      <div id="inv_status_msg"></div>
+    </div>
+
+    <div class="card">
+      <h3>Cash Movement</h3>
+      <input id="cash_amount" placeholder="Amount" value="50000" />
+      <input id="cash_note" placeholder="Note" value="Initial treasury funding" />
+      <button onclick="deposit()">Deposit</button>
+      <button onclick="withdrawFunds()">Withdraw</button>
+      <div id="cash_status_msg"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Create Fund Account</h3>
+    <input id="fund_name" placeholder="Fund Account Name" value="Alpha Mandate" />
+    <input id="fund_scope" placeholder="Strategy Scope" value="multi-asset" />
+    <button onclick="createFundAccount()">Create Fund Account</button>
+    <div id="fund_status_msg"></div>
+  </div>
+
+  <div class="card">
+    <h3>Quick Links</h3>
+    <p>
+      <a href="/workspace/fund/investors" target="_blank">Investors JSON</a> |
+      <a href="/workspace/fund/cash-movements" target="_blank">Cash Movements JSON</a> |
+      <a href="/workspace/fund/accounts" target="_blank">Fund Accounts JSON</a>
+    </p>
+  </div>
+
+<script>
+async function postJson(url, payload){
+  const r = await fetch(url, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  return await r.json();
+}
+async function loadSummary(){
+  const r = await fetch('/workspace/fund/summary');
+  const j = await r.json();
+  document.getElementById('summary').textContent = JSON.stringify(j, null, 2);
+}
+function openJson(path){ window.open(path, '_blank'); }
+
+async function addInvestor(){
+  const j = await postJson('/workspace/fund/investors/add', {
+    investor_name: document.getElementById('inv_name').value,
+    amount: document.getElementById('inv_amount').value,
+    status: document.getElementById('inv_status').value,
+    currency: 'USD'
+  });
+  document.getElementById('inv_status_msg').textContent = 'Investor commitment added: ' + (j.investor_commitment?.commitment_id || 'n/a');
+  loadSummary();
+}
+async function deposit(){
+  const j = await postJson('/workspace/fund/deposit', {
+    amount: document.getElementById('cash_amount').value,
+    note: document.getElementById('cash_note').value
+  });
+  document.getElementById('cash_status_msg').textContent = 'Deposit recorded: ' + (j.movement?.movement_id || 'n/a');
+  loadSummary();
+}
+async function withdrawFunds(){
+  const j = await postJson('/workspace/fund/withdraw', {
+    amount: document.getElementById('cash_amount').value,
+    note: document.getElementById('cash_note').value
+  });
+  document.getElementById('cash_status_msg').textContent = 'Withdrawal recorded: ' + (j.movement?.movement_id || 'n/a');
+  loadSummary();
+}
+async function createFundAccount(){
+  const j = await postJson('/workspace/fund/accounts/create', {
+    name: document.getElementById('fund_name').value,
+    strategy_scope: document.getElementById('fund_scope').value,
+    base_currency: 'USD'
+  });
+  document.getElementById('fund_status_msg').textContent = 'Fund account created: ' + (j.fund_account?.fund_account_id || 'n/a');
+  loadSummary();
+}
+loadSummary();
+</script>
+</body>
+</html>

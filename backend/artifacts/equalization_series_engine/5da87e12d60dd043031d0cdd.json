@@ -1,0 +1,104 @@
+{
+  "email": "operator@example.com",
+  "share_classes": [
+    {
+      "share_class_id": "class_qnta",
+      "class_name": "Class A",
+      "base_nav_per_share": 100.0,
+      "fee_rate_pct": 2.0,
+      "currency": "USD",
+      "status": "active",
+      "created_at": 1773705600
+    },
+    {
+      "share_class_id": "class_qntb",
+      "class_name": "Class B",
+      "base_nav_per_share": 100.0,
+      "fee_rate_pct": 1.5,
+      "currency": "USD",
+      "status": "active",
+      "created_at": 1773705600
+    }
+  ],
+  "series_accounts": [
+    {
+      "series_id": "series_qnta_001",
+      "investor_id": "inv_qnt_001",
+      "share_class_id": "class_qnta",
+      "series_name": "Series 2026-01",
+      "capital_amount": 420000.0,
+      "nav_per_share": 108.45,
+      "units": 3872.75242047,
+      "equalization_credit": -4200.0,
+      "status": "active",
+      "created_at": 1773705600,
+      "updated_at": 1775967384
+    },
+    {
+      "series_id": "series_qnta_002",
+      "investor_id": "inv_qnt_002",
+      "share_class_id": "class_qnta",
+      "series_name": "Series 2026-01",
+      "capital_amount": 300000.0,
+      "nav_per_share": 107.1,
+      "units": 2801.12044818,
+      "equalization_credit": -2550.0,
+      "status": "active",
+      "created_at": 1773705600,
+      "updated_at": 1775967384
+    },
+    {
+      "series_id": "series_qntb_003",
+      "investor_id": "inv_qnt_003",
+      "share_class_id": "class_qntb",
+      "series_name": "Series 2026-02",
+      "capital_amount": 240000.0,
+      "nav_per_share": 103.85,
+      "units": 2311.02551757,
+      "equalization_credit": 1750.0,
+      "status": "active",
+      "created_at": 1773705600,
+      "updated_at": 1775967384
+    }
+  ],
+  "equalization_events": [
+    {
+      "event_id": "eqevt_inv_qnt_001",
+      "series_id": "series_qnta_001",
+      "investor_id": "inv_qnt_001",
+      "share_class_id": "class_qnta",
+      "event_type": "management_fee",
+      "basis_amount": 420000.0,
+      "rate_pct": 1.0,
+      "amount": 4200.0,
+      "post_credit_balance": -4200.0,
+      "created_at": 1775865600
+    },
+    {
+      "event_id": "eqevt_inv_qnt_002",
+      "series_id": "series_qnta_002",
+      "investor_id": "inv_qnt_002",
+      "share_class_id": "class_qnta",
+      "event_type": "management_fee",
+      "basis_amount": 300000.0,
+      "rate_pct": 0.85,
+      "amount": 2550.0,
+      "post_credit_balance": -2550.0,
+      "created_at": 1775865600
+    },
+    {
+      "event_id": "eqevt_inv_qnt_003",
+      "series_id": "series_qntb_003",
+      "investor_id": "inv_qnt_003",
+      "share_class_id": "class_qntb",
+      "event_type": "credit",
+      "basis_amount": 240000.0,
+      "rate_pct": 0.729167,
+      "amount": 1750.0,
+      "post_credit_balance": 1750.0,
+      "created_at": 1775865600
+    }
+  ],
+  "created_at": 1775967384,
+  "updated_at": 1775967384
+}

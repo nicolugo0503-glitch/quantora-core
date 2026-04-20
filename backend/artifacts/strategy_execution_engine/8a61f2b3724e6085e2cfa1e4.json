@@ -1,0 +1,38 @@
+{
+  "email": "qnt30650@test.local",
+  "strategy_allocations": [],
+  "trades": [],
+  "strategy_registry": [],
+  "history": [
+    {
+      "event_id": "hist_sync_1775711166388912308",
+      "type": "allocation_sync",
+      "synced_rows": 0,
+      "manual_rows": 0,
+      "timestamp": 1775711166
+    },
+    {
+      "event_id": "hist_sync_1775711166387320828",
+      "type": "allocation_sync",
+      "synced_rows": 0,
+      "manual_rows": 0,
+      "timestamp": 1775711166
+    },
+    {
+      "event_id": "hist_sync_1775711166379592917",
+      "type": "allocation_sync",
+      "synced_rows": 0,
+      "manual_rows": 0,
+      "timestamp": 1775711166
+    },
+    {
+      "event_id": "hist_sync_1775711166376689019",
+      "type": "allocation_sync",
+      "synced_rows": 0,
+      "manual_rows": 0,
+      "timestamp": 1775711166
+    }
+  ],
+  "created_at": 1775711166,
+  "updated_at": 1775711166
+}

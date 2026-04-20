@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>QNT30532 Cleanup Check</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;background:#08111f;color:#eef4ff;padding:24px}
+    button{background:#2455d6;color:#fff;border:1px solid #3f6fff;border-radius:10px;padding:10px 14px;cursor:pointer}
+    pre{background:#07111f;border:1px solid #1f3556;border-radius:10px;padding:14px;white-space:pre-wrap}
+  </style>
+</head>
+<body>
+  <h1>QNT30532 — Cleanup Check</h1>
+  <button onclick="runChecks()">Run Checks</button>
+  <pre id="out">ready</pre>
+  <script>
+    async function hit(url, options){
+      try{
+        const r = await fetch(url, options||{});
+        const t = await r.text();
+        return {url, ok:r.ok, status:r.status, body:t.slice(0,500)};
+      }catch(e){
+        return {url, ok:false, error:String(e)};
+      }
+    }
+    async function runChecks(){
+      const checks = await Promise.all([
+        hit('/api/audit/qnt30531-smoke'),
+        hit('/api/v1/reports/nav'),
+        hit('/api/broker/orders?limit=5'),
+        hit('/api/nav/eod-snapshots?limit=5'),
+        hit('/api/treasury/summary?fund_id=FUND1'),
+        hit('/api/capital/summary?fund_id=FUND1'),
+        hit('/api/onboarding/summary?fund_id=FUND1'),
+        hit('/api/multifund/summary?fund_id=FUND2')
+      ]);
+      document.getElementById('out').textContent = JSON.stringify(checks, null, 2);
+    }
+  </script>
+</body>
+</html>

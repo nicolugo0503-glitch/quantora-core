@@ -1,0 +1,23 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 180,
+    "minimum_score": 96.0,
+    "require_capital_adequacy_clear": true,
+    "require_liquidity_command_clear": true,
+    "require_resolution_control_clear": true,
+    "require_simulation_command_clear": true,
+    "minimum_stress_test_coverage": 0.95,
+    "minimum_model_traceability_score": 0.92,
+    "minimum_submission_readiness_score": 0.94,
+    "minimum_supervisory_challenge_response_score": 0.93
+  },
+  "runs": [],
+  "alerts": [],
+  "cycles": [],
+  "staged_submissions": [],
+  "supervisory_challenges": [],
+  "closed_challenges": [],
+  "latest_run": null,
+  "last_context": {}
+}

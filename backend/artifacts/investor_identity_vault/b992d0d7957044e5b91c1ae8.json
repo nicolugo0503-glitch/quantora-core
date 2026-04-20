@@ -1,0 +1,39 @@
+{
+  "email": "admin@quantora.local",
+  "documents": [
+    {
+      "doc_type": "government_id",
+      "title": "Government ID",
+      "status": "missing",
+      "uploaded_at": null,
+      "review_status": "not_submitted",
+      "notes": ""
+    },
+    {
+      "doc_type": "proof_of_address",
+      "title": "Proof of Address",
+      "status": "missing",
+      "uploaded_at": null,
+      "review_status": "not_submitted",
+      "notes": ""
+    },
+    {
+      "doc_type": "accreditation",
+      "title": "Accreditation Document",
+      "status": "missing",
+      "uploaded_at": null,
+      "review_status": "not_submitted",
+      "notes": ""
+    },
+    {
+      "doc_type": "tax_form",
+      "title": "Tax Form",
+      "status": "missing",
+      "uploaded_at": null,
+      "review_status": "not_submitted",
+      "notes": ""
+    }
+  ],
+  "created_at": 1776215341,
+  "updated_at": 1776215341
+}

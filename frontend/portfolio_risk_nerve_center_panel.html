@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — Portfolio Risk Nerve Center</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--panel2:#132742;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(15,29,49,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .sub{color:var(--muted);max-width:980px;line-height:1.5}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    button{border-radius:10px;border:none;background:var(--accent);color:var(--text);padding:10px 12px;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}.stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}
+    th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #274168;background:#0b1a2c;font-size:12px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:180px;white-space:pre-wrap}
+    @media (max-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:1fr}}
+    @media (max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT30451 — Portfolio Risk Nerve Center</h1>
+      <div class="sub">Cross-book exposure, limit surveillance, live alerts, and stress scenarios. This is the central risk surface that protects capital before scale creates fragility.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="loadAll()">Refresh</button>
+      <button onclick="seedExposure()">Seed Exposure</button>
+      <button onclick="seedLimit()">Seed Limit</button>
+      <button onclick="seedAlert()">Seed Alert</button>
+      <button onclick="seedStress()">Seed Stress</button>
+    </div>
+  </div>
+
+  <div class="grid" id="summaryGrid"></div>
+
+  <div class="layout">
+    <div class="stack">
+      <div class="card">
+        <h2>Exposure Registry</h2>
+        <div class="table-wrap"><table id="exposureTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Risk Limits</h2>
+        <div class="table-wrap"><table id="limitTable"></table></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card">
+        <h2>Risk Alerts</h2>
+        <div class="table-wrap"><table id="alertTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Stress Scenarios</h2>
+        <div class="table-wrap"><table id="stressTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Risk Health</h2>
+        <div class="pills" id="healthPills"></div>
+      </div>
+      <div class="card">
+        <h2>Last Action</h2>
+        <pre id="actionOut">No action yet.</pre>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const api=(path, opts={})=>fetch(path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok) throw new Error(d.detail||'request_failed'); return d;});
+const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(Number(v||0));
+function table(el, headers, rows){
+  const thead = `<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  const body = rows.length ? rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${headers.length}">No data</td></tr>`;
+  el.innerHTML = thead + body;
+}
+function renderSummary(summary){
+  const labels = [
+    ['Books', summary.books_tracked],
+    ['Gross Exposure', money(summary.gross_exposure)],
+    ['Net Exposure', money(summary.net_exposure)],
+    ['Breaches', summary.limits_breached],
+    ['Alerts', summary.live_alerts],
+    ['Risk Score', summary.risk_score]
+  ];
+  document.getElementById('summaryGrid').innerHTML = labels.map(([label,val])=>`<div class="card"><div class="label">${label}</div><div class="value">${val}</div></div>`).join('');
+}
+function pills(target, items){
+  document.getElementById(target).innerHTML = items.map(([label,klass])=>`<span class="pill ${klass}">${label}</span>`).join('');
+}
+async function loadAll(){
+  const data = await api('/workspace/risk/summary');
+  renderSummary(data.summary);
+  table(document.getElementById('exposureTable'),
+    ['Book','Asset Class','Gross','Net','1D VaR','Created'],
+    (data.exposures||[]).map(r=>[r.book_name, r.asset_class, money(r.gross_exposure), money(r.net_exposure), money(r.var_1d), r.created_at||'-'])
+  );
+  table(document.getElementById('limitTable'),
+    ['Limit','Type','Threshold','Current','Status'],
+    (data.limits||[]).map(r=>[r.limit_name, r.limit_type, money(r.threshold_value), money(r.current_value), r.status])
+  );
+  table(document.getElementById('alertTable'),
+    ['Alert','Severity','Status','Target','Created'],
+    (data.alerts||[]).map(r=>[r.alert_name, r.severity, r.status, r.target_ref, r.created_at||'-'])
+  );
+  table(document.getElementById('stressTable'),
+    ['Scenario','Loss','Capital Impact','Status','Created'],
+    (data.stress_tests||[]).map(r=>[r.scenario_name, money(r.loss_estimate), money(r.capital_impact), r.status, r.created_at||'-'])
+  );
+  pills('healthPills', [
+    [`Exposure ${data.risk_health.exposure_registry_ready?'Ready':'Missing'}`, data.risk_health.exposure_registry_ready?'good':'warn'],
+    [`Limits ${data.risk_health.limit_framework_ready?'Ready':'Missing'}`, data.risk_health.limit_framework_ready?'good':'warn'],
+    [`Alerts ${data.risk_health.alerting_ready?'Ready':'Missing'}`, data.risk_health.alerting_ready?'good':'warn'],
+    [`Stress ${data.risk_health.stress_engine_ready?'Ready':'Missing'}`, data.risk_health.stress_engine_ready?'good':'warn'],
+    [`Score ${data.risk_health.risk_score}`, data.risk_health.risk_score>=85?'good':'warn']
+  ]);
+}
+async function seedExposure(){
+  const res = await api('/workspace/risk/exposures/create', {method:'POST', body: JSON.stringify({book_name:'Core Book', asset_class:'equities', gross_exposure:125000, net_exposure:64000, var_1d:7200})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedLimit(){
+  const res = await api('/workspace/risk/limits/create', {method:'POST', body: JSON.stringify({limit_name:'Gross Exposure Cap', limit_type:'gross_exposure', threshold_value:150000, current_value:125000, status:'ok'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedAlert(){
+  const res = await api('/workspace/risk/alerts/create', {method:'POST', body: JSON.stringify({alert_name:'Sector Concentration Alert', severity:'medium', status:'open', target_ref:'core_book'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedStress(){
+  const res = await api('/workspace/risk/stress/create', {method:'POST', body: JSON.stringify({scenario_name:'Equity Gap Down 8%', loss_estimate:18000, capital_impact:22000, status:'pass'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+loadAll().catch(err => document.getElementById('actionOut').textContent = String(err));
+</script>
+</body>
+</html>

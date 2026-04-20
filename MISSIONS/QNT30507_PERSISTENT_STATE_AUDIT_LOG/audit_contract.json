@@ -1,0 +1,23 @@
+{
+  "state_file": "data/qnt30507_runtime_state.json",
+  "audit_file": "data/qnt30507_audit_log.jsonl",
+  "audit_events": [
+    "state_recovered_on_boot",
+    "loop_start",
+    "loop_pause",
+    "loop_resume",
+    "loop_kill",
+    "loop_set_interval",
+    "cycle_snapshot_persisted"
+  ],
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/api/audit/runtime-state"
+    },
+    {
+      "method": "GET",
+      "path": "/api/audit/logs"
+    }
+  ]
+}

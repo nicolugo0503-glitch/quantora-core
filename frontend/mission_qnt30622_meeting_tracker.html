@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30622 Investor Meeting Tracker + Due Diligence Room Workflow</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1440px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,select,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:90px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1400px){.grid{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30622 · Investor Meeting Tracker + Due Diligence Room Workflow</h1>
+        <div style="color:#9fb3d8">Tracks investor meetings, DD rooms, and due diligence request items across the fundraising workflow.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30621_pipeline.html">Opportunity Pipeline</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Meetings</div><div id="meetings" class="value">-</div></div>
+    <div class="card"><div class="label">DD Rooms</div><div id="rooms" class="value">-</div></div>
+    <div class="card"><div class="label">DD Items</div><div id="items" class="value">-</div></div>
+    <div class="card"><div class="label">Scheduled</div><div id="scheduled" class="value">-</div></div>
+    <div class="card"><div class="label">Completed</div><div id="completed" class="value">-</div></div>
+    <div class="card"><div class="label">Open DD Items</div><div id="openitems" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <input id="opportunityId" placeholder="Opportunity ID">
+    <input id="meetingTitle" placeholder="Meeting title" style="margin-top:12px">
+    <select id="meetingType" style="margin-top:12px">
+      <option value="intro">intro</option>
+      <option value="follow_up">follow_up</option>
+      <option value="dd_session">dd_session</option>
+      <option value="ic_review">ic_review</option>
+    </select>
+    <input id="scheduledFor" placeholder="Scheduled for" style="margin-top:12px">
+    <input id="owner" placeholder="Owner" style="margin-top:12px">
+    <input id="location" placeholder="Location" style="margin-top:12px" value="virtual">
+    <textarea id="notes" placeholder="Notes" style="margin-top:12px"></textarea>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="createMeeting()">Create Meeting</button>
+      <button onclick="createRoom()">Create DD Room</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <input id="roomId" placeholder="Room ID">
+    <input id="itemTitle" placeholder="DD item title" style="margin-top:12px">
+    <select id="itemType" style="margin-top:12px">
+      <option value="document_request">document_request</option>
+      <option value="questionnaire">questionnaire</option>
+      <option value="financials">financials</option>
+      <option value="legal">legal</option>
+    </select>
+    <select id="itemPriority" style="margin-top:12px">
+      <option value="normal">normal</option>
+      <option value="high">high</option>
+    </select>
+    <textarea id="itemDetail" placeholder="DD item detail" style="margin-top:12px"></textarea>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="addItem()">Add DD Item</button>
+      <button onclick="completeLatestMeeting()">Complete Latest Meeting</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Meeting / DD Ledger</div>
+    <table>
+      <thead><tr><th>Meeting</th><th>Type</th><th>Status</th><th>Owner</th><th>Opportunity</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">DD Workflow Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/dd-workflow/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data,null,2); return; }
+  const d = res.data || {};
+  document.getElementById('meetings').textContent = String(d.meeting_count || 0);
+  document.getElementById('rooms').textContent = String(d.room_count || 0);
+  document.getElementById('items').textContent = String(d.item_count || 0);
+  document.getElementById('scheduled').textContent = String(d.scheduled_meeting_count || 0);
+  document.getElementById('completed').textContent = String(d.completed_meeting_count || 0);
+  document.getElementById('openitems').textContent = String(d.open_item_count || 0);
+  document.getElementById('rows').innerHTML = (d.meetings || []).map(m =>
+    `<tr><td>${m.title}</td><td>${m.meeting_type}</td><td>${m.status}</td><td>${m.owner}</td><td>${m.opportunity_id}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function createMeeting(){
+  await j('/api/dd-workflow/meeting', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    opportunity_id: document.getElementById('opportunityId').value,
+    title: document.getElementById('meetingTitle').value,
+    meeting_type: document.getElementById('meetingType').value,
+    scheduled_for: document.getElementById('scheduledFor').value,
+    owner: document.getElementById('owner').value,
+    location: document.getElementById('location').value,
+    notes: document.getElementById('notes').value
+  })});
+  await load();
+}
+async function createRoom(){
+  await j('/api/dd-workflow/room', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    opportunity_id: document.getElementById('opportunityId').value,
+    room_name: 'Due Diligence Room',
+    owner: document.getElementById('owner').value,
+    access_level: 'controlled'
+  })});
+  await load();
+}
+async function addItem(){
+  await j('/api/dd-workflow/item', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    room_id: document.getElementById('roomId').value,
+    title: document.getElementById('itemTitle').value,
+    item_type: document.getElementById('itemType').value,
+    priority: document.getElementById('itemPriority').value,
+    detail: document.getElementById('itemDetail').value
+  })});
+  await load();
+}
+async function completeLatestMeeting(){
+  const res = await j('/api/dd-workflow/summary');
+  const latest = res.data.latest_meeting;
+  if(!latest) return;
+  await j('/api/dd-workflow/meeting/update', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    meeting_id: latest.meeting_id,
+    status: 'completed'
+  })});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

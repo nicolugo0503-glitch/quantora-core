@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30492 Control Panel</title>
+  <style>
+    :root { --bg:#08111f; --panel:#0e1a2b; --border:#1f3556; --text:#eef4ff; --muted:#9bb0ce; --accent:#5ea1ff; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; background:var(--bg); color:var(--text); padding:24px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:18px; }
+    .panel { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:16px; }
+    .btn { display:inline-block; color:#fff; background:#2455d6; border:1px solid #3f6fff; border-radius:10px; padding:10px 14px; text-decoration:none; font-weight:700; }
+    .controls { display:flex; gap:10px; flex-wrap:wrap; }
+    button, select { background:#12233b; color:var(--text); border:1px solid var(--border); border-radius:10px; padding:10px 12px; cursor:pointer; }
+    .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+    .stat { background:rgba(255,255,255,.02); border:1px solid var(--border); border-radius:12px; padding:14px; }
+    .label { color:var(--muted); font-size:13px; margin-bottom:6px; }
+    .value { font-size:24px; font-weight:700; }
+    @media (max-width:900px) { .grid { grid-template-columns:repeat(2,1fr); } }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div>
+      <h1 style="margin:0 0 6px">QNT30492 — Control Panel UI</h1>
+      <div style="color:var(--muted)">Deployable frontend route for operator controls.</div>
+    </div>
+    <a class="btn" href="index.html">Back to Command Center</a>
+  </div>
+
+  <div class="panel">
+    <h2 style="margin-top:0">System Controls</h2>
+    <div class="controls">
+      <button onclick="setStatus('running')">Start</button>
+      <button onclick="setStatus('paused')">Pause</button>
+      <button onclick="setStatus('killed')">Kill Switch</button>
+      <button onclick="tick()">Run Cycle</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="stat"><div class="label">Runtime Status</div><div class="value" id="status">idle</div></div>
+    <div class="stat"><div class="label">Active Fund</div><div class="value" id="fund">FUND1</div></div>
+    <div class="stat"><div class="label">Last NAV</div><div class="value" id="nav">$720,000</div></div>
+    <div class="stat"><div class="label">PnL</div><div class="value" id="pnl">$23,000</div></div>
+  </div>
+
+  <div class="panel">
+    <h2 style="margin-top:0">Mission Summary</h2>
+    <div style="color:var(--muted); line-height:1.5">
+      This is the deployable version of the QNT30492 control panel route. It lives inside the frontend so Railway can serve it directly.
+    </div>
+  </div>
+
+  <script>
+    let nav = 720000, pnl = 23000;
+    function money(v){ return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(v); }
+    function setStatus(v){ document.getElementById('status').textContent = v; }
+    function tick(){
+      nav += 1250;
+      pnl += 450;
+      document.getElementById('nav').textContent = money(nav);
+      document.getElementById('pnl').textContent = money(pnl);
+      document.getElementById('status').textContent = 'running';
+    }
+  </script>
+</body>
+</html>

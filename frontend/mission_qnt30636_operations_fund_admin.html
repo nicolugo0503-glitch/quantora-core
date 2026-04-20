@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>QNT30636 Operations & Fund Administration Layer</title>
+<style>
+:root{--bg:#071019;--panel:#0d1723;--line:#1b2b40;--text:#edf3fb;--muted:#8ea0b7;--good:#48d597;--bad:#ff6f86;--warn:#ffc857}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#071019,#09131d 55%,#071019);color:var(--text);font-family:Inter,Arial,sans-serif}.wrap{max-width:1500px;margin:0 auto;padding:28px}.hero,.card{background:rgba(13,23,35,.95);border:1px solid var(--line);border-radius:20px;box-shadow:0 22px 54px rgba(0,0,0,.35)}.hero{padding:26px}.label{font-size:11px;color:var(--muted);letter-spacing:.16em;text-transform:uppercase;font-weight:800}.hero h1{margin:10px 0 8px;font-size:42px}.sub{color:var(--muted);max-width:1080px;line-height:1.55}.toolbar,.grid2,.grid3,.grid4{display:grid;gap:14px}.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}.grid4{grid-template-columns:repeat(4,1fr);margin-top:18px}.grid3{grid-template-columns:1.15fr 1fr 1fr;margin-top:18px}.grid2{grid-template-columns:1fr 1fr;margin-top:18px}.card{padding:18px}.value{font-size:26px;font-weight:800;margin-top:8px}.tiny{font-size:12px;color:var(--muted)}button,input,textarea{background:#0b1520;color:var(--text);border:1px solid var(--line);padding:11px 14px;border-radius:12px;font:inherit}.btn{cursor:pointer;font-weight:700}.primary{background:#fff;color:#0a0e14}textarea{min-height:100px;width:100%}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #1a293d;font-size:13px;vertical-align:top}th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}pre{background:#09111a;border:1px solid var(--line);padding:14px;border-radius:14px;min-height:280px;max-height:720px;overflow:auto}.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}@media(max-width:1100px){.grid4,.grid3,.grid2{grid-template-columns:1fr 1fr}}@media(max-width:760px){.grid4,.grid3,.grid2{grid-template-columns:1fr}.wrap{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="label">QNT30636</div>
+    <h1>Operations &amp; Fund Administration Layer</h1>
+    <div class="sub">The institutional close-control surface for Quantora. Period close packets, reconciliation oversight, exception tracking, break visibility, and NAV locking now sit in one operator layer so the autonomous stack can be governed like a real fund administrator.</div>
+    <div class="toolbar">
+      <button class="btn primary" onclick="bootstrapDemo()">Bootstrap Ops Demo</button>
+      <button class="btn" onclick="runClose()">Run Close Packet</button>
+      <button class="btn" onclick="lockPeriod()">Lock Period</button>
+      <button class="btn" onclick="unlockPeriod()">Unlock Period</button>
+      <button class="btn" onclick="window.location.href='mission_qnt30633_governance_compliance.html'">Open Governance Layer</button>
+      <button class="btn" onclick="window.location.href='index.html'">Back to Command Center</button>
+    </div>
+  </div>
+
+  <div class="grid4">
+    <div class="card"><div class="label">NAV Status</div><div id="navStatus" class="value">-</div><div class="tiny">Period lock state</div></div>
+    <div class="card"><div class="label">Reconciliation</div><div id="reconStatus" class="value">-</div><div class="tiny">Close-readiness signal</div></div>
+    <div class="card"><div class="label">Open Breaks</div><div id="breakCount" class="value">-</div><div class="tiny">Actionable operations alerts</div></div>
+    <div class="card"><div class="label">Open Exceptions</div><div id="exceptionCount" class="value">-</div><div class="tiny">Unresolved reconciliation exceptions</div></div>
+  </div>
+
+  <div class="grid3">
+    <div class="card"><div class="label">Capital Snapshot</div><table><tbody id="capitalRows"></tbody></table></div>
+    <div class="card"><div class="label">Close Controls</div><textarea id="opsNotes" placeholder="Close notes / operator memo"></textarea><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button class="btn" onclick="runClose()">Generate Packet</button><button class="btn" onclick="lockPeriod()">Lock Current Period</button></div><div class="tiny" style="margin-top:10px">Close packets capture the fund admin state for the active reporting period.</div></div>
+    <div class="card"><div class="label">Latest Close Packet</div><pre id="packetBox">Loading...</pre></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><div class="label">Reconciliation &amp; Breaks</div><pre id="opsSummary">Loading...</pre></div>
+    <div class="card"><div class="label">Period Lock</div><pre id="lockBox">Loading...</pre></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><div class="label">Close Packets</div><table><thead><tr><th>Period</th><th>Status</th><th>Breaks</th><th>Statements</th></tr></thead><tbody id="packetRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+    <div class="card"><div class="label">Operations Notes</div><table><thead><tr><th>Type</th><th>Reason</th><th>Time</th></tr></thead><tbody id="noteRows"><tr><td colspan="3">Loading...</td></tr></tbody></table></div>
+  </div>
+</div>
+<script>
+const stamp=ts=>ts?new Date(Number(ts)*1000).toISOString().replace('T',' ').slice(0,16):'-';
+async function j(url,opt){const r=await fetch(url,opt);const d=await r.json();if(!r.ok) throw new Error(d.detail||'request failed');return d;}
+function notes(){return document.getElementById('opsNotes').value.trim();}
+function classForStatus(v){const t=String(v||'').toLowerCase();if(t.includes('clean')||t.includes('locked')||t.includes('ready')) return 'good';if(t.includes('attention')||t.includes('open')||t.includes('issue')) return 'warn';return 'bad';}
+function render(data){
+  document.getElementById('navStatus').textContent=(data.nav_status||'-').toUpperCase();
+  document.getElementById('navStatus').className='value '+classForStatus(data.nav_status);
+  document.getElementById('reconStatus').textContent=(data.reconciliation_status||'-').toUpperCase();
+  document.getElementById('reconStatus').className='value '+classForStatus(data.reconciliation_status);
+  document.getElementById('breakCount').textContent=data.open_break_count||0;
+  document.getElementById('breakCount').className='value '+((data.open_break_count||0)>0?'warn':'good');
+  document.getElementById('exceptionCount').textContent=data.open_exception_count||0;
+  document.getElementById('exceptionCount').className='value '+((data.open_exception_count||0)>0?'warn':'good');
+  const cap=data.capital_summary||{};
+  document.getElementById('capitalRows').innerHTML=`<tr><th>Committed</th><td>$${Number(cap.committed||0).toLocaleString()}</td></tr><tr><th>Funded</th><td>$${Number(cap.funded||0).toLocaleString()}</td></tr><tr><th>NAV</th><td>$${Number(cap.nav||0).toLocaleString()}</td></tr><tr><th>Investors</th><td>${cap.investor_count||0}</td></tr>`;
+  document.getElementById('packetBox').textContent=JSON.stringify(data.latest_close_packet||{},null,2);
+  document.getElementById('opsSummary').textContent=JSON.stringify({reconciliation:data.reconciliation_summary,breaks:data.break_summary,exceptions:data.exception_summary,corrections:data.correction_summary,supervisory:data.supervisory_summary,performance:data.performance_summary},null,2);
+  document.getElementById('lockBox').textContent=JSON.stringify(data.period_lock||{},null,2);
+  const packets=data.close_packets||[];
+  document.getElementById('packetRows').innerHTML=packets.length?packets.slice(0,12).map(p=>`<tr><td>${p.period}</td><td class="${classForStatus(p.status)}">${p.status}</td><td>${p.open_break_count||0}</td><td>${p.statement_batch_count||0}</td></tr>`).join(''):'<tr><td colspan="4">No packets yet.</td></tr>';
+  const notesRows=data.ops_notes||[];
+  document.getElementById('noteRows').innerHTML=notesRows.length?notesRows.slice(0,12).map(n=>`<tr><td>${n.type||'-'}</td><td>${n.reason||'-'}</td><td>${stamp(n.timestamp)}</td></tr>`).join(''):'<tr><td colspan="3">No operator notes yet.</td></tr>';
+}
+async function loadAll(){render(await j('/api/operations-fund-admin/summary'));}
+async function bootstrapDemo(){await j('/api/operations-fund-admin/bootstrap-demo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({notes:notes()})});await loadAll();}
+async function runClose(){await j('/api/operations-fund-admin/run-close',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({notes:notes()})});await loadAll();}
+async function lockPeriod(){await j('/api/operations-fund-admin/lock-period',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({reason:notes()||'Locked in QNT30636'})});await loadAll();}
+async function unlockPeriod(){await j('/api/operations-fund-admin/unlock-period',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({reason:notes()||'Unlocked in QNT30636'})});await loadAll();}
+loadAll();
+</script>
+</body>
+</html>

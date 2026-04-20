@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30603 Broker Reconciliation Bridge + Alpaca Match Engine</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1420px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,textarea,select{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,textarea,select{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:84px}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr 2fr auto auto;gap:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:420px}
+.good{color:#10b981}
+.bad{color:#ef4444}
+@media(max-width:1400px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30603 · Broker Reconciliation Bridge + Alpaca Match Engine</h1>
+        <div style="color:#9fb3d8">Matches internal trade attribution against broker trades and surfaces breaks, unexpected fills, and missing executions.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30602_audit_trail.html">Audit Trail</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Runs</div><div id="runs" class="value">-</div></div>
+    <div class="card"><div class="label">Matched Runs</div><div id="matchedRuns" class="value">-</div></div>
+    <div class="card"><div class="label">Break Runs</div><div id="breakRuns" class="value">-</div></div>
+    <div class="card"><div class="label">Broker Trades</div><div id="brokerTrades" class="value">-</div></div>
+    <div class="card"><div class="label">Latest Status</div><div id="status" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="tradeId" placeholder="Broker trade id">
+      <input id="symbol" placeholder="Symbol">
+      <select id="side"><option value="buy">buy</option><option value="sell">sell</option></select>
+      <input id="qty" placeholder="Qty">
+      <input id="price" placeholder="Price">
+      <textarea id="notes" placeholder="Notes"></textarea>
+      <button onclick="addBrokerTrade()">Add Broker Trade</button>
+      <button onclick="runRecon()">Run Match</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Latest Match Results</div>
+    <table>
+      <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Broker Reconciliation Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/broker-reconciliation/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  const run = d.latest_run || {};
+  document.getElementById('runs').textContent = String(d.run_count || 0);
+  document.getElementById('matchedRuns').textContent = String(d.matched_run_count || 0);
+  document.getElementById('breakRuns').textContent = String(d.break_run_count || 0);
+  document.getElementById('brokerTrades').textContent = String(d.broker_trade_count || 0);
+  document.getElementById('status').textContent = String(run.status || '-');
+  document.getElementById('status').className = 'value ' + ((run.status === 'matched') ? 'good' : 'bad');
+  const rows = [
+    ['Internal trades', run.internal_trade_count || 0],
+    ['Broker trades', run.broker_trade_count || 0],
+    ['Matched', run.matched_count || 0],
+    ['Missing in broker', run.missing_in_broker_count || 0],
+    ['Unexpected broker', run.unexpected_broker_count || 0],
+  ];
+  document.getElementById('rows').innerHTML = rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function addBrokerTrade(){
+  await j('/api/broker-reconciliation/add-broker-trade', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    broker_trade_id: document.getElementById('tradeId').value,
+    symbol: document.getElementById('symbol').value,
+    side: document.getElementById('side').value,
+    qty: Number(document.getElementById('qty').value || 0),
+    price: Number(document.getElementById('price').value || 0),
+    notes: document.getElementById('notes').value
+  })});
+  await load();
+}
+async function runRecon(){
+  await j('/api/broker-reconciliation/run', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({notes: document.getElementById('notes').value})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

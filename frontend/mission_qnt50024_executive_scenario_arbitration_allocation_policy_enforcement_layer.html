@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>QNT50024 - Executive Scenario Arbitration + Allocation Policy Enforcement Layer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background:#0f172a; color:#e2e8f0; }
+    .card { background:#111827; border:1px solid #334155; border-radius:12px; padding:20px; max-width:1000px; }
+    h1,h2 { margin-top:0; }
+    code { background:#1e293b; padding:2px 6px; border-radius:6px; }
+    ul { line-height:1.6; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>QNT50024 — Executive Scenario Arbitration + Allocation Policy Enforcement Layer</h1>
+    <p>Institutional executive layer that arbitrates capital scenarios against committee context, liquidity posture, and allocation policy, then issues governed directives for downstream execution and treasury systems.</p>
+    <h2>Capabilities</h2>
+    <ul>
+      <li>Synchronizes committee, autonomous control, risk, treasury, performance, deployment, and intercompany posture.</li>
+      <li>Registers allocation policies with allowed and blocked action scopes, thresholds, and entity context.</li>
+      <li>Arbitrates proposed capital changes using resilience, policy alignment, downside, and liquidity coverage scoring.</li>
+      <li>Issues enforceable directives only when scenario decisions clear policy and institutional control thresholds.</li>
+    </ul>
+    <h2>Primary endpoints</h2>
+    <ul>
+      <li><code>GET /executive-arbitration/health</code></li>
+      <li><code>GET /executive-arbitration/summary</code></li>
+      <li><code>POST /executive-arbitration/register-policy</code></li>
+      <li><code>POST /executive-arbitration/arbitrate</code></li>
+      <li><code>POST /executive-arbitration/enforce-policy</code></li>
+      <li><code>POST /executive-arbitration/reset</code></li>
+    </ul>
+  </div>
+</body>
+</html>

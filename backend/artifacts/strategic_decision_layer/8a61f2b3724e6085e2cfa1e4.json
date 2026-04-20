@@ -1,0 +1,58 @@
+{
+  "email": "qnt30650@test.local",
+  "policy": {
+    "product_scale_score": 70.0,
+    "product_retire_score": 38.0,
+    "high_confidence_threshold": 82.0,
+    "distribution_priority_floor": 55.0,
+    "max_directives": 5
+  },
+  "runs": [
+    {
+      "run_id": "sdl_1775711166",
+      "trigger": "test",
+      "timestamp": "2026-04-09T05:06:06.390478+00:00",
+      "operating_posture": "capitalization-pending",
+      "confidence_score": 0.0,
+      "directive_count": 0,
+      "risk_alert_count": 0,
+      "capital_overview": {
+        "total_nav": 0.0,
+        "deployable_capital": 0.0,
+        "cash_reserve": 0.0,
+        "directive_count": 0
+      },
+      "capital_directives": [],
+      "strategy_rankings": [],
+      "product_decisions": [],
+      "distribution_priorities": [
+        {
+          "channel": "private_placements",
+          "priority": "watch",
+          "score": 50.4,
+          "recommended_focus": "monitor"
+        },
+        {
+          "channel": "family_offices",
+          "priority": "watch",
+          "score": 4.3333,
+          "recommended_focus": "monitor"
+        },
+        {
+          "channel": "ria_platforms",
+          "priority": "watch",
+          "score": 0.0,
+          "recommended_focus": "monitor"
+        },
+        {
+          "channel": "institutional_allocators",
+          "priority": "watch",
+          "score": 0.0,
+          "recommended_focus": "monitor"
+        }
+      ]
+    }
+  ],
+  "created_at": 1775711166,
+  "updated_at": 1775711166
+}

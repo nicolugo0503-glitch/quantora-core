@@ -1,0 +1,42 @@
+{
+  "checks": {
+    "frontend/mission_qnt30637_external_reporting.html": true,
+    "frontend/mission_qnt30638_treasury.html": true,
+    "frontend/mission_qnt30639_capital_scaling.html": true,
+    "frontend/mission_qnt30640_capital_intake.html": true,
+    "frontend/mission_registry.json": true,
+    "frontend/index.html": true,
+    "registry_has_30637_30640": true,
+    "index_dynamic_loader": true
+  },
+  "page_checks": {
+    "mission_qnt30640_capital_intake.html": {
+      "has_title": true,
+      "has_stats": true,
+      "has_table": true,
+      "has_audit": true,
+      "has_back_button": true
+    },
+    "mission_qnt30639_capital_scaling.html": {
+      "has_title": true,
+      "has_stats": true,
+      "has_table": true,
+      "has_audit": true,
+      "has_back_button": true
+    },
+    "mission_qnt30638_treasury.html": {
+      "has_title": true,
+      "has_stats": true,
+      "has_table": true,
+      "has_audit": true,
+      "has_back_button": true
+    },
+    "mission_qnt30637_external_reporting.html": {
+      "has_title": true,
+      "has_stats": true,
+      "has_table": true,
+      "has_audit": true,
+      "has_back_button": true
+    }
+  }
+}

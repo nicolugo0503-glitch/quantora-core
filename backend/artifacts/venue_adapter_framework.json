@@ -1,0 +1,124 @@
+{
+  "enabled": true,
+  "last_updated_at": null,
+  "last_normalized_at": null,
+  "last_schema_at": null,
+  "last_market_data_at": null,
+  "normalizations": 0,
+  "schemas_prepared": 0,
+  "market_snapshots": 0,
+  "venue_registry": {
+    "alpaca": {
+      "venue_id": "alpaca",
+      "asset_classes": [
+        "equities",
+        "crypto"
+      ],
+      "latency_ms": 42,
+      "status": "active"
+    },
+    "binance": {
+      "venue_id": "binance",
+      "asset_classes": [
+        "crypto"
+      ],
+      "latency_ms": 28,
+      "status": "standby"
+    },
+    "oanda": {
+      "venue_id": "oanda",
+      "asset_classes": [
+        "forex"
+      ],
+      "latency_ms": 34,
+      "status": "standby"
+    },
+    "ibkr": {
+      "venue_id": "ibkr",
+      "asset_classes": [
+        "equities",
+        "futures",
+        "forex"
+      ],
+      "latency_ms": 57,
+      "status": "standby"
+    }
+  },
+  "symbol_map": {
+    "AAPL": {
+      "equities": "AAPL",
+      "crypto": "AAPL/USD",
+      "forex": "AAPL_SYNTH",
+      "futures": "AAPL.FUT"
+    },
+    "BTCUSD": {
+      "crypto": "BTC/USD",
+      "equities": "BTC-ETF",
+      "forex": "BTCUSD",
+      "futures": "BTC.FUT"
+    },
+    "ETHUSD": {
+      "crypto": "ETH/USD",
+      "equities": "ETH-ETF",
+      "forex": "ETHUSD",
+      "futures": "ETH.FUT"
+    },
+    "EURUSD": {
+      "forex": "EUR/USD",
+      "crypto": "EURUSD",
+      "equities": "FXE",
+      "futures": "6E"
+    },
+    "NQ": {
+      "futures": "NQ",
+      "equities": "QQQ",
+      "crypto": "NQ_SYNTH",
+      "forex": "NQ_SYNTH"
+    }
+  },
+  "order_schemas": {
+    "alpaca": {
+      "side_field": "side",
+      "qty_field": "qty",
+      "type_field": "type",
+      "time_in_force_field": "time_in_force"
+    },
+    "binance": {
+      "side_field": "side",
+      "qty_field": "quantity",
+      "type_field": "type",
+      "time_in_force_field": "timeInForce"
+    },
+    "oanda": {
+      "side_field": "units_sign",
+      "qty_field": "units",
+      "type_field": "type",
+      "time_in_force_field": "timeInForce"
+    },
+    "ibkr": {
+      "side_field": "action",
+      "qty_field": "totalQuantity",
+      "type_field": "orderType",
+      "time_in_force_field": "tif"
+    }
+  },
+  "market_data": {
+    "equities": {
+      "default_source": "iex-sim",
+      "top_of_book_latency_ms": 25
+    },
+    "crypto": {
+      "default_source": "binance-sim",
+      "top_of_book_latency_ms": 18
+    },
+    "forex": {
+      "default_source": "oanda-sim",
+      "top_of_book_latency_ms": 22
+    },
+    "futures": {
+      "default_source": "cme-sim",
+      "top_of_book_latency_ms": 20
+    }
+  },
+  "telemetry": []
+}

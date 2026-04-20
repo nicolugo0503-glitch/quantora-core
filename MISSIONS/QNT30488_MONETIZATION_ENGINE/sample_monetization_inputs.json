@@ -1,0 +1,59 @@
+{
+  "subscription_plans": [
+    {
+      "plan_id": "PRO",
+      "monthly_price": 299.0,
+      "features": [
+        "multi-fund access",
+        "investor reporting",
+        "allocation analytics"
+      ]
+    },
+    {
+      "plan_id": "INSTITUTIONAL",
+      "monthly_price": 2500.0,
+      "features": [
+        "aum reporting",
+        "custom sleeves",
+        "white-glove onboarding"
+      ]
+    }
+  ],
+  "active_accounts": [
+    {
+      "account_id": "ACC001",
+      "plan_id": "PRO"
+    },
+    {
+      "account_id": "ACC002",
+      "plan_id": "PRO"
+    },
+    {
+      "account_id": "ACC003",
+      "plan_id": "INSTITUTIONAL"
+    }
+  ],
+  "management_fee_example": {
+    "fund_id": "FUND1",
+    "annual_rate": 0.02,
+    "avg_aum": 1000000.0,
+    "period_days": 30
+  },
+  "performance_fee_example": {
+    "fund_id": "FUND1",
+    "rate": 0.2,
+    "hurdle_return": 0.02,
+    "net_profit": 120000.0,
+    "starting_nav": 1000000.0
+  },
+  "investor_allocations": [
+    {
+      "investor_id": "INV001",
+      "market_value": 432000.0
+    },
+    {
+      "investor_id": "INV002",
+      "market_value": 288000.0
+    }
+  ]
+}

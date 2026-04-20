@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30493 Real Control Panel</title>
+  <style>
+    :root { --bg:#08111f; --panel:#0e1a2b; --border:#1f3556; --text:#eef4ff; --muted:#9bb0ce; --good:#33d17a; --warn:#f6c445; --bad:#ff6b6b; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; background:var(--bg); color:var(--text); padding:24px; }
+    .btn, button {
+      display:inline-block; color:#fff; background:#2455d6; border:1px solid #3f6fff; border-radius:10px;
+      padding:10px 14px; text-decoration:none; font-weight:700; cursor:pointer;
+    }
+    .btn.secondary, button.secondary { background:#12233b; border-color:var(--border); }
+    .panel { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:16px; }
+    .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+    .stat { background:rgba(255,255,255,.02); border:1px solid var(--border); border-radius:12px; padding:14px; }
+    .label { color:var(--muted); font-size:13px; margin-bottom:6px; }
+    .value { font-size:24px; font-weight:700; }
+    table { width:100%; border-collapse:collapse; }
+    th,td { padding:10px 8px; border-bottom:1px solid rgba(255,255,255,.06); text-align:left; }
+    th { color:var(--muted); }
+    .muted { color:var(--muted); }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:18px; }
+    .controls { display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+    .status-good { color:var(--good); }
+    .status-warn { color:var(--warn); }
+    .status-bad { color:var(--bad); }
+    .toggle-row { display:flex; gap:16px; flex-wrap:wrap; align-items:center; margin-top:10px; }
+    .toggle-label { color:var(--muted); font-size:14px; }
+    .banner { border-radius:12px; padding:12px 14px; margin-top:10px; }
+    .banner.warn { background:rgba(246,196,69,.12); border:1px solid rgba(246,196,69,.35); color:#f6e3a2; }
+    .banner.bad { background:rgba(255,107,107,.12); border:1px solid rgba(255,107,107,.35); color:#ffc3c3; }
+    @media (max-width:1100px) { .grid { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:700px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div>
+      <h1 style="margin:0 0 6px">QNT30493 — Real Control Panel</h1>
+      <div class="muted">QNT30504 strict live mode: true end-to-end state with optional fallback disabled.</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn secondary" href="conversation_missions_hub.html">Back to Missions Hub</a>
+      <a class="btn" href="index.html">Back to Command Center</a>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2 style="margin:0 0 8px">Runtime Controls</h2>
+    <div class="muted">In strict live mode, the panel will refuse to silently fall back to demo data.</div>
+    <div class="controls">
+      <button onclick="sendControl('start')">Start</button>
+      <button onclick="sendControl('pause')">Pause</button>
+      <button onclick="sendControl('resume')">Resume</button>
+      <button onclick="sendControl('kill')" class="secondary">Kill Switch</button>
+      <button onclick="refreshNow()" class="secondary">Refresh</button>
+    </div>
+    <div class="toggle-row">
+      <label class="toggle-label"><input type="checkbox" id="strictLiveToggle" checked> Strict live mode</label>
+      <label class="toggle-label"><input type="checkbox" id="autoRefreshToggle" checked> Auto refresh</label>
+    </div>
+    <div id="modeBanner" class="banner warn">Strict live mode is enabled. If backend endpoints are missing, this panel will show that explicitly instead of demo data.</div>
+  </div>
+
+  <div class="grid">
+    <div class="stat"><div class="label">Runtime Status</div><div class="value" id="runtimeStatus">loading</div></div>
+    <div class="stat"><div class="label">Cycle Count</div><div class="value" id="cycleCount">--</div></div>
+    <div class="stat"><div class="label">Last NAV</div><div class="value" id="lastNav">--</div></div>
+    <div class="stat"><div class="label">PnL</div><div class="value" id="lastPnl">--</div></div>
+  </div>
+
+  <div class="panel">
+    <h2 style="margin-top:0">Allocation Breakdown</h2>
+    <table>
+      <thead><tr><th>Sleeve</th><th>Capital</th></tr></thead>
+      <tbody id="allocationRows"></tbody>
+    </table>
+  </div>
+
+  <div class="panel">
+    <h2 style="margin-top:0">Investor Overview</h2>
+    <table>
+      <thead><tr><th>Investor</th><th>Fund</th><th>Market Value</th><th>Ownership %</th></tr></thead>
+      <tbody id="investorRows"></tbody>
+    </table>
+  </div>
+
+  <div class="panel">
+    <h2 style="margin-top:0">Live Wiring Status</h2>
+    <div class="muted" id="wiringStatus">checking backend connectivity...</div>
+    <div class="muted" id="lastUpdated" style="margin-top:8px"></div>
+  </div>
+
+  <script src="qnt30501_live_system_client.js"></script>
+  <script>
+    function money(v) {
+      return new Intl.NumberFormat('en-US', { style:'currency', currency:'USD', maximumFractionDigits:0 }).format(Number(v || 0));
+    }
+    function pct(v) {
+      return Number(v || 0).toFixed(2) + '%';
+    }
+    function setStatusText(el, text) {
+      el.textContent = text;
+      el.classList.remove('status-good','status-warn','status-bad');
+      const t = String(text || '').toLowerCase();
+      if (t.includes('running') || t.includes('ok') || t.includes('live')) el.classList.add('status-good');
+      else if (t.includes('pause') || t.includes('fallback') || t.includes('simulation')) el.classList.add('status-warn');
+      else if (t.includes('kill') || t.includes('error') || t.includes('stopped') || t.includes('missing')) el.classList.add('status-bad');
+    }
+
+    function strictLiveEnabled() {
+      return document.getElementById('strictLiveToggle').checked;
+    }
+    function autoRefreshEnabled() {
+      return document.getElementById('autoRefreshToggle').checked;
+    }
+
+    async function render() {
+      const data = await window.QNT30501Client.loadAll({ strictLive: strictLiveEnabled() });
+      const runtime = data.runtime || {};
+      const exposure = data.exposure || {};
+      const funds = Array.isArray(data.funds) ? data.funds : [];
+      const investors = Array.isArray(data.investors) ? data.investors : [];
+      const strictError = Boolean(data.strict_error);
+
+      setStatusText(document.getElementById('runtimeStatus'), runtime.status || 'unknown');
+      document.getElementById('cycleCount').textContent = runtime.cycle_count ?? runtime.cycleCount ?? '--';
+      document.getElementById('lastNav').textContent = money(runtime.nav || runtime.last_nav || 0);
+      document.getElementById('lastPnl').textContent = money(exposure.pnl || exposure.total_pnl || runtime.pnl || 0);
+
+      const allocationRows = document.getElementById('allocationRows');
+      allocationRows.innerHTML = '';
+      if (!funds.length) {
+        allocationRows.innerHTML = '<tr><td colspan="2" class="muted">No live sleeve data available.</td></tr>';
+      } else {
+        funds.forEach(row => {
+          const sleeve = row.sleeve || row.name || row.label || 'Unknown Sleeve';
+          const capital = row.capital || row.market_value || row.amount || 0;
+          allocationRows.innerHTML += `<tr><td>${sleeve}</td><td>${money(capital)}</td></tr>`;
+        });
+      }
+
+      const investorRows = document.getElementById('investorRows');
+      investorRows.innerHTML = '';
+      if (!investors.length) {
+        investorRows.innerHTML = '<tr><td colspan="4" class="muted">No live investor rows available.</td></tr>';
+      } else {
+        investors.forEach(row => {
+          investorRows.innerHTML += `<tr>
+            <td>${row.investor || row.investor_name || 'Unknown Investor'}</td>
+            <td>${row.fund || row.fund_id || '--'}</td>
+            <td>${money(row.market_value || 0)}</td>
+            <td>${pct(row.ownership_pct || 0)}</td>
+          </tr>`;
+        });
+      }
+
+      const banner = document.getElementById('modeBanner');
+      if (strictError) {
+        banner.className = 'banner bad';
+        banner.textContent = 'Strict live mode is enabled and live backend endpoints were not found. Fallback is disabled.';
+        document.getElementById('wiringStatus').textContent = 'No live backend data detected.';
+      } else if (runtime.status === 'simulation-fallback') {
+        banner.className = 'banner warn';
+        banner.textContent = 'Strict live mode is disabled. Panel is using safe fallback data.';
+        document.getElementById('wiringStatus').textContent = 'Backend endpoints not detected. Panel is running in fallback mode.';
+      } else {
+        banner.className = 'banner warn';
+        banner.textContent = 'Live backend endpoints detected. Panel is consuming real system state.';
+        document.getElementById('wiringStatus').textContent = 'Live backend data detected and flowing.';
+      }
+
+      document.getElementById('lastUpdated').textContent = 'Last updated: ' + (runtime.last_updated || new Date().toISOString());
+    }
+
+    async function sendControl(action) {
+      const res = await window.QNT30501Client.postControl(action);
+      if (!res) {
+        alert('No live control endpoint detected yet.');
+      } else {
+        alert('Control action sent: ' + action);
+      }
+      await render();
+    }
+
+    async function refreshNow() {
+      await render();
+    }
+
+    document.getElementById('strictLiveToggle').addEventListener('change', render);
+    document.getElementById('autoRefreshToggle').addEventListener('change', render);
+
+    render();
+    setInterval(() => {
+      if (autoRefreshEnabled()) render();
+    }, window.QNT30501Client.DEFAULT_POLL_MS);
+  </script>
+</body>
+</html>

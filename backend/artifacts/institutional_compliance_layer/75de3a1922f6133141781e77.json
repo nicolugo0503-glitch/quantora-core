@@ -1,0 +1,23 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "min_required_documents": 4,
+    "minimum_approved_documents": 3,
+    "max_blocked_events": 0,
+    "max_pending_approvals": 2,
+    "max_critical_constraints": 0,
+    "max_open_queue_cases": 1,
+    "minimum_growth_capacity": 62.0,
+    "minimum_confidence_score": 58.0,
+    "require_audit_chain": true,
+    "require_live_approval": true,
+    "jurisdiction_mode": "US_FIRST",
+    "approved_jurisdictions": [
+      "US",
+      "MX"
+    ]
+  },
+  "runs": [],
+  "created_at": 1775712870,
+  "updated_at": 1775712870
+}

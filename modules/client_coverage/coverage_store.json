@@ -1,0 +1,37 @@
+{
+  "module": "QNT30647",
+  "name": "Institutional Client Coverage Layer",
+  "created_at": "2026-04-08T22:46:54.564880+00:00",
+  "clients": [
+    {
+      "client_id": "CLIENT_001",
+      "name": "Atlas Family Office",
+      "channel_origin": "CHAN_FAMILY_OFFICE_01",
+      "relationship_status": "diligencing",
+      "current_capital": 2500000,
+      "potential_capital": 10000000,
+      "engagement_score": 82,
+      "priority_tier": "tier_1",
+      "coverage_owner_id": "OWNER_IR_01",
+      "created_at": "2026-04-08T22:46:54.564900+00:00"
+    }
+  ],
+  "interactions": [
+    {
+      "interaction_id": "INT_001",
+      "client_id": "CLIENT_001",
+      "type": "meeting",
+      "summary": "Reviewed Quantora Growth Vehicle diligence pack.",
+      "capital_discussion": 2500000,
+      "created_at": "2026-04-08T22:46:54.564906+00:00"
+    },
+    {
+      "interaction_id": "INT_002",
+      "client_id": "CLIENT_001",
+      "type": "follow_up",
+      "summary": "Confirmed vehicle eligibility and reporting cadence.",
+      "capital_discussion": 0,
+      "created_at": "2026-04-08T22:46:54.564909+00:00"
+    }
+  ]
+}

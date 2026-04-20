@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Quantora Marketplace</title>
+<style>
+body{font-family:Arial;margin:24px;background:#0f172a;color:#e2e8f0}
+.card{border:1px solid #334155;border-radius:10px;padding:16px;margin-bottom:16px;background:#111827}
+input,button{padding:8px;margin:4px;border-radius:8px;border:1px solid #475569}
+pre{background:#020617;padding:12px;border-radius:8px}
+</style>
+</head>
+<body>
+<h1>QNT30441 — Capital Allocation Marketplace</h1>
+
+<div class="card">
+  <h3>Publish Strategy</h3>
+  <input id="s_name" value="Alpha Core"/>
+  <input id="s_desc" value="Momentum + mean reversion"/>
+  <input id="s_risk" value="balanced"/>
+  <button onclick="publish()">Publish</button>
+</div>
+
+<div class="card">
+  <h3>Create Mandate</h3>
+  <input id="m_sid" placeholder="strategy_id"/>
+  <input id="m_target" value="1000000"/>
+  <input id="m_min" value="25000"/>
+  <button onclick="mandate()">Create</button>
+</div>
+
+<div class="card">
+  <h3>Allocate Capital</h3>
+  <input id="a_mid" placeholder="mandate_id"/>
+  <input id="a_inv" value="Founding LP"/>
+  <input id="a_amt" value="50000"/>
+  <button onclick="alloc()">Allocate</button>
+</div>
+
+<div class="card">
+  <button onclick="load()">Refresh Summary</button>
+  <a href="/workspace/marketplace/summary" target="_blank">Open JSON</a>
+  <pre id="out"></pre>
+</div>
+
+<script>
+async function post(u,p){const r=await fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)});return await r.json();}
+async function publish(){
+ const j=await post('/workspace/marketplace/strategies/publish',{name:document.getElementById('s_name').value,description:document.getElementById('s_desc').value,risk_profile:document.getElementById('s_risk').value});
+ alert('Published: '+j.strategy.strategy_id);
+}
+async function mandate(){
+ const j=await post('/workspace/marketplace/mandates/create',{strategy_id:document.getElementById('m_sid').value,capital_target:document.getElementById('m_target').value,min_ticket:document.getElementById('m_min').value});
+ alert('Mandate: '+j.mandate.mandate_id);
+}
+async function alloc(){
+ const j=await post('/workspace/marketplace/allocate',{mandate_id:document.getElementById('a_mid').value,investor_name:document.getElementById('a_inv').value,amount:document.getElementById('a_amt').value});
+ alert('Allocation: '+j.allocation.allocation_id);
+ load();
+}
+async function load(){
+ const r=await fetch('/workspace/marketplace/summary'); const j=await r.json();
+ document.getElementById('out').textContent=JSON.stringify(j,null,2);
+}
+load();
+</script>
+</body>
+</html>

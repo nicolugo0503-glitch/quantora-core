@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>QNT30382 Broker Integration Layer</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background: #0b1020; color: #e8ecf3; }
+    .card { background: #141b34; border: 1px solid #263257; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+    button { padding: 10px 14px; border-radius: 8px; border: 0; cursor: pointer; }
+    input, select { padding: 8px; width: 100%; margin-top: 6px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #44527a; background: #0f1530; color: #fff; }
+    pre { white-space: pre-wrap; background: #0a0f22; padding: 12px; border-radius: 8px; border: 1px solid #263257; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  </style>
+</head>
+<body>
+  <h1>QNT30382 — Broker Integration Layer</h1>
+  <div class="grid">
+    <div class="card">
+      <h3>System Status</h3>
+      <button onclick="getStatus()">Refresh Status</button>
+      <pre id="status"></pre>
+    </div>
+    <div class="card">
+      <h3>Paper Order Submit</h3>
+      <label>Broker</label>
+      <select id="broker">
+        <option>alpaca</option>
+        <option>binance</option>
+        <option>ibkr</option>
+      </select>
+      <label>Symbol</label>
+      <input id="symbol" value="AAPL" />
+      <label>Side</label>
+      <select id="side"><option>buy</option><option>sell</option></select>
+      <label>Quantity</label>
+      <input id="qty" value="10" />
+      <button onclick="submitOrder()">Submit Order</button>
+      <pre id="result"></pre>
+    </div>
+  </div>
+<script>
+async function getStatus(){
+  const res = await fetch('/broker-integration/status');
+  const data = await res.json();
+  document.getElementById('status').textContent = JSON.stringify(data, null, 2);
+}
+async function submitOrder(){
+  const payload = {
+    broker: document.getElementById('broker').value,
+    symbol: document.getElementById('symbol').value,
+    side: document.getElementById('side').value,
+    qty: parseFloat(document.getElementById('qty').value),
+    execution_policy: { mode: "adaptive", source: "QNT30379" },
+    metadata: { source: "QNT30381", mode: "paper" }
+  };
+  const res = await fetch('/broker-integration/order/submit', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json();
+  document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+}
+getStatus();
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>Quantora QNT30495 Fund Visualization</title>
+      <style>
+        :root { --bg:#08111f; --panel:#0e1a2b; --border:#1f3556; --text:#eef4ff; --muted:#9bb0ce; }
+        body { margin:0; font-family:Arial,Helvetica,sans-serif; background:var(--bg); color:var(--text); padding:24px; }
+        .btn { display:inline-block; color:#fff; background:#2455d6; border:1px solid #3f6fff; border-radius:10px; padding:10px 14px; text-decoration:none; font-weight:700; }
+        .panel { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:16px; }
+        table { width:100%; border-collapse:collapse; }
+        th,td { padding:10px 8px; border-bottom:1px solid rgba(255,255,255,.06); text-align:left; }
+        th { color:var(--muted); }
+        pre { background:#07111f; border:1px solid var(--border); border-radius:10px; padding:14px; overflow:auto; color:#dbe7ff; }
+      </style>
+    </head>
+    <body>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px">
+        <div>
+          <h1 style="margin:0 0 6px">QNT30495 — Live Fund Visualization</h1>
+          <div style="color:var(--muted)">Deployable visualization page for fund exposure and NAV inputs.</div>
+        </div>
+        <a class="btn" href="index.html">Back to Command Center</a>
+      </div>
+
+      <div class="panel">
+        <h2 style="margin-top:0">Fund Exposure</h2>
+        <table>
+          <thead><tr><th>Fund</th><th>Market Value</th><th>Total PnL</th></tr></thead>
+          <tbody>
+            <tr><td>FUND1</td><td>$480,000</td><td>$23,000</td></tr>
+            <tr><td>FUND2</td><td>$27,500</td><td>$520</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel">
+        <h2 style="margin-top:0">NAV Inputs By Fund</h2>
+        <pre>{
+  "FUND1": [
+    { "strategy_id": "STRAT_BTC_MOMO", "market_value": 300000, "unrealized_pnl": 15000, "realized_pnl": 5000 },
+    { "strategy_id": "STRAT_YIELD_LOW_RISK", "market_value": 180000, "unrealized_pnl": 2000, "realized_pnl": 1000 }
+  ],
+  "FUND2": [
+    { "strategy_id": "STRAT_AI_MACRO", "market_value": 27500, "unrealized_pnl": 400, "realized_pnl": 120 }
+  ]
+}</pre>
+      </div>
+    </body>
+    </html>

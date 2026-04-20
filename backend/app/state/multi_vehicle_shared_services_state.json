@@ -1,0 +1,171 @@
+{
+  "generated_by": "QNT50034",
+  "status": "degraded",
+  "policy": {
+    "enabled": true,
+    "auto_sync_sources": true,
+    "require_vehicle_launch_execution": true,
+    "require_charter_alignment": true,
+    "allow_live_shared_services": false,
+    "default_minimum_supported_vehicles": 2,
+    "max_service_models": 250,
+    "max_service_events": 500,
+    "max_audit_events": 500
+  },
+  "last_sync": {
+    "mission": "QNT50034",
+    "timestamp": 1776580388,
+    "source": "smoke",
+    "snapshot": {
+      "synced_at": 1776580388,
+      "safe_mode": true,
+      "risk_triggered": false,
+      "execution_mode": "paper",
+      "latest_launch_case_id": "launch_case_72dece9d34c6",
+      "latest_launch_status": "closed",
+      "latest_launch_event_id": "launch_event_f0b6eafc4c5e",
+      "treasury_total_balance": 5000000.0,
+      "active_directive_id": "dir_001",
+      "directive_status": "approved"
+    }
+  },
+  "sync_history": [
+    {
+      "mission": "QNT50034",
+      "timestamp": 1776580388,
+      "source": "smoke",
+      "snapshot": {
+        "synced_at": 1776580388,
+        "safe_mode": true,
+        "risk_triggered": false,
+        "execution_mode": "paper",
+        "latest_launch_case_id": "launch_case_72dece9d34c6",
+        "latest_launch_status": "closed",
+        "latest_launch_event_id": "launch_event_f0b6eafc4c5e",
+        "treasury_total_balance": 5000000.0,
+        "active_directive_id": "dir_001",
+        "directive_status": "approved"
+      }
+    }
+  ],
+  "service_models": [
+    {
+      "service_model_id": "service_model_d3056115c080",
+      "created_at": 1776580388,
+      "operator": "smoke",
+      "service_name": "Shared Ops",
+      "service_type": "shared-services",
+      "operating_region": "global",
+      "supported_vehicle_types": [
+        "fund",
+        "spv"
+      ],
+      "minimum_supported_vehicles": 2,
+      "annual_budget": 1000.0,
+      "budget_source": "opex",
+      "service_scope": "ops and finance",
+      "launch_event_id": "launch_event_f0b6eafc4c5e",
+      "directive_id": "dir_001",
+      "operating_mode": "paper",
+      "notes": "",
+      "status": "closed",
+      "approved_at": 1776580388,
+      "approved_by": "smoke",
+      "approval_mode": "paper",
+      "approved_budget": 1200.0,
+      "approval_notes": "",
+      "executed_at": 1776580388,
+      "last_service_event_id": "service_event_e1a1693a3604",
+      "closed_at": 1776580388,
+      "closed_by": "smoke",
+      "closure_notes": ""
+    }
+  ],
+  "service_events": [
+    {
+      "service_event_id": "service_event_e1a1693a3604",
+      "executed_at": 1776580388,
+      "operator": "smoke",
+      "service_model_id": "service_model_d3056115c080",
+      "service_name": "Shared Ops",
+      "execution_mode": "paper",
+      "service_destination": "shared_services_registry",
+      "vehicle_count": 2,
+      "result_summary": "",
+      "status": "executed"
+    }
+  ],
+  "audit_log": [
+    {
+      "event_id": "multi_vehicle_shared_services_audit_1776580388311985360",
+      "event_type": "multi_vehicle_shared_services_closed",
+      "timestamp": 1776580388,
+      "service_model_id": "service_model_d3056115c080",
+      "closed_by": "smoke"
+    },
+    {
+      "event_id": "multi_vehicle_shared_services_audit_1776580388310713147",
+      "event_type": "multi_vehicle_shared_services_executed",
+      "timestamp": 1776580388,
+      "service_event_id": "service_event_e1a1693a3604",
+      "executed_at": 1776580388,
+      "operator": "smoke",
+      "service_model_id": "service_model_d3056115c080",
+      "service_name": "Shared Ops",
+      "execution_mode": "paper",
+      "service_destination": "shared_services_registry",
+      "vehicle_count": 2,
+      "result_summary": "",
+      "status": "executed"
+    },
+    {
+      "event_id": "multi_vehicle_shared_services_audit_1776580388309531035",
+      "event_type": "multi_vehicle_shared_services_approved",
+      "timestamp": 1776580388,
+      "service_model_id": "service_model_d3056115c080",
+      "approval_mode": "paper"
+    },
+    {
+      "event_id": "multi_vehicle_shared_services_audit_1776580388308431304",
+      "event_type": "multi_vehicle_shared_services_registered",
+      "timestamp": 1776580388,
+      "service_model_id": "service_model_d3056115c080",
+      "created_at": 1776580388,
+      "operator": "smoke",
+      "service_name": "Shared Ops",
+      "service_type": "shared-services",
+      "operating_region": "global",
+      "supported_vehicle_types": [
+        "fund",
+        "spv"
+      ],
+      "minimum_supported_vehicles": 2,
+      "annual_budget": 1000.0,
+      "budget_source": "opex",
+      "service_scope": "ops and finance",
+      "launch_event_id": "launch_event_f0b6eafc4c5e",
+      "directive_id": "dir_001",
+      "operating_mode": "paper",
+      "notes": "",
+      "status": "registered"
+    },
+    {
+      "event_id": "multi_vehicle_shared_services_audit_1776580388307227907",
+      "event_type": "multi_vehicle_shared_services_context_synced",
+      "timestamp": 1776580388,
+      "source": "smoke",
+      "snapshot": {
+        "synced_at": 1776580388,
+        "safe_mode": true,
+        "risk_triggered": false,
+        "execution_mode": "paper",
+        "latest_launch_case_id": "launch_case_72dece9d34c6",
+        "latest_launch_status": "closed",
+        "latest_launch_event_id": "launch_event_f0b6eafc4c5e",
+        "treasury_total_balance": 5000000.0,
+        "active_directive_id": "dir_001",
+        "directive_status": "approved"
+      }
+    }
+  ]
+}

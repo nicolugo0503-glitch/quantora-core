@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QNT50014 — Governance Binder Publication + Regulator Retrieval Packet Layer</title>
+  <style>
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#07101d;color:#edf4ff}
+    .wrap{max-width:1120px;margin:0 auto;padding:32px}
+    .hero,.card{background:#0d1a2c;border:1px solid #223754;border-radius:18px;padding:24px;box-shadow:0 12px 34px rgba(0,0,0,.28)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:18px}
+    h1,h2{margin:0 0 12px}.eyebrow{letter-spacing:.18em;text-transform:uppercase;color:#89b9ff;font-size:12px}
+    .pill{display:inline-block;padding:8px 12px;border-radius:999px;background:#163457;margin:6px 8px 0 0}
+    ul{padding-left:18px;line-height:1.6} code{background:#091425;padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Quantora • Governance Publication Control</div>
+      <h1>QNT50014 — Governance Binder Publication + Regulator Retrieval Packet Layer</h1>
+      <p>Quantora now converts official books release evidence into a published governance binder and regulator retrieval packet with attestation, retention metadata, and supervisory delivery readiness.</p>
+      <span class="pill">Governance binder publication</span>
+      <span class="pill">Retrieval packet assembly</span>
+      <span class="pill">Regulator channel control</span>
+      <span class="pill">Retention governance</span>
+    </section>
+    <div class="grid">
+      <section class="card">
+        <h2>Control Flow</h2>
+        <ul>
+          <li><code>register-publication</code> binds QNT50013 official books release evidence into a governance publication case.</li>
+          <li><code>assemble-retrieval-packet</code> prepares the regulator retrieval packet and manifest.</li>
+          <li><code>publish</code> releases the governance binder only after packet assembly when policy requires it.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Institutional Checks</h2>
+        <ul>
+          <li>Official books release evidence is required before a publication case can be registered.</li>
+          <li>Archive certification lineage is enforced through the linked QNT50013 release chain.</li>
+          <li>Operations and compliance attestations can be required before publication begins.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Endpoints</h2>
+        <ul>
+          <li><code>GET /governance-binder/health</code></li>
+          <li><code>POST /governance-binder/register-publication</code></li>
+          <li><code>POST /governance-binder/assemble-retrieval-packet</code></li>
+          <li><code>POST /governance-binder/publish</code></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "close_packets": [
+    {
+      "packet_id": "ops_1775662020125806815",
+      "period": "2026-04",
+      "created_at": 1775662020,
+      "status": "requires_attention",
+      "nav_status": "open",
+      "reconciliation_status": "unknown",
+      "open_break_count": 0,
+      "open_exception_count": 0,
+      "statement_batch_count": 0,
+      "capital_summary": {
+        "committed": 0.0,
+        "funded": 0.0,
+        "nav": 0.0,
+        "investor_count": 0
+      },
+      "performance_return_pct": null,
+      "notes": "smoke"
+    }
+  ],
+  "period_lock": {},
+  "ops_notes": [],
+  "created_at": 1775662020,
+  "updated_at": 1775662020
+}

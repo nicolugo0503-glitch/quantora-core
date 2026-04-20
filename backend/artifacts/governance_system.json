@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "last_evaluated_at": null,
+  "last_simulation_at": null,
+  "last_operator_id": null,
+  "policy_breach_count": 0,
+  "approval_backlog_warn": 5,
+  "approval_sla_hours": 24,
+  "ledger_retention_events": 2000,
+  "enforcement": {
+    "block_live_orders_on_pending_approval": true,
+    "block_orders_on_risk_breach": true,
+    "require_manual_review_on_large_rebalance": true
+  },
+  "telemetry": []
+}

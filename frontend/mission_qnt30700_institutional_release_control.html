@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QNT30700 Institutional Release Control</title>
+  <style>
+    :root{--bg:#07101d;--card:#101b31;--muted:#90a6cd;--line:#243353;--text:#edf3ff;--good:#0fbf7f;--warn:#ffb020;--bad:#ff5d5d}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#07101d,#0c1730 58%,#0b1327);color:var(--text)}
+    .wrap{max-width:1200px;margin:0 auto;padding:34px 20px 74px}.hero,.two,.three{display:grid;gap:18px}.hero{grid-template-columns:1.3fr .9fr}.two{grid-template-columns:1fr 1fr}.three{grid-template-columns:repeat(3,1fr)}
+    .card{background:rgba(16,27,49,.94);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 22px 60px rgba(0,0,0,.28)}
+    .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}h1{margin:.35rem 0 0;font-size:34px}p{color:#cad7f1;line-height:1.58}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}.stat{padding:16px;border-radius:16px;background:#0d1529;border:1px solid var(--line)}.label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.value{font-size:27px;font-weight:700;margin-top:8px}
+    .list{display:flex;flex-direction:column;gap:10px;margin-top:14px}.row{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:14px;background:#0d1529;border:1px solid var(--line)}
+    code{background:#0d1529;padding:2px 6px;border-radius:6px;border:1px solid var(--line);color:#d8e4ff}.pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:8px 12px;font-weight:700}.good{background:rgba(15,191,127,.14);color:#90f0c8}.warn{background:rgba(255,176,32,.14);color:#ffd37e}.bad{background:rgba(255,93,93,.14);color:#ffb8b8}
+    @media (max-width:980px){.hero,.two,.three,.grid{grid-template-columns:1fr 1fr}}@media (max-width:720px){.hero,.two,.three,.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="card">
+        <div class="eyebrow">Institutional Governance Layer</div>
+        <h1>QNT30700 — Institutional Release Control</h1>
+        <p>This mission governs every live-system change through a release registry, proposal intake, pre-release validation, operator approval, deployment control, and rollback authority. It turns Quantora from a codebase that changes into a capital system that deploys only through governed releases.</p>
+        <div class="grid">
+          <div class="stat"><div class="label">Active Version</div><div class="value">Tracked</div></div>
+          <div class="stat"><div class="label">Pending Queue</div><div class="value">Governed</div></div>
+          <div class="stat"><div class="label">Approval Flow</div><div class="value">Required</div></div>
+          <div class="stat"><div class="label">Rollback</div><div class="value">Ready</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="eyebrow">Core Endpoints</div>
+        <div class="list">
+          <div class="row"><span><code>GET /api/institutional-release-control/summary</code></span></div>
+          <div class="row"><span><code>POST /api/institutional-release-control/propose</code></span></div>
+          <div class="row"><span><code>POST /api/institutional-release-control/validate</code></span></div>
+          <div class="row"><span><code>POST /api/institutional-release-control/approve</code></span></div>
+          <div class="row"><span><code>POST /api/institutional-release-control/deploy</code></span></div>
+          <div class="row"><span><code>POST /api/institutional-release-control/rollback</code></span></div>
+          <div class="row"><span><code>POST /api/institutional-release-control/rules</code></span></div>
+          <div class="row"><span><code>POST /api/institutional-release-control/bootstrap-demo</code></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two" style="margin-top:18px">
+      <div class="card">
+        <div class="eyebrow">Governance Chain</div>
+        <div class="list">
+          <div class="row"><span>Proposal intake</span><span class="pill warn">Required</span></div>
+          <div class="row"><span>Safety validation</span><span class="pill good">Pre-deploy gate</span></div>
+          <div class="row"><span>Operator approval</span><span class="pill warn">Mandatory</span></div>
+          <div class="row"><span>Deployment event logging</span><span class="pill good">Audited</span></div>
+          <div class="row"><span>Rollback command</span><span class="pill bad">Emergency authority</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="eyebrow">Deployment Rules</div>
+        <div class="list">
+          <div class="row"><span>No proposal record</span><strong>BLOCK</strong></div>
+          <div class="row"><span>Safety posture not production ready</span><strong>BLOCK</strong></div>
+          <div class="row"><span>Kill switch or execution pause active</span><strong>BLOCK</strong></div>
+          <div class="row"><span>Approval missing</span><strong>BLOCK</strong></div>
+          <div class="row"><span>Validation fails</span><strong>BLOCK</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="three" style="margin-top:18px">
+      <div class="card"><div class="eyebrow">Release Registry</div><p>Every version carries a release ID, rationale, affected modules, author, risk impact, validation outcome, and deployment status.</p></div>
+      <div class="card"><div class="eyebrow">Approval Engine</div><p>Approvals are stored as explicit governance events so operator signoff becomes auditable capital control, not tribal memory.</p></div>
+      <div class="card"><div class="eyebrow">Rollback Authority</div><p>The system can revert to the prior stable deployment immediately when live posture degrades or an unexpected regression appears.</p></div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,131 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "accounts": [
+    {
+      "account_id": "acct_inv_qnt_001",
+      "investor_id": "inv_qnt_001",
+      "investor_name": "Meridian Endowment Fund",
+      "status": "open",
+      "committed_capital": 500000.0,
+      "funded_capital": 420000.0,
+      "unfunded_capital": 80000.0,
+      "nav": 420000.0,
+      "ownership_pct": 43.75,
+      "created_at": 1773705600,
+      "updated_at": 1775662020
+    },
+    {
+      "account_id": "acct_inv_qnt_002",
+      "investor_id": "inv_qnt_002",
+      "investor_name": "Aurora Family Office",
+      "status": "open",
+      "committed_capital": 350000.0,
+      "funded_capital": 300000.0,
+      "unfunded_capital": 50000.0,
+      "nav": 300000.0,
+      "ownership_pct": 31.25,
+      "created_at": 1773705600,
+      "updated_at": 1775662020
+    },
+    {
+      "account_id": "acct_inv_qnt_003",
+      "investor_id": "inv_qnt_003",
+      "investor_name": "Northstar Treasury Partners",
+      "status": "open",
+      "committed_capital": 250000.0,
+      "funded_capital": 240000.0,
+      "unfunded_capital": 10000.0,
+      "nav": 240000.0,
+      "ownership_pct": 25.0,
+      "created_at": 1773705600,
+      "updated_at": 1775662020
+    }
+  ],
+  "entries": [
+    {
+      "entry_id": "entry_inv_qnt_001",
+      "investor_id": "inv_qnt_001",
+      "account_id": "acct_inv_qnt_001",
+      "entry_type": "funding",
+      "amount": 420000.0,
+      "description": "Initial funding",
+      "created_at": 1773705600
+    },
+    {
+      "entry_id": "entry_inv_qnt_002",
+      "investor_id": "inv_qnt_002",
+      "account_id": "acct_inv_qnt_002",
+      "entry_type": "funding",
+      "amount": 300000.0,
+      "description": "Initial funding",
+      "created_at": 1773705600
+    },
+    {
+      "entry_id": "entry_inv_qnt_003",
+      "investor_id": "inv_qnt_003",
+      "account_id": "acct_inv_qnt_003",
+      "entry_type": "funding",
+      "amount": 240000.0,
+      "description": "Initial funding",
+      "created_at": 1773705600
+    }
+  ],
+  "allocations": [
+    {
+      "allocation_id": "alloc_inv_qnt_001_1",
+      "investor_id": "inv_qnt_001",
+      "strategy": "Alpha Core",
+      "sleeve": "alpha_core",
+      "amount": 220000.0,
+      "status": "active",
+      "created_at": 1773705600
+    },
+    {
+      "allocation_id": "alloc_inv_qnt_001_2",
+      "investor_id": "inv_qnt_001",
+      "strategy": "Macro FX",
+      "sleeve": "macro_fx",
+      "amount": 160000.0,
+      "status": "active",
+      "created_at": 1773705600
+    },
+    {
+      "allocation_id": "alloc_inv_qnt_002_1",
+      "investor_id": "inv_qnt_002",
+      "strategy": "Alpha Core",
+      "sleeve": "alpha_core",
+      "amount": 140000.0,
+      "status": "active",
+      "created_at": 1773705600
+    },
+    {
+      "allocation_id": "alloc_inv_qnt_002_2",
+      "investor_id": "inv_qnt_002",
+      "strategy": "Credit Income",
+      "sleeve": "credit_income",
+      "amount": 110000.0,
+      "status": "active",
+      "created_at": 1773705600
+    },
+    {
+      "allocation_id": "alloc_inv_qnt_003_1",
+      "investor_id": "inv_qnt_003",
+      "strategy": "Macro FX",
+      "sleeve": "macro_fx",
+      "amount": 100000.0,
+      "status": "active",
+      "created_at": 1773705600
+    },
+    {
+      "allocation_id": "alloc_inv_qnt_003_2",
+      "investor_id": "inv_qnt_003",
+      "strategy": "Treasury Arbitrage",
+      "sleeve": "treasury_arb",
+      "amount": 90000.0,
+      "status": "active",
+      "created_at": 1773705600
+    }
+  ],
+  "created_at": 1775662020,
+  "updated_at": 1775662020
+}

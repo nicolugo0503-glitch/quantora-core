@@ -1,0 +1,21 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "minimum_brain_score": 84.0,
+    "minimum_selection_score": 78.0,
+    "minimum_regime_score": 78.0,
+    "minimum_deployment_score": 78.0,
+    "minimum_reallocation_score": 76.0,
+    "minimum_rotation_score": 76.0,
+    "minimum_governance_score": 78.0,
+    "minimum_compliance_score": 78.0,
+    "maximum_drawdown_pct": 14.0,
+    "maximum_volatility_pct": 35.0,
+    "maximum_concentration_pct": 45.0,
+    "maximum_exception_pressure": 22.0,
+    "maximum_break_pressure": 18.0
+  },
+  "runs": [],
+  "created_at": 1775845364,
+  "updated_at": 1775845364
+}

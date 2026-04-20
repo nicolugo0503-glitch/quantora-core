@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — Autonomous Capital Layer</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--panel2:#132742;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(15,29,49,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .sub{color:var(--muted);max-width:980px;line-height:1.5}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    button{border-radius:10px;border:none;background:var(--accent);color:var(--text);padding:10px 12px;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}.stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}
+    th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #274168;background:#0b1a2c;font-size:12px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:180px;white-space:pre-wrap}
+    @media (max-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:1fr}}
+    @media (max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT30447 — Autonomous Capital Layer</h1>
+      <div class="sub">Allocation plans, approval queue, and broker-connected execution logging. This is the controlled transition from decision support into capital action.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="loadAll()">Refresh</button>
+      <button onclick="seedPlan()">Create Plan</button>
+      <button onclick="approveLatest()">Approve Latest</button>
+      <button onclick="executeLatest()">Execute Latest</button>
+    </div>
+  </div>
+
+  <div class="grid" id="summaryGrid"></div>
+
+  <div class="layout">
+    <div class="stack">
+      <div class="card">
+        <h2>Recommended Allocations</h2>
+        <div class="table-wrap"><table id="allocationTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Plan Queue</h2>
+        <div class="table-wrap"><table id="planTable"></table></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card">
+        <h2>Execution Ledger</h2>
+        <div class="table-wrap"><table id="executionTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Execution Health</h2>
+        <div class="pills" id="healthPills"></div>
+      </div>
+      <div class="card">
+        <h2>Last Action</h2>
+        <pre id="actionOut">No action yet.</pre>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const api=(path, opts={})=>fetch(path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok) throw new Error(d.detail||'request_failed'); return d;});
+const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(Number(v||0));
+function table(el, headers, rows){
+  const thead = `<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  const body = rows.length ? rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${headers.length}">No data</td></tr>`;
+  el.innerHTML = thead + body;
+}
+function renderSummary(summary){
+  const labels = [
+    ['Strategies', summary.tracked_strategies],
+    ['Capital Base', money(summary.capital_base)],
+    ['Draft Plans', summary.draft_plans],
+    ['Approved Plans', summary.approved_plans],
+    ['Executed Actions', summary.executed_actions],
+    ['Autonomy Score', summary.autonomy_score]
+  ];
+  document.getElementById('summaryGrid').innerHTML = labels.map(([label,val])=>`<div class="card"><div class="label">${label}</div><div class="value">${val}</div></div>`).join('');
+}
+function pills(target, items){
+  document.getElementById(target).innerHTML = items.map(([label,klass])=>`<span class="pill ${klass}">${label}</span>`).join('');
+}
+async function loadAll(){
+  const data = await api('/workspace/autonomy/summary');
+  renderSummary(data.summary);
+  table(document.getElementById('allocationTable'),
+    ['Strategy','Score','Current','Target','Delta','Direction'],
+    (data.recommended_allocations||[]).map(r=>[r.strategy_name, r.score, money(r.current_allocation), money(r.target_capital), money(r.delta_capital), r.direction])
+  );
+  table(document.getElementById('planTable'),
+    ['Created','Plan','Strategy','Action','Amount','Status'],
+    (data.plans||[]).map(r=>[r.created_at||'-', r.plan_name||'-', r.strategy_name||'-', r.action_type||'-', money(r.amount), r.status||'-'])
+  );
+  table(document.getElementById('executionTable'),
+    ['Created','Plan','Broker','Action','Amount','Status'],
+    (data.executions||[]).map(r=>[r.created_at||'-', r.plan_name||'-', r.broker_name||'alpaca', r.action_type||'-', money(r.amount), r.status||'-'])
+  );
+  pills('healthPills', [
+    [`Capital ${money(data.execution_health.total_capital_base)}`, 'good'],
+    [`Strategies ${data.execution_health.strategy_inputs_ready?'Ready':'Missing'}`, data.execution_health.strategy_inputs_ready?'good':'warn'],
+    [`Queue Ready`, data.execution_health.plan_queue_ready?'good':'warn'],
+    [`Approved ${data.execution_health.approved_plan_count}`, data.execution_health.approved_plan_count>0?'good':'warn'],
+    [`Score ${data.execution_health.autonomy_score}`, data.execution_health.autonomy_score>=85?'good':'warn']
+  ]);
+}
+async function seedPlan(){
+  const res = await api('/workspace/autonomy/plans/create', {method:'POST', body: JSON.stringify({
+    plan_name:'Increase Momentum Allocation',
+    strategy_name:'Momentum Alpha',
+    action_type:'rebalance',
+    amount:5000,
+    broker_name:'alpaca'
+  })});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function approveLatest(){
+  const summary = await api('/workspace/autonomy/summary');
+  const first = (summary.plans||[])[0];
+  if(!first){ document.getElementById('actionOut').textContent = 'No plan found.'; return; }
+  const res = await api('/workspace/autonomy/plans/approve', {method:'POST', body: JSON.stringify({plan_id:first.id || first.plan_id})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function executeLatest(){
+  const summary = await api('/workspace/autonomy/summary');
+  const first = (summary.plans||[]).find(p => String(p.status||'').toLowerCase()==='approved') || (summary.plans||[])[0];
+  if(!first){ document.getElementById('actionOut').textContent = 'No plan found.'; return; }
+  const res = await api('/workspace/autonomy/execute', {method:'POST', body: JSON.stringify({plan_id:first.id || first.plan_id})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+loadAll().catch(err => document.getElementById('actionOut').textContent = String(err));
+</script>
+</body>
+</html>

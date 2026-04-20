@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>QNT30633 Governance Compliance Layer</title>
+<style>
+:root{--bg:#071019;--panel:#0d1723;--line:#1b2b40;--text:#edf3fb;--muted:#8ea0b7;--good:#48d597;--bad:#ff6f86;--warn:#ffc857}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#071019,#09131d 55%,#071019);color:var(--text);font-family:Inter,Arial,sans-serif}.wrap{max-width:1500px;margin:0 auto;padding:28px}.hero,.card{background:rgba(13,23,35,.95);border:1px solid var(--line);border-radius:20px;box-shadow:0 22px 54px rgba(0,0,0,.35)}.hero{padding:26px}.label{font-size:11px;color:var(--muted);letter-spacing:.16em;text-transform:uppercase;font-weight:800}.hero h1{margin:10px 0 8px;font-size:42px}.sub{color:var(--muted);max-width:1080px;line-height:1.55}.toolbar,.grid2,.grid3,.grid4,.form-grid{display:grid;gap:14px}.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}.grid4{grid-template-columns:repeat(4,1fr);margin-top:18px}.grid3{grid-template-columns:1.1fr .95fr .95fr;margin-top:18px}.grid2{grid-template-columns:1fr 1fr;margin-top:18px}.card{padding:18px}.value{font-size:26px;font-weight:800;margin-top:8px}.tiny{font-size:12px;color:var(--muted)}button,input,textarea{background:#0b1520;color:var(--text);border:1px solid var(--line);padding:11px 14px;border-radius:12px;font:inherit}.btn{cursor:pointer;font-weight:700}.primary{background:#fff;color:#0a0e14}textarea{min-height:100px;width:100%}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #1a293d;font-size:13px;vertical-align:top}th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}pre{background:#09111a;border:1px solid var(--line);padding:14px;border-radius:14px;min-height:280px;max-height:720px;overflow:auto}.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}@media(max-width:1100px){.grid4,.grid3,.grid2{grid-template-columns:1fr 1fr}}@media(max-width:760px){.grid4,.grid3,.grid2{grid-template-columns:1fr}.wrap{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="label">QNT30633</div>
+    <h1>Compliance, Audit & Governance Layer</h1>
+    <div class="sub">Institutional control overlay for the autonomous fund. Policy rules, approval routing, immutable audit evidence, override logging, and live governance snapshots now sit above allocation, execution, and autonomous operation.</div>
+    <div class="toolbar">
+      <button class="btn primary" onclick="bootstrapDemo()">Bootstrap Governance Demo</button>
+      <button class="btn" onclick="captureCycle()">Capture Cycle Snapshot</button>
+      <button class="btn" onclick="savePolicies()">Save Policies</button>
+      <button class="btn" onclick="evaluateAction()">Evaluate Sample Action</button>
+      <button class="btn" onclick="window.location.href='mission_qnt30632_autonomous_fund_mode.html'">Open Autonomous Fund</button>
+      <button class="btn" onclick="window.location.href='index.html'">Back to Command Center</button>
+    </div>
+  </div>
+
+  <div class="grid4">
+    <div class="card"><div class="label">Audit Chain</div><div id="auditChain" class="value">-</div><div class="tiny">Immutable evidence integrity</div></div>
+    <div class="card"><div class="label">Open Approvals</div><div id="openApprovals" class="value">-</div><div class="tiny">Pending governance decisions</div></div>
+    <div class="card"><div class="label">Blocked Events</div><div id="blockedEvents" class="value">-</div><div class="tiny">Policy violations or blocked actions</div></div>
+    <div class="card"><div class="label">Breach Status</div><div id="breachStatus" class="value">-</div><div class="tiny">Latest system governance posture</div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="label">Policy Controls</div>
+      <div class="grid2">
+        <input id="maxStrategyWeight" placeholder="Max strategy weight (0.40)">
+        <input id="maxOrderNotional" placeholder="Max single order notional">
+        <input id="maxDrawdown" placeholder="Max portfolio drawdown %">
+        <input id="maxOpenOrders" placeholder="Max open orders">
+      </div>
+      <div class="grid2" style="margin-top:14px">
+        <input id="restrictedSymbols" placeholder="Restricted symbols comma separated">
+        <input id="approvedStrategies" placeholder="Approved strategies comma separated">
+      </div>
+      <div class="tiny" style="margin-top:10px">Live mode approval and autonomous cycle permissions are preserved server-side; this panel updates core allocation and execution policy thresholds.</div>
+    </div>
+    <div class="card">
+      <div class="label">Evaluate Action</div>
+      <div class="grid2">
+        <input id="actionType" placeholder="action_type" value="broker_order">
+        <input id="actionStrategy" placeholder="strategy_id" value="BTC_MOMENTUM">
+        <input id="actionSymbol" placeholder="symbol" value="BTCUSD">
+        <input id="actionWeight" placeholder="target_weight" value="0.32">
+        <input id="actionNotional" placeholder="order_notional" value="85000">
+        <input id="actionDrawdown" placeholder="projected_drawdown_pct" value="11">
+      </div>
+      <div class="grid2" style="margin-top:14px">
+        <input id="actionMode" placeholder="execution_mode" value="paper">
+        <button class="btn" onclick="evaluateAction()">Run Evaluation</button>
+      </div>
+      <pre id="evalBox">Awaiting evaluation...</pre>
+    </div>
+  </div>
+
+  <div class="grid3">
+    <div class="card"><div class="label">Compliance Events</div><table><thead><tr><th>Type</th><th>Status</th><th>Severity</th><th>Time</th></tr></thead><tbody id="eventRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+    <div class="card"><div class="label">Approval Queue</div><table><thead><tr><th>Action</th><th>Status</th><th>Requested</th></tr></thead><tbody id="approvalRows"><tr><td colspan="3">Loading...</td></tr></tbody></table></div>
+    <div class="card"><div class="label">Override Register</div><table><thead><tr><th>Type</th><th>Operator</th><th>Time</th></tr></thead><tbody id="overrideRows"><tr><td colspan="3">Loading...</td></tr></tbody></table><div style="margin-top:12px"><textarea id="overrideJustification" placeholder="Override justification"></textarea><button class="btn" onclick="recordOverride()">Record Override</button></div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><div class="label">Governance Summary</div><pre id="summaryBox">Loading...</pre></div>
+    <div class="card"><div class="label">Snapshots</div><table><thead><tr><th>Period</th><th>Audit</th><th>Autonomy</th><th>Broker</th></tr></thead><tbody id="snapshotRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+  </div>
+</div>
+<script>
+const stamp=ts=>ts?new Date(Number(ts)*1000).toISOString().replace('T',' ').slice(0,16):'-';
+async function j(url,opt){const r=await fetch(url,opt);const d=await r.json();if(!r.ok) throw new Error(d.detail||'request failed');return d;}
+function val(id){return document.getElementById(id).value;}
+function setPolicies(p){document.getElementById('maxStrategyWeight').value=p.max_strategy_weight??'';document.getElementById('maxOrderNotional').value=p.max_single_order_notional??'';document.getElementById('maxDrawdown').value=p.max_portfolio_drawdown_pct??'';document.getElementById('maxOpenOrders').value=p.max_open_orders??'';document.getElementById('restrictedSymbols').value=(p.restricted_symbols||[]).join(', ');document.getElementById('approvedStrategies').value=(p.approved_strategies||[]).join(', ');}
+function render(data){document.getElementById('auditChain').textContent=data.audit_summary?.chain_integrity_ok?'OK':'BROKEN';document.getElementById('auditChain').className='value '+(data.audit_summary?.chain_integrity_ok?'good':'bad');document.getElementById('openApprovals').textContent=data.open_approval_count||0;document.getElementById('blockedEvents').textContent=data.blocked_event_count||0;document.getElementById('breachStatus').textContent=data.breach_summary?.latest_snapshot?.status||'-';setPolicies(data.policies||{});document.getElementById('summaryBox').textContent=JSON.stringify(data,null,2);
+const events=data.compliance_events||[];document.getElementById('eventRows').innerHTML=events.length?events.slice(0,12).map(e=>`<tr><td>${e.type}</td><td class="${e.status==='blocked'?'bad':(e.status==='approved'||e.status==='recorded'||e.status==='captured'?'good':'warn')}">${e.status}</td><td>${e.severity}</td><td>${stamp(e.timestamp)}</td></tr>`).join(''):'<tr><td colspan="4">No events yet.</td></tr>';
+const approvals=data.approval_queue||[];document.getElementById('approvalRows').innerHTML=approvals.length?approvals.slice(0,12).map(a=>`<tr><td>${a.action_type||'-'} ${a.symbol||''}</td><td class="${a.status==='pending'?'warn':(a.status==='approved'?'good':'bad')}">${a.status}</td><td>${stamp(a.requested_at||a.decided_at)}</td></tr>`).join(''):'<tr><td colspan="3">No approvals queued.</td></tr>';
+const overrides=data.override_log||[];document.getElementById('overrideRows').innerHTML=overrides.length?overrides.slice(0,12).map(o=>`<tr><td>${o.action_type}</td><td>${o.operator||'-'}</td><td>${stamp(o.timestamp)}</td></tr>`).join(''):'<tr><td colspan="3">No overrides recorded.</td></tr>';
+const snaps=data.snapshots||[];document.getElementById('snapshotRows').innerHTML=snaps.length?snaps.slice(0,12).map(s=>`<tr><td>${s.period}</td><td class="${s.audit_chain_ok?'good':'bad'}">${s.audit_chain_ok?'OK':'BROKEN'}</td><td>${s.autonomous_mode||'-'}</td><td>${s.broker_mode||'-'}</td></tr>`).join(''):'<tr><td colspan="4">No snapshots yet.</td></tr>';
+}
+async function loadAll(){render(await j('/api/governance-compliance/summary'));}
+async function bootstrapDemo(){await j('/api/governance-compliance/bootstrap-demo',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});await loadAll();}
+async function captureCycle(){await j('/api/governance-compliance/capture-cycle',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});await loadAll();}
+async function savePolicies(){const payload={max_strategy_weight:Number(val('maxStrategyWeight')),max_single_order_notional:Number(val('maxOrderNotional')),max_portfolio_drawdown_pct:Number(val('maxDrawdown')),max_open_orders:Number(val('maxOpenOrders')),restricted_symbols:val('restrictedSymbols').split(',').map(s=>s.trim()).filter(Boolean),approved_strategies:val('approvedStrategies').split(',').map(s=>s.trim()).filter(Boolean)};await j('/api/governance-compliance/policies',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});await loadAll();}
+async function evaluateAction(){const payload={action_type:val('actionType'),strategy_id:val('actionStrategy'),symbol:val('actionSymbol'),target_weight:Number(val('actionWeight')),order_notional:Number(val('actionNotional')),projected_drawdown_pct:Number(val('actionDrawdown')),execution_mode:val('actionMode')};const res=await j('/api/governance-compliance/evaluate-action',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});document.getElementById('evalBox').textContent=JSON.stringify(res,null,2);await loadAll();}
+async function recordOverride(){await j('/api/governance-compliance/override',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action_type:'manual_override',justification:val('overrideJustification')})});document.getElementById('overrideJustification').value='';await loadAll();}
+loadAll();
+</script>
+</body>
+</html>

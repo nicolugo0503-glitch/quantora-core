@@ -1,0 +1,22 @@
+{
+  "risk_controls": {
+    "max_notional_exposure": 1000000.0,
+    "max_drawdown_pct": 25.0,
+    "max_position_count": 50,
+    "blocked_symbols": [
+      "TSLA"
+    ]
+  },
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/api/risk/report"
+    }
+  ],
+  "behavior": {
+    "start": "blocked if any critical breach is active",
+    "resume": "blocked if any critical breach is active",
+    "pause": "always allowed",
+    "kill": "always allowed"
+  }
+}

@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30616 Investor Access Control + Delivery Permission Matrix</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1440px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,select{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1400px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30616 · Investor Access Control + Delivery Permission Matrix</h1>
+        <div style="color:#9fb3d8">Applies permission-based access controls across delivered reports and inbox visibility.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30615_distribution_console.html">Distribution Console</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Permissions</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Enabled</div><div id="enabled" class="value">-</div></div>
+    <div class="card"><div class="label">Portal View</div><div id="portal" class="value">-</div></div>
+    <div class="card"><div class="label">Downloads</div><div id="download" class="value">-</div></div>
+    <div class="card"><div class="label">Archived View</div><div id="archived" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <select id="capability">
+      <option value="portal_view">portal_view</option>
+      <option value="download_reports">download_reports</option>
+      <option value="receive_email_simulated">receive_email_simulated</option>
+      <option value="view_archived_items">view_archived_items</option>
+      <option value="manage_starred_items">manage_starred_items</option>
+    </select>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="checkCapability()">Check Capability</button>
+      <button onclick="filterInbox()">Filter Inbox</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Permission Matrix</div>
+    <table>
+      <thead><tr><th>Capability</th><th>Enabled</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Access Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/access-control/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data,null,2); return; }
+  const d = res.data || {};
+  const m = d.permission_matrix || {};
+  document.getElementById('count').textContent = String(d.permission_count || 0);
+  document.getElementById('enabled').textContent = String(d.enabled_permission_count || 0);
+  document.getElementById('portal').textContent = m.portal_view ? 'YES' : 'NO';
+  document.getElementById('download').textContent = m.download_reports ? 'YES' : 'NO';
+  document.getElementById('archived').textContent = m.view_archived_items ? 'YES' : 'NO';
+  document.getElementById('rows').innerHTML = Object.entries(m).map(([k,v]) =>
+    `<tr><td>${k}</td><td>${v}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function checkCapability(){
+  const res = await j('/api/access-control/check', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({capability: document.getElementById('capability').value})});
+  document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2);
+}
+async function filterInbox(){
+  const res = await j('/api/access-control/filter-inbox', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({})});
+  document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2);
+}
+load();
+</script>
+</body>
+</html>

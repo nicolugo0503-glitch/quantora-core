@@ -1,0 +1,39 @@
+{
+  "module": "QNT30646",
+  "name": "Distribution & Capital Channels Layer",
+  "created_at": "2026-04-08T22:34:18.369837+00:00",
+  "channels": [
+    {
+      "channel_id": "CHAN_FAMILY_OFFICE_01",
+      "name": "Family Office Network",
+      "type": "family_office",
+      "allowed_products": [
+        "PROD_GROWTH_01"
+      ],
+      "jurisdiction_rules": "approved_regions_only",
+      "investor_tier_rules": "qualified_plus",
+      "status": "active",
+      "created_at": "2026-04-08T22:34:18.369861+00:00"
+    }
+  ],
+  "mappings": [
+    {
+      "mapping_id": "MAP_001",
+      "product_id": "PROD_GROWTH_01",
+      "channel_id": "CHAN_FAMILY_OFFICE_01",
+      "assigned_at": "2026-04-08T22:34:18.369867+00:00",
+      "status": "active"
+    }
+  ],
+  "pipeline": [
+    {
+      "record_id": "DIST_001",
+      "channel_id": "CHAN_FAMILY_OFFICE_01",
+      "product_id": "PROD_GROWTH_01",
+      "prospect_name": "Atlas Family Office",
+      "stage": "diligence_underway",
+      "target_commitment": 2500000,
+      "created_at": "2026-04-08T22:34:18.369871+00:00"
+    }
+  ]
+}

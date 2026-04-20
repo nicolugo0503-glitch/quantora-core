@@ -1,0 +1,71 @@
+{
+  "reallocation_board": {
+    "enabled": true,
+    "last_updated_at": "2026-03-31T14:14:33Z",
+    "last_queue_refresh_at": "2026-03-31T14:14:33Z",
+    "last_reallocation_at": "2026-03-31T14:14:33Z",
+    "total_candidates_ranked": 2,
+    "queued_opportunities": 1,
+    "approved_reallocations": 1,
+    "reallocated_capital": 22000.0,
+    "telemetry": [
+      {
+        "timestamp": "2026-03-31T14:14:33Z",
+        "event": "queue.refreshed",
+        "queued_opportunities": 1
+      },
+      {
+        "timestamp": "2026-03-31T14:14:33Z",
+        "event": "capital.reallocated",
+        "candidate_id": "cand_2001",
+        "allocated_capital": 22000.0
+      }
+    ]
+  },
+  "queue_rules": {
+    "min_opportunity_score": 65.0,
+    "max_queue_size": 20,
+    "max_reallocation_per_candidate": 50000.0,
+    "watchlist_haircut_pct": 0.5,
+    "priority_bonus": 10.0,
+    "validation_required": true
+  },
+  "opportunities": [
+    {
+      "candidate_id": "cand_2001",
+      "strategy_name": "Momentum Expansion A",
+      "verdict": "APPROVED",
+      "opportunity_score": 82.5,
+      "adjusted_score": 92.5,
+      "edge_score": 71.0,
+      "confidence": 0.78,
+      "priority": true,
+      "reclaimed_capital_pool": 30000.0
+    }
+  ],
+  "reallocation_events": [
+    {
+      "event_id": "realloc_0001",
+      "timestamp": "2026-03-31T14:14:33Z",
+      "candidate_id": "cand_2001",
+      "strategy_name": "Momentum Expansion A",
+      "allocated_capital": 22000.0,
+      "available_capital": 22000.0,
+      "adjusted_score": 92.5,
+      "verdict": "APPROVED"
+    }
+  ],
+  "history": [
+    {
+      "timestamp": "2026-03-31T14:14:33Z",
+      "event": "queue.refreshed",
+      "queued_opportunities": 1
+    },
+    {
+      "timestamp": "2026-03-31T14:14:33Z",
+      "event": "capital.reallocated",
+      "candidate_id": "cand_2001",
+      "allocated_capital": 22000.0
+    }
+  ]
+}

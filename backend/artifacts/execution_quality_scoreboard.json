@@ -1,0 +1,37 @@
+{
+  "scores": [
+    {
+      "venue_id": "lit_nyse",
+      "venue_name": "Lit NYSE",
+      "quality_score": 93.0,
+      "flagged": false,
+      "avg_slippage_bps": 2.8,
+      "fill_rate": 0.985,
+      "reject_rate": 0.01,
+      "avg_latency_ms": 29.0,
+      "available_liquidity": 2200.0
+    },
+    {
+      "venue_id": "lit_nasdaq",
+      "venue_name": "Lit NASDAQ",
+      "quality_score": 89.5,
+      "flagged": false,
+      "avg_slippage_bps": 3.6,
+      "fill_rate": 0.978,
+      "reject_rate": 0.012,
+      "avg_latency_ms": 26.0,
+      "available_liquidity": 1800.0
+    },
+    {
+      "venue_id": "dark_pool_x",
+      "venue_name": "Dark Pool X",
+      "quality_score": 56.0,
+      "flagged": true,
+      "avg_slippage_bps": 10.2,
+      "fill_rate": 0.84,
+      "reject_rate": 0.06,
+      "avg_latency_ms": 71.0,
+      "available_liquidity": 3100.0
+    }
+  ]
+}

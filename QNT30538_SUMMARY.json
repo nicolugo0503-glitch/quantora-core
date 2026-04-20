@@ -1,0 +1,6 @@
+{
+  "base_zip": "QUANTORA_FULL_PROJECT_QNT30537_INVESTOR_PORTAL.zip",
+  "mission_added": "QNT30538_INVESTOR_DATA_ROOM",
+  "frontend_only": true,
+  "new_file": "frontend/mission_qnt30538_investor_data_room.html"
+}

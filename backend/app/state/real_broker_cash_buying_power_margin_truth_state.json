@@ -1,0 +1,25 @@
+{
+  "truth_status": "ready",
+  "selected_broker": "binance",
+  "currency": "USD",
+  "cash_balance": 100000.0,
+  "settled_cash": 100000.0,
+  "unsettled_cash": 0.0,
+  "buying_power": 200000.0,
+  "available_buying_power": 200000.0,
+  "initial_margin_used": 0.0,
+  "maintenance_margin_used": 0.0,
+  "margin_excess": 100000.0,
+  "margin_ratio": 0.0,
+  "blockers": [],
+  "source": "ledger+pnl+sync",
+  "last_synced_at": 1776593249,
+  "history": [
+    {
+      "event": "reset",
+      "timestamp": 1776593249
+    }
+  ],
+  "execution_mode": "live",
+  "safe_mode": false
+}

@@ -1,0 +1,40 @@
+{
+  "recommended_endpoints": [
+    {
+      "method": "GET",
+      "path": "/api/runtime/state",
+      "purpose": "runtime status, cycle count, nav, active fund, timestamp"
+    },
+    {
+      "method": "GET",
+      "path": "/api/funds/summary",
+      "purpose": "sleeve or fund allocation rows"
+    },
+    {
+      "method": "GET",
+      "path": "/api/investors/overview",
+      "purpose": "investor market value and ownership data"
+    },
+    {
+      "method": "GET",
+      "path": "/api/exposure/summary",
+      "purpose": "pnl / exposure metrics"
+    },
+    {
+      "method": "POST",
+      "path": "/api/runtime/control",
+      "purpose": "start / pause / resume / kill runtime actions"
+    }
+  ],
+  "fallback_endpoints_supported_by_client": [
+    "/runtime/state",
+    "/api/qnt30501/runtime-state",
+    "/funds/summary",
+    "/api/qnt30501/fund-summary",
+    "/investors/overview",
+    "/api/qnt30501/investor-overview",
+    "/exposure/summary",
+    "/api/qnt30501/exposure-summary",
+    "/api/qnt30501/runtime-control"
+  ]
+}

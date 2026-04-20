@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html>
+<body style="background:#09101d;color:white;font-family:Arial;padding:20px">
+<h2>QNT30411 Performance Engine</h2>
+<input id="symbol" placeholder="symbol"><br>
+<input id="pnl" placeholder="pnl"><br>
+<button onclick="trade()">Add Trade</button>
+<button onclick="summary()">Get Summary</button>
+<pre id="out"></pre>
+<script>
+async function trade(){
+ let r=await fetch('/performance/trade',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({symbol:symbol.value,pnl:parseFloat(pnl.value)})});
+ out.innerText=JSON.stringify(await r.json(),null,2);
+}
+async function summary(){
+ let r=await fetch('/performance/summary');
+ out.innerText=JSON.stringify(await r.json(),null,2);
+}
+</script>
+</body>
+</html>

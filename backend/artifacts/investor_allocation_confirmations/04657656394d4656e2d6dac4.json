@@ -1,0 +1,23 @@
+{
+  "email": "operator@quantora.test",
+  "notes": [
+    {
+      "note_id": "note_1776220060",
+      "title": "Post-Dealing Confirmation",
+      "generated_at": 1776220060,
+      "official_nav": 0.0,
+      "processed_subscriptions": 0,
+      "processed_redemptions": 0,
+      "net_capital_activity": 0,
+      "allocated_nav": 0.0,
+      "valuation_id": "val_1776220060",
+      "status": "delivered",
+      "ack_status": "pending",
+      "delivered_at": 1776220060,
+      "acknowledged_at": null,
+      "notes": "released after nav publication"
+    }
+  ],
+  "created_at": 1776220060,
+  "updated_at": 1776220060
+}

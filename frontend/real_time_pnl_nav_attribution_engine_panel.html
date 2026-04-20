@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — Real-Time PnL, NAV, and Attribution Engine</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;--bad:#ef4444;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(15,29,49,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .sub{color:var(--muted);max-width:980px;line-height:1.5}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    button{border-radius:10px;border:none;background:var(--accent);color:var(--text);padding:10px 12px;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}.stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}
+    th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #274168;background:#0b1a2c;font-size:12px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}.bad{color:#fecaca;border-color:#7f1d1d}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:180px;white-space:pre-wrap}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT30482 — Real-Time PnL, NAV, and Attribution Engine</h1>
+      <div class="sub">PnL rows, NAV records, attribution buckets, and valuation marks. This is the layer that turns Quantora into a real performance accounting engine.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="loadAll()">Refresh</button>
+      <button onclick="seedPnl()">Seed PnL</button>
+      <button onclick="seedNav()">Seed NAV</button>
+      <button onclick="seedAttribution()">Seed Attribution</button>
+      <button onclick="seedValuation()">Seed Valuation</button>
+    </div>
+  </div>
+  <div class="grid" id="summaryGrid"></div>
+  <div class="layout">
+    <div class="stack">
+      <div class="card"><h2>PnL Rows</h2><div class="table-wrap"><table id="pnlTable"></table></div></div>
+      <div class="card"><h2>NAV Rows</h2><div class="table-wrap"><table id="navTable"></table></div></div>
+    </div>
+    <div class="stack">
+      <div class="card"><h2>Attribution</h2><div class="table-wrap"><table id="attributionTable"></table></div></div>
+      <div class="card"><h2>Valuation Marks</h2><div class="table-wrap"><table id="valuationTable"></table></div></div>
+      <div class="card"><h2>Engine Health</h2><div class="pills" id="healthPills"></div></div>
+      <div class="card"><h2>Last Action</h2><pre id="actionOut">No action yet.</pre></div>
+    </div>
+  </div>
+</div>
+<script>
+const api=(path, opts={})=>fetch(path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok) throw new Error(d.detail||'request_failed'); return d;});
+function money(v){return Number(v||0).toFixed(2)}
+function table(el, headers, rows){ const thead=`<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`; const body=rows.length?rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join(''):`<tr><td colspan="${headers.length}">No data</td></tr>`; el.innerHTML=thead+body; }
+function renderSummary(summary){ const labels=[['PnL Rows',summary.pnl_rows_total],['NAV Rows',summary.nav_rows_total],['Attribution',summary.attribution_rows_total],['Valuations',summary.valuation_rows_total],['PnL',money(summary.pnl_total)],['State',summary.engine_state]]; document.getElementById('summaryGrid').innerHTML=labels.map(([l,v])=>`<div class="card"><div class="label">${l}</div><div class="value">${v}</div></div>`).join('');}
+function pills(target, items){ document.getElementById(target).innerHTML=items.map(([l,k])=>`<span class="pill ${k}">${l}</span>`).join(''); }
+async function loadAll(){
+  const data=await api('/workspace/performance-engine/summary');
+  renderSummary(data.summary);
+  table(document.getElementById('pnlTable'), ['Book','PnL','Type','Status'], (data.pnl_rows||[]).map(r=>[r.book_name,money(r.pnl_value),r.pnl_type,r.status]));
+  table(document.getElementById('navTable'), ['Vehicle','NAV','Shares','Status'], (data.nav_rows||[]).map(r=>[r.vehicle_name,money(r.nav_value),money(r.share_count),r.status]));
+  table(document.getElementById('attributionTable'), ['Source','Contribution','Bucket','Status'], (data.attribution_rows||[]).map(r=>[r.source_name,money(r.contribution_value),r.bucket_type,r.status]));
+  table(document.getElementById('valuationTable'), ['Symbol','Market Value','Mark','Status'], (data.valuation_rows||[]).map(r=>[r.symbol,money(r.market_value),money(r.price_mark),r.status]));
+  const stateClass = data.engine_health.engine_state === 'LIVE' ? 'good' : (data.engine_health.engine_state === 'TRACKING' ? 'warn' : 'bad');
+  pills('healthPills', [
+    [`PnL ${data.engine_health.pnl_registry_ready?'Ready':'Missing'}`, data.engine_health.pnl_registry_ready?'good':'warn'],
+    [`NAV ${data.engine_health.nav_registry_ready?'Ready':'Missing'}`, data.engine_health.nav_registry_ready?'good':'warn'],
+    [`Attribution ${data.engine_health.attribution_registry_ready?'Ready':'Missing'}`, data.engine_health.attribution_registry_ready?'good':'warn'],
+    [`Valuation ${data.engine_health.valuation_registry_ready?'Ready':'Missing'}`, data.engine_health.valuation_registry_ready?'good':'warn'],
+    [`${data.engine_health.engine_state}`, stateClass]
+  ]);
+}
+async function seedPnl(){ const res=await api('/workspace/performance-engine/pnl/create',{method:'POST',body:JSON.stringify({book_name:'Flagship Core Book',pnl_value:12.75,pnl_type:'realized',status:'active'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedNav(){ const res=await api('/workspace/performance-engine/nav/create',{method:'POST',body:JSON.stringify({vehicle_name:'Quantora Flagship Fund',nav_value:1012.75,share_count:100.0,status:'published'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedAttribution(){ const res=await api('/workspace/performance-engine/attribution/create',{method:'POST',body:JSON.stringify({source_name:'Momentum Alpha',contribution_value:8.25,bucket_type:'strategy',status:'active'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+async function seedValuation(){ const res=await api('/workspace/performance-engine/valuation/create',{method:'POST',body:JSON.stringify({symbol:'AAPL',market_value:154.5,price_mark:103.0,status:'fresh'})}); document.getElementById('actionOut').textContent=JSON.stringify(res,null,2); await loadAll(); }
+loadAll().catch(err=>document.getElementById('actionOut').textContent=String(err));
+</script>
+</body>
+</html>

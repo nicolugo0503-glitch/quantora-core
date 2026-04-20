@@ -1,0 +1,11 @@
+<html><body><h1>QNT30521 Adaptive AI</h1>
+<button onclick="run()">Run Adaptive Allocation</button>
+<pre id='out'></pre>
+<script>
+async function run(){
+ await fetch('/api/ai/update',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({asset:'crypto',pnl:100})});
+ const res = await fetch('/api/ai/allocate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({capital:100000})});
+ const d = await res.json();
+ out.innerText = JSON.stringify(d,null,2);
+}
+</script></body></html>

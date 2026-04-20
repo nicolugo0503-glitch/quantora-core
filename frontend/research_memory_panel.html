@@ -1,0 +1,102 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora Research Memory + Regime Intelligence</title>
+  <style>
+    body { font-family: Inter, Arial, sans-serif; margin: 0; background:#08111f; color:#e5eefc; }
+    .wrap { max-width: 1180px; margin:0 auto; padding:24px; }
+    .panel { background:#0f1d31; border:1px solid #22314e; border-radius:18px; padding:18px; margin-bottom:16px; }
+    .grid { display:grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap:16px; }
+    input, textarea, select { width:100%; padding:10px 12px; border-radius:10px; border:1px solid #22314e; background:#132742; color:#e5eefc; }
+    textarea { min-height:120px; }
+    button { border:none; background:#3b82f6; color:white; padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer; }
+    pre { background:#06101d; border:1px solid #1e2d47; padding:14px; border-radius:14px; white-space:pre-wrap; overflow:auto; min-height:220px; }
+    .row { display:grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap:10px; }
+    a { color:#93c5fd; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="panel">
+    <h1>Research Memory + Regime Intelligence</h1>
+    <p>Institutional memory for market observations, regime classification, and allocation biasing.</p>
+    <p><a href="index.html">Back to Command Center</a></p>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h2>Ingest Research Note</h2>
+      <div class="row">
+        <input id="noteTitle" placeholder="Title" value="Breadth improving">
+        <select id="noteMarket"><option>equities</option><option>crypto</option><option>forex</option><option>futures</option></select>
+        <input id="noteTag" placeholder="Regime tag" value="trend">
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <select id="noteType"><option>observation</option><option>macro</option><option>risk</option><option>execution</option></select>
+        <input id="noteSymbol" placeholder="Symbol (optional)" value="SPY">
+        <input id="noteConfidence" type="number" step="0.01" min="0" max="1" value="0.72">
+      </div>
+      <textarea id="noteContent" style="margin-top:10px;">Participation is broadening and liquidity remains stable, favoring controlled trend deployment.</textarea>
+      <div style="margin-top:12px;"><button onclick="ingestNote()">Ingest Note</button></div>
+    </div>
+    <div class="panel">
+      <h2>Regime Snapshot / Allocator</h2>
+      <div class="row">
+        <select id="snapMarket"><option>equities</option><option>crypto</option><option>forex</option><option>futures</option></select>
+        <input id="snapSymbol" placeholder="Symbol" value="SPY">
+        <input id="volatility" type="number" step="1" value="118">
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <input id="breadth" type="number" step="0.01" value="0.66">
+        <input id="liquidity" type="number" step="0.01" value="0.74">
+        <input id="trend" type="number" step="0.01" value="0.71">
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <input id="macro" type="number" step="0.01" value="0.59">
+        <button onclick="snapshot()">Build Snapshot</button>
+        <button onclick="evaluateAllocator()">Evaluate Allocator</button>
+      </div>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="panel"><h2>Status</h2><pre id="statusOut">Loading...</pre></div>
+    <div class="panel"><h2>Output</h2><pre id="outputOut">Ready.</pre></div>
+  </div>
+</div>
+<script>
+async function api(path, payload) {
+  const res = await fetch('http://127.0.0.1:8010' + path, {
+    method: payload ? 'POST' : 'GET',
+    headers: {'Content-Type':'application/json'},
+    body: payload ? JSON.stringify(payload) : undefined
+  });
+  return await res.json();
+}
+async function refreshStatus(){
+  document.getElementById('statusOut').textContent = JSON.stringify(await api('/research-memory/status'), null, 2);
+}
+async function ingestNote(){
+  const payload = {
+    title: noteTitle.value, content: noteContent.value, market: noteMarket.value, symbol: noteSymbol.value || null,
+    regime_tag: noteTag.value || null, note_type: noteType.value, confidence: parseFloat(noteConfidence.value || '0.6')
+  };
+  document.getElementById('outputOut').textContent = JSON.stringify(await api('/research-memory/ingest', payload), null, 2);
+  refreshStatus();
+}
+function snapshotPayload(){
+  return { market: snapMarket.value, symbol: snapSymbol.value || null, volatility_bps: parseFloat(volatility.value), breadth: parseFloat(breadth.value), liquidity_score: parseFloat(liquidity.value), trend_score: parseFloat(trend.value), macro_score: parseFloat(macro.value) };
+}
+async function snapshot(){
+  document.getElementById('outputOut').textContent = JSON.stringify(await api('/regime-intelligence/snapshot', snapshotPayload()), null, 2);
+  refreshStatus();
+}
+async function evaluateAllocator(){
+  document.getElementById('outputOut').textContent = JSON.stringify(await api('/regime-intelligence/allocator/evaluate', snapshotPayload()), null, 2);
+  refreshStatus();
+}
+refreshStatus();
+</script>
+</body>
+</html>

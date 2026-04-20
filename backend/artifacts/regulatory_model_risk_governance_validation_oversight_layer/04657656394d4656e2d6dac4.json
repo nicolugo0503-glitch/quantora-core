@@ -1,0 +1,22 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 180,
+    "minimum_score": 96.0,
+    "require_stress_testing_clear": true,
+    "require_capital_adequacy_clear": true,
+    "require_liquidity_command_clear": true,
+    "minimum_model_inventory_coverage": 0.95,
+    "minimum_validation_completion_score": 0.93,
+    "minimum_model_governance_score": 0.94,
+    "minimum_challenge_closure_score": 0.92
+  },
+  "runs": [],
+  "alerts": [],
+  "model_families": [],
+  "validation_reviews": [],
+  "governance_actions": [],
+  "challenge_closures": [],
+  "latest_run": null,
+  "last_context": {}
+}

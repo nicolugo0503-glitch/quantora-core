@@ -1,0 +1,6 @@
+{
+  "base_zip": "QUANTORA_FULL_PROJECT_QNT30535B_IMPORT_HOTFIX.zip",
+  "fixed_file": "backend/app/main.py",
+  "issue": "ModuleNotFoundError: No module named 'app'",
+  "fix": "Removed invalid app.qnt30531_integration fallback; only relative and backend.app imports remain"
+}

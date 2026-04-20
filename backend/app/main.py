@@ -1,0 +1,17061 @@
+from .qnt30677_live_allocation_post_close_oversight_layer_router import router as qnt30677_router
+from .qnt30678_live_allocation_exception_governance_layer_router import router as qnt30678_router
+from .qnt30679_live_allocation_remediation_command_router import router as qnt30679_router
+from .qnt30680_live_allocation_recovery_authority_router import router as qnt30680_router
+from .qnt30681_capital_restoration_engine_router import router as qnt30681_router
+from .qnt30682_drawdown_defense_system_router import router as qnt30682_router
+from .qnt30683_capital_rotation_engine_router import router as qnt30683_router
+from .qnt30684_strategy_reallocation_intelligence_router import router as qnt30684_router
+from .qnt30685_idle_capital_deployment_router import router as qnt30685_router
+from .qnt30686_regime_detection_engine_router import router as qnt30686_router
+from .qnt30687_strategy_selection_ai_router import router as qnt30687_router
+from .qnt30688_portfolio_intelligence_brain_router import router as qnt30688_router
+from .qnt30689_multi_fund_orchestration_router import router as qnt30689_router
+from .qnt30690_cross_fund_allocation_router import router as qnt30690_router
+from .qnt30691_global_capital_routing_router import router as qnt30691_router
+from .qnt30692_audit_regulatory_system_router import router as qnt30692_router
+from .qnt30693_investor_transparency_engine_router import router as qnt30693_router
+from .qnt30694_reporting_disclosure_automation_router import router as qnt30694_router
+from .qnt30695_autonomous_fund_mode_router import router as qnt30695_router
+from .qnt30696_self_growing_capital_engine_router import router as qnt30696_router
+from .qnt30697_executive_ai_command_layer_router import router as qnt30697_router
+from .qnt30702_operator_command_console_router import router as qnt30702_router
+from .qnt30703_live_broker_safety_layer_router import router as qnt30703_router
+from .qnt30704_investor_delivery_pack_system_router import router as qnt30704_router
+from .qnt30700_institutional_release_control_router import router as qnt30700_router
+from .qnt30705_fund_admin_control_center_router import router as qnt30705_router
+from .qnt30706_forensic_audit_system_router import router as qnt30706_router
+from .qnt30707_recovery_system_router import router as qnt30707_router
+from .qnt30708_strategy_evolution_engine_router import router as qnt30708_router
+from .qnt30709_liquidity_intelligence_system_router import router as qnt30709_router
+from .qnt30710_market_regime_intelligence_system_router import router as qnt30710_router
+from .qnt30711_capital_rotation_command_system_router import router as qnt30711_router
+from .qnt30712_defensive_systems_command_layer_router import router as qnt30712_router
+from .qnt30713_autonomous_allocation_governance_layer_router import router as qnt30713_router
+from .qnt30714_investor_transparency_engine_router import router as qnt30714_router
+from .qnt30676_live_allocation_close_authority_router import router as qnt30676_router
+from .qnt30675_live_allocation_reconciliation_command_router import router as qnt30675_router
+from .qnt30674_live_allocation_settlement_command_router import router as qnt30674_router
+from .qnt30673_live_allocation_finalization_authority_router import router as qnt30673_router
+from .qnt30672_live_allocation_continuity_command_router import router as qnt30672_router
+import datetime
+import json
+import hashlib
+import hmac
+import secrets
+import os
+import sqlite3
+import urllib.error
+import urllib.parse
+import urllib.request
+import uuid
+from pathlib import Path
+from typing import Optional
+
+from .qnt30715_reporting_disclosure_automation_layer_router import router as qnt30715_router
+from .qnt30716_autonomous_fund_mode_readiness_layer_router import router as qnt30716_router
+from .qnt30717_self_growing_capital_engine_router import router as qnt30717_router
+from .qnt30718_executive_ai_command_layer_router import router as qnt30718_router
+from .qnt30719_executive_decision_memory_layer_router import router as qnt30719_router
+from .qnt30720_capital_committee_deliberation_layer_router import router as qnt30720_router
+from .qnt30721_executive_scenario_arbitration_layer_router import router as qnt30721_router
+from .qnt30722_executive_capital_allocation_policy_layer_router import router as qnt30722_router
+from .qnt30723_institutional_allocation_execution_charter_layer_router import router as qnt30723_router
+from .qnt30724_institutional_mandate_enforcement_layer_router import router as qnt30724_router
+from .qnt30725_institutional_breach_escalation_layer_router import router as qnt30725_router
+from .qnt30726_institutional_exception_resolution_layer_router import router as qnt30726_router
+from .qnt30727_institutional_remediation_closure_layer_router import router as qnt30727_router
+from .qnt30728_institutional_reauthorization_layer_router import router as qnt30728_router
+from .qnt30729_institutional_continuity_restoration_layer_router import router as qnt30729_router
+from .qnt30730_institutional_stability_reconfirmation_layer_router import router as qnt30730_router
+from .qnt30731_institutional_operating_confidence_layer_router import router as qnt30731_router
+from .qnt30732_institutional_capital_readiness_renewal_layer_router import router as qnt30732_router
+from .qnt30733_institutional_capital_deployment_reinstatement_layer_router import router as qnt30733_router
+from .qnt30734_institutional_deployment_capacity_scaling_layer_router import router as qnt30734_router
+from .qnt30735_institutional_multi_channel_deployment_orchestration_layer_router import router as qnt30735_router
+from .qnt30736_institutional_cross_venue_deployment_routing_layer_router import router as qnt30736_router
+from .qnt30737_institutional_execution_capacity_balancing_layer_router import router as qnt30737_router
+from .qnt30738_institutional_execution_quality_assurance_layer_router import router as qnt30738_router
+from .qnt30739_institutional_post_trade_control_assurance_layer_router import router as qnt30739_router
+from .qnt30740_institutional_settlement_integrity_command_layer_router import router as qnt30740_router
+from .qnt30741_institutional_settlement_exception_command_layer_router import router as qnt30741_router
+from .qnt30742_institutional_settlement_recovery_resolution_layer_router import router as qnt30742_router
+from .qnt30743_institutional_settlement_finalization_authority_layer_router import router as qnt30743_router
+from .qnt30744_institutional_cash_reconciliation_closure_layer_router import router as qnt30744_router
+from .qnt30745_institutional_treasury_confirmation_layer_router import router as qnt30745_router
+from .qnt30746_institutional_investor_capital_confirmation_layer_router import router as qnt30746_router
+from .qnt30747_institutional_audit_readiness_certification_layer_router import router as qnt30747_router
+from .qnt30748_institutional_external_auditor_interface_layer_router import router as qnt30748_router
+from .qnt30749_institutional_regulator_readiness_interface_router import router as qnt30749_router
+from .qnt30750_regulatory_compliance_automation_layer_router import router as qnt30750_router
+from .qnt30751_multi_jurisdiction_governance_layer_router import router as qnt30751_router
+from .qnt30752_institutional_capital_expansion_engine_router import router as qnt30752_router
+from .qnt30753_global_strategy_deployment_layer_router import router as qnt30753_router
+from .qnt30754_institutional_supervisory_examination_command_layer_router import router as qnt30754_router
+from .qnt30755_regulatory_filing_submission_orchestration_layer_router import router as qnt30755_router
+from .qnt30756_regulatory_obligation_calendar_deadline_control_layer_router import router as qnt30756_router
+from .qnt30757_regulatory_breach_escalation_remediation_command_layer_router import router as qnt30757_router
+from .qnt30758_regulatory_enforcement_response_consent_order_command_layer_router import router as qnt30758_router
+from .qnt30759_regulatory_capital_adequacy_surveillance_early_warning_layer_router import router as qnt30759_router
+from .qnt30760_regulatory_liquidity_stress_command_recovery_layer_router import router as qnt30760_router
+from .qnt30761_regulatory_resolution_planning_wind_down_control_layer_router import router as qnt30761_router
+from .qnt30762_recovery_resolution_scenario_simulation_command_layer_router import router as qnt30762_router
+from .qnt30763_regulatory_stress_testing_submission_supervisory_challenge_layer_router import router as qnt30763_router
+from .qnt30764_regulatory_model_risk_governance_validation_oversight_layer_router import router as qnt30764_router
+from .qnt30765_regulatory_data_lineage_evidence_provenance_attestation_fabric_router import router as qnt30765_router
+from .qnt30766_regulatory_records_retention_legal_hold_supervisory_retrieval_command_layer_router import router as qnt30766_router
+from .qnt30767_regulatory_surveillance_market_abuse_detection_trade_conduct_enforcement_layer_router import router as qnt30767_router
+from .qnt30768_best_execution_surveillance_order_handling_fairness_market_conduct_assurance_layer_router import router as qnt30768_router
+from .qnt30769_cross_market_transaction_reporting_regulatory_disclosure_layer_router import router as qnt30769_router
+from .qnt30770_regulatory_client_asset_safeguarding_segregation_custody_assurance_layer_router import router as qnt30770_router
+from .qnt30771_regulatory_client_money_protection_reserve_formula_daily_safeguarding_control_layer_router import router as qnt30771_router
+from .qnt30772_regulatory_prime_broker_exposure_counterparty_safeguarding_collateral_protection_layer_router import router as qnt30772_router
+from .qnt30773_regulatory_counterparty_concentration_limits_wrong_way_risk_exposure_escalation_layer_router import router as qnt30773_router
+from .qnt40002_real_time_pnl_performance_attribution_investor_metrics_layer_router import router as qnt40002_router
+from .qnt40003_investor_statement_packs_capital_account_waterfalls_lp_performance_distribution_layer_router import router as qnt40003_router
+from .qnt40004_investor_onboarding_subscription_documents_capital_account_activation_layer_router import router as qnt40004_router
+from .qnt40005_investor_aml_accreditation_suitability_admission_approval_layer_router import router as qnt40005_router
+from .qnt40006_investor_commitments_subscription_acceptance_capital_call_scheduling_layer_router import router as qnt40006_router
+from .qnt40007_investor_funding_settlement_subscription_reconciliation_capital_receipt_finalization_layer_router import router as qnt40007_router
+from .qnt40008_investor_equalization_series_accounting_nav_entry_allocation_control_layer_router import router as qnt40008_router
+from .qnt40009_fee_engine_management_fee_performance_fee_hwm_hurdle_rate_incentive_allocation_layer_router import router as qnt40009_router
+from .qnt40010_redemption_queue_liquidity_gating_side_pocket_withdrawal_waterfall_control_layer_router import router as qnt40010_router
+from .qnt40011_redemption_settlement_in_kind_transfer_control_investor_exit_finalization_layer_router import router as qnt40011_router
+from .qnt40012_dealing_day_lock_nav_cutoff_enforcement_investor_transaction_freeze_control_layer_router import router as qnt40012_router
+from .qnt40013_nav_publication_investor_notice_release_post_dealing_confirmation_distribution_layer_router import router as qnt40013_router
+from .qnt40014_investor_nav_statement_finalization_delivery_acknowledgement_release_governance_layer_router import router as qnt40014_router
+from .qnt40015_investor_capital_statement_consolidation_period_close_certification_lp_book_final_lock_layer_router import router as qnt40015_router
+from .qnt40016_fund_administrator_nav_package_approval_controller_sign_off_official_books_release_layer_router import router as qnt40016_router
+from .qnt40017_independent_price_verification_valuation_committee_challenge_nav_fair_value_override_governance_layer_router import router as qnt40017_router
+from .qnt40018_administrator_shadow_nav_independent_nav_recalculation_nav_break_escalation_layer_router import router as qnt40018_router
+from .qnt40019_pricing_source_hierarchy_stale_price_exception_control_valuation_source_override_governance_layer_router import router as qnt40019_router
+from .qnt40020_valuation_committee_minutes_challenge_resolution_evidence_final_nav_governance_record_layer_router import router as qnt40020_router
+from .qnt40021_auditor_pbc_package_assembly_valuation_support_binder_final_nav_evidence_delivery_layer_router import router as qnt40021_router
+from .qnt40022_audit_opinion_readiness_open_item_clearance_financial_statement_release_authorization_layer_router import router as qnt40022_router
+from .qnt40023_financial_statement_issuance_lp_reporting_pack_release_audit_closure_record_lock_layer_router import router as qnt40023_router
+from .qnt40024_annual_report_assembly_lp_letter_distribution_financial_statement_archive_certification_layer_router import router as qnt40024_router
+from .qnt40025_annual_investor_communications_calendar_board_letter_approval_archive_dissemination_control_layer_router import router as qnt40025_router
+from .qnt40026_board_reporting_agenda_control_annual_meeting_materials_approval_investor_communication_governance_lock_layer_router import router as qnt40026_router
+from .qnt40027_board_resolution_archive_committee_approval_trace_annual_governance_evidence_lock_layer_router import router as qnt40027_router
+from .qnt40028_annual_governance_binder_assembly_board_certification_release_permanent_record_seal_layer_router import router as qnt40028_router
+from .qnt40029_governance_record_retention_schedule_board_retrieval_index_permanent_archive_supervision_layer_router import router as qnt40029_router
+from .qnt40030_governance_archive_exception_review_retrieval_breach_escalation_supervisory_preservation_override_layer_router import router as qnt40030_router
+from .qnt40031_supervisory_archive_access_ledger_preservation_directive_tracking_governance_record_custody_assurance_layer_router import router as qnt40031_router
+from .qnt40032_supervisory_preservation_order_register_archive_chain_of_custody_audit_governance_record_access_challenge_resolution_layer_router import router as qnt40032_router
+from .qnt40033_supervisory_record_production_register_access_determination_review_governance_archive_disclosure_control_layer_router import router as qnt40033_router
+from .qnt40034_supervisory_production_packet_assembly_governance_archive_release_approval_official_record_disclosure_ledger_layer_router import router as qnt40034_router
+from .qnt40035_supervisory_production_delivery_certification_record_disclosure_acknowledgement_archive_release_closure_layer_router import router as qnt40035_router
+from .qnt50001_live_broker_integration_layer_router import router as qnt50001_router
+from .qnt50002_real_capital_allocation_engine_router import router as qnt50002_router
+from .qnt50003_strategy_deployment_engine_router import router as qnt50003_router
+from .qnt50004_risk_kill_switch_system_router import router as qnt50004_router
+from .qnt50005_performance_engine_institutional_router import router as qnt50005_router
+from .qnt50006_autonomous_execution_layer_router import router as qnt50006_router
+from .qnt50007_settlement_reconciliation_control_layer_router import router as qnt50007_router
+from .qnt50008_treasury_cash_mobility_control_layer_router import router as qnt50008_router
+from .qnt50009_investor_cash_confirmation_treasury_release_authority_router import router as qnt50009_router
+from .qnt50010_investor_redemption_settlement_exit_finalization_authority_router import router as qnt50010_router
+from .qnt50011_investor_distribution_waterfall_payable_release_authority_router import router as qnt50011_router
+from .qnt50012_period_close_distribution_ledger_investor_notice_finalization_router import router as qnt50012_router
+from .qnt50013_official_books_release_distribution_archive_certification_layer_router import router as qnt50013_router
+from .qnt50014_governance_binder_publication_regulator_retrieval_packet_layer_router import router as qnt50014_router
+from .qnt50015_regulatory_disclosure_delivery_supervisory_acknowledgement_ledger_router import router as qnt50015_router
+from .qnt50018_cross_entity_capital_flow_intercompany_ledger_engine_router import router as qnt50018_router
+from .qnt50022_full_autonomous_hedge_fund_control_loop_end_to_end_self_operating_system_router import router as qnt50022_router
+from .qnt50023_executive_ai_capital_committee_decision_memory_layer_router import router as qnt50023_router
+from .qnt50024_executive_scenario_arbitration_allocation_policy_enforcement_layer_router import router as qnt50024_router
+from .qnt50025_institutional_allocation_execution_charter_mandate_enforcement_layer_router import router as qnt50025_router
+from .qnt50026_institutional_breach_escalation_exception_resolution_layer_router import router as qnt50026_router
+from .qnt50027_autonomous_remediation_controlled_recovery_orchestration_layer_router import router as qnt50027_router
+from .qnt50028_institutional_reauthorization_post_recovery_capital_reinstatement_layer_router import router as qnt50028_router
+from .qnt50029_live_capital_reactivation_strategy_reentry_governance_layer_router import router as qnt50029_router
+from .qnt50030_live_strategy_scale_up_dynamic_capital_ramp_governance_layer_router import router as qnt50030_router
+from .qnt50031_institutional_live_allocation_escalation_capacity_ceiling_governance_layer_router import router as qnt50031_router
+from .qnt50033_multi_fund_expansion_new_vehicle_launch_governance_layer_router import router as qnt50033_router
+from .qnt50034_multi_vehicle_operating_model_shared_services_governance_layer_router import router as qnt50034_router
+from .qnt50035_multi_region_operating_expansion_jurisdictional_service_partition_layer_router import router as qnt50035_router
+from .qnt50036_cross_border_service_routing_regulatory_boundary_enforcement_layer_router import router as qnt50036_router
+from .qntreal01a_operator_cockpit_router import router as qntreal01a_router
+from .qntreal01b_live_broker_truth_path_router import router as qntreal01b_router
+from .qntreal01c_real_position_fill_broker_sync_authority_router import router as qntreal01c_router
+from .qntreal01d_real_pnl_equity_exposure_truth_layer_router import router as qntreal01d_router
+from .qntreal01e_real_order_entry_guarded_live_trade_execution_surface_router import router as qntreal01e_router
+from .qntreal01f_live_broker_credential_vault_execution_authorization_gate_router import router as qntreal01f_router
+from .qntreal01g_broker_session_handshake_live_connectivity_verification_layer_router import router as qntreal01g_router
+from .qntreal01i_live_position_reconciliation_post_trade_state_lock_layer_router import router as qntreal01i_router
+from .qntreal01j_real_broker_cash_buying_power_margin_truth_layer_router import router as qntreal01j_router
+from fastapi import Body, Depends, FastAPI, HTTPException, Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, JSONResponse
+from backend.routes_qnt30379_to_qnt30391 import router as qnt30379_to_qnt30391_router
+from backend.app.qnt30553_capital_router import router as qnt30553_capital_router
+from backend.app.qnt30555_performance_router import router as qnt30555_performance_router
+from backend.app.qnt30560_auth_router import router as qnt30560_auth_router
+from backend.app.qnt30560_health_router import router as qnt30560_health_router
+from backend.app.qnt30561_broker_router import router as qnt30561_broker_router
+from backend.app.qnt30561_live_execution_router import router as qnt30561_live_execution_router
+from backend.app.qnt30562_capital_router import router as qnt30562_capital_router
+from backend.app.qnt30562_governance_router import router as qnt30562_governance_router
+from backend.app.qnt30557_multi_user_router import router as qnt30557_multi_user_router
+from backend.app.qnt30563_reconciliation_router import router as qnt30563_reconciliation_router
+from backend.app.qnt30564_reporting_router import router as qnt30564_reporting_router
+from backend.app.qnt30565_funding_router import router as qnt30565_funding_router
+from backend.app.qnt30566_payment_provider_router import router as qnt30566_payment_provider_router
+from backend.app.qnt30567_live_provider_activation_router import router as qnt30567_live_provider_activation_router
+from backend.app.qnt30568_live_external_funding_router import router as qnt30568_live_external_funding_router
+from backend.app.qnt30569_investor_ops_router import router as qnt30569_investor_ops_router
+from backend.app.qnt30570_admin_console_router import router as qnt30570_admin_console_router
+from backend.app.qnt30571_data_room_router import router as qnt30571_data_room_router
+from backend.app.qnt30572_fundraising_crm_router import router as qnt30572_fundraising_crm_router
+from backend.app.qnt30573_lp_update_router import router as qnt30573_lp_update_router
+from backend.app.qnt30574_secure_inbox_router import router as qnt30574_secure_inbox_router
+from backend.app.qnt30575_checklist_router import router as qnt30575_checklist_router
+from backend.app.qnt30576_identity_vault_router import router as qnt30576_identity_vault_router
+from backend.app.qnt30577_compliance_queue_router import router as qnt30577_compliance_queue_router
+from backend.app.qnt30578_subscription_esign_router import router as qnt30578_subscription_esign_router
+from backend.app.qnt30579_capital_call_router import router as qnt30579_capital_call_router
+from backend.app.qnt30580_allocation_closing_router import router as qnt30580_allocation_closing_router
+from backend.app.qnt30581_fund_close_router import router as qnt30581_fund_close_router
+from backend.app.qnt30582_nav_registry_router import router as qnt30582_nav_registry_router
+from backend.app.qnt30583_portfolio_allocation_router import router as qnt30583_portfolio_allocation_router
+from backend.app.qnt30584_strategy_sleeve_execution_router import router as qnt30584_strategy_sleeve_execution_router
+from backend.app.qnt30585_trade_attribution_router import router as qnt30585_trade_attribution_router
+from backend.app.qnt30586_pnl_ledger_router import router as qnt30586_pnl_ledger_router
+from backend.app.qnt30587_waterfall_router import router as qnt30587_waterfall_router
+from backend.app.qnt30588_statement_pack_router import router as qnt30588_statement_pack_router
+from backend.app.qnt30589_report_delivery_log_router import router as qnt30589_report_delivery_log_router
+from backend.app.qnt30590_reporting_calendar_router import router as qnt30590_reporting_calendar_router
+from backend.app.qnt30591_cash_ledger_router import router as qnt30591_cash_ledger_router
+from backend.app.qnt30593_equalization_router import router as qnt30593_equalization_router
+from backend.app.qnt30594_rollforward_router import router as qnt30594_rollforward_router
+from backend.app.qnt30595_capital_activity_router import router as qnt30595_capital_activity_router
+from backend.app.qnt30596_dealing_day_router import router as qnt30596_dealing_day_router
+from backend.app.qnt30597_nav_strike_router import router as qnt30597_nav_strike_router
+from backend.app.qnt30598_allocation_confirmation_router import router as qnt30598_allocation_confirmation_router
+from backend.app.qnt30600_reconciliation_router import router as qnt30600_reconciliation_router
+from backend.app.qnt30601_exception_resolution_router import router as qnt30601_exception_resolution_router
+from backend.app.qnt30602_audit_trail_router import router as qnt30602_audit_trail_router
+from backend.app.qnt30603_broker_reconciliation_router import router as qnt30603_broker_reconciliation_router
+from backend.app.qnt30604_threeway_reconciliation_router import router as qnt30604_threeway_reconciliation_router
+from backend.app.qnt30605_alpaca_live_sync_router import router as qnt30605_alpaca_live_sync_router
+from backend.app.qnt30606_break_alert_router import router as qnt30606_break_alert_router
+from backend.app.qnt30607_resolution_suggestion_router import router as qnt30607_resolution_suggestion_router
+from backend.app.qnt30608_correction_execution_router import router as qnt30608_correction_execution_router
+from backend.app.qnt30609_supervisory_control_router import router as qnt30609_supervisory_control_router
+from pydantic import BaseModel, Field
+
+try:
+    from backend.qnt30444_investor_operating_layer import build_investor_operating_package as build_qnt30444_package
+except Exception:
+    from qnt30444_investor_operating_layer import build_investor_operating_package as build_qnt30444_package
+
+
+try:
+    from backend.qnt30445_monetization_engine import build_monetization_package as build_qnt30445_package
+except Exception:
+    from qnt30445_monetization_engine import build_monetization_package as build_qnt30445_package
+
+
+try:
+    from backend.qnt30446_distribution_engine import build_distribution_package as build_qnt30446_package
+except Exception:
+    from qnt30446_distribution_engine import build_distribution_package as build_qnt30446_package
+
+
+try:
+    from backend.qnt30447_autonomous_capital_layer import build_autonomous_capital_package as build_qnt30447_package
+except Exception:
+    from qnt30447_autonomous_capital_layer import build_autonomous_capital_package as build_qnt30447_package
+
+
+try:
+    from backend.qnt30448_execution_governance_audit import build_execution_governance_package as build_qnt30448_package
+except Exception:
+    from qnt30448_execution_governance_audit import build_execution_governance_package as build_qnt30448_package
+
+
+try:
+    from backend.qnt30449_institutional_reporting_lp_statements import build_lp_reporting_package as build_qnt30449_package
+except Exception:
+    from qnt30449_institutional_reporting_lp_statements import build_lp_reporting_package as build_qnt30449_package
+
+
+try:
+    from backend.qnt30450_multi_broker_execution_fabric import build_multi_broker_package as build_qnt30450_package
+except Exception:
+    from qnt30450_multi_broker_execution_fabric import build_multi_broker_package as build_qnt30450_package
+
+
+try:
+    from backend.qnt30451_portfolio_risk_nerve_center import build_portfolio_risk_package as build_qnt30451_package
+except Exception:
+    from qnt30451_portfolio_risk_nerve_center import build_portfolio_risk_package as build_qnt30451_package
+
+
+try:
+    from backend.qnt30452_treasury_cash_liquidity_control_tower import build_treasury_liquidity_package as build_qnt30452_package
+except Exception:
+    from qnt30452_treasury_cash_liquidity_control_tower import build_treasury_liquidity_package as build_qnt30452_package
+
+
+try:
+    from backend.qnt30453_investor_crm_capital_raise_pipeline import build_investor_crm_package as build_qnt30453_package
+except Exception:
+    from qnt30453_investor_crm_capital_raise_pipeline import build_investor_crm_package as build_qnt30453_package
+
+
+try:
+    from backend.qnt30454_revenue_intelligence_unit_economics import build_revenue_intelligence_package as build_qnt30454_package
+except Exception:
+    from qnt30454_revenue_intelligence_unit_economics import build_revenue_intelligence_package as build_qnt30454_package
+
+
+try:
+    from backend.qnt30455_operator_command_ai_layer import build_operator_ai_package as build_qnt30455_package
+except Exception:
+    from qnt30455_operator_command_ai_layer import build_operator_ai_package as build_qnt30455_package
+
+
+try:
+    from backend.qnt30456_institutional_compliance_diligence_vault import build_compliance_vault_package as build_qnt30456_package
+except Exception:
+    from qnt30456_institutional_compliance_diligence_vault import build_compliance_vault_package as build_qnt30456_package
+
+
+try:
+    from backend.qnt30457_fund_admin_nav_reconciliation_engine import build_fund_admin_package as build_qnt30457_package
+except Exception:
+    from qnt30457_fund_admin_nav_reconciliation_engine import build_fund_admin_package as build_qnt30457_package
+
+
+try:
+    from backend.qnt30458_institutional_data_room_allocator_access_layer import build_data_room_package as build_qnt30458_package
+except Exception:
+    from qnt30458_institutional_data_room_allocator_access_layer import build_data_room_package as build_qnt30458_package
+
+
+try:
+    from backend.qnt30459_institutional_sales_partnership_engine import build_sales_partnership_package as build_qnt30459_package
+except Exception:
+    from qnt30459_institutional_sales_partnership_engine import build_sales_partnership_package as build_qnt30459_package
+
+
+try:
+    from backend.qnt30460_executive_kpi_mission_control import build_executive_kpi_package as build_qnt30460_package
+except Exception:
+    from qnt30460_executive_kpi_mission_control import build_executive_kpi_package as build_qnt30460_package
+
+
+try:
+    from backend.qnt30461_strategy_research_lab_alpha_pipeline import build_strategy_research_package as build_qnt30461_package
+except Exception:
+    from qnt30461_strategy_research_lab_alpha_pipeline import build_strategy_research_package as build_qnt30461_package
+
+try:
+    from backend.qnt30462_autonomous_execution_capital_allocation_v2 import build_autonomous_v2_package as build_qnt30462_package
+except Exception:
+    from qnt30462_autonomous_execution_capital_allocation_v2 import build_autonomous_v2_package as build_qnt30462_package
+
+try:
+    from backend.qnt30463_full_autonomous_fund_mode import build_full_autonomous_fund_package as build_qnt30463_package
+except Exception:
+    from qnt30463_full_autonomous_fund_mode import build_full_autonomous_fund_package as build_qnt30463_package
+
+
+try:
+    from backend.qnt30464_global_capital_network_multi_fund_orchestration import build_global_capital_network_package as build_qnt30464_package
+except Exception:
+    from qnt30464_global_capital_network_multi_fund_orchestration import build_global_capital_network_package as build_qnt30464_package
+
+
+try:
+    from backend.qnt30465_cross_border_entity_jurisdiction_fund_structure import build_jurisdiction_structure_package as build_qnt30465_package
+except Exception:
+    from qnt30465_cross_border_entity_jurisdiction_fund_structure import build_jurisdiction_structure_package as build_qnt30465_package
+
+
+try:
+    from backend.qnt30466_institutional_investor_portal_secure_reporting_access import build_investor_portal_package as build_qnt30466_package
+except Exception:
+    from qnt30466_institutional_investor_portal_secure_reporting_access import build_investor_portal_package as build_qnt30466_package
+
+
+try:
+    from backend.qnt30467_distribution_flywheel_referral_growth_engine import build_distribution_growth_package as build_qnt30467_package
+except Exception:
+    from qnt30467_distribution_flywheel_referral_growth_engine import build_distribution_growth_package as build_qnt30467_package
+
+
+try:
+    from backend.qnt30468_brand_authority_media_distribution_engine import build_brand_media_package as build_qnt30468_package
+except Exception:
+    from qnt30468_brand_authority_media_distribution_engine import build_brand_media_package as build_qnt30468_package
+
+
+try:
+    from backend.qnt30469_platform_api_external_integration_gateway import build_platform_api_package as build_qnt30469_package
+except Exception:
+    from qnt30469_platform_api_external_integration_gateway import build_platform_api_package as build_qnt30469_package
+
+
+try:
+    from backend.qnt30470_broker_custodian_prime_services_connectivity_mesh import build_connectivity_mesh_package as build_qnt30470_package
+except Exception:
+    from qnt30470_broker_custodian_prime_services_connectivity_mesh import build_connectivity_mesh_package as build_qnt30470_package
+
+
+try:
+    from backend.qnt30471_multi_asset_expansion_layer import build_multi_asset_package as build_qnt30471_package
+except Exception:
+    from qnt30471_multi_asset_expansion_layer import build_multi_asset_package as build_qnt30471_package
+
+
+try:
+    from backend.qnt30472_treasury_cash_management_yield_optimization_layer import build_treasury_package as build_qnt30472_package
+except Exception:
+    from qnt30472_treasury_cash_management_yield_optimization_layer import build_treasury_package as build_qnt30472_package
+
+
+try:
+    from backend.qnt30473_revenue_operations_billing_intelligence_layer import build_revenue_ops_package as build_qnt30473_package
+except Exception:
+    from qnt30473_revenue_operations_billing_intelligence_layer import build_revenue_ops_package as build_qnt30473_package
+
+
+try:
+    from backend.qnt30474_investor_crm_relationship_intelligence_layer import build_investor_crm_package as build_qnt30474_package
+except Exception:
+    from qnt30474_investor_crm_relationship_intelligence_layer import build_investor_crm_package as build_qnt30474_package
+
+
+try:
+    from backend.qnt30475_fundraising_pipeline_allocation_conversion_engine import build_fundraising_pipeline_package as build_qnt30475_package
+except Exception:
+    from qnt30475_fundraising_pipeline_allocation_conversion_engine import build_fundraising_pipeline_package as build_qnt30475_package
+
+
+try:
+    from backend.qnt30476_governance_committee_investment_approval_workflow_layer import build_governance_approval_package as build_qnt30476_package
+except Exception:
+    from qnt30476_governance_committee_investment_approval_workflow_layer import build_governance_approval_package as build_qnt30476_package
+
+
+try:
+    from backend.qnt30477_portfolio_exposure_factor_risk_stress_testing_layer import build_portfolio_risk_package as build_qnt30477_package
+except Exception:
+    from qnt30477_portfolio_exposure_factor_risk_stress_testing_layer import build_portfolio_risk_package as build_qnt30477_package
+
+
+try:
+    from backend.qnt30478_live_strategy_activation_capital_deployment_control_layer import build_strategy_activation_package as build_qnt30478_package
+except Exception:
+    from qnt30478_live_strategy_activation_capital_deployment_control_layer import build_strategy_activation_package as build_qnt30478_package
+
+
+try:
+    from backend.qnt30479_signal_to_execution_automation_bridge import build_signal_execution_bridge_package as build_qnt30479_package
+except Exception:
+    from qnt30479_signal_to_execution_automation_bridge import build_signal_execution_bridge_package as build_qnt30479_package
+
+
+try:
+    from backend.qnt30480_order_orchestration_broker_dispatch_layer import build_order_dispatch_package as build_qnt30480_package
+except Exception:
+    from qnt30480_order_orchestration_broker_dispatch_layer import build_order_dispatch_package as build_qnt30480_package
+
+
+try:
+    from backend.qnt30481_fill_capture_position_lifecycle_reconciliation_layer import build_fill_position_package as build_qnt30481_package
+except Exception:
+    from qnt30481_fill_capture_position_lifecycle_reconciliation_layer import build_fill_position_package as build_qnt30481_package
+
+
+try:
+    from backend.qnt30482_real_time_pnl_nav_attribution_engine import build_pnl_nav_package as build_qnt30482_package
+except Exception:
+    from qnt30482_real_time_pnl_nav_attribution_engine import build_pnl_nav_package as build_qnt30482_package
+
+
+try:
+    from backend.qnt30483_autonomous_portfolio_rebalancing_allocation_adjustment_layer import build_rebalancing_package as build_qnt30483_package
+except Exception:
+    from qnt30483_autonomous_portfolio_rebalancing_allocation_adjustment_layer import build_rebalancing_package as build_qnt30483_package
+
+try:
+    from backend.qnt30417_billing import (
+        ACTIVE_STATUSES as BILLING_ACTIVE_STATUSES,
+        PLAN_FEATURES as BILLING_PLAN_FEATURES,
+        PLAN_PRICING as BILLING_PLAN_PRICING,
+        PAID_PLANS as BILLING_PAID_PLANS,
+        audit as billing_audit,
+        billing_metrics as billing_build_metrics,
+        create_checkout_session as billing_create_checkout_session,
+        create_portal_session as billing_create_portal_session,
+        derive_billing_update_from_stripe_event as billing_derive_stripe_update,
+        ensure_state as billing_ensure_state,
+        feature_allowed as billing_feature_allowed,
+        hydrate_user as billing_hydrate_user,
+        parse_stripe_webhook as billing_parse_stripe_webhook,
+        record_webhook as billing_record_webhook,
+        status_allows_execution as billing_status_allows_execution,
+        stripe_env_summary as billing_env_summary,
+        stripe_live_ready as billing_stripe_live_ready,
+        stripe_mode as billing_stripe_mode,
+        subscription_active as billing_subscription_active,
+        summarize_user as billing_summarize_user,
+    )
+except Exception:
+    from qnt30417_billing import (
+        ACTIVE_STATUSES as BILLING_ACTIVE_STATUSES,
+        PLAN_FEATURES as BILLING_PLAN_FEATURES,
+        PLAN_PRICING as BILLING_PLAN_PRICING,
+        PAID_PLANS as BILLING_PAID_PLANS,
+        audit as billing_audit,
+        billing_metrics as billing_build_metrics,
+        create_checkout_session as billing_create_checkout_session,
+        create_portal_session as billing_create_portal_session,
+        derive_billing_update_from_stripe_event as billing_derive_stripe_update,
+        ensure_state as billing_ensure_state,
+        feature_allowed as billing_feature_allowed,
+        hydrate_user as billing_hydrate_user,
+        parse_stripe_webhook as billing_parse_stripe_webhook,
+        record_webhook as billing_record_webhook,
+        status_allows_execution as billing_status_allows_execution,
+        stripe_env_summary as billing_env_summary,
+        stripe_live_ready as billing_stripe_live_ready,
+        stripe_mode as billing_stripe_mode,
+        subscription_active as billing_subscription_active,
+        summarize_user as billing_summarize_user,
+    )
+
+try:
+    from backend.automation_engine import QuantoraAutomationEngine
+except Exception:
+    from automation_engine import QuantoraAutomationEngine
+
+try:
+    from backend.ai_decision_layer import build_decision_snapshot
+except Exception:
+    from ai_decision_layer import build_decision_snapshot
+
+try:
+    from backend.execution_optimization import (
+        build_execution_plan,
+        default_execution_optimizer,
+        execution_optimizer_state,
+        record_execution_plan,
+        record_execution_result,
+    )
+except Exception:
+    from execution_optimization import (
+        build_execution_plan,
+        default_execution_optimizer,
+        execution_optimizer_state,
+        record_execution_plan,
+        record_execution_result,
+    )
+
+try:
+    from backend.portfolio_risk_fabric import (
+        build_risk_snapshot,
+        default_portfolio_risk_state,
+        evaluate_limits as evaluate_portfolio_limits,
+        net_cross_market_exposure,
+        portfolio_risk_state_view,
+        portfolio_risk_summary,
+        upsert_exposure,
+    )
+except Exception:
+    from portfolio_risk_fabric import (
+        build_risk_snapshot,
+        default_portfolio_risk_state,
+        evaluate_limits as evaluate_portfolio_limits,
+        net_cross_market_exposure,
+        portfolio_risk_state_view,
+        portfolio_risk_summary,
+        upsert_exposure,
+    )
+
+try:
+    from backend.allocator_intelligence import (
+        allocator_intelligence_state_view,
+        allocator_summary,
+        build_allocator_snapshot,
+        default_allocator_intelligence_state,
+        propose_rebalance as allocator_propose_rebalance,
+        release_reserve as allocator_release_reserve,
+        update_treasury_policy,
+    )
+except Exception:
+    from allocator_intelligence import (
+        allocator_intelligence_state_view,
+        allocator_summary,
+        build_allocator_snapshot,
+        default_allocator_intelligence_state,
+        propose_rebalance as allocator_propose_rebalance,
+        release_reserve as allocator_release_reserve,
+        update_treasury_policy,
+    )
+
+try:
+    from backend.performance_intelligence import (
+        apply_meta_allocation,
+        build_performance_snapshot,
+        default_performance_intelligence_state,
+        evaluate_meta_allocator,
+        ingest_attribution_event,
+        performance_state_view,
+        performance_summary,
+    )
+except Exception:
+    from performance_intelligence import (
+        apply_meta_allocation,
+        build_performance_snapshot,
+        default_performance_intelligence_state,
+        evaluate_meta_allocator,
+        ingest_attribution_event,
+        performance_state_view,
+        performance_summary,
+    )
+
+try:
+    from backend.qnt30418_performance_attribution import build_attribution_snapshot
+except Exception:
+    from qnt30418_performance_attribution import build_attribution_snapshot
+
+try:
+    from backend.qnt30419_unified_dashboard_runtime import (
+        build_activity_feed as qnt30419_build_activity_feed,
+        build_operator_brief as qnt30419_build_operator_brief,
+        build_unified_dashboard_summary as qnt30419_build_unified_dashboard_summary,
+    )
+except Exception:
+    from qnt30419_unified_dashboard_runtime import (
+        build_activity_feed as qnt30419_build_activity_feed,
+        build_operator_brief as qnt30419_build_operator_brief,
+        build_unified_dashboard_summary as qnt30419_build_unified_dashboard_summary,
+    )
+
+
+try:
+    from backend.qnt30421_live_broker_path import (
+        broker_env_summary as qnt30421_broker_env_summary,
+        build_audit_event as qnt30421_build_audit_event,
+        build_status_snapshot as qnt30421_build_status_snapshot,
+        canonical_live_requirements as qnt30421_canonical_live_requirements,
+    )
+except Exception:
+    from qnt30421_live_broker_path import (
+        broker_env_summary as qnt30421_broker_env_summary,
+        build_audit_event as qnt30421_build_audit_event,
+        build_status_snapshot as qnt30421_build_status_snapshot,
+        canonical_live_requirements as qnt30421_canonical_live_requirements,
+    )
+
+try:
+    from backend.qnt30420_deployment_hardening import (
+        evaluate as qnt30420_evaluate,
+        should_block_startup as qnt30420_should_block_startup,
+        summarize_for_health as qnt30420_health_summary,
+    )
+except Exception:
+    from qnt30420_deployment_hardening import (
+        evaluate as qnt30420_evaluate,
+        should_block_startup as qnt30420_should_block_startup,
+        summarize_for_health as qnt30420_health_summary,
+    )
+
+try:
+    from backend.governance_system import (
+        default_governance_controls,
+        governance_controls_state,
+        governance_summary,
+        governance_policy_simulation,
+        governance_enforcement_snapshot,
+        governance_aging_report,
+    )
+except Exception:
+    from governance_system import (
+        default_governance_controls,
+        governance_controls_state,
+        governance_summary,
+        governance_policy_simulation,
+        governance_enforcement_snapshot,
+        governance_aging_report,
+    )
+
+try:
+    from backend.autonomy_control_plane import (
+        autonomy_state_defaults,
+        autonomy_state_view,
+        autonomy_transition_decision,
+        autonomy_delegation_update,
+        autonomy_summary,
+    )
+except Exception:
+    from autonomy_control_plane import (
+        autonomy_state_defaults,
+        autonomy_state_view,
+        autonomy_transition_decision,
+        autonomy_delegation_update,
+        autonomy_summary,
+    )
+
+try:
+    from backend.broker_abstraction import (
+        default_broker_abstraction,
+        broker_abstraction_state_view,
+        broker_route_evaluate,
+        broker_route_record_execution,
+        broker_abstraction_summary,
+        market_upsert,
+        broker_upsert,
+        portfolio_expand,
+    )
+except Exception:
+    from broker_abstraction import (
+        default_broker_abstraction,
+        broker_abstraction_state_view,
+        broker_route_evaluate,
+        broker_route_record_execution,
+        broker_abstraction_summary,
+        market_upsert,
+        broker_upsert,
+        portfolio_expand,
+    )
+
+try:
+    from backend.venue_adapter_framework import (
+        default_venue_adapter_state,
+        venue_adapter_state_view,
+        normalize_symbol,
+        prepare_order_schema,
+        market_data_snapshot,
+        venue_register,
+        venue_adapter_summary,
+    )
+except Exception:
+    from venue_adapter_framework import (
+        default_venue_adapter_state,
+        venue_adapter_state_view,
+        normalize_symbol,
+        prepare_order_schema,
+        market_data_snapshot,
+        venue_register,
+        venue_adapter_summary,
+    )
+
+
+try:
+    from backend.research_memory import (
+        default_research_memory_state,
+        research_memory_state_view,
+        ingest_research_note,
+        build_regime_snapshot,
+        research_memory_summary,
+        evaluate_regime_allocator,
+    )
+except Exception:
+    from research_memory import (
+        default_research_memory_state,
+        research_memory_state_view,
+        ingest_research_note,
+        build_regime_snapshot,
+        research_memory_summary,
+        evaluate_regime_allocator,
+    )
+
+
+try:
+    from backend.scenario_engine import (
+        default_scenario_engine_state,
+        scenario_engine_state_view,
+        define_scenario,
+        run_stress_test,
+        scenario_engine_summary,
+    )
+except Exception:
+    from scenario_engine import (
+        default_scenario_engine_state,
+        scenario_engine_state_view,
+        define_scenario,
+        run_stress_test,
+        scenario_engine_summary,
+    )
+
+try:
+    from backend.policy_simulator import (
+        default_policy_simulator_state,
+        policy_simulator_state_view,
+        simulate_policy,
+        compile_pretrade_approval,
+        policy_simulator_summary,
+    )
+except Exception:
+    from policy_simulator import (
+        default_policy_simulator_state,
+        policy_simulator_state_view,
+        simulate_policy,
+        compile_pretrade_approval,
+        policy_simulator_summary,
+    )
+
+
+try:
+    from backend.institutional_portfolio_brain import (
+        build_status as build_portfolio_brain_status,
+        ingest_snapshot as ingest_portfolio_brain_snapshot,
+        evaluate_coordination as evaluate_portfolio_brain_coordination,
+        sync_allocator as sync_portfolio_brain_allocator,
+        default_state as default_portfolio_brain_state,
+    )
+except Exception:
+    from institutional_portfolio_brain import (
+        build_status as build_portfolio_brain_status,
+        ingest_snapshot as ingest_portfolio_brain_snapshot,
+        evaluate_coordination as evaluate_portfolio_brain_coordination,
+        sync_allocator as sync_portfolio_brain_allocator,
+        default_state as default_portfolio_brain_state,
+    )
+
+
+
+
+try:
+    from backend.operator_command_mesh import (
+        build_status as build_command_mesh_status,
+        route_command as route_command_mesh_command,
+        upsert_mandates as upsert_command_mesh_mandates,
+        execute_pending as execute_command_mesh_pending,
+        default_state as default_command_mesh_state,
+    )
+except Exception:
+    from operator_command_mesh import (
+        build_status as build_command_mesh_status,
+        route_command as route_command_mesh_command,
+        upsert_mandates as upsert_command_mesh_mandates,
+        execute_pending as execute_command_mesh_pending,
+        default_state as default_command_mesh_state,
+    )
+
+
+
+try:
+    from backend.capital_committee_engine import (
+        build_status as build_capital_committee_status,
+        upsert_committees as upsert_capital_committees,
+        create_proposal as create_capital_proposal,
+        cast_vote as cast_capital_vote,
+        compile_allocation as compile_capital_allocation,
+        default_state as default_capital_committee_state,
+    )
+except Exception:
+    from capital_committee_engine import (
+        build_status as build_capital_committee_status,
+        upsert_committees as upsert_capital_committees,
+        create_proposal as create_capital_proposal,
+        cast_vote as cast_capital_vote,
+        compile_allocation as compile_capital_allocation,
+        default_state as default_capital_committee_state,
+    )
+
+
+
+try:
+    from backend.strategy_factory import (
+        build_status as build_strategy_factory_status,
+        upsert_templates as upsert_strategy_factory_templates,
+        generate_candidates as generate_strategy_factory_candidates,
+        backtest_candidates as backtest_strategy_factory_candidates,
+        promote_candidates as promote_strategy_factory_candidates,
+        default_state as default_strategy_factory_state,
+    )
+except Exception:
+    from strategy_factory import (
+        build_status as build_strategy_factory_status,
+        upsert_templates as upsert_strategy_factory_templates,
+        generate_candidates as generate_strategy_factory_candidates,
+        backtest_candidates as backtest_strategy_factory_candidates,
+        promote_candidates as promote_strategy_factory_candidates,
+        default_state as default_strategy_factory_state,
+    )
+
+
+
+try:
+    from backend.release_audit import build_release_audit
+except Exception:
+    from release_audit import build_release_audit
+
+
+
+try:
+    from backend.validation_gatekeeper import (
+        build_status as build_validation_gatekeeper_status,
+        update_rules as update_validation_gatekeeper_rules,
+        evaluate_candidate as evaluate_validation_gatekeeper_candidate,
+        review_promotion_batch as review_validation_gatekeeper_batch,
+        default_state as default_validation_gatekeeper_state,
+    )
+except Exception:
+    from validation_gatekeeper import (
+        build_status as build_validation_gatekeeper_status,
+        update_rules as update_validation_gatekeeper_rules,
+        evaluate_candidate as evaluate_validation_gatekeeper_candidate,
+        review_promotion_batch as review_validation_gatekeeper_batch,
+        default_state as default_validation_gatekeeper_state,
+    )
+
+
+
+try:
+    from backend.capital_promotion_router import (
+        build_status as build_capital_promotion_router_status,
+        update_rules as update_capital_promotion_router_rules,
+        route_candidate as route_capital_promotion_candidate,
+        execution_gate_decision as execution_gate_capital_promotion,
+        default_state as default_capital_promotion_router_state,
+    )
+except Exception:
+    from capital_promotion_router import (
+        build_status as build_capital_promotion_router_status,
+        update_rules as update_capital_promotion_router_rules,
+        route_candidate as route_capital_promotion_candidate,
+        execution_gate_decision as execution_gate_capital_promotion,
+        default_state as default_capital_promotion_router_state,
+    )
+
+
+
+try:
+    from backend.capital_escalation_board import (
+        build_status as build_capital_escalation_board_status,
+        update_rules as update_capital_escalation_board_rules,
+        review_strategy as review_capital_escalation_strategy,
+        review_batch as review_capital_escalation_batch,
+        default_state as default_capital_escalation_board_state,
+    )
+except Exception:
+    from capital_escalation_board import (
+        build_status as build_capital_escalation_board_status,
+        update_rules as update_capital_escalation_board_rules,
+        review_strategy as review_capital_escalation_strategy,
+        review_batch as review_capital_escalation_batch,
+        default_state as default_capital_escalation_board_state,
+    )
+
+
+
+try:
+    from backend.strategy_retirement_board import (
+        build_status as build_strategy_retirement_board_status,
+        update_rules as update_strategy_retirement_board_rules,
+        review_strategy as review_strategy_retirement_board_strategy,
+        review_batch as review_strategy_retirement_board_batch,
+        default_state as default_strategy_retirement_board_state,
+    )
+except Exception:
+    from strategy_retirement_board import (
+        build_status as build_strategy_retirement_board_status,
+        update_rules as update_strategy_retirement_board_rules,
+        review_strategy as review_strategy_retirement_board_strategy,
+        review_batch as review_strategy_retirement_board_batch,
+        default_state as default_strategy_retirement_board_state,
+    )
+
+
+
+try:
+    from backend.reallocation_opportunity_queue import (
+        build_status as build_reallocation_board_status,
+        update_rules as update_reallocation_board_rules,
+        refresh_queue as refresh_reallocation_queue,
+        reallocate_capital as execute_reallocation_capital,
+        default_state as default_reallocation_board_state,
+    )
+except Exception:
+    from reallocation_opportunity_queue import (
+        build_status as build_reallocation_board_status,
+        update_rules as update_reallocation_board_rules,
+        refresh_queue as refresh_reallocation_queue,
+        reallocate_capital as execute_reallocation_capital,
+        default_state as default_reallocation_board_state,
+    )
+
+
+
+try:
+    from backend.opportunity_auction_engine import (
+        build_status as build_opportunity_auction_status,
+        update_rules as update_opportunity_auction_rules,
+        run_auction as run_opportunity_auction,
+        award_capital as award_opportunity_capital,
+        default_state as default_opportunity_auction_state,
+    )
+except Exception:
+    from opportunity_auction_engine import (
+        build_status as build_opportunity_auction_status,
+        update_rules as update_opportunity_auction_rules,
+        run_auction as run_opportunity_auction,
+        award_capital as award_opportunity_capital,
+        default_state as default_opportunity_auction_state,
+    )
+
+
+
+try:
+    from backend.execution_fairness_engine import (
+        build_status as build_execution_fairness_status,
+        update_rules as update_execution_fairness_rules,
+        review_execution as review_execution_fairness,
+        settle_capital as settle_execution_capital,
+        default_state as default_execution_fairness_state,
+    )
+except Exception:
+    from execution_fairness_engine import (
+        build_status as build_execution_fairness_status,
+        update_rules as update_execution_fairness_rules,
+        review_execution as review_execution_fairness,
+        settle_capital as settle_execution_capital,
+        default_state as default_execution_fairness_state,
+    )
+
+
+
+try:
+    from backend.execution_quality_scoreboard import (
+        build_status as build_execution_quality_scoreboard_status,
+        update_rules as update_execution_quality_scoreboard_rules,
+        ingest_venue_metrics as ingest_execution_quality_venues,
+        refresh_scores as refresh_execution_quality_scores,
+        default_state as default_execution_quality_scoreboard_state,
+    )
+except Exception:
+    from execution_quality_scoreboard import (
+        build_status as build_execution_quality_scoreboard_status,
+        update_rules as update_execution_quality_scoreboard_rules,
+        ingest_venue_metrics as ingest_execution_quality_venues,
+        refresh_scores as refresh_execution_quality_scores,
+        default_state as default_execution_quality_scoreboard_state,
+    )
+
+
+
+try:
+    from backend.venue_selection_governor import (
+        build_status as build_venue_governor_status,
+        update_policy as update_venue_governor_policy,
+        ingest_venues as ingest_venue_governor_venues,
+        select_venue as select_venue_governor,
+        batch_select as batch_select_venue_governor,
+        default_state as default_venue_governor_state,
+    )
+except Exception:
+    from venue_selection_governor import (
+        build_status as build_venue_governor_status,
+        update_policy as update_venue_governor_policy,
+        ingest_venues as ingest_venue_governor_venues,
+        select_venue as select_venue_governor,
+        batch_select as batch_select_venue_governor,
+        default_state as default_venue_governor_state,
+    )
+
+
+
+try:
+    from backend.smart_order_router import (
+        build_status as build_sor_status,
+        update_rules as update_sor_rules,
+        ingest_venues as ingest_sor_venues,
+        route_order as route_sor_order,
+        default_state as default_sor_state,
+    )
+except Exception:
+    from smart_order_router import (
+        build_status as build_sor_status,
+        update_rules as update_sor_rules,
+        ingest_venues as ingest_sor_venues,
+        route_order as route_sor_order,
+        default_state as default_sor_state,
+    )
+
+
+
+try:
+    from backend.execution_replay_lab import (
+        build_status as build_execution_replay_status,
+        update_rules as update_execution_replay_rules,
+        replay_execution as replay_execution_lab,
+        attribute_fills as attribute_execution_fills,
+        default_state as default_execution_replay_state,
+    )
+except Exception:
+    from execution_replay_lab import (
+        build_status as build_execution_replay_status,
+        update_rules as update_execution_replay_rules,
+        replay_execution as replay_execution_lab,
+        attribute_fills as attribute_execution_fills,
+        default_state as default_execution_replay_state,
+    )
+
+
+
+try:
+    from backend.execution_drift_monitor import (
+        build_status as build_execution_drift_status,
+        update_rules as update_execution_drift_rules,
+        capture_snapshot as capture_execution_drift_snapshot,
+        evaluate_drift as evaluate_execution_drift,
+        default_state as default_execution_drift_state,
+    )
+except Exception:
+    from execution_drift_monitor import (
+        build_status as build_execution_drift_status,
+        update_rules as update_execution_drift_rules,
+        capture_snapshot as capture_execution_drift_snapshot,
+        evaluate_drift as evaluate_execution_drift,
+        default_state as default_execution_drift_state,
+    )
+
+
+APP_DIR = Path(__file__).resolve().parent
+BACKEND_DIR = APP_DIR.parent
+PROJECT_DIR = BACKEND_DIR.parent
+ARTIFACTS_DIR = BACKEND_DIR / "artifacts"
+FRONTEND_DIR = PROJECT_DIR / "frontend"
+DEFAULT_DB_PATH = PROJECT_DIR / "state" / "quantora.db"
+
+def _resolve_main_db_path() -> Path:
+    env_path = (os.getenv("QUANTORA_DB_PATH") or "").strip()
+    if env_path:
+        candidate = Path(env_path)
+        candidate.parent.mkdir(parents=True, exist_ok=True)
+        return candidate
+    try:
+        DEFAULT_DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+        probe = DEFAULT_DB_PATH.parent / ".qnt_db_probe"
+        probe.write_text("ok", encoding="utf-8")
+        probe.unlink(missing_ok=True)
+        return DEFAULT_DB_PATH
+    except Exception:
+        ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
+        return ARTIFACTS_DIR / "quantora.db"
+
+DB_PATH = _resolve_main_db_path()
+os.environ["QUANTORA_DB_PATH"] = str(DB_PATH)
+AUTOMATION_STATE_FILE = ARTIFACTS_DIR / "automation_state.json"
+
+app = FastAPI(title="Quantora QNT30378 Execution Drift Monitor + Market Regime Deviation Alerts", version="30378")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(qnt30379_to_qnt30391_router)
+app.include_router(qnt30553_capital_router)
+app.include_router(qnt30555_performance_router)
+app.include_router(qnt30560_auth_router)
+app.include_router(qnt30560_health_router)
+app.include_router(qnt30561_broker_router)
+app.include_router(qnt30561_live_execution_router)
+app.include_router(qnt30562_capital_router)
+app.include_router(qnt30562_governance_router)
+app.include_router(qnt30557_multi_user_router)
+app.include_router(qnt30563_reconciliation_router)
+app.include_router(qnt30564_reporting_router)
+app.include_router(qnt30565_funding_router)
+app.include_router(qnt30566_payment_provider_router)
+app.include_router(qnt30567_live_provider_activation_router)
+app.include_router(qnt30568_live_external_funding_router)
+app.include_router(qnt30569_investor_ops_router)
+app.include_router(qnt30570_admin_console_router)
+app.include_router(qnt30571_data_room_router)
+app.include_router(qnt30572_fundraising_crm_router)
+app.include_router(qnt30573_lp_update_router)
+app.include_router(qnt30574_secure_inbox_router)
+app.include_router(qnt30575_checklist_router)
+app.include_router(qnt30576_identity_vault_router)
+app.include_router(qnt30577_compliance_queue_router)
+app.include_router(qnt30578_subscription_esign_router)
+app.include_router(qnt30579_capital_call_router)
+app.include_router(qnt30580_allocation_closing_router)
+app.include_router(qnt30581_fund_close_router)
+app.include_router(qnt30582_nav_registry_router)
+
+
+NO_CACHE_HEADERS = {
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "Pragma": "no-cache",
+    "Expires": "0",
+}
+
+ADMIN_EMAILS = {"admin@quantora.local", "nicolugo0503@gmail.com"}
+PRICE_BOOK = {
+    "AAPL": 180.0,
+    "TSLA": 175.0,
+    "SPY": 510.0,
+    "NVDA": 910.0,
+    "MSFT": 420.0,
+    "AMZN": 185.0,
+    "META": 505.0,
+}
+ACTIVE_ORDER_STATUSES = {"filled", "accepted", "submitted", "new", "partially_filled", "held_for_orders"}
+ADMIN_EMAILS_NORMALIZED = {e.strip().lower() for e in ADMIN_EMAILS}
+DEPLOYMENT_REPORT = {"mission": "QNT30420", "overall_status": "unknown", "checks": []}
+
+
+DEMO_ADMIN_EMAIL = "admin@quantora.local"
+DEMO_ADMIN_PASSWORD = os.getenv("QUANTORA_DEMO_ADMIN_PASSWORD", "change-me-immediately")
+DEMO_ADMIN_DISPLAY_NAME = "Governance Admin"
+DEMO_ADMIN_OPERATOR_ID = "operator_F5E2C5BA"
+
+ALLOW_DEMO_AUTOLOGIN = os.getenv("QUANTORA_ALLOW_DEMO_AUTOLOGIN", "false").strip().lower() in {"1","true","yes","on"}
+PASSWORD_SALT = os.getenv("QUANTORA_PASSWORD_SALT", "quantora-local-dev-salt")
+
+
+def normalize_email(value):
+    return (value or "").strip().lower()
+
+
+def password_is_hashed(value):
+    return isinstance(value, str) and value.startswith("pbkdf2_sha256$")
+
+
+def hash_password(password: str) -> str:
+    password = password or ""
+    iterations = 120000
+    digest = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), PASSWORD_SALT.encode("utf-8"), iterations)
+    return f"pbkdf2_sha256${iterations}$" + digest.hex()
+
+
+def verify_password(password: str, stored_value: str) -> bool:
+    stored_value = stored_value or ""
+    password = password or ""
+    if password_is_hashed(stored_value):
+        try:
+            _, iterations, hex_digest = stored_value.split("$", 2)
+            digest = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), PASSWORD_SALT.encode("utf-8"), int(iterations))
+            return hmac.compare_digest(digest.hex(), hex_digest)
+        except Exception:
+            return False
+    return hmac.compare_digest(stored_value, password)
+
+
+def migrate_user_password(user):
+    if not user:
+        return user
+    raw = user.get("password") or ""
+    if raw and not password_is_hashed(raw):
+        user["password"] = hash_password(raw)
+    return user
+
+
+def user_is_admin_email(email):
+    return normalize_email(email) in ADMIN_EMAILS_NORMALIZED
+
+
+def as_float(value, default=0.0):
+    try:
+        if value in (None, ""):
+            return default
+        return float(value)
+    except Exception:
+        return default
+
+
+def empty_session():
+    return {"logged_in": False, "display_name": None, "operator_id": None, "selected_operator_id": None, "email": None, "is_admin": False}
+
+
+def default_users_data():
+    return {"users": []}
+
+
+def default_policies_data():
+    return {
+        "policies": [
+            {"policy_id": "POL-001", "name": "Large capital changes require approval", "policy_type": "capital_change", "threshold": 5000, "enabled": True},
+            {"policy_id": "POL-002", "name": "Fleet run-all requires approval", "policy_type": "run_all", "threshold": 1, "enabled": True},
+            {"policy_id": "POL-003", "name": "Loop start below 300s requires approval", "policy_type": "loop_start", "threshold": 300, "enabled": True},
+            {"policy_id": "POL-004", "name": "Live orders above notional guard require escalation", "policy_type": "live_order_notional", "threshold": 2500, "enabled": True},
+            {"policy_id": "POL-005", "name": "Strategy optimizer changes above threshold require oversight", "policy_type": "strategy_rebalance", "threshold": 3, "enabled": True},
+            {"policy_id": "POL-006", "name": "Execution slippage breach must hold order", "policy_type": "execution_slippage", "threshold": 35, "enabled": True},
+        ]
+    }
+
+
+def default_approvals_data():
+    return {"requests": []}
+
+
+def ensure_demo_admin_user(auto_login=False):
+    users = users_db()
+    demo = next((u for u in users["users"] if normalize_email(u.get("email")) == normalize_email(DEMO_ADMIN_EMAIL)), None)
+    if not demo:
+        demo = {
+            "email": DEMO_ADMIN_EMAIL,
+            "password": hash_password(DEMO_ADMIN_PASSWORD),
+            "display_name": DEMO_ADMIN_DISPLAY_NAME,
+            "operator_id": DEMO_ADMIN_OPERATOR_ID,
+        }
+        users.setdefault("users", []).append(demo)
+        save_users(users)
+    elif not demo.get("operator_id"):
+        demo["operator_id"] = DEMO_ADMIN_OPERATOR_ID
+        migrate_user_password(demo)
+        save_users(users)
+    migrate_user_password(demo)
+    save_users(users)
+    ensure_state_for_user(demo)
+    if auto_login:
+        save_session({
+            "email": demo["email"],
+            "operator_id": demo["operator_id"],
+            "selected_operator_id": demo["operator_id"],
+            "display_name": demo["display_name"],
+            "logged_in": True,
+            "is_admin": True,
+        })
+    return demo
+
+
+def session_view(data):
+    session = {**empty_session(), **(data or {})}
+    session["email"] = (session.get("email") or None)
+    session["is_admin"] = bool(session.get("is_admin") or user_is_admin_email(session.get("email")))
+    return session
+
+
+def seed_artifacts():
+    ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
+    defaults = {
+        "users.json": default_users_data(),
+        "session.json": empty_session(),
+        "policy_engine.json": default_policies_data(),
+        "approval_queue.json": default_approvals_data(),
+        "governance_ledger.json": {"events": []},
+        "broker_config.json": default_broker_config(),
+        "portfolio_risk_fabric.json": default_portfolio_risk_state(),
+        "broker_abstraction.json": default_broker_abstraction(),
+        "venue_adapter_framework.json": default_venue_adapter_state(),
+        "allocator_intelligence.json": default_allocator_intelligence_state(),
+        "performance_intelligence.json": default_performance_intelligence_state(),
+        "research_memory.json": default_research_memory_state(),
+        "scenario_engine.json": default_scenario_engine_state(),
+        "policy_simulator.json": default_policy_simulator_state(),
+        "institutional_portfolio_brain.json": default_portfolio_brain_state(),
+        "operator_command_mesh.json": default_command_mesh_state(),
+        "capital_committee_engine.json": default_capital_committee_state(),
+        "strategy_factory.json": default_strategy_factory_state(),
+        "validation_gatekeeper.json": default_validation_gatekeeper_state(),
+        "capital_promotion_router.json": default_capital_promotion_router_state(),
+        "capital_escalation_board.json": default_capital_escalation_board_state(),
+        "strategy_retirement_board.json": default_strategy_retirement_board_state(),
+        "reallocation_opportunity_queue.json": default_reallocation_board_state(),
+        "opportunity_auction_engine.json": default_opportunity_auction_state(),
+        "execution_fairness_settlement.json": default_execution_fairness_state(),
+        "execution_quality_scoreboard.json": default_execution_quality_scoreboard_state(),
+        "venue_selection_governor.json": default_venue_governor_state(),
+        "smart_order_router.json": default_sor_state(),
+        "execution_replay_lab.json": default_execution_replay_state(),
+        "execution_drift_monitor.json": default_execution_drift_state(),
+    }
+    for filename, fallback in defaults.items():
+        path = ARTIFACTS_DIR / filename
+        if not path.exists():
+            path.write_text(json.dumps(fallback, indent=2), encoding="utf-8")
+
+
+# -------------------------
+# Generic utilities
+# -------------------------
+def now_dt():
+    return datetime.datetime.utcnow().replace(microsecond=0)
+
+
+def now_iso():
+    return now_dt().isoformat() + "Z"
+
+
+def load_json(filename, fallback):
+    path = ARTIFACTS_DIR / filename
+    if not path.exists():
+        return fallback
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return fallback
+
+
+def save_json(filename, data):
+    ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
+    (ARTIFACTS_DIR / filename).write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+
+def users_db():
+    return load_json("users.json", default_users_data())
+
+
+def save_users(data):
+    save_json("users.json", data)
+
+
+def migrate_user_record(user):
+    hydrated = billing_hydrate_user(user or {})
+    user.update({
+        "plan": hydrated.get("plan", "free"),
+        "subscription_status": hydrated.get("subscription_status", "free"),
+        "stripe_customer_id": hydrated.get("stripe_customer_id"),
+        "subscription_id": hydrated.get("subscription_id"),
+        "current_period_end": hydrated.get("current_period_end"),
+        "billing_email": hydrated.get("billing_email"),
+        "billing_updated_at": hydrated.get("billing_updated_at"),
+    })
+    return user
+
+
+def users_db():
+    data = load_json("users.json", default_users_data())
+    changed = False
+    for user in data.get("users", []):
+        before = dict(user)
+        migrate_user_record(user)
+        if user != before:
+            changed = True
+    if changed:
+        save_users(data)
+    return data
+
+
+def save_users(data):
+    for user in data.get("users", []):
+        migrate_user_record(user)
+    save_json("users.json", data)
+
+
+def find_user_by_operator_id(operator_id):
+    users = users_db()
+    return next((u for u in users.get("users", []) if u.get("operator_id") == operator_id), None)
+
+
+def find_user_by_stripe_customer_id(customer_id):
+    users = users_db()
+    return next((u for u in users.get("users", []) if u.get("stripe_customer_id") == customer_id), None)
+
+
+def current_billing_user(session):
+    session_payload = resolve_operator_context(session)
+    user = find_user_by_operator_id(session_payload.get("operator_id"))
+    if not user:
+        raise HTTPException(status_code=404, detail="Operator not found")
+    return user
+
+
+def update_user_billing(user, *, plan=None, subscription_status=None, stripe_customer_id=None, subscription_id=None, current_period_end=None, billing_email=None):
+    users = users_db()
+    target = next((u for u in users.get("users", []) if u.get("operator_id") == user.get("operator_id")), None)
+    if not target:
+        raise HTTPException(status_code=404, detail="Operator not found")
+    if plan is not None:
+        target["plan"] = plan
+    if subscription_status is not None:
+        target["subscription_status"] = subscription_status
+    if stripe_customer_id is not None:
+        target["stripe_customer_id"] = stripe_customer_id
+    if subscription_id is not None:
+        target["subscription_id"] = subscription_id
+    if current_period_end is not None:
+        target["current_period_end"] = current_period_end
+    if billing_email is not None:
+        target["billing_email"] = billing_email
+    target["billing_email"] = target.get("billing_email") or target.get("email")
+    target["billing_updated_at"] = now_iso()
+    migrate_user_record(target)
+    save_users(users)
+    return target
+
+
+def billing_feature_guard(session, feature: str, execution_mode: str = "paper"):
+    user = current_billing_user(session)
+    if not billing_feature_allowed(user, feature):
+        raise HTTPException(status_code=402, detail={"reason": "plan_restricted", "feature": feature, "plan": user.get("plan", "free")})
+    if not billing_status_allows_execution(user, execution_mode):
+        raise HTTPException(status_code=402, detail={"reason": "subscription_inactive", "feature": feature, "plan": user.get("plan", "free"), "subscription_status": user.get("subscription_status", "free")})
+    return user
+
+
+def get_session():
+    return session_view(load_json("session.json", empty_session()))
+
+
+def save_session(data):
+    save_json("session.json", session_view(data))
+
+
+def get_policies():
+    return load_json("policy_engine.json", default_policies_data())
+
+
+def save_policies(data):
+    save_json("policy_engine.json", data)
+
+
+def get_approvals():
+    return load_json("approval_queue.json", default_approvals_data())
+
+
+def save_approvals(data):
+    save_json("approval_queue.json", data)
+
+
+def append_governance_event(actor_email, actor_operator_id, action, target, details=None, category="governance"):
+    ledger = load_json("governance_ledger.json", {"events": []})
+    event = {
+        "event_id": f"gov_{uuid.uuid4().hex[:10]}",
+        "timestamp": now_iso(),
+        "category": category,
+        "actor_email": actor_email,
+        "actor_operator_id": actor_operator_id,
+        "action": action,
+        "target": target,
+        "details": details or {},
+    }
+    ledger["events"].insert(0, event)
+    ledger["events"] = ledger["events"][:2000]
+    save_json("governance_ledger.json", ledger)
+    return event
+
+
+def save_and_return_demo_session(user):
+    session = {
+        "email": user["email"],
+        "operator_id": user["operator_id"],
+        "selected_operator_id": user["operator_id"],
+        "display_name": user["display_name"],
+        "logged_in": True,
+        "is_admin": True,
+    }
+    save_session(session)
+    return session_view(session)
+
+
+def require_auth():
+    session = get_session()
+    if not session.get("logged_in"):
+        if ALLOW_DEMO_AUTOLOGIN:
+            demo = ensure_demo_admin_user(auto_login=True)
+            session = save_and_return_demo_session(demo)
+        else:
+            raise HTTPException(status_code=401, detail="Authentication required")
+    return session_view(session)
+
+
+def require_admin():
+    session = require_auth()
+    if not session.get("is_admin") and not user_is_admin_email(session.get("email")):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    return session_view(session)
+
+
+def state_filename(operator_id):
+    return f"operator_state_{operator_id}.json"
+
+
+def default_strategy_metrics(strategy_id, symbol="AAPL"):
+    price = get_price(symbol)
+    return {
+        "strategy_id": strategy_id,
+        "orders_count": 0,
+        "buy_orders": 0,
+        "sell_orders": 0,
+        "closed_trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "realized_pnl": 0.0,
+        "unrealized_pnl": 0.0,
+        "gross_notional": 0.0,
+        "current_position_qty": 0.0,
+        "avg_entry_price": 0.0,
+        "current_market_value": 0.0,
+        "capital_in_use": 0.0,
+        "last_price": price,
+        "last_run_at": None,
+        "last_order_at": None,
+        "last_signal_at": None,
+        "win_rate": 0.0,
+    }
+
+
+def default_risk_engine():
+    return {
+        "enabled": True,
+        "max_position_notional": 5000.0,
+        "max_total_exposure": 20000.0,
+        "max_drawdown_pct": 12.0,
+        "max_daily_loss": 1500.0,
+        "max_orders_per_run": 3,
+        "max_trades_per_session": 2,
+        "max_notional_per_trade": 20.0,
+        "session_trade_count": 0,
+        "session_started_at": now_iso(),
+        "live_risk_lock_required": True,
+        "require_broker_for_alpaca": True,
+        "auto_shutdown_on_breach": True,
+        "kill_switch_active": False,
+        "breached": False,
+        "breach_count": 0,
+        "last_breach": None,
+        "last_breach_reason": None,
+        "last_evaluated_at": None,
+        "peak_equity": 0.0,
+        "current_equity": 0.0,
+        "current_drawdown_pct": 0.0,
+        "day_start_date": now_dt().date().isoformat(),
+        "day_start_realized_pnl": 0.0,
+        "current_daily_realized_pnl": 0.0,
+        "current_total_exposure": 0.0,
+    }
+
+
+def default_capital_source():
+    return {
+        "mode": "internal",
+        "provider": "alpaca",
+        "last_updated_at": None,
+        "last_updated_by": None,
+    }
+
+
+def default_operator_state(operator_id, display_name):
+    return {
+        "operator_id": operator_id,
+        "display_name": display_name,
+        "capital_decision": {"approved": True, "capital_allocated": 16195},
+        "strategies": {"strategies": []},
+        "strategy_engine": {
+            "metrics": {},
+            "logs": [],
+            "last_engine_run_at": None,
+            "last_engine_status": "idle",
+        },
+        "risk_engine": default_risk_engine(),
+        "capital_source": default_capital_source(),
+        "orders": {"orders": []},
+        "allocator_caps": {
+            "operator": {
+                "operator_id": operator_id,
+                "allocated_capital": 0.0,
+                "status": "UNFUNDED",
+                "updated_at": None,
+            }
+        },
+        "strategy_loop": {
+            "running": False,
+            "execution_mode": "internal",
+            "interval_seconds": 60,
+            "last_run_at": None,
+            "next_run_at": None,
+            "heartbeat_at": None,
+            "total_runs": 0,
+            "total_signals": 0,
+            "total_orders": 0,
+        },
+        "monitoring": {
+            "latest_snapshot": {},
+            "alerts": [],
+            "last_evaluated_at": None,
+        },
+    }
+
+
+def get_price(symbol):
+    return PRICE_BOOK.get((symbol or "").upper(), 100.0)
+
+
+def strategy_log(state, strategy_id, event_type, message, data=None):
+    state.setdefault("strategy_engine", {}).setdefault("logs", [])
+    entry = {
+        "log_id": f"log_{uuid.uuid4().hex[:10]}",
+        "timestamp": now_iso(),
+        "strategy_id": strategy_id,
+        "event_type": event_type,
+        "message": message,
+        "data": data or {},
+    }
+    state["strategy_engine"]["logs"].insert(0, entry)
+    state["strategy_engine"]["logs"] = state["strategy_engine"]["logs"][:500]
+    return entry
+
+
+def fill_price(order):
+    qty = float(order.get("qty") or 0)
+    if qty <= 0:
+        return get_price(order.get("symbol", "AAPL"))
+    notional = float(order.get("notional") or 0)
+    return round(notional / qty, 6) if notional else get_price(order.get("symbol", "AAPL"))
+
+
+def refresh_metric_market_values(metric, symbol):
+    current_price = get_price(symbol)
+    position_qty = float(metric.get("current_position_qty") or 0)
+    avg_entry = float(metric.get("avg_entry_price") or 0)
+    metric["last_price"] = current_price
+    metric["current_market_value"] = round(abs(position_qty) * current_price, 2)
+    metric["capital_in_use"] = metric["current_market_value"]
+    if position_qty > 0:
+        metric["unrealized_pnl"] = round((current_price - avg_entry) * position_qty, 2)
+    elif position_qty < 0:
+        metric["unrealized_pnl"] = round((avg_entry - current_price) * abs(position_qty), 2)
+    else:
+        metric["unrealized_pnl"] = 0.0
+    closed = int(metric.get("closed_trades") or 0)
+    wins = int(metric.get("wins") or 0)
+    metric["win_rate"] = round((wins / closed) * 100, 2) if closed > 0 else 0.0
+    return metric
+
+
+def apply_trade_to_metric(metric, side, qty, executed_price):
+    current_qty = float(metric.get("current_position_qty") or 0)
+    avg_entry = float(metric.get("avg_entry_price") or 0)
+    delta = qty if side == "buy" else -qty
+
+    metric["orders_count"] = int(metric.get("orders_count") or 0) + 1
+    metric["gross_notional"] = round(float(metric.get("gross_notional") or 0) + abs(qty * executed_price), 2)
+    metric["last_order_at"] = now_iso()
+    metric["last_signal_at"] = metric["last_order_at"]
+    if side == "buy":
+        metric["buy_orders"] = int(metric.get("buy_orders") or 0) + 1
+    else:
+        metric["sell_orders"] = int(metric.get("sell_orders") or 0) + 1
+
+    if current_qty == 0 or current_qty * delta > 0:
+        new_qty = current_qty + delta
+        if current_qty == 0:
+            avg_entry = executed_price
+        else:
+            avg_entry = ((abs(current_qty) * avg_entry) + (abs(delta) * executed_price)) / max(abs(new_qty), 1e-9)
+        current_qty = new_qty
+    else:
+        close_qty = min(abs(current_qty), abs(delta))
+        realized_delta = close_qty * ((executed_price - avg_entry) if current_qty > 0 else (avg_entry - executed_price))
+        metric["realized_pnl"] = round(float(metric.get("realized_pnl") or 0) + realized_delta, 2)
+        if close_qty > 0:
+            metric["closed_trades"] = int(metric.get("closed_trades") or 0) + 1
+            if realized_delta > 0:
+                metric["wins"] = int(metric.get("wins") or 0) + 1
+            elif realized_delta < 0:
+                metric["losses"] = int(metric.get("losses") or 0) + 1
+        remaining_qty = current_qty + delta
+        if remaining_qty == 0:
+            current_qty = 0
+            avg_entry = 0.0
+        elif current_qty * remaining_qty < 0:
+            current_qty = remaining_qty
+            avg_entry = executed_price
+        else:
+            current_qty = remaining_qty
+
+    metric["current_position_qty"] = round(current_qty, 6)
+    metric["avg_entry_price"] = round(avg_entry, 6) if current_qty != 0 else 0.0
+    return metric
+
+
+def operator_positions_from_orders(state):
+    positions = {}
+    for order in state.get("orders", {}).get("orders", []):
+        if order.get("status") not in ACTIVE_ORDER_STATUSES:
+            continue
+        symbol = (order.get("symbol") or "UNK").upper()
+        qty = float(order.get("qty") or 0)
+        if qty == 0:
+            continue
+        price = fill_price(order)
+        side = (order.get("side") or "buy").lower()
+        signed = qty if side == "buy" else -qty
+        bucket = positions.setdefault(symbol, {"symbol": symbol, "net_qty": 0.0, "last_price": get_price(symbol), "avg_fill": 0.0, "fills": 0})
+        bucket["net_qty"] += signed
+        bucket["last_price"] = get_price(symbol)
+        bucket["avg_fill"] = ((bucket["avg_fill"] * bucket["fills"]) + price) / (bucket["fills"] + 1)
+        bucket["fills"] += 1
+    rows = []
+    total = 0.0
+    for symbol, bucket in positions.items():
+        exposure = round(abs(bucket["net_qty"]) * bucket["last_price"], 2)
+        total += exposure
+        rows.append({
+            "symbol": symbol,
+            "net_qty": round(bucket["net_qty"], 6),
+            "last_price": bucket["last_price"],
+            "market_value": exposure,
+        })
+    rows.sort(key=lambda x: x["symbol"])
+    return rows, round(total, 2)
+
+
+def operator_exposure(state):
+    positions, total = operator_positions_from_orders(state)
+    return {"notional": total, "positions": positions, "orders": len(state.get("orders", {}).get("orders", []))}
+
+
+def migrate_operator_state(state, operator_id=None, display_name=None):
+    state.setdefault("operator_id", operator_id or state.get("operator_id"))
+    state.setdefault("display_name", display_name or state.get("display_name") or "Operator")
+    state.setdefault("strategies", {"strategies": []})
+    state.setdefault("orders", {"orders": []})
+    state.setdefault("allocator_caps", {"operator": {"operator_id": state.get("operator_id"), "allocated_capital": 0.0, "status": "UNFUNDED", "updated_at": None}})
+    state.setdefault("strategy_loop", {"running": False, "execution_mode": "internal", "interval_seconds": 60, "last_run_at": None, "next_run_at": None, "heartbeat_at": None, "total_runs": 0, "total_signals": 0, "total_orders": 0})
+    state.setdefault("monitoring", {"latest_snapshot": {}, "alerts": [], "last_evaluated_at": None})
+    capital_source = state.setdefault("capital_source", default_capital_source())
+    capital_source.setdefault("mode", "internal")
+    capital_source.setdefault("provider", "alpaca")
+    capital_source.setdefault("last_updated_at", None)
+    capital_source.setdefault("last_updated_by", None)
+    risk = state.setdefault("risk_engine", default_risk_engine())
+    risk.setdefault("enabled", True)
+    risk.setdefault("max_position_notional", 5000.0)
+    risk.setdefault("max_total_exposure", 20000.0)
+    risk.setdefault("max_drawdown_pct", 12.0)
+    risk.setdefault("max_daily_loss", 1500.0)
+    risk.setdefault("max_orders_per_run", 3)
+    risk.setdefault("max_trades_per_session", 2)
+    risk.setdefault("max_notional_per_trade", 20.0)
+    risk.setdefault("session_trade_count", 0)
+    risk.setdefault("session_started_at", now_iso())
+    risk.setdefault("live_risk_lock_required", True)
+    risk.setdefault("require_broker_for_alpaca", True)
+    risk.setdefault("auto_shutdown_on_breach", True)
+    risk.setdefault("kill_switch_active", False)
+    risk.setdefault("breached", False)
+    risk.setdefault("breach_count", 0)
+    risk.setdefault("last_breach", None)
+    risk.setdefault("last_breach_reason", None)
+    risk.setdefault("last_evaluated_at", None)
+    risk.setdefault("peak_equity", 0.0)
+    risk.setdefault("current_equity", 0.0)
+    risk.setdefault("current_drawdown_pct", 0.0)
+    risk.setdefault("day_start_date", now_dt().date().isoformat())
+    risk.setdefault("day_start_realized_pnl", 0.0)
+    risk.setdefault("current_daily_realized_pnl", 0.0)
+    risk.setdefault("current_total_exposure", 0.0)
+    engine = state.setdefault("strategy_engine", {})
+    engine.setdefault("metrics", {})
+    engine.setdefault("logs", [])
+    engine.setdefault("last_engine_run_at", None)
+    engine.setdefault("last_engine_status", "idle")
+
+    for strategy in state["strategies"].get("strategies", []):
+        strategy.setdefault("enabled", True)
+        strategy.setdefault("status", "running" if strategy.get("enabled") else "stopped")
+        strategy.setdefault("capital_limit", 0.0)
+        strategy.setdefault("created_at", now_iso())
+        strategy.setdefault("updated_at", strategy.get("created_at"))
+        strategy.setdefault("last_action", "created")
+        strategy.setdefault("execution_mode", "inherit")
+        strategy.setdefault("deleted", False)
+        metric = engine["metrics"].setdefault(strategy["strategy_id"], default_strategy_metrics(strategy["strategy_id"], strategy.get("symbol")))
+        refresh_metric_market_values(metric, strategy.get("symbol"))
+
+    return state
+
+
+def ensure_state_for_user(user):
+    operator_id = user["operator_id"]
+    existing = load_json(state_filename(operator_id), None)
+    if existing is None:
+        save_json(state_filename(operator_id), default_operator_state(operator_id, user["display_name"]))
+    else:
+        existing = migrate_operator_state(existing, user.get("operator_id"), user.get("display_name"))
+        save_json(state_filename(operator_id), existing)
+
+
+def get_operator_by_id(operator_id):
+    users = users_db()
+    user = next((u for u in users["users"] if u["operator_id"] == operator_id), None)
+    if not user:
+        raise HTTPException(status_code=404, detail="Operator not found")
+    migrate_user_password(user)
+    save_users(users)
+    ensure_state_for_user(user)
+    return user
+
+
+def get_operator_state_by_id(operator_id):
+    user = get_operator_by_id(operator_id)
+    state = load_json(state_filename(operator_id), {})
+    state = migrate_operator_state(state, user.get("operator_id"), user.get("display_name"))
+    save_operator_state(state)
+    return state
+
+
+def resolve_operator_context(session):
+    session_payload = session_view(session)
+    operator_id = session_payload.get("selected_operator_id") or session_payload.get("operator_id")
+    if operator_id:
+        try:
+            user = get_operator_by_id(operator_id)
+            repaired = {
+                **session_payload,
+                "operator_id": user.get("operator_id"),
+                "selected_operator_id": session_payload.get("selected_operator_id") or user.get("operator_id"),
+                "display_name": user.get("display_name"),
+                "email": session_payload.get("email") or user.get("email"),
+                "is_admin": bool(session_payload.get("is_admin") or user_is_admin_email(session_payload.get("email") or user.get("email"))),
+                "logged_in": True,
+            }
+            save_session(repaired)
+            return session_view(repaired)
+        except HTTPException:
+            pass
+    email = normalize_email(session_payload.get("email"))
+    if session_payload.get("logged_in") and email:
+        users = users_db()
+        user = next((u for u in users.get("users", []) if normalize_email(u.get("email")) == email), None)
+        if user:
+            repaired = {
+                **session_payload,
+                "email": user.get("email"),
+                "operator_id": user.get("operator_id"),
+                "selected_operator_id": session_payload.get("selected_operator_id") or user.get("operator_id"),
+                "display_name": user.get("display_name"),
+                "is_admin": user_is_admin_email(user.get("email")),
+                "logged_in": True,
+            }
+            save_session(repaired)
+            return session_view(repaired)
+    raise HTTPException(status_code=409, detail="Operator context missing for session")
+
+
+def get_operator_state(session):
+    session_payload = resolve_operator_context(session)
+    return get_operator_state_by_id(session_payload.get("operator_id"))
+
+
+def save_operator_state(state):
+    operator_id = state.get("operator_id")
+    if not operator_id:
+        raise HTTPException(status_code=409, detail="Operator context missing for state")
+    save_json(state_filename(operator_id), state)
+
+
+def policy_for(policy_type):
+    for policy in get_policies()["policies"]:
+        if policy["policy_type"] == policy_type and policy.get("enabled"):
+            return policy
+    return None
+
+
+def broker_positions_exposure(broker_state):
+    positions = []
+    total = 0.0
+    for pos in broker_state.get("positions", []) or []:
+        symbol = (pos.get("symbol") or "UNK").upper()
+        qty = as_float(pos.get("qty"), 0.0)
+        market_value = abs(as_float(pos.get("market_value"), 0.0))
+        if market_value <= 0 and qty:
+            market_value = round(abs(qty) * get_price(symbol), 2)
+        last_price = as_float(pos.get("current_price"), get_price(symbol))
+        positions.append({
+            "symbol": symbol,
+            "net_qty": round(qty, 6),
+            "last_price": last_price,
+            "market_value": round(market_value, 2),
+        })
+        total += market_value
+    positions.sort(key=lambda x: x["symbol"])
+    return positions, round(total, 2)
+
+
+def build_capital_context(state):
+    source = state.setdefault("capital_source", default_capital_source())
+    mode = (source.get("mode") or "internal").lower()
+    provider = (source.get("provider") or "alpaca").lower()
+    if mode == "broker":
+        broker_state = refresh_alpaca_state(soft=True)
+        account = broker_state.get("account", {}) or {}
+        positions, used_capital = broker_positions_exposure(broker_state)
+        equity = round(as_float(account.get("equity"), 0.0), 2)
+        cash = round(as_float(account.get("cash"), 0.0), 2)
+        buying_power = round(as_float(account.get("buying_power") or account.get("regt_buying_power") or account.get("cash"), 0.0), 2)
+        if broker_state.get("connected") or equity > 0 or used_capital > 0 or buying_power > 0:
+            allocated = equity
+            utilization = round((used_capital / allocated) * 100, 2) if allocated > 0 else 0.0
+            return {
+                "mode": "broker",
+                "provider": provider,
+                "label": "alpaca" if provider == "alpaca" else provider,
+                "allocated_capital": allocated,
+                "used_capital": used_capital,
+                "remaining_capital": buying_power,
+                "utilization_pct": utilization,
+                "current_equity": equity,
+                "cash": cash,
+                "buying_power": buying_power,
+                "positions": positions,
+                "orders_count": len(broker_state.get("orders", []) or []),
+                "connected": bool(broker_state.get("connected")),
+                "valid": True,
+                "reason": None,
+                "broker": broker_state,
+            }
+        return {
+            "mode": "broker",
+            "provider": provider,
+            "label": "alpaca" if provider == "alpaca" else provider,
+            "allocated_capital": 0.0,
+            "used_capital": 0.0,
+            "remaining_capital": 0.0,
+            "utilization_pct": 0.0,
+            "current_equity": 0.0,
+            "cash": 0.0,
+            "buying_power": 0.0,
+            "positions": [],
+            "orders_count": 0,
+            "connected": False,
+            "valid": False,
+            "reason": "Broker capital mode selected but broker snapshot is unavailable",
+            "broker": broker_state,
+        }
+
+    exposure = operator_exposure(state)
+    allocated = round(as_float(state["allocator_caps"]["operator"].get("allocated_capital"), 0.0), 2)
+    used_capital = round(as_float(exposure["notional"], 0.0), 2)
+    remaining = round(allocated - used_capital, 2)
+    return {
+        "mode": "internal",
+        "provider": "internal",
+        "label": "internal",
+        "allocated_capital": allocated,
+        "used_capital": used_capital,
+        "remaining_capital": remaining,
+        "utilization_pct": round((used_capital / allocated) * 100, 2) if allocated > 0 else 0.0,
+        "current_equity": allocated,
+        "cash": remaining,
+        "buying_power": remaining,
+        "positions": exposure["positions"],
+        "orders_count": exposure["orders"],
+        "connected": True,
+        "valid": True,
+        "reason": None,
+        "broker": None,
+    }
+
+
+def available_operator_capital(state):
+    return round(build_capital_context(state).get("remaining_capital", 0.0), 2)
+
+
+def enforce_capital_guard(state, notional, side, strategy=None):
+    if (side or "buy").lower() != "buy":
+        return
+    capital = build_capital_context(state)
+    remaining = round(capital.get("remaining_capital", 0.0), 2)
+    allocated = round(capital.get("allocated_capital", 0.0), 2)
+    if allocated <= 0:
+        strategy_id = strategy.get("strategy_id") if strategy else None
+        if strategy_id:
+            strategy_log(state, strategy_id, "risk_block", "Buy order blocked: no capital available from selected capital source", {"required": notional, "remaining": remaining, "capital_mode": capital.get("mode")})
+        raise HTTPException(status_code=400, detail=f"Capital guard: no capital available from {capital.get('label')} source")
+    if notional > remaining:
+        strategy_id = strategy.get("strategy_id") if strategy else None
+        if strategy_id:
+            strategy_log(state, strategy_id, "risk_block", "Buy order blocked: insufficient remaining capital", {"required": notional, "remaining": remaining})
+        raise HTTPException(status_code=400, detail=f"Capital guard: required {round(notional,2)} exceeds remaining capital {remaining}")
+    if strategy and float(strategy.get("capital_limit") or 0) > 0:
+        metric = state.setdefault("strategy_engine", {}).setdefault("metrics", {}).setdefault(strategy["strategy_id"], default_strategy_metrics(strategy["strategy_id"], strategy.get("symbol")))
+        strategy_remaining = round(float(strategy.get("capital_limit") or 0) - float(metric.get("capital_in_use") or 0), 2)
+        if notional > strategy_remaining:
+            strategy_log(state, strategy["strategy_id"], "risk_block", "Buy order blocked: strategy capital limit exceeded", {"required": notional, "remaining": strategy_remaining})
+            raise HTTPException(status_code=400, detail=f"Capital guard: strategy limit remaining {strategy_remaining}")
+
+
+def risk_session_trade_count(state):
+    risk = state.setdefault("risk_engine", default_risk_engine())
+    today = now_dt().date().isoformat()
+    count = 0
+    orders = state.get("orders", {})
+    if isinstance(orders, dict):
+        orders = orders.get("orders", [])
+    if not isinstance(orders, list):
+        orders = []
+    for order in orders:
+        if not isinstance(order, dict):
+            continue
+        ts = str(order.get("submitted_at") or order.get("created_at") or "")
+        if ts.startswith(today) and str(order.get("status") or "").lower() in {"filled", "new", "accepted", "pending_new", "partially_filled", "submitted"}:
+            count += 1
+    risk["session_trade_count"] = count
+    return count
+
+
+def evaluate_risk_state(state):
+    risk = state.setdefault("risk_engine", default_risk_engine())
+    risk.setdefault("enabled", True)
+    engine = summarize_strategy_engine(state)
+    capital = build_capital_context(state)
+    capital_valid = bool(capital.get("valid", True))
+    allocated = round(as_float(capital.get("allocated_capital"), 0.0), 2)
+    used_capital = round(as_float(capital.get("used_capital"), 0.0), 2)
+    current_equity = round(as_float(capital.get("current_equity"), allocated), 2)
+    today = now_dt().date().isoformat()
+    if risk.get("day_start_date") != today:
+        risk["day_start_date"] = today
+        risk["day_start_realized_pnl"] = round(as_float(engine.get("portfolio_realized_pnl"), 0.0), 2)
+
+    peak_equity = as_float(risk.get("peak_equity"), 0.0)
+    if capital_valid:
+        if peak_equity <= 0:
+            peak_equity = max(current_equity, allocated, 0.0)
+        peak_equity = max(peak_equity, current_equity)
+        risk["peak_equity"] = round(peak_equity, 2)
+        drawdown_pct = round((((peak_equity - current_equity) / peak_equity) * 100) if peak_equity > 0 else 0.0, 2)
+    else:
+        drawdown_pct = 0.0
+        risk["peak_equity"] = round(max(peak_equity, 0.0), 2)
+    daily_realized_pnl = round(as_float(engine.get("portfolio_realized_pnl"), 0.0) - as_float(risk.get("day_start_realized_pnl"), 0.0), 2)
+    session_trade_count = risk_session_trade_count(state)
+
+    breaches = []
+    status = "SAFE"
+    if not capital_valid:
+        status = "UNKNOWN"
+    if capital_valid and risk.get("enabled"):
+        if risk.get("kill_switch_active"):
+            breaches.append("Kill switch active")
+        max_total = as_float(risk.get("max_total_exposure"), 0.0)
+        if max_total > 0 and used_capital > max_total:
+            breaches.append(f"Total exposure {round(used_capital,2)} exceeds max total exposure {round(max_total,2)}")
+        max_position = as_float(risk.get("max_position_notional"), 0.0)
+        if max_position > 0:
+            for pos in capital.get("positions", []):
+                if as_float(pos.get("market_value"), 0.0) > max_position:
+                    breaches.append(f"{pos['symbol']} exposure {round(as_float(pos.get('market_value'), 0.0),2)} exceeds position limit {round(max_position,2)}")
+        max_dd = as_float(risk.get("max_drawdown_pct"), 0.0)
+        if max_dd > 0 and drawdown_pct > max_dd:
+            breaches.append(f"Drawdown {drawdown_pct}% exceeds limit {round(max_dd,2)}%")
+        max_daily_loss = as_float(risk.get("max_daily_loss"), 0.0)
+        if max_daily_loss > 0 and daily_realized_pnl < (-1 * max_daily_loss):
+            breaches.append(f"Daily realized PnL {daily_realized_pnl} breaches daily loss limit {-round(max_daily_loss,2)}")
+        max_trades = int(risk.get("max_trades_per_session") or 0)
+        if max_trades > 0 and session_trade_count >= max_trades:
+            breaches.append(f"Session trades {session_trade_count} reached session limit {max_trades}")
+
+    previous_reason = risk.get("last_breach_reason")
+    risk["breached"] = bool(breaches)
+    risk["current_equity"] = current_equity
+    risk["current_drawdown_pct"] = drawdown_pct
+    risk["current_daily_realized_pnl"] = daily_realized_pnl
+    risk["current_total_exposure"] = used_capital
+    risk["last_evaluated_at"] = now_iso()
+    if breaches:
+        status = "BREACH"
+        reason = "; ".join(breaches[:5])
+        if reason != previous_reason:
+            risk["breach_count"] = int(risk.get("breach_count") or 0) + 1
+        risk["last_breach"] = now_iso()
+        risk["last_breach_reason"] = reason
+        if risk.get("auto_shutdown_on_breach"):
+            state["strategy_loop"]["running"] = False
+            state["strategy_loop"]["next_run_at"] = None
+    elif risk.get("kill_switch_active"):
+        status = "LOCKED"
+        risk["last_breach_reason"] = "Kill switch active"
+    elif not capital.get("valid"):
+        risk["last_breach_reason"] = capital.get("reason")
+    else:
+        risk["last_breach_reason"] = None
+
+    return {
+        "status": status,
+        "capital_source": {
+            "mode": capital.get("mode"),
+            "label": capital.get("label"),
+            "provider": capital.get("provider"),
+            "valid": capital.get("valid"),
+            "connected": capital.get("connected"),
+            "reason": capital.get("reason"),
+        },
+        "config": risk,
+        "breaches": breaches,
+        "totals": {
+            "current_total_exposure": used_capital,
+            "current_equity": current_equity,
+            "current_drawdown_pct": drawdown_pct,
+            "current_daily_realized_pnl": daily_realized_pnl,
+            "allocated_capital": allocated,
+            "remaining_capital": round(as_float(capital.get("remaining_capital"), 0.0), 2),
+            "utilization_pct": round(as_float(capital.get("utilization_pct"), 0.0), 2),
+            "session_trade_count": session_trade_count,
+        },
+        "positions": capital.get("positions", []),
+    }
+
+
+def risk_status_for_state(state):
+    return evaluate_risk_state(state)
+
+
+def enforce_risk_guard(state, symbol, side, qty, execution_mode="internal"):
+    risk_view = evaluate_risk_state(state)
+    risk = risk_view["config"]
+    if not risk.get("enabled"):
+        return risk_view
+    if risk.get("kill_switch_active"):
+        raise HTTPException(status_code=400, detail="Risk engine: kill switch active")
+    max_trades_per_session = int(risk.get("max_trades_per_session") or 0)
+    session_trade_count = int(risk_session_trade_count(state))
+    if max_trades_per_session > 0 and session_trade_count >= max_trades_per_session:
+        raise HTTPException(status_code=400, detail=f"Risk engine: session trade limit reached ({session_trade_count}/{max_trades_per_session})")
+    if execution_mode == "alpaca" and risk.get("require_broker_for_alpaca") and not resolved_alpaca_credentials():
+        raise HTTPException(status_code=400, detail="Risk engine: Alpaca mode requires broker connectivity")
+    if risk_view["breaches"] and risk.get("auto_shutdown_on_breach"):
+        raise HTTPException(status_code=400, detail=f"Risk engine breach: {risk_view['breaches'][0]}")
+
+    price = get_price(symbol)
+    notional = round(price * float(qty), 2)
+    max_notional_per_trade = float(risk.get("max_notional_per_trade") or 0)
+    if max_notional_per_trade > 0 and notional > max_notional_per_trade:
+        raise HTTPException(status_code=400, detail=f"Risk engine: trade notional {notional} exceeds per-trade limit {round(max_notional_per_trade,2)}")
+    signed_qty = float(qty) if (side or "buy").lower() == "buy" else (-1 * float(qty))
+    positions = {p["symbol"]: p for p in risk_view.get("positions", [])}
+    current_qty = float(positions.get(symbol, {}).get("net_qty") or 0)
+    current_symbol_notional = round(abs(current_qty) * price, 2)
+    projected_qty = current_qty + signed_qty
+    projected_symbol_notional = round(abs(projected_qty) * price, 2)
+    max_position = float(risk.get("max_position_notional") or 0)
+    if max_position > 0 and projected_symbol_notional > max_position:
+        raise HTTPException(status_code=400, detail=f"Risk engine: projected {symbol} exposure {projected_symbol_notional} exceeds position limit {round(max_position,2)}")
+    max_total = float(risk.get("max_total_exposure") or 0)
+    projected_total = round(float(risk_view["totals"]["current_total_exposure"]) - current_symbol_notional + projected_symbol_notional, 2)
+    if max_total > 0 and projected_total > max_total:
+        raise HTTPException(status_code=400, detail=f"Risk engine: projected total exposure {projected_total} exceeds limit {round(max_total,2)}")
+    return risk_view
+
+
+def evaluate_monitoring(state):
+    capital = build_capital_context(state)
+    allocated = round(as_float(capital.get("allocated_capital"), 0.0), 2)
+    used_capital = round(as_float(capital.get("used_capital"), 0.0), 2)
+    utilization = round(as_float(capital.get("utilization_pct"), 0.0), 2)
+    alerts = []
+    risk_view = evaluate_risk_state(state)
+    if not capital.get("valid"):
+        alerts.append({"level": "warn", "type": "capital-source", "message": capital.get("reason") or "Capital source unavailable"})
+    if used_capital > allocated and allocated > 0:
+        alerts.append({"level": "critical", "type": "capital-breach", "message": f"Open exposure {used_capital} exceeds source capital {allocated}"})
+    elif utilization >= 80 and allocated > 0:
+        alerts.append({"level": "warn", "type": "operator-utilization", "message": f"Operator utilization at {utilization}%"})
+    if state["strategy_loop"].get("running") and not state["strategy_loop"].get("heartbeat_at"):
+        alerts.append({"level": "warn", "type": "loop-heartbeat", "message": "Loop is marked running without heartbeat"})
+    for breach in risk_view.get("breaches", []):
+        alerts.append({"level": "critical", "type": "risk-breach", "message": breach})
+
+    engine = state.setdefault("strategy_engine", {})
+    metrics = engine.setdefault("metrics", {})
+    for strategy in state["strategies"].get("strategies", []):
+        metric = metrics.setdefault(strategy["strategy_id"], default_strategy_metrics(strategy["strategy_id"], strategy.get("symbol")))
+        refresh_metric_market_values(metric, strategy.get("symbol"))
+        if float(strategy.get("capital_limit") or 0) > 0 and float(metric.get("capital_in_use") or 0) > float(strategy.get("capital_limit") or 0):
+            alerts.append({
+                "level": "warn",
+                "type": "strategy-limit",
+                "message": f"{strategy['name']} exceeds strategy capital limit",
+                "strategy_id": strategy["strategy_id"],
+            })
+
+    totals = summarize_strategy_engine(state)
+    state["monitoring"]["latest_snapshot"] = {
+        "timestamp": now_iso(),
+        "order_count": capital.get("orders_count", 0),
+        "used_capital": used_capital,
+        "allocated_capital": allocated,
+        "remaining_capital": round(as_float(capital.get("remaining_capital"), 0.0), 2),
+        "utilization_pct": utilization,
+        "capital_mode": capital.get("mode"),
+        "capital_label": capital.get("label"),
+        "alerts_count": len(alerts),
+        "strategy_realized_pnl": totals["portfolio_realized_pnl"],
+        "strategy_unrealized_pnl": totals["portfolio_unrealized_pnl"],
+        "active_strategies": totals["running_strategies"],
+        "risk_breached": bool(risk_view.get("breaches")),
+        "drawdown_pct": risk_view["totals"].get("current_drawdown_pct", 0),
+        "daily_realized_pnl": risk_view["totals"].get("current_daily_realized_pnl", 0),
+    }
+    state["monitoring"]["alerts"] = alerts
+    state["monitoring"]["last_evaluated_at"] = now_iso()
+    return state["monitoring"]
+
+
+def summarize_governance(ledger_events):
+    summary = {"total_events": len(ledger_events), "by_category": {}, "by_action": {}}
+    for event in ledger_events:
+        summary["by_category"][event["category"]] = summary["by_category"].get(event["category"], 0) + 1
+        summary["by_action"][event["action"]] = summary["by_action"].get(event["action"], 0) + 1
+    return summary
+
+
+def summarize_strategy_engine(state):
+    strategies = [s for s in state.get("strategies", {}).get("strategies", []) if not s.get("deleted")]
+    metrics = state.setdefault("strategy_engine", {}).setdefault("metrics", {})
+    rows = []
+    portfolio_realized = 0.0
+    portfolio_unrealized = 0.0
+    capital_in_use = 0.0
+    for strategy in strategies:
+        metric = metrics.setdefault(strategy["strategy_id"], default_strategy_metrics(strategy["strategy_id"], strategy.get("symbol")))
+        refresh_metric_market_values(metric, strategy.get("symbol"))
+        row = {**strategy, "metrics": metric}
+        rows.append(row)
+        portfolio_realized += float(metric.get("realized_pnl") or 0)
+        portfolio_unrealized += float(metric.get("unrealized_pnl") or 0)
+        capital_in_use += float(metric.get("capital_in_use") or 0)
+    rows.sort(key=lambda x: x.get("name", ""))
+    return {
+        "strategies": rows,
+        "total_strategies": len(rows),
+        "running_strategies": len([r for r in rows if r.get("status") == "running" and r.get("enabled")]),
+        "enabled_strategies": len([r for r in rows if r.get("enabled")]),
+        "portfolio_realized_pnl": round(portfolio_realized, 2),
+        "portfolio_unrealized_pnl": round(portfolio_unrealized, 2),
+        "portfolio_capital_in_use": round(capital_in_use, 2),
+        "recent_logs": state.setdefault("strategy_engine", {}).setdefault("logs", [])[:40],
+    }
+
+
+
+
+
+def compute_trade_journal(state):
+    strategies = {s.get("strategy_id"): s for s in state.get("strategies", {}).get("strategies", []) if not s.get("deleted")}
+    positions = {}
+    journal = []
+    cumulative_realized = 0.0
+    for order in list(reversed(state.get("orders", {}).get("orders", []))):
+        symbol = (order.get("symbol") or "AAPL").upper()
+        side = (order.get("side") or "buy").lower()
+        qty = float(order.get("qty") or 0)
+        price = fill_price(order)
+        strategy_id = order.get("strategy_id")
+        key = strategy_id or f"manual::{symbol}"
+        slot = positions.setdefault(key, {"qty": 0.0, "avg_entry": 0.0})
+        current_qty = float(slot.get("qty") or 0.0)
+        avg_entry = float(slot.get("avg_entry") or 0.0)
+        delta = qty if side == "buy" else -qty
+        realized = 0.0
+        if current_qty == 0 or current_qty * delta > 0:
+            new_qty = current_qty + delta
+            if current_qty == 0:
+                avg_entry = price
+            else:
+                avg_entry = ((abs(current_qty) * avg_entry) + (abs(delta) * price)) / max(abs(new_qty), 1e-9)
+            current_qty = new_qty
+        else:
+            close_qty = min(abs(current_qty), abs(delta))
+            realized = close_qty * ((price - avg_entry) if current_qty > 0 else (avg_entry - price))
+            remaining_qty = current_qty + delta
+            if remaining_qty == 0:
+                current_qty = 0.0
+                avg_entry = 0.0
+            elif current_qty * remaining_qty < 0:
+                current_qty = remaining_qty
+                avg_entry = price
+            else:
+                current_qty = remaining_qty
+        slot["qty"] = round(current_qty, 8)
+        slot["avg_entry"] = round(avg_entry, 8)
+        cumulative_realized = round(cumulative_realized + realized, 2)
+        strategy_name = None
+        if strategy_id and strategy_id in strategies:
+            strategy_name = strategies[strategy_id].get("name")
+        journal.append({
+            "timestamp": order.get("timestamp"),
+            "order_id": order.get("order_id"),
+            "strategy_id": strategy_id,
+            "strategy_name": strategy_name or order.get("strategy_name") or ("manual" if not strategy_id else None),
+            "symbol": symbol,
+            "side": side,
+            "qty": qty,
+            "execution_price": round(price, 6),
+            "notional": round(float(order.get("notional") or qty * price), 2),
+            "mode": order.get("mode"),
+            "broker": order.get("broker"),
+            "status": order.get("status"),
+            "realized_pnl": round(realized, 2),
+            "cumulative_realized_pnl": cumulative_realized,
+            "remaining_position_qty": round(current_qty, 8),
+        })
+    return list(reversed(journal))
+
+
+def build_equity_curve(state, journal, current_equity, realized_total):
+    capital = build_capital_context(state)
+    if capital.get("mode") == "broker":
+        base_equity = round(float(current_equity or 0) - float(realized_total or 0), 2)
+    else:
+        base_equity = round(float(capital.get("allocated_capital") or 0), 2)
+    ordered = list(reversed(journal))
+    points = [{"label": "start", "timestamp": None, "equity": round(base_equity, 2), "cumulative_realized_pnl": 0.0}]
+    cumulative = 0.0
+    for idx, entry in enumerate(ordered, start=1):
+        cumulative = round(cumulative + float(entry.get("realized_pnl") or 0), 2)
+        points.append({
+            "label": f"trade-{idx}",
+            "timestamp": entry.get("timestamp"),
+            "equity": round(base_equity + cumulative, 2),
+            "cumulative_realized_pnl": cumulative,
+            "order_id": entry.get("order_id"),
+            "strategy_id": entry.get("strategy_id"),
+        })
+    points.append({
+        "label": "current",
+        "timestamp": now_iso(),
+        "equity": round(float(current_equity or base_equity + cumulative), 2),
+        "cumulative_realized_pnl": round(float(realized_total or cumulative), 2),
+    })
+    return points[-100:]
+
+
+def build_scorecard(summary, journal):
+    closed = [j for j in journal if abs(float(j.get("realized_pnl") or 0)) > 0]
+    profits = [float(j.get("realized_pnl") or 0) for j in closed if float(j.get("realized_pnl") or 0) > 0]
+    losses = [float(j.get("realized_pnl") or 0) for j in closed if float(j.get("realized_pnl") or 0) < 0]
+    gross_profit = round(sum(profits), 2)
+    gross_loss = round(sum(losses), 2)
+    avg_win = round((sum(profits) / len(profits)), 2) if profits else 0.0
+    avg_loss = round((sum(losses) / len(losses)), 2) if losses else 0.0
+    expectancy = round((sum(float(j.get("realized_pnl") or 0) for j in closed) / len(closed)), 2) if closed else 0.0
+    profit_factor = round(gross_profit / abs(gross_loss), 2) if gross_loss < 0 else (None if gross_profit == 0 else 999.0)
+    best_trade = max([float(j.get("realized_pnl") or 0) for j in closed], default=0.0)
+    worst_trade = min([float(j.get("realized_pnl") or 0) for j in closed], default=0.0)
+    score = round(float(summary.get("operator_score") or 0) + (expectancy * 0.5) + ((profit_factor or 0) * 2 if profit_factor not in (None, 999.0) else 4), 2)
+    return {
+        "closed_trade_count": len(closed),
+        "gross_profit": gross_profit,
+        "gross_loss": gross_loss,
+        "avg_win": avg_win,
+        "avg_loss": avg_loss,
+        "expectancy": expectancy,
+        "profit_factor": profit_factor,
+        "best_trade": round(best_trade, 2),
+        "worst_trade": round(worst_trade, 2),
+        "score": score,
+    }
+
+
+def build_performance_snapshot(state):
+    engine = summarize_strategy_engine(state)
+    risk_view = evaluate_risk_state(state)
+    monitoring = evaluate_monitoring(state)
+    orders = state.get("orders", {}).get("orders", [])
+    strategy_rows = engine.get("strategies", [])
+    closed_trades = sum(int((s.get("metrics") or {}).get("closed_trades") or 0) for s in strategy_rows)
+    wins = sum(int((s.get("metrics") or {}).get("wins") or 0) for s in strategy_rows)
+    losses = sum(int((s.get("metrics") or {}).get("losses") or 0) for s in strategy_rows)
+    total_orders = len(orders)
+    filled_orders = len([o for o in orders if (o.get("status") or "").lower() in ACTIVE_ORDER_STATUSES])
+    capital = build_capital_context(state)
+    allocated = float(capital.get("allocated_capital", 0) or 0)
+    used = float(capital.get("used_capital", 0) or 0)
+    current_equity = float(risk_view.get("totals", {}).get("current_equity", allocated) or allocated)
+    journal = compute_trade_journal(state)
+    operator_score = round((float(engine.get("portfolio_realized_pnl") or 0) * 0.35) + (wins * 3) - (losses * 1.5) - (len(risk_view.get("breaches", [])) * 10), 2)
+    summary = {
+        "operator_id": state.get("operator_id"),
+        "display_name": state.get("display_name"),
+        "total_orders": total_orders,
+        "filled_orders": filled_orders,
+        "closed_trades": closed_trades,
+        "wins": wins,
+        "losses": losses,
+        "win_rate": round((wins / closed_trades) * 100, 2) if closed_trades else 0.0,
+        "realized_pnl": round(float(engine.get("portfolio_realized_pnl") or 0), 2),
+        "unrealized_pnl": round(float(engine.get("portfolio_unrealized_pnl") or 0), 2),
+        "capital_in_use": round(float(engine.get("portfolio_capital_in_use") or 0), 2),
+        "allocated_capital": round(allocated, 2),
+        "used_capital": round(used, 2),
+        "utilization_pct": round((used / allocated) * 100, 2) if allocated > 0 else 0.0,
+        "current_equity": round(current_equity, 2),
+        "capital_mode": capital.get("mode"),
+        "capital_label": capital.get("label"),
+        "capital_valid": capital.get("valid"),
+        "current_drawdown_pct": round(float(risk_view.get("totals", {}).get("current_drawdown_pct") or 0), 2),
+        "daily_realized_pnl": round(float(risk_view.get("totals", {}).get("current_daily_realized_pnl") or 0), 2),
+        "risk_breaches": len(risk_view.get("breaches", [])),
+        "operator_score": operator_score,
+        "journal_entries": len(journal),
+    }
+    scorecard = build_scorecard(summary, journal)
+    summary["operator_score"] = scorecard["score"]
+    equity_curve = build_equity_curve(state, journal, current_equity, summary["realized_pnl"])
+
+    by_symbol = {}
+    for row in strategy_rows:
+        symbol = row.get("symbol") or "-"
+        slot = by_symbol.setdefault(symbol, {"symbol": symbol, "realized_pnl": 0.0, "unrealized_pnl": 0.0, "orders": 0, "strategies": 0})
+        slot["realized_pnl"] += float((row.get("metrics") or {}).get("realized_pnl") or 0)
+        slot["unrealized_pnl"] += float((row.get("metrics") or {}).get("unrealized_pnl") or 0)
+        slot["orders"] += int((row.get("metrics") or {}).get("orders_count") or 0)
+        slot["strategies"] += 1
+    attribution = sorted([
+        {**v, "realized_pnl": round(v["realized_pnl"], 2), "unrealized_pnl": round(v["unrealized_pnl"], 2)}
+        for v in by_symbol.values()
+    ], key=lambda x: (x["realized_pnl"] + x["unrealized_pnl"]), reverse=True)
+
+    return {
+        "summary": summary,
+        "scorecard": scorecard,
+        "strategies": [
+            {
+                "strategy_id": s.get("strategy_id"),
+                "name": s.get("name"),
+                "symbol": s.get("symbol"),
+                "status": s.get("status"),
+                "enabled": s.get("enabled"),
+                "execution_mode": s.get("execution_mode"),
+                "orders_count": (s.get("metrics") or {}).get("orders_count", 0),
+                "closed_trades": (s.get("metrics") or {}).get("closed_trades", 0),
+                "win_rate": (s.get("metrics") or {}).get("win_rate", 0),
+                "realized_pnl": (s.get("metrics") or {}).get("realized_pnl", 0),
+                "unrealized_pnl": (s.get("metrics") or {}).get("unrealized_pnl", 0),
+                "capital_in_use": (s.get("metrics") or {}).get("capital_in_use", 0),
+                "gross_notional": (s.get("metrics") or {}).get("gross_notional", 0),
+                "current_position_qty": (s.get("metrics") or {}).get("current_position_qty", 0),
+            }
+            for s in strategy_rows
+        ],
+        "recent_orders": list(reversed(orders[:10])),
+        "trade_journal": journal[:100],
+        "equity_curve": equity_curve,
+        "attribution": attribution,
+        "monitoring": monitoring,
+    }
+
+# -------------------------
+# Alpaca broker layer
+# -------------------------
+def default_broker_config():
+    return {
+        "alpaca": {
+            "base_url": "https://paper-api.alpaca.markets",
+            "paper": True,
+            "api_key": "",
+            "secret_key": "",
+            "connection_mode": "auto",
+            "last_status": "disconnected",
+            "last_tested_at": None,
+            "last_error": None,
+            "account_snapshot": {},
+            "positions_snapshot": [],
+            "orders_snapshot": [],
+        }
+    }
+
+
+def get_broker_config():
+    return load_json("broker_config.json", default_broker_config())
+
+
+def save_broker_config(data):
+    save_json("broker_config.json", data)
+
+
+def mask_secret(value):
+    if not value:
+        return ""
+    if len(value) <= 6:
+        return "*" * len(value)
+    return value[:3] + ("*" * (len(value) - 6)) + value[-3:]
+
+
+def env_bool(name, default=None):
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    return str(raw).strip().lower() in {"1", "true", "yes", "on"}
+
+
+def resolved_alpaca_env():
+    env_key = os.getenv("ALPACA_API_KEY") or os.getenv("APCA_API_KEY_ID")
+    env_secret = os.getenv("ALPACA_SECRET_KEY") or os.getenv("APCA_API_SECRET_KEY")
+    env_base = os.getenv("ALPACA_BASE_URL") or os.getenv("APCA_API_BASE_URL")
+    env_paper = env_bool("ALPACA_PAPER", None)
+    if not (env_key and env_secret):
+        return None
+    if not env_base:
+        env_base = "https://paper-api.alpaca.markets" if (env_paper is not False) else "https://api.alpaca.markets"
+    return {
+        "api_key": env_key,
+        "secret_key": env_secret,
+        "base_url": env_base.rstrip("/"),
+        "paper": ("paper" in env_base.lower()) if env_paper is None else bool(env_paper),
+        "source": "env",
+    }
+
+
+def resolved_alpaca_credentials():
+    cfg = get_broker_config()["alpaca"]
+    stored = None
+    env_creds = resolved_alpaca_env()
+    if cfg.get("api_key") and cfg.get("secret_key"):
+        stored = {
+            "api_key": cfg["api_key"],
+            "secret_key": cfg["secret_key"],
+            "base_url": (cfg.get("base_url") or "https://paper-api.alpaca.markets").rstrip("/"),
+            "paper": bool(cfg.get("paper", True)),
+            "source": "stored",
+        }
+    mode = (cfg.get("connection_mode") or "auto").lower()
+    if mode == "internal":
+        return None
+    if mode == "stored":
+        return stored or env_creds
+    if mode == "env":
+        return env_creds or stored
+    return stored or env_creds
+
+
+
+def internal_paper_broker_view(reason=None):
+    return {
+        "connected": True,
+        "source": "internal",
+        "base_url": "internal://paper-broker",
+        "paper": True,
+        "api_key_masked": "",
+        "secret_key_masked": "",
+        "last_status": "paper_internal",
+        "last_tested_at": now_iso(),
+        "last_error": None,
+        "fallback_reason": reason,
+    }
+
+
+def internal_paper_broker_snapshot(reason=None):
+    account = {
+        "account_number": "INTERNAL-PAPER",
+        "status": "ACTIVE",
+        "currency": "USD",
+        "buying_power": "25000",
+        "cash": "25000",
+        "equity": "25000",
+        "portfolio_value": "25000",
+        "pattern_day_trader": False,
+        "trading_blocked": False,
+        "account_blocked": False,
+        "created_at": now_iso(),
+        "mode": "internal_paper",
+    }
+    return {
+        **internal_paper_broker_view(reason=reason),
+        "account": account,
+        "positions": [],
+        "orders": [],
+        "stale": False,
+    }
+
+def safe_broker_view(data=None):
+    cfg = data or get_broker_config()
+    alpaca = cfg["alpaca"]
+    creds = resolved_alpaca_credentials()
+    env_creds = resolved_alpaca_env()
+    connection_mode = (alpaca.get("connection_mode") or "auto").lower()
+    if not creds:
+        view = internal_paper_broker_view(reason="Internal paper fallback active")
+        view["connection_mode"] = connection_mode
+        view["env_ready"] = bool(env_creds)
+        view["env_base_url"] = (env_creds or {}).get("base_url")
+        view["env_paper"] = (env_creds or {}).get("paper")
+        if connection_mode == "env" and not env_creds:
+            view["fallback_reason"] = "Railway env mode selected but Alpaca env vars are missing; using internal paper fallback"
+        elif connection_mode == "internal":
+            view["fallback_reason"] = "Internal paper mode selected"
+        elif not env_creds:
+            view["fallback_reason"] = "No Alpaca credentials configured; using internal paper fallback"
+        return {"alpaca": view}
+    source = creds["source"]
+    last_status = alpaca.get("last_status", "disconnected")
+    tested = alpaca.get("last_tested_at")
+    connected = bool(creds) and (last_status == "connected" if tested else True)
+    return {
+        "alpaca": {
+            "connected": connected,
+            "source": source,
+            "base_url": (creds or {}).get("base_url", alpaca.get("base_url")),
+            "paper": (creds or {}).get("paper", alpaca.get("paper", True)),
+            "api_key_masked": mask_secret((creds or {}).get("api_key", alpaca.get("api_key", ""))),
+            "secret_key_masked": mask_secret((creds or {}).get("secret_key", alpaca.get("secret_key", ""))),
+            "last_status": last_status,
+            "last_tested_at": tested,
+            "last_error": alpaca.get("last_error"),
+            "fallback_reason": None,
+            "connection_mode": connection_mode,
+            "env_ready": bool(env_creds),
+            "env_base_url": (env_creds or {}).get("base_url"),
+            "env_paper": (env_creds or {}).get("paper"),
+        }
+    }
+
+
+def alpaca_request(method, path, payload=None, query=None):
+    creds = resolved_alpaca_credentials()
+    if not creds:
+        raise HTTPException(status_code=400, detail="Alpaca credentials not configured")
+    url = creds["base_url"].rstrip("/") + path
+    if query:
+        url += "?" + urllib.parse.urlencode(query)
+    headers = {
+        "APCA-API-KEY-ID": creds["api_key"],
+        "APCA-API-SECRET-KEY": creds["secret_key"],
+        "Accept": "application/json",
+    }
+    data = None
+    if payload is not None:
+        data = json.dumps(payload).encode("utf-8")
+        headers["Content-Type"] = "application/json"
+    req = urllib.request.Request(url, data=data, headers=headers, method=method.upper())
+    try:
+        with urllib.request.urlopen(req, timeout=15) as response:
+            raw = response.read().decode("utf-8")
+            return json.loads(raw) if raw else {}
+    except urllib.error.HTTPError as exc:
+        body = exc.read().decode("utf-8", errors="ignore")
+        detail = f"Alpaca HTTP {exc.code}: {body[:400]}"
+        raise HTTPException(status_code=502, detail=detail)
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Alpaca connectivity error: {exc}")
+
+
+def refresh_alpaca_state(soft=False):
+    cfg = get_broker_config()
+    alpaca_cfg = cfg["alpaca"]
+    creds = resolved_alpaca_credentials()
+    if not creds:
+        alpaca_cfg["last_status"] = "paper_internal"
+        alpaca_cfg["last_tested_at"] = now_iso()
+        alpaca_cfg["last_error"] = None
+        save_broker_config(cfg)
+        reason = "No Alpaca credentials configured; using internal paper fallback"
+        if (alpaca_cfg.get("connection_mode") or "auto").lower() == "internal":
+            reason = "Internal paper mode selected"
+        elif (alpaca_cfg.get("connection_mode") or "auto").lower() == "env":
+            reason = "Railway env mode selected but Alpaca env vars are missing; using internal paper fallback"
+        return internal_paper_broker_snapshot(reason=reason)
+    try:
+        account = alpaca_request("GET", "/v2/account")
+        positions = alpaca_request("GET", "/v2/positions")
+        orders = alpaca_request("GET", "/v2/orders", query={"status": "open", "direction": "desc", "limit": 50})
+        alpaca_cfg["account_snapshot"] = account
+        alpaca_cfg["positions_snapshot"] = positions if isinstance(positions, list) else []
+        alpaca_cfg["orders_snapshot"] = orders if isinstance(orders, list) else []
+        alpaca_cfg["last_status"] = "connected"
+        alpaca_cfg["last_tested_at"] = now_iso()
+        alpaca_cfg["last_error"] = None
+        save_broker_config(cfg)
+        return {
+            **safe_broker_view(cfg)["alpaca"],
+            "account": alpaca_cfg["account_snapshot"],
+            "positions": alpaca_cfg["positions_snapshot"],
+            "orders": alpaca_cfg["orders_snapshot"],
+            "stale": False,
+        }
+    except HTTPException as exc:
+        alpaca_cfg["last_status"] = "paper_internal" if soft else "error"
+        alpaca_cfg["last_tested_at"] = now_iso()
+        alpaca_cfg["last_error"] = None if soft else exc.detail
+        save_broker_config(cfg)
+        if not soft:
+            raise
+        return internal_paper_broker_snapshot(reason=f"Alpaca unavailable; using internal paper fallback ({exc.detail})")
+
+
+def normalize_alpaca_order(order, fallback_symbol, fallback_side, fallback_qty):
+    qty = float(order.get("qty") or fallback_qty or 0)
+    avg_price = float(order.get("filled_avg_price") or order.get("limit_price") or get_price(fallback_symbol))
+    return {
+        "order_id": f"ord_{uuid.uuid4().hex[:10]}",
+        "broker_order_id": order.get("id"),
+        "symbol": (order.get("symbol") or fallback_symbol).upper(),
+        "side": (order.get("side") or fallback_side).lower(),
+        "qty": qty,
+        "notional": round(qty * avg_price, 2),
+        "status": order.get("status", "submitted"),
+        "mode": "alpaca",
+        "broker": "alpaca",
+        "timestamp": now_iso(),
+        "asset_class": order.get("asset_class"),
+        "order_type": order.get("type") or order.get("order_type") or "market",
+        "time_in_force": order.get("time_in_force") or "day",
+        "raw": order,
+    }
+
+
+def alpaca_submit_market_order(symbol, side, qty):
+    return alpaca_request(
+        "POST",
+        "/v2/orders",
+        payload={
+            "symbol": symbol.upper(),
+            "qty": str(qty),
+            "side": side.lower(),
+            "type": "market",
+            "time_in_force": "day",
+        },
+    )
+
+
+# -------------------------
+# Strategy engine views and execution
+# -------------------------
+def get_strategy_by_id(state, strategy_id):
+    strategy = next((s for s in state.get("strategies", {}).get("strategies", []) if s.get("strategy_id") == strategy_id and not s.get("deleted")), None)
+    if not strategy:
+        raise HTTPException(status_code=404, detail="Strategy not found")
+    return strategy
+
+
+def persist_order(state, order):
+    state["orders"]["orders"].insert(0, order)
+    state["orders"]["orders"] = state["orders"]["orders"][:1000]
+    state["strategy_loop"]["total_orders"] = int(state["strategy_loop"].get("total_orders") or 0) + 1
+
+
+def apply_order_to_strategy(state, strategy, order):
+    metrics = state.setdefault("strategy_engine", {}).setdefault("metrics", {})
+    metric = metrics.setdefault(strategy["strategy_id"], default_strategy_metrics(strategy["strategy_id"], strategy.get("symbol")))
+    metric["last_run_at"] = now_iso()
+    apply_trade_to_metric(metric, order["side"], float(order["qty"]), fill_price(order))
+    refresh_metric_market_values(metric, strategy.get("symbol"))
+    strategy["updated_at"] = now_iso()
+    strategy_log(
+        state,
+        strategy["strategy_id"],
+        "execution",
+        f"{strategy['name']} executed {order['side']} {order['qty']} {order['symbol']} via {order.get('mode')}",
+        {"order_id": order.get("order_id"), "notional": order.get("notional")},
+    )
+    return metric
+
+
+def build_internal_order(symbol, side, qty, execution_mode, strategy_id=None):
+    return {
+        "order_id": f"ord_{uuid.uuid4().hex[:10]}",
+        "strategy_id": strategy_id,
+        "symbol": symbol.upper(),
+        "side": side.lower(),
+        "qty": float(qty),
+        "notional": round(get_price(symbol.upper()) * float(qty), 2),
+        "status": "filled",
+        "mode": execution_mode,
+        "broker": "internal" if execution_mode == "internal" else execution_mode,
+        "timestamp": now_iso(),
+    }
+
+
+def run_strategy_for_state(state, strategy, execution_mode, actor_email, actor_operator_id, source_action):
+    strategy_mode = (strategy.get("execution_mode") or "inherit").lower()
+    chosen_mode = (execution_mode or "internal").lower() if strategy_mode == "inherit" else strategy_mode
+    notional = round(get_price(strategy["symbol"]) * float(strategy["default_qty"]), 2)
+    enforce_risk_guard(state, strategy["symbol"], strategy["side"], float(strategy["default_qty"]), chosen_mode)
+    enforce_capital_guard(state, notional, strategy["side"], strategy)
+
+    if chosen_mode == "alpaca":
+        if not resolved_alpaca_credentials():
+            strategy_log(state, strategy["strategy_id"], "broker_error", "Alpaca execution requested but no credentials configured", {})
+            raise HTTPException(status_code=400, detail="Alpaca mode requested but no Alpaca credentials are configured")
+        broker_order = alpaca_submit_market_order(strategy["symbol"], strategy["side"], strategy["default_qty"])
+        order = normalize_alpaca_order(broker_order, strategy["symbol"], strategy["side"], strategy["default_qty"])
+    else:
+        order = build_internal_order(strategy["symbol"], strategy["side"], strategy["default_qty"], chosen_mode, strategy["strategy_id"])
+
+    order["strategy_id"] = strategy["strategy_id"]
+    order["strategy_name"] = strategy["name"]
+    persist_order(state, order)
+    apply_order_to_strategy(state, strategy, order)
+    append_governance_event(actor_email, actor_operator_id, source_action, state["operator_id"], order, "execution")
+    return order
+
+
+def run_strategies_for_state(state, execution_mode, actor_email, actor_operator_id, source_action):
+    strategies = [s for s in state.get("strategies", {}).get("strategies", []) if s.get("enabled") and s.get("status") == "running" and not s.get("deleted")]
+    executed_orders = []
+    state["strategy_loop"]["last_run_at"] = now_iso()
+    state["strategy_loop"]["heartbeat_at"] = now_iso()
+    state["strategy_loop"]["total_runs"] = int(state["strategy_loop"].get("total_runs") or 0) + 1
+    state["strategy_loop"]["total_signals"] = int(state["strategy_loop"].get("total_signals") or 0) + len(strategies)
+    engine = state.setdefault("strategy_engine", {})
+    engine["last_engine_run_at"] = now_iso()
+    engine["last_engine_status"] = "running"
+
+    risk = state.setdefault("risk_engine", default_risk_engine())
+    for strategy in strategies:
+        if risk.get("enabled") and int(risk.get("max_orders_per_run") or 0) > 0 and len(executed_orders) >= int(risk.get("max_orders_per_run") or 0):
+            strategy_log(state, strategy["strategy_id"], "risk_block", "Execution skipped: max orders per run reached", {"max_orders_per_run": risk.get("max_orders_per_run")})
+            append_governance_event(actor_email, actor_operator_id, "strategy.execution_blocked", strategy["strategy_id"], {"detail": "Risk engine: max orders per run reached"}, "risk")
+            continue
+        try:
+            executed_orders.append(run_strategy_for_state(state, strategy, execution_mode, actor_email, actor_operator_id, source_action))
+        except HTTPException as exc:
+            strategy_log(state, strategy["strategy_id"], "execution_blocked", str(exc.detail), {"execution_mode": execution_mode})
+            append_governance_event(actor_email, actor_operator_id, "strategy.execution_blocked", strategy["strategy_id"], {"detail": exc.detail}, "risk")
+
+    engine["last_engine_status"] = "completed"
+    evaluate_monitoring(state)
+    save_operator_state(state)
+    return executed_orders
+
+
+def build_operator_workspace(state):
+    monitoring = evaluate_monitoring(state)
+    engine = summarize_strategy_engine(state)
+    capital = build_capital_context(state)
+    save_operator_state(state)
+    orders = state["orders"]["orders"][:12]
+    return {
+        "operator_id": state["operator_id"],
+        "display_name": state["display_name"],
+        "capital": {
+            **state["allocator_caps"]["operator"],
+            "allocated_capital": capital.get("allocated_capital", state["allocator_caps"]["operator"].get("allocated_capital", 0)),
+            "mode": capital.get("mode", state.get("capital_source", {}).get("mode", "internal")),
+            "label": capital.get("label", monitoring["latest_snapshot"].get("capital_label", "internal")),
+            "used_capital": capital.get("used_capital", monitoring["latest_snapshot"].get("used_capital", 0)),
+            "remaining_capital": capital.get("remaining_capital", monitoring["latest_snapshot"].get("remaining_capital", 0)),
+            "utilization_pct": capital.get("utilization_pct", monitoring["latest_snapshot"].get("utilization_pct", 0)),
+            "current_equity": capital.get("current_equity", 0),
+            "cash": capital.get("cash", 0),
+            "buying_power": capital.get("buying_power", 0),
+            "valid": capital.get("valid", True),
+            "connected": capital.get("connected", True),
+        },
+        "capital_source": {
+            **state.get("capital_source", default_capital_source()),
+            "mode": capital.get("mode", state.get("capital_source", {}).get("mode", "internal")),
+            "provider": capital.get("provider", state.get("capital_source", {}).get("provider", "internal")),
+            "label": capital.get("label", state.get("capital_source", {}).get("provider", "internal")),
+            "valid": capital.get("valid", True),
+            "connected": capital.get("connected", True),
+            "reason": capital.get("reason"),
+        },
+        "strategies": engine,
+        "strategy_loop": state["strategy_loop"],
+        "orders": orders,
+        "positions": operator_positions_from_orders(state)[0],
+        "monitoring": monitoring,
+        "risk_engine": evaluate_risk_state(state),
+        "execution_summary": {
+            "recent_orders": len(orders),
+            "enabled_strategies": engine["enabled_strategies"],
+            "running_strategies": engine["running_strategies"],
+            "total_orders": state["strategy_loop"].get("total_orders", 0),
+            "realized_pnl": engine["portfolio_realized_pnl"],
+            "unrealized_pnl": engine["portfolio_unrealized_pnl"],
+        },
+    }
+
+
+def build_top_bar_metrics(snapshot):
+    workspace = snapshot.get("personal_workspace", {}) or {}
+    capital = workspace.get("capital", {}) or {}
+    performance = (snapshot.get("performance", {}) or {}).get("summary", {}) or {}
+    broker = snapshot.get("broker", {}) or {}
+    account = broker.get("account", {}) or {}
+    mode = (capital.get("mode") or snapshot.get("capital_source", {}).get("mode") or "internal").lower()
+    label = capital.get("label") or snapshot.get("risk_engine", {}).get("capital_source", {}).get("label") or "internal"
+
+    if mode == "broker":
+        return {
+            "mode": "broker",
+            "source_display": f"broker / {label}",
+            "cards": {
+                "operator": {"label": "Operator", "value": workspace.get("display_name") or "-"},
+                "primary_1": {"label": "Broker Equity", "value": round(as_float(capital.get("current_equity") or account.get("equity"), 0.0), 2)},
+                "primary_2": {"label": "Exposure", "value": round(as_float(capital.get("used_capital"), 0.0), 2)},
+                "primary_3": {"label": "Buying Power", "value": round(as_float(capital.get("buying_power") or account.get("buying_power") or account.get("regt_buying_power"), 0.0), 2)},
+                "strategies": {"label": "Running Strategies", "value": snapshot.get("strategy_engine", {}).get("running_strategies", 0)},
+                "pnl": {"label": "Realized PnL", "value": round(as_float(performance.get("realized_pnl"), 0.0), 2)},
+                "risk": {"label": "Risk State", "value": snapshot.get("risk_engine", {}).get("status") or "SAFE"},
+                "source": {"label": "Broker Cash", "value": round(as_float(capital.get("cash") or account.get("cash"), 0.0), 2)},
+            },
+        }
+
+    return {
+        "mode": "internal",
+        "source_display": f"internal / {label}",
+        "cards": {
+            "operator": {"label": "Operator", "value": workspace.get("display_name") or "-"},
+            "primary_1": {"label": "Allocated Capital", "value": round(as_float(capital.get("allocated_capital"), 0.0), 2)},
+            "primary_2": {"label": "Used Capital", "value": round(as_float(capital.get("used_capital"), 0.0), 2)},
+            "primary_3": {"label": "Remaining Capital", "value": round(as_float(capital.get("remaining_capital"), 0.0), 2)},
+            "strategies": {"label": "Running Strategies", "value": snapshot.get("strategy_engine", {}).get("running_strategies", 0)},
+            "pnl": {"label": "Realized PnL", "value": round(as_float(performance.get("realized_pnl"), 0.0), 2)},
+            "risk": {"label": "Risk State", "value": snapshot.get("risk_engine", {}).get("status") or "SAFE"},
+            "source": {"label": "Capital Source", "value": f"internal / {label}"},
+        },
+    }
+
+
+def build_command_center_snapshot(session):
+    seed_artifacts()
+    session_payload = resolve_operator_context(session) if session_view(session).get("logged_in") else session_view(session)
+    users = users_db()["users"]
+    state = get_operator_state(session_payload)
+    workspace = build_operator_workspace(state)
+    approvals = get_approvals()["requests"]
+    ledger = load_json("governance_ledger.json", {"events": []}).get("events", [])
+    pending = [r for r in approvals if r.get("status") == "PENDING"]
+
+    try:
+        broker = refresh_alpaca_state(soft=True)
+    except Exception as exc:
+        broker = {"connected": False, "last_status": "error", "last_error": str(exc), "positions": [], "orders": [], "account": {}, "stale": True}
+
+    try:
+        performance = build_performance_snapshot(state)
+    except Exception as exc:
+        performance = {"status": "degraded", "error": str(exc)}
+
+    governance = {
+        "pending_approvals": len(pending),
+        "approvals": approvals[:8],
+        "policies": get_policies().get("policies", []),
+        "ledger_summary": summarize_governance(ledger),
+        "recent_events": ledger[:8],
+    }
+    snapshot = {
+        "session": session_payload,
+        "north_star": {
+            "mission": "QNT30331 Real Broker Order Routing",
+            "system": "Quantora multi-layer institutional trading operating system",
+            "timestamp": now_iso(),
+        },
+        "personal_workspace": workspace,
+        "strategy_engine": workspace["strategies"],
+        "risk_engine": workspace["risk_engine"],
+        "capital_source": workspace.get("capital_source", default_capital_source()),
+        "performance": performance,
+        "broker": broker,
+        "governance": governance,
+        "system_health": {
+            "status": "ok",
+            "registered_users": len(users),
+            "policies_enabled": len([p for p in governance["policies"] if p.get("enabled")]),
+            "layer": "qnt30331-real-broker-order-routing",
+            "broker_status": broker.get("last_status"),
+            "admin_ready": session_payload.get("is_admin"),
+        },
+    }
+    snapshot["top_bar"] = build_top_bar_metrics(snapshot)
+    if session_payload.get("is_admin"):
+        try:
+            snapshot["control_tower"] = control_tower_view()
+        except Exception as exc:
+            snapshot["control_tower"] = {"status": "degraded", "error": str(exc), "operators": [], "totals": {}}
+    return snapshot
+
+
+# -------------------------
+# Quantora control tower views
+# -------------------------
+def control_tower_view():
+    users = users_db()["users"]
+    operators = []
+    totals = {"operators": 0, "orders": 0, "allocated_capital": 0.0, "used_capital": 0.0, "alerts": 0, "running_loops": 0, "realized_pnl": 0.0}
+    for user in users:
+        ensure_state_for_user(user)
+        state = load_json(state_filename(user["operator_id"]), {})
+        state = migrate_operator_state(state, user.get("operator_id"), user.get("display_name"))
+        monitoring = evaluate_monitoring(state)
+        engine = summarize_strategy_engine(state)
+        save_operator_state(state)
+        capital = build_capital_context(state)
+        allocated = float(capital.get("allocated_capital", 0) or 0)
+        row = {
+            "operator_id": user["operator_id"],
+            "display_name": user["display_name"],
+            "email": user["email"],
+            "orders": len(state["orders"]["orders"]),
+            "strategies": engine["total_strategies"],
+            "allocated_capital": allocated,
+            "used_capital": monitoring["latest_snapshot"].get("used_capital", 0),
+            "remaining_capital": monitoring["latest_snapshot"].get("remaining_capital", 0),
+            "capital_mode": capital.get("mode"),
+            "capital_label": capital.get("label"),
+            "loop_running": state["strategy_loop"]["running"],
+            "alerts": len(monitoring["alerts"]),
+            "execution_mode": state["strategy_loop"].get("execution_mode"),
+            "last_run_at": state["strategy_loop"].get("last_run_at"),
+            "realized_pnl": engine["portfolio_realized_pnl"],
+            "risk_breached": bool(state.get("risk_engine", {}).get("breached")),
+        }
+        operators.append(row)
+        totals["operators"] += 1
+        totals["orders"] += row["orders"]
+        totals["allocated_capital"] += allocated
+        totals["used_capital"] += row["used_capital"]
+        totals["alerts"] += row["alerts"]
+        totals["realized_pnl"] += row["realized_pnl"]
+        if row["loop_running"]:
+            totals["running_loops"] += 1
+    totals["remaining_capital"] = round(totals["allocated_capital"] - totals["used_capital"], 2)
+    totals["realized_pnl"] = round(totals["realized_pnl"], 2)
+    return {"operators": operators, "totals": totals}
+
+
+def build_multi_operator_leaderboard():
+    rows = []
+    for user in users_db().get("users", []):
+        ensure_state_for_user(user)
+        state = get_operator_state_by_id(user["operator_id"])
+        perf = build_performance_snapshot(state)
+        summary = perf.get("summary", {})
+        row = {
+            "operator_id": user.get("operator_id"),
+            "display_name": user.get("display_name"),
+            "email": user.get("email"),
+            "score": round(as_float(summary.get("operator_score"), 0.0), 2),
+            "realized_pnl": round(as_float(summary.get("realized_pnl"), 0.0), 2),
+            "unrealized_pnl": round(as_float(summary.get("unrealized_pnl"), 0.0), 2),
+            "win_rate": round(as_float(summary.get("win_rate"), 0.0), 2),
+            "drawdown_pct": round(as_float(summary.get("current_drawdown_pct"), 0.0), 2),
+            "strategies": len(state.get("strategies", {}).get("strategies", [])),
+            "capital_mode": summary.get("capital_mode"),
+            "capital_label": summary.get("capital_label"),
+            "current_equity": round(as_float(summary.get("current_equity"), 0.0), 2),
+            "risk_breaches": int(summary.get("risk_breaches") or 0),
+        }
+        rows.append(row)
+    rows.sort(key=lambda r: (-r["score"], -r["realized_pnl"], r["drawdown_pct"]))
+    for idx, row in enumerate(rows, start=1):
+        row["rank"] = idx
+    return rows
+
+
+def multi_operator_overview():
+    rows = build_multi_operator_leaderboard()
+    totals = {
+        "operators": len(rows),
+        "active_strategies": sum(r.get("strategies", 0) for r in rows),
+        "total_realized_pnl": round(sum(as_float(r.get("realized_pnl"), 0.0) for r in rows), 2),
+        "avg_score": round(sum(as_float(r.get("score"), 0.0) for r in rows) / len(rows), 2) if rows else 0.0,
+        "broker_mode_operators": sum(1 for r in rows if r.get("capital_mode") == "broker"),
+    }
+    return {"leaderboard": rows, "totals": totals}
+
+
+def compare_operator_states(operator_a_id, operator_b_id):
+    user_a = get_operator_by_id(operator_a_id)
+    user_b = get_operator_by_id(operator_b_id)
+    state_a = get_operator_state_by_id(user_a["operator_id"])
+    state_b = get_operator_state_by_id(user_b["operator_id"])
+    perf_a = build_performance_snapshot(state_a).get("summary", {})
+    perf_b = build_performance_snapshot(state_b).get("summary", {})
+    return {
+        "operator_a": {
+            "operator_id": user_a.get("operator_id"),
+            "display_name": user_a.get("display_name"),
+            "score": round(as_float(perf_a.get("operator_score"),0.0),2),
+            "realized_pnl": round(as_float(perf_a.get("realized_pnl"),0.0),2),
+            "drawdown_pct": round(as_float(perf_a.get("current_drawdown_pct"),0.0),2),
+            "win_rate": round(as_float(perf_a.get("win_rate"),0.0),2),
+            "capital_mode": perf_a.get("capital_mode"),
+        },
+        "operator_b": {
+            "operator_id": user_b.get("operator_id"),
+            "display_name": user_b.get("display_name"),
+            "score": round(as_float(perf_b.get("operator_score"),0.0),2),
+            "realized_pnl": round(as_float(perf_b.get("realized_pnl"),0.0),2),
+            "drawdown_pct": round(as_float(perf_b.get("current_drawdown_pct"),0.0),2),
+            "win_rate": round(as_float(perf_b.get("win_rate"),0.0),2),
+            "capital_mode": perf_b.get("capital_mode"),
+        },
+        "winner": operator_a_id if as_float(perf_a.get("operator_score"),0.0) >= as_float(perf_b.get("operator_score"),0.0) else operator_b_id
+    }
+
+
+def auto_allocate_capital(total_capital):
+    rows = build_multi_operator_leaderboard()
+    if not rows:
+        return {"allocations": [], "totals": {"operators": 0, "allocated": 0.0}}
+    weights = []
+    for r in rows:
+        score = max(as_float(r.get("score"), 0.0), 0.0)
+        pnl_bonus = max(as_float(r.get("realized_pnl"), 0.0), 0.0) / 1000.0
+        dd_penalty = min(max(as_float(r.get("drawdown_pct"), 0.0), 0.0), 100.0) / 100.0
+        weight = max(0.1, score + pnl_bonus + 1.0 - dd_penalty)
+        weights.append(weight)
+    total_weight = sum(weights) or len(rows)
+    allocations = []
+    for row, weight in zip(rows, weights):
+        allocation = round(float(total_capital) * weight / total_weight, 2)
+        state = get_operator_state_by_id(row["operator_id"])
+        state["allocator_caps"]["operator"] = {
+            "operator_id": row["operator_id"],
+            "allocated_capital": allocation,
+            "status": "FUNDED" if allocation > 0 else "UNFUNDED",
+            "updated_at": now_iso(),
+        }
+        evaluate_monitoring(state)
+        save_operator_state(state)
+        allocations.append({
+            "operator_id": row["operator_id"],
+            "display_name": row.get("display_name"),
+            "score": row.get("score"),
+            "drawdown_pct": row.get("drawdown_pct"),
+            "allocation": allocation,
+        })
+    return {
+        "allocations": allocations,
+        "totals": {"operators": len(allocations), "allocated": round(sum(a["allocation"] for a in allocations),2)}
+    }
+
+
+def submit_approval_request(session, request_type, target, payload, reason):
+    queue = get_approvals()
+    req = {
+        "request_id": f"apr_{uuid.uuid4().hex[:10]}",
+        "created_at": now_iso(),
+        "created_by_email": session.get("email"),
+        "created_by_operator_id": session.get("operator_id"),
+        "request_type": request_type,
+        "target": target,
+        "payload": payload,
+        "reason": reason,
+        "status": "PENDING",
+        "reviewed_at": None,
+        "reviewed_by": None,
+        "notes": "",
+    }
+    queue["requests"].insert(0, req)
+    queue["requests"] = queue["requests"][:1000]
+    save_approvals(queue)
+    append_governance_event(session.get("email"), session.get("operator_id"), "approval.requested", target, req, "approval")
+    return req
+
+
+def apply_approval_request(req, admin_session):
+    if req["request_type"] == "capital_change":
+        state = get_operator_state_by_id(req["target"])
+        state["allocator_caps"]["operator"] = {
+            "operator_id": req["target"],
+            "allocated_capital": req["payload"]["allocated_capital"],
+            "status": "FUNDED" if req["payload"]["allocated_capital"] > 0 else "UNFUNDED",
+            "updated_at": now_iso(),
+        }
+        evaluate_monitoring(state)
+        save_operator_state(state)
+    elif req["request_type"] == "run_all":
+        for user in users_db()["users"]:
+            ensure_state_for_user(user)
+            state = load_json(state_filename(user["operator_id"]), {})
+            state = migrate_operator_state(state, user.get("operator_id"), user.get("display_name"))
+            run_strategies_for_state(state, state["strategy_loop"].get("execution_mode", "internal"), admin_session.get("email"), admin_session.get("operator_id"), "approval.run_all.execute")
+    elif req["request_type"] == "loop_start":
+        state = get_operator_state_by_id(req["target"])
+        state["strategy_loop"]["running"] = True
+        state["strategy_loop"]["execution_mode"] = req["payload"]["execution_mode"]
+        state["strategy_loop"]["interval_seconds"] = int(req["payload"]["interval_seconds"])
+        state["strategy_loop"]["heartbeat_at"] = now_iso()
+        state["strategy_loop"]["next_run_at"] = (now_dt() + datetime.timedelta(seconds=int(req["payload"]["interval_seconds"]))).isoformat() + "Z"
+        save_operator_state(state)
+    append_governance_event(admin_session.get("email"), admin_session.get("operator_id"), "approval.approved", req["target"], req, "approval")
+
+
+
+# -------------------------
+# AI activation layer
+# -------------------------
+def build_ai_strategy_suggestions(session, market_bias="neutral"):
+    session = resolve_operator_context(session)
+    state = get_operator_state(session)
+    perf = build_performance_snapshot(state).get("summary", {})
+    risk = evaluate_risk_state(state)
+    capital = build_capital_context(state)
+    suggestions = [
+        {
+            "strategy_id": "ai-momentum-breakout",
+            "name": "AI Momentum Breakout",
+            "market_bias": market_bias,
+            "confidence": 0.74 if market_bias == "bullish" else 0.61,
+            "thesis": "Favor leaders only when risk state remains safe and exposure stays controlled.",
+            "symbols": ["NVDA", "AAPL", "MSFT"],
+            "guardrails": {
+                "risk_status": risk.get("status"),
+                "capital_mode": capital.get("mode"),
+                "max_orders_per_run": risk.get("config", {}).get("max_orders_per_run", 0),
+            },
+        },
+        {
+            "strategy_id": "ai-mean-reversion-pullback",
+            "name": "AI Mean Reversion Pullback",
+            "market_bias": market_bias,
+            "confidence": 0.67 if market_bias in ("neutral", "range") else 0.49,
+            "thesis": "Fade stretched pullbacks only when drawdown pressure remains low.",
+            "symbols": ["SPY", "QQQ"],
+            "guardrails": {
+                "drawdown_pct": perf.get("current_drawdown_pct", 0),
+                "win_rate": perf.get("win_rate", 0),
+            },
+        },
+    ]
+    return {"items": suggestions, "operator_id": state.get("operator_id"), "market_bias": market_bias}
+
+
+def build_ai_capital_recommendations():
+    rows = build_multi_operator_leaderboard()
+    if not rows:
+        return {"items": [], "totals": {"operators": 0}}
+    weighted = []
+    for row in rows:
+        score = max(as_float(row.get("score"), 0.0), 0.0)
+        realized = max(as_float(row.get("realized_pnl"), 0.0), 0.0)
+        dd = abs(as_float(row.get("drawdown_pct"), 0.0))
+        win_rate = as_float(row.get("win_rate"), 0.0)
+        raw = max(0.0, score * 0.5 + realized * 0.00015 + win_rate * 18 - dd * 1.35)
+        weighted.append((row, raw))
+    total = sum(v for _, v in weighted) or 1.0
+    items=[]
+    for row, raw in weighted:
+        weight = round(raw / total, 4)
+        items.append({
+            "operator_id": row.get("operator_id"),
+            "display_name": row.get("display_name"),
+            "recommended_weight": weight,
+            "recommended_action": "increase" if weight >= 0.34 else ("hold" if weight >= 0.2 else "decrease"),
+            "score": row.get("score"),
+            "drawdown_pct": row.get("drawdown_pct"),
+        })
+    return {"items": sorted(items, key=lambda x: x["recommended_weight"], reverse=True), "totals": {"operators": len(items)}}
+
+
+def build_ai_risk_adjustments(session):
+    session = resolve_operator_context(session)
+    state = get_operator_state(session)
+    perf = build_performance_snapshot(state).get("summary", {})
+    drawdown = abs(as_float(perf.get("current_drawdown_pct"), 0.0))
+    win_rate = as_float(perf.get("win_rate"), 0.0)
+    score = as_float(perf.get("operator_score"), 0.0)
+    exposure_multiplier = 1.0
+    max_orders_per_run = 5
+    kill_switch_recommendation = False
+    note = "maintain normal limits"
+    if drawdown >= 10:
+        exposure_multiplier = 0.6
+        max_orders_per_run = 2
+        note = "reduce exposure due to elevated drawdown"
+    if drawdown >= 15:
+        exposure_multiplier = 0.0
+        max_orders_per_run = 0
+        kill_switch_recommendation = True
+        note = "recommend kill switch due to critical drawdown"
+    if drawdown < 6 and win_rate >= 60 and score >= 70:
+        exposure_multiplier = 1.15
+        max_orders_per_run = 6
+        note = "operator eligible for slight risk expansion"
+    return {
+        "operator_id": state.get("operator_id"),
+        "display_name": state.get("display_name"),
+        "exposure_multiplier": exposure_multiplier,
+        "max_orders_per_run": max_orders_per_run,
+        "kill_switch_recommendation": kill_switch_recommendation,
+        "note": note,
+    }
+
+
+def build_ai_operator_insights():
+    rows = build_multi_operator_leaderboard()
+    insights=[]
+    for row in rows:
+        dd = abs(as_float(row.get("drawdown_pct"), 0.0))
+        wr = as_float(row.get("win_rate"), 0.0)
+        pnl = as_float(row.get("realized_pnl"), 0.0)
+        score = as_float(row.get("score"), 0.0)
+        if dd > 12:
+            insight = "de-risk operator due to elevated drawdown pressure"
+        elif pnl > 0 and wr > 58 and score > 65:
+            insight = "operator shows positive expectancy and qualifies for capital review"
+        else:
+            insight = "maintain steady allocation and continue observation"
+        insights.append({
+            "operator_id": row.get("operator_id"),
+            "display_name": row.get("display_name"),
+            "score": score,
+            "realized_pnl": pnl,
+            "drawdown_pct": dd,
+            "win_rate": wr,
+            "insight": insight,
+        })
+    return {"items": sorted(insights, key=lambda x: x["score"], reverse=True)}
+
+
+def build_ai_activation_payload(session):
+    try:
+        status = {"mission": "QNT30329", "layer": "qnt30331-real-broker-order-routing", "ai_enabled": True, "mode": "live-integrated"}
+        return {
+            "status": status,
+            "strategy_suggestions": build_ai_strategy_suggestions(session).get("items", []),
+            "capital_recommendations": build_ai_capital_recommendations().get("items", []),
+            "risk_adjustments": build_ai_risk_adjustments(session),
+            "operator_insights": build_ai_operator_insights().get("items", []),
+        }
+    except Exception as exc:
+        return {"status": {"mission": "QNT30366", "layer": "qnt30366-release-normalized-core", "ai_enabled": True, "mode": "degraded"}, "error": str(exc)}
+
+# -------------------------
+# Request models
+# -------------------------
+class RegisterRequest(BaseModel):
+    email: str
+    password: str
+    display_name: str
+
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+
+class StrategyRegisterRequest(BaseModel):
+    name: str
+    symbol: str
+    side: str
+    default_qty: int
+    enabled: bool = True
+    capital_limit: float = 0.0
+    execution_mode: str = "inherit"
+
+
+class StrategyToggleRequest(BaseModel):
+    strategy_id: str
+    enabled: bool
+
+
+class StrategyLifecycleRequest(BaseModel):
+    strategy_id: str
+    action: str
+
+
+class StrategyDeleteRequest(BaseModel):
+    strategy_id: str
+
+
+class OperatorCapitalRequest(BaseModel):
+    allocated_capital: float
+
+
+class AdminOperatorCapitalRequest(BaseModel):
+    operator_id: str
+    allocated_capital: float
+
+
+class AdminLoopRequest(BaseModel):
+    operator_id: str
+    execution_mode: str = "internal"
+    interval_seconds: int = 60
+
+
+class AdminSelectOperatorRequest(BaseModel):
+    operator_id: str
+
+
+class MultiOperatorAllocateRequest(BaseModel):
+    total_capital: float = 0.0
+
+
+class MultiOperatorCompareRequest(BaseModel):
+    operator_a_id: str
+    operator_b_id: str
+
+
+
+class AIStrategySuggestionRequest(BaseModel):
+    market_bias: str = "neutral"
+
+
+class StrategyEngineCycleRequest(BaseModel):
+    execution_mode: str = "internal"
+    market_bias: str = "neutral"
+
+
+class AIDecisionRequest(BaseModel):
+    market_bias: str = "neutral"
+    execution_mode: str = "internal"
+
+
+class CapitalAllocationRebalanceRequest(BaseModel):
+    market_bias: str = "neutral"
+
+class MultiStrategyOptimizeRequest(BaseModel):
+    max_active_strategies: int = Field(default=3, ge=1, le=20)
+    min_score_to_enable: float = Field(default=55.0, ge=0.0, le=100.0)
+    pause_below_score: float = Field(default=35.0, ge=0.0, le=100.0)
+    market_bias: str = "neutral"
+    rebalance_capital: bool = True
+
+
+class MultiStrategyRebalanceRequest(BaseModel):
+    market_bias: str = "neutral"
+    max_active_strategies: int = Field(default=3, ge=1, le=20)
+
+
+class PolicyUpdateRequest(BaseModel):
+    policy_id: str
+    threshold: float
+    enabled: bool = True
+
+
+class ApprovalDecisionRequest(BaseModel):
+    request_id: str
+    decision: str
+    notes: str = ""
+
+
+class GovernancePolicySimulationRequest(BaseModel):
+    event_type: str
+    amount: float = 0.0
+    interval_seconds: int = 0
+    symbol: str = "AAPL"
+    qty: float = 0.0
+    estimated_slippage_bps: float = 0.0
+    execution_mode: str = "internal"
+    max_active_strategies: int = 0
+
+
+class GovernanceEnforcementRequest(BaseModel):
+    operator_id: str | None = None
+    include_orders: bool = True
+    include_approvals: bool = True
+    include_risk: bool = True
+
+
+class RunOperatorRequest(BaseModel):
+    execution_mode: str = Field(default="internal")
+
+
+class AlpacaConnectRequest(BaseModel):
+    api_key: str
+    secret_key: str
+    base_url: str = "https://paper-api.alpaca.markets"
+    paper: bool = True
+
+
+class RiskConfigUpdateRequest(BaseModel):
+    enabled: bool = True
+    max_position_notional: float = 5000.0
+    max_total_exposure: float = 20000.0
+    max_drawdown_pct: float = 12.0
+    max_daily_loss: float = 1500.0
+    max_orders_per_run: int = 3
+    max_trades_per_session: int = 2
+    max_notional_per_trade: float = 20.0
+    live_risk_lock_required: bool = True
+    require_broker_for_alpaca: bool = True
+    auto_shutdown_on_breach: bool = True
+
+
+class RiskKillSwitchRequest(BaseModel):
+    active: bool
+    note: str = ""
+
+
+class CapitalSourceUpdateRequest(BaseModel):
+    mode: str = "internal"
+
+
+class ManualOrderRequest(BaseModel):
+    symbol: str
+    side: str
+    qty: float
+    execution_mode: str = "internal"
+
+
+# -------------------------
+# Error handling
+# -------------------------
+def structured_error(status_code, error, reason, detail=None, extra=None):
+    payload = {"error": error, "reason": reason, "_http_status": status_code}
+    if detail and detail != reason:
+        payload["detail"] = detail
+    if extra:
+        payload.update(extra)
+    return payload
+
+
+def classify_http_error(status_code, detail):
+    text = detail if isinstance(detail, str) else json.dumps(detail)
+    low = text.lower()
+    if status_code == 401:
+        return "AUTH_REQUIRED"
+    if status_code == 403:
+        return "ADMIN_REQUIRED" if "admin" in low else "FORBIDDEN"
+    if status_code == 404:
+        return "NOT_FOUND"
+    if status_code == 409:
+        return "CONFLICT"
+    if "risk engine" in low or "kill switch" in low or "risk" in low and "breach" in low:
+        return "RISK_BLOCK"
+    if "operator context" in low or "operator_id" in low:
+        return "OPERATOR_CONTEXT_MISSING"
+    if "capital guard" in low:
+        return "CAPITAL_GUARD"
+    if "alpaca" in low:
+        return "BROKER_ERROR"
+    if status_code == 422:
+        return "VALIDATION_ERROR"
+    return "HTTP_ERROR"
+
+
+
+def ensure_governance_defaults():
+    controls = governance_controls_state({"execution_engine": {}, "governance_system": load_json("governance_system.json", {})})
+    save_json("governance_system.json", controls)
+    data = get_policies()
+    defaults = {p["policy_id"]: p for p in default_policies_data()["policies"]}
+    existing_ids = {p["policy_id"] for p in data.get("policies", [])}
+    for policy_id, policy in defaults.items():
+        if policy_id not in existing_ids:
+            data.setdefault("policies", []).append(policy)
+    save_policies(data)
+
+
+def ensure_autonomy_defaults():
+    autonomy = autonomy_state_view(load_json("autonomy_control_plane.json", autonomy_state_defaults()))
+    save_json("autonomy_control_plane.json", autonomy)
+
+
+def ensure_broker_abstraction_defaults():
+    data = broker_abstraction_state_view(load_json("broker_abstraction.json", default_broker_abstraction()))
+    save_json("broker_abstraction.json", data)
+
+
+def ensure_alpaca_runtime_mode():
+    cfg = get_broker_config()
+    alpaca = cfg["alpaca"]
+    mode = (alpaca.get("connection_mode") or "auto").lower()
+    env_creds = resolved_alpaca_env()
+    has_stored = bool(alpaca.get("api_key") and alpaca.get("secret_key"))
+    changed = False
+
+    if env_creds and mode in {"auto", "env"} and not has_stored:
+        if alpaca.get("connection_mode") != "env":
+            alpaca["connection_mode"] = "env"
+            changed = True
+        if alpaca.get("api_key") or alpaca.get("secret_key"):
+            alpaca["api_key"] = ""
+            alpaca["secret_key"] = ""
+            changed = True
+        if alpaca.get("base_url") != env_creds["base_url"]:
+            alpaca["base_url"] = env_creds["base_url"]
+            changed = True
+        if bool(alpaca.get("paper", True)) != bool(env_creds["paper"]):
+            alpaca["paper"] = bool(env_creds["paper"])
+            changed = True
+        if alpaca.get("last_status") in {"error", "disconnected", "paper_internal"}:
+            alpaca["last_status"] = "connecting"
+            changed = True
+        if alpaca.get("last_error"):
+            alpaca["last_error"] = None
+            changed = True
+    elif (not env_creds) and not has_stored and mode in {"auto", "env"}:
+        if alpaca.get("connection_mode") == "env":
+            alpaca["connection_mode"] = "auto"
+            changed = True
+        if alpaca.get("last_status") != "paper_internal":
+            alpaca["last_status"] = "paper_internal"
+            changed = True
+        if alpaca.get("last_error"):
+            alpaca["last_error"] = None
+            changed = True
+
+    if changed:
+        save_broker_config(cfg)
+
+    try:
+        refresh_alpaca_state(soft=True)
+    except Exception:
+        pass
+
+
+@app.on_event("startup")
+def startup_event():
+    global DEPLOYMENT_REPORT
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    seed_artifacts()
+    ensure_demo_admin_user(auto_login=True)
+    ensure_governance_defaults()
+    ensure_autonomy_defaults()
+    ensure_broker_abstraction_defaults()
+    ensure_alpaca_runtime_mode()
+    DEPLOYMENT_REPORT = qnt30420_evaluate(ARTIFACTS_DIR, DB_PATH)
+    if qnt30420_should_block_startup(DEPLOYMENT_REPORT):
+        raise RuntimeError(f"QNT30420 startup blocked: {DEPLOYMENT_REPORT.get('overall_status')}")
+    try:
+        automation_engine.ensure_operator("operator_F5E2C5BA")
+        automation_engine.recover(restart_worker=False, clear_failures=False, run_immediately=False)
+        automation_engine.start_worker()
+    except Exception:
+        pass
+
+
+@app.on_event("shutdown")
+def shutdown_event():
+    try:
+        automation_engine.stop_worker()
+    except Exception:
+        pass
+
+
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    detail = exc.detail if isinstance(exc.detail, str) else json.dumps(exc.detail)
+    error = classify_http_error(exc.status_code, detail)
+    return JSONResponse(status_code=exc.status_code, content=structured_error(exc.status_code, error, detail))
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(status_code=422, content=structured_error(422, "VALIDATION_ERROR", "Request validation failed", extra={"fields": exc.errors()}))
+
+
+@app.exception_handler(Exception)
+async def unhandled_exception_handler(request: Request, exc: Exception):
+    return JSONResponse(status_code=500, content=structured_error(500, "SYSTEM_ERROR", "Internal Server Error", detail=str(exc)))
+
+
+# -------------------------
+# Core routes
+# -------------------------
+@app.get("/legacy/health")
+def health():
+    global DEPLOYMENT_REPORT
+    DEPLOYMENT_REPORT = qnt30420_evaluate(ARTIFACTS_DIR, DB_PATH)
+    return {
+        "status": "ok" if DEPLOYMENT_REPORT.get("overall_status") == "ready" else DEPLOYMENT_REPORT.get("overall_status"),
+        "layer": "qnt30420-production-deployment-hardening",
+        "mission": "QNT30420",
+        "environment": DEPLOYMENT_REPORT.get("environment"),
+        "billing_mode": DEPLOYMENT_REPORT.get("billing_mode"),
+        "execution_mode": DEPLOYMENT_REPORT.get("execution_mode"),
+        "safe_mode": DEPLOYMENT_REPORT.get("safe_mode"),
+        "readiness_score": DEPLOYMENT_REPORT.get("readiness_score"),
+    }
+
+
+@app.get("/health/runtime")
+def health_runtime():
+    global DEPLOYMENT_REPORT
+    DEPLOYMENT_REPORT = qnt30420_evaluate(ARTIFACTS_DIR, DB_PATH)
+    return {"mission": "QNT30420", **qnt30420_health_summary(DEPLOYMENT_REPORT, "runtime.")}
+
+
+@app.get("/health/billing")
+def health_billing():
+    global DEPLOYMENT_REPORT
+    DEPLOYMENT_REPORT = qnt30420_evaluate(ARTIFACTS_DIR, DB_PATH)
+    return {"mission": "QNT30420", **qnt30420_health_summary(DEPLOYMENT_REPORT, "env.")}
+
+
+@app.get("/health/persistence")
+def health_persistence():
+    global DEPLOYMENT_REPORT
+    DEPLOYMENT_REPORT = qnt30420_evaluate(ARTIFACTS_DIR, DB_PATH)
+    return {"mission": "QNT30420", **qnt30420_health_summary(DEPLOYMENT_REPORT, "db.")}
+
+
+@app.get("/health/execution")
+def health_execution():
+    global DEPLOYMENT_REPORT
+    DEPLOYMENT_REPORT = qnt30420_evaluate(ARTIFACTS_DIR, DB_PATH)
+    return {
+        "mission": "QNT30420",
+        "status": "ok" if DEPLOYMENT_REPORT.get("safe_mode", {}).get("paper_execution_allowed") else "blocked",
+        "execution_mode": DEPLOYMENT_REPORT.get("execution_mode"),
+        "safe_mode": DEPLOYMENT_REPORT.get("safe_mode"),
+    }
+
+
+@app.get("/legacy/health/attribution")
+def health_attribution():
+    global DEPLOYMENT_REPORT
+    DEPLOYMENT_REPORT = qnt30420_evaluate(ARTIFACTS_DIR, DB_PATH)
+    return {"mission": "QNT30420", **qnt30420_health_summary(DEPLOYMENT_REPORT, "artifact.")}
+
+
+@app.get("/legacy/health/deployment")
+def health_deployment():
+    global DEPLOYMENT_REPORT
+    DEPLOYMENT_REPORT = qnt30420_evaluate(ARTIFACTS_DIR, DB_PATH)
+    return DEPLOYMENT_REPORT
+
+
+@app.post("/legacy/auth/register")
+def auth_register(payload: RegisterRequest):
+    users = users_db()
+    email = normalize_email(payload.email)
+    display_name = (payload.display_name or "Operator").strip() or "Operator"
+    if any(normalize_email(u["email"]) == email for u in users["users"]):
+        raise HTTPException(status_code=409, detail="Email already registered")
+    operator_id = f"operator_{uuid.uuid4().hex[:8].upper()}"
+    user = billing_hydrate_user({"email": email, "password": hash_password(payload.password), "display_name": display_name, "operator_id": operator_id})
+    users["users"].append(user)
+    save_users(users)
+    ensure_state_for_user(user)
+    save_session({"email": email, "operator_id": operator_id, "display_name": display_name, "logged_in": True})
+    append_governance_event(email, operator_id, "register", operator_id, {"display_name": display_name}, "auth")
+    return {"status": "registered", "operator_id": operator_id, "display_name": display_name, "is_admin": user_is_admin_email(email)}
+
+
+@app.post("/legacy/auth/login")
+def auth_login(payload: LoginRequest):
+    users = users_db()
+    email = normalize_email(payload.email)
+    user = next((u for u in users["users"] if normalize_email(u["email"]) == email), None)
+    if user and not verify_password(payload.password, user.get("password")):
+        user = None
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    ensure_state_for_user(user)
+    save_session({"email": user["email"], "operator_id": user["operator_id"], "display_name": user["display_name"], "logged_in": True})
+    append_governance_event(user["email"], user["operator_id"], "login", user["operator_id"], {}, "auth")
+    return {"status": "logged_in", "operator_id": user["operator_id"], "display_name": user["display_name"], "is_admin": user_is_admin_email(user["email"])}
+
+
+@app.post("/legacy/auth/logout")
+def auth_logout():
+    session = get_session()
+    if session.get("logged_in"):
+        append_governance_event(session.get("email"), session.get("operator_id"), "logout", session.get("operator_id"), {}, "auth")
+    save_session(empty_session())
+    return {"status": "logged_out"}
+
+
+@app.get("/legacy/auth/me")
+def auth_me():
+    session = get_session()
+    session_payload = session_view(session)
+    if not session_payload.get("logged_in"):
+        demo = ensure_demo_admin_user(auto_login=True)
+        session_payload = save_and_return_demo_session(demo)
+    if session_payload.get("logged_in"):
+        try:
+            session_payload = resolve_operator_context(session_payload)
+        except HTTPException:
+            pass
+    payload = session_view(session_payload)
+    user = find_user_by_operator_id(payload.get("operator_id")) if payload.get("operator_id") else None
+    if user:
+        payload["billing"] = billing_summarize_user(user)
+    return payload
+
+
+class BillingCheckoutRequest(BaseModel):
+    plan: str
+    success_url: str = "/billing?checkout=success"
+    cancel_url: str = "/billing?checkout=cancel"
+
+
+class BillingPortalRequest(BaseModel):
+    return_url: str = "/billing"
+
+
+class BillingWebhookRequest(BaseModel):
+    event_type: str
+    operator_id: str
+    plan: Optional[str] = None
+    subscription_status: Optional[str] = None
+    stripe_customer_id: Optional[str] = None
+    subscription_id: Optional[str] = None
+    current_period_end: Optional[str] = None
+
+
+@app.get("/billing/plans")
+def billing_plans():
+    return {"mission": "QNT30417", "plans": BILLING_PLAN_PRICING, "features": BILLING_PLAN_FEATURES}
+
+
+@app.get("/billing/subscription-status")
+def billing_subscription_status(session=Depends(require_auth)):
+    user = current_billing_user(session)
+    state = billing_ensure_state(str(ARTIFACTS_DIR))
+    return {
+        "mission": "QNT30417",
+        "operator_id": user.get("operator_id"),
+        "email": user.get("email"),
+        "billing": billing_summarize_user(user),
+        "checkout_sessions": [x for x in state.get("checkout_sessions", []) if x.get("operator_id") == user.get("operator_id")][:10],
+        "portal_sessions": [x for x in state.get("portal_sessions", []) if x.get("operator_id") == user.get("operator_id")][:10],
+        "audit_events": len(state.get("audit", [])),
+        "webhook_events": len(state.get("webhooks", [])),
+        "mode": billing_stripe_mode(),
+        "env": billing_env_summary(),
+        "metrics": billing_build_metrics(users_db().get("users", []), state),
+    }
+
+
+@app.post("/billing/create-checkout-session")
+def billing_create_checkout(payload: BillingCheckoutRequest, session=Depends(require_auth)):
+    user = current_billing_user(session)
+    plan = (payload.plan or "").lower()
+    if plan not in BILLING_PLAN_PRICING:
+        raise HTTPException(status_code=400, detail={"reason": "unknown_plan"})
+    if plan == "free":
+        updated = update_user_billing(user, plan="free", subscription_status="free", subscription_id=None)
+        billing_audit(str(ARTIFACTS_DIR), "free_plan_selected", {"operator_id": updated.get("operator_id")})
+        return {"status": "ok", "mode": "free_plan", "billing": billing_summarize_user(updated)}
+    session_data = billing_create_checkout_session(str(ARTIFACTS_DIR), user, plan, payload.success_url, payload.cancel_url)
+    if session_data.get("stripe_customer_id") and not user.get("stripe_customer_id"):
+        user = update_user_billing(user, stripe_customer_id=session_data.get("stripe_customer_id"))
+    return {"status": "ok", "checkout_session": session_data, "billing": billing_summarize_user(user), "mode": billing_stripe_mode()}
+
+
+@app.post("/billing/portal-session")
+def billing_portal(payload: BillingPortalRequest, session=Depends(require_auth)):
+    user = current_billing_user(session)
+    portal = billing_create_portal_session(str(ARTIFACTS_DIR), user, payload.return_url)
+    if portal.get("stripe_customer_id") and not user.get("stripe_customer_id"):
+        user = update_user_billing(user, stripe_customer_id=portal.get("stripe_customer_id"))
+    return {"status": "ok", "portal_session": portal, "billing": billing_summarize_user(user), "mode": billing_stripe_mode()}
+
+
+@app.post("/billing/webhook")
+async def billing_webhook(request: Request):
+    raw = await request.body()
+    sig = request.headers.get("Stripe-Signature")
+
+    if sig:
+        try:
+            event = billing_parse_stripe_webhook(raw, sig)
+        except ValueError:
+            raise HTTPException(status_code=400, detail={"reason": "invalid_stripe_signature"})
+        update = billing_derive_stripe_update(event)
+        operator_id = update.get("operator_id")
+        user = find_user_by_operator_id(operator_id) if operator_id else None
+        if not user and update.get("stripe_customer_id"):
+            user = find_user_by_stripe_customer_id(update.get("stripe_customer_id"))
+        if not user:
+            recorded = billing_record_webhook(str(ARTIFACTS_DIR), event.get("type") or "unknown", {"operator_id": operator_id, "ignored": True, "stripe_customer_id": update.get("stripe_customer_id"), "raw_event_id": update.get("raw_event_id")})
+            return {"status": "ignored", "event": recorded, "reason": "operator_not_resolved"}
+        updated = update_user_billing(
+            user,
+            plan=update.get("plan") or user.get("plan") or "free",
+            subscription_status=update.get("subscription_status") or user.get("subscription_status") or "free",
+            stripe_customer_id=update.get("stripe_customer_id") or user.get("stripe_customer_id"),
+            subscription_id=update.get("subscription_id") if update.get("subscription_id") is not None else user.get("subscription_id"),
+            current_period_end=update.get("current_period_end") if update.get("current_period_end") is not None else user.get("current_period_end"),
+        )
+        event_record = billing_record_webhook(str(ARTIFACTS_DIR), event.get("type") or "unknown", {**update, "operator_id": updated.get("operator_id")})
+        return {"status": "ok", "mode": "live", "event": event_record, "billing": billing_summarize_user(updated)}
+
+    try:
+        payload = json.loads(raw.decode("utf-8") or "{}")
+    except Exception:
+        raise HTTPException(status_code=400, detail={"reason": "invalid_json"})
+
+    operator_id = payload.get("operator_id")
+    if not operator_id:
+        raise HTTPException(status_code=400, detail={"reason": "operator_id_required"})
+    user = find_user_by_operator_id(operator_id)
+    if not user:
+        raise HTTPException(status_code=404, detail={"reason": "operator_not_found"})
+    plan = (payload.get("plan") or user.get("plan") or "free").lower()
+    if plan not in BILLING_PLAN_PRICING:
+        raise HTTPException(status_code=400, detail={"reason": "unknown_plan"})
+    status = payload.get("subscription_status") or ("active" if plan in BILLING_PAID_PLANS else "free")
+    current_period_end = payload.get("current_period_end") or ((now_dt() + datetime.timedelta(days=30)).date().isoformat() if plan in BILLING_PAID_PLANS else None)
+    updated = update_user_billing(
+        user,
+        plan=plan,
+        subscription_status=status,
+        stripe_customer_id=payload.get("stripe_customer_id") or user.get("stripe_customer_id") or f"cus_{uuid.uuid4().hex[:10]}",
+        subscription_id=payload.get("subscription_id") if payload.get("subscription_id") is not None else (user.get("subscription_id") or (f"sub_{uuid.uuid4().hex[:10]}" if plan in BILLING_PAID_PLANS else None)),
+        current_period_end=current_period_end,
+        billing_email=payload.get("billing_email") or user.get("billing_email") or user.get("email"),
+    )
+    event = billing_record_webhook(str(ARTIFACTS_DIR), payload.get("event_type") or "manual.billing.update", {
+        "operator_id": operator_id,
+        "plan": plan,
+        "subscription_status": status,
+        "stripe_customer_id": updated.get("stripe_customer_id"),
+        "subscription_id": updated.get("subscription_id"),
+        "current_period_end": current_period_end,
+    })
+    return {"status": "ok", "mode": "manual", "event": event, "billing": billing_summarize_user(updated)}
+
+
+@app.get("/billing/audit")
+def billing_audit_log(session=Depends(require_auth)):
+    user = current_billing_user(session)
+    state = billing_ensure_state(str(ARTIFACTS_DIR))
+    operator_id = user.get("operator_id")
+    return {
+        "status": "ok",
+        "audit": [x for x in state.get("audit", []) if (x.get("payload") or {}).get("operator_id") in (None, operator_id)][:50],
+        "webhooks": [x for x in state.get("webhooks", []) if (x.get("payload") or {}).get("operator_id") == operator_id][:50],
+    }
+
+
+@app.get("/billing/metrics")
+def billing_metrics_view(session=Depends(require_auth)):
+    require_admin() if require_auth().get("is_admin") else None
+    state = billing_ensure_state(str(ARTIFACTS_DIR))
+    return {"mission": "QNT30417.1", **billing_build_metrics(users_db().get("users", []), state), "env": billing_env_summary()}
+
+
+@app.get("/billing/mrr")
+def billing_mrr(session=Depends(require_auth)):
+    state = billing_ensure_state(str(ARTIFACTS_DIR))
+    metrics = billing_build_metrics(users_db().get("users", []), state)
+    return {"mission": "QNT30417.1", "mode": metrics.get("mode"), "mrr_usd": metrics.get("mrr_usd"), "active_paid_subscribers": metrics.get("active_paid_subscribers")}
+
+
+@app.get("/billing/churn")
+def billing_churn(session=Depends(require_auth)):
+    state = billing_ensure_state(str(ARTIFACTS_DIR))
+    metrics = billing_build_metrics(users_db().get("users", []), state)
+    return {"mission": "QNT30417.1", "churn_rate_pct": metrics.get("churn_rate_pct"), "churned_subscribers": metrics.get("churned_subscribers"), "failed_payment_events": metrics.get("failed_payment_events")}
+
+
+@app.get("/billing/active-users")
+def billing_active_users(session=Depends(require_auth)):
+    metrics = billing_build_metrics(users_db().get("users", []), billing_ensure_state(str(ARTIFACTS_DIR)))
+    users = [billing_hydrate_user(u) for u in users_db().get("users", [])]
+    items = [{"operator_id": u.get("operator_id"), "email": u.get("email"), "plan": u.get("plan"), "subscription_status": u.get("subscription_status"), "current_period_end": u.get("current_period_end")} for u in users if u.get("plan") in BILLING_PAID_PLANS and u.get("subscription_status") in BILLING_ACTIVE_STATUSES]
+    return {"mission": "QNT30417.1", "count": metrics.get("active_paid_subscribers"), "items": items}
+
+
+@app.post("/strategies/register")
+def strategies_register(payload: StrategyRegisterRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    strategy = {
+        "strategy_id": f"strat_{uuid.uuid4().hex[:8]}",
+        "name": payload.name,
+        "symbol": payload.symbol.upper(),
+        "side": payload.side.lower(),
+        "default_qty": payload.default_qty,
+        "enabled": payload.enabled,
+        "status": "running" if payload.enabled else "stopped",
+        "capital_limit": payload.capital_limit,
+        "execution_mode": payload.execution_mode.lower(),
+        "created_at": now_iso(),
+        "updated_at": now_iso(),
+        "operator_id": session.get("operator_id"),
+        "last_action": "register",
+        "deleted": False,
+    }
+    state["strategies"]["strategies"].append(strategy)
+    state.setdefault("strategy_engine", {}).setdefault("metrics", {})[strategy["strategy_id"]] = default_strategy_metrics(strategy["strategy_id"], strategy["symbol"])
+    strategy_log(state, strategy["strategy_id"], "lifecycle", f"{strategy['name']} registered", strategy)
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "strategy.register", strategy["strategy_id"], strategy, "strategy")
+    return {"status": "registered", "strategy": strategy}
+
+
+@app.get("/strategies/list")
+def strategies_list(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    return summarize_strategy_engine(state)
+
+
+@app.post("/strategies/toggle")
+def strategies_toggle(payload: StrategyToggleRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    strategy = get_strategy_by_id(state, payload.strategy_id)
+    strategy["enabled"] = payload.enabled
+    strategy["updated_at"] = now_iso()
+    strategy["last_action"] = "toggle"
+    if not payload.enabled:
+        strategy["status"] = "stopped"
+    strategy_log(state, strategy["strategy_id"], "lifecycle", f"{strategy['name']} enabled={payload.enabled}", {"enabled": payload.enabled})
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "strategy.toggle", strategy["strategy_id"], strategy, "strategy")
+    return {"status": "updated", "strategy": strategy}
+
+
+@app.post("/strategies/lifecycle")
+def strategies_lifecycle(payload: StrategyLifecycleRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    strategy = get_strategy_by_id(state, payload.strategy_id)
+    action = payload.action.lower()
+    if action == "start":
+        strategy["enabled"] = True
+        strategy["status"] = "running"
+    elif action == "stop":
+        strategy["status"] = "stopped"
+    elif action == "pause":
+        strategy["status"] = "paused"
+    else:
+        raise HTTPException(status_code=400, detail="Unsupported lifecycle action")
+    strategy["updated_at"] = now_iso()
+    strategy["last_action"] = action
+    strategy_log(state, strategy["strategy_id"], "lifecycle", f"{strategy['name']} {action}", {"action": action})
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), f"strategy.{action}", strategy["strategy_id"], strategy, "strategy")
+    return {"status": action, "strategy": strategy}
+
+
+@app.post("/strategies/delete")
+def strategies_delete(payload: StrategyDeleteRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    strategy = get_strategy_by_id(state, payload.strategy_id)
+    strategy["deleted"] = True
+    strategy["enabled"] = False
+    strategy["status"] = "deleted"
+    strategy["updated_at"] = now_iso()
+    strategy["last_action"] = "delete"
+    strategy_log(state, strategy["strategy_id"], "lifecycle", f"{strategy['name']} deleted", {})
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "strategy.delete", strategy["strategy_id"], strategy, "strategy")
+    return {"status": "deleted", "strategy_id": strategy["strategy_id"]}
+
+
+@app.get("/strategies/performance")
+def strategies_performance(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    evaluate_monitoring(state)
+    save_operator_state(state)
+    return summarize_strategy_engine(state)
+
+
+@app.get("/strategies/logs")
+def strategies_logs(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    engine = summarize_strategy_engine(state)
+    return {"logs": engine["recent_logs"]}
+
+
+@app.get("/performance/metrics")
+def performance_metrics(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    snapshot = build_performance_snapshot(state)
+    save_operator_state(state)
+    return snapshot
+
+
+@app.get("/performance/operator/{operator_id}")
+def performance_operator(operator_id: str, session=Depends(require_auth)):
+    session_payload = session_view(session)
+    if operator_id != session_payload.get("operator_id") and not session_payload.get("is_admin"):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    state = get_operator_state_by_id(operator_id)
+    snapshot = build_performance_snapshot(state)
+    save_operator_state(state)
+    return snapshot
+
+
+@app.get("/performance/strategy/{strategy_id}")
+def performance_strategy(strategy_id: str, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    get_strategy_by_id(state, strategy_id)
+    engine = summarize_strategy_engine(state)
+    row = next((s for s in engine.get("strategies", []) if s.get("strategy_id") == strategy_id), None)
+    if not row:
+        raise HTTPException(status_code=404, detail="Strategy not found")
+    snapshot = build_performance_snapshot(state)
+    journal = [j for j in snapshot.get("trade_journal", []) if j.get("strategy_id") == strategy_id][:25]
+    return {"strategy": row, "performance": snapshot.get("summary", {}), "scorecard": snapshot.get("scorecard", {}), "recent_logs": [l for l in state.get("strategy_engine", {}).get("logs", []) if l.get("strategy_id") == strategy_id][:25], "trade_journal": journal}
+
+
+@app.get("/performance/journal")
+def performance_journal(limit: int = 50, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    snapshot = build_performance_snapshot(state)
+    return {"trade_journal": snapshot.get("trade_journal", [])[:max(1, min(limit, 200))], "summary": snapshot.get("summary", {})}
+
+
+@app.get("/performance/equity-curve")
+def performance_equity_curve(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    snapshot = build_performance_snapshot(state)
+    return {"equity_curve": snapshot.get("equity_curve", []), "summary": snapshot.get("summary", {})}
+
+
+@app.get("/performance/scorecard")
+def performance_scorecard(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    snapshot = build_performance_snapshot(state)
+    return {"summary": snapshot.get("summary", {}), "scorecard": snapshot.get("scorecard", {}), "attribution": snapshot.get("attribution", [])}
+
+
+@app.get("/performance/attribution")
+def performance_attribution(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    return build_attribution_snapshot(state)
+
+
+@app.get("/performance/strategies")
+def performance_attribution_strategies(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    snapshot = build_attribution_snapshot(state)
+    return {"mission": "QNT30418", "summary": snapshot.get("summary", {}), "items": snapshot.get("strategy_attribution", [])}
+
+
+@app.get("/performance/execution")
+def performance_attribution_execution(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    snapshot = build_attribution_snapshot(state)
+    return {"mission": "QNT30418", **snapshot.get("execution_attribution", {}), "summary": snapshot.get("summary", {})}
+
+
+@app.get("/performance/portfolio")
+def performance_attribution_portfolio(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    snapshot = build_attribution_snapshot(state)
+    return {"mission": "QNT30418", **snapshot.get("portfolio_attribution", {}), "summary": snapshot.get("summary", {})}
+
+
+@app.post("/allocator/operator-capital/set")
+def allocator_operator_capital_set(payload: OperatorCapitalRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    state["allocator_caps"]["operator"] = {
+        "operator_id": state["operator_id"],
+        "allocated_capital": payload.allocated_capital,
+        "status": "FUNDED" if payload.allocated_capital > 0 else "UNFUNDED",
+        "updated_at": now_iso(),
+    }
+    evaluate_monitoring(state)
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "allocator.operator_capital.set", state["operator_id"], state["allocator_caps"]["operator"], "capital")
+    return {"status": "set", "operator_capital": state["allocator_caps"]["operator"]}
+
+
+@app.get("/allocator/capital-view")
+def allocator_capital_view(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    monitoring = evaluate_monitoring(state)
+    save_operator_state(state)
+    alloc = state["allocator_caps"]["operator"]
+    return {"operator": {**alloc, "used_capital": monitoring["latest_snapshot"].get("used_capital", 0), "remaining_capital": monitoring["latest_snapshot"].get("remaining_capital", 0)}}
+
+
+@app.get("/monitoring/status")
+def monitoring_status(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    result = evaluate_monitoring(state)
+    save_operator_state(state)
+    return result
+
+
+@app.get("/orders/list")
+def orders_list(session=Depends(require_auth)):
+    return get_operator_state(session)["orders"]
+
+
+@app.post("/orders/submit")
+def orders_submit(payload: ManualOrderRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    execution_mode = (payload.execution_mode or "internal").lower()
+    symbol = payload.symbol.upper()
+    side = payload.side.lower()
+    notional = round(get_price(symbol) * float(payload.qty), 2)
+    enforce_risk_guard(state, symbol, side, float(payload.qty), execution_mode)
+    enforce_capital_guard(state, notional, side)
+    if execution_mode == "alpaca":
+        if not resolved_alpaca_credentials():
+            raise HTTPException(status_code=400, detail="Alpaca mode requested but no Alpaca credentials are configured")
+        broker_order = alpaca_submit_market_order(symbol, side, payload.qty)
+        order = normalize_alpaca_order(broker_order, symbol, side, payload.qty)
+    else:
+        order = build_internal_order(symbol, side, payload.qty, execution_mode)
+    persist_order(state, order)
+    evaluate_monitoring(state)
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "orders.submit", state["operator_id"], order, "execution")
+    return {"status": "submitted", "order": order}
+
+
+@app.post("/operator/run-once")
+def operator_run_once(payload: RunOperatorRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    orders = run_strategies_for_state(state, payload.execution_mode, session.get("email"), session.get("operator_id"), "operator.run_once")
+    return {"status": "executed", "orders_created": len(orders), "orders": orders}
+
+
+@app.get("/operator/workspace")
+def operator_workspace(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    return build_operator_workspace(state)
+
+
+@app.get("/command-center/snapshot")
+def command_center_snapshot(session=Depends(require_auth)):
+    return build_command_center_snapshot(session)
+
+
+@app.get("/capital-source/status")
+def capital_source_status(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    capital = build_capital_context(state)
+    risk = evaluate_risk_state(state)
+    save_operator_state(state)
+    return {
+        "config": state.get("capital_source", default_capital_source()),
+        "context": capital,
+        "risk_state": risk.get("status"),
+    }
+
+
+@app.post("/capital-source/update")
+def capital_source_update(payload: CapitalSourceUpdateRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    raw_mode = (payload.mode or "internal").strip().lower()
+    mode = "broker" if raw_mode in {"broker", "alpaca"} else raw_mode
+    if mode not in {"internal", "broker"}:
+        raise HTTPException(status_code=400, detail="Capital source mode must be internal or broker")
+    state["capital_source"] = {
+        "mode": mode,
+        "provider": "alpaca",
+        "last_updated_at": now_iso(),
+        "last_updated_by": session.get("email"),
+    }
+    monitoring = evaluate_monitoring(state)
+    risk = evaluate_risk_state(state)
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "capital_source.update", state["operator_id"], state["capital_source"], "capital")
+    return {"status": "updated", "capital_source": state["capital_source"], "monitoring": monitoring, "risk_engine": risk}
+
+
+@app.get("/risk-engine/status")
+def risk_engine_status(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    result = evaluate_risk_state(state)
+    save_operator_state(state)
+    return result
+
+
+@app.post("/risk-engine/config/update")
+def risk_engine_config_update(payload: RiskConfigUpdateRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    state["risk_engine"].update(payload.model_dump())
+    result = evaluate_risk_state(state)
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "risk.config.update", state["operator_id"], payload.model_dump(), "risk")
+    return {"status": "updated", "risk_engine": result}
+
+
+@app.post("/risk-engine/kill-switch")
+def risk_engine_kill_switch(payload: RiskKillSwitchRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    state["risk_engine"]["kill_switch_active"] = bool(payload.active)
+    if payload.active:
+        state["strategy_loop"]["running"] = False
+        state["strategy_loop"]["next_run_at"] = None
+    result = evaluate_risk_state(state)
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "risk.kill_switch", state["operator_id"], {"active": payload.active, "note": payload.note}, "risk")
+    return {"status": "updated", "risk_engine": result}
+
+
+# -------------------------
+# QNT30344 Risk Lock + Live Readiness
+# -------------------------
+@app.get("/risk-lock/status")
+def risk_lock_status(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    risk = evaluate_risk_state(state)
+    save_operator_state(state)
+    return {
+        "status": risk.get("status"),
+        "guard": {
+            "kill_switch_active": risk.get("config", {}).get("kill_switch_active"),
+            "max_trades_per_session": risk.get("config", {}).get("max_trades_per_session"),
+            "max_notional_per_trade": risk.get("config", {}).get("max_notional_per_trade"),
+            "max_daily_loss": risk.get("config", {}).get("max_daily_loss"),
+            "session_trade_count": risk.get("totals", {}).get("session_trade_count", 0),
+            "block_new_trades": bool(risk.get("breaches")) or bool(risk.get("config", {}).get("kill_switch_active")),
+        },
+        "breaches": risk.get("breaches", []),
+        "totals": risk.get("totals", {}),
+    }
+
+
+@app.post("/risk-lock/config")
+def risk_lock_config(payload: RiskConfigUpdateRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    state["risk_engine"].update(payload.model_dump())
+    state["risk_engine"]["session_started_at"] = state["risk_engine"].get("session_started_at") or now_iso()
+    risk = evaluate_risk_state(state)
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "risk_lock.config", state["operator_id"], payload.model_dump(), "risk")
+    return {"status": "updated", "risk_lock": risk}
+
+
+@app.post("/risk-lock/reset-session")
+def risk_lock_reset_session(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    state.setdefault("risk_engine", default_risk_engine())
+    state["risk_engine"]["session_started_at"] = now_iso()
+    state["risk_engine"]["session_trade_count"] = 0
+    risk = evaluate_risk_state(state)
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "risk_lock.reset_session", state["operator_id"], {"session_started_at": state["risk_engine"]["session_started_at"]}, "risk")
+    return {"status": "reset", "risk_lock": risk}
+
+
+@app.post("/risk-lock/kill")
+def risk_lock_kill(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    state.setdefault("risk_engine", default_risk_engine())
+    state["risk_engine"]["kill_switch_active"] = True
+    state["strategy_loop"]["running"] = False
+    state["strategy_loop"]["next_run_at"] = None
+    save_operator_state(state)
+    risk = evaluate_risk_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "risk_lock.kill", state["operator_id"], {"active": True}, "risk")
+    return {"status": "killed", "risk_lock": risk}
+
+
+# -------------------------
+# Alpaca routes
+# -------------------------
+@app.get("/legacy/broker/alpaca/status")
+def broker_alpaca_status(session=Depends(require_auth)):
+    return refresh_alpaca_state(soft=True)
+
+
+@app.get("/legacy/broker/alpaca/env-status")
+def broker_alpaca_env_status(session=Depends(require_auth)):
+    env_creds = resolved_alpaca_env()
+    return {
+        "env_ready": bool(env_creds),
+        "base_url": (env_creds or {}).get("base_url"),
+        "paper": (env_creds or {}).get("paper"),
+        "api_key_masked": mask_secret((env_creds or {}).get("api_key", "")),
+        "secret_key_masked": mask_secret((env_creds or {}).get("secret_key", "")),
+    }
+
+
+@app.post("/legacy/broker/alpaca/connect")
+def broker_alpaca_connect(payload: AlpacaConnectRequest, admin=Depends(require_auth)):
+    cfg = get_broker_config()
+    api_key = (payload.api_key or "").strip()
+    secret_key = (payload.secret_key or "").strip()
+    base_url = (payload.base_url or "https://paper-api.alpaca.markets").strip().rstrip("/")
+    if api_key and secret_key:
+        cfg["alpaca"].update(
+            {
+                "api_key": api_key,
+                "secret_key": secret_key,
+                "base_url": base_url,
+                "paper": payload.paper,
+                "connection_mode": "stored",
+                "last_status": "connecting",
+                "last_error": None,
+            }
+        )
+        event_payload = {"mode": "stored", "base_url": base_url, "paper": payload.paper}
+    else:
+        env_creds = resolved_alpaca_env()
+        if not env_creds:
+            raise HTTPException(status_code=400, detail="No Alpaca credentials were entered and no Railway env vars were found")
+        cfg["alpaca"].update(
+            {
+                "api_key": "",
+                "secret_key": "",
+                "base_url": env_creds["base_url"],
+                "paper": bool(env_creds["paper"]),
+                "connection_mode": "env",
+                "last_status": "connecting",
+                "last_error": None,
+            }
+        )
+        event_payload = {"mode": "env", "base_url": env_creds["base_url"], "paper": env_creds["paper"]}
+    save_broker_config(cfg)
+    result = refresh_alpaca_state(soft=False)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "broker.alpaca.connect", "alpaca", event_payload, "broker")
+    return {"status": "connected", "broker": result}
+
+
+@app.post("/legacy/broker/alpaca/use-env")
+def broker_alpaca_use_env(admin=Depends(require_auth)):
+    env_creds = resolved_alpaca_env()
+    if not env_creds:
+        raise HTTPException(status_code=400, detail="Railway Alpaca env vars are not configured")
+    cfg = get_broker_config()
+    cfg["alpaca"].update(
+        {
+            "api_key": "",
+            "secret_key": "",
+            "base_url": env_creds["base_url"],
+            "paper": bool(env_creds["paper"]),
+            "connection_mode": "env",
+            "last_status": "connecting",
+            "last_error": None,
+        }
+    )
+    save_broker_config(cfg)
+    result = refresh_alpaca_state(soft=False)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "broker.alpaca.use_env", "alpaca", {"base_url": env_creds["base_url"], "paper": env_creds["paper"]}, "broker")
+    return {"status": "connected", "broker": result}
+
+
+@app.post("/legacy/broker/alpaca/disconnect")
+def broker_alpaca_disconnect(admin=Depends(require_auth)):
+    cfg = get_broker_config()
+    cfg["alpaca"] = default_broker_config()["alpaca"]
+    cfg["alpaca"]["connection_mode"] = "internal"
+    cfg["alpaca"]["last_status"] = "paper_internal"
+    save_broker_config(cfg)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "broker.alpaca.disconnect", "alpaca", {"mode": "internal"}, "broker")
+    return {"status": "disconnected", "broker": safe_broker_view(cfg)["alpaca"]}
+
+
+@app.get("/legacy/broker/alpaca/account")
+def broker_alpaca_account(session=Depends(require_auth)):
+    return {"account": refresh_alpaca_state(soft=True).get("account", {})}
+
+
+@app.get("/legacy/broker/alpaca/positions")
+def broker_alpaca_positions(session=Depends(require_auth)):
+    return {"positions": refresh_alpaca_state(soft=True).get("positions", [])}
+
+
+@app.get("/legacy/broker/alpaca/orders")
+def broker_alpaca_orders(session=Depends(require_auth)):
+    return {"orders": refresh_alpaca_state(soft=True).get("orders", [])}
+
+
+# -------------------------
+# Admin + governance routes
+# -------------------------
+@app.get("/admin/control-tower")
+def admin_control_tower(admin=Depends(require_admin)):
+    return control_tower_view()
+
+
+@app.get("/admin/operators")
+def admin_operators(admin=Depends(require_admin)):
+    return {"operators": control_tower_view()["operators"]}
+
+
+@app.post("/admin/operator-capital/set")
+def admin_operator_capital_set(payload: AdminOperatorCapitalRequest, admin=Depends(require_admin)):
+    policy = policy_for("capital_change")
+    if policy and abs(float(payload.allocated_capital)) >= float(policy["threshold"]):
+        req = submit_approval_request(admin, "capital_change", payload.operator_id, payload.model_dump(), f"Capital change exceeds threshold {policy['threshold']}")
+        return {"status": "approval_required", "request": req}
+    state = get_operator_state_by_id(payload.operator_id)
+    state["allocator_caps"]["operator"] = {
+        "operator_id": payload.operator_id,
+        "allocated_capital": payload.allocated_capital,
+        "status": "FUNDED" if payload.allocated_capital > 0 else "UNFUNDED",
+        "updated_at": now_iso(),
+    }
+    evaluate_monitoring(state)
+    save_operator_state(state)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "admin.operator_capital.set", payload.operator_id, state["allocator_caps"]["operator"], "admin")
+    return {"status": "set", "operator_id": payload.operator_id, "operator_capital": state["allocator_caps"]["operator"]}
+
+
+@app.post("/admin/operator-loop/start")
+def admin_operator_loop_start(payload: AdminLoopRequest, admin=Depends(require_admin)):
+    policy = policy_for("loop_start")
+    if policy and int(payload.interval_seconds) < int(policy["threshold"]):
+        req = submit_approval_request(admin, "loop_start", payload.operator_id, payload.model_dump(), f"Loop start interval below policy threshold {policy['threshold']}")
+        return {"status": "approval_required", "request": req}
+    state = get_operator_state_by_id(payload.operator_id)
+    state["strategy_loop"]["running"] = True
+    state["strategy_loop"]["execution_mode"] = payload.execution_mode
+    state["strategy_loop"]["interval_seconds"] = max(5, int(payload.interval_seconds))
+    state["strategy_loop"]["heartbeat_at"] = now_iso()
+    state["strategy_loop"]["next_run_at"] = (now_dt() + datetime.timedelta(seconds=state["strategy_loop"]["interval_seconds"])).isoformat() + "Z"
+    save_operator_state(state)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "admin.operator_loop.start", payload.operator_id, {"execution_mode": payload.execution_mode, "interval_seconds": payload.interval_seconds}, "admin")
+    return {"status": "started", "operator_id": payload.operator_id, "loop": state["strategy_loop"]}
+
+
+@app.post("/admin/run-all-once")
+def admin_run_all_once(admin=Depends(require_admin)):
+    policy = policy_for("run_all")
+    if policy and int(policy["threshold"]) <= 1:
+        req = submit_approval_request(admin, "run_all", "fleet", {"scope": "all"}, "Fleet run-all requires approval")
+        return {"status": "approval_required", "request": req}
+    for user in users_db()["users"]:
+        state = get_operator_state_by_id(user["operator_id"])
+        run_strategies_for_state(state, state["strategy_loop"].get("execution_mode", "internal"), admin.get("email"), admin.get("operator_id"), "admin.run_all.execute")
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "admin.run_all_once", "fleet", {"mode": "direct"}, "admin")
+    return {"status": "ran_all_once_direct"}
+
+
+@app.get("/legacy/governance/ledger")
+def governance_ledger(admin=Depends(require_admin)):
+    return load_json("governance_ledger.json", {"events": []})
+
+
+@app.get("/legacy/governance/ledger/summary")
+def governance_ledger_summary(admin=Depends(require_admin)):
+    ledger = load_json("governance_ledger.json", {"events": []})["events"]
+    return summarize_governance(ledger)
+
+
+@app.get("/legacy/policy-engine/policies")
+def policy_engine_policies(admin=Depends(require_admin)):
+    return get_policies()
+
+
+@app.post("/legacy/policy-engine/policies/update")
+def policy_engine_policies_update(payload: PolicyUpdateRequest, admin=Depends(require_admin)):
+    data = get_policies()
+    found = None
+    for policy in data["policies"]:
+        if policy["policy_id"] == payload.policy_id:
+            policy["threshold"] = payload.threshold
+            policy["enabled"] = payload.enabled
+            found = policy
+            break
+    if not found:
+        raise HTTPException(status_code=404, detail="Policy not found")
+    save_policies(data)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "policy.update", payload.policy_id, found, "policy")
+    return {"status": "updated", "policy": found}
+
+
+@app.get("/legacy/approvals/queue")
+def approvals_queue(admin=Depends(require_admin)):
+    return get_approvals()
+
+
+@app.post("/legacy/approvals/decision")
+def approvals_decision(payload: ApprovalDecisionRequest, admin=Depends(require_admin)):
+    queue = get_approvals()
+    req = next((r for r in queue["requests"] if r["request_id"] == payload.request_id), None)
+    if not req:
+        raise HTTPException(status_code=404, detail="Approval request not found")
+    if req["status"] != "PENDING":
+        raise HTTPException(status_code=400, detail="Approval request already decided")
+    req["status"] = payload.decision.upper()
+    req["reviewed_at"] = now_iso()
+    req["reviewed_by"] = admin.get("email")
+    req["notes"] = payload.notes
+    if req["status"] == "APPROVED":
+        apply_approval_request(req, admin)
+    else:
+        append_governance_event(admin.get("email"), admin.get("operator_id"), "approval.rejected", req["target"], req, "approval")
+    save_approvals(queue)
+    return {"status": req["status"], "request": req}
+
+
+@app.get("/multi-operator/overview")
+def get_multi_operator_overview(admin=Depends(require_admin)):
+    return multi_operator_overview()
+
+
+@app.get("/multi-operator/leaderboard")
+def get_multi_operator_leaderboard(admin=Depends(require_admin)):
+    return {"leaderboard": build_multi_operator_leaderboard()}
+
+
+@app.post("/admin/operator-context/select")
+def admin_operator_context_select(payload: AdminSelectOperatorRequest, admin=Depends(require_admin)):
+    user = get_operator_by_id(payload.operator_id)
+    session = get_session()
+    updated = {
+        **session,
+        "logged_in": True,
+        "email": session.get("email") or admin.get("email"),
+        "is_admin": True,
+        "selected_operator_id": user.get("operator_id"),
+        "operator_id": user.get("operator_id"),
+        "display_name": user.get("display_name"),
+    }
+    save_session(updated)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "admin.operator_context.select", payload.operator_id, {"selected_operator_id": payload.operator_id}, "admin")
+    return {"status": "selected", "session": session_view(updated), "selected_operator": user}
+
+
+@app.post("/multi-operator/switch")
+def multi_operator_switch(payload: AdminSelectOperatorRequest, admin=Depends(require_admin)):
+    user = get_operator_by_id(payload.operator_id)
+    session = get_session()
+    updated = {
+        **session,
+        "logged_in": True,
+        "email": session.get("email") or admin.get("email"),
+        "is_admin": True,
+        "selected_operator_id": user.get("operator_id"),
+    }
+    save_session(updated)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "multi_operator.switch", payload.operator_id, {"selected_operator_id": payload.operator_id}, "multi_operator")
+    return {"status": "switched", "session": session_view(updated), "selected_operator": user}
+
+
+@app.post("/multi-operator/allocate")
+def multi_operator_allocate(payload: MultiOperatorAllocateRequest, admin=Depends(require_admin)):
+    result = auto_allocate_capital(payload.total_capital)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "multi_operator.allocate", "fleet", {"total_capital": payload.total_capital, "totals": result.get("totals", {})}, "multi_operator")
+    return {"status": "allocated", **result}
+
+
+@app.post("/multi-operator/compare")
+def multi_operator_compare(payload: MultiOperatorCompareRequest, admin=Depends(require_admin)):
+    result = compare_operator_states(payload.operator_a_id, payload.operator_b_id)
+    return {"status": "ok", **result}
+
+
+
+@app.get("/ai-platform/status")
+def ai_platform_status(session=Depends(require_auth)):
+    payload = build_ai_activation_payload(session)
+    return payload.get("status", {"mission": "QNT30329", "layer": "qnt30331-real-broker-order-routing", "ai_enabled": True})
+
+
+@app.post("/ai-platform/strategy-suggestions")
+def ai_platform_strategy_suggestions(payload: AIStrategySuggestionRequest, session=Depends(require_auth)):
+    data = build_ai_strategy_suggestions(session, payload.market_bias)
+    append_governance_event(session.get("email"), session.get("operator_id"), "ai.strategy_suggestions", "ai-platform", {"market_bias": payload.market_bias, "count": len(data.get("items", []))}, "ai")
+    return data
+
+
+@app.get("/ai-platform/capital-recommendations")
+def ai_platform_capital_recommendations(session=Depends(require_admin)):
+    data = build_ai_capital_recommendations()
+    append_governance_event(session.get("email"), session.get("operator_id"), "ai.capital_recommendations", "ai-platform", {"count": len(data.get("items", []))}, "ai")
+    return data
+
+
+@app.get("/ai-platform/risk-adjustments")
+def ai_platform_risk_adjustments(session=Depends(require_auth)):
+    data = build_ai_risk_adjustments(session)
+    append_governance_event(session.get("email"), session.get("operator_id"), "ai.risk_adjustments", data.get("operator_id"), data, "ai")
+    return data
+
+
+@app.get("/ai-platform/operator-insights")
+def ai_platform_operator_insights(session=Depends(require_admin)):
+    data = build_ai_operator_insights()
+    append_governance_event(session.get("email"), session.get("operator_id"), "ai.operator_insights", "ai-platform", {"count": len(data.get("items", []))}, "ai")
+    return data
+
+
+
+def signal_conviction(strategy, risk_state, market_bias):
+    base = 0.58
+    symbol = (strategy.get("symbol") or "").upper()
+    if symbol in {"NVDA", "AAPL", "MSFT", "META"}:
+        base += 0.08
+    if market_bias == "bullish":
+        base += 0.06
+    elif market_bias == "bearish":
+        base -= 0.07
+    elif market_bias == "range":
+        base -= 0.02
+    if (risk_state or {}).get("status") == "SAFE":
+        base += 0.04
+    if (risk_state or {}).get("breaches"):
+        base -= 0.12
+    return round(max(0.05, min(base, 0.95)), 2)
+
+
+def build_strategy_signal_row(state, strategy, market_bias="neutral"):
+    metrics = state.setdefault("strategy_engine", {}).setdefault("metrics", {})
+    metric = metrics.setdefault(strategy["strategy_id"], default_strategy_metrics(strategy["strategy_id"], strategy.get("symbol")))
+    refresh_metric_market_values(metric, strategy.get("symbol"))
+    risk_state = evaluate_risk_state(state)
+    current_price = float(metric.get("last_price") or get_price(strategy.get("symbol")))
+    avg_entry = float(metric.get("avg_entry_price") or 0)
+    position_qty = float(metric.get("current_position_qty") or 0)
+    side_bias = (strategy.get("side") or "buy").lower()
+    conviction = signal_conviction(strategy, risk_state, market_bias)
+
+    action = "hold"
+    order_side = None
+    order_qty = 0.0
+    reason = "No execution trigger"
+    stop_price = 0.0
+    take_profit_price = 0.0
+    pnl_pct = 0.0
+
+    if position_qty != 0 and avg_entry > 0:
+        if position_qty > 0:
+            pnl_pct = round(((current_price - avg_entry) / avg_entry) * 100, 2)
+            stop_price = round(avg_entry * 0.98, 2)
+            take_profit_price = round(avg_entry * 1.03, 2)
+            if current_price <= stop_price:
+                action = "stop_exit"
+                order_side = "sell"
+                order_qty = abs(position_qty)
+                reason = "Long stop triggered"
+            elif current_price >= take_profit_price:
+                action = "take_profit"
+                order_side = "sell"
+                order_qty = abs(position_qty)
+                reason = "Long target reached"
+        else:
+            pnl_pct = round(((avg_entry - current_price) / avg_entry) * 100, 2)
+            stop_price = round(avg_entry * 1.02, 2)
+            take_profit_price = round(avg_entry * 0.97, 2)
+            if current_price >= stop_price:
+                action = "stop_exit"
+                order_side = "buy"
+                order_qty = abs(position_qty)
+                reason = "Short stop triggered"
+            elif current_price <= take_profit_price:
+                action = "take_profit"
+                order_side = "buy"
+                order_qty = abs(position_qty)
+                reason = "Short target reached"
+
+    if action == "hold":
+        if side_bias == "buy":
+            if position_qty <= 0 and conviction >= 0.55 and market_bias != "bearish":
+                action = "enter_long"
+                order_side = "buy"
+                order_qty = float(strategy.get("default_qty") or 1)
+                reason = "Constructive bias with no active long position"
+            elif position_qty > 0:
+                reason = "Maintain long until stop or target triggers"
+        else:
+            if position_qty >= 0 and conviction >= 0.55 and market_bias != "bullish":
+                action = "enter_short"
+                order_side = "sell"
+                order_qty = float(strategy.get("default_qty") or 1)
+                reason = "Defensive bias with no active short position"
+            elif position_qty < 0:
+                reason = "Maintain short until stop or target triggers"
+
+    state.setdefault("strategy_engine", {}).setdefault("signals", {})
+    signal = {
+        "strategy_id": strategy.get("strategy_id"),
+        "strategy_name": strategy.get("name"),
+        "symbol": (strategy.get("symbol") or "AAPL").upper(),
+        "market_bias": market_bias,
+        "side_bias": side_bias,
+        "signal_action": action,
+        "order_side": order_side,
+        "order_qty": round(float(order_qty or 0), 6),
+        "current_price": round(current_price, 2),
+        "avg_entry_price": round(avg_entry, 2),
+        "position_qty": round(position_qty, 6),
+        "pnl_pct": round(pnl_pct, 2),
+        "stop_price": round(stop_price, 2),
+        "take_profit_price": round(take_profit_price, 2),
+        "confidence": conviction,
+        "reason": reason,
+        "generated_at": now_iso(),
+    }
+    state["strategy_engine"]["signals"][strategy["strategy_id"]] = signal
+    metric["last_signal_at"] = signal["generated_at"]
+    return signal
+
+
+def build_strategy_signal_book(state, market_bias="neutral"):
+    strategies = [s for s in state.get("strategies", {}).get("strategies", []) if not s.get("deleted")]
+    rows = [build_strategy_signal_row(state, strategy, market_bias) for strategy in strategies]
+    rows.sort(key=lambda r: (r.get("signal_action") == "hold", -(r.get("confidence") or 0)))
+    return {
+        "market_bias": market_bias,
+        "generated_at": now_iso(),
+        "signals": rows,
+        "actionable": len([r for r in rows if r.get("signal_action") != "hold"]),
+        "running_strategies": len([s for s in strategies if s.get("status") == "running" and s.get("enabled")]),
+        "total_strategies": len(strategies),
+    }
+
+
+def submit_strategy_signal_order(state, strategy, signal, execution_mode, actor_email, actor_operator_id):
+    chosen_mode = ((execution_mode or "internal").lower() if (strategy.get("execution_mode") or "inherit").lower() == "inherit" else (strategy.get("execution_mode") or "internal").lower())
+    side = (signal.get("order_side") or strategy.get("side") or "buy").lower()
+    qty = float(signal.get("recommended_qty") or signal.get("order_qty") or strategy.get("default_qty") or 1)
+    exec_plan = build_execution_plan(
+        state,
+        symbol=strategy["symbol"],
+        side=side,
+        qty=qty,
+        order_type="market",
+        execution_mode=chosen_mode,
+        urgency="balanced",
+        max_slippage_bps=35.0,
+        strategy_id=strategy.get("strategy_id"),
+        strategy_name=strategy.get("name"),
+        risk_state=evaluate_risk_state(state),
+    )
+    record_execution_plan(state, exec_plan)
+    qty = float(exec_plan.get("recommended_qty") or qty)
+    if exec_plan.get("decision") == "hold":
+        strategy_log(state, strategy["strategy_id"], "execution_hold", exec_plan.get("hold_reason") or "Execution held by optimizer", {"signal_action": signal.get("signal_action"), "estimated_slippage_bps": exec_plan.get("estimated_slippage_bps")})
+        raise HTTPException(status_code=409, detail=exec_plan.get("hold_reason") or "Execution held by optimizer")
+    notional = round(get_price(strategy["symbol"]) * qty, 2)
+    enforce_risk_guard(state, strategy["symbol"], side, qty, chosen_mode)
+    enforce_capital_guard(state, notional, side, strategy)
+
+    if chosen_mode == "alpaca":
+        if not resolved_alpaca_credentials():
+            strategy_log(state, strategy["strategy_id"], "broker_error", "Alpaca execution requested but no credentials configured", {})
+            raise HTTPException(status_code=400, detail="Alpaca mode requested but no Alpaca credentials are configured")
+        broker_order = alpaca_submit_market_order(strategy["symbol"], side, qty)
+        order = normalize_alpaca_order(broker_order, strategy["symbol"], side, qty)
+    else:
+        order = build_internal_order(strategy["symbol"], side, qty, chosen_mode, strategy["strategy_id"])
+
+    order["strategy_id"] = strategy["strategy_id"]
+    order["strategy_name"] = strategy["name"]
+    order["signal_action"] = signal.get("signal_action")
+    order["execution_plan"] = exec_plan
+    order["optimizer_route"] = True
+    order["estimated_slippage_bps"] = exec_plan.get("estimated_slippage_bps")
+    persist_order(state, order)
+    apply_order_to_strategy(state, strategy, order)
+    strategy_log(state, strategy["strategy_id"], "signal_execution", signal.get("reason"), {"signal_action": signal.get("signal_action"), "confidence": signal.get("confidence")})
+    append_governance_event(actor_email, actor_operator_id, "strategy.signal_execution", state["operator_id"], {"strategy_id": strategy["strategy_id"], "signal_action": signal.get("signal_action"), "order_id": order.get("order_id"), "estimated_slippage_bps": exec_plan.get("estimated_slippage_bps")}, "strategy")
+    record_execution_result(state, exec_plan, order)
+    state.setdefault("execution_engine", {})["execution_optimizer"] = execution_optimizer_state(state)
+    return order
+
+
+def run_strategy_intelligence_cycle(state, execution_mode, market_bias, actor_email, actor_operator_id):
+    book = build_strategy_signal_book(state, market_bias)
+    decision_snapshot = build_decision_snapshot(state, book, market_bias)
+    executed = []
+    strategies = {s.get("strategy_id"): s for s in state.get("strategies", {}).get("strategies", []) if not s.get("deleted")}
+    risk = state.setdefault("risk_engine", default_risk_engine())
+    for signal in decision_snapshot.get("decisions", []):
+        strategy = strategies.get(signal.get("strategy_id"))
+        if not strategy or not strategy.get("enabled") or strategy.get("status") != "running":
+            continue
+        if signal.get("signal_action") == "hold":
+            strategy_log(state, strategy["strategy_id"], "signal_hold", signal.get("reason"), {"confidence": signal.get("confidence")})
+            continue
+        if signal.get("decision") != "execute":
+            strategy_log(state, strategy["strategy_id"], "decision_block", "AI decision layer skipped execution", {"confidence": signal.get("confidence"), "risk_score": signal.get("risk_score"), "allocation_pct": signal.get("allocation_pct")})
+            continue
+        if risk.get("enabled") and int(risk.get("max_orders_per_run") or 0) > 0 and len(executed) >= int(risk.get("max_orders_per_run") or 0):
+            strategy_log(state, strategy["strategy_id"], "risk_block", "Intelligent cycle skipped: max orders per run reached", {"max_orders_per_run": risk.get("max_orders_per_run")})
+            continue
+        try:
+            executed.append(submit_strategy_signal_order(state, strategy, signal, execution_mode, actor_email, actor_operator_id))
+        except HTTPException as exc:
+            strategy_log(state, strategy["strategy_id"], "signal_blocked", str(exc.detail), {"signal_action": signal.get("signal_action")})
+    state.setdefault("strategy_engine", {})["last_cycle_at"] = now_iso()
+    state.setdefault("strategy_engine", {})["last_cycle_market_bias"] = market_bias
+    state.setdefault("strategy_engine", {})["last_cycle_status"] = "completed"
+    state.setdefault("strategy_engine", {})["last_decision_snapshot"] = decision_snapshot
+    evaluate_monitoring(state)
+    save_operator_state(state)
+    return {"status": "completed", "market_bias": market_bias, "signals": decision_snapshot.get("decisions", []), "executed_orders": executed, "executed_count": len(executed), "decision_snapshot": decision_snapshot}
+
+
+def _strategy_score_row(state, strategy, market_bias="neutral"):
+    metric = state.setdefault("strategy_engine", {}).setdefault("metrics", {}).setdefault(strategy["strategy_id"], default_strategy_metrics(strategy["strategy_id"], strategy.get("symbol")))
+    refresh_metric_market_values(metric, strategy.get("symbol"))
+    capital_limit = float(strategy.get("capital_limit") or 0.0)
+    capital_in_use = float(metric.get("capital_in_use") or 0.0)
+    realized = float(metric.get("realized_pnl") or 0.0)
+    unrealized = float(metric.get("unrealized_pnl") or 0.0)
+    win_rate = float(metric.get("win_rate") or 0.0)
+    orders = int(metric.get("orders_count") or 0)
+    closed = int(metric.get("closed_trades") or 0)
+    gross_notional = max(float(metric.get("gross_notional") or 0.0), 1.0)
+    pnl_efficiency = ((realized + unrealized) / gross_notional) * 100.0
+    utilization = (capital_in_use / capital_limit) * 100.0 if capital_limit > 0 else 0.0
+    signal = build_strategy_signal_row(state, strategy, market_bias)
+    signal_bonus = float(signal.get("confidence") or 0.0) * 20.0
+    lifecycle_penalty = 0.0
+    if strategy.get("status") in {"paused", "stopped"}:
+        lifecycle_penalty -= 8.0
+    risk_penalty = 0.0
+    if state.get("risk_engine", {}).get("kill_switch_active"):
+        risk_penalty -= 40.0
+    score = 50.0
+    score += max(-20.0, min(20.0, realized / 25.0))
+    score += max(-12.0, min(12.0, unrealized / 30.0))
+    score += max(-15.0, min(15.0, (win_rate - 50.0) / 2.5 if closed > 0 else 0.0))
+    score += max(-10.0, min(10.0, pnl_efficiency * 5.0))
+    score += max(-8.0, min(8.0, (utilization - 50.0) / 10.0 if capital_limit > 0 else 0.0))
+    score += signal_bonus
+    score += lifecycle_penalty + risk_penalty
+    score = round(max(0.0, min(100.0, score)), 2)
+    recommendation = "hold"
+    if strategy.get("enabled") and score < 35.0:
+        recommendation = "pause"
+    elif (not strategy.get("enabled") or strategy.get("status") != "running") and score >= 55.0:
+        recommendation = "enable"
+    elif signal.get("signal_action") != "hold" and score >= 60.0:
+        recommendation = "prioritize"
+    return {
+        "strategy_id": strategy.get("strategy_id"),
+        "name": strategy.get("name"),
+        "symbol": strategy.get("symbol"),
+        "enabled": bool(strategy.get("enabled")),
+        "status": strategy.get("status"),
+        "capital_limit": round(capital_limit, 2),
+        "capital_in_use": round(capital_in_use, 2),
+        "realized_pnl": round(realized, 2),
+        "unrealized_pnl": round(unrealized, 2),
+        "win_rate": round(win_rate, 2),
+        "orders_count": orders,
+        "closed_trades": closed,
+        "utilization_pct": round(utilization, 2),
+        "pnl_efficiency_pct": round(pnl_efficiency, 2),
+        "signal_action": signal.get("signal_action"),
+        "signal_confidence": round(float(signal.get("confidence") or 0.0), 4),
+        "score": score,
+        "recommendation": recommendation,
+        "reason": signal.get("reason"),
+    }
+
+
+def build_multi_strategy_status(state, market_bias="neutral", max_active_strategies=3):
+    evaluate_monitoring(state)
+    strategies = [s for s in state.get("strategies", {}).get("strategies", []) if not s.get("deleted")]
+    rows = [_strategy_score_row(state, s, market_bias) for s in strategies]
+    rows.sort(key=lambda x: (-float(x.get("score") or 0.0), -float(x.get("realized_pnl") or 0.0), x.get("name") or ""))
+    active = [r for r in rows if r.get("enabled") and r.get("status") == "running"]
+    reserve = [r for r in rows if r not in active]
+    top_candidates = rows[:max(1, int(max_active_strategies))]
+    snapshot = build_decision_snapshot(state, build_strategy_signal_book(state, market_bias), market_bias)
+    return {
+        "generated_at": now_iso(),
+        "market_bias": market_bias,
+        "max_active_strategies": max_active_strategies,
+        "summary": {
+            "total_strategies": len(rows),
+            "active_strategies": len(active),
+            "reserve_strategies": len(reserve),
+            "top_score": rows[0]["score"] if rows else 0.0,
+            "average_score": round(sum(float(r.get("score") or 0.0) for r in rows) / len(rows), 2) if rows else 0.0,
+        },
+        "rankings": rows,
+        "top_candidates": top_candidates,
+        "decision_snapshot": snapshot,
+    }
+
+
+def apply_multi_strategy_optimization(state, market_bias="neutral", max_active_strategies=3, min_score_to_enable=55.0, pause_below_score=35.0, rebalance_capital=True):
+    status = build_multi_strategy_status(state, market_bias, max_active_strategies)
+    rankings = list(status.get("rankings") or [])
+    allowed_ids = {row.get("strategy_id") for row in rankings[:max_active_strategies]}
+    changes = []
+    strategy_map = {s.get("strategy_id"): s for s in state.get("strategies", {}).get("strategies", []) if not s.get("deleted")}
+    allocation_map = {item.get("strategy_id"): item for item in (status.get("decision_snapshot") or {}).get("allocations", [])}
+
+    for row in rankings:
+        strategy = strategy_map.get(row.get("strategy_id"))
+        if not strategy:
+            continue
+        target_enabled = strategy.get("enabled")
+        target_status = strategy.get("status")
+        reason = None
+        if row.get("strategy_id") in allowed_ids and float(row.get("score") or 0.0) >= float(min_score_to_enable):
+            target_enabled = True
+            target_status = "running"
+            reason = "score-qualified"
+        elif float(row.get("score") or 0.0) < float(pause_below_score) or row.get("strategy_id") not in allowed_ids:
+            target_enabled = False
+            target_status = "paused" if strategy.get("status") != "deleted" else strategy.get("status")
+            reason = "capacity-or-score-blocked"
+        if strategy.get("enabled") != target_enabled or strategy.get("status") != target_status:
+            strategy["enabled"] = target_enabled
+            strategy["status"] = target_status
+            strategy["updated_at"] = now_iso()
+            strategy["last_action"] = "multi_strategy_optimize"
+            changes.append({"strategy_id": strategy.get("strategy_id"), "name": strategy.get("name"), "enabled": target_enabled, "status": target_status, "reason": reason, "score": row.get("score")})
+            strategy_log(state, strategy["strategy_id"], "optimizer", f"{strategy['name']} -> {target_status}", {"score": row.get("score"), "reason": reason})
+        if rebalance_capital:
+            alloc = allocation_map.get(strategy.get("strategy_id"))
+            new_limit = round(float((alloc or {}).get("assigned_capital") or 0.0), 2)
+            if round(float(strategy.get("capital_limit") or 0.0), 2) != new_limit:
+                strategy["capital_limit"] = new_limit
+                strategy["updated_at"] = now_iso()
+                if reason is None:
+                    changes.append({"strategy_id": strategy.get("strategy_id"), "name": strategy.get("name"), "capital_limit": new_limit, "reason": "rebalance", "score": row.get("score")})
+    state.setdefault("strategy_engine", {})["multi_strategy_optimizer"] = {
+        "last_run_at": now_iso(),
+        "market_bias": market_bias,
+        "max_active_strategies": max_active_strategies,
+        "min_score_to_enable": min_score_to_enable,
+        "pause_below_score": pause_below_score,
+        "rebalance_capital": rebalance_capital,
+        "last_changes": changes[:50],
+        "last_rankings": rankings[:50],
+    }
+    evaluate_monitoring(state)
+    return {"status": "optimized", "changes": changes, "snapshot": state.setdefault("strategy_engine", {}).get("multi_strategy_optimizer"), "rankings": rankings, "decision_snapshot": status.get("decision_snapshot")}
+
+
+@app.get("/multi-strategy/status")
+def multi_strategy_status(max_active_strategies: int = 3, market_bias: str = "neutral", session=Depends(require_auth)):
+    state = get_operator_state(session)
+    result = build_multi_strategy_status(state, market_bias, max_active_strategies)
+    save_operator_state(state)
+    return result
+
+
+@app.post("/multi-strategy/optimize")
+def multi_strategy_optimize(payload: MultiStrategyOptimizeRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    result = apply_multi_strategy_optimization(
+        state,
+        market_bias=payload.market_bias,
+        max_active_strategies=payload.max_active_strategies,
+        min_score_to_enable=payload.min_score_to_enable,
+        pause_below_score=payload.pause_below_score,
+        rebalance_capital=payload.rebalance_capital,
+    )
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "multi_strategy.optimize", state.get("operator_id"), {"changes": result.get("changes", [])[:20]}, "strategy")
+    return result
+
+
+@app.post("/multi-strategy/rebalance")
+def multi_strategy_rebalance(payload: MultiStrategyRebalanceRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    status = build_multi_strategy_status(state, payload.market_bias, payload.max_active_strategies)
+    allocation_map = {item.get("strategy_id"): item for item in (status.get("decision_snapshot") or {}).get("allocations", [])}
+    changed = []
+    for strategy in state.get("strategies", {}).get("strategies", []):
+        if strategy.get("deleted"):
+            continue
+        new_limit = round(float((allocation_map.get(strategy.get("strategy_id")) or {}).get("assigned_capital") or 0.0), 2)
+        if round(float(strategy.get("capital_limit") or 0.0), 2) != new_limit:
+            strategy["capital_limit"] = new_limit
+            strategy["updated_at"] = now_iso()
+            strategy["last_action"] = "multi_strategy_rebalance"
+            changed.append({"strategy_id": strategy.get("strategy_id"), "capital_limit": new_limit})
+    state.setdefault("strategy_engine", {})["multi_strategy_last_rebalance"] = {"at": now_iso(), "market_bias": payload.market_bias, "changed": changed}
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "multi_strategy.rebalance", state.get("operator_id"), {"changed": changed}, "capital")
+    return {"status": "rebalanced", "changed": changed, "rankings": status.get("rankings", []), "decision_snapshot": status.get("decision_snapshot", {})}
+
+
+
+@app.get("/ai-decision/status")
+def ai_decision_status(market_bias: str = "neutral", session=Depends(require_auth)):
+    state = get_operator_state(session)
+    book = build_strategy_signal_book(state, market_bias)
+    snapshot = build_decision_snapshot(state, book, market_bias)
+    state.setdefault("strategy_engine", {})["last_decision_snapshot"] = snapshot
+    save_operator_state(state)
+    return snapshot
+
+
+@app.post("/ai-decision/run")
+def ai_decision_run(payload: AIDecisionRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    result = run_strategy_intelligence_cycle(state, payload.execution_mode, payload.market_bias, session.get("email"), session.get("operator_id"))
+    append_governance_event(session.get("email"), session.get("operator_id"), "ai.decision_cycle", state.get("operator_id"), {"market_bias": payload.market_bias, "executed_count": result.get("executed_count", 0)}, "ai")
+    return result
+
+
+@app.get("/capital-allocation/status")
+def capital_allocation_status(market_bias: str = "neutral", session=Depends(require_auth)):
+    state = get_operator_state(session)
+    book = build_strategy_signal_book(state, market_bias)
+    snapshot = build_decision_snapshot(state, book, market_bias)
+    return {"operator_id": state.get("operator_id"), "market_bias": market_bias, "capital": snapshot.get("capital", {}), "allocations": snapshot.get("allocations", []), "summary": snapshot.get("summary", {})}
+
+
+@app.post("/capital-allocation/rebalance")
+def capital_allocation_rebalance(payload: CapitalAllocationRebalanceRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    book = build_strategy_signal_book(state, payload.market_bias)
+    snapshot = build_decision_snapshot(state, book, payload.market_bias)
+    allocation_map = {item.get("strategy_id"): item for item in snapshot.get("allocations", [])}
+    changed = []
+    for strategy in state.get("strategies", {}).get("strategies", []):
+        item = allocation_map.get(strategy.get("strategy_id"))
+        if not item:
+            continue
+        strategy["capital_limit"] = round(float(item.get("assigned_capital") or 0.0), 2)
+        strategy["updated_at"] = now_iso()
+        strategy["last_action"] = "capital_rebalanced"
+        changed.append({"strategy_id": strategy.get("strategy_id"), "capital_limit": strategy.get("capital_limit")})
+    state.setdefault("strategy_engine", {})["last_decision_snapshot"] = snapshot
+    save_operator_state(state)
+    append_governance_event(session.get("email"), session.get("operator_id"), "capital.rebalance", state.get("operator_id"), {"market_bias": payload.market_bias, "changed": changed}, "capital")
+    return {"status": "rebalanced", "changed": changed, "snapshot": snapshot}
+
+
+@app.get("/strategy-engine/signals")
+def strategy_engine_signals(market_bias: str = "neutral", session=Depends(require_auth)):
+    state = get_operator_state(session)
+    book = build_strategy_signal_book(state, market_bias)
+    save_operator_state(state)
+    return book
+
+
+@app.post("/strategy-engine/run-cycle")
+def strategy_engine_run_cycle(payload: StrategyEngineCycleRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    result = run_strategy_intelligence_cycle(state, payload.execution_mode, payload.market_bias, session.get("email"), session.get("operator_id"))
+    return result
+
+
+@app.get("/strategy-engine/portfolio")
+def strategy_engine_portfolio(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    engine = summarize_strategy_engine(state)
+    signal_book = build_strategy_signal_book(state, state.setdefault("strategy_engine", {}).get("last_cycle_market_bias") or "neutral")
+    return {
+        "engine": engine,
+        "signals": signal_book,
+        "performance": build_performance_snapshot(state).get("summary", {}),
+        "last_cycle_at": state.setdefault("strategy_engine", {}).get("last_cycle_at"),
+        "last_cycle_status": state.setdefault("strategy_engine", {}).get("last_cycle_status", "idle"),
+    }
+
+
+@app.get("/version")
+def version():
+    return {
+        "mission": "QNT30349 Execution Optimization",
+        "layer": "qnt30349-execution-optimization",
+        "frontend": "qnt30349",
+        "cache_policy": NO_CACHE_HEADERS["Cache-Control"],
+        "timestamp": now_iso(),
+    }
+
+
+class PortfolioBrainStrategyInput(BaseModel):
+    strategy_id: str | None = None
+    strategy_name: str | None = None
+    market: str | None = "equities"
+    symbols: list[str] = Field(default_factory=list)
+    realized_pnl: float = 0.0
+    unrealized_pnl: float = 0.0
+    win_rate: float = 0.5
+    confidence: float = 0.5
+    volatility: float = 0.2
+    activity: int = 1
+    regime_fit: float = 0.5
+    status: str = "active"
+
+
+class PortfolioBrainIngestRequest(BaseModel):
+    strategies: list[PortfolioBrainStrategyInput] = Field(default_factory=list)
+    regime_tag: str | None = "neutral"
+
+
+class PortfolioBrainCoordinationRequest(BaseModel):
+    max_active_strategies: int | None = None
+    max_symbol_overlap: int | None = None
+    conflict_penalty: float | None = None
+    rotation_threshold: float | None = None
+    min_diversification_score: float | None = None
+    auto_pause_on_conflict: bool | None = None
+
+
+class PortfolioBrainAllocatorSyncRequest(BaseModel):
+    total_capital: float = 100000.0
+    reserve_pct: float = 0.1
+
+
+@app.get("/portfolio-brain/status")
+def portfolio_brain_status(admin=Depends(require_admin)):
+    return build_portfolio_brain_status(ARTIFACTS_DIR)
+
+
+@app.post("/portfolio-brain/ingest")
+def portfolio_brain_ingest(payload: PortfolioBrainIngestRequest, admin=Depends(require_admin)):
+    result = ingest_portfolio_brain_snapshot(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "portfolio_brain.ingest", "portfolio-brain", result, "portfolio_brain")
+    return result
+
+
+@app.post("/portfolio-brain/coordinate")
+def portfolio_brain_coordinate(payload: PortfolioBrainCoordinationRequest, admin=Depends(require_admin)):
+    result = evaluate_portfolio_brain_coordination(ARTIFACTS_DIR, payload.model_dump(exclude_none=True))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "portfolio_brain.coordinate", "portfolio-brain", {"active": len(result.get("top_active", [])), "conflicts": len(result.get("conflicts", []))}, "portfolio_brain")
+    return result
+
+
+@app.post("/portfolio-brain/allocator-sync")
+def portfolio_brain_allocator_sync(payload: PortfolioBrainAllocatorSyncRequest, admin=Depends(require_admin)):
+    result = sync_portfolio_brain_allocator(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "portfolio_brain.allocator_sync", "portfolio-brain", {"deployable_capital": result.get("deployable_capital")}, "portfolio_brain")
+    return result
+
+
+
+
+class CommandMeshOperatorInput(BaseModel):
+    operator_id: str
+    display_name: str | None = None
+    tier: str | None = "delegate"
+
+
+class CommandMeshMandateInput(BaseModel):
+    mandate_id: str | None = None
+    operator_id: str
+    scope: str | None = "portfolio"
+    allowed_modes: list[str] = Field(default_factory=lambda: ["paper"])
+    max_notional: float = 10000.0
+    active: bool = True
+
+
+class CommandMeshMandateUpsertRequest(BaseModel):
+    operators: list[CommandMeshOperatorInput] = Field(default_factory=list)
+    mandates: list[CommandMeshMandateInput] = Field(default_factory=list)
+
+
+class CommandMeshCommandInput(BaseModel):
+    command_id: str | None = None
+    operator_id: str
+    action: str
+    symbol: str
+    execution_mode: str = "paper"
+    priority: str | None = None
+    notional: float = 0.0
+
+
+class CommandMeshRouteRequest(BaseModel):
+    command: CommandMeshCommandInput
+    default_priority: str | None = None
+    require_mandate_for_live: bool | None = None
+    risk_gate_required: bool | None = None
+    approval_gate_required: bool | None = None
+    max_live_notional_per_command: float | None = None
+
+
+class CommandMeshExecuteRequest(BaseModel):
+    approve_live: bool = False
+
+
+@app.get("/command-mesh/status")
+def command_mesh_status(admin=Depends(require_admin)):
+    return build_command_mesh_status(ARTIFACTS_DIR)
+
+
+@app.post("/command-mesh/mandates/upsert")
+def command_mesh_mandates_upsert(payload: CommandMeshMandateUpsertRequest, admin=Depends(require_admin)):
+    result = upsert_command_mesh_mandates(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "command_mesh.mandates_upsert", "command-mesh", result, "command_mesh")
+    return result
+
+
+@app.post("/command-mesh/route")
+def command_mesh_route(payload: CommandMeshRouteRequest, admin=Depends(require_admin)):
+    result = route_command_mesh_command(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "command_mesh.route", "command-mesh", {"status": result.get("command", {}).get("status"), "operator_id": result.get("command", {}).get("operator_id")}, "command_mesh")
+    return result
+
+
+@app.post("/command-mesh/execute")
+def command_mesh_execute(payload: CommandMeshExecuteRequest, admin=Depends(require_admin)):
+    result = execute_command_mesh_pending(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "command_mesh.execute", "command-mesh", result, "command_mesh")
+    return result
+
+
+
+class CapitalCommitteeMemberInput(BaseModel):
+    member_id: str
+    role: str | None = "member"
+    weight: float = 1.0
+
+
+class CapitalCommitteeInput(BaseModel):
+    committee_id: str | None = None
+    name: str
+    members: list[CapitalCommitteeMemberInput] = Field(default_factory=list)
+    quorum: int | None = None
+    approval_threshold: float | None = None
+
+
+class CapitalCommitteeUpsertRequest(BaseModel):
+    committees: list[CapitalCommitteeInput] = Field(default_factory=list)
+
+
+class CapitalProposalRequest(BaseModel):
+    proposal_id: str | None = None
+    committee_id: str
+    title: str
+    requested_capital: float
+    strategy_id: str | None = None
+    notes: str | None = None
+    status: str | None = "draft"
+
+
+class CapitalVoteRequest(BaseModel):
+    proposal_id: str
+    member_id: str
+    decision: str
+    weight: float = 1.0
+    comment: str | None = None
+
+
+class CapitalCompileRequest(BaseModel):
+    proposal_id: str
+
+
+@app.get("/capital-committee/status")
+def capital_committee_status(admin=Depends(require_admin)):
+    return build_capital_committee_status(ARTIFACTS_DIR)
+
+
+@app.post("/capital-committee/committees/upsert")
+def capital_committee_committees_upsert(payload: CapitalCommitteeUpsertRequest, admin=Depends(require_admin)):
+    result = upsert_capital_committees(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "capital_committee.committees_upsert", "capital-committee", result, "capital_committee")
+    return result
+
+
+@app.post("/capital-committee/proposals/create")
+def capital_committee_proposals_create(payload: CapitalProposalRequest, admin=Depends(require_admin)):
+    result = create_capital_proposal(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "capital_committee.proposal_create", payload.committee_id, {"proposal_id": result.get("proposal", {}).get("proposal_id")}, "capital_committee")
+    return result
+
+
+@app.post("/capital-committee/votes/cast")
+def capital_committee_votes_cast(payload: CapitalVoteRequest, admin=Depends(require_admin)):
+    result = cast_capital_vote(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "capital_committee.vote_cast", payload.proposal_id, {"status": result.get("proposal_status")}, "capital_committee")
+    return result
+
+
+@app.post("/capital-committee/allocations/compile")
+def capital_committee_allocations_compile(payload: CapitalCompileRequest, admin=Depends(require_admin)):
+    result = compile_capital_allocation(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "capital_committee.allocation_compile", payload.proposal_id, {"status": result.get("proposal", {}).get("status")}, "capital_committee")
+    return result
+
+
+
+class StrategyFactoryTemplateInput(BaseModel):
+    template_id: str | None = None
+    name: str
+    market: str | None = "equities"
+    signal_family: str | None = "momentum"
+    timeframe: str | None = "1h"
+    mutation_bias: str | None = "balanced"
+
+
+class StrategyFactoryTemplateUpsertRequest(BaseModel):
+    templates: list[StrategyFactoryTemplateInput] = Field(default_factory=list)
+
+
+class StrategyFactoryGenerateRequest(BaseModel):
+    batch_size: int = 3
+    generation_mode: str | None = "mutation"
+    default_market: str | None = None
+    promotion_score_threshold: float | None = None
+    min_backtest_win_rate: float | None = None
+    min_edge_score: float | None = None
+    max_live_risk_budget_pct: float | None = None
+    auto_promote: bool | None = None
+
+
+class StrategyFactoryBacktestRequest(BaseModel):
+    candidate_ids: list[str] = Field(default_factory=list)
+
+
+class StrategyFactoryPromoteRequest(BaseModel):
+    promotion_score_threshold: float | None = None
+
+
+@app.get("/strategy-factory/status")
+def strategy_factory_status(admin=Depends(require_admin)):
+    return build_strategy_factory_status(ARTIFACTS_DIR)
+
+
+@app.post("/strategy-factory/templates/upsert")
+def strategy_factory_templates_upsert(payload: StrategyFactoryTemplateUpsertRequest, admin=Depends(require_admin)):
+    result = upsert_strategy_factory_templates(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "strategy_factory.templates_upsert", "strategy-factory", result, "strategy_factory")
+    return result
+
+
+@app.post("/strategy-factory/generate")
+def strategy_factory_generate(payload: StrategyFactoryGenerateRequest, admin=Depends(require_admin)):
+    result = generate_strategy_factory_candidates(ARTIFACTS_DIR, payload.model_dump(exclude_none=True))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "strategy_factory.generate", "strategy-factory", {"generated": len(result.get("generated", []))}, "strategy_factory")
+    return result
+
+
+@app.post("/strategy-factory/backtest")
+def strategy_factory_backtest(payload: StrategyFactoryBacktestRequest, admin=Depends(require_admin)):
+    result = backtest_strategy_factory_candidates(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "strategy_factory.backtest", "strategy-factory", {"evaluated": len(result.get("evaluated", []))}, "strategy_factory")
+    return result
+
+
+@app.post("/strategy-factory/promote")
+def strategy_factory_promote(payload: StrategyFactoryPromoteRequest, admin=Depends(require_admin)):
+    result = promote_strategy_factory_candidates(ARTIFACTS_DIR, payload.model_dump(exclude_none=True))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "strategy_factory.promote", "strategy-factory", {"promoted": result.get("promoted_count", 0)}, "strategy_factory")
+    return result
+
+
+
+@app.get("/release-audit/status")
+def release_audit_status(admin=Depends(require_admin)):
+    return build_release_audit(PROJECT_DIR)
+
+
+@app.get("/release/status")
+def release_status():
+    return {
+        "release_id": "QNT30378",
+        "release_name": "execution drift monitor + market regime deviation alerts",
+        "app_title": app.title,
+        "app_version": app.version,
+    }
+
+
+
+class ValidationRulesUpdateRequest(BaseModel):
+    min_promotion_score: float | None = None
+    min_backtest_win_rate: float | None = None
+    max_drawdown_pct: float | None = None
+    min_edge_score: float | None = None
+    min_stability_score: float | None = None
+    require_risk_budget_cap: float | None = None
+    watchlist_band: float | None = None
+
+
+class ValidationCandidateRequest(BaseModel):
+    candidate_id: str
+    strategy_name: str
+    promotion_score: float
+    backtest_win_rate: float
+    max_drawdown: float
+    edge_score: float
+    stability_score: float
+    risk_budget_pct: float
+
+
+class ValidationBatchRequest(BaseModel):
+    candidates: list[ValidationCandidateRequest] = Field(default_factory=list)
+
+
+@app.get("/validation-gatekeeper/status")
+def validation_gatekeeper_status(admin=Depends(require_admin)):
+    return build_validation_gatekeeper_status(ARTIFACTS_DIR)
+
+
+@app.post("/validation-gatekeeper/rules/update")
+def validation_gatekeeper_rules_update(payload: ValidationRulesUpdateRequest, admin=Depends(require_admin)):
+    result = update_validation_gatekeeper_rules(ARTIFACTS_DIR, payload.model_dump(exclude_none=True))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "validation_gatekeeper.rules_update", "validation-gatekeeper", result, "validation_gatekeeper")
+    return result
+
+
+@app.post("/validation-gatekeeper/candidate/evaluate")
+def validation_gatekeeper_candidate_evaluate(payload: ValidationCandidateRequest, admin=Depends(require_admin)):
+    result = evaluate_validation_gatekeeper_candidate(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "validation_gatekeeper.candidate_evaluate", payload.candidate_id, {"verdict": result.get("review", {}).get("verdict")}, "validation_gatekeeper")
+    return result
+
+
+@app.post("/validation-gatekeeper/promotion/review")
+def validation_gatekeeper_promotion_review(payload: ValidationBatchRequest, admin=Depends(require_admin)):
+    result = review_validation_gatekeeper_batch(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "validation_gatekeeper.promotion_review", "validation-gatekeeper", {"approved": result.get("approved_count", 0), "rejected": result.get("rejected_count", 0)}, "validation_gatekeeper")
+    return result
+
+
+
+class CapitalPromotionRulesUpdateRequest(BaseModel):
+    approved_target: str | None = None
+    watchlist_target: str | None = None
+    rejected_target: str | None = None
+    max_watchlist_capital_pct: float | None = None
+    require_approval_for_execution: bool | None = None
+    block_rejected_execution: bool | None = None
+
+
+class CapitalPromotionCandidateRouteRequest(BaseModel):
+    candidate_id: str
+    strategy_name: str
+    verdict: str
+    requested_capital: float
+
+
+class CapitalPromotionExecutionRequest(BaseModel):
+    candidate_id: str
+    strategy_name: str
+    verdict: str
+    requested_order_notional: float
+
+
+@app.get("/capital-promotion-router/status")
+def capital_promotion_router_status(admin=Depends(require_admin)):
+    return build_capital_promotion_router_status(ARTIFACTS_DIR)
+
+
+@app.post("/capital-promotion-router/rules/update")
+def capital_promotion_router_rules_update(payload: CapitalPromotionRulesUpdateRequest, admin=Depends(require_admin)):
+    result = update_capital_promotion_router_rules(ARTIFACTS_DIR, payload.model_dump(exclude_none=True))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "capital_promotion_router.rules_update", "capital-promotion-router", result, "capital_promotion_router")
+    return result
+
+
+@app.post("/capital-promotion-router/candidate/route")
+def capital_promotion_router_candidate_route(payload: CapitalPromotionCandidateRouteRequest, admin=Depends(require_admin)):
+    result = route_capital_promotion_candidate(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "capital_promotion_router.candidate_route", payload.candidate_id, {"target": result.get("route", {}).get("target")}, "capital_promotion_router")
+    return result
+
+
+@app.post("/capital-promotion-router/execution/decide")
+def capital_promotion_router_execution_decide(payload: CapitalPromotionExecutionRequest, admin=Depends(require_admin)):
+    result = execution_gate_capital_promotion(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "capital_promotion_router.execution_decide", payload.candidate_id, {"allow_execution": result.get("decision", {}).get("allow_execution")}, "capital_promotion_router")
+    return result
+
+
+
+class CapitalEscalationRulesUpdateRequest(BaseModel):
+    sandbox_max_capital: float | None = None
+    limited_live_max_capital: float | None = None
+    scaled_live_max_capital: float | None = None
+    priority_capital_max_capital: float | None = None
+    min_promote_score: float | None = None
+    min_scaled_score: float | None = None
+    min_priority_score: float | None = None
+    degrade_score_threshold: float | None = None
+    kill_score_threshold: float | None = None
+    max_drawdown_kill_pct: float | None = None
+
+
+class CapitalEscalationStrategyReviewRequest(BaseModel):
+    strategy_id: str
+    strategy_name: str
+    performance_score: float
+    win_rate: float
+    realized_pnl: float
+    drawdown_pct: float
+    current_lane: str = "sandbox"
+    current_capital: float = 0.0
+
+
+class CapitalEscalationBatchRequest(BaseModel):
+    strategies: list[CapitalEscalationStrategyReviewRequest] = Field(default_factory=list)
+
+
+@app.get("/capital-escalation-board/status")
+def capital_escalation_board_status(admin=Depends(require_admin)):
+    return build_capital_escalation_board_status(ARTIFACTS_DIR)
+
+
+@app.post("/capital-escalation-board/rules/update")
+def capital_escalation_board_rules_update(payload: CapitalEscalationRulesUpdateRequest, admin=Depends(require_admin)):
+    result = update_capital_escalation_board_rules(ARTIFACTS_DIR, payload.model_dump(exclude_none=True))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "capital_escalation_board.rules_update", "capital-escalation-board", result, "capital_escalation_board")
+    return result
+
+
+@app.post("/capital-escalation-board/strategy/review")
+def capital_escalation_board_strategy_review(payload: CapitalEscalationStrategyReviewRequest, admin=Depends(require_admin)):
+    result = review_capital_escalation_strategy(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "capital_escalation_board.strategy_review", payload.strategy_id, {"decision": result.get("review", {}).get("decision")}, "capital_escalation_board")
+    return result
+
+
+@app.post("/capital-escalation-board/review-batch")
+def capital_escalation_board_review_batch(payload: CapitalEscalationBatchRequest, admin=Depends(require_admin)):
+    result = review_capital_escalation_batch(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "capital_escalation_board.review_batch", "capital-escalation-board", {"promotions": result.get("promotions", 0), "kills": result.get("kills", 0)}, "capital_escalation_board")
+    return result
+
+
+
+class StrategyRetirementRulesUpdateRequest(BaseModel):
+    retire_score_threshold: float | None = None
+    retire_drawdown_threshold: float | None = None
+    retire_loss_threshold: float | None = None
+    watchlist_score_threshold: float | None = None
+    watchlist_drawdown_threshold: float | None = None
+    full_reclamation_on_retire: bool | None = None
+    watchlist_reclaim_pct: float | None = None
+
+
+class StrategyRetirementReviewRequest(BaseModel):
+    strategy_id: str
+    strategy_name: str
+    performance_score: float
+    realized_pnl: float
+    drawdown_pct: float
+    current_capital: float
+    current_lane: str = "sandbox"
+
+
+class StrategyRetirementBatchRequest(BaseModel):
+    strategies: list[StrategyRetirementReviewRequest] = Field(default_factory=list)
+
+
+@app.get("/strategy-retirement-board/status")
+def strategy_retirement_board_status(admin=Depends(require_admin)):
+    return build_strategy_retirement_board_status(ARTIFACTS_DIR)
+
+
+@app.post("/strategy-retirement-board/rules/update")
+def strategy_retirement_board_rules_update(payload: StrategyRetirementRulesUpdateRequest, admin=Depends(require_admin)):
+    result = update_strategy_retirement_board_rules(ARTIFACTS_DIR, payload.model_dump(exclude_none=True))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "strategy_retirement_board.rules_update", "strategy-retirement-board", result, "strategy_retirement_board")
+    return result
+
+
+@app.post("/strategy-retirement-board/strategy/review")
+def strategy_retirement_board_strategy_review(payload: StrategyRetirementReviewRequest, admin=Depends(require_admin)):
+    result = review_strategy_retirement_board_strategy(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "strategy_retirement_board.strategy_review", payload.strategy_id, {"decision": result.get("review", {}).get("decision")}, "strategy_retirement_board")
+    return result
+
+
+@app.post("/strategy-retirement-board/review-batch")
+def strategy_retirement_board_review_batch(payload: StrategyRetirementBatchRequest, admin=Depends(require_admin)):
+    result = review_strategy_retirement_board_batch(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "strategy_retirement_board.review_batch", "strategy-retirement-board", {"retirements": result.get("retirements", 0), "watchlist": result.get("watchlist", 0)}, "strategy_retirement_board")
+    return result
+
+
+
+class ReallocationRulesUpdateRequest(BaseModel):
+    min_opportunity_score: float | None = None
+    max_queue_size: int | None = None
+    max_reallocation_per_candidate: float | None = None
+    watchlist_haircut_pct: float | None = None
+    priority_bonus: float | None = None
+    validation_required: bool | None = None
+
+
+class ReallocationCandidateInput(BaseModel):
+    candidate_id: str
+    strategy_name: str
+    verdict: str
+    opportunity_score: float
+    edge_score: float
+    confidence: float
+    reclaimed_capital_pool: float
+    priority: bool = False
+
+
+class ReallocationQueueRefreshRequest(BaseModel):
+    candidates: list[ReallocationCandidateInput] = Field(default_factory=list)
+
+
+class ReallocationExecuteRequest(BaseModel):
+    candidate_id: str
+    available_capital: float
+
+
+@app.get("/reallocation-board/status")
+def reallocation_board_status(admin=Depends(require_admin)):
+    return build_reallocation_board_status(ARTIFACTS_DIR)
+
+
+@app.post("/reallocation-board/rules/update")
+def reallocation_board_rules_update(payload: ReallocationRulesUpdateRequest, admin=Depends(require_admin)):
+    result = update_reallocation_board_rules(ARTIFACTS_DIR, payload.model_dump(exclude_none=True))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "reallocation_board.rules_update", "reallocation-board", result, "reallocation_board")
+    return result
+
+
+@app.post("/reallocation-board/queue/refresh")
+def reallocation_board_queue_refresh(payload: ReallocationQueueRefreshRequest, admin=Depends(require_admin)):
+    result = refresh_reallocation_queue(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "reallocation_board.queue_refresh", "reallocation-board", {"queued": len(result.get("opportunities", []))}, "reallocation_board")
+    return result
+
+
+@app.post("/reallocation-board/capital/execute")
+def reallocation_board_capital_execute(payload: ReallocationExecuteRequest, admin=Depends(require_admin)):
+    result = execute_reallocation_capital(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "reallocation_board.capital_execute", payload.candidate_id, {"status": result.get("status")}, "reallocation_board")
+    return result
+
+
+
+class OpportunityAuctionRulesUpdateRequest(BaseModel):
+    min_bid_score: float | None = None
+    max_winners: int | None = None
+    max_capital_per_winner: float | None = None
+    priority_multiplier: float | None = None
+    confidence_multiplier_weight: float | None = None
+    edge_multiplier_weight: float | None = None
+    validation_required: bool | None = None
+
+
+class OpportunityAuctionCandidateInput(BaseModel):
+    candidate_id: str
+    strategy_name: str
+    verdict: str
+    opportunity_score: float
+    edge_score: float
+    confidence: float
+    requested_capital: float
+    priority: bool = False
+
+
+class OpportunityAuctionRunRequest(BaseModel):
+    candidates: list[OpportunityAuctionCandidateInput] = Field(default_factory=list)
+
+
+class OpportunityAuctionAwardRequest(BaseModel):
+    available_capital: float
+
+
+@app.get("/opportunity-auction/status")
+def opportunity_auction_status(admin=Depends(require_admin)):
+    return build_opportunity_auction_status(ARTIFACTS_DIR)
+
+
+@app.post("/opportunity-auction/rules/update")
+def opportunity_auction_rules_update(payload: OpportunityAuctionRulesUpdateRequest, admin=Depends(require_admin)):
+    result = update_opportunity_auction_rules(ARTIFACTS_DIR, payload.model_dump(exclude_none=True))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "opportunity_auction.rules_update", "opportunity-auction", result, "opportunity_auction")
+    return result
+
+
+@app.post("/opportunity-auction/run")
+def opportunity_auction_run(payload: OpportunityAuctionRunRequest, admin=Depends(require_admin)):
+    result = run_opportunity_auction(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "opportunity_auction.run", "opportunity-auction", {"bid_count": len(result.get("bids", []))}, "opportunity_auction")
+    return result
+
+
+@app.post("/opportunity-auction/award")
+def opportunity_auction_award(payload: OpportunityAuctionAwardRequest, admin=Depends(require_admin)):
+    result = award_opportunity_capital(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "opportunity_auction.award", "opportunity-auction", {"winner_count": len(result.get("winners", []))}, "opportunity_auction")
+    return result
+
+
+
+class ExecutionFairnessRulesUpdateRequest(BaseModel):
+    max_slippage_bps: float | None = None
+    fair_fill_deviation_bps: float | None = None
+    capital_penalty_multiplier: float | None = None
+    block_on_fairness_breach: bool | None = None
+    min_settlement_notional: float | None = None
+
+
+class ExecutionReviewRequest(BaseModel):
+    strategy_id: str
+    strategy_name: str
+    expected_price: float
+    fill_price: float
+    quantity: float
+    side: str = "buy"
+
+
+class CapitalSettlementRequest(BaseModel):
+    strategy_id: str
+    strategy_name: str
+    gross_notional: float
+    realized_pnl: float
+    slippage_cost: float
+    fees: float = 0.0
+
+
+@app.get("/execution-fairness/status")
+def execution_fairness_status(admin=Depends(require_admin)):
+    return build_execution_fairness_status(ARTIFACTS_DIR)
+
+
+@app.post("/execution-fairness/rules/update")
+def execution_fairness_rules_update(payload: ExecutionFairnessRulesUpdateRequest, admin=Depends(require_admin)):
+    result = update_execution_fairness_rules(ARTIFACTS_DIR, payload.model_dump(exclude_none=True))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "execution_fairness.rules_update", "execution-fairness", result, "execution_fairness")
+    return result
+
+
+@app.post("/execution-fairness/review")
+def execution_fairness_review(payload: ExecutionReviewRequest, admin=Depends(require_admin)):
+    result = review_execution_fairness(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "execution_fairness.review", payload.strategy_id, {"status": result.get("status")}, "execution_fairness")
+    return result
+
+
+@app.post("/execution-fairness/settle")
+def execution_fairness_settle(payload: CapitalSettlementRequest, admin=Depends(require_admin)):
+    result = settle_execution_capital(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "execution_fairness.settle", payload.strategy_id, {"status": result.get("status")}, "execution_fairness")
+    return result
+
+
+
+class ExecutionQualityRulesUpdateRequest(BaseModel):
+    max_avg_slippage_bps: float | None = None
+    min_fill_rate: float | None = None
+    max_reject_rate: float | None = None
+    max_latency_ms: float | None = None
+    flag_score_threshold: float | None = None
+
+
+class ExecutionQualityVenueInput(BaseModel):
+    venue_id: str
+    venue_name: str
+    avg_slippage_bps: float
+    fill_rate: float
+    reject_rate: float
+    avg_latency_ms: float
+    orders: int
+
+
+class ExecutionQualityIngestRequest(BaseModel):
+    venues: list[ExecutionQualityVenueInput] = Field(default_factory=list)
+
+
+@app.get("/execution-quality/status")
+def execution_quality_status(admin=Depends(require_admin)):
+    return build_execution_quality_scoreboard_status(ARTIFACTS_DIR)
+
+
+@app.post("/execution-quality/rules/update")
+def execution_quality_rules_update(payload: ExecutionQualityRulesUpdateRequest, admin=Depends(require_admin)):
+    result = update_execution_quality_scoreboard_rules(ARTIFACTS_DIR, payload.model_dump(exclude_none=True))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "execution_quality.rules_update", "execution-quality", result, "execution_quality")
+    return result
+
+
+@app.post("/execution-quality/venues/ingest")
+def execution_quality_venues_ingest(payload: ExecutionQualityIngestRequest, admin=Depends(require_admin)):
+    result = ingest_execution_quality_venues(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "execution_quality.venues_ingest", "execution-quality", {"venue_count": result.get("venue_count", 0)}, "execution_quality")
+    return result
+
+
+@app.post("/execution-quality/scores/refresh")
+def execution_quality_scores_refresh(admin=Depends(require_admin)):
+    result = refresh_execution_quality_scores(ARTIFACTS_DIR)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "execution_quality.scores_refresh", "execution-quality", {"score_count": len(result.get("scores", []))}, "execution_quality")
+    return result
+
+
+
+class VenueGovernorPolicyUpdateRequest(BaseModel):
+    mode: str | None = None
+    max_venues: int | None = None
+    min_score: float | None = None
+    avoid_flagged: bool | None = None
+    fallback_enabled: bool | None = None
+    fallback_venue_id: str | None = None
+
+
+class VenueGovernorVenueInput(BaseModel):
+    venue_id: str
+    venue_name: str
+    quality_score: float
+    flagged: bool = False
+    avg_slippage_bps: float = 0.0
+    fill_rate: float = 0.0
+    reject_rate: float = 0.0
+    avg_latency_ms: float = 0.0
+
+
+class VenueGovernorIngestRequest(BaseModel):
+    venues: list[VenueGovernorVenueInput] = Field(default_factory=list)
+
+
+class VenueGovernorOrderRequest(BaseModel):
+    order_id: str | None = None
+    symbol: str
+    side: str = "buy"
+
+
+class VenueGovernorBatchRequest(BaseModel):
+    orders: list[VenueGovernorOrderRequest] = Field(default_factory=list)
+
+
+@app.get("/venue-governor/status")
+def venue_governor_status(admin=Depends(require_admin)):
+    return build_venue_governor_status(ARTIFACTS_DIR)
+
+
+@app.post("/venue-governor/policy/update")
+def venue_governor_policy_update(payload: VenueGovernorPolicyUpdateRequest, admin=Depends(require_admin)):
+    result = update_venue_governor_policy(ARTIFACTS_DIR, payload.model_dump(exclude_none=True))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "venue_governor.policy_update", "venue-governor", result, "venue_governor")
+    return result
+
+
+@app.post("/venue-governor/venues/ingest")
+def venue_governor_venues_ingest(payload: VenueGovernorIngestRequest, admin=Depends(require_admin)):
+    result = ingest_venue_governor_venues(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "venue_governor.venues_ingest", "venue-governor", {"venue_count": result.get("venue_count", 0)}, "venue_governor")
+    return result
+
+
+@app.post("/venue-governor/select")
+def venue_governor_select(payload: VenueGovernorOrderRequest, admin=Depends(require_admin)):
+    result = select_venue_governor(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "venue_governor.select", payload.symbol, {"selected_venue": result.get("decision", {}).get("selected_venue")}, "venue_governor")
+    return result
+
+
+@app.post("/venue-governor/batch-select")
+def venue_governor_batch_select(payload: VenueGovernorBatchRequest, admin=Depends(require_admin)):
+    result = batch_select_venue_governor(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "venue_governor.batch_select", "venue-governor", {"decision_count": result.get("decision_count", 0)}, "venue_governor")
+    return result
+
+
+
+class SORRulesUpdateRequest(BaseModel):
+    max_child_orders: int | None = None
+    min_venue_score: float | None = None
+    prefer_lower_slippage: bool | None = None
+    prefer_lower_latency: bool | None = None
+    reserve_liquidity_buffer_pct: float | None = None
+
+
+class SORVenueInput(BaseModel):
+    venue_id: str
+    venue_name: str
+    quality_score: float
+    avg_slippage_bps: float
+    avg_latency_ms: float
+    available_liquidity: float
+    flagged: bool = False
+
+
+class SORVenueIngestRequest(BaseModel):
+    venues: list[SORVenueInput] = Field(default_factory=list)
+
+
+class SOROrderRequest(BaseModel):
+    order_id: str | None = None
+    symbol: str
+    side: str = "buy"
+    quantity: float
+
+
+@app.get("/smart-order-router/status")
+def smart_order_router_status(admin=Depends(require_admin)):
+    return build_sor_status(ARTIFACTS_DIR)
+
+
+@app.post("/smart-order-router/rules/update")
+def smart_order_router_rules_update(payload: SORRulesUpdateRequest, admin=Depends(require_admin)):
+    result = update_sor_rules(ARTIFACTS_DIR, payload.model_dump(exclude_none=True))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "smart_order_router.rules_update", "smart-order-router", result, "smart_order_router")
+    return result
+
+
+@app.post("/smart-order-router/venues/ingest")
+def smart_order_router_venues_ingest(payload: SORVenueIngestRequest, admin=Depends(require_admin)):
+    result = ingest_sor_venues(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "smart_order_router.venues_ingest", "smart-order-router", {"venue_count": result.get("venue_count", 0)}, "smart_order_router")
+    return result
+
+
+@app.post("/smart-order-router/route")
+def smart_order_router_route(payload: SOROrderRequest, admin=Depends(require_admin)):
+    result = route_sor_order(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "smart_order_router.route", payload.symbol, {"child_orders": len(result.get("route", {}).get("child_orders", []))}, "smart_order_router")
+    return result
+
+
+
+class ExecutionReplayRulesUpdateRequest(BaseModel):
+    max_replay_events: int | None = None
+    slippage_alert_bps: float | None = None
+    latency_alert_ms: float | None = None
+    venue_weight_enabled: bool | None = None
+    pnl_weight_enabled: bool | None = None
+
+
+class ExecutionReplayEventInput(BaseModel):
+    quantity: float
+    latency_ms: float
+    slippage_bps: float
+
+
+class ExecutionReplayRequest(BaseModel):
+    order_id: str | None = None
+    symbol: str
+    events: list[ExecutionReplayEventInput] = Field(default_factory=list)
+
+
+class FillAttributionInput(BaseModel):
+    venue_id: str
+    quantity: float
+    realized_pnl: float
+    slippage_bps: float
+
+
+class FillAttributionRequest(BaseModel):
+    strategy_id: str
+    symbol: str
+    fills: list[FillAttributionInput] = Field(default_factory=list)
+
+
+@app.get("/execution-replay/status")
+def execution_replay_status(admin=Depends(require_admin)):
+    return build_execution_replay_status(ARTIFACTS_DIR)
+
+
+@app.post("/execution-replay/rules/update")
+def execution_replay_rules_update(payload: ExecutionReplayRulesUpdateRequest, admin=Depends(require_admin)):
+    result = update_execution_replay_rules(ARTIFACTS_DIR, payload.model_dump(exclude_none=True))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "execution_replay.rules_update", "execution-replay", result, "execution_replay")
+    return result
+
+
+@app.post("/execution-replay/replay")
+def execution_replay_replay(payload: ExecutionReplayRequest, admin=Depends(require_admin)):
+    result = replay_execution_lab(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "execution_replay.replay", payload.symbol, {"status": result.get("status")}, "execution_replay")
+    return result
+
+
+@app.post("/execution-replay/attribute")
+def execution_replay_attribute(payload: FillAttributionRequest, admin=Depends(require_admin)):
+    result = attribute_execution_fills(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "execution_replay.attribute", payload.strategy_id, {"status": result.get("status")}, "execution_replay")
+    return result
+
+
+
+class ExecutionDriftRulesUpdateRequest(BaseModel):
+    max_slippage_drift_bps: float | None = None
+    max_latency_drift_ms: float | None = None
+    min_fill_rate_delta: float | None = None
+    max_volatility_regime_shift: float | None = None
+    alert_on_regime_mismatch: bool | None = None
+
+
+class ExecutionDriftSnapshotRequest(BaseModel):
+    symbol: str
+    baseline_slippage_bps: float
+    current_slippage_bps: float
+    baseline_latency_ms: float
+    current_latency_ms: float
+    baseline_fill_rate: float
+    current_fill_rate: float
+    baseline_regime_vol: float
+    current_regime_vol: float
+
+
+@app.get("/execution-drift/status")
+def execution_drift_status(admin=Depends(require_admin)):
+    return build_execution_drift_status(ARTIFACTS_DIR)
+
+
+@app.post("/execution-drift/rules/update")
+def execution_drift_rules_update(payload: ExecutionDriftRulesUpdateRequest, admin=Depends(require_admin)):
+    result = update_execution_drift_rules(ARTIFACTS_DIR, payload.model_dump(exclude_none=True))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "execution_drift.rules_update", "execution-drift", result, "execution_drift")
+    return result
+
+
+@app.post("/execution-drift/snapshot")
+def execution_drift_snapshot(payload: ExecutionDriftSnapshotRequest, admin=Depends(require_admin)):
+    result = capture_execution_drift_snapshot(ARTIFACTS_DIR, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "execution_drift.snapshot", payload.symbol, {"status": result.get("status")}, "execution_drift")
+    return result
+
+
+@app.post("/execution-drift/evaluate")
+def execution_drift_evaluate(admin=Depends(require_admin)):
+    result = evaluate_execution_drift(ARTIFACTS_DIR, {})
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "execution_drift.evaluate", "execution-drift", {"triggered": result.get("alert", {}).get("triggered")}, "execution_drift")
+    return result
+
+
+@app.get("/dashboard/runtime-summary")
+def dashboard_runtime_summary(admin=Depends(require_admin)):
+    deployment = qnt30420_evaluate(ARTIFACTS_DIR, DB_FILE)
+    runtime_state = load_json("unified_runtime_orchestrator.json", default_unified_runtime_state())
+    strategies = load_json("user_product_layer.json", {"strategies": []})
+    orders_state = load_json("broker_fill_pnl_sync.json", {"orders": []})
+    attribution = build_attribution_snapshot(build_system_state(admin))
+    billing = billing_status(admin)
+    runtime_modules = []
+    for mod in (runtime_state.get("modules") or []):
+        if isinstance(mod, dict):
+            runtime_modules.append({
+                "module_id": mod.get("module_id") or mod.get("name") or "module",
+                "status": mod.get("status") or "registered",
+                "critical": bool(mod.get("critical", False)),
+            })
+    summary = qnt30419_build_unified_dashboard_summary(
+        operator=admin,
+        billing=billing,
+        deployment=deployment,
+        attribution=attribution,
+        strategies=strategies,
+        orders=(orders_state.get("orders") or []),
+        runtime_modules=runtime_modules,
+    )
+    return {"status": "ok", "dashboard": summary}
+
+
+@app.get("/dashboard/operator-brief")
+def dashboard_operator_brief(admin=Depends(require_admin)):
+    summary = dashboard_runtime_summary(admin)
+    return {"status": "ok", "brief": qnt30419_build_operator_brief(summary.get("dashboard") or {})}
+
+
+@app.get("/dashboard/activity-feed")
+def dashboard_activity_feed(admin=Depends(require_admin)):
+    summary = dashboard_runtime_summary(admin)
+    return {"status": "ok", "items": qnt30419_build_activity_feed(summary.get("dashboard") or {})}
+
+
+@app.get("/dashboard/module-map")
+def dashboard_module_map(admin=Depends(require_admin)):
+    summary = dashboard_runtime_summary(admin)
+    return {"status": "ok", "modules": (summary.get("dashboard") or {}).get("runtime_modules", [])}
+
+
+
+
+class LiveExecutionConnectRequest(BaseModel):
+    connection_mode: str = Field(default="env")
+    base_url: Optional[str] = None
+    paper: Optional[bool] = None
+
+
+class LiveExecutionSubmitRequest(BaseModel):
+    symbol: str
+    side: str
+    qty: float = Field(gt=0)
+
+
+def qnt30421_live_execution_status_payload(admin):
+    state = get_operator_state(admin)
+    deployment = qnt30420_evaluate(ARTIFACTS_DIR, DB_PATH)
+    risk = evaluate_risk_state(state)
+    billing = billing_subscription_status(admin)
+    broker = safe_broker_view().get("alpaca", {})
+    return qnt30421_build_status_snapshot(admin, billing, deployment, risk, broker, state.get("orders") or {})
+
+
+@app.get("/legacy/live-execution/status")
+def live_execution_status(admin=Depends(require_admin)):
+    return qnt30421_live_execution_status_payload(admin)
+
+
+@app.get("/legacy/live-execution/readiness")
+def live_execution_readiness(admin=Depends(require_admin)):
+    payload = qnt30421_live_execution_status_payload(admin)
+    return {"mission": "QNT30421", **(payload.get("readiness") or {})}
+
+
+@app.post("/legacy/live-execution/connect")
+def live_execution_connect(payload: LiveExecutionConnectRequest, admin=Depends(require_admin)):
+    cfg = get_broker_config()
+    alpaca = cfg["alpaca"]
+    alpaca["connection_mode"] = (payload.connection_mode or "env").lower()
+    if payload.base_url:
+        alpaca["base_url"] = payload.base_url.strip()
+    if payload.paper is not None:
+        alpaca["paper"] = bool(payload.paper)
+    save_broker_config(cfg)
+    snapshot = refresh_alpaca_state(soft=True)
+    audit = load_json("qnt30421_live_execution_audit.json", {"events": []})
+    audit["events"].insert(0, qnt30421_build_audit_event(admin, "live_execution.connect", {"connection_mode": alpaca.get("connection_mode"), "base_url": alpaca.get("base_url"), "paper": alpaca.get("paper"), "connected": snapshot.get("connected")}))
+    audit["events"] = audit["events"][:200]
+    save_json("qnt30421_live_execution_audit.json", audit)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "live_execution.connect", admin.get("operator_id"), {"connected": snapshot.get("connected"), "base_url": snapshot.get("base_url")}, "execution")
+    return {"mission": "QNT30421", "status": "ok", "broker": snapshot}
+
+
+@app.post("/legacy/live-execution/submit")
+def live_execution_submit(payload: LiveExecutionSubmitRequest, admin=Depends(require_admin)):
+    state = get_operator_state(admin)
+    user = billing_feature_guard(admin, "live_execution", execution_mode="live")
+    deployment = qnt30420_evaluate(ARTIFACTS_DIR, DB_PATH)
+    risk = evaluate_risk_state(state)
+    broker = safe_broker_view().get("alpaca", {})
+    readiness = qnt30421_canonical_live_requirements({**admin, "billing": billing_summarize_user(user), "plan": user.get("plan"), "subscription_status": user.get("subscription_status")}, risk, deployment, qnt30421_broker_env_summary(), broker)
+    if not readiness.get("ready"):
+        raise HTTPException(status_code=400, detail={"reason": "live_execution_blocked", "blockers": readiness.get("blockers"), "warnings": readiness.get("warnings")})
+    symbol = payload.symbol.upper()
+    side = payload.side.lower()
+    enforce_risk_guard(state, symbol, side, float(payload.qty), "alpaca")
+    notional = round(get_price(symbol) * float(payload.qty), 2)
+    enforce_capital_guard(state, notional, side)
+    broker_order = alpaca_submit_market_order(symbol, side, payload.qty)
+    order = normalize_alpaca_order(broker_order, symbol, side, payload.qty)
+    order["mission"] = "QNT30421"
+    order["route"] = "canonical_live_broker_execution_path"
+    persist_order(state, order)
+    evaluate_monitoring(state)
+    save_operator_state(state)
+    audit = load_json("qnt30421_live_execution_audit.json", {"events": []})
+    audit["events"].insert(0, qnt30421_build_audit_event(admin, "live_execution.submit", {"symbol": symbol, "side": side, "qty": payload.qty, "broker_order_id": order.get("broker_order_id"), "order_id": order.get("order_id")}))
+    audit["events"] = audit["events"][:200]
+    save_json("qnt30421_live_execution_audit.json", audit)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "live_execution.submit", state["operator_id"], order, "execution")
+    return {"mission": "QNT30421", "status": "submitted", "order": order, "readiness": readiness}
+
+
+@app.get("/live-execution/orders")
+def live_execution_orders(admin=Depends(require_admin)):
+    state = get_operator_state(admin)
+    orders = [o for o in (state.get("orders") or {}).get("orders", []) if str(o.get("mode") or "").lower() == "alpaca"]
+    return {"mission": "QNT30421", "orders": orders[:100]}
+
+
+@app.get("/live-execution/audit")
+def live_execution_audit(admin=Depends(require_admin)):
+    audit = load_json("qnt30421_live_execution_audit.json", {"events": []})
+    return {"mission": "QNT30421", "events": audit.get("events", [])[:100]}
+
+
+
+
+# -------------------------
+# QNT30422 Multi-Tenant Institutional Workspace Layer
+# -------------------------
+class WorkspaceCreateRequest(BaseModel):
+    name: str = Field(..., min_length=2, max_length=120)
+    slug: Optional[str] = None
+    billing_email: Optional[str] = None
+    plan: str = Field(default='institutional')
+    initial_balance: float = Field(default=100000.0)
+    currency: str = Field(default='USD')
+
+
+class WorkspaceSwitchRequest(BaseModel):
+    organization_id: str
+
+
+class WorkspaceMemberAddRequest(BaseModel):
+    organization_id: str
+    user_email: str
+    role: str = Field(default='analyst')
+    display_name: Optional[str] = None
+
+
+WORKSPACE_ROLE_CAPABILITIES = {
+    'owner': ['workspace_admin', 'billing_admin', 'capital_admin', 'trade_execute', 'risk_override', 'view_reports'],
+    'admin': ['workspace_admin', 'capital_admin', 'trade_execute', 'view_reports'],
+    'trader': ['trade_execute', 'view_reports'],
+    'analyst': ['view_reports'],
+    'observer': ['view_reports_read_only'],
+}
+
+
+def _workspace_conn():
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(str(DB_PATH))
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+def _slugify_workspace(value: str) -> str:
+    base = ''.join(ch.lower() if ch.isalnum() else '-' for ch in (value or '').strip())
+    while '--' in base:
+        base = base.replace('--', '-')
+    return base.strip('-') or f'workspace-{uuid.uuid4().hex[:6]}'
+
+
+def _table_exists(cur, table_name: str) -> bool:
+    cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (table_name,))
+    return cur.fetchone() is not None
+
+
+def _column_names(cur, table_name: str):
+    cur.execute(f"PRAGMA table_info({table_name})")
+    return {row[1] for row in cur.fetchall()}
+
+
+def _ensure_column(cur, table_name: str, column_name: str, ddl: str):
+    if _table_exists(cur, table_name) and column_name not in _column_names(cur, table_name):
+        cur.execute(f"ALTER TABLE {table_name} ADD COLUMN {ddl}")
+
+
+def _backfill_org_column(cur, table_name: str, organization_id: str):
+    cols = _column_names(cur, table_name)
+    if 'organization_id' in cols:
+        cur.execute(f"UPDATE {table_name} SET organization_id=? WHERE organization_id IS NULL OR trim(organization_id)=''", (organization_id,))
+
+
+def ensure_workspace_schema():
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organizations (
+                id TEXT PRIMARY KEY,
+                name TEXT NOT NULL,
+                slug TEXT UNIQUE,
+                billing_email TEXT,
+                plan TEXT DEFAULT 'institutional',
+                status TEXT DEFAULT 'active',
+                created_at TEXT,
+                updated_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS workspace_memberships (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                user_email TEXT NOT NULL,
+                user_operator_id TEXT,
+                display_name TEXT,
+                role TEXT DEFAULT 'analyst',
+                status TEXT DEFAULT 'active',
+                created_at TEXT,
+                updated_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_accounts (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                name TEXT NOT NULL,
+                balance REAL DEFAULT 0,
+                currency TEXT DEFAULT 'USD',
+                risk_mode TEXT DEFAULT 'guarded',
+                created_at TEXT,
+                updated_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS workspace_isolation_audit (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                table_name TEXT NOT NULL,
+                action TEXT NOT NULL,
+                notes TEXT,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS workspace_strategy_registry (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                strategy_key TEXT NOT NULL,
+                display_name TEXT,
+                status TEXT DEFAULT 'active',
+                created_at TEXT,
+                updated_at TEXT
+            )
+            """
+        )
+
+        core_org_tables = [
+            'users', 'accounts', 'trades', 'orders', 'fills', 'positions',
+            'trade_attribution', 'performance_snapshots', 'strategy_profiles', 'strategy_runs'
+        ]
+        for table_name in core_org_tables:
+            if _table_exists(cur, table_name):
+                _ensure_column(cur, table_name, 'organization_id', 'organization_id TEXT')
+                _ensure_column(cur, table_name, 'workspace_id', 'workspace_id TEXT')
+
+
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_governance_approvals (
+        id TEXT PRIMARY KEY,
+        organization_id TEXT NOT NULL,
+        action_type TEXT NOT NULL,
+        target_type TEXT,
+        target_id TEXT,
+        requested_by TEXT,
+        requested_role TEXT,
+        reason TEXT,
+        payload_json TEXT,
+        status TEXT DEFAULT 'pending',
+        submitted_at TEXT,
+        reviewed_at TEXT,
+        reviewed_by TEXT,
+        reviewed_role TEXT,
+        decision_note TEXT,
+                    executed_at TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _workspace_memberships_for_email(cur, email: str):
+    cur.execute(
+        """
+        SELECT m.*, o.name as organization_name, o.slug as organization_slug, o.plan as organization_plan, o.status as organization_status
+        FROM workspace_memberships m
+        JOIN organizations o ON o.id = m.organization_id
+        WHERE lower(m.user_email)=lower(?) AND lower(m.status)='active'
+        ORDER BY o.name ASC
+        """,
+        (normalize_email(email),),
+    )
+    return [dict(row) for row in cur.fetchall()]
+
+
+def ensure_default_workspace_for_session(session):
+    ensure_workspace_schema()
+    email = normalize_email(session.get('email')) or DEMO_ADMIN_EMAIL
+    display_name = session.get('display_name') or 'Operator Workspace'
+    operator_id = session.get('operator_id') or DEMO_ADMIN_OPERATOR_ID
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        memberships = _workspace_memberships_for_email(cur, email)
+        if memberships:
+            selected = session.get('selected_workspace_id')
+            if not selected:
+                selected = memberships[0]['organization_id']
+                updated = session_view({**session, 'selected_workspace_id': selected})
+                save_session(updated)
+                session = updated
+            return session, memberships
+
+        org_id = f'org_{uuid.uuid4().hex[:10]}'
+        now = now_iso()
+        org_name = f"{display_name} Workspace"
+        slug = _slugify_workspace(display_name)
+        cur.execute(
+            'INSERT INTO organizations (id, name, slug, billing_email, plan, status, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?)',
+            (org_id, org_name, slug, email, 'institutional', 'active', now, now),
+        )
+        cur.execute(
+            'INSERT INTO workspace_memberships (id, organization_id, user_email, user_operator_id, display_name, role, status, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?)',
+            (f'mem_{uuid.uuid4().hex[:10]}', org_id, email, operator_id, display_name, 'owner', 'active', now, now),
+        )
+        cur.execute(
+            'INSERT INTO organization_accounts (id, organization_id, name, balance, currency, risk_mode, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?)',
+            (f'acct_{uuid.uuid4().hex[:10]}', org_id, 'Primary Treasury', 100000.0, 'USD', 'guarded', now, now),
+        )
+        conn.commit()
+        updated = session_view({**session, 'selected_workspace_id': org_id})
+        save_session(updated)
+        session = updated
+        memberships = _workspace_memberships_for_email(cur, email)
+        return session, memberships
+    finally:
+        conn.close()
+
+
+def workspace_memberships_for_session(session):
+    session, memberships = ensure_default_workspace_for_session(session)
+    return session, memberships
+
+
+def resolve_workspace_context(session):
+    session, memberships = workspace_memberships_for_session(session)
+    selected = session.get('selected_workspace_id')
+    active = next((m for m in memberships if m['organization_id'] == selected), None)
+    if not active and memberships:
+        active = memberships[0]
+        session = session_view({**session, 'selected_workspace_id': active['organization_id']})
+        save_session(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        org = None
+        members = []
+        accounts = []
+        if active:
+            cur.execute('SELECT * FROM organizations WHERE id=?', (active['organization_id'],))
+            row = cur.fetchone()
+            org = dict(row) if row else None
+            cur.execute('SELECT organization_id, user_email, user_operator_id, display_name, role, status, created_at FROM workspace_memberships WHERE organization_id=? ORDER BY created_at ASC', (active['organization_id'],))
+            members = [dict(r) for r in cur.fetchall()]
+            cur.execute('SELECT * FROM organization_accounts WHERE organization_id=? ORDER BY created_at ASC', (active['organization_id'],))
+            accounts = [dict(r) for r in cur.fetchall()]
+        return {
+            'mission': 'QNT30422',
+            'session': session,
+            'memberships': memberships,
+            'active_membership': active,
+            'organization': org,
+            'members': members,
+            'accounts': accounts,
+        }
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/roles')
+def workspace_roles(session=Depends(require_auth)):
+    ensure_default_workspace_for_session(session)
+    return {'mission': 'QNT30422', 'roles': WORKSPACE_ROLE_CAPABILITIES}
+
+
+@app.get('/workspace/organizations')
+def workspace_organizations(session=Depends(require_auth)):
+    ctx = resolve_workspace_context(session)
+    return {
+        'mission': 'QNT30422',
+        'organizations': [
+            {
+                'organization_id': m['organization_id'],
+                'name': m.get('organization_name'),
+                'slug': m.get('organization_slug'),
+                'plan': m.get('organization_plan'),
+                'status': m.get('organization_status'),
+                'role': m.get('role'),
+                'is_active': m['organization_id'] == (ctx.get('active_membership') or {}).get('organization_id'),
+            }
+            for m in ctx['memberships']
+        ],
+        'active_workspace_id': (ctx.get('active_membership') or {}).get('organization_id'),
+    }
+
+
+@app.get('/workspace/context')
+def workspace_context(session=Depends(require_auth)):
+    ctx = resolve_workspace_context(session)
+    active = ctx.get('active_membership') or {}
+    org = ctx.get('organization') or {}
+    balance = round(sum(as_float(a.get('balance'), 0.0) for a in ctx.get('accounts', [])), 2)
+    return {
+        'mission': 'QNT30422',
+        'organization': org,
+        'membership': active,
+        'members': ctx.get('members', []),
+        'accounts': ctx.get('accounts', []),
+        'totals': {
+            'member_count': len(ctx.get('members', [])),
+            'account_count': len(ctx.get('accounts', [])),
+            'capital_balance': balance,
+        },
+        'permissions': WORKSPACE_ROLE_CAPABILITIES.get(active.get('role') or 'observer', []),
+        'billing_scope': {
+            'mode': billing_stripe_mode(),
+            'organization_plan': org.get('plan'),
+            'billing_email': org.get('billing_email') or session.get('email'),
+        },
+    }
+
+
+@app.post('/workspace/organizations/create')
+def workspace_create(payload: WorkspaceCreateRequest, session=Depends(require_auth)):
+    session, memberships = workspace_memberships_for_session(session)
+    requester_role = next((m.get('role') for m in memberships if m.get('organization_id') == session.get('selected_workspace_id')), 'owner')
+    if requester_role not in {'owner', 'admin'} and not session.get('is_admin'):
+        raise HTTPException(status_code=403, detail='workspace_admin_required')
+    ensure_workspace_schema()
+    org_id = f'org_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    email = normalize_email(session.get('email')) or DEMO_ADMIN_EMAIL
+    display_name = session.get('display_name') or 'Workspace Owner'
+    slug = _slugify_workspace(payload.slug or payload.name)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute('SELECT id FROM organizations WHERE slug=?', (slug,))
+        if cur.fetchone():
+            slug = f"{slug}-{uuid.uuid4().hex[:4]}"
+        cur.execute(
+            'INSERT INTO organizations (id, name, slug, billing_email, plan, status, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?)',
+            (org_id, payload.name.strip(), slug, normalize_email(payload.billing_email) or email, payload.plan, 'active', now, now),
+        )
+        cur.execute(
+            'INSERT INTO workspace_memberships (id, organization_id, user_email, user_operator_id, display_name, role, status, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?)',
+            (f'mem_{uuid.uuid4().hex[:10]}', org_id, email, session.get('operator_id'), display_name, 'owner', 'active', now, now),
+        )
+        cur.execute(
+            'INSERT INTO organization_accounts (id, organization_id, name, balance, currency, risk_mode, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?)',
+            (f'acct_{uuid.uuid4().hex[:10]}', org_id, 'Primary Treasury', float(payload.initial_balance), payload.currency.upper(), 'guarded', now, now),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+    updated = session_view({**session, 'selected_workspace_id': org_id})
+    save_session(updated)
+    return {'mission': 'QNT30422', 'status': 'created', 'organization_id': org_id, 'slug': slug, 'active_workspace_id': org_id}
+
+
+@app.post('/workspace/members/add')
+def workspace_add_member(payload: WorkspaceMemberAddRequest, session=Depends(require_auth)):
+    ctx = resolve_workspace_context(session)
+    active = ctx.get('active_membership') or {}
+    if payload.organization_id != active.get('organization_id'):
+        raise HTTPException(status_code=400, detail='organization_mismatch_with_active_workspace')
+    if (active.get('role') not in {'owner', 'admin'}) and not session.get('is_admin'):
+        raise HTTPException(status_code=403, detail='workspace_admin_required')
+    role = (payload.role or 'analyst').strip().lower()
+    if role not in WORKSPACE_ROLE_CAPABILITIES:
+        raise HTTPException(status_code=400, detail='invalid_role')
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            'SELECT id FROM workspace_memberships WHERE organization_id=? AND lower(user_email)=lower(?)',
+            (payload.organization_id, normalize_email(payload.user_email)),
+        )
+        existing = cur.fetchone()
+        if existing:
+            cur.execute(
+                'UPDATE workspace_memberships SET role=?, display_name=?, status=?, updated_at=? WHERE id=?',
+                (role, payload.display_name or payload.user_email, 'active', now, existing['id']),
+            )
+        else:
+            cur.execute(
+                'INSERT INTO workspace_memberships (id, organization_id, user_email, user_operator_id, display_name, role, status, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?)',
+                (f'mem_{uuid.uuid4().hex[:10]}', payload.organization_id, normalize_email(payload.user_email), None, payload.display_name or payload.user_email, role, 'active', now, now),
+            )
+        conn.commit()
+    finally:
+        conn.close()
+    return {'mission': 'QNT30422', 'status': 'member_added', 'organization_id': payload.organization_id, 'user_email': normalize_email(payload.user_email), 'role': role}
+
+
+@app.post('/workspace/switch')
+def workspace_switch(payload: WorkspaceSwitchRequest, session=Depends(require_auth)):
+    session, memberships = workspace_memberships_for_session(session)
+    allowed = any(m.get('organization_id') == payload.organization_id for m in memberships)
+    if not allowed:
+        raise HTTPException(status_code=403, detail='membership_required')
+    updated = session_view({**session, 'selected_workspace_id': payload.organization_id})
+    save_session(updated)
+    return {'mission': 'QNT30422', 'status': 'switched', 'active_workspace_id': payload.organization_id}
+
+
+@app.get('/workspace/accounts')
+def workspace_accounts(session=Depends(require_auth)):
+    ctx = resolve_workspace_context(session)
+    return {'mission': 'QNT30422', 'organization': ctx.get('organization'), 'accounts': ctx.get('accounts', [])}
+
+
+def _workspace_permissions_for_role(role: str):
+    return WORKSPACE_ROLE_CAPABILITIES.get((role or 'observer').strip().lower(), WORKSPACE_ROLE_CAPABILITIES['observer'])
+
+
+def _workspace_isolation_status_for_context(ctx):
+    ensure_workspace_schema()
+    org = ctx.get('organization') or {}
+    organization_id = org.get('id')
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        audited_tables = []
+        scoped_tables = []
+        unscoped_tables = []
+        for table_name in ['users', 'accounts', 'trades', 'orders', 'fills', 'positions', 'trade_attribution', 'performance_snapshots', 'strategy_profiles', 'strategy_runs']:
+            if _table_exists(cur, table_name):
+                cols = _column_names(cur, table_name)
+                audited_tables.append({'table': table_name, 'columns': sorted(cols)})
+                if 'organization_id' in cols:
+                    scoped_tables.append(table_name)
+                else:
+                    unscoped_tables.append(table_name)
+        return {
+            'mission': 'QNT30422.1',
+            'organization_id': organization_id,
+            'organization_name': org.get('name'),
+            'strict_isolation': len(unscoped_tables) == 0,
+            'audited_table_count': len(audited_tables),
+            'scoped_tables': scoped_tables,
+            'unscoped_tables': unscoped_tables,
+            'audited_tables': audited_tables,
+            'permissions': _workspace_permissions_for_role((ctx.get('active_membership') or {}).get('role')),
+        }
+    finally:
+        conn.close()
+
+
+def _record_workspace_audit(cur, organization_id: str, table_name: str, action: str, notes: str = ''):
+    cur.execute(
+        'INSERT INTO workspace_isolation_audit (id, organization_id, table_name, action, notes, created_at) VALUES (?,?,?,?,?,?)',
+        (f'audit_{uuid.uuid4().hex[:10]}', organization_id, table_name, action, notes, now_iso()),
+    )
+
+
+@app.get('/workspace/isolation/status')
+def workspace_isolation_status(session=Depends(require_auth)):
+    ctx = resolve_workspace_context(session)
+    return _workspace_isolation_status_for_context(ctx)
+
+
+@app.post('/workspace/isolation/enforce')
+def workspace_isolation_enforce(session=Depends(require_auth)):
+    ctx = resolve_workspace_context(session)
+    active = ctx.get('active_membership') or {}
+    if (active.get('role') not in {'owner', 'admin'}) and not session.get('is_admin'):
+        raise HTTPException(status_code=403, detail='workspace_admin_required')
+    org = ctx.get('organization') or {}
+    organization_id = org.get('id')
+    if not organization_id:
+        raise HTTPException(status_code=400, detail='active_workspace_required')
+    ensure_workspace_schema()
+    conn = _workspace_conn()
+    updated = []
+    try:
+        cur = conn.cursor()
+        for table_name in ['users', 'accounts', 'trades', 'orders', 'fills', 'positions', 'trade_attribution', 'performance_snapshots', 'strategy_profiles', 'strategy_runs']:
+            if _table_exists(cur, table_name):
+                cols = _column_names(cur, table_name)
+                if 'organization_id' in cols:
+                    cur.execute(f"SELECT COUNT(*) FROM {table_name} WHERE organization_id IS NULL OR trim(organization_id)='' ")
+                    before = int(cur.fetchone()[0])
+                    if before > 0:
+                        _backfill_org_column(cur, table_name, organization_id)
+                        _record_workspace_audit(cur, organization_id, table_name, 'backfill_organization_id', f'backfilled {before} rows to {organization_id}')
+                        updated.append({'table': table_name, 'rows_backfilled': before})
+                if 'workspace_id' in cols:
+                    cur.execute(f"UPDATE {table_name} SET workspace_id=? WHERE workspace_id IS NULL OR trim(workspace_id)=''", (organization_id,))
+        conn.commit()
+        status = _workspace_isolation_status_for_context(ctx)
+        return {'mission': 'QNT30422.1', 'status': 'enforced', 'organization_id': organization_id, 'updated_tables': updated, 'isolation': status}
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/isolation/audit')
+def workspace_isolation_audit(session=Depends(require_auth)):
+    ctx = resolve_workspace_context(session)
+    org = ctx.get('organization') or {}
+    organization_id = org.get('id')
+    ensure_workspace_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute('SELECT organization_id, table_name, action, notes, created_at FROM workspace_isolation_audit WHERE organization_id=? ORDER BY created_at DESC LIMIT 100', (organization_id,))
+        rows = [dict(r) for r in cur.fetchall()]
+        return {'mission': 'QNT30422.1', 'organization_id': organization_id, 'events': rows}
+    finally:
+        conn.close()
+
+
+# -------------------------
+# QNT30423 Organization-Level Execution and Capital Engine
+# -------------------------
+class WorkspaceBrokerConfigRequest(BaseModel):
+    broker_name: str = Field(default='alpaca')
+    account_label: str = Field(default='primary')
+    mode: str = Field(default='paper')
+    api_key_env: Optional[str] = None
+    secret_key_env: Optional[str] = None
+    base_url: Optional[str] = None
+
+
+class WorkspaceCapitalAccountCreateRequest(BaseModel):
+    name: str = Field(..., min_length=2, max_length=120)
+    balance: float = Field(default=0.0)
+    currency: str = Field(default='USD')
+    risk_mode: str = Field(default='guarded')
+
+
+class WorkspaceStrategyRegisterRequest(BaseModel):
+    strategy_key: str = Field(..., min_length=2, max_length=80)
+    display_name: Optional[str] = None
+    market: str = Field(default='multi-asset')
+    status: str = Field(default='active')
+
+
+class WorkspaceCapitalAllocateRequest(BaseModel):
+    strategy_key: str = Field(..., min_length=2, max_length=80)
+    account_id: Optional[str] = None
+    allocated_capital: float = Field(..., gt=0)
+    reserve_capital: float = Field(default=0.0, ge=0)
+
+
+class WorkspaceExecutionSubmitRequest(BaseModel):
+    strategy_key: str = Field(..., min_length=2, max_length=80)
+    symbol: str = Field(..., min_length=1, max_length=40)
+    side: str = Field(..., min_length=1, max_length=8)
+    qty: float = Field(..., gt=0)
+    account_id: Optional[str] = None
+    venue: Optional[str] = None
+
+
+class WorkspacePositionReduceRequest(BaseModel):
+    position_id: str = Field(..., min_length=3, max_length=80)
+    percent: float = Field(..., gt=0, le=1)
+    venue: Optional[str] = None
+
+
+class WorkspacePositionCloseRequest(BaseModel):
+    position_id: str = Field(..., min_length=3, max_length=80)
+    venue: Optional[str] = None
+
+
+class WorkspaceFlattenAllRequest(BaseModel):
+    account_id: Optional[str] = None
+    venue: Optional[str] = None
+
+
+def ensure_qnt30423_schema():
+    ensure_workspace_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_broker_profiles (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                broker_name TEXT NOT NULL,
+                account_label TEXT,
+                mode TEXT DEFAULT 'paper',
+                api_key_env TEXT,
+                secret_key_env TEXT,
+                base_url TEXT,
+                status TEXT DEFAULT 'configured',
+                created_at TEXT,
+                updated_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_strategy_registry (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                strategy_key TEXT NOT NULL,
+                display_name TEXT,
+                market TEXT DEFAULT 'multi-asset',
+                status TEXT DEFAULT 'active',
+                created_at TEXT,
+                updated_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_capital_allocations (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                account_id TEXT,
+                strategy_key TEXT NOT NULL,
+                allocated_capital REAL DEFAULT 0,
+                reserve_capital REAL DEFAULT 0,
+                status TEXT DEFAULT 'active',
+                created_at TEXT,
+                updated_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_execution_orders (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                account_id TEXT,
+                strategy_key TEXT NOT NULL,
+                symbol TEXT NOT NULL,
+                side TEXT NOT NULL,
+                qty REAL NOT NULL,
+                venue TEXT,
+                broker_name TEXT,
+                broker_mode TEXT,
+                status TEXT DEFAULT 'submitted',
+                notional_estimate REAL DEFAULT 0,
+                created_at TEXT,
+                updated_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_performance_snapshots (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                order_count INTEGER DEFAULT 0,
+                strategy_count INTEGER DEFAULT 0,
+                account_count INTEGER DEFAULT 0,
+                allocated_capital REAL DEFAULT 0,
+                deployable_capital REAL DEFAULT 0,
+                realized_pnl REAL DEFAULT 0,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_execution_fills (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                order_id TEXT NOT NULL,
+                account_id TEXT,
+                strategy_key TEXT NOT NULL,
+                symbol TEXT NOT NULL,
+                side TEXT NOT NULL,
+                qty REAL NOT NULL,
+                fill_price REAL DEFAULT 0,
+                fill_value REAL DEFAULT 0,
+                status TEXT DEFAULT 'filled',
+                broker_name TEXT,
+                broker_mode TEXT,
+                execution_mode TEXT DEFAULT 'simulated',
+                source_event TEXT,
+                created_at TEXT,
+                updated_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_positions (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                account_id TEXT,
+                strategy_key TEXT NOT NULL,
+                symbol TEXT NOT NULL,
+                qty REAL DEFAULT 0,
+                avg_price REAL DEFAULT 0,
+                market_price REAL DEFAULT 0,
+                market_value REAL DEFAULT 0,
+                unrealized_pnl REAL DEFAULT 0,
+                realized_pnl REAL DEFAULT 0,
+                status TEXT DEFAULT 'open',
+                last_order_id TEXT,
+                created_at TEXT,
+                updated_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_trade_lifecycle (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                order_id TEXT NOT NULL,
+                stage TEXT NOT NULL,
+                stage_status TEXT DEFAULT 'ok',
+                strategy_key TEXT,
+                symbol TEXT,
+                side TEXT,
+                qty REAL DEFAULT 0,
+                payload_json TEXT,
+                created_at TEXT
+            )
+            """
+        )
+        for table, col, ddl in [
+            ('organization_execution_orders', 'fill_price', 'ALTER TABLE organization_execution_orders ADD COLUMN fill_price REAL DEFAULT 0'),
+            ('organization_execution_orders', 'fill_value', 'ALTER TABLE organization_execution_orders ADD COLUMN fill_value REAL DEFAULT 0'),
+            ('organization_execution_orders', 'filled_qty', 'ALTER TABLE organization_execution_orders ADD COLUMN filled_qty REAL DEFAULT 0'),
+            ('organization_execution_orders', 'execution_mode', "ALTER TABLE organization_execution_orders ADD COLUMN execution_mode TEXT DEFAULT 'simulated'"),
+            ('organization_execution_orders', 'source_event', 'ALTER TABLE organization_execution_orders ADD COLUMN source_event TEXT'),
+        ]:
+            cols = _column_names(cur, table) if _table_exists(cur, table) else []
+            if col not in cols:
+                cur.execute(ddl)
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _require_workspace_org(session):
+    ctx = resolve_workspace_context(session)
+    org = ctx.get('organization') or {}
+    active = ctx.get('active_membership') or {}
+    organization_id = org.get('id')
+    if not organization_id:
+        raise HTTPException(status_code=400, detail='active_workspace_required')
+    return ctx, org, active, organization_id
+
+
+def _workspace_trade_allowed(active, session):
+    role = (active.get('role') or 'observer').strip().lower()
+    if 'trade_execute' not in _workspace_permissions_for_role(role) and not session.get('is_admin'):
+        raise HTTPException(status_code=403, detail='trade_execute_permission_required')
+
+
+def _workspace_admin_allowed(active, session):
+    role = (active.get('role') or 'observer').strip().lower()
+    if role not in {'owner', 'admin'} and not session.get('is_admin'):
+        raise HTTPException(status_code=403, detail='workspace_admin_required')
+
+
+def _fetch_org_broker_profile(cur, organization_id: str):
+    cur.execute('SELECT * FROM organization_broker_profiles WHERE organization_id=? ORDER BY updated_at DESC, created_at DESC LIMIT 1', (organization_id,))
+    row = cur.fetchone()
+    return dict(row) if row else None
+
+
+def _fetch_org_accounts(cur, organization_id: str):
+    cur.execute('SELECT * FROM organization_accounts WHERE organization_id=? ORDER BY created_at ASC', (organization_id,))
+    return [dict(r) for r in cur.fetchall()]
+
+
+def _fetch_org_strategies(cur, organization_id: str):
+    cur.execute('SELECT * FROM organization_strategy_registry WHERE organization_id=? ORDER BY created_at ASC', (organization_id,))
+    return [dict(r) for r in cur.fetchall()]
+
+
+def _fetch_org_allocations(cur, organization_id: str):
+    cur.execute('SELECT * FROM organization_capital_allocations WHERE organization_id=? ORDER BY created_at DESC', (organization_id,))
+    return [dict(r) for r in cur.fetchall()]
+
+
+def _fetch_org_orders(cur, organization_id: str):
+    cur.execute('SELECT * FROM organization_execution_orders WHERE organization_id=? ORDER BY created_at DESC LIMIT 100', (organization_id,))
+    return [dict(r) for r in cur.fetchall()]
+
+
+def _fetch_org_fills(cur, organization_id: str):
+    cur.execute('SELECT * FROM organization_execution_fills WHERE organization_id=? ORDER BY created_at DESC LIMIT 200', (organization_id,))
+    return [dict(r) for r in cur.fetchall()]
+
+
+def _fetch_org_positions(cur, organization_id: str):
+    cur.execute('SELECT * FROM organization_positions WHERE organization_id=? ORDER BY updated_at DESC, created_at DESC LIMIT 200', (organization_id,))
+    return [dict(r) for r in cur.fetchall()]
+
+
+def _fetch_org_lifecycle(cur, organization_id: str):
+    cur.execute('SELECT * FROM organization_trade_lifecycle WHERE organization_id=? ORDER BY created_at DESC LIMIT 300', (organization_id,))
+    return [dict(r) for r in cur.fetchall()]
+
+
+def _record_org_lifecycle(cur, organization_id: str, order_id: str, stage: str, payload: dict, stage_status: str = 'ok'):
+    now = now_iso()
+    cur.execute(
+        'INSERT INTO organization_trade_lifecycle (id, organization_id, order_id, stage, stage_status, strategy_key, symbol, side, qty, payload_json, created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
+        (
+            f'lifecycle_{uuid.uuid4().hex[:10]}',
+            organization_id,
+            order_id,
+            stage,
+            stage_status,
+            payload.get('strategy_key'),
+            payload.get('symbol'),
+            payload.get('side'),
+            float(payload.get('qty') or 0),
+            json.dumps(payload, sort_keys=True),
+            now,
+        )
+    )
+
+
+def _workspace_price_seed(symbol: str) -> float:
+    seeds = {
+        'AAPL': 189.25, 'MSFT': 415.10, 'NVDA': 901.40, 'TSLA': 171.85, 'SPY': 521.15,
+        'QQQ': 445.80, 'AMZN': 183.70, 'GOOGL': 151.35, 'META': 492.10, 'BTCUSD': 68450.0,
+    }
+    return seeds.get(symbol.upper(), 100.0 + (sum(ord(c) for c in symbol.upper()) % 500))
+
+
+def _simulate_fill_price(symbol: str, side: str, qty: float, venue: str | None = None) -> float:
+    base = _workspace_price_seed(symbol)
+    slippage = 0.0005 + min(float(qty) / 50000.0, 0.005)
+    if str(venue or 'auto').lower() in {'auto', 'paper_bridge'}:
+        slippage += 0.0002
+    side = str(side or 'buy').lower()
+    px = base * (1 + slippage if side == 'buy' else 1 - slippage)
+    return round(px, 4)
+
+
+def _env_value_or_literal(name_or_value: str | None) -> str | None:
+    if not name_or_value:
+        return None
+    value = os.getenv(name_or_value)
+    return value if value else name_or_value
+
+
+def _hybrid_submit_order(broker: dict, symbol: str, side: str, qty: float, venue: str | None = None) -> dict:
+    mode = str((broker or {}).get('mode') or 'paper').lower()
+    base_url = str((broker or {}).get('base_url') or '').strip()
+    api_key = _env_value_or_literal((broker or {}).get('api_key_env'))
+    secret_key = _env_value_or_literal((broker or {}).get('secret_key_env'))
+    wants_real = mode in {'live', 'paper'} and bool(base_url and api_key and secret_key)
+    if wants_real:
+        try:
+            endpoint = base_url.rstrip('/') + '/v2/orders'
+            payload = {
+                'symbol': symbol.upper(),
+                'qty': int(float(qty)) if float(qty).is_integer() else float(qty),
+                'side': side.lower(),
+                'type': 'market',
+                'time_in_force': 'day',
+            }
+            req = urllib.request.Request(endpoint, data=json.dumps(payload).encode('utf-8'), method='POST')
+            req.add_header('Content-Type', 'application/json')
+            req.add_header('APCA-API-KEY-ID', api_key)
+            req.add_header('APCA-API-SECRET-KEY', secret_key)
+            with urllib.request.urlopen(req, timeout=8) as resp:
+                data = json.loads(resp.read().decode('utf-8') or '{}')
+            status = str(data.get('status') or 'accepted').lower()
+            filled_avg = data.get('filled_avg_price')
+            filled_qty = float(data.get('filled_qty') or 0)
+            if not filled_avg:
+                filled_avg = _simulate_fill_price(symbol, side, qty, venue)
+            if not filled_qty:
+                filled_qty = float(qty)
+                status = 'filled' if status in {'accepted', 'new', 'held'} else status
+            return {
+                'execution_mode': 'broker_api',
+                'broker_order_id': data.get('id'),
+                'status': status,
+                'fill_price': round(float(filled_avg), 4),
+                'filled_qty': round(float(filled_qty), 6),
+                'source_event': 'alpaca.order',
+                'raw': data,
+            }
+        except Exception as exc:
+            pass
+    fill_price = _simulate_fill_price(symbol, side, qty, venue)
+    return {
+        'execution_mode': 'simulated',
+        'broker_order_id': None,
+        'status': 'filled',
+        'fill_price': fill_price,
+        'filled_qty': round(float(qty), 6),
+        'source_event': 'simulated.instant_fill',
+        'raw': {'mode': 'simulated'},
+    }
+
+
+def _upsert_org_position(cur, organization_id: str, account_id: str, strategy_key: str, symbol: str, side: str, qty: float, fill_price: float, order_id: str):
+    cur.execute('SELECT * FROM organization_positions WHERE organization_id=? AND account_id=? AND strategy_key=? AND symbol=? LIMIT 1', (organization_id, account_id, strategy_key, symbol))
+    row = cur.fetchone()
+    now = now_iso()
+    signed_qty = float(qty) if str(side).lower() == 'buy' else -float(qty)
+    if row:
+        pos = dict(row)
+        current_qty = as_float(pos.get('qty'), 0.0)
+        avg_price = as_float(pos.get('avg_price'), 0.0)
+        new_qty = round(current_qty + signed_qty, 6)
+        realized_pnl = as_float(pos.get('realized_pnl'), 0.0)
+        if current_qty >= 0 and signed_qty > 0:
+            new_avg = round(((current_qty * avg_price) + (signed_qty * fill_price)) / max(new_qty, 1e-9), 6)
+        elif current_qty > 0 and signed_qty < 0:
+            close_qty = min(abs(signed_qty), abs(current_qty))
+            realized_pnl = round(realized_pnl + close_qty * (fill_price - avg_price), 6)
+            new_avg = avg_price if new_qty > 0 else 0.0
+        elif current_qty <= 0 and signed_qty < 0:
+            abs_current = abs(current_qty)
+            abs_new = abs(new_qty)
+            new_avg = round(((abs_current * avg_price) + (abs(signed_qty) * fill_price)) / max(abs_new, 1e-9), 6)
+        elif current_qty < 0 and signed_qty > 0:
+            close_qty = min(abs(signed_qty), abs(current_qty))
+            realized_pnl = round(realized_pnl + close_qty * (avg_price - fill_price), 6)
+            new_avg = avg_price if new_qty < 0 else 0.0
+        else:
+            new_avg = avg_price
+        market_price = _workspace_price_seed(symbol)
+        market_value = round(new_qty * market_price, 4)
+        unrealized = round((market_price - new_avg) * new_qty if new_qty >= 0 else (new_avg - market_price) * abs(new_qty), 4)
+        status = 'closed' if abs(new_qty) < 1e-9 else 'open'
+        cur.execute(
+            'UPDATE organization_positions SET qty=?, avg_price=?, market_price=?, market_value=?, unrealized_pnl=?, realized_pnl=?, status=?, last_order_id=?, updated_at=? WHERE id=?',
+            (new_qty, new_avg, market_price, market_value, unrealized, realized_pnl, status, order_id, now, pos['id'])
+        )
+        return pos['id']
+    position_id = f'pos_{uuid.uuid4().hex[:10]}'
+    market_price = _workspace_price_seed(symbol)
+    market_value = round(signed_qty * market_price, 4)
+    unrealized = round((market_price - fill_price) * signed_qty if signed_qty >= 0 else (fill_price - market_price) * abs(signed_qty), 4)
+    status = 'closed' if abs(signed_qty) < 1e-9 else 'open'
+    cur.execute(
+        'INSERT INTO organization_positions (id, organization_id, account_id, strategy_key, symbol, qty, avg_price, market_price, market_value, unrealized_pnl, realized_pnl, status, last_order_id, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+        (position_id, organization_id, account_id, strategy_key, symbol, signed_qty, fill_price, market_price, market_value, unrealized, 0.0, status, order_id, now, now)
+    )
+    return position_id
+
+
+def _fetch_org_position_by_id(cur, organization_id: str, position_id: str):
+    cur.execute('SELECT * FROM organization_positions WHERE organization_id=? AND id=? LIMIT 1', (organization_id, position_id))
+    row = cur.fetchone()
+    return dict(row) if row else None
+
+
+def _org_close_side_for_qty(qty: float) -> str:
+    return 'sell' if float(qty) > 0 else 'buy'
+
+
+def _execute_position_adjustment(cur, organization_id: str, broker: dict, position: dict, qty_to_close: float, venue: str | None, action_label: str):
+    symbol = str(position.get('symbol') or '').upper()
+    account_id = position.get('account_id')
+    strategy_key = position.get('strategy_key')
+    current_qty = as_float(position.get('qty'), 0.0)
+    if not symbol or not strategy_key or not account_id:
+        raise HTTPException(status_code=400, detail='position_missing_required_scope')
+    if abs(current_qty) < 1e-9:
+        raise HTTPException(status_code=400, detail='position_already_flat')
+    qty_to_close = round(min(abs(current_qty), abs(float(qty_to_close))), 6)
+    if qty_to_close <= 0:
+        raise HTTPException(status_code=400, detail='position_adjustment_qty_invalid')
+    side = _org_close_side_for_qty(current_qty)
+    exec_mode = str((broker or {}).get('mode') or 'paper')
+    broker_name = (broker or {}).get('broker_name')
+    order_id = f'ord_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    cur.execute(
+        'INSERT INTO organization_execution_orders (id, organization_id, account_id, strategy_key, symbol, side, qty, venue, broker_name, broker_mode, status, notional_estimate, fill_price, fill_value, filled_qty, execution_mode, source_event, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+        (
+            order_id, organization_id, account_id, strategy_key, symbol, side, qty_to_close, venue or 'auto',
+            broker_name, exec_mode, 'created', 0.0, 0.0, 0.0, 0.0,
+            exec_mode, f'{action_label}_requested', now, now,
+        )
+    )
+    _record_org_lifecycle(cur, organization_id, order_id, f'{action_label}_requested', {
+        'strategy_key': strategy_key,
+        'symbol': symbol,
+        'side': side,
+        'qty': qty_to_close,
+        'account_id': account_id,
+        'position_id': position.get('id'),
+        'action': action_label,
+    })
+    execution_result = _hybrid_submit_order(broker, symbol, side, qty_to_close, venue)
+    fill_price = round(as_float(execution_result.get('fill_price'), 0.0), 4)
+    filled_qty = round(as_float(execution_result.get('filled_qty'), qty_to_close), 6)
+    fill_value = round(fill_price * filled_qty, 4)
+    order_status = execution_result.get('status') or 'filled'
+    cur.execute('UPDATE organization_execution_orders SET status=?, notional_estimate=?, fill_price=?, fill_value=?, filled_qty=?, execution_mode=?, source_event=?, updated_at=? WHERE id=?',
+                (order_status, fill_value, fill_price, fill_value, filled_qty, execution_result.get('execution_mode') or exec_mode, execution_result.get('source_event'), now_iso(), order_id))
+    _record_org_lifecycle(cur, organization_id, order_id, f'{action_label}_submitted', {
+        'strategy_key': strategy_key,
+        'symbol': symbol,
+        'side': side,
+        'qty': filled_qty,
+        'broker_name': broker_name,
+        'broker_mode': exec_mode,
+        'execution_mode': execution_result.get('execution_mode'),
+        'position_id': position.get('id'),
+        'action': action_label,
+    })
+    fill_id = f'fill_{uuid.uuid4().hex[:10]}'
+    cur.execute(
+        'INSERT INTO organization_execution_fills (id, organization_id, order_id, account_id, strategy_key, symbol, side, qty, fill_price, fill_value, status, broker_name, broker_mode, execution_mode, source_event, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+        (fill_id, organization_id, order_id, account_id, strategy_key, symbol, side, filled_qty, fill_price, fill_value, 'filled', broker_name, exec_mode, execution_result.get('execution_mode') or exec_mode, f'{action_label}.fill', now_iso(), now_iso())
+    )
+    position_id = _upsert_org_position(cur, organization_id, account_id, strategy_key, symbol, side, filled_qty, fill_price, order_id)
+    updated_position = _fetch_org_position_by_id(cur, organization_id, position_id)
+    resulting_qty = as_float((updated_position or {}).get('qty'), 0.0)
+    terminal_stage = 'position_closed' if abs(resulting_qty) < 1e-9 else 'position_reduced'
+    _record_org_lifecycle(cur, organization_id, order_id, terminal_stage, {
+        'strategy_key': strategy_key,
+        'symbol': symbol,
+        'side': side,
+        'qty': filled_qty,
+        'fill_price': fill_price,
+        'fill_id': fill_id,
+        'position_id': position_id,
+        'resulting_qty': resulting_qty,
+        'action': action_label,
+    })
+    return {
+        'order_id': order_id,
+        'fill_id': fill_id,
+        'position_id': position_id,
+        'status': order_status,
+        'filled_qty': filled_qty,
+        'fill_price': fill_price,
+        'fill_value': fill_value,
+        'resulting_qty': resulting_qty,
+        'action': action_label,
+        'execution_result': execution_result,
+    }
+
+
+def _build_qnt30423_summary(organization_id: str):
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM organizations WHERE id=?', (organization_id,))
+        org = dict(cur.fetchone() or {})
+        accounts = _fetch_org_accounts(cur, organization_id)
+        strategies = _fetch_org_strategies(cur, organization_id)
+        allocations = _fetch_org_allocations(cur, organization_id)
+        orders = _fetch_org_orders(cur, organization_id)
+        fills = _fetch_org_fills(cur, organization_id)
+        positions = _fetch_org_positions(cur, organization_id)
+        lifecycle = _fetch_org_lifecycle(cur, organization_id)
+        broker = _fetch_org_broker_profile(cur, organization_id)
+        capital_balance = round(sum(as_float(a.get('balance'), 0.0) for a in accounts), 2)
+        allocated_capital = round(sum(as_float(a.get('allocated_capital'), 0.0) for a in allocations if str(a.get('status') or '').lower() == 'active'), 2)
+        reserve_capital = round(sum(as_float(a.get('reserve_capital'), 0.0) for a in allocations if str(a.get('status') or '').lower() == 'active'), 2)
+        deployable_capital = round(max(capital_balance - allocated_capital - reserve_capital, 0.0), 2)
+        realized_pnl = round(sum(as_float(p.get('realized_pnl'), 0.0) for p in positions), 2)
+        unrealized_pnl = round(sum(as_float(p.get('unrealized_pnl'), 0.0) for p in positions if str(p.get('status') or '').lower() == 'open'), 2)
+        return {
+            'mission': 'QNT30424',
+            'organization': org,
+            'broker_profile': broker,
+            'accounts': accounts,
+            'strategies': strategies,
+            'allocations': allocations,
+            'orders': orders,
+            'fills': fills,
+            'positions': positions,
+            'lifecycle': lifecycle,
+            'capital_summary': {
+                'capital_balance': capital_balance,
+                'allocated_capital': allocated_capital,
+                'reserve_capital': reserve_capital,
+                'deployable_capital': deployable_capital,
+                'realized_pnl': realized_pnl,
+                'unrealized_pnl': unrealized_pnl,
+                'strategy_count': len(strategies),
+                'order_count': len(orders),
+                'fill_count': len(fills),
+                'position_count': len(positions),
+                'account_count': len(accounts),
+            },
+            'execution_scope': {
+                'broker_per_organization': True,
+                'required_plan': org.get('plan') or 'institutional',
+                'billing_mode': billing_stripe_mode(),
+                'fill_mode': 'hybrid',
+            },
+        }
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/execution-capital/context')
+def workspace_execution_capital_context(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    summary = _build_qnt30423_summary(organization_id)
+    summary['membership'] = active
+    return summary
+
+
+@app.post('/workspace/broker/configure')
+def workspace_broker_configure(payload: WorkspaceBrokerConfigRequest, session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        now = now_iso()
+        profile = _fetch_org_broker_profile(cur, organization_id)
+        if profile:
+            cur.execute(
+                'UPDATE organization_broker_profiles SET broker_name=?, account_label=?, mode=?, api_key_env=?, secret_key_env=?, base_url=?, status=?, updated_at=? WHERE id=?',
+                (payload.broker_name.strip().lower(), payload.account_label.strip(), payload.mode.strip().lower(), payload.api_key_env, payload.secret_key_env, payload.base_url, 'configured', now, profile['id'])
+            )
+            profile_id = profile['id']
+        else:
+            profile_id = f'broker_{uuid.uuid4().hex[:10]}'
+            cur.execute(
+                'INSERT INTO organization_broker_profiles (id, organization_id, broker_name, account_label, mode, api_key_env, secret_key_env, base_url, status, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
+                (profile_id, organization_id, payload.broker_name.strip().lower(), payload.account_label.strip(), payload.mode.strip().lower(), payload.api_key_env, payload.secret_key_env, payload.base_url, 'configured', now, now)
+            )
+        conn.commit()
+        return {'mission': 'QNT30423', 'status': 'broker_configured', 'organization_id': organization_id, 'broker_profile_id': profile_id, 'broker_per_organization': True}
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/broker/status')
+def workspace_broker_status(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        profile = _fetch_org_broker_profile(cur, organization_id)
+        configured = bool(profile)
+        return {
+            'mission': 'QNT30423',
+            'organization_id': organization_id,
+            'configured': configured,
+            'broker_per_organization': True,
+            'profile': profile,
+        }
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/capital/accounts/create')
+def workspace_capital_account_create(payload: WorkspaceCapitalAccountCreateRequest, session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        account_id = f'acct_{uuid.uuid4().hex[:10]}'
+        now = now_iso()
+        cur.execute(
+            'INSERT INTO organization_accounts (id, organization_id, name, balance, currency, risk_mode, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?)',
+            (account_id, organization_id, payload.name.strip(), float(payload.balance), payload.currency.strip().upper(), payload.risk_mode.strip().lower(), now, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30423', 'status': 'account_created', 'organization_id': organization_id, 'account_id': account_id}
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/capital/summary')
+def workspace_capital_summary(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    return _build_qnt30423_summary(organization_id)['capital_summary']
+
+
+@app.post('/workspace/strategies/register')
+def workspace_strategy_register(payload: WorkspaceStrategyRegisterRequest, session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        now = now_iso()
+        cur.execute('SELECT id FROM organization_strategy_registry WHERE organization_id=? AND lower(strategy_key)=lower(?)', (organization_id, payload.strategy_key.strip()))
+        row = cur.fetchone()
+        if row:
+            cur.execute('UPDATE organization_strategy_registry SET display_name=?, market=?, status=?, updated_at=? WHERE id=?', (payload.display_name or payload.strategy_key, payload.market, payload.status, now, row['id']))
+            strategy_id = row['id']
+        else:
+            strategy_id = f'strat_{uuid.uuid4().hex[:10]}'
+            cur.execute('INSERT INTO organization_strategy_registry (id, organization_id, strategy_key, display_name, market, status, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?)', (strategy_id, organization_id, payload.strategy_key.strip(), payload.display_name or payload.strategy_key.strip(), payload.market, payload.status, now, now))
+        conn.commit()
+        return {'mission': 'QNT30423', 'status': 'strategy_registered', 'organization_id': organization_id, 'strategy_id': strategy_id, 'strategy_key': payload.strategy_key.strip()}
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/strategies')
+def workspace_strategies(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        return {'mission': 'QNT30423', 'organization_id': organization_id, 'strategies': _fetch_org_strategies(cur, organization_id)}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/capital/allocate')
+def workspace_capital_allocate(payload: WorkspaceCapitalAllocateRequest, session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        accounts = _fetch_org_accounts(cur, organization_id)
+        if not accounts:
+            raise HTTPException(status_code=400, detail='organization_account_required')
+        account_id = payload.account_id or accounts[0]['id']
+        account = next((a for a in accounts if a['id'] == account_id), None)
+        if not account:
+            raise HTTPException(status_code=404, detail='account_not_found')
+        strategy_keys = {s['strategy_key'] for s in _fetch_org_strategies(cur, organization_id)}
+        if payload.strategy_key not in strategy_keys:
+            raise HTTPException(status_code=404, detail='strategy_not_registered')
+        balance = as_float(account.get('balance'), 0.0)
+        total_request = float(payload.allocated_capital) + float(payload.reserve_capital)
+        if total_request > balance:
+            raise HTTPException(status_code=400, detail='allocation_exceeds_account_balance')
+        allocation_id = f'alloc_{uuid.uuid4().hex[:10]}'
+        now = now_iso()
+        cur.execute('INSERT INTO organization_capital_allocations (id, organization_id, account_id, strategy_key, allocated_capital, reserve_capital, status, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?)', (allocation_id, organization_id, account_id, payload.strategy_key, float(payload.allocated_capital), float(payload.reserve_capital), 'active', now, now))
+        conn.commit()
+        return {'mission': 'QNT30423', 'status': 'capital_allocated', 'organization_id': organization_id, 'allocation_id': allocation_id}
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/capital/allocations')
+def workspace_capital_allocations(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        return {'mission': 'QNT30423', 'organization_id': organization_id, 'allocations': _fetch_org_allocations(cur, organization_id)}
+    finally:
+        conn.close()
+
+
+
+@app.post('/workspace/execution/submit')
+def workspace_execution_submit(payload: WorkspaceExecutionSubmitRequest, session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_trade_allowed(active, session)
+    ensure_qnt30423_schema()
+    plan = str((org.get('plan') or 'free')).lower()
+    if plan not in {'institutional', 'pro'}:
+        raise HTTPException(status_code=403, detail='organization_plan_insufficient')
+    billing = billing_hydrate_user(session) or {}
+    billing_user = {
+        'plan': plan,
+        'subscription_status': str((billing.get('billing', {}) or {}).get('subscription_status') or 'inactive'),
+    }
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        strategies = _fetch_org_strategies(cur, organization_id)
+        strategy_keys = {s['strategy_key'] for s in strategies}
+        if payload.strategy_key not in strategy_keys:
+            raise HTTPException(status_code=404, detail='strategy_not_registered_in_active_organization')
+        accounts = _fetch_org_accounts(cur, organization_id)
+        if not accounts:
+            raise HTTPException(status_code=400, detail='organization_account_required')
+        account_id = payload.account_id or accounts[0]['id']
+        account = next((a for a in accounts if a['id'] == account_id), None)
+        if not account:
+            raise HTTPException(status_code=404, detail='account_not_found')
+        allocations = _fetch_org_allocations(cur, organization_id)
+        matching_allocs = [a for a in allocations if a.get('strategy_key') == payload.strategy_key and (not a.get('account_id') or a.get('account_id') == account_id)]
+        if not matching_allocs:
+            raise HTTPException(status_code=400, detail='capital_allocation_required_for_strategy')
+        broker = _fetch_org_broker_profile(cur, organization_id) or {'broker_name': 'alpaca', 'mode': 'paper', 'status': 'implicit_paper', 'base_url': 'https://paper-api.alpaca.markets'}
+        broker_mode = str((broker.get('mode') or 'paper')).lower()
+        # QNT30424.3 hotfix: do not hard-block org execution in institutional workspace flows
+        # when billing/session state lags behind org-level live billing configuration.
+        billing_allowed = True
+        try:
+            billing_allowed = billing_status_allows_execution(billing_user, broker_mode)
+        except Exception:
+            billing_allowed = True
+        if not billing_allowed and plan not in {'institutional', 'pro'}:
+            raise HTTPException(status_code=403, detail='billing_subscription_inactive')
+        order_id = f'ord_{uuid.uuid4().hex[:10]}'
+        now = now_iso()
+        side = payload.side.strip().lower()
+        symbol = payload.symbol.strip().upper()
+        exec_mode = broker.get('mode') or 'paper'
+        cur.execute(
+            'INSERT INTO organization_execution_orders (id, organization_id, account_id, strategy_key, symbol, side, qty, venue, broker_name, broker_mode, status, notional_estimate, fill_price, fill_value, filled_qty, execution_mode, source_event, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+            (
+                order_id, organization_id, account_id, payload.strategy_key, symbol, side, float(payload.qty), payload.venue or 'auto',
+                broker.get('broker_name'), broker.get('mode'), 'created', 0.0, 0.0, 0.0, 0.0,
+                exec_mode, 'order_created', now, now,
+            )
+        )
+        _record_org_lifecycle(cur, organization_id, order_id, 'order_created', {'strategy_key': payload.strategy_key, 'symbol': symbol, 'side': side, 'qty': float(payload.qty), 'account_id': account_id})
+        conn.commit()
+        try:
+            execution_result = _hybrid_submit_order(broker, symbol, side, float(payload.qty), payload.venue)
+        except Exception as e:
+            fail_time = now_iso()
+            cur.execute('UPDATE organization_execution_orders SET status=?, source_event=?, updated_at=? WHERE id=?', ('broker_submit_failed', str(e)[:240], fail_time, order_id))
+            _record_org_lifecycle(cur, organization_id, order_id, 'broker_submit_failed', {'error': str(e)[:240], 'strategy_key': payload.strategy_key, 'symbol': symbol, 'qty': float(payload.qty)})
+            conn.commit()
+            return {'mission': 'QNT30424.1', 'status': 'order_created_broker_submit_failed', 'organization_id': organization_id, 'order_id': order_id, 'error': str(e)[:240]}
+        fill_price = round(as_float(execution_result.get('fill_price'), 0.0), 4)
+        filled_qty = round(as_float(execution_result.get('filled_qty'), float(payload.qty)), 6)
+        fill_value = round(fill_price * filled_qty, 4)
+        order_status = execution_result.get('status') or 'filled'
+        cur.execute('UPDATE organization_execution_orders SET status=?, notional_estimate=?, fill_price=?, fill_value=?, filled_qty=?, execution_mode=?, source_event=?, updated_at=? WHERE id=?',
+                    (order_status, fill_value, fill_price, fill_value, filled_qty, execution_result.get('execution_mode') or exec_mode, execution_result.get('source_event'), now_iso(), order_id))
+        _record_org_lifecycle(cur, organization_id, order_id, 'broker_routed', {'strategy_key': payload.strategy_key, 'symbol': symbol, 'side': side, 'qty': float(payload.qty), 'broker_name': broker.get('broker_name'), 'broker_mode': broker.get('mode'), 'execution_mode': execution_result.get('execution_mode')})
+        fill_id = f'fill_{uuid.uuid4().hex[:10]}'
+        cur.execute(
+            'INSERT INTO organization_execution_fills (id, organization_id, order_id, account_id, strategy_key, symbol, side, qty, fill_price, fill_value, status, broker_name, broker_mode, execution_mode, source_event, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+            (fill_id, organization_id, order_id, account_id, payload.strategy_key, symbol, side, filled_qty, fill_price, fill_value, 'filled', broker.get('broker_name'), broker.get('mode'), execution_result.get('execution_mode') or exec_mode, execution_result.get('source_event'), now_iso(), now_iso())
+        )
+        position_id = _upsert_org_position(cur, organization_id, account_id, payload.strategy_key, symbol, side, filled_qty, fill_price, order_id)
+        _record_org_lifecycle(cur, organization_id, order_id, 'filled', {'strategy_key': payload.strategy_key, 'symbol': symbol, 'side': side, 'qty': filled_qty, 'fill_price': fill_price, 'fill_id': fill_id, 'position_id': position_id, 'execution_mode': execution_result.get('execution_mode')})
+        conn.commit()
+        return {'mission': 'QNT30424.1', 'status': order_status, 'organization_id': organization_id, 'order_id': order_id, 'fill_id': fill_id, 'position_id': position_id, 'broker_profile': broker, 'execution_result': execution_result, 'fill_value': fill_value}
+    finally:
+        conn.close()
+
+
+
+
+@app.get('/workspace/risk/status')
+def workspace_risk_status(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    state = GLOBAL_STATE
+    risk_view = evaluate_risk_state(state)
+    return {
+        'mission': 'QNT30426',
+        'organization_id': organization_id,
+        'organization_name': org.get('name'),
+        'execution_mode': str((active or {}).get('execution_mode') or 'paper'),
+        'kill_switch_active': bool(risk_view.get('config', {}).get('kill_switch_active')),
+        'risk': risk_view,
+    }
+
+
+class WorkspaceRiskUpdateRequest(BaseModel):
+    max_position_notional: Optional[float] = None
+    max_total_exposure: Optional[float] = None
+    max_daily_loss: Optional[float] = None
+    max_trades_per_session: Optional[int] = None
+    max_notional_per_trade: Optional[float] = None
+    execution_mode: Optional[str] = None
+
+
+class WorkspaceApprovalSubmitRequest(BaseModel):
+    action_type: str
+    target_type: Optional[str] = 'system'
+    target_id: Optional[str] = None
+    reason: Optional[str] = None
+    payload: Optional[dict] = None
+
+
+class WorkspaceApprovalDecisionRequest(BaseModel):
+    approval_id: str
+    note: Optional[str] = None
+
+
+@app.post('/workspace/risk/update')
+def workspace_risk_update(payload: WorkspaceRiskUpdateRequest, session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    state = GLOBAL_STATE
+    risk = state.setdefault('risk_engine', default_risk_engine())
+    updated = {}
+    for key in ['max_position_notional','max_total_exposure','max_daily_loss','max_notional_per_trade']:
+        value = getattr(payload, key)
+        if value is not None:
+            risk[key] = float(value)
+            updated[key] = risk[key]
+    if payload.max_trades_per_session is not None:
+        risk['max_trades_per_session'] = int(payload.max_trades_per_session)
+        updated['max_trades_per_session'] = risk['max_trades_per_session']
+    if payload.execution_mode is not None:
+        mode = str(payload.execution_mode).strip().lower()
+        if mode not in {'paper','guarded','live'}:
+            raise HTTPException(status_code=400, detail='invalid_execution_mode')
+        active['execution_mode'] = mode
+        updated['execution_mode'] = mode
+    persist_state(state)
+    return {
+        'mission': 'QNT30426',
+        'status': 'risk_updated',
+        'organization_id': organization_id,
+        'updated': updated,
+        'risk': evaluate_risk_state(state),
+    }
+
+
+@app.post('/workspace/risk/kill-switch')
+def workspace_risk_kill_switch(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    state = GLOBAL_STATE
+    risk = state.setdefault('risk_engine', default_risk_engine())
+    risk['kill_switch_active'] = not bool(risk.get('kill_switch_active'))
+    risk['last_breach_reason'] = 'Kill switch active' if risk['kill_switch_active'] else None
+    persist_state(state)
+    return {
+        'mission': 'QNT30426',
+        'status': 'kill_switch_toggled',
+        'organization_id': organization_id,
+        'kill_switch_active': bool(risk['kill_switch_active']),
+        'risk': evaluate_risk_state(state),
+    }
+
+
+
+@app.get('/workspace/portfolio/exposure')
+def workspace_portfolio_exposure(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        positions = _fetch_org_positions(cur, organization_id)
+        accounts = _fetch_org_accounts(cur, organization_id)
+        capital_balance = round(sum(as_float(a.get('balance'), 0.0) for a in accounts), 2)
+        symbol_rows = []
+        total_abs_exposure = 0.0
+        long_exposure = 0.0
+        short_exposure = 0.0
+        for p in positions:
+            qty = as_float(p.get('qty'), 0.0)
+            price = as_float(p.get('current_price') or p.get('market_price') or p.get('avg_price') or p.get('average_entry_price') or p.get('entry_price'), 0.0)
+            exposure = round(qty * price, 4)
+            abs_exp = abs(exposure)
+            total_abs_exposure += abs_exp
+            if qty >= 0:
+                long_exposure += abs_exp
+            else:
+                short_exposure += abs_exp
+            symbol_rows.append({
+                'symbol': p.get('symbol'),
+                'qty': qty,
+                'price': price,
+                'exposure': round(exposure, 4),
+                'abs_exposure': round(abs_exp, 4),
+                'unrealized_pnl': round(as_float(p.get('unrealized_pnl'), 0.0), 4),
+            })
+        symbol_rows.sort(key=lambda r: r['abs_exposure'], reverse=True)
+        total_abs_exposure = round(total_abs_exposure, 4)
+        long_exposure = round(long_exposure, 4)
+        short_exposure = round(short_exposure, 4)
+        concentration = []
+        for row in symbol_rows:
+            share = round((row['abs_exposure'] / total_abs_exposure), 4) if total_abs_exposure > 0 else 0.0
+            concentration.append({**row, 'share_of_exposure': share})
+        return {
+            'mission': 'QNT30427',
+            'organization_id': organization_id,
+            'capital_balance': capital_balance,
+            'total_abs_exposure': total_abs_exposure,
+            'long_exposure': long_exposure,
+            'short_exposure': short_exposure,
+            'net_exposure': round(long_exposure - short_exposure, 4),
+            'exposure_utilization': round((total_abs_exposure / capital_balance), 4) if capital_balance > 0 else 0.0,
+            'symbols': concentration,
+        }
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/portfolio/risk')
+def workspace_portfolio_risk(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    state = GLOBAL_STATE
+    risk_engine = state.setdefault('risk_engine', default_risk_engine())
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        positions = _fetch_org_positions(cur, organization_id)
+        accounts = _fetch_org_accounts(cur, organization_id)
+        orders = _fetch_org_orders(cur, organization_id)
+        capital_balance = round(sum(as_float(a.get('balance'), 0.0) for a in accounts), 2)
+        total_abs_exposure = 0.0
+        exposures_by_symbol = {}
+        unrealized_pnl = 0.0
+        for p in positions:
+            qty = as_float(p.get('qty'), 0.0)
+            price = as_float(p.get('current_price') or p.get('market_price') or p.get('avg_price') or p.get('average_entry_price') or p.get('entry_price'), 0.0)
+            abs_exp = abs(qty * price)
+            total_abs_exposure += abs_exp
+            exposures_by_symbol[p.get('symbol') or 'UNKNOWN'] = exposures_by_symbol.get(p.get('symbol') or 'UNKNOWN', 0.0) + abs_exp
+            unrealized_pnl += as_float(p.get('unrealized_pnl'), 0.0)
+        total_abs_exposure = round(total_abs_exposure, 4)
+        unrealized_pnl = round(unrealized_pnl, 4)
+        exposure_utilization = round((total_abs_exposure / capital_balance), 4) if capital_balance > 0 else 0.0
+        max_symbol_share = 0.0
+        dominant_symbol = None
+        for symbol, exposure in exposures_by_symbol.items():
+            share = (exposure / total_abs_exposure) if total_abs_exposure > 0 else 0.0
+            if share > max_symbol_share:
+                max_symbol_share = share
+                dominant_symbol = symbol
+        thresholds = {
+            'warning_exposure_utilization': 0.60,
+            'breach_exposure_utilization': 0.85,
+            'warning_symbol_concentration': 0.35,
+            'breach_symbol_concentration': 0.55,
+            'warning_drawdown': max(as_float(risk_engine.get('max_daily_loss'), 0.0) * 0.5, 500.0),
+            'breach_drawdown': max(as_float(risk_engine.get('max_daily_loss'), 0.0), 1000.0),
+        }
+        warnings = []
+        breaches = []
+        if exposure_utilization >= thresholds['breach_exposure_utilization']:
+            breaches.append('portfolio_exposure_limit_breached')
+        elif exposure_utilization >= thresholds['warning_exposure_utilization']:
+            warnings.append('portfolio_exposure_near_limit')
+        if max_symbol_share >= thresholds['breach_symbol_concentration']:
+            breaches.append('symbol_concentration_breached')
+        elif max_symbol_share >= thresholds['warning_symbol_concentration']:
+            warnings.append('symbol_concentration_warning')
+        drawdown = abs(min(unrealized_pnl, 0.0))
+        if drawdown >= thresholds['breach_drawdown']:
+            breaches.append('unrealized_drawdown_breached')
+        elif drawdown >= thresholds['warning_drawdown']:
+            warnings.append('unrealized_drawdown_warning')
+        if bool(risk_engine.get('kill_switch_active')):
+            breaches.append('kill_switch_active')
+        governance_state = 'safe'
+        recommended_action = 'normal'
+        if breaches:
+            governance_state = 'breach'
+            recommended_action = 'freeze_new_risk'
+        elif warnings:
+            governance_state = 'warning'
+            recommended_action = 'throttle_and_review'
+        return {
+            'mission': 'QNT30427',
+            'organization_id': organization_id,
+            'organization_name': org.get('name'),
+            'governance_state': governance_state,
+            'recommended_action': recommended_action,
+            'portfolio': {
+                'capital_balance': capital_balance,
+                'position_count': len(positions),
+                'open_order_count': len([o for o in orders if str(o.get('status') or '').lower() not in {'filled', 'cancelled', 'rejected'}]),
+                'total_abs_exposure': total_abs_exposure,
+                'exposure_utilization': exposure_utilization,
+                'unrealized_pnl': unrealized_pnl,
+                'dominant_symbol': dominant_symbol,
+                'dominant_symbol_share': round(max_symbol_share, 4),
+            },
+            'thresholds': thresholds,
+            'warnings': warnings,
+            'breaches': breaches,
+            'symbol_exposure': [
+                {'symbol': symbol, 'abs_exposure': round(exposure, 4), 'share_of_exposure': round((exposure / total_abs_exposure), 4) if total_abs_exposure > 0 else 0.0}
+                for symbol, exposure in sorted(exposures_by_symbol.items(), key=lambda item: item[1], reverse=True)
+            ],
+        }
+    finally:
+        conn.close()
+
+@app.post('/workspace/positions/reduce')
+def workspace_positions_reduce(payload: WorkspacePositionReduceRequest, session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_trade_allowed(active, session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        position = _fetch_org_position_by_id(cur, organization_id, payload.position_id)
+        if not position:
+            raise HTTPException(status_code=404, detail='position_not_found')
+        broker = _fetch_org_broker_profile(cur, organization_id) or {'broker_name': 'alpaca', 'mode': 'paper', 'status': 'implicit_paper', 'base_url': 'https://paper-api.alpaca.markets'}
+        action = _execute_position_adjustment(cur, organization_id, broker, position, abs(as_float(position.get('qty'), 0.0)) * float(payload.percent), payload.venue, 'reduce')
+        conn.commit()
+        return {'mission': 'QNT30428', 'organization_id': organization_id, **action}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/positions/close')
+def workspace_positions_close(payload: WorkspacePositionCloseRequest, session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_trade_allowed(active, session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        position = _fetch_org_position_by_id(cur, organization_id, payload.position_id)
+        if not position:
+            raise HTTPException(status_code=404, detail='position_not_found')
+        broker = _fetch_org_broker_profile(cur, organization_id) or {'broker_name': 'alpaca', 'mode': 'paper', 'status': 'implicit_paper', 'base_url': 'https://paper-api.alpaca.markets'}
+        action = _execute_position_adjustment(cur, organization_id, broker, position, abs(as_float(position.get('qty'), 0.0)), payload.venue, 'close')
+        conn.commit()
+        return {'mission': 'QNT30428', 'organization_id': organization_id, **action}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/positions/flatten')
+def workspace_positions_flatten(payload: Optional[WorkspaceFlattenAllRequest] = Body(default=None), session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_trade_allowed(active, session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        broker = _fetch_org_broker_profile(cur, organization_id) or {'broker_name': 'alpaca', 'mode': 'paper', 'status': 'implicit_paper', 'base_url': 'https://paper-api.alpaca.markets'}
+        payload = payload or WorkspaceFlattenAllRequest()
+        positions = [p for p in _fetch_org_positions(cur, organization_id) if str(p.get('status') or 'open').lower() == 'open' and abs(as_float(p.get('qty'), 0.0)) > 1e-9]
+        if payload.account_id:
+            positions = [p for p in positions if p.get('account_id') == payload.account_id]
+        results = []
+        for position in positions:
+            try:
+                results.append(_execute_position_adjustment(cur, organization_id, broker, position, abs(as_float(position.get('qty'), 0.0)), payload.venue, 'flatten'))
+            except Exception as exc:
+                results.append({'position_id': position.get('id'), 'symbol': position.get('symbol'), 'error': str(exc)[:240], 'action': 'flatten_requested'})
+        conn.commit()
+        return {'mission': 'QNT30428', 'organization_id': organization_id, 'flattened': results, 'flatten_count': len([r for r in results if not r.get('error')])}
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/execution/orders')
+def workspace_execution_orders(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        return {'mission': 'QNT30424', 'organization_id': organization_id, 'orders': _fetch_org_orders(cur, organization_id)}
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/execution/fills')
+def workspace_execution_fills(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        return {'mission': 'QNT30424', 'organization_id': organization_id, 'fills': _fetch_org_fills(cur, organization_id)}
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/positions')
+def workspace_positions(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        return {'mission': 'QNT30424', 'organization_id': organization_id, 'positions': _fetch_org_positions(cur, organization_id)}
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/execution/lifecycle')
+def workspace_execution_lifecycle(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        return {'mission': 'QNT30424', 'organization_id': organization_id, 'events': _fetch_org_lifecycle(cur, organization_id)}
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/performance/summary')
+def workspace_performance_summary(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    summary = _build_qnt30423_summary(organization_id)
+    return {'mission': 'QNT30424', 'organization_id': organization_id, 'performance': summary['capital_summary'], 'broker_profile': summary['broker_profile'], 'execution_scope': summary['execution_scope']}
+
+
+
+
+def _build_qnt30429_pnl_summary(cur, organization_id: str):
+    positions = _fetch_org_positions(cur, organization_id)
+    fills = _fetch_org_fills(cur, organization_id)
+    orders = _fetch_org_orders(cur, organization_id)
+    realized = round(sum(as_float(p.get('realized_pnl'), 0.0) for p in positions), 4)
+    unrealized = round(sum(as_float(p.get('unrealized_pnl'), 0.0) for p in positions), 4)
+    gross_fill_value = round(sum(as_float(f.get('fill_value'), 0.0) for f in fills), 4)
+    open_positions = [p for p in positions if str(p.get('status') or 'open').lower() != 'closed' and abs(as_float(p.get('qty'), 0.0)) > 0]
+    closed_positions = [p for p in positions if str(p.get('status') or '').lower() == 'closed' or abs(as_float(p.get('qty'), 0.0)) == 0]
+    wins = len([p for p in closed_positions if as_float(p.get('realized_pnl'), 0.0) > 0])
+    losses = len([p for p in closed_positions if as_float(p.get('realized_pnl'), 0.0) < 0])
+    net = round(realized + unrealized, 4)
+    avg_gain = round(sum(as_float(p.get('realized_pnl'), 0.0) for p in closed_positions if as_float(p.get('realized_pnl'), 0.0) > 0) / wins, 4) if wins else 0.0
+    avg_loss = round(sum(as_float(p.get('realized_pnl'), 0.0) for p in closed_positions if as_float(p.get('realized_pnl'), 0.0) < 0) / losses, 4) if losses else 0.0
+    return {
+        'mission': 'QNT30429',
+        'organization_id': organization_id,
+        'summary': {
+            'realized_pnl': realized,
+            'unrealized_pnl': unrealized,
+            'net_pnl': net,
+            'gross_fill_value': gross_fill_value,
+            'open_position_count': len(open_positions),
+            'closed_position_count': len(closed_positions),
+            'order_count': len(orders),
+            'fill_count': len(fills),
+            'win_count': wins,
+            'loss_count': losses,
+            'win_rate': round((wins / max(wins + losses, 1)) * 100.0, 2) if (wins + losses) else 0.0,
+            'average_gain': avg_gain,
+            'average_loss': avg_loss,
+        }
+    }
+
+
+def _build_qnt30429_strategy_attribution(cur, organization_id: str):
+    positions = _fetch_org_positions(cur, organization_id)
+    fills = _fetch_org_fills(cur, organization_id)
+    by_strategy = {}
+    for fill in fills:
+        key = fill.get('strategy_key') or 'unassigned'
+        bucket = by_strategy.setdefault(key, {'strategy_key': key, 'fill_count': 0, 'filled_qty': 0.0, 'gross_fill_value': 0.0, 'symbols': set(), 'realized_pnl': 0.0, 'unrealized_pnl': 0.0})
+        bucket['fill_count'] += 1
+        bucket['filled_qty'] += as_float(fill.get('qty'), 0.0)
+        bucket['gross_fill_value'] += as_float(fill.get('fill_value'), 0.0)
+        bucket['symbols'].add(str(fill.get('symbol') or '').upper())
+    for pos in positions:
+        key = pos.get('strategy_key') or 'unassigned'
+        bucket = by_strategy.setdefault(key, {'strategy_key': key, 'fill_count': 0, 'filled_qty': 0.0, 'gross_fill_value': 0.0, 'symbols': set(), 'realized_pnl': 0.0, 'unrealized_pnl': 0.0})
+        bucket['realized_pnl'] += as_float(pos.get('realized_pnl'), 0.0)
+        bucket['unrealized_pnl'] += as_float(pos.get('unrealized_pnl'), 0.0)
+        bucket['symbols'].add(str(pos.get('symbol') or '').upper())
+    rows = []
+    for bucket in by_strategy.values():
+        rows.append({
+            'strategy_key': bucket['strategy_key'],
+            'fill_count': bucket['fill_count'],
+            'filled_qty': round(bucket['filled_qty'], 4),
+            'gross_fill_value': round(bucket['gross_fill_value'], 4),
+            'realized_pnl': round(bucket['realized_pnl'], 4),
+            'unrealized_pnl': round(bucket['unrealized_pnl'], 4),
+            'net_pnl': round(bucket['realized_pnl'] + bucket['unrealized_pnl'], 4),
+            'symbol_count': len(bucket['symbols']),
+            'symbols': sorted(s for s in bucket['symbols'] if s),
+        })
+    rows.sort(key=lambda r: (r['net_pnl'], r['gross_fill_value']), reverse=True)
+    return {'mission': 'QNT30429', 'organization_id': organization_id, 'strategies': rows}
+
+
+def _build_qnt30429_symbol_attribution(cur, organization_id: str):
+    positions = _fetch_org_positions(cur, organization_id)
+    fills = _fetch_org_fills(cur, organization_id)
+    by_symbol = {}
+    for fill in fills:
+        sym = str(fill.get('symbol') or '').upper() or 'UNKNOWN'
+        bucket = by_symbol.setdefault(sym, {'symbol': sym, 'fill_count': 0, 'buy_qty': 0.0, 'sell_qty': 0.0, 'gross_fill_value': 0.0, 'strategies': set(), 'realized_pnl': 0.0, 'unrealized_pnl': 0.0, 'open_qty': 0.0})
+        bucket['fill_count'] += 1
+        qty = as_float(fill.get('qty'), 0.0)
+        if str(fill.get('side') or '').lower() == 'sell':
+            bucket['sell_qty'] += qty
+        else:
+            bucket['buy_qty'] += qty
+        bucket['gross_fill_value'] += as_float(fill.get('fill_value'), 0.0)
+        if fill.get('strategy_key'):
+            bucket['strategies'].add(str(fill.get('strategy_key')))
+    for pos in positions:
+        sym = str(pos.get('symbol') or '').upper() or 'UNKNOWN'
+        bucket = by_symbol.setdefault(sym, {'symbol': sym, 'fill_count': 0, 'buy_qty': 0.0, 'sell_qty': 0.0, 'gross_fill_value': 0.0, 'strategies': set(), 'realized_pnl': 0.0, 'unrealized_pnl': 0.0, 'open_qty': 0.0})
+        bucket['realized_pnl'] += as_float(pos.get('realized_pnl'), 0.0)
+        bucket['unrealized_pnl'] += as_float(pos.get('unrealized_pnl'), 0.0)
+        bucket['open_qty'] += as_float(pos.get('qty'), 0.0)
+        if pos.get('strategy_key'):
+            bucket['strategies'].add(str(pos.get('strategy_key')))
+    rows = []
+    for bucket in by_symbol.values():
+        rows.append({
+            'symbol': bucket['symbol'],
+            'fill_count': bucket['fill_count'],
+            'buy_qty': round(bucket['buy_qty'], 4),
+            'sell_qty': round(bucket['sell_qty'], 4),
+            'open_qty': round(bucket['open_qty'], 4),
+            'gross_fill_value': round(bucket['gross_fill_value'], 4),
+            'realized_pnl': round(bucket['realized_pnl'], 4),
+            'unrealized_pnl': round(bucket['unrealized_pnl'], 4),
+            'net_pnl': round(bucket['realized_pnl'] + bucket['unrealized_pnl'], 4),
+            'strategies': sorted(bucket['strategies']),
+        })
+    rows.sort(key=lambda r: (abs(r['net_pnl']), r['gross_fill_value']), reverse=True)
+    return {'mission': 'QNT30429', 'organization_id': organization_id, 'symbols': rows}
+
+
+@app.get('/workspace/pnl/summary')
+def workspace_pnl_summary(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        return _build_qnt30429_pnl_summary(cur, organization_id)
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/attribution/strategies')
+def workspace_attribution_strategies(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        return _build_qnt30429_strategy_attribution(cur, organization_id)
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/attribution/symbols')
+def workspace_attribution_symbols(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        return _build_qnt30429_symbol_attribution(cur, organization_id)
+    finally:
+        conn.close()
+
+
+
+def _fetch_org_governance_approvals(cur, organization_id: str, statuses=None, limit: int = 100):
+    if statuses:
+        placeholders = ",".join("?" for _ in statuses)
+        cur.execute(
+            f'SELECT * FROM organization_governance_approvals WHERE organization_id=? AND status IN ({placeholders}) ORDER BY submitted_at DESC LIMIT ?',
+            tuple([organization_id] + list(statuses) + [limit]),
+        )
+    else:
+        cur.execute('SELECT * FROM organization_governance_approvals WHERE organization_id=? ORDER BY submitted_at DESC LIMIT ?', (organization_id, limit))
+    return [dict(r) for r in cur.fetchall()]
+
+
+def _governance_actor(session, active):
+    return {
+        'user': session.get('email') or session.get('user_email') or session.get('username') or 'operator@quantora.local',
+        'role': (active.get('role') or ('owner' if session.get('is_admin') else 'observer')).strip().lower()
+    }
+
+
+@app.get('/workspace/governance/pending')
+def workspace_governance_pending(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        rows = _fetch_org_governance_approvals(cur, organization_id, statuses=['pending'])
+        return {'mission': 'QNT30430', 'organization_id': organization_id, 'pending': rows, 'count': len(rows)}
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/governance/history')
+def workspace_governance_history(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        rows = _fetch_org_governance_approvals(cur, organization_id, statuses=None, limit=200)
+        return {'mission': 'QNT30430', 'organization_id': organization_id, 'history': rows, 'count': len(rows)}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/governance/submit')
+def workspace_governance_submit(payload: WorkspaceApprovalSubmitRequest, session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    actor = _governance_actor(session, active)
+    role = actor['role']
+    if role not in {'owner', 'admin', 'trader'} and not session.get('is_admin'):
+        raise HTTPException(status_code=403, detail='approval_submit_permission_required')
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        approval_id = f'appr_{uuid.uuid4().hex[:10]}'
+        now = now_iso()
+        cur.execute(
+            'INSERT INTO organization_governance_approvals (id, organization_id, action_type, target_type, target_id, requested_by, requested_role, reason, payload_json, status, submitted_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
+            (
+                approval_id, organization_id, payload.action_type.strip().lower(), (payload.target_type or 'system'),
+                payload.target_id, actor['user'], role, payload.reason or '', json.dumps(payload.payload or {}, sort_keys=True),
+                'pending', now
+            )
+        )
+        _record_org_lifecycle(cur, organization_id, approval_id, 'approval_submitted', {
+            'strategy_key': (payload.payload or {}).get('strategy_key'),
+            'symbol': (payload.payload or {}).get('symbol'),
+            'side': (payload.payload or {}).get('side'),
+            'qty': (payload.payload or {}).get('qty') or 0,
+            'approval_id': approval_id,
+            'action_type': payload.action_type,
+            'target_type': payload.target_type,
+            'target_id': payload.target_id,
+            'requested_by': actor['user'],
+            'requested_role': role,
+            'reason': payload.reason or '',
+        })
+        conn.commit()
+        return {'mission': 'QNT30430', 'status': 'pending', 'approval_id': approval_id, 'organization_id': organization_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/governance/approve')
+def workspace_governance_approve(payload: WorkspaceApprovalDecisionRequest, session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    actor = _governance_actor(session, active)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM organization_governance_approvals WHERE organization_id=? AND id=? LIMIT 1', (organization_id, payload.approval_id))
+        row = cur.fetchone()
+        if not row:
+            raise HTTPException(status_code=404, detail='approval_not_found')
+        item = dict(row)
+        if item.get('status') != 'pending':
+            raise HTTPException(status_code=400, detail='approval_not_pending')
+        now = now_iso()
+        cur.execute(
+            'UPDATE organization_governance_approvals SET status=?, reviewed_at=?, reviewed_by=?, reviewed_role=?, decision_note=?, executed_at=? WHERE id=?',
+            ('approved', now, actor['user'], actor['role'], payload.note or '', now, payload.approval_id)
+        )
+        payload_json = json.loads(item.get('payload_json') or '{}')
+        _record_org_lifecycle(cur, organization_id, payload.approval_id, 'approval_approved', {
+            'strategy_key': payload_json.get('strategy_key'),
+            'symbol': payload_json.get('symbol'),
+            'side': payload_json.get('side'),
+            'qty': payload_json.get('qty') or 0,
+            'approval_id': payload.approval_id,
+            'action_type': item.get('action_type'),
+            'reviewed_by': actor['user'],
+            'reviewed_role': actor['role'],
+            'note': payload.note or '',
+        })
+        conn.commit()
+        return {'mission': 'QNT30430', 'status': 'approved', 'approval_id': payload.approval_id, 'organization_id': organization_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/governance/reject')
+def workspace_governance_reject(payload: WorkspaceApprovalDecisionRequest, session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    actor = _governance_actor(session, active)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM organization_governance_approvals WHERE organization_id=? AND id=? LIMIT 1', (organization_id, payload.approval_id))
+        row = cur.fetchone()
+        if not row:
+            raise HTTPException(status_code=404, detail='approval_not_found')
+        item = dict(row)
+        if item.get('status') != 'pending':
+            raise HTTPException(status_code=400, detail='approval_not_pending')
+        now = now_iso()
+        cur.execute(
+            'UPDATE organization_governance_approvals SET status=?, reviewed_at=?, reviewed_by=?, reviewed_role=?, decision_note=? WHERE id=?',
+            ('rejected', now, actor['user'], actor['role'], payload.note or '', payload.approval_id)
+        )
+        payload_json = json.loads(item.get('payload_json') or '{}')
+        _record_org_lifecycle(cur, organization_id, payload.approval_id, 'approval_rejected', {
+            'strategy_key': payload_json.get('strategy_key'),
+            'symbol': payload_json.get('symbol'),
+            'side': payload_json.get('side'),
+            'qty': payload_json.get('qty') or 0,
+            'approval_id': payload.approval_id,
+            'action_type': item.get('action_type'),
+            'reviewed_by': actor['user'],
+            'reviewed_role': actor['role'],
+            'note': payload.note or '',
+        })
+        conn.commit()
+        return {'mission': 'QNT30430', 'status': 'rejected', 'approval_id': payload.approval_id, 'organization_id': organization_id}
+    finally:
+        conn.close()
+
+
+@app.get("/")
+def root():
+    index = FRONTEND_DIR / "index.html"
+    if index.exists():
+        return FileResponse(index, media_type="text/html", headers=NO_CACHE_HEADERS)
+    return {"status": "ok", "message": "Quantora QNT30378 execution drift monitor"}
+
+
+@app.get("/{page_name}")
+def static_pages(page_name: str):
+    page = FRONTEND_DIR / page_name
+    if page.suffix == "" and not page_name.endswith(".html"):
+        page = FRONTEND_DIR / f"{page_name}.html"
+    if page.exists() and page.is_file():
+        return FileResponse(page, headers=NO_CACHE_HEADERS if page.suffix == ".html" else None)
+    return JSONResponse({"error": "not found", "page": page_name}, status_code=404)
+
+
+class ExecutionStartRequest(BaseModel):
+    market_bias: str = Field(default="neutral")
+    execution_mode: str = Field(default="internal")
+
+
+def default_execution_engine():
+    return {
+        "running": False,
+        "last_started_at": None,
+        "last_stopped_at": None,
+        "last_cycle_at": None,
+        "last_cycle_status": "idle",
+        "last_market_bias": "neutral",
+        "last_execution_mode": "internal",
+        "last_executed_count": 0,
+    }
+
+
+def execution_engine_state(state):
+    engine = state.setdefault("execution_engine", default_execution_engine())
+    for k, v in default_execution_engine().items():
+        engine.setdefault(k, v)
+    return engine
+
+
+@app.get("/execution/status")
+def execution_status(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    engine = execution_engine_state(state)
+    orders = list(state.get("orders", {}).get("orders", []))
+    active_orders = [o for o in orders if (o.get("status") or "").lower() in ACTIVE_ORDER_STATUSES]
+    positions = state.get("monitoring", {}).get("positions", [])
+    return {
+        "engine": engine,
+        "active_orders": active_orders[:25],
+        "active_order_count": len(active_orders),
+        "positions": positions[:25],
+        "position_count": len(positions),
+    }
+
+
+@app.post("/execution/start")
+def execution_start(payload: ExecutionStartRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    engine = execution_engine_state(state)
+    engine["running"] = True
+    engine["last_started_at"] = now_iso()
+    engine["last_market_bias"] = payload.market_bias
+    engine["last_execution_mode"] = payload.execution_mode
+    save_operator_state(state)
+    return {"status": "started", "engine": engine}
+
+
+@app.post("/execution/stop")
+def execution_stop(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    engine = execution_engine_state(state)
+    engine["running"] = False
+    engine["last_stopped_at"] = now_iso()
+    save_operator_state(state)
+    return {"status": "stopped", "engine": engine}
+
+
+@app.post("/execution/run-once")
+def execution_run_once(payload: ExecutionStartRequest, session=Depends(require_auth)):
+    feature = "live_execution" if payload.execution_mode.lower() == "live" else "paper_trading"
+    billing_feature_guard(session, feature, payload.execution_mode)
+    state = get_operator_state(session)
+    engine = execution_engine_state(state)
+    result = run_strategy_intelligence_cycle(
+        state,
+        payload.execution_mode,
+        payload.market_bias,
+        session.get("email"),
+        session.get("operator_id"),
+    )
+    engine["last_cycle_at"] = now_iso()
+    engine["last_cycle_status"] = "completed"
+    engine["last_market_bias"] = payload.market_bias
+    engine["last_execution_mode"] = payload.execution_mode
+    engine["last_executed_count"] = int(result.get("executed_count") or 0)
+    save_operator_state(state)
+    return {
+        "status": "completed",
+        "engine": engine,
+        "result": result,
+    }
+
+
+@app.get("/execution/orders")
+def execution_orders(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    orders = list(reversed(state.get("orders", {}).get("orders", [])))
+    return {"items": orders[:100], "count": len(orders)}
+
+
+class BrokerRouteRequest(BaseModel):
+    symbol: str
+    side: str = Field(default="buy")
+    qty: float = Field(default=1.0)
+    order_type: str = Field(default="market")
+    execution_mode: str = Field(default="paper")
+    governance_approved: bool = Field(default=False)
+    strategy_name: Optional[str] = None
+    urgency: str = Field(default="balanced")
+    max_slippage_bps: float = Field(default=35.0)
+    use_optimizer: bool = Field(default=True)
+
+
+def default_broker_router():
+    return {
+        "routing_mode": "paper-first",
+        "live_enabled": False,
+        "last_route_at": None,
+        "last_route_status": "idle",
+        "last_error": None,
+        "paper_count": 0,
+        "live_count": 0,
+    }
+
+
+def broker_router_state(state):
+    router = state.setdefault("broker_router", default_broker_router())
+    for k, v in default_broker_router().items():
+        router.setdefault(k, v)
+    return router
+
+
+
+class ExecutionOptimizationPlanRequest(BaseModel):
+    symbol: str
+    side: str = Field(default="buy")
+    qty: float = Field(default=1.0)
+    order_type: str = Field(default="market")
+    execution_mode: str = Field(default="paper")
+    urgency: str = Field(default="balanced")
+    max_slippage_bps: float = Field(default=35.0)
+    strategy_id: Optional[str] = None
+    strategy_name: Optional[str] = None
+
+
+class ExecutionOptimizationRouteRequest(ExecutionOptimizationPlanRequest):
+    governance_approved: bool = Field(default=False)
+
+
+@app.get("/execution-optimization/status")
+def execution_optimization_status(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    optimizer = execution_optimizer_state(state)
+    state.setdefault("execution_engine", {}).setdefault("execution_optimizer", optimizer)
+    save_operator_state(state)
+    return {
+        "optimizer": optimizer,
+        "execution_engine": state.get("execution_engine", {}),
+        "router": broker_router_state(state),
+    }
+
+
+@app.post("/execution-optimization/plan")
+def execution_optimization_plan(payload: ExecutionOptimizationPlanRequest, session=Depends(require_auth)):
+    state = get_operator_state(session)
+    risk_state = evaluate_risk_state(state)
+    plan = build_execution_plan(
+        state,
+        symbol=payload.symbol,
+        side=payload.side,
+        qty=payload.qty,
+        order_type=payload.order_type,
+        execution_mode=payload.execution_mode,
+        urgency=payload.urgency,
+        max_slippage_bps=payload.max_slippage_bps,
+        strategy_id=payload.strategy_id,
+        strategy_name=payload.strategy_name,
+        risk_state=risk_state,
+    )
+    record_execution_plan(state, plan)
+    state.setdefault("execution_engine", {})["execution_optimizer"] = execution_optimizer_state(state)
+    save_operator_state(state)
+    return plan
+
+
+@app.post("/execution-optimization/route")
+def execution_optimization_route(payload: ExecutionOptimizationRouteRequest, session=Depends(require_auth)):
+    submit_payload = BrokerRouteRequest(
+        symbol=payload.symbol,
+        side=payload.side,
+        qty=payload.qty,
+        order_type=payload.order_type,
+        execution_mode=payload.execution_mode,
+        governance_approved=payload.governance_approved,
+        strategy_name=payload.strategy_name,
+        urgency=payload.urgency,
+        max_slippage_bps=payload.max_slippage_bps,
+        use_optimizer=True,
+    )
+    return broker_routing_submit(submit_payload, session)
+
+
+@app.get("/broker-routing/status")
+def broker_routing_status(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    router = broker_router_state(state)
+    orders = list(reversed(state.get("orders", {}).get("orders", [])))
+    broker_orders = [o for o in orders if (o.get("broker_route") or False)]
+    return {
+        "router": router,
+        "recent_broker_orders": broker_orders[:25],
+        "recent_count": len(broker_orders),
+    }
+
+
+@app.post("/broker-routing/submit")
+def broker_routing_submit(payload: BrokerRouteRequest, session=Depends(require_auth)):
+    feature = "live_execution" if payload.execution_mode.lower() == "live" else "paper_trading"
+    billing_feature_guard(session, feature, payload.execution_mode)
+    state = get_operator_state(session)
+    router = broker_router_state(state)
+    risk_state = evaluate_risk_state(state)
+
+    if risk_status_for_state(state).get("status") not in ("SAFE", "UNKNOWN"):
+        router["last_route_at"] = now_iso()
+        router["last_route_status"] = "blocked"
+        router["last_error"] = "risk_block"
+        save_operator_state(state)
+        return {
+            "error": "RISK_BLOCK",
+            "detail": "Execution blocked by risk engine",
+            "router": router,
+        }
+
+    if payload.execution_mode == "live" and not payload.governance_approved:
+        router["last_route_at"] = now_iso()
+        router["last_route_status"] = "blocked"
+        router["last_error"] = "governance_required"
+        save_operator_state(state)
+        return {
+            "error": "GOVERNANCE_REQUIRED",
+            "detail": "Live broker routing requires governance approval",
+            "router": router,
+        }
+
+    plan = None
+    if payload.use_optimizer:
+        plan = build_execution_plan(
+            state,
+            symbol=payload.symbol,
+            side=payload.side,
+            qty=payload.qty,
+            order_type=payload.order_type,
+            execution_mode=payload.execution_mode,
+            urgency=payload.urgency,
+            max_slippage_bps=payload.max_slippage_bps,
+            strategy_name=payload.strategy_name,
+            risk_state=risk_state,
+        )
+        record_execution_plan(state, plan)
+        if plan.get("decision") == "hold":
+            router["last_route_at"] = now_iso()
+            router["last_route_status"] = "held"
+            router["last_error"] = plan.get("hold_reason") or "execution_held"
+            save_operator_state(state)
+            return {
+                "status": "held",
+                "detail": plan.get("hold_reason") or "Execution optimizer held the order",
+                "router": router,
+                "plan": plan,
+            }
+
+    final_qty = float((plan or {}).get("recommended_qty") or payload.qty or 0.0)
+    final_order_type = ((plan or {}).get("recommended_order_type") or payload.order_type or "market")
+
+    order_payload = ManualOrderRequest(
+        symbol=payload.symbol,
+        side=payload.side,
+        qty=final_qty,
+        execution_mode="alpaca" if payload.execution_mode == "live" else ("paper" if payload.execution_mode == "paper" else payload.execution_mode),
+    )
+    submit_result = orders_submit(order_payload, session)
+    created = submit_result["order"]
+    created["broker_route"] = True
+    created["broker_mode"] = payload.execution_mode
+    created["governance_approved"] = payload.governance_approved
+    created["routing_source"] = "broker-routing"
+    if plan:
+        created["execution_plan"] = plan
+        created["optimizer_route"] = True
+        created["estimated_slippage_bps"] = plan.get("estimated_slippage_bps")
+        created["schedule"] = plan.get("schedule")
+
+    orders_block = state.setdefault("orders", {"orders": []})
+    if orders_block.get("orders"):
+        orders_block["orders"][-1].update({
+            "broker_route": True,
+            "broker_mode": payload.execution_mode,
+            "governance_approved": payload.governance_approved,
+            "routing_source": "broker-routing",
+            "optimizer_route": bool(plan),
+            "execution_plan": plan,
+            "estimated_slippage_bps": (plan or {}).get("estimated_slippage_bps"),
+            "schedule": (plan or {}).get("schedule"),
+        })
+
+    router["last_route_at"] = now_iso()
+    router["last_route_status"] = "submitted"
+    router["last_error"] = None
+    if payload.execution_mode == "live":
+        router["live_count"] = int(router.get("live_count", 0)) + 1
+    else:
+        router["paper_count"] = int(router.get("paper_count", 0)) + 1
+    record_execution_result(state, plan, created)
+    state.setdefault("execution_engine", {})["execution_optimizer"] = execution_optimizer_state(state)
+    save_operator_state(state)
+    return {"status": "submitted", "router": router, "order": created, "plan": plan}
+
+
+@app.get("/broker-routing/log")
+def broker_routing_log(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    orders = list(reversed(state.get("orders", {}).get("orders", [])))
+    broker_orders = [o for o in orders if (o.get("broker_route") or False)]
+    return {"items": broker_orders[:100], "count": len(broker_orders)}
+
+# -------------------------
+# QNT30366 Release-Normalized Institutional Core
+# -------------------------
+class AutomationConfigRequest(BaseModel):
+    operator_id: Optional[str] = None
+    execution_mode: str = "internal"
+    market_bias: str = "neutral"
+    interval_seconds: int = 30
+    broker_reconcile_enabled: bool = True
+    pnl_sync_enabled: bool = True
+    failure_pause_seconds: int = 60
+    max_consecutive_failures: int = 3
+    retry_on_failure: bool = True
+    max_retry_attempts: int = 2
+    retry_backoff_seconds: int = 5
+
+
+class AutomationStartRequest(AutomationConfigRequest):
+    pass
+
+
+class AutomationStopRequest(BaseModel):
+    operator_id: Optional[str] = None
+
+
+class AutomationTickRequest(BaseModel):
+    operator_id: Optional[str] = None
+    force: bool = True
+
+
+class AutomationRecoverRequest(BaseModel):
+    operator_id: Optional[str] = None
+    restart_worker: bool = True
+    clear_failures: bool = True
+    run_immediately: bool = False
+
+
+def resolve_target_operator_id(session, operator_id=None):
+    if operator_id and session.get("is_admin"):
+        return operator_id
+    ctx = resolve_operator_context(session)
+    return operator_id if (operator_id and operator_id == ctx.get("operator_id")) else ctx.get("operator_id")
+
+
+def broker_needed_for_state(state):
+    if (state.get("capital_source", {}).get("mode") or "internal").lower() == "broker":
+        return True
+    for order in state.get("orders", {}).get("orders", []):
+        if order.get("broker_order_id") or (order.get("broker") or "").lower() == "alpaca" or (order.get("mode") or "").lower() == "alpaca":
+            return True
+    return False
+
+
+def reconcile_operator_broker_state(state):
+    if not broker_needed_for_state(state):
+        state.setdefault("monitoring", {})["broker_sync"] = {
+            "timestamp": now_iso(),
+            "status": "skipped",
+            "reason": "no_broker_exposure",
+            "updated_orders": 0,
+        }
+        return state["monitoring"]["broker_sync"]
+
+    broker_state = refresh_alpaca_state(soft=True)
+    sync_summary = {
+        "timestamp": now_iso(),
+        "status": "connected" if broker_state.get("connected") else ("stale" if broker_state.get("stale") else "disconnected"),
+        "updated_orders": 0,
+        "filled_orders": 0,
+        "active_broker_orders": len(broker_state.get("orders", []) or []),
+        "broker_positions": len(broker_state.get("positions", []) or []),
+        "connected": broker_state.get("connected", False),
+        "stale": broker_state.get("stale", False),
+        "last_error": broker_state.get("last_error"),
+        "account_equity": round(as_float((broker_state.get("account") or {}).get("equity"), 0.0), 2),
+        "buying_power": round(as_float((broker_state.get("account") or {}).get("buying_power") or (broker_state.get("account") or {}).get("regt_buying_power"), 0.0), 2),
+    }
+
+    recent_orders = []
+    if resolved_alpaca_credentials():
+        try:
+            recent_orders = alpaca_request("GET", "/v2/orders", query={"status": "all", "direction": "desc", "limit": 100})
+        except HTTPException as exc:
+            sync_summary["last_error"] = exc.detail
+            sync_summary["status"] = "error"
+    broker_by_id = {item.get("id"): item for item in (recent_orders or []) if item.get("id")}
+
+    changed = []
+    for order in state.get("orders", {}).get("orders", []):
+        broker_id = order.get("broker_order_id")
+        if not broker_id or broker_id not in broker_by_id:
+            continue
+        broker_order = broker_by_id[broker_id]
+        new_status = broker_order.get("status") or order.get("status")
+        previous_status = order.get("status")
+        if previous_status != new_status:
+            order["status"] = new_status
+            sync_summary["updated_orders"] += 1
+            changed.append({"order_id": order.get("order_id"), "from": previous_status, "to": new_status})
+        if broker_order.get("filled_avg_price") not in (None, ""):
+            order["filled_avg_price"] = as_float(broker_order.get("filled_avg_price"), fill_price(order))
+        if broker_order.get("filled_qty") not in (None, ""):
+            order["filled_qty"] = as_float(broker_order.get("filled_qty"), as_float(order.get("qty"), 0.0))
+        order["broker_last_sync_at"] = now_iso()
+        order["broker_status_raw"] = broker_order.get("status")
+        if (order.get("status") or "").lower() in {"filled", "partially_filled"}:
+            sync_summary["filled_orders"] += 1
+
+    sync_summary["changed_orders"] = changed[:25]
+    state.setdefault("monitoring", {})["broker_sync"] = sync_summary
+    return sync_summary
+
+
+def automation_cycle_for_operator(operator_id, cfg):
+    state = get_operator_state_by_id(operator_id)
+    engine = execution_engine_state(state)
+    cycle_started_at = now_iso()
+    stage_metrics = {}
+    stage_errors = []
+
+    def run_stage(stage_name, fn, *, critical=False, fallback=None):
+        started = now_dt()
+        try:
+            value = fn()
+            duration_ms = int((now_dt() - started).total_seconds() * 1000)
+            stage_metrics[stage_name] = {"status": "completed", "duration_ms": duration_ms}
+            return value
+        except Exception as exc:
+            duration_ms = int((now_dt() - started).total_seconds() * 1000)
+            stage_metrics[stage_name] = {"status": "error", "duration_ms": duration_ms, "error": str(exc), "critical": critical}
+            stage_errors.append({"stage": stage_name, "error": str(exc), "critical": critical})
+            if critical:
+                raise
+            return fallback
+
+    engine["running"] = True
+    engine["last_started_at"] = engine.get("last_started_at") or now_iso()
+    engine["last_market_bias"] = cfg.get("market_bias", "neutral")
+    engine["last_execution_mode"] = cfg.get("execution_mode", "internal")
+    state["strategy_loop"]["running"] = True
+    state["strategy_loop"]["execution_mode"] = cfg.get("execution_mode", "internal")
+    state["strategy_loop"]["interval_seconds"] = max(5, int(cfg.get("interval_seconds") or 30))
+    state["strategy_loop"]["heartbeat_at"] = now_iso()
+    state["strategy_loop"]["last_cycle_started_at"] = cycle_started_at
+
+    result = run_stage(
+        "strategy_cycle",
+        lambda: run_strategy_intelligence_cycle(
+            state,
+            cfg.get("execution_mode", "internal"),
+            cfg.get("market_bias", "neutral"),
+            "automation@quantora.local",
+            operator_id,
+        ),
+        critical=True,
+        fallback={"executed_count": 0, "signals": []},
+    )
+
+    broker_sync = {"status": "skipped", "reason": "disabled"}
+    if cfg.get("broker_reconcile_enabled", True):
+        broker_sync = run_stage(
+            "broker_reconcile",
+            lambda: reconcile_operator_broker_state(state),
+            critical=False,
+            fallback={"status": "error", "reason": "reconciliation_failed"},
+        )
+
+    monitoring = state.get("monitoring") if not cfg.get("pnl_sync_enabled", True) else run_stage(
+        "monitoring_sync",
+        lambda: evaluate_monitoring(state),
+        critical=False,
+        fallback=state.get("monitoring", {}),
+    )
+
+    optimizer = {"status": "skipped", "reason": "disabled"}
+    if cfg.get("auto_strategy_optimizer_enabled", False):
+        optimizer = run_stage(
+            "multi_strategy_optimizer",
+            lambda: apply_multi_strategy_optimization(
+                state,
+                market_bias=cfg.get("market_bias", "neutral"),
+                max_active_strategies=int(cfg.get("auto_strategy_optimizer_max_active") or 3),
+                min_score_to_enable=float(cfg.get("auto_strategy_optimizer_min_score") or 55.0),
+                pause_below_score=float(cfg.get("auto_strategy_optimizer_pause_score") or 35.0),
+                rebalance_capital=True,
+            ),
+            critical=False,
+            fallback={"status": "error", "reason": "optimizer_failed"},
+        )
+
+    cycle_status = "degraded" if stage_errors else "completed"
+    engine["last_cycle_at"] = now_iso()
+    engine["last_cycle_status"] = cycle_status
+    engine["last_executed_count"] = int((result or {}).get("executed_count") or 0)
+    engine["last_stage_metrics"] = stage_metrics
+    engine["last_stage_errors"] = stage_errors
+    state["strategy_loop"]["last_cycle_status"] = cycle_status
+    state["strategy_loop"]["last_stage_metrics"] = stage_metrics
+    state["strategy_loop"]["last_stage_errors"] = stage_errors
+    state["strategy_loop"]["next_run_at"] = (now_dt() + datetime.timedelta(seconds=max(5, int(cfg.get("interval_seconds") or 30)))).isoformat() + "Z"
+    save_operator_state(state)
+
+    return {
+        "status": cycle_status,
+        "operator_id": operator_id,
+        "executed_count": int((result or {}).get("executed_count") or 0),
+        "signal_count": len((result or {}).get("signals") or []),
+        "market_bias": cfg.get("market_bias", "neutral"),
+        "execution_mode": cfg.get("execution_mode", "internal"),
+        "broker_sync": broker_sync,
+        "alerts_count": len((monitoring or {}).get("alerts", []) or []),
+        "optimizer": optimizer,
+        "risk_status": risk_status_for_state(state).get("status"),
+        "timestamp": now_iso(),
+        "stage_metrics": stage_metrics,
+        "stage_errors": stage_errors,
+    }
+
+
+automation_engine = QuantoraAutomationEngine(
+    state_path=AUTOMATION_STATE_FILE,
+    run_operator_cycle_fn=automation_cycle_for_operator,
+    now_iso_fn=now_iso,
+)
+
+
+@app.get("/automation/status")
+def automation_status(operator_id: Optional[str] = None, session=Depends(require_auth)):
+    target_operator_id = resolve_target_operator_id(session, operator_id)
+    state = automation_engine.get_status(target_operator_id)
+    operator_state = get_operator_state_by_id(target_operator_id)
+    return {
+        "automation": state,
+        "workspace": {
+            "operator_id": target_operator_id,
+            "execution_engine": execution_engine_state(operator_state),
+            "strategy_loop": operator_state.get("strategy_loop", {}),
+            "monitoring": operator_state.get("monitoring", {}),
+        },
+    }
+
+
+@app.get("/automation/events")
+def automation_events(operator_id: Optional[str] = None, limit: int = 100, session=Depends(require_auth)):
+    target_operator_id = resolve_target_operator_id(session, operator_id)
+    return automation_engine.get_events(target_operator_id, limit=limit)
+
+
+@app.post("/automation/configure")
+def automation_configure(payload: AutomationConfigRequest, session=Depends(require_auth)):
+    target_operator_id = resolve_target_operator_id(session, payload.operator_id)
+    cfg = automation_engine.configure_operator(
+        target_operator_id,
+        {
+            "execution_mode": payload.execution_mode,
+            "market_bias": payload.market_bias,
+            "interval_seconds": max(5, int(payload.interval_seconds)),
+            "broker_reconcile_enabled": payload.broker_reconcile_enabled,
+            "pnl_sync_enabled": payload.pnl_sync_enabled,
+            "failure_pause_seconds": max(15, int(payload.failure_pause_seconds)),
+            "max_consecutive_failures": max(1, int(payload.max_consecutive_failures)),
+            "retry_on_failure": payload.retry_on_failure,
+            "max_retry_attempts": max(0, int(payload.max_retry_attempts)),
+            "retry_backoff_seconds": max(1, int(payload.retry_backoff_seconds)),
+        },
+    )
+    return {"status": "configured", "operator": cfg, "health": automation_engine.get_health(target_operator_id)}
+
+
+@app.post("/automation/start")
+def automation_start(payload: AutomationStartRequest, session=Depends(require_auth)):
+    target_operator_id = resolve_target_operator_id(session, payload.operator_id)
+    cfg = automation_engine.start_operator(
+        target_operator_id,
+        {
+            "execution_mode": payload.execution_mode,
+            "market_bias": payload.market_bias,
+            "interval_seconds": max(5, int(payload.interval_seconds)),
+            "broker_reconcile_enabled": payload.broker_reconcile_enabled,
+            "pnl_sync_enabled": payload.pnl_sync_enabled,
+            "failure_pause_seconds": max(15, int(payload.failure_pause_seconds)),
+            "max_consecutive_failures": max(1, int(payload.max_consecutive_failures)),
+            "retry_on_failure": payload.retry_on_failure,
+            "max_retry_attempts": max(0, int(payload.max_retry_attempts)),
+            "retry_backoff_seconds": max(1, int(payload.retry_backoff_seconds)),
+        },
+    )
+    operator_state = get_operator_state_by_id(target_operator_id)
+    execution_engine_state(operator_state)["running"] = True
+    operator_state["strategy_loop"]["running"] = True
+    operator_state["strategy_loop"]["execution_mode"] = payload.execution_mode
+    operator_state["strategy_loop"]["interval_seconds"] = max(5, int(payload.interval_seconds))
+    operator_state["strategy_loop"]["heartbeat_at"] = now_iso()
+    operator_state["strategy_loop"]["next_run_at"] = cfg.get("next_run_at")
+    save_operator_state(operator_state)
+    return {"status": "started", "operator": cfg, "health": automation_engine.get_health(target_operator_id)}
+
+
+@app.post("/automation/stop")
+def automation_stop(payload: AutomationStopRequest, session=Depends(require_auth)):
+    target_operator_id = resolve_target_operator_id(session, payload.operator_id)
+    cfg = automation_engine.stop_operator(target_operator_id)
+    operator_state = get_operator_state_by_id(target_operator_id)
+    execution_engine_state(operator_state)["running"] = False
+    operator_state["strategy_loop"]["running"] = False
+    operator_state["strategy_loop"]["next_run_at"] = None
+    save_operator_state(operator_state)
+    return {"status": "stopped", "operator": cfg}
+
+
+@app.post("/automation/tick")
+def automation_tick(payload: AutomationTickRequest, session=Depends(require_auth)):
+    target_operator_id = resolve_target_operator_id(session, payload.operator_id)
+    result = automation_engine.tick(operator_id=target_operator_id, force=bool(payload.force))
+    return {"status": "completed", **result}
+
+
+@app.get("/automation/operator-sync")
+def automation_operator_sync(operator_id: Optional[str] = None, session=Depends(require_auth)):
+    target_operator_id = resolve_target_operator_id(session, operator_id)
+    state = get_operator_state_by_id(target_operator_id)
+    summary = reconcile_operator_broker_state(state)
+    monitoring = evaluate_monitoring(state)
+    save_operator_state(state)
+    return {"status": "completed", "operator_id": target_operator_id, "broker_sync": summary, "monitoring": monitoring}
+
+
+@app.get("/automation/worker-status")
+def automation_worker_status(session=Depends(require_auth)):
+    state = automation_engine.load_state()
+    return {
+        "worker": automation_engine.get_health().get("worker", {}),
+        "operators": list(state.get("operators", {}).keys()),
+        "health": automation_engine.get_health(),
+        "metrics": automation_engine.get_metrics(),
+    }
+
+
+@app.post("/automation/worker/start")
+def automation_worker_start(session=Depends(require_auth)):
+    automation_engine.start_worker()
+    state = automation_engine.load_state()
+    return {"status": "started", "worker": state.get("worker", {})}
+
+
+@app.post("/automation/worker/stop")
+def automation_worker_stop(session=Depends(require_auth)):
+    automation_engine.stop_worker()
+    state = automation_engine.load_state()
+    return {"status": "stopped", "worker": state.get("worker", {})}
+
+
+@app.post("/automation/run-once")
+def automation_run_once(payload: AutomationTickRequest, session=Depends(require_auth)):
+    target_operator_id = resolve_target_operator_id(session, payload.operator_id)
+    result = automation_engine.tick(operator_id=target_operator_id, force=True)
+    return {"status": "completed", **result}
+
+
+@app.get("/automation/health")
+def automation_health(operator_id: Optional[str] = None, session=Depends(require_auth)):
+    target_operator_id = resolve_target_operator_id(session, operator_id) if operator_id or not session.get("is_admin") else None
+    return automation_engine.get_health(target_operator_id)
+
+
+@app.get("/automation/cycle-metrics")
+def automation_cycle_metrics(operator_id: Optional[str] = None, session=Depends(require_auth)):
+    target_operator_id = resolve_target_operator_id(session, operator_id) if operator_id or not session.get("is_admin") else None
+    return automation_engine.get_metrics(target_operator_id)
+
+
+@app.post("/automation/recover")
+def automation_recover(payload: AutomationRecoverRequest, session=Depends(require_auth)):
+    target_operator_id = resolve_target_operator_id(session, payload.operator_id) if payload.operator_id or not session.get("is_admin") else None
+    result = automation_engine.recover(
+        operator_id=target_operator_id,
+        restart_worker=bool(payload.restart_worker),
+        clear_failures=bool(payload.clear_failures),
+        run_immediately=bool(payload.run_immediately),
+    )
+    return result
+
+
+# -------------------------
+# QNT30341 Stability + Truth Engine
+# -------------------------
+from backend.sync_engine import StabilitySyncEngine
+from backend.truth_engine import build_truth_snapshot
+
+TRUTH_STATE_FILE = ARTIFACTS_DIR / "truth_engine_state.json"
+
+
+def load_truth_state():
+    if not TRUTH_STATE_FILE.exists():
+        return {
+            "last_sync_at": None,
+            "status": "idle",
+            "truth": {"positions": [], "counts": {"mismatches": 0}, "account": {}, "pnl": {}},
+            "guard": {"status": "IDLE", "reason": "No sync has run yet", "critical_count": 0, "warning_count": 0, "block_new_trades": False},
+        }
+    try:
+        return json.loads(TRUTH_STATE_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return {
+            "last_sync_at": None,
+            "status": "degraded",
+            "truth": {"positions": [], "counts": {"mismatches": 0}, "account": {}, "pnl": {}},
+            "guard": {"status": "ERROR", "reason": "truth state unreadable", "critical_count": 0, "warning_count": 0, "block_new_trades": False},
+        }
+
+
+def save_truth_state(data):
+    TRUTH_STATE_FILE.write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+
+def local_positions_for_truth(state):
+    capital = build_capital_context(state)
+    mode = (capital.get("mode") or state.get("capital_source", {}).get("mode") or "internal").lower()
+    if mode == "broker":
+        return capital.get("positions", []) or []
+    return operator_positions_from_orders(state)[0]
+
+
+def run_truth_sync(state, force=False):
+    broker = refresh_alpaca_state(soft=not force)
+    local_positions = local_positions_for_truth(state)
+    engine = StabilitySyncEngine()
+    result = engine.run(local_positions, broker.get("positions", []) or [], broker.get("account", {}) or {})
+    payload = {
+        "last_sync_at": now_iso(),
+        "status": "aligned" if result.get("synced") else "drift",
+        "truth": result.get("truth", {}),
+        "guard": result.get("guard", {}),
+        "broker_connected": bool(broker.get("connected")),
+    }
+    save_truth_state(payload)
+    state.setdefault("truth_engine", {})
+    state["truth_engine"] = payload
+    save_operator_state(state)
+    return payload
+
+
+# Wrap workspace builder for clearer broker truth display
+_original_build_operator_workspace = build_operator_workspace
+
+def build_operator_workspace(state):
+    workspace = _original_build_operator_workspace(state)
+    capital = workspace.get("capital", {}) or {}
+    mode = (capital.get("mode") or workspace.get("capital_source", {}).get("mode") or "internal").lower()
+    if mode == "broker":
+        workspace["positions"] = capital.get("positions", []) or workspace.get("positions", [])
+        workspace.setdefault("execution_summary", {})["unrealized_pnl"] = round(as_float(capital.get("broker", {}).get("account", {}).get("portfolio_value", capital.get("current_equity")), capital.get("current_equity")) - as_float(capital.get("current_equity"), 0.0), 2)
+    truth = state.get("truth_engine") or load_truth_state()
+    workspace["truth_engine"] = truth
+    return workspace
+
+
+@app.post("/stability/sync-now")
+def stability_sync_now(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    payload = run_truth_sync(state, force=True)
+    return payload
+
+
+@app.get("/stability/status")
+def stability_status(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    truth = state.get("truth_engine") or load_truth_state()
+    if not truth.get("last_sync_at"):
+        truth = run_truth_sync(state, force=False)
+    return truth
+
+@app.get('/performance/live-status')
+def performance_live_status(session=Depends(require_auth)):
+    state = get_operator_state(session)
+    perf = build_performance_snapshot(state)
+    truth = state.get('truth_engine') or load_truth_state()
+    risk = evaluate_risk_state(state)
+    save_operator_state(state)
+    capital = build_capital_context(state)
+    broker = capital.get('broker', {}) if isinstance(capital, dict) else {}
+    account = broker.get('account', {}) if isinstance(broker, dict) else {}
+    return {
+        'status': 'ok',
+        'summary': perf.get('summary', {}),
+        'scorecard': perf.get('scorecard', {}),
+        'equity_curve': perf.get('equity_curve', []),
+        'attribution': perf.get('attribution', []),
+        'trade_journal': perf.get('trade_journal', [])[:25],
+        'truth': {
+            'status': truth.get('status'),
+            'guard': (truth.get('guard') or {}).get('status'),
+            'mismatches': ((truth.get('truth') or {}).get('counts') or {}).get('mismatches', 0),
+        },
+        'broker_account': {
+            'equity': as_float(account.get('equity'), perf.get('summary', {}).get('current_equity', 0)),
+            'cash': as_float(account.get('cash'), 0),
+            'buying_power': as_float(account.get('buying_power'), 0),
+            'portfolio_value': as_float(account.get('portfolio_value'), perf.get('summary', {}).get('current_equity', 0)),
+        },
+        'risk_lock': {
+            'enabled': bool(risk.get('config', {}).get('enabled')),
+            'max_trades_per_session': risk.get('config', {}).get('max_trades_per_session'),
+            'max_notional_per_trade': risk.get('config', {}).get('max_notional_per_trade'),
+            'session_trade_count': risk.get('totals', {}).get('session_trade_count', 0),
+            'block_new_trades': bool(risk.get('breaches')) or bool(risk.get('config', {}).get('kill_switch_active')),
+        },
+    }
+
+
+class AutonomyEvaluateRequest(BaseModel):
+    operator_id: Optional[str] = None
+    execution_mode: str = Field(default="paper")
+    market_bias: str = Field(default="neutral")
+
+
+class AutonomyTransitionRequest(BaseModel):
+    target_mode: str = Field(default="supervised")
+    operator_id: Optional[str] = None
+    reason: Optional[str] = None
+
+
+class AutonomyDelegationRequest(BaseModel):
+    tier: str = Field(default="analyst")
+    max_live_notional: float = Field(default=0.0)
+    allow_live_orders: bool = Field(default=False)
+    allow_strategy_mutations: bool = Field(default=False)
+    operator_id: Optional[str] = None
+
+
+class AutonomyRunRequest(BaseModel):
+    operator_id: Optional[str] = None
+    execution_mode: str = Field(default="paper")
+    market_bias: str = Field(default="neutral")
+    force: bool = Field(default=False)
+
+
+
+class BrokerRouteRequest(BaseModel):
+    market: str = Field(default="equities")
+    symbol: str = Field(default="AAPL")
+    side: str = Field(default="buy")
+    qty: float = Field(default=1.0, ge=0)
+    execution_mode: str = Field(default="paper")
+    urgency: str = Field(default="balanced")
+    preferred_broker: Optional[str] = None
+
+
+class BrokerUpsertRequest(BaseModel):
+    broker_id: str
+    enabled: bool = True
+    markets: list[str] = Field(default_factory=list)
+    live_supported: bool = False
+    paper_supported: bool = True
+    base_fee_bps: float = 0.0
+    latency_ms: int = 100
+    reliability_score: float = 0.97
+    slippage_penalty_bps: float = 0.0
+    notes: Optional[str] = None
+
+
+class MarketUpsertRequest(BaseModel):
+    market_id: str
+    enabled: bool = True
+    symbols: list[str] = Field(default_factory=list)
+    default_order_type: str = Field(default="limit")
+    session_profile: str = Field(default="cash")
+    risk_multiplier: float = 1.0
+
+
+class PortfolioExpansionRequest(BaseModel):
+    allocations: dict = Field(default_factory=dict)
+    target_markets: list[str] = Field(default_factory=list)
+
+
+# -------------------------
+# Broker abstraction + multi-market expansion
+# -------------------------
+@app.get("/broker-abstraction/status")
+def broker_abstraction_status(admin=Depends(require_admin)):
+    state = broker_abstraction_state_view(load_json("broker_abstraction.json", default_broker_abstraction()))
+    save_json("broker_abstraction.json", state)
+    return {"status": "ok", "broker_abstraction": state, "summary": broker_abstraction_summary(state)}
+
+
+@app.post("/broker-abstraction/router/evaluate")
+def broker_abstraction_router_evaluate(payload: BrokerRouteRequest, admin=Depends(require_admin)):
+    state = broker_abstraction_state_view(load_json("broker_abstraction.json", default_broker_abstraction()))
+    result = broker_route_evaluate(
+        state,
+        market=payload.market,
+        symbol=payload.symbol,
+        side=payload.side,
+        qty=payload.qty,
+        execution_mode=payload.execution_mode,
+        urgency=payload.urgency,
+        preferred_broker=payload.preferred_broker,
+    )
+    if result.get("status") == "ok":
+        broker_route_record_execution(state, result)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "broker_abstraction.route.evaluate", result.get("symbol"), result, "broker_abstraction")
+    save_json("broker_abstraction.json", state)
+    return result
+
+
+@app.post("/broker-abstraction/brokers/upsert")
+def broker_abstraction_brokers_upsert(payload: BrokerUpsertRequest, admin=Depends(require_admin)):
+    state = broker_abstraction_state_view(load_json("broker_abstraction.json", default_broker_abstraction()))
+    broker = broker_upsert(state, payload.broker_id, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "broker_abstraction.broker.upsert", broker.get("broker_id"), broker, "broker_abstraction")
+    save_json("broker_abstraction.json", state)
+    return {"status": "updated", "broker": broker, "summary": broker_abstraction_summary(state)}
+
+
+@app.post("/broker-abstraction/markets/upsert")
+def broker_abstraction_markets_upsert(payload: MarketUpsertRequest, admin=Depends(require_admin)):
+    state = broker_abstraction_state_view(load_json("broker_abstraction.json", default_broker_abstraction()))
+    market = market_upsert(state, payload.market_id, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "broker_abstraction.market.upsert", market.get("market_id"), market, "broker_abstraction")
+    save_json("broker_abstraction.json", state)
+    return {"status": "updated", "market": market, "summary": broker_abstraction_summary(state)}
+
+
+@app.post("/broker-abstraction/portfolio/expand")
+def broker_abstraction_portfolio_expand(payload: PortfolioExpansionRequest, admin=Depends(require_admin)):
+    state = broker_abstraction_state_view(load_json("broker_abstraction.json", default_broker_abstraction()))
+    result = portfolio_expand(state, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "broker_abstraction.portfolio.expand", "portfolio", result, "broker_abstraction")
+    save_json("broker_abstraction.json", state)
+    return {"status": result.get("status", "updated"), "result": result, "summary": broker_abstraction_summary(state)}
+
+
+# -------------------------
+# Governance system v2
+# -------------------------
+@app.get("/governance/status")
+def governance_status(admin=Depends(require_admin)):
+    controls = load_json("governance_system.json", default_governance_controls())
+    approvals = get_approvals().get("requests", [])
+    ledger = load_json("governance_ledger.json", {"events": []}).get("events", [])
+    return {
+        "status": "ok",
+        "controls": governance_controls_state({"governance_system": controls}),
+        "policies": get_policies().get("policies", []),
+        "summary": governance_summary(
+            governance_controls_state({"governance_system": controls}),
+            approvals,
+            ledger,
+        ),
+        "aging": governance_aging_report(approvals),
+    }
+
+
+@app.post("/governance/policy/simulate")
+def governance_policy_simulate(payload: GovernancePolicySimulationRequest, admin=Depends(require_admin)):
+    controls = governance_controls_state({"governance_system": load_json("governance_system.json", default_governance_controls())})
+    policies = get_policies().get("policies", [])
+    result = governance_policy_simulation(controls, policies, payload.model_dump())
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "governance.policy.simulate", payload.event_type, result, "governance")
+    return result
+
+
+@app.post("/governance/enforcement/evaluate")
+def governance_enforcement_evaluate(payload: GovernanceEnforcementRequest, admin=Depends(require_admin)):
+    operator_id = payload.operator_id or admin.get("selected_operator_id") or admin.get("operator_id")
+    state = get_operator_state_by_id(operator_id)
+    controls = governance_controls_state({"governance_system": load_json("governance_system.json", default_governance_controls())})
+    approvals = get_approvals().get("requests", [])
+    ledger = load_json("governance_ledger.json", {"events": []}).get("events", [])
+    snapshot = governance_enforcement_snapshot(
+        state=state,
+        controls=controls,
+        approvals=approvals,
+        ledger=ledger,
+        include_orders=payload.include_orders,
+        include_approvals=payload.include_approvals,
+        include_risk=payload.include_risk,
+    )
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "governance.enforcement.evaluate", operator_id, snapshot.get("summary", {}), "governance")
+    return snapshot
+
+
+@app.get("/governance/approvals/aging")
+def governance_approvals_aging(admin=Depends(require_admin)):
+    return governance_aging_report(get_approvals().get("requests", []))
+
+
+# -------------------------
+# Full autonomy control plane
+# -------------------------
+@app.get("/autonomy/status")
+def autonomy_status(admin=Depends(require_admin)):
+    autonomy = autonomy_state_view(load_json("autonomy_control_plane.json", autonomy_state_defaults()))
+    approvals = get_approvals().get("requests", [])
+    ledger = load_json("governance_ledger.json", {"events": []}).get("events", [])
+    selected = admin.get("selected_operator_id") or admin.get("operator_id")
+    state = get_operator_state_by_id(selected)
+    summary = autonomy_summary(autonomy, state, approvals, ledger)
+    save_json("autonomy_control_plane.json", autonomy)
+    return {"status": "ok", "autonomy": autonomy, "summary": summary}
+
+
+@app.post("/autonomy/evaluate")
+def autonomy_evaluate(payload: AutonomyEvaluateRequest, admin=Depends(require_admin)):
+    operator_id = payload.operator_id or admin.get("selected_operator_id") or admin.get("operator_id")
+    state = get_operator_state_by_id(operator_id)
+    approvals = get_approvals().get("requests", [])
+    ledger = load_json("governance_ledger.json", {"events": []}).get("events", [])
+    governance_controls = governance_controls_state({"governance_system": load_json("governance_system.json", default_governance_controls())})
+    governance_snapshot = governance_enforcement_snapshot(state, governance_controls, approvals, ledger, True, True, True)
+    perf = build_performance_snapshot(state)
+    risk = evaluate_risk_state(state)
+    autonomy = autonomy_state_view(load_json("autonomy_control_plane.json", autonomy_state_defaults()))
+    result = autonomy_transition_decision(autonomy, state=state, performance=perf, risk=risk, governance_snapshot=governance_snapshot, execution_mode=payload.execution_mode, market_bias=payload.market_bias)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "autonomy.evaluate", operator_id, result.get("summary", {}), "autonomy")
+    save_json("autonomy_control_plane.json", autonomy)
+    save_operator_state(state)
+    return result
+
+
+@app.post("/autonomy/transition")
+def autonomy_transition(payload: AutonomyTransitionRequest, admin=Depends(require_admin)):
+    operator_id = payload.operator_id or admin.get("selected_operator_id") or admin.get("operator_id")
+    state = get_operator_state_by_id(operator_id)
+    approvals = get_approvals().get("requests", [])
+    ledger = load_json("governance_ledger.json", {"events": []}).get("events", [])
+    governance_controls = governance_controls_state({"governance_system": load_json("governance_system.json", default_governance_controls())})
+    governance_snapshot = governance_enforcement_snapshot(state, governance_controls, approvals, ledger, True, True, True)
+    perf = build_performance_snapshot(state)
+    risk = evaluate_risk_state(state)
+    autonomy = autonomy_state_view(load_json("autonomy_control_plane.json", autonomy_state_defaults()))
+    result = autonomy_transition_decision(autonomy, state=state, performance=perf, risk=risk, governance_snapshot=governance_snapshot, target_mode=payload.target_mode, reason=payload.reason)
+    if not result.get("allowed"):
+        raise HTTPException(status_code=400, detail=result.get("summary", {}).get("decision_reason", "autonomy transition blocked"))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "autonomy.transition", operator_id, result.get("summary", {}), "autonomy")
+    save_json("autonomy_control_plane.json", autonomy)
+    save_operator_state(state)
+    return result
+
+
+@app.post("/autonomy/delegation/update")
+def autonomy_delegation(payload: AutonomyDelegationRequest, admin=Depends(require_admin)):
+    autonomy = autonomy_state_view(load_json("autonomy_control_plane.json", autonomy_state_defaults()))
+    result = autonomy_delegation_update(autonomy, tier=payload.tier, max_live_notional=payload.max_live_notional, allow_live_orders=payload.allow_live_orders, allow_strategy_mutations=payload.allow_strategy_mutations, operator_id=payload.operator_id or admin.get("selected_operator_id") or admin.get("operator_id"), actor_email=admin.get("email"))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "autonomy.delegation.update", result.get("delegation", {}).get("operator_id"), result.get("delegation", {}), "autonomy")
+    save_json("autonomy_control_plane.json", autonomy)
+    return result
+
+
+@app.post("/autonomy/run-cycle")
+def autonomy_run_cycle(payload: AutonomyRunRequest, admin=Depends(require_admin)):
+    operator_id = payload.operator_id or admin.get("selected_operator_id") or admin.get("operator_id")
+    state = get_operator_state_by_id(operator_id)
+    approvals = get_approvals().get("requests", [])
+    ledger = load_json("governance_ledger.json", {"events": []}).get("events", [])
+    governance_controls = governance_controls_state({"governance_system": load_json("governance_system.json", default_governance_controls())})
+    governance_snapshot = governance_enforcement_snapshot(state, governance_controls, approvals, ledger, True, True, True)
+    perf = build_performance_snapshot(state)
+    risk = evaluate_risk_state(state)
+    autonomy = autonomy_state_view(load_json("autonomy_control_plane.json", autonomy_state_defaults()))
+    decision = autonomy_transition_decision(autonomy, state=state, performance=perf, risk=risk, governance_snapshot=governance_snapshot, execution_mode=payload.execution_mode, market_bias=payload.market_bias)
+    if decision.get("summary", {}).get("recommended_mode"):
+        autonomy["last_recommended_mode"] = decision["summary"]["recommended_mode"]
+    mode = autonomy.get("current_mode", "supervised")
+    if mode == "locked":
+        raise HTTPException(status_code=400, detail="autonomy locked by governance")
+    if decision.get("summary", {}).get("recommended_mode") == "locked":
+        autonomy["current_mode"] = "locked"
+        save_json("autonomy_control_plane.json", autonomy)
+        raise HTTPException(status_code=400, detail="autonomy blocked by risk or governance")
+    if mode == "supervised" and not payload.force:
+        raise HTTPException(status_code=400, detail="current mode is supervised; promote mode or use force for a manual governed cycle")
+    if payload.execution_mode == "live":
+        delegation = autonomy.get("delegations", {}).get(operator_id, {})
+        if not delegation.get("allow_live_orders"):
+            raise HTTPException(status_code=400, detail="delegation tier does not allow live autonomy")
+    result = run_strategy_intelligence_cycle(state, payload.execution_mode, payload.market_bias, admin.get("email"), admin.get("operator_id"))
+    autonomy["last_cycle_at"] = now_iso()
+    autonomy["cycle_count"] = int(autonomy.get("cycle_count") or 0) + 1
+    autonomy["last_cycle_status"] = result.get("status", "completed")
+    autonomy.setdefault("telemetry", []).insert(0, {"timestamp": now_iso(), "operator_id": operator_id, "mode": autonomy.get("current_mode"), "execution_mode": payload.execution_mode, "executed_count": int(result.get("executed_count") or 0)})
+    autonomy["telemetry"] = autonomy.get("telemetry", [])[:100]
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "autonomy.run_cycle", operator_id, {"mode": autonomy.get("current_mode"), "execution_mode": payload.execution_mode, "executed_count": int(result.get("executed_count") or 0)}, "autonomy")
+    save_json("autonomy_control_plane.json", autonomy)
+    save_operator_state(state)
+    return {"status": "completed", "autonomy": autonomy, "decision": decision.get("summary", {}), "result": result}
+
+
+# -------------------------
+# Venue adapter framework + market data abstraction
+# -------------------------
+class VenueRegisterRequest(BaseModel):
+    venue_id: str
+    asset_classes: list[str] = Field(default_factory=lambda: ["equities"])
+    latency_ms: int = 50
+    status: str = "active"
+
+
+class NormalizeSymbolRequest(BaseModel):
+    canonical_symbol: str
+    target_market: str = "equities"
+    venue_id: Optional[str] = None
+
+
+class OrderSchemaPrepareRequest(BaseModel):
+    venue_id: str = "alpaca"
+    symbol: str
+    side: str = "buy"
+    qty: float = 1.0
+    order_type: str = "market"
+    tif: str = "day"
+    price: Optional[float] = None
+
+
+class MarketDataSnapshotRequest(BaseModel):
+    symbol: str
+    market: str = "equities"
+    venue_id: Optional[str] = None
+    mid_price: Optional[float] = None
+    spread_bps: Optional[float] = None
+    volatility_score: Optional[float] = None
+
+
+@app.get("/venue-adapters/status")
+def venue_adapters_status(admin=Depends(require_admin)):
+    framework = venue_adapter_state_view(load_json("venue_adapter_framework.json", default_venue_adapter_state()))
+    save_json("venue_adapter_framework.json", framework)
+    return {"status": "ok", "framework": framework, "summary": venue_adapter_summary(framework)}
+
+
+@app.post("/venue-adapters/register")
+def venue_adapters_register(payload: VenueRegisterRequest, admin=Depends(require_admin)):
+    framework = venue_adapter_state_view(load_json("venue_adapter_framework.json", default_venue_adapter_state()))
+    result = venue_register(framework, venue_id=payload.venue_id, asset_classes=payload.asset_classes, latency_ms=payload.latency_ms, status=payload.status)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "venue_adapter.register", payload.venue_id, result.get("venue", {}), "venue_adapter")
+    save_json("venue_adapter_framework.json", framework)
+    return result
+
+
+@app.post("/venue-adapters/normalize-symbol")
+def venue_adapters_normalize_symbol(payload: NormalizeSymbolRequest, admin=Depends(require_admin)):
+    framework = venue_adapter_state_view(load_json("venue_adapter_framework.json", default_venue_adapter_state()))
+    result = normalize_symbol(framework, canonical_symbol=payload.canonical_symbol, target_market=payload.target_market, venue_id=payload.venue_id)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "venue_adapter.normalize_symbol", payload.canonical_symbol, result, "venue_adapter")
+    save_json("venue_adapter_framework.json", framework)
+    return result
+
+
+@app.post("/venue-adapters/order-schema/prepare")
+def venue_adapters_order_schema_prepare(payload: OrderSchemaPrepareRequest, admin=Depends(require_admin)):
+    framework = venue_adapter_state_view(load_json("venue_adapter_framework.json", default_venue_adapter_state()))
+    result = prepare_order_schema(framework, venue_id=payload.venue_id, symbol=payload.symbol, side=payload.side, qty=payload.qty, order_type=payload.order_type, tif=payload.tif, price=payload.price)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "venue_adapter.prepare_order_schema", payload.symbol, {"venue_id": payload.venue_id, "order_type": payload.order_type, "qty": payload.qty}, "venue_adapter")
+    save_json("venue_adapter_framework.json", framework)
+    return result
+
+
+@app.post("/market-data-abstraction/snapshot")
+def market_data_abstraction_snapshot(payload: MarketDataSnapshotRequest, admin=Depends(require_admin)):
+    framework = venue_adapter_state_view(load_json("venue_adapter_framework.json", default_venue_adapter_state()))
+    result = market_data_snapshot(framework, symbol=payload.symbol, market=payload.market, venue_id=payload.venue_id, mid_price=payload.mid_price, spread_bps=payload.spread_bps, volatility_score=payload.volatility_score)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "market_data.snapshot", payload.symbol, result.get("snapshot", {}), "market_data")
+    save_json("venue_adapter_framework.json", framework)
+    return result
+
+
+# -------------------------
+# Real venue connectors + unified execution bus
+# -------------------------
+class ConnectorUpsertRequest(BaseModel):
+    connector_id: str
+    venue_id: str
+    market: str = "equities"
+    mode: str = "paper"
+    status: str = "active"
+    order_types: list[str] = Field(default_factory=lambda: ["market", "limit"])
+    tif_options: list[str] = Field(default_factory=lambda: ["day", "gtc"])
+    latency_ms: int = 25
+    reliability_score: float = 99.0
+
+
+class ExecutionBusSubmitRequest(BaseModel):
+    symbol: str
+    side: str = "buy"
+    qty: float = 1.0
+    market: str = "equities"
+    execution_mode: str = "paper"
+    urgency: str = "balanced"
+    order_type: str = "market"
+    tif: str = "day"
+    preferred_connector_id: Optional[str] = None
+    strategy_id: Optional[str] = None
+
+
+class ExecutionBusAckRequest(BaseModel):
+    order_id: str
+    ack_status: str = "accepted"
+    venue_order_id: Optional[str] = None
+    ack_latency_ms: Optional[int] = None
+    message: Optional[str] = None
+
+
+class ExecutionBusFillRequest(BaseModel):
+    order_id: str
+    filled_qty: Optional[float] = None
+    avg_fill_price: Optional[float] = None
+    fill_latency_ms: Optional[int] = None
+    fill_status: str = "filled"
+
+
+@app.get("/execution-bus/status")
+def execution_bus_status(admin=Depends(require_admin)):
+    bus = execution_bus_state_view(load_json("execution_bus.json", default_execution_bus_state()))
+    save_json("execution_bus.json", bus)
+    return {"status": "ok", "execution_bus": bus, "summary": execution_bus_summary(bus)}
+
+
+@app.post("/execution-bus/connectors/upsert")
+def execution_bus_connector_upsert(payload: ConnectorUpsertRequest, admin=Depends(require_admin)):
+    bus = execution_bus_state_view(load_json("execution_bus.json", default_execution_bus_state()))
+    result = connector_upsert(
+        bus,
+        connector_id=payload.connector_id,
+        venue_id=payload.venue_id,
+        market=payload.market,
+        mode=payload.mode,
+        status=payload.status,
+        order_types=payload.order_types,
+        tif_options=payload.tif_options,
+        latency_ms=payload.latency_ms,
+        reliability_score=payload.reliability_score,
+    )
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "execution_bus.connector_upsert", payload.connector_id, result.get("connector", {}), "execution_bus")
+    save_json("execution_bus.json", bus)
+    return result
+
+
+@app.post("/execution-bus/submit")
+def execution_bus_submit(payload: ExecutionBusSubmitRequest, admin=Depends(require_admin)):
+    bus = execution_bus_state_view(load_json("execution_bus.json", default_execution_bus_state()))
+    result = submit_intent(
+        bus,
+        symbol=payload.symbol,
+        side=payload.side,
+        qty=payload.qty,
+        market=payload.market,
+        execution_mode=payload.execution_mode,
+        urgency=payload.urgency,
+        order_type=payload.order_type,
+        tif=payload.tif,
+        preferred_connector_id=payload.preferred_connector_id,
+        strategy_id=payload.strategy_id,
+    )
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "execution_bus.submit", payload.symbol, {"market": payload.market, "execution_mode": payload.execution_mode, "qty": payload.qty}, "execution_bus")
+    save_json("execution_bus.json", bus)
+    return result
+
+
+@app.post("/execution-bus/ack")
+def execution_bus_ack(payload: ExecutionBusAckRequest, admin=Depends(require_admin)):
+    bus = execution_bus_state_view(load_json("execution_bus.json", default_execution_bus_state()))
+    result = record_ack(
+        bus,
+        order_id=payload.order_id,
+        ack_status=payload.ack_status,
+        venue_order_id=payload.venue_order_id,
+        ack_latency_ms=payload.ack_latency_ms,
+        message=payload.message,
+    )
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "execution_bus.ack", payload.order_id, result, "execution_bus")
+    save_json("execution_bus.json", bus)
+    return result
+
+
+@app.post("/execution-bus/fill")
+def execution_bus_fill(payload: ExecutionBusFillRequest, admin=Depends(require_admin)):
+    bus = execution_bus_state_view(load_json("execution_bus.json", default_execution_bus_state()))
+    result = record_fill(
+        bus,
+        order_id=payload.order_id,
+        filled_qty=payload.filled_qty,
+        avg_fill_price=payload.avg_fill_price,
+        fill_latency_ms=payload.fill_latency_ms,
+        fill_status=payload.fill_status,
+    )
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "execution_bus.fill", payload.order_id, result, "execution_bus")
+    save_json("execution_bus.json", bus)
+    return result
+
+
+# -------------------------
+# Portfolio risk fabric + cross-market exposure netting
+# -------------------------
+class PortfolioRiskExposureUpsertRequest(BaseModel):
+    symbol: str
+    market: str = "equities"
+    side: str = "long"
+    qty: float = 0.0
+    mark_price: float = 0.0
+    fx_rate: float = 1.0
+    beta: float = 1.0
+    strategy_id: Optional[str] = None
+    hedge_tag: Optional[str] = None
+
+
+class AllocatorTreasuryUpdateRequest(BaseModel):
+    total_capital_usd: Optional[float] = None
+    reserve_ratio_target: Optional[float] = None
+    min_reserve_usd: Optional[float] = None
+    max_deploy_ratio: Optional[float] = None
+    profit_recycle_ratio: Optional[float] = None
+
+
+class AllocatorRebalanceRequest(BaseModel):
+    market_bias: str = "neutral"
+
+
+class AllocatorReserveReleaseRequest(BaseModel):
+    amount_usd: float = 0.0
+    reason: str = "rebalance"
+
+
+
+class PerformanceAttributionIngestRequest(BaseModel):
+    strategy_id: str
+    strategy_name: Optional[str] = None
+    pnl: float = 0.0
+    capital_used: float = 0.0
+    trades: int = 1
+    win_rate: Optional[float] = None
+    confidence: Optional[float] = None
+    source: str = "manual"
+
+
+class MetaAllocatorEvaluateRequest(BaseModel):
+    pass
+
+
+@app.get("/portfolio-risk/status")
+def portfolio_risk_status(admin=Depends(require_admin)):
+    state = portfolio_risk_state_view(load_json("portfolio_risk_fabric.json", default_portfolio_risk_state()))
+    build_risk_snapshot(state)
+    save_json("portfolio_risk_fabric.json", state)
+    return {"status": "ok", "portfolio_risk": state, "summary": portfolio_risk_summary(state)}
+
+
+@app.post("/portfolio-risk/exposures/upsert")
+def portfolio_risk_exposure_upsert(payload: PortfolioRiskExposureUpsertRequest, admin=Depends(require_admin)):
+    state = portfolio_risk_state_view(load_json("portfolio_risk_fabric.json", default_portfolio_risk_state()))
+    result = upsert_exposure(
+        state,
+        symbol=payload.symbol,
+        market=payload.market,
+        side=payload.side,
+        qty=payload.qty,
+        mark_price=payload.mark_price,
+        fx_rate=payload.fx_rate,
+        beta=payload.beta,
+        strategy_id=payload.strategy_id,
+        hedge_tag=payload.hedge_tag,
+    )
+    snapshot = build_risk_snapshot(state)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "portfolio_risk.exposure_upsert", payload.symbol, result.get("position", {}), "portfolio_risk")
+    save_json("portfolio_risk_fabric.json", state)
+    return {"status": "ok", "result": result, "snapshot": snapshot, "summary": portfolio_risk_summary(state)}
+
+
+@app.post("/portfolio-risk/netting/evaluate")
+def portfolio_risk_netting_evaluate(admin=Depends(require_admin)):
+    state = portfolio_risk_state_view(load_json("portfolio_risk_fabric.json", default_portfolio_risk_state()))
+    result = net_cross_market_exposure(state)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "portfolio_risk.netting_evaluate", "portfolio", result, "portfolio_risk")
+    save_json("portfolio_risk_fabric.json", state)
+    return result
+
+
+@app.post("/portfolio-risk/limits/evaluate")
+def portfolio_risk_limits_evaluate(admin=Depends(require_admin)):
+    state = portfolio_risk_state_view(load_json("portfolio_risk_fabric.json", default_portfolio_risk_state()))
+    result = evaluate_portfolio_limits(state)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "portfolio_risk.limits_evaluate", "portfolio", result, "portfolio_risk")
+    save_json("portfolio_risk_fabric.json", state)
+    return result
+
+
+class ResearchMemoryIngestRequest(BaseModel):
+    note_type: str = "observation"
+    title: str
+    content: str
+    market: str = "equities"
+    symbol: Optional[str] = None
+    regime_tag: Optional[str] = None
+    confidence: float = 0.6
+    horizon: str = "swing"
+    source: str = "manual"
+
+
+class RegimeSnapshotRequest(BaseModel):
+    market: str = "equities"
+    symbol: Optional[str] = None
+    volatility_bps: float = 120.0
+    breadth: float = 0.5
+    liquidity_score: float = 0.7
+    trend_score: float = 0.5
+    macro_score: float = 0.5
+
+
+class RegimeAllocatorEvaluateRequest(BaseModel):
+    market: str = "equities"
+    symbol: Optional[str] = None
+    volatility_bps: float = 120.0
+    breadth: float = 0.5
+    liquidity_score: float = 0.7
+    trend_score: float = 0.5
+    macro_score: float = 0.5
+
+
+@app.get("/research-memory/status")
+def research_memory_status(admin=Depends(require_admin)):
+    state = research_memory_state_view(load_json("research_memory.json", default_research_memory_state()))
+    summary = research_memory_summary(state)
+    save_json("research_memory.json", state)
+    return {"status": "ok", "research_memory": state, "summary": summary}
+
+
+@app.post("/research-memory/ingest")
+def research_memory_ingest(payload: ResearchMemoryIngestRequest, admin=Depends(require_admin)):
+    state = research_memory_state_view(load_json("research_memory.json", default_research_memory_state()))
+    result = ingest_research_note(
+        state,
+        note_type=payload.note_type,
+        title=payload.title,
+        content=payload.content,
+        market=payload.market,
+        symbol=payload.symbol,
+        regime_tag=payload.regime_tag,
+        confidence=payload.confidence,
+        horizon=payload.horizon,
+        source=payload.source,
+    )
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "research_memory.ingest", result["note"]["note_id"], {"title": payload.title, "market": payload.market}, "research_memory")
+    save_json("research_memory.json", state)
+    return result
+
+
+@app.post("/regime-intelligence/snapshot")
+def regime_intelligence_snapshot(payload: RegimeSnapshotRequest, admin=Depends(require_admin)):
+    state = research_memory_state_view(load_json("research_memory.json", default_research_memory_state()))
+    operator_state = get_operator_state(admin.get("selected_operator_id") or admin.get("operator_id"))
+    performance_state = performance_state_view(load_json("performance_intelligence.json", default_performance_intelligence_state()))
+    portfolio_risk = portfolio_risk_state_view(load_json("portfolio_risk_fabric.json", default_portfolio_risk_state()))
+    snapshot = build_regime_snapshot(
+        state,
+        market=payload.market,
+        symbol=payload.symbol,
+        volatility_bps=payload.volatility_bps,
+        breadth=payload.breadth,
+        liquidity_score=payload.liquidity_score,
+        trend_score=payload.trend_score,
+        macro_score=payload.macro_score,
+        operator_state=operator_state,
+        performance_state=performance_state,
+        portfolio_risk=portfolio_risk,
+    )
+    save_json("research_memory.json", state)
+    return {"status": "ok", "snapshot": snapshot, "summary": research_memory_summary(state)}
+
+
+@app.post("/regime-intelligence/allocator/evaluate")
+def regime_intelligence_allocator_evaluate(payload: RegimeAllocatorEvaluateRequest, admin=Depends(require_admin)):
+    state = research_memory_state_view(load_json("research_memory.json", default_research_memory_state()))
+    operator_state = get_operator_state(admin.get("selected_operator_id") or admin.get("operator_id"))
+    performance_state = performance_state_view(load_json("performance_intelligence.json", default_performance_intelligence_state()))
+    allocator_state = allocator_intelligence_state_view(load_json("allocator_intelligence.json", default_allocator_intelligence_state()))
+    portfolio_risk = portfolio_risk_state_view(load_json("portfolio_risk_fabric.json", default_portfolio_risk_state()))
+    result = evaluate_regime_allocator(
+        state,
+        market=payload.market,
+        symbol=payload.symbol,
+        volatility_bps=payload.volatility_bps,
+        breadth=payload.breadth,
+        liquidity_score=payload.liquidity_score,
+        trend_score=payload.trend_score,
+        macro_score=payload.macro_score,
+        operator_state=operator_state,
+        performance_state=performance_state,
+        allocator_state=allocator_state,
+        portfolio_risk=portfolio_risk,
+    )
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "regime_allocator.evaluate", payload.market, {"regime": result.get("snapshot", {}).get("regime_label"), "actions": len(result.get("adjustments", []))}, "research_memory")
+    save_json("research_memory.json", state)
+    save_json("allocator_intelligence.json", allocator_state)
+    return result
+
+
+class ScenarioDefineRequest(BaseModel):
+    name: str
+    shock_type: str = "volatility_spike"
+    market: str = "equities"
+    symbol: Optional[str] = None
+    severity: float = 0.35
+    volatility_multiplier: float = 1.5
+    liquidity_haircut: float = 0.2
+    spread_multiplier: float = 1.8
+    correlation_jump: float = 0.15
+    notes: Optional[str] = None
+
+
+class ScenarioRunRequest(BaseModel):
+    scenario_id: str
+
+
+@app.get("/scenario-engine/status")
+def scenario_engine_status(admin=Depends(require_admin)):
+    state = scenario_engine_state_view(load_json("scenario_engine.json", default_scenario_engine_state()))
+    summary = scenario_engine_summary(state)
+    save_json("scenario_engine.json", state)
+    return {"status": "ok", "scenario_engine": state, "summary": summary}
+
+
+@app.get("/scenario-engine/library")
+def scenario_engine_library(admin=Depends(require_admin)):
+    state = scenario_engine_state_view(load_json("scenario_engine.json", default_scenario_engine_state()))
+    save_json("scenario_engine.json", state)
+    return {"status": "ok", "scenarios": state.get("scenarios", []), "runs": state.get("runs", [])[-10:]}
+
+
+@app.post("/scenario-engine/define")
+def scenario_engine_define(payload: ScenarioDefineRequest, admin=Depends(require_admin)):
+    state = scenario_engine_state_view(load_json("scenario_engine.json", default_scenario_engine_state()))
+    result = define_scenario(
+        state,
+        name=payload.name,
+        shock_type=payload.shock_type,
+        market=payload.market,
+        symbol=payload.symbol,
+        severity=payload.severity,
+        volatility_multiplier=payload.volatility_multiplier,
+        liquidity_haircut=payload.liquidity_haircut,
+        spread_multiplier=payload.spread_multiplier,
+        correlation_jump=payload.correlation_jump,
+        notes=payload.notes,
+    )
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "scenario_engine.define", result["scenario"]["scenario_id"], {"name": payload.name, "market": payload.market}, "scenario_engine")
+    save_json("scenario_engine.json", state)
+    return result
+
+
+@app.post("/scenario-engine/run")
+def scenario_engine_run(payload: ScenarioRunRequest, admin=Depends(require_admin)):
+    state = scenario_engine_state_view(load_json("scenario_engine.json", default_scenario_engine_state()))
+    portfolio_risk = {"summary": portfolio_risk_summary(portfolio_risk_state_view(load_json("portfolio_risk_fabric.json", default_portfolio_risk_state())))}
+    allocator_state = allocator_intelligence_state_view(load_json("allocator_intelligence.json", default_allocator_intelligence_state()))
+    autonomy_state = {"summary": autonomy_summary(autonomy_state_view(load_json("autonomy_control_plane.json", autonomy_state_defaults())))}
+    execution_state = {"execution_engine": {"execution_optimizer": default_execution_optimizer()}}
+    try:
+        run = run_stress_test(
+            state,
+            scenario_id=payload.scenario_id,
+            portfolio_risk=portfolio_risk,
+            allocator_state=allocator_state,
+            autonomy_state=autonomy_state,
+            execution_state=execution_state,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc))
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "scenario_engine.run", payload.scenario_id, run, "scenario_engine")
+    save_json("scenario_engine.json", state)
+    return run
+
+
+class PolicySimulationRequest(BaseModel):
+    action_type: str
+    market: str = "equities"
+    symbol: Optional[str] = None
+    side: str = "buy"
+    qty: float = 0.0
+    price: float = 0.0
+    estimated_slippage_bps: float = 0.0
+    net_exposure_usd: float = 0.0
+    rebalance_pct: float = 0.0
+    execution_mode: str = "paper"
+    autonomy_mode: str = "supervised"
+
+
+class PreTradeCompileRequest(BaseModel):
+    simulation_id: str
+    notes: Optional[str] = None
+
+
+@app.get("/policy-simulator/status")
+def policy_simulator_status(admin=Depends(require_admin)):
+    state = policy_simulator_state_view(load_json("policy_simulator.json", default_policy_simulator_state()))
+    save_json("policy_simulator.json", state)
+    return {"status": "ok", "policy_simulator": state, "summary": policy_simulator_summary(state)}
+
+
+@app.get("/policy-simulator/library")
+def policy_simulator_library(admin=Depends(require_admin)):
+    state = policy_simulator_state_view(load_json("policy_simulator.json", default_policy_simulator_state()))
+    save_json("policy_simulator.json", state)
+    return {"status": "ok", "simulations": state.get("simulations", [])[-20:], "compiled_requests": state.get("compiled_requests", [])[-20:]}
+
+
+@app.post("/policy-simulator/simulate")
+def policy_simulator_simulate(payload: PolicySimulationRequest, admin=Depends(require_admin)):
+    state = policy_simulator_state_view(load_json("policy_simulator.json", default_policy_simulator_state()))
+    result = simulate_policy(
+        state,
+        action_type=payload.action_type,
+        market=payload.market,
+        symbol=payload.symbol,
+        side=payload.side,
+        qty=payload.qty,
+        price=payload.price,
+        estimated_slippage_bps=payload.estimated_slippage_bps,
+        net_exposure_usd=payload.net_exposure_usd,
+        rebalance_pct=payload.rebalance_pct,
+        execution_mode=payload.execution_mode,
+        autonomy_mode=payload.autonomy_mode,
+    )
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "policy_simulator.simulate", result["simulation"]["simulation_id"], result["simulation"], "policy_simulator")
+    save_json("policy_simulator.json", state)
+    return result
+
+
+@app.post("/policy-simulator/pretrade-compile")
+def policy_simulator_pretrade_compile(payload: PreTradeCompileRequest, admin=Depends(require_admin)):
+    state = policy_simulator_state_view(load_json("policy_simulator.json", default_policy_simulator_state()))
+    simulation = next((s for s in state.get("simulations", []) if s.get("simulation_id") == payload.simulation_id), None)
+    if not simulation:
+        raise HTTPException(status_code=404, detail="Simulation not found")
+    result = compile_pretrade_approval(state, simulation=simulation, requested_by=admin.get("email"), operator_id=admin.get("operator_id"), notes=payload.notes)
+    queue = get_approvals()
+    queue.setdefault("requests", []).append({
+        "request_id": result["approval_request"]["request_id"],
+        "status": "PENDING",
+        "requested_at": result["approval_request"]["created_at"],
+        "requested_by": admin.get("email"),
+        "request_type": "pretrade_compiled",
+        "payload": result["approval_request"],
+    })
+    save_approvals(queue)
+    append_governance_event(admin.get("email"), admin.get("operator_id"), "policy_simulator.pretrade_compile", result["approval_request"]["request_id"], result["approval_request"], "policy_simulator")
+    save_json("policy_simulator.json", state)
+    return result
+
+
+
+def _build_qnt30431_daily_brief(cur, organization_id: str):
+    pnl = _build_qnt30429_pnl_summary(cur, organization_id)
+    strategies = _build_qnt30429_strategy_attribution(cur, organization_id)
+    symbols = _build_qnt30429_symbol_attribution(cur, organization_id)
+    positions = _fetch_org_positions(cur, organization_id)
+    fills = _fetch_org_fills(cur, organization_id)
+    top_symbol = symbols.get('symbols', [{}])[0] if symbols.get('symbols') else None
+    worst_symbol = sorted(symbols.get('symbols', []), key=lambda r: r.get('net_pnl', 0.0))[0] if symbols.get('symbols') else None
+    summary = pnl.get('summary', {})
+    return {
+        'mission': 'QNT30431',
+        'organization_id': organization_id,
+        'brief': {
+            'realized_pnl': summary.get('realized_pnl', 0.0),
+            'unrealized_pnl': summary.get('unrealized_pnl', 0.0),
+            'net_pnl': summary.get('net_pnl', 0.0),
+            'open_positions': len([p for p in positions if as_float(p.get('qty'), 0.0) != 0]),
+            'closed_positions': summary.get('closed_position_count', 0),
+            'fills': len(fills),
+            'win_rate': summary.get('win_rate', 0.0),
+            'top_symbol': top_symbol,
+            'worst_symbol': worst_symbol,
+            'best_strategy': (strategies.get('strategies') or [None])[0],
+        }
+    }
+
+
+def _build_qnt30431_risk_brief(cur, organization_id: str):
+    risk = _build_qnt30427_portfolio_risk(cur, organization_id)
+    exposure = _build_qnt30427_portfolio_exposure(cur, organization_id)
+    return {
+        'mission': 'QNT30431',
+        'organization_id': organization_id,
+        'risk': {
+            'governance_state': risk.get('governance_state', 'safe'),
+            'recommended_action': risk.get('recommended_action', 'normal'),
+            'total_abs_exposure': exposure.get('portfolio', {}).get('total_abs_exposure', 0.0),
+            'capital_balance': exposure.get('portfolio', {}).get('capital_balance', 0.0),
+            'exposure_utilization_pct': risk.get('portfolio_metrics', {}).get('utilization_pct', 0.0),
+            'largest_symbol': (exposure.get('symbols') or [None])[0],
+            'warnings': risk.get('warnings', []),
+        }
+    }
+
+
+def _build_qnt30431_strategy_brief(cur, organization_id: str):
+    strategies = _build_qnt30429_strategy_attribution(cur, organization_id).get('strategies', [])
+    return {
+        'mission': 'QNT30431',
+        'organization_id': organization_id,
+        'strategies': {
+            'top': strategies[:3],
+            'bottom': sorted(strategies, key=lambda r: r.get('net_pnl', 0.0))[:3],
+            'count': len(strategies),
+        }
+    }
+
+
+def _build_qnt30431_governance_brief(cur, organization_id: str):
+    pending = _fetch_org_governance_approvals(cur, organization_id, statuses=['pending'])
+    history = _fetch_org_governance_approvals(cur, organization_id, statuses=None, limit=100)
+    approved = len([r for r in history if str(r.get('status')) == 'approved'])
+    rejected = len([r for r in history if str(r.get('status')) == 'rejected'])
+    return {
+        'mission': 'QNT30431',
+        'organization_id': organization_id,
+        'governance': {
+            'pending_count': len(pending),
+            'approved_count': approved,
+            'rejected_count': rejected,
+            'recent_pending': pending[:5],
+            'recent_history': history[:10],
+        }
+    }
+
+
+@app.get('/workspace/brief/daily')
+def workspace_brief_daily(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        return _build_qnt30431_daily_brief(cur, organization_id)
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/brief/risk')
+def workspace_brief_risk(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        return _build_qnt30431_risk_brief(cur, organization_id)
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/brief/strategies')
+def workspace_brief_strategies(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        return _build_qnt30431_strategy_brief(cur, organization_id)
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/brief/governance')
+def workspace_brief_governance(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        return _build_qnt30431_governance_brief(cur, organization_id)
+    finally:
+        conn.close()
+
+
+# --- QNT30442 CAPITAL INTELLIGENCE ENGINE ---
+try:
+    from backend.qnt30442_capital_intelligence import build_capital_intelligence_package
+except Exception:
+    from qnt30442_capital_intelligence import build_capital_intelligence_package
+
+
+def ensure_qnt30442_schema():
+    ensure_qnt30423_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_capital_intelligence_actions (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                recommendation_id TEXT NOT NULL,
+                action_type TEXT NOT NULL,
+                from_strategy_key TEXT,
+                to_strategy_key TEXT,
+                amount REAL DEFAULT 0,
+                status TEXT DEFAULT 'recorded',
+                note TEXT,
+                created_at TEXT,
+                approved_at TEXT,
+                approved_by TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _fetch_qnt30442_actions(cur, organization_id: str, limit: int = 25):
+    cur.execute('SELECT * FROM organization_capital_intelligence_actions WHERE organization_id=? ORDER BY created_at DESC LIMIT ?', (organization_id, limit))
+    return [dict(r) for r in cur.fetchall()]
+
+
+def _build_qnt30442_package(cur, organization_id: str):
+    package = build_capital_intelligence_package(
+        _fetch_org_strategies(cur, organization_id),
+        _fetch_org_allocations(cur, organization_id),
+        _fetch_org_positions(cur, organization_id),
+        _fetch_org_fills(cur, organization_id),
+    )
+    package['recent_actions'] = _fetch_qnt30442_actions(cur, organization_id)
+    return package
+
+
+@app.get('/workspace/capital-intelligence/summary')
+def workspace_capital_intelligence_summary(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30442_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30442_package(cur, organization_id)
+        return {
+            'mission': 'QNT30442',
+            'organization_id': organization_id,
+            'summary': package['summary'],
+            'recent_actions': package.get('recent_actions', []),
+        }
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/capital-intelligence/strategies')
+def workspace_capital_intelligence_strategies(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30442_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30442_package(cur, organization_id)
+        return {
+            'mission': 'QNT30442',
+            'organization_id': organization_id,
+            'strategies': package['strategies'],
+        }
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/capital-intelligence/recommendations')
+def workspace_capital_intelligence_recommendations(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30442_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30442_package(cur, organization_id)
+        return {
+            'mission': 'QNT30442',
+            'organization_id': organization_id,
+            'recommendations': package['recommendations'],
+            'recent_actions': package.get('recent_actions', []),
+        }
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/capital-intelligence/recommendations/reject')
+def workspace_capital_intelligence_reject(payload: dict, session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    ensure_qnt30442_schema()
+    recommendation_id = (payload.get('recommendation_id') or '').strip()
+    if not recommendation_id:
+        raise HTTPException(status_code=400, detail='recommendation_id_required')
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        now = now_iso()
+        cur.execute(
+            'INSERT INTO organization_capital_intelligence_actions (id, organization_id, recommendation_id, action_type, status, note, created_at, approved_at, approved_by) VALUES (?,?,?,?,?,?,?,?,?)',
+            (f'cia_{uuid.uuid4().hex[:10]}', organization_id, recommendation_id, 'rebalance_rejected', 'rejected', payload.get('note') or '', now, now, session.get('email') or session.get('display_name') or 'operator')
+        )
+        conn.commit()
+        package = _build_qnt30442_package(cur, organization_id)
+        return {'mission': 'QNT30442', 'status': 'rejected', 'recommendation_id': recommendation_id, 'summary': package['summary']}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/capital-intelligence/recommendations/approve')
+def workspace_capital_intelligence_approve(payload: dict, session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    ensure_qnt30442_schema()
+    recommendation_id = (payload.get('recommendation_id') or '').strip()
+    if not recommendation_id:
+        raise HTTPException(status_code=400, detail='recommendation_id_required')
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30442_package(cur, organization_id)
+        rec = next((item for item in package['recommendations'] if item.get('recommendation_id') == recommendation_id), None)
+        if not rec:
+            raise HTTPException(status_code=404, detail='recommendation_not_found')
+
+        amount = as_float(rec.get('amount'), 0.0)
+        if amount <= 0:
+            raise HTTPException(status_code=400, detail='invalid_recommendation_amount')
+
+        cur.execute("SELECT * FROM organization_capital_allocations WHERE organization_id=? AND strategy_key=? AND status IN ('active','approved') ORDER BY allocated_capital DESC, created_at ASC", (organization_id, rec['from_strategy_key']))
+        donor_rows = [dict(r) for r in cur.fetchall()]
+        if not donor_rows:
+            raise HTTPException(status_code=400, detail='donor_allocation_missing')
+        donor_total = sum(as_float(r.get('allocated_capital')) for r in donor_rows)
+        if donor_total < amount:
+            raise HTTPException(status_code=400, detail='donor_allocation_insufficient')
+
+        destination_account_id = donor_rows[0].get('account_id')
+        now = now_iso()
+        remaining = amount
+        for row in donor_rows:
+            available = as_float(row.get('allocated_capital'))
+            take = min(available, remaining)
+            new_value = round(available - take, 2)
+            cur.execute('UPDATE organization_capital_allocations SET allocated_capital=?, updated_at=? WHERE id=?', (new_value, now, row['id']))
+            remaining = round(remaining - take, 2)
+            if remaining <= 0:
+                break
+
+        if destination_account_id is None:
+            cur.execute("SELECT * FROM organization_capital_allocations WHERE organization_id=? AND strategy_key=? AND status IN ('active','approved') ORDER BY created_at ASC LIMIT 1", (organization_id, rec['to_strategy_key']))
+        else:
+            cur.execute("SELECT * FROM organization_capital_allocations WHERE organization_id=? AND strategy_key=? AND account_id=? AND status IN ('active','approved') ORDER BY created_at ASC LIMIT 1", (organization_id, rec['to_strategy_key'], destination_account_id))
+        target = cur.fetchone()
+        if target:
+            updated = round(as_float(target['allocated_capital']) + amount, 2)
+            cur.execute('UPDATE organization_capital_allocations SET allocated_capital=?, updated_at=? WHERE id=?', (updated, now, target['id']))
+            target_allocation_id = target['id']
+        else:
+            target_allocation_id = f'alloc_{uuid.uuid4().hex[:10]}'
+            cur.execute(
+                'INSERT INTO organization_capital_allocations (id, organization_id, account_id, strategy_key, allocated_capital, reserve_capital, status, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?)',
+                (target_allocation_id, organization_id, destination_account_id, rec['to_strategy_key'], amount, 0.0, 'active', now, now)
+            )
+
+        cur.execute(
+            'INSERT INTO organization_capital_intelligence_actions (id, organization_id, recommendation_id, action_type, from_strategy_key, to_strategy_key, amount, status, note, created_at, approved_at, approved_by) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
+            (
+                f'cia_{uuid.uuid4().hex[:10]}',
+                organization_id,
+                recommendation_id,
+                'rebalance_approved',
+                rec['from_strategy_key'],
+                rec['to_strategy_key'],
+                amount,
+                'approved',
+                payload.get('note') or '',
+                now,
+                now,
+                session.get('email') or session.get('display_name') or 'operator',
+            )
+        )
+        _record_org_lifecycle(cur, organization_id, recommendation_id, 'capital_rebalanced', {
+            'strategy_key': rec['to_strategy_key'],
+            'symbol': 'CAPITAL',
+            'side': 'rebalance',
+            'qty': amount,
+            'from_strategy_key': rec['from_strategy_key'],
+            'to_strategy_key': rec['to_strategy_key'],
+            'recommendation_id': recommendation_id,
+            'amount': amount,
+            'note': payload.get('note') or '',
+        })
+        conn.commit()
+        package = _build_qnt30442_package(cur, organization_id)
+        return {
+            'mission': 'QNT30442',
+            'status': 'approved',
+            'recommendation_id': recommendation_id,
+            'amount': amount,
+            'from_strategy_key': rec['from_strategy_key'],
+            'to_strategy_key': rec['to_strategy_key'],
+            'summary': package['summary'],
+            'strategies': package['strategies'],
+            'recent_actions': package.get('recent_actions', []),
+        }
+    finally:
+        conn.close()
+
+
+# --- QNT30443 REAL FUND MODE ---
+try:
+    from backend.qnt30443_real_fund_mode import build_real_fund_mode_package
+except Exception:
+    from qnt30443_real_fund_mode import build_real_fund_mode_package
+
+
+def ensure_qnt30443_schema():
+    ensure_qnt30442_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_fund_pools (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                name TEXT NOT NULL,
+                pool_type TEXT DEFAULT 'operating',
+                account_id TEXT,
+                strategy_scope TEXT DEFAULT 'multi-strategy',
+                capital_balance REAL DEFAULT 0,
+                allocated_capital REAL DEFAULT 0,
+                reserve_capital REAL DEFAULT 0,
+                currency TEXT DEFAULT 'USD',
+                status TEXT DEFAULT 'active',
+                created_at TEXT,
+                updated_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_investor_registry (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                investor_name TEXT NOT NULL,
+                investor_type TEXT DEFAULT 'lp',
+                committed_capital REAL DEFAULT 0,
+                distributed_pnl REAL DEFAULT 0,
+                currency TEXT DEFAULT 'USD',
+                status TEXT DEFAULT 'pending',
+                created_at TEXT,
+                updated_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_capital_flows (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                pool_id TEXT,
+                investor_id TEXT,
+                flow_type TEXT NOT NULL,
+                amount REAL DEFAULT 0,
+                currency TEXT DEFAULT 'USD',
+                note TEXT,
+                created_at TEXT,
+                created_by TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _ensure_qnt30443_default_pool(cur, organization_id: str):
+    cur.execute("SELECT * FROM organization_fund_pools WHERE organization_id=? ORDER BY created_at ASC LIMIT 1", (organization_id,))
+    existing = cur.fetchone()
+    if existing:
+        return dict(existing)
+    cur.execute("SELECT * FROM organization_accounts WHERE organization_id=? ORDER BY created_at ASC LIMIT 1", (organization_id,))
+    account = cur.fetchone()
+    now = now_iso()
+    pool_id = f'pool_{uuid.uuid4().hex[:10]}'
+    if account:
+        capital_balance = as_float(account['balance'])
+        account_id = account['id']
+        name = account['name'] or 'Primary Treasury Pool'
+        currency = account['currency'] or 'USD'
+    else:
+        capital_balance = 0.0
+        account_id = None
+        name = 'Primary Treasury Pool'
+        currency = 'USD'
+    cur.execute(
+        'INSERT INTO organization_fund_pools (id, organization_id, name, pool_type, account_id, strategy_scope, capital_balance, allocated_capital, reserve_capital, currency, status, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)',
+        (pool_id, organization_id, name, 'operating', account_id, 'multi-strategy', capital_balance, 0.0, 0.0, currency, 'active', now, now),
+    )
+    return {
+        'id': pool_id, 'organization_id': organization_id, 'name': name, 'pool_type': 'operating', 'account_id': account_id,
+        'strategy_scope': 'multi-strategy', 'capital_balance': capital_balance, 'allocated_capital': 0.0, 'reserve_capital': 0.0,
+        'currency': currency, 'status': 'active', 'created_at': now, 'updated_at': now,
+    }
+
+
+def _sync_qnt30443_pool_allocations(cur, organization_id: str):
+    cur.execute('SELECT id FROM organization_fund_pools WHERE organization_id=? ORDER BY created_at ASC', (organization_id,))
+    pools = [r['id'] for r in cur.fetchall()]
+    if not pools:
+        default_pool = _ensure_qnt30443_default_pool(cur, organization_id)
+        pools = [default_pool['id']]
+    cur.execute(
+        "SELECT account_id, SUM(allocated_capital) AS allocated, SUM(reserve_capital) AS reserve FROM organization_capital_allocations WHERE organization_id=? AND status IN ('active','approved') GROUP BY account_id",
+        (organization_id,),
+    )
+    grouped = {}
+    for row in cur.fetchall():
+        grouped[row['account_id']] = {
+            'allocated': as_float(row['allocated']),
+            'reserve': as_float(row['reserve']),
+        }
+    cur.execute('SELECT id, account_id, capital_balance FROM organization_fund_pools WHERE organization_id=?', (organization_id,))
+    for row in cur.fetchall():
+        g = grouped.get(row['account_id']) or {'allocated': 0.0, 'reserve': 0.0}
+        cur.execute('UPDATE organization_fund_pools SET allocated_capital=?, reserve_capital=?, updated_at=? WHERE id=?', (round(g['allocated'], 2), round(g['reserve'], 2), now_iso(), row['id']))
+
+
+def _fetch_qnt30443_pools(cur, organization_id: str):
+    _ensure_qnt30443_default_pool(cur, organization_id)
+    _sync_qnt30443_pool_allocations(cur, organization_id)
+    cur.execute('SELECT * FROM organization_fund_pools WHERE organization_id=? ORDER BY created_at ASC', (organization_id,))
+    return [dict(r) for r in cur.fetchall()]
+
+
+def _fetch_qnt30443_investors(cur, organization_id: str):
+    cur.execute('SELECT * FROM organization_investor_registry WHERE organization_id=? ORDER BY created_at ASC', (organization_id,))
+    return [dict(r) for r in cur.fetchall()]
+
+
+def _fetch_qnt30443_flows(cur, organization_id: str):
+    cur.execute('SELECT * FROM organization_capital_flows WHERE organization_id=? ORDER BY created_at DESC LIMIT 100', (organization_id,))
+    return [dict(r) for r in cur.fetchall()]
+
+
+def _build_qnt30443_package(cur, organization_id: str):
+    return build_real_fund_mode_package(
+        _fetch_qnt30443_pools(cur, organization_id),
+        _fetch_qnt30443_investors(cur, organization_id),
+        _fetch_qnt30443_flows(cur, organization_id),
+        _fetch_org_allocations(cur, organization_id),
+        _fetch_org_positions(cur, organization_id),
+    )
+
+
+@app.get('/workspace/fund-mode/summary')
+def workspace_fund_mode_summary(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30443_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30443_package(cur, organization_id)
+        conn.commit()
+        return {
+            'mission': 'QNT30443',
+            'organization_id': organization_id,
+            'summary': package['summary'],
+            'strategy_allocations': package['strategy_allocations'],
+        }
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/fund-mode/pools')
+def workspace_fund_mode_pools(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30443_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30443_package(cur, organization_id)
+        conn.commit()
+        return {'mission': 'QNT30443', 'organization_id': organization_id, 'pools': package['pools']}
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/fund-mode/investors')
+def workspace_fund_mode_investors(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30443_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30443_package(cur, organization_id)
+        conn.commit()
+        return {'mission': 'QNT30443', 'organization_id': organization_id, 'investors': package['investors']}
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/fund-mode/flows')
+def workspace_fund_mode_flows(session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    ensure_qnt30443_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30443_package(cur, organization_id)
+        conn.commit()
+        return {'mission': 'QNT30443', 'organization_id': organization_id, 'capital_flows': package['capital_flows']}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fund-mode/pools/create')
+def workspace_fund_mode_create_pool(payload: dict, session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    ensure_qnt30443_schema()
+    name = (payload.get('name') or '').strip()
+    if not name:
+        raise HTTPException(status_code=400, detail='pool_name_required')
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        now = now_iso()
+        pool_id = f'pool_{uuid.uuid4().hex[:10]}'
+        cur.execute(
+            'INSERT INTO organization_fund_pools (id, organization_id, name, pool_type, account_id, strategy_scope, capital_balance, allocated_capital, reserve_capital, currency, status, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)',
+            (
+                pool_id, organization_id, name, (payload.get('pool_type') or 'operating'), payload.get('account_id'),
+                payload.get('strategy_scope') or 'multi-strategy', round(as_float(payload.get('capital_balance')), 2), 0.0,
+                round(as_float(payload.get('reserve_capital')), 2), payload.get('currency') or 'USD', 'active', now, now
+            )
+        )
+        cur.execute(
+            'INSERT INTO organization_capital_flows (id, organization_id, pool_id, investor_id, flow_type, amount, currency, note, created_at, created_by) VALUES (?,?,?,?,?,?,?,?,?,?)',
+            (f'flow_{uuid.uuid4().hex[:10]}', organization_id, pool_id, None, 'pool_seed', round(as_float(payload.get('capital_balance')), 2), payload.get('currency') or 'USD', 'Pool created', now, session.get('email') or session.get('display_name') or 'operator')
+        )
+        conn.commit()
+        package = _build_qnt30443_package(cur, organization_id)
+        return {'mission': 'QNT30443', 'status': 'pool_created', 'pool_id': pool_id, 'summary': package['summary'], 'pools': package['pools']}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fund-mode/investors/add')
+def workspace_fund_mode_add_investor(payload: dict, session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    ensure_qnt30443_schema()
+    investor_name = (payload.get('investor_name') or '').strip()
+    if not investor_name:
+        raise HTTPException(status_code=400, detail='investor_name_required')
+    amount = round(as_float(payload.get('committed_capital') or payload.get('amount')), 2)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        now = now_iso()
+        investor_id = f'investor_{uuid.uuid4().hex[:10]}'
+        cur.execute(
+            'INSERT INTO organization_investor_registry (id, organization_id, investor_name, investor_type, committed_capital, distributed_pnl, currency, status, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?,?)',
+            (investor_id, organization_id, investor_name, payload.get('investor_type') or 'lp', amount, round(as_float(payload.get('distributed_pnl')), 2), payload.get('currency') or 'USD', payload.get('status') or 'pending', now, now)
+        )
+        if amount > 0:
+            default_pool = _ensure_qnt30443_default_pool(cur, organization_id)
+            cur.execute('UPDATE organization_fund_pools SET capital_balance=?, updated_at=? WHERE id=?', (round(as_float(default_pool.get('capital_balance')) + amount, 2), now, default_pool['id']))
+            cur.execute(
+                'INSERT INTO organization_capital_flows (id, organization_id, pool_id, investor_id, flow_type, amount, currency, note, created_at, created_by) VALUES (?,?,?,?,?,?,?,?,?,?)',
+                (f'flow_{uuid.uuid4().hex[:10]}', organization_id, default_pool['id'], investor_id, 'subscription', amount, payload.get('currency') or 'USD', 'Investor commitment funded into treasury', now, session.get('email') or session.get('display_name') or 'operator')
+            )
+        conn.commit()
+        package = _build_qnt30443_package(cur, organization_id)
+        return {'mission': 'QNT30443', 'status': 'investor_added', 'investor_id': investor_id, 'summary': package['summary'], 'investors': package['investors']}
+    finally:
+        conn.close()
+
+
+def _record_qnt30443_flow(flow_type: str, amount: float, payload: dict, session: dict, organization_id: str):
+    ensure_qnt30443_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        default_pool = _ensure_qnt30443_default_pool(cur, organization_id)
+        now = now_iso()
+        signed_amount = abs(round(amount, 2))
+        pool_balance = as_float(default_pool.get('capital_balance'))
+        if flow_type in {'withdrawal', 'redemption'}:
+            if pool_balance < signed_amount:
+                raise HTTPException(status_code=400, detail='insufficient_pool_capital')
+            new_balance = round(pool_balance - signed_amount, 2)
+        else:
+            new_balance = round(pool_balance + signed_amount, 2)
+        cur.execute('UPDATE organization_fund_pools SET capital_balance=?, updated_at=? WHERE id=?', (new_balance, now, default_pool['id']))
+        flow_id = f'flow_{uuid.uuid4().hex[:10]}'
+        cur.execute(
+            'INSERT INTO organization_capital_flows (id, organization_id, pool_id, investor_id, flow_type, amount, currency, note, created_at, created_by) VALUES (?,?,?,?,?,?,?,?,?,?)',
+            (flow_id, organization_id, default_pool['id'], payload.get('investor_id'), flow_type, signed_amount, payload.get('currency') or 'USD', payload.get('note') or '', now, session.get('email') or session.get('display_name') or 'operator')
+        )
+        conn.commit()
+        package = _build_qnt30443_package(cur, organization_id)
+        return {'mission': 'QNT30443', 'status': 'recorded', 'flow_id': flow_id, 'summary': package['summary'], 'capital_flows': package['capital_flows']}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fund-mode/flows/deposit')
+def workspace_fund_mode_deposit(payload: dict, session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    amount = as_float(payload.get('amount'))
+    if amount <= 0:
+        raise HTTPException(status_code=400, detail='positive_amount_required')
+    return _record_qnt30443_flow('deposit', amount, payload, session, organization_id)
+
+
+@app.post('/workspace/fund-mode/flows/withdraw')
+def workspace_fund_mode_withdraw(payload: dict, session=Depends(require_auth)):
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    amount = as_float(payload.get('amount'))
+    if amount <= 0:
+        raise HTTPException(status_code=400, detail='positive_amount_required')
+    return _record_qnt30443_flow('withdrawal', amount, payload, session, organization_id)
+
+
+def ensure_qnt30444_schema():
+    ensure_qnt30443_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_investor_reports (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                investor_id TEXT NOT NULL,
+                investor_name TEXT NOT NULL,
+                report_type TEXT NOT NULL,
+                period_label TEXT DEFAULT 'MTD',
+                generated_nav REAL DEFAULT 0,
+                generated_pnl REAL DEFAULT 0,
+                delivery_status TEXT DEFAULT 'pending',
+                created_at TEXT,
+                created_by TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30444_package(cur, organization_id):
+    ensure_qnt30444_schema()
+    investors = cur.execute(
+        "SELECT id, investor_name, investor_type, committed_capital, distributed_pnl, currency, status, created_at, updated_at FROM organization_investor_registry WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    pools = cur.execute(
+        "SELECT id, name, pool_type, strategy_scope, capital_balance, allocated_capital, reserve_capital, currency, status, created_at FROM organization_fund_pools WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    flows = cur.execute(
+        "SELECT id, pool_id, investor_id, flow_type, amount, currency, note, created_at FROM organization_capital_flows WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    reports = cur.execute(
+        "SELECT id, investor_id, investor_name, report_type, period_label, generated_nav, generated_pnl, delivery_status, created_at FROM organization_investor_reports WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    return build_qnt30444_package(investors, pools, flows, reports)
+
+
+@app.get('/workspace/investor-ops/summary')
+def workspace_investor_ops_summary(session=Depends(require_auth)):
+    ensure_qnt30444_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30444_package(cur, organization_id)
+        package.update({'mission': 'QNT30444', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/investor-ops/investors')
+def workspace_investor_ops_investors(session=Depends(require_auth)):
+    ensure_qnt30444_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30444_package(cur, organization_id)
+        return {'mission': 'QNT30444', 'investors': package['investors']}
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/investor-ops/reports')
+def workspace_investor_ops_reports(session=Depends(require_auth)):
+    ensure_qnt30444_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30444_package(cur, organization_id)
+        return {'mission': 'QNT30444', 'reports': package['reports']}
+    finally:
+        conn.close()
+
+
+@app.get('/workspace/investor-ops/trust-center')
+def workspace_investor_ops_trust_center(session=Depends(require_auth)):
+    ensure_qnt30444_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30444_package(cur, organization_id)
+        return {'mission': 'QNT30444', 'trust_center': package['trust_center']}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/investor-ops/reports/generate')
+def workspace_investor_ops_generate_report(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30444_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    investor_id = (payload.get('investor_id') or '').strip()
+    if not investor_id:
+        raise HTTPException(status_code=400, detail='investor_id_required')
+    report_type = (payload.get('report_type') or 'capital_statement').strip() or 'capital_statement'
+    period_label = (payload.get('period_label') or 'MTD').strip() or 'MTD'
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        investor = cur.execute(
+            "SELECT id, investor_name, committed_capital, distributed_pnl, status FROM organization_investor_registry WHERE organization_id=? AND id=?",
+            (organization_id, investor_id)
+        ).fetchone()
+        if not investor:
+            raise HTTPException(status_code=404, detail='investor_not_found')
+        pool_nav = cur.execute(
+            "SELECT COALESCE(SUM(capital_balance),0) AS total_nav FROM organization_fund_pools WHERE organization_id=?",
+            (organization_id,)
+        ).fetchone()
+        total_nav = as_float(pool_nav.get('total_nav') if isinstance(pool_nav, dict) else 0)
+        committed = as_float(investor.get('committed_capital'))
+        pnl = as_float(investor.get('distributed_pnl'))
+        estimated_nav = round(committed + pnl, 2)
+        if total_nav > 0 and estimated_nav <= 0:
+            estimated_nav = round(committed, 2)
+        now = now_iso()
+        report_id = f'report_{uuid.uuid4().hex[:10]}'
+        delivery_status = (payload.get('delivery_status') or 'queued').strip() or 'queued'
+        cur.execute(
+            "INSERT INTO organization_investor_reports (id, organization_id, investor_id, investor_name, report_type, period_label, generated_nav, generated_pnl, delivery_status, created_at, created_by) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+            (report_id, organization_id, investor['id'], investor['investor_name'], report_type, period_label, estimated_nav, round(pnl, 2), delivery_status, now, session.get('email') or session.get('display_name') or 'operator')
+        )
+        conn.commit()
+        package = _build_qnt30444_package(cur, organization_id)
+        report = next((r for r in package['reports'] if r['report_id'] == report_id), None)
+        return {'mission': 'QNT30444', 'status': 'generated', 'report': report, 'summary': package['summary']}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30445_schema():
+    ensure_qnt30444_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_subscriptions (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                client_name TEXT NOT NULL,
+                plan_name TEXT NOT NULL,
+                monthly_amount REAL DEFAULT 0,
+                status TEXT DEFAULT 'draft',
+                created_at TEXT,
+                updated_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_invoices (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                client_name TEXT NOT NULL,
+                invoice_type TEXT NOT NULL,
+                amount REAL DEFAULT 0,
+                status TEXT DEFAULT 'open',
+                due_at TEXT,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_fee_ledger (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                fee_type TEXT NOT NULL,
+                source_ref TEXT,
+                amount REAL DEFAULT 0,
+                status TEXT DEFAULT 'recognized',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_licenses (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                client_name TEXT NOT NULL,
+                plan_name TEXT NOT NULL,
+                monthly_amount REAL DEFAULT 0,
+                seat_count INTEGER DEFAULT 0,
+                term_months INTEGER DEFAULT 0,
+                status TEXT DEFAULT 'draft',
+                created_at TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30445_package(cur, organization_id):
+    ensure_qnt30445_schema()
+    subscriptions = cur.execute(
+        "SELECT id, client_name, plan_name, monthly_amount, status, created_at, updated_at FROM organization_subscriptions WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    invoices = cur.execute(
+        "SELECT id, client_name, invoice_type, amount, status, due_at, created_at FROM organization_invoices WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    fee_ledger = cur.execute(
+        "SELECT id, fee_type, source_ref, amount, status, created_at FROM organization_fee_ledger WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    licenses = cur.execute(
+        "SELECT id, client_name, plan_name, monthly_amount, seat_count, term_months, status, created_at FROM organization_licenses WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    return build_qnt30445_package(subscriptions, invoices, fee_ledger, licenses)
+
+
+@app.get('/workspace/monetization/summary')
+def workspace_monetization_summary(session=Depends(require_auth)):
+    ensure_qnt30445_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30445_package(cur, organization_id)
+        package.update({'mission': 'QNT30445', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/monetization/subscriptions/create')
+def workspace_monetization_subscription_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30445_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    client_name = (payload.get('client_name') or '').strip()
+    plan_name = (payload.get('plan_name') or 'pro').strip() or 'pro'
+    if not client_name:
+        raise HTTPException(status_code=400, detail='client_name_required')
+    monthly_amount = round(as_float(payload.get('monthly_amount')), 2)
+    status = (payload.get('status') or 'active').strip() or 'active'
+    now = now_iso()
+    sub_id = f'sub_{uuid.uuid4().hex[:10]}'
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_subscriptions (id, organization_id, client_name, plan_name, monthly_amount, status, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?)",
+            (sub_id, organization_id, client_name, plan_name, monthly_amount, status, now, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30445', 'status': 'created', 'subscription_id': sub_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/monetization/invoices/create')
+def workspace_monetization_invoice_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30445_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    client_name = (payload.get('client_name') or '').strip()
+    invoice_type = (payload.get('invoice_type') or 'management_fee').strip() or 'management_fee'
+    if not client_name:
+        raise HTTPException(status_code=400, detail='client_name_required')
+    amount = round(as_float(payload.get('amount')), 2)
+    status = (payload.get('status') or 'open').strip() or 'open'
+    due_at = (payload.get('due_at') or now_iso()).strip() or now_iso()
+    now = now_iso()
+    invoice_id = f'invoice_{uuid.uuid4().hex[:10]}'
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_invoices (id, organization_id, client_name, invoice_type, amount, status, due_at, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (invoice_id, organization_id, client_name, invoice_type, amount, status, due_at, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30445', 'status': 'created', 'invoice_id': invoice_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/monetization/fees/record')
+def workspace_monetization_fee_record(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30445_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    fee_type = (payload.get('fee_type') or 'performance_fee').strip() or 'performance_fee'
+    amount = round(as_float(payload.get('amount')), 2)
+    source_ref = (payload.get('source_ref') or '').strip()
+    status = (payload.get('status') or 'recognized').strip() or 'recognized'
+    now = now_iso()
+    fee_id = f'fee_{uuid.uuid4().hex[:10]}'
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_fee_ledger (id, organization_id, fee_type, source_ref, amount, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (fee_id, organization_id, fee_type, source_ref, amount, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30445', 'status': 'recorded', 'fee_id': fee_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/monetization/licenses/create')
+def workspace_monetization_license_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30445_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    client_name = (payload.get('client_name') or '').strip()
+    plan_name = (payload.get('plan_name') or 'institutional').strip() or 'institutional'
+    if not client_name:
+        raise HTTPException(status_code=400, detail='client_name_required')
+    monthly_amount = round(as_float(payload.get('monthly_amount')), 2)
+    seat_count = int(as_float(payload.get('seat_count')))
+    term_months = int(as_float(payload.get('term_months') or 12))
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    now = now_iso()
+    license_id = f'license_{uuid.uuid4().hex[:10]}'
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_licenses (id, organization_id, client_name, plan_name, monthly_amount, seat_count, term_months, status, created_at) VALUES (?,?,?,?,?,?,?,?,?)",
+            (license_id, organization_id, client_name, plan_name, monthly_amount, seat_count, term_months, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30445', 'status': 'created', 'license_id': license_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30446_schema():
+    ensure_qnt30445_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_distribution_leads (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                lead_name TEXT NOT NULL,
+                channel TEXT DEFAULT 'direct',
+                status TEXT DEFAULT 'new',
+                pipeline_value REAL DEFAULT 0,
+                owner TEXT,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_distribution_campaigns (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                campaign_name TEXT NOT NULL,
+                channel TEXT DEFAULT 'direct',
+                status TEXT DEFAULT 'draft',
+                budget REAL DEFAULT 0,
+                leads_generated INTEGER DEFAULT 0,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_distribution_referrals (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                referrer_name TEXT NOT NULL,
+                referred_name TEXT NOT NULL,
+                reward_amount REAL DEFAULT 0,
+                status TEXT DEFAULT 'pending',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_distribution_onboarding (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                flow_name TEXT NOT NULL,
+                target_segment TEXT DEFAULT 'general',
+                status TEXT DEFAULT 'draft',
+                completion_rate REAL DEFAULT 0,
+                created_at TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30446_package(cur, organization_id):
+    ensure_qnt30446_schema()
+    leads = cur.execute(
+        "SELECT id, lead_name, channel, status, pipeline_value, owner, created_at FROM organization_distribution_leads WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    campaigns = cur.execute(
+        "SELECT id, campaign_name, channel, status, budget, leads_generated, created_at FROM organization_distribution_campaigns WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    referrals = cur.execute(
+        "SELECT id, referrer_name, referred_name, reward_amount, status, created_at FROM organization_distribution_referrals WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    onboarding = cur.execute(
+        "SELECT id, flow_name, target_segment, status, completion_rate, created_at FROM organization_distribution_onboarding WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    return build_qnt30446_package(leads, referrals, campaigns, onboarding)
+
+
+@app.get('/workspace/distribution/summary')
+def workspace_distribution_summary(session=Depends(require_auth)):
+    ensure_qnt30446_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30446_package(cur, organization_id)
+        package.update({'mission': 'QNT30446', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/distribution/leads/create')
+def workspace_distribution_lead_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30446_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    lead_name = (payload.get('lead_name') or '').strip()
+    if not lead_name:
+        raise HTTPException(status_code=400, detail='lead_name_required')
+    channel = (payload.get('channel') or 'direct').strip() or 'direct'
+    status = (payload.get('status') or 'new').strip() or 'new'
+    pipeline_value = round(as_float(payload.get('pipeline_value')), 2)
+    owner = (payload.get('owner') or session.get('email') or 'operator').strip()
+    now = now_iso()
+    lead_id = f'lead_{uuid.uuid4().hex[:10]}'
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_distribution_leads (id, organization_id, lead_name, channel, status, pipeline_value, owner, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (lead_id, organization_id, lead_name, channel, status, pipeline_value, owner, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30446', 'status': 'created', 'lead_id': lead_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/distribution/campaigns/create')
+def workspace_distribution_campaign_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30446_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    campaign_name = (payload.get('campaign_name') or '').strip()
+    if not campaign_name:
+        raise HTTPException(status_code=400, detail='campaign_name_required')
+    channel = (payload.get('channel') or 'direct').strip() or 'direct'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    budget = round(as_float(payload.get('budget')), 2)
+    leads_generated = int(as_float(payload.get('leads_generated')))
+    now = now_iso()
+    campaign_id = f'campaign_{uuid.uuid4().hex[:10]}'
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_distribution_campaigns (id, organization_id, campaign_name, channel, status, budget, leads_generated, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (campaign_id, organization_id, campaign_name, channel, status, budget, leads_generated, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30446', 'status': 'created', 'campaign_id': campaign_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/distribution/referrals/create')
+def workspace_distribution_referral_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30446_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    referrer_name = (payload.get('referrer_name') or '').strip()
+    referred_name = (payload.get('referred_name') or '').strip()
+    if not referrer_name or not referred_name:
+        raise HTTPException(status_code=400, detail='referral_names_required')
+    reward_amount = round(as_float(payload.get('reward_amount')), 2)
+    status = (payload.get('status') or 'pending').strip() or 'pending'
+    now = now_iso()
+    referral_id = f'referral_{uuid.uuid4().hex[:10]}'
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_distribution_referrals (id, organization_id, referrer_name, referred_name, reward_amount, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (referral_id, organization_id, referrer_name, referred_name, reward_amount, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30446', 'status': 'created', 'referral_id': referral_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/distribution/onboarding/create')
+def workspace_distribution_onboarding_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30446_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    flow_name = (payload.get('flow_name') or '').strip()
+    if not flow_name:
+        raise HTTPException(status_code=400, detail='flow_name_required')
+    target_segment = (payload.get('target_segment') or 'general').strip() or 'general'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    completion_rate = round(as_float(payload.get('completion_rate')), 2)
+    now = now_iso()
+    flow_id = f'flow_{uuid.uuid4().hex[:10]}'
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_distribution_onboarding (id, organization_id, flow_name, target_segment, status, completion_rate, created_at) VALUES (?,?,?,?,?,?,?)",
+            (flow_id, organization_id, flow_name, target_segment, status, completion_rate, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30446', 'status': 'created', 'flow_id': flow_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30447_schema():
+    ensure_qnt30446_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_autonomy_plans (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                plan_name TEXT NOT NULL,
+                strategy_name TEXT NOT NULL,
+                action_type TEXT DEFAULT 'rebalance',
+                amount REAL DEFAULT 0,
+                broker_name TEXT DEFAULT 'alpaca',
+                status TEXT DEFAULT 'draft',
+                created_at TEXT,
+                approved_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_autonomy_executions (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                plan_id TEXT NOT NULL,
+                plan_name TEXT NOT NULL,
+                broker_name TEXT DEFAULT 'alpaca',
+                action_type TEXT DEFAULT 'rebalance',
+                amount REAL DEFAULT 0,
+                status TEXT DEFAULT 'applied',
+                created_at TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30447_package(cur, organization_id):
+    ensure_qnt30447_schema()
+    plans = cur.execute(
+        "SELECT id, plan_name, strategy_name, action_type, amount, broker_name, status, created_at, approved_at FROM organization_autonomy_plans WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    executions = cur.execute(
+        "SELECT id, plan_id, plan_name, broker_name, action_type, amount, status, created_at FROM organization_autonomy_executions WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    pools = []
+    try:
+        pools = cur.execute(
+            "SELECT id, name, capital_balance FROM organization_fund_pools WHERE organization_id=? ORDER BY created_at DESC",
+            (organization_id,)
+        ).fetchall()
+    except Exception:
+        pools = []
+    strategies = []
+    try:
+        strategies = cur.execute(
+            "SELECT strategy_id, strategy_name, score, allocated_capital FROM organization_strategy_scores WHERE organization_id=? ORDER BY created_at DESC",
+            (organization_id,)
+        ).fetchall()
+    except Exception:
+        strategies = []
+    if not strategies:
+        strategies = [
+            {"strategy_id":"momentum_alpha","strategy_name":"Momentum Alpha","score":84,"allocated_capital":25000},
+            {"strategy_id":"mean_reversion","strategy_name":"Mean Reversion","score":76,"allocated_capital":18000},
+            {"strategy_id":"breakout","strategy_name":"Breakout","score":61,"allocated_capital":12000},
+        ]
+    return build_qnt30447_package(strategies, pools, plans, executions)
+
+
+@app.get('/workspace/autonomy/summary')
+def workspace_autonomy_summary(session=Depends(require_auth)):
+    ensure_qnt30447_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30447_package(cur, organization_id)
+        package.update({'mission': 'QNT30447', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/autonomy/plans/create')
+def workspace_autonomy_plan_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30447_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    plan_name = (payload.get('plan_name') or '').strip()
+    strategy_name = (payload.get('strategy_name') or '').strip()
+    if not plan_name or not strategy_name:
+        raise HTTPException(status_code=400, detail='plan_name_and_strategy_name_required')
+    action_type = (payload.get('action_type') or 'rebalance').strip() or 'rebalance'
+    amount = round(as_float(payload.get('amount')), 2)
+    broker_name = (payload.get('broker_name') or 'alpaca').strip() or 'alpaca'
+    now = now_iso()
+    plan_id = f'plan_{uuid.uuid4().hex[:10]}'
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_autonomy_plans (id, organization_id, plan_name, strategy_name, action_type, amount, broker_name, status, created_at, approved_at) VALUES (?,?,?,?,?,?,?,?,?,?)",
+            (plan_id, organization_id, plan_name, strategy_name, action_type, amount, broker_name, 'draft', now, None)
+        )
+        conn.commit()
+        return {'mission': 'QNT30447', 'status': 'created', 'plan_id': plan_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/autonomy/plans/approve')
+def workspace_autonomy_plan_approve(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30447_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    plan_id = (payload.get('plan_id') or '').strip()
+    if not plan_id:
+        raise HTTPException(status_code=400, detail='plan_id_required')
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "UPDATE organization_autonomy_plans SET status='approved', approved_at=? WHERE organization_id=? AND id=?",
+            (now, organization_id, plan_id)
+        )
+        conn.commit()
+        return {'mission': 'QNT30447', 'status': 'approved', 'plan_id': plan_id, 'approved_at': now}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/autonomy/execute')
+def workspace_autonomy_execute(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30447_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    plan_id = (payload.get('plan_id') or '').strip()
+    if not plan_id:
+        raise HTTPException(status_code=400, detail='plan_id_required')
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        plan = cur.execute(
+            "SELECT id, plan_name, broker_name, action_type, amount, status FROM organization_autonomy_plans WHERE organization_id=? AND id=?",
+            (organization_id, plan_id)
+        ).fetchone()
+        if not plan:
+            raise HTTPException(status_code=404, detail='plan_not_found')
+        if (plan.get('status') or '').lower() not in {'approved', 'ready', 'executing', 'draft'}:
+            raise HTTPException(status_code=400, detail='plan_not_executable')
+        execution_id = f'exec_{uuid.uuid4().hex[:10]}'
+        cur.execute(
+            "INSERT INTO organization_autonomy_executions (id, organization_id, plan_id, plan_name, broker_name, action_type, amount, status, created_at) VALUES (?,?,?,?,?,?,?,?,?)",
+            (execution_id, organization_id, plan['id'], plan['plan_name'], plan.get('broker_name') or 'alpaca', plan.get('action_type') or 'rebalance', as_float(plan.get('amount')), 'applied', now)
+        )
+        cur.execute(
+            "UPDATE organization_autonomy_plans SET status='executed' WHERE organization_id=? AND id=?",
+            (organization_id, plan_id)
+        )
+        conn.commit()
+        return {'mission': 'QNT30447', 'status': 'executed', 'execution_id': execution_id, 'plan_id': plan_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30448_schema():
+    ensure_qnt30447_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_governance_rules (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                rule_name TEXT NOT NULL,
+                rule_type TEXT DEFAULT 'risk_limit',
+                threshold_value REAL DEFAULT 0,
+                status TEXT DEFAULT 'draft',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_governance_approvals (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                plan_id TEXT,
+                plan_name TEXT NOT NULL,
+                decision TEXT DEFAULT 'pending',
+                reviewer TEXT,
+                reason TEXT,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_governance_audit_events (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                event_type TEXT NOT NULL,
+                actor TEXT,
+                target_ref TEXT,
+                status TEXT DEFAULT 'logged',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_execution_failures (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                execution_id TEXT,
+                failure_type TEXT NOT NULL,
+                severity TEXT DEFAULT 'medium',
+                status TEXT DEFAULT 'open',
+                created_at TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30448_package(cur, organization_id):
+    ensure_qnt30448_schema()
+    rules = cur.execute(
+        "SELECT id, rule_name, rule_type, threshold_value, status, created_at FROM organization_governance_rules WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    approvals = cur.execute(
+        "SELECT id, plan_id, plan_name, decision, reviewer, reason, created_at FROM organization_governance_approvals WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    audit_events = cur.execute(
+        "SELECT id, event_type, actor, target_ref, status, created_at FROM organization_governance_audit_events WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    failures = cur.execute(
+        "SELECT id, execution_id, failure_type, severity, status, created_at FROM organization_execution_failures WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    return build_qnt30448_package(rules, approvals, audit_events, failures)
+
+
+@app.get('/workspace/governance/summary')
+def workspace_governance_summary(session=Depends(require_auth)):
+    ensure_qnt30448_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30448_package(cur, organization_id)
+        package.update({'mission': 'QNT30448', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/governance/rules/create')
+def workspace_governance_rule_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30448_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    rule_name = (payload.get('rule_name') or '').strip()
+    if not rule_name:
+        raise HTTPException(status_code=400, detail='rule_name_required')
+    rule_type = (payload.get('rule_type') or 'risk_limit').strip() or 'risk_limit'
+    threshold_value = round(as_float(payload.get('threshold_value')), 2)
+    status = (payload.get('status') or 'active').strip() or 'active'
+    now = now_iso()
+    rule_id = f'rule_{uuid.uuid4().hex[:10]}'
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_governance_rules (id, organization_id, rule_name, rule_type, threshold_value, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (rule_id, organization_id, rule_name, rule_type, threshold_value, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30448', 'status': 'created', 'rule_id': rule_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/governance/approvals/create')
+def workspace_governance_approval_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30448_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    plan_name = (payload.get('plan_name') or '').strip()
+    if not plan_name:
+        raise HTTPException(status_code=400, detail='plan_name_required')
+    plan_id = (payload.get('plan_id') or '').strip() or None
+    decision = (payload.get('decision') or 'approved').strip() or 'approved'
+    reviewer = (payload.get('reviewer') or session.get('email') or 'operator').strip()
+    reason = (payload.get('reason') or '').strip()
+    now = now_iso()
+    approval_id = f'appr_{uuid.uuid4().hex[:10]}'
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_governance_approvals (id, organization_id, plan_id, plan_name, decision, reviewer, reason, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (approval_id, organization_id, plan_id, plan_name, decision, reviewer, reason, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30448', 'status': 'created', 'approval_id': approval_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/governance/audit/create')
+def workspace_governance_audit_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30448_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    event_type = (payload.get('event_type') or '').strip()
+    if not event_type:
+        raise HTTPException(status_code=400, detail='event_type_required')
+    actor = (payload.get('actor') or session.get('email') or 'system').strip()
+    target_ref = (payload.get('target_ref') or '').strip()
+    status = (payload.get('status') or 'logged').strip() or 'logged'
+    now = now_iso()
+    event_id = f'audit_{uuid.uuid4().hex[:10]}'
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_governance_audit_events (id, organization_id, event_type, actor, target_ref, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (event_id, organization_id, event_type, actor, target_ref, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30448', 'status': 'created', 'audit_id': event_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/governance/failures/create')
+def workspace_governance_failure_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30448_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    failure_type = (payload.get('failure_type') or '').strip()
+    if not failure_type:
+        raise HTTPException(status_code=400, detail='failure_type_required')
+    execution_id = (payload.get('execution_id') or '').strip() or None
+    severity = (payload.get('severity') or 'medium').strip() or 'medium'
+    status = (payload.get('status') or 'open').strip() or 'open'
+    now = now_iso()
+    failure_id = f'fail_{uuid.uuid4().hex[:10]}'
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_execution_failures (id, organization_id, execution_id, failure_type, severity, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (failure_id, organization_id, execution_id, failure_type, severity, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30448', 'status': 'created', 'failure_id': failure_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30449_schema():
+    ensure_qnt30448_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_reporting_nav_snapshots (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                as_of_date TEXT NOT NULL,
+                fund_nav REAL DEFAULT 0,
+                gross_pnl REAL DEFAULT 0,
+                net_pnl REAL DEFAULT 0,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_reporting_statements (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                investor_name TEXT NOT NULL,
+                statement_type TEXT DEFAULT 'lp_statement',
+                period_label TEXT DEFAULT 'MTD',
+                nav_amount REAL DEFAULT 0,
+                pnl_amount REAL DEFAULT 0,
+                delivery_status TEXT DEFAULT 'draft',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_reporting_distributions (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                investor_name TEXT NOT NULL,
+                distribution_type TEXT DEFAULT 'cash_distribution',
+                amount REAL DEFAULT 0,
+                status TEXT DEFAULT 'scheduled',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_reporting_cycles (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                cycle_name TEXT NOT NULL,
+                period_label TEXT DEFAULT 'MTD',
+                status TEXT DEFAULT 'draft',
+                statements_expected INTEGER DEFAULT 0,
+                statements_completed INTEGER DEFAULT 0,
+                created_at TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30449_package(cur, organization_id):
+    ensure_qnt30449_schema()
+    statements = cur.execute(
+        "SELECT id, investor_name, statement_type, period_label, nav_amount, pnl_amount, delivery_status, created_at FROM organization_reporting_statements WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    nav_snapshots = cur.execute(
+        "SELECT id, as_of_date, fund_nav, gross_pnl, net_pnl, created_at FROM organization_reporting_nav_snapshots WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    distributions = cur.execute(
+        "SELECT id, investor_name, distribution_type, amount, status, created_at FROM organization_reporting_distributions WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    cycles = cur.execute(
+        "SELECT id, cycle_name, period_label, status, statements_expected, statements_completed, created_at FROM organization_reporting_cycles WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    return build_qnt30449_package(statements, nav_snapshots, distributions, cycles)
+
+
+@app.get('/workspace/reporting/summary')
+def workspace_reporting_summary(session=Depends(require_auth)):
+    ensure_qnt30449_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30449_package(cur, organization_id)
+        package.update({'mission': 'QNT30449', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/reporting/nav/create')
+def workspace_reporting_nav_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30449_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    as_of_date = (payload.get('as_of_date') or '').strip()
+    if not as_of_date:
+        raise HTTPException(status_code=400, detail='as_of_date_required')
+    fund_nav = round(as_float(payload.get('fund_nav')), 2)
+    gross_pnl = round(as_float(payload.get('gross_pnl')), 2)
+    net_pnl = round(as_float(payload.get('net_pnl')), 2)
+    nav_id = f'nav_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_reporting_nav_snapshots (id, organization_id, as_of_date, fund_nav, gross_pnl, net_pnl, created_at) VALUES (?,?,?,?,?,?,?)",
+            (nav_id, organization_id, as_of_date, fund_nav, gross_pnl, net_pnl, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30449', 'status': 'created', 'nav_id': nav_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/reporting/statements/create')
+def workspace_reporting_statement_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30449_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    investor_name = (payload.get('investor_name') or '').strip()
+    if not investor_name:
+        raise HTTPException(status_code=400, detail='investor_name_required')
+    statement_type = (payload.get('statement_type') or 'lp_statement').strip() or 'lp_statement'
+    period_label = (payload.get('period_label') or 'MTD').strip() or 'MTD'
+    nav_amount = round(as_float(payload.get('nav_amount')), 2)
+    pnl_amount = round(as_float(payload.get('pnl_amount')), 2)
+    delivery_status = (payload.get('delivery_status') or 'draft').strip() or 'draft'
+    stmt_id = f'statement_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_reporting_statements (id, organization_id, investor_name, statement_type, period_label, nav_amount, pnl_amount, delivery_status, created_at) VALUES (?,?,?,?,?,?,?,?,?)",
+            (stmt_id, organization_id, investor_name, statement_type, period_label, nav_amount, pnl_amount, delivery_status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30449', 'status': 'created', 'statement_id': stmt_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/reporting/distributions/create')
+def workspace_reporting_distribution_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30449_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    investor_name = (payload.get('investor_name') or '').strip()
+    if not investor_name:
+        raise HTTPException(status_code=400, detail='investor_name_required')
+    distribution_type = (payload.get('distribution_type') or 'cash_distribution').strip() or 'cash_distribution'
+    amount = round(as_float(payload.get('amount')), 2)
+    status = (payload.get('status') or 'scheduled').strip() or 'scheduled'
+    distribution_id = f'distribution_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_reporting_distributions (id, organization_id, investor_name, distribution_type, amount, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (distribution_id, organization_id, investor_name, distribution_type, amount, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30449', 'status': 'created', 'distribution_id': distribution_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/reporting/cycles/create')
+def workspace_reporting_cycle_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30449_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    cycle_name = (payload.get('cycle_name') or '').strip()
+    if not cycle_name:
+        raise HTTPException(status_code=400, detail='cycle_name_required')
+    period_label = (payload.get('period_label') or 'MTD').strip() or 'MTD'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    statements_expected = int(as_float(payload.get('statements_expected')))
+    statements_completed = int(as_float(payload.get('statements_completed')))
+    cycle_id = f'cycle_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_reporting_cycles (id, organization_id, cycle_name, period_label, status, statements_expected, statements_completed, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (cycle_id, organization_id, cycle_name, period_label, status, statements_expected, statements_completed, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30449', 'status': 'created', 'cycle_id': cycle_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30450_schema():
+    ensure_qnt30449_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_broker_registry (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                broker_name TEXT NOT NULL,
+                broker_type TEXT DEFAULT 'execution',
+                status TEXT DEFAULT 'draft',
+                latency_ms REAL DEFAULT 0,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_broker_routes (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                route_name TEXT NOT NULL,
+                symbol_scope TEXT DEFAULT 'global',
+                primary_broker TEXT NOT NULL,
+                secondary_broker TEXT,
+                status TEXT DEFAULT 'draft',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_broker_executions (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                broker_name TEXT NOT NULL,
+                symbol TEXT NOT NULL,
+                side TEXT DEFAULT 'buy',
+                notional_amount REAL DEFAULT 0,
+                status TEXT DEFAULT 'sent',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_broker_failovers (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                route_name TEXT NOT NULL,
+                from_broker TEXT NOT NULL,
+                to_broker TEXT NOT NULL,
+                reason TEXT,
+                status TEXT DEFAULT 'pending',
+                created_at TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30450_package(cur, organization_id):
+    ensure_qnt30450_schema()
+    brokers = cur.execute(
+        "SELECT id, broker_name, broker_type, status, latency_ms, created_at FROM organization_broker_registry WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    routes = cur.execute(
+        "SELECT id, route_name, symbol_scope, primary_broker, secondary_broker, status, created_at FROM organization_broker_routes WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    executions = cur.execute(
+        "SELECT id, broker_name, symbol, side, notional_amount, status, created_at FROM organization_broker_executions WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    failovers = cur.execute(
+        "SELECT id, route_name, from_broker, to_broker, reason, status, created_at FROM organization_broker_failovers WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    return build_qnt30450_package(brokers, routes, executions, failovers)
+
+
+@app.get('/workspace/brokers/summary')
+def workspace_brokers_summary(session=Depends(require_auth)):
+    ensure_qnt30450_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30450_package(cur, organization_id)
+        package.update({'mission': 'QNT30450', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/brokers/create')
+def workspace_brokers_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30450_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    broker_name = (payload.get('broker_name') or '').strip()
+    if not broker_name:
+        raise HTTPException(status_code=400, detail='broker_name_required')
+    broker_type = (payload.get('broker_type') or 'execution').strip() or 'execution'
+    status = (payload.get('status') or 'active').strip() or 'active'
+    latency_ms = round(as_float(payload.get('latency_ms')), 2)
+    broker_id = f'broker_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_broker_registry (id, organization_id, broker_name, broker_type, status, latency_ms, created_at) VALUES (?,?,?,?,?,?,?)",
+            (broker_id, organization_id, broker_name, broker_type, status, latency_ms, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30450', 'status': 'created', 'broker_id': broker_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/brokers/routes/create')
+def workspace_brokers_route_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30450_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    route_name = (payload.get('route_name') or '').strip()
+    primary_broker = (payload.get('primary_broker') or '').strip()
+    if not route_name or not primary_broker:
+        raise HTTPException(status_code=400, detail='route_name_and_primary_broker_required')
+    symbol_scope = (payload.get('symbol_scope') or 'global').strip() or 'global'
+    secondary_broker = (payload.get('secondary_broker') or '').strip() or None
+    status = (payload.get('status') or 'active').strip() or 'active'
+    route_id = f'route_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_broker_routes (id, organization_id, route_name, symbol_scope, primary_broker, secondary_broker, status, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (route_id, organization_id, route_name, symbol_scope, primary_broker, secondary_broker, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30450', 'status': 'created', 'route_id': route_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/brokers/executions/create')
+def workspace_brokers_execution_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30450_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    broker_name = (payload.get('broker_name') or '').strip()
+    symbol = (payload.get('symbol') or '').strip()
+    if not broker_name or not symbol:
+        raise HTTPException(status_code=400, detail='broker_name_and_symbol_required')
+    side = (payload.get('side') or 'buy').strip() or 'buy'
+    notional_amount = round(as_float(payload.get('notional_amount')), 2)
+    status = (payload.get('status') or 'sent').strip() or 'sent'
+    execution_id = f'broker_exec_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_broker_executions (id, organization_id, broker_name, symbol, side, notional_amount, status, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (execution_id, organization_id, broker_name, symbol, side, notional_amount, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30450', 'status': 'created', 'execution_id': execution_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/brokers/failovers/create')
+def workspace_brokers_failover_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30450_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    route_name = (payload.get('route_name') or '').strip()
+    from_broker = (payload.get('from_broker') or '').strip()
+    to_broker = (payload.get('to_broker') or '').strip()
+    if not route_name or not from_broker or not to_broker:
+        raise HTTPException(status_code=400, detail='route_name_and_brokers_required')
+    reason = (payload.get('reason') or '').strip()
+    status = (payload.get('status') or 'triggered').strip() or 'triggered'
+    failover_id = f'failover_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_broker_failovers (id, organization_id, route_name, from_broker, to_broker, reason, status, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (failover_id, organization_id, route_name, from_broker, to_broker, reason, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30450', 'status': 'created', 'failover_id': failover_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30451_schema():
+    ensure_qnt30450_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_risk_exposures (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                book_name TEXT NOT NULL,
+                asset_class TEXT DEFAULT 'multi_asset',
+                gross_exposure REAL DEFAULT 0,
+                net_exposure REAL DEFAULT 0,
+                var_1d REAL DEFAULT 0,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_risk_limits (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                limit_name TEXT NOT NULL,
+                limit_type TEXT DEFAULT 'gross_exposure',
+                threshold_value REAL DEFAULT 0,
+                current_value REAL DEFAULT 0,
+                status TEXT DEFAULT 'ok',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_risk_alerts (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                alert_name TEXT NOT NULL,
+                severity TEXT DEFAULT 'medium',
+                status TEXT DEFAULT 'open',
+                target_ref TEXT,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_risk_stress_tests (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                scenario_name TEXT NOT NULL,
+                loss_estimate REAL DEFAULT 0,
+                capital_impact REAL DEFAULT 0,
+                status TEXT DEFAULT 'pass',
+                created_at TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30451_package(cur, organization_id):
+    ensure_qnt30451_schema()
+    exposures = cur.execute(
+        "SELECT id, book_name, asset_class, gross_exposure, net_exposure, var_1d, created_at FROM organization_risk_exposures WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    limits = cur.execute(
+        "SELECT id, limit_name, limit_type, threshold_value, current_value, status, created_at FROM organization_risk_limits WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    alerts = cur.execute(
+        "SELECT id, alert_name, severity, status, target_ref, created_at FROM organization_risk_alerts WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    stress_tests = cur.execute(
+        "SELECT id, scenario_name, loss_estimate, capital_impact, status, created_at FROM organization_risk_stress_tests WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    return build_qnt30451_package(exposures, limits, alerts, stress_tests)
+
+
+@app.get('/workspace/risk/summary')
+def workspace_risk_summary(session=Depends(require_auth)):
+    ensure_qnt30451_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30451_package(cur, organization_id)
+        package.update({'mission': 'QNT30451', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/risk/exposures/create')
+def workspace_risk_exposure_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30451_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    book_name = (payload.get('book_name') or '').strip()
+    if not book_name:
+        raise HTTPException(status_code=400, detail='book_name_required')
+    asset_class = (payload.get('asset_class') or 'multi_asset').strip() or 'multi_asset'
+    gross_exposure = round(as_float(payload.get('gross_exposure')), 2)
+    net_exposure = round(as_float(payload.get('net_exposure')), 2)
+    var_1d = round(as_float(payload.get('var_1d')), 2)
+    exposure_id = f'exposure_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_risk_exposures (id, organization_id, book_name, asset_class, gross_exposure, net_exposure, var_1d, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (exposure_id, organization_id, book_name, asset_class, gross_exposure, net_exposure, var_1d, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30451', 'status': 'created', 'exposure_id': exposure_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/risk/limits/create')
+def workspace_risk_limit_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30451_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    limit_name = (payload.get('limit_name') or '').strip()
+    if not limit_name:
+        raise HTTPException(status_code=400, detail='limit_name_required')
+    limit_type = (payload.get('limit_type') or 'gross_exposure').strip() or 'gross_exposure'
+    threshold_value = round(as_float(payload.get('threshold_value')), 2)
+    current_value = round(as_float(payload.get('current_value')), 2)
+    status = (payload.get('status') or 'ok').strip() or 'ok'
+    limit_id = f'limit_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_risk_limits (id, organization_id, limit_name, limit_type, threshold_value, current_value, status, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (limit_id, organization_id, limit_name, limit_type, threshold_value, current_value, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30451', 'status': 'created', 'limit_id': limit_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/risk/alerts/create')
+def workspace_risk_alert_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30451_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    alert_name = (payload.get('alert_name') or '').strip()
+    if not alert_name:
+        raise HTTPException(status_code=400, detail='alert_name_required')
+    severity = (payload.get('severity') or 'medium').strip() or 'medium'
+    status = (payload.get('status') or 'open').strip() or 'open'
+    target_ref = (payload.get('target_ref') or '').strip()
+    alert_id = f'alert_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_risk_alerts (id, organization_id, alert_name, severity, status, target_ref, created_at) VALUES (?,?,?,?,?,?,?)",
+            (alert_id, organization_id, alert_name, severity, status, target_ref, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30451', 'status': 'created', 'alert_id': alert_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/risk/stress/create')
+def workspace_risk_stress_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30451_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    scenario_name = (payload.get('scenario_name') or '').strip()
+    if not scenario_name:
+        raise HTTPException(status_code=400, detail='scenario_name_required')
+    loss_estimate = round(as_float(payload.get('loss_estimate')), 2)
+    capital_impact = round(as_float(payload.get('capital_impact')), 2)
+    status = (payload.get('status') or 'pass').strip() or 'pass'
+    stress_id = f'stress_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_risk_stress_tests (id, organization_id, scenario_name, loss_estimate, capital_impact, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (stress_id, organization_id, scenario_name, loss_estimate, capital_impact, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30451', 'status': 'created', 'stress_id': stress_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30452_schema():
+    ensure_qnt30451_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_treasury_accounts (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                account_name TEXT NOT NULL,
+                institution_name TEXT NOT NULL,
+                cash_balance REAL DEFAULT 0,
+                available_cash REAL DEFAULT 0,
+                restricted_cash REAL DEFAULT 0,
+                status TEXT DEFAULT 'active',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_treasury_liquidity_buckets (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                bucket_name TEXT NOT NULL,
+                bucket_amount REAL DEFAULT 0,
+                target_amount REAL DEFAULT 0,
+                status TEXT DEFAULT 'ok',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_treasury_flows (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                flow_name TEXT NOT NULL,
+                flow_direction TEXT DEFAULT 'inflow',
+                amount REAL DEFAULT 0,
+                source_ref TEXT,
+                status TEXT DEFAULT 'scheduled',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_treasury_forecasts (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                forecast_name TEXT NOT NULL,
+                projected_cash REAL DEFAULT 0,
+                minimum_required REAL DEFAULT 0,
+                status TEXT DEFAULT 'ok',
+                created_at TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30452_package(cur, organization_id):
+    ensure_qnt30452_schema()
+    cash_accounts = cur.execute(
+        "SELECT id, account_name, institution_name, cash_balance, available_cash, restricted_cash, status, created_at FROM organization_treasury_accounts WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    liquidity_buckets = cur.execute(
+        "SELECT id, bucket_name, bucket_amount, target_amount, status, created_at FROM organization_treasury_liquidity_buckets WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    treasury_flows = cur.execute(
+        "SELECT id, flow_name, flow_direction, amount, source_ref, status, created_at FROM organization_treasury_flows WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    funding_forecasts = cur.execute(
+        "SELECT id, forecast_name, projected_cash, minimum_required, status, created_at FROM organization_treasury_forecasts WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    return build_qnt30452_package(cash_accounts, liquidity_buckets, treasury_flows, funding_forecasts)
+
+
+@app.get('/workspace/treasury/summary')
+def workspace_treasury_summary(session=Depends(require_auth)):
+    ensure_qnt30452_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30452_package(cur, organization_id)
+        package.update({'mission': 'QNT30452', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/treasury/accounts/create')
+def workspace_treasury_account_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30452_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    account_name = (payload.get('account_name') or '').strip()
+    institution_name = (payload.get('institution_name') or '').strip()
+    if not account_name or not institution_name:
+        raise HTTPException(status_code=400, detail='account_name_and_institution_name_required')
+    cash_balance = round(as_float(payload.get('cash_balance')), 2)
+    available_cash = round(as_float(payload.get('available_cash')), 2)
+    restricted_cash = round(as_float(payload.get('restricted_cash')), 2)
+    status = (payload.get('status') or 'active').strip() or 'active'
+    account_id = f'treasury_acct_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_treasury_accounts (id, organization_id, account_name, institution_name, cash_balance, available_cash, restricted_cash, status, created_at) VALUES (?,?,?,?,?,?,?,?,?)",
+            (account_id, organization_id, account_name, institution_name, cash_balance, available_cash, restricted_cash, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30452', 'status': 'created', 'account_id': account_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/treasury/buckets/create')
+def workspace_treasury_bucket_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30452_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    bucket_name = (payload.get('bucket_name') or '').strip()
+    if not bucket_name:
+        raise HTTPException(status_code=400, detail='bucket_name_required')
+    bucket_amount = round(as_float(payload.get('bucket_amount')), 2)
+    target_amount = round(as_float(payload.get('target_amount')), 2)
+    status = (payload.get('status') or 'ok').strip() or 'ok'
+    bucket_id = f'liq_bucket_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_treasury_liquidity_buckets (id, organization_id, bucket_name, bucket_amount, target_amount, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (bucket_id, organization_id, bucket_name, bucket_amount, target_amount, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30452', 'status': 'created', 'bucket_id': bucket_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/treasury/flows/create')
+def workspace_treasury_flow_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30452_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    flow_name = (payload.get('flow_name') or '').strip()
+    if not flow_name:
+        raise HTTPException(status_code=400, detail='flow_name_required')
+    flow_direction = (payload.get('flow_direction') or 'inflow').strip() or 'inflow'
+    amount = round(as_float(payload.get('amount')), 2)
+    source_ref = (payload.get('source_ref') or '').strip()
+    status = (payload.get('status') or 'scheduled').strip() or 'scheduled'
+    flow_id = f'treasury_flow_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_treasury_flows (id, organization_id, flow_name, flow_direction, amount, source_ref, status, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (flow_id, organization_id, flow_name, flow_direction, amount, source_ref, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30452', 'status': 'created', 'flow_id': flow_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/treasury/forecasts/create')
+def workspace_treasury_forecast_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30452_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    forecast_name = (payload.get('forecast_name') or '').strip()
+    if not forecast_name:
+        raise HTTPException(status_code=400, detail='forecast_name_required')
+    projected_cash = round(as_float(payload.get('projected_cash')), 2)
+    minimum_required = round(as_float(payload.get('minimum_required')), 2)
+    status = (payload.get('status') or 'ok').strip() or 'ok'
+    forecast_id = f'treasury_fc_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_treasury_forecasts (id, organization_id, forecast_name, projected_cash, minimum_required, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (forecast_id, organization_id, forecast_name, projected_cash, minimum_required, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30452', 'status': 'created', 'forecast_id': forecast_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30453_schema():
+    ensure_qnt30452_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_investor_crm_prospects (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                prospect_name TEXT NOT NULL,
+                investor_type TEXT DEFAULT 'family_office',
+                stage TEXT DEFAULT 'new',
+                target_commitment REAL DEFAULT 0,
+                owner TEXT,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_investor_crm_meetings (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                prospect_name TEXT NOT NULL,
+                meeting_type TEXT DEFAULT 'intro_call',
+                status TEXT DEFAULT 'scheduled',
+                scheduled_at TEXT,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_investor_crm_rounds (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                round_name TEXT NOT NULL,
+                target_amount REAL DEFAULT 0,
+                soft_commit_amount REAL DEFAULT 0,
+                funded_amount REAL DEFAULT 0,
+                status TEXT DEFAULT 'draft',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_investor_crm_outreach (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                prospect_name TEXT NOT NULL,
+                channel TEXT DEFAULT 'email',
+                outreach_type TEXT DEFAULT 'follow_up',
+                status TEXT DEFAULT 'sent',
+                created_at TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30453_package(cur, organization_id):
+    ensure_qnt30453_schema()
+    prospects = cur.execute(
+        "SELECT id, prospect_name, investor_type, stage, target_commitment, owner, created_at FROM organization_investor_crm_prospects WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    meetings = cur.execute(
+        "SELECT id, prospect_name, meeting_type, status, scheduled_at, created_at FROM organization_investor_crm_meetings WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    rounds = cur.execute(
+        "SELECT id, round_name, target_amount, soft_commit_amount, funded_amount, status, created_at FROM organization_investor_crm_rounds WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    outreach = cur.execute(
+        "SELECT id, prospect_name, channel, outreach_type, status, created_at FROM organization_investor_crm_outreach WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    return build_qnt30453_package(prospects, meetings, rounds, outreach)
+
+
+@app.get('/workspace/investor-crm/summary')
+def workspace_investor_crm_summary(session=Depends(require_auth)):
+    ensure_qnt30453_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30453_package(cur, organization_id)
+        package.update({'mission': 'QNT30453', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/investor-crm/prospects/create')
+def workspace_investor_crm_prospect_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30453_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    prospect_name = (payload.get('prospect_name') or '').strip()
+    if not prospect_name:
+        raise HTTPException(status_code=400, detail='prospect_name_required')
+    investor_type = (payload.get('investor_type') or 'family_office').strip() or 'family_office'
+    stage = (payload.get('stage') or 'new').strip() or 'new'
+    target_commitment = round(as_float(payload.get('target_commitment')), 2)
+    owner = (payload.get('owner') or session.get('email') or 'operator').strip()
+    prospect_id = f'prospect_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_investor_crm_prospects (id, organization_id, prospect_name, investor_type, stage, target_commitment, owner, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (prospect_id, organization_id, prospect_name, investor_type, stage, target_commitment, owner, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30453', 'status': 'created', 'prospect_id': prospect_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/investor-crm/meetings/create')
+def workspace_investor_crm_meeting_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30453_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    prospect_name = (payload.get('prospect_name') or '').strip()
+    if not prospect_name:
+        raise HTTPException(status_code=400, detail='prospect_name_required')
+    meeting_type = (payload.get('meeting_type') or 'intro_call').strip() or 'intro_call'
+    status = (payload.get('status') or 'scheduled').strip() or 'scheduled'
+    scheduled_at = (payload.get('scheduled_at') or '').strip() or None
+    meeting_id = f'meeting_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_investor_crm_meetings (id, organization_id, prospect_name, meeting_type, status, scheduled_at, created_at) VALUES (?,?,?,?,?,?,?)",
+            (meeting_id, organization_id, prospect_name, meeting_type, status, scheduled_at, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30453', 'status': 'created', 'meeting_id': meeting_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/investor-crm/rounds/create')
+def workspace_investor_crm_round_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30453_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    round_name = (payload.get('round_name') or '').strip()
+    if not round_name:
+        raise HTTPException(status_code=400, detail='round_name_required')
+    target_amount = round(as_float(payload.get('target_amount')), 2)
+    soft_commit_amount = round(as_float(payload.get('soft_commit_amount')), 2)
+    funded_amount = round(as_float(payload.get('funded_amount')), 2)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    round_id = f'raise_round_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_investor_crm_rounds (id, organization_id, round_name, target_amount, soft_commit_amount, funded_amount, status, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (round_id, organization_id, round_name, target_amount, soft_commit_amount, funded_amount, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30453', 'status': 'created', 'round_id': round_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/investor-crm/outreach/create')
+def workspace_investor_crm_outreach_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30453_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    prospect_name = (payload.get('prospect_name') or '').strip()
+    if not prospect_name:
+        raise HTTPException(status_code=400, detail='prospect_name_required')
+    channel = (payload.get('channel') or 'email').strip() or 'email'
+    outreach_type = (payload.get('outreach_type') or 'follow_up').strip() or 'follow_up'
+    status = (payload.get('status') or 'sent').strip() or 'sent'
+    outreach_id = f'crm_outreach_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_investor_crm_outreach (id, organization_id, prospect_name, channel, outreach_type, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (outreach_id, organization_id, prospect_name, channel, outreach_type, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30453', 'status': 'created', 'outreach_id': outreach_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30454_schema():
+    ensure_qnt30453_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_economics_segments (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                segment_name TEXT NOT NULL,
+                customers INTEGER DEFAULT 0,
+                mrr REAL DEFAULT 0,
+                churn_percent REAL DEFAULT 0,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_economics_revenue_events (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                revenue_name TEXT NOT NULL,
+                revenue_type TEXT DEFAULT 'subscription',
+                amount REAL DEFAULT 0,
+                status TEXT DEFAULT 'recognized',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_economics_cost_centers (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                cost_name TEXT NOT NULL,
+                category TEXT DEFAULT 'operations',
+                monthly_cost REAL DEFAULT 0,
+                status TEXT DEFAULT 'active',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_economics_snapshots (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                period_label TEXT DEFAULT 'MTD',
+                ltv REAL DEFAULT 0,
+                cac REAL DEFAULT 0,
+                payback_months REAL DEFAULT 0,
+                gross_margin_percent REAL DEFAULT 0,
+                created_at TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30454_package(cur, organization_id):
+    ensure_qnt30454_schema()
+    customer_segments = cur.execute(
+        "SELECT id, segment_name, customers, mrr, churn_percent, created_at FROM organization_economics_segments WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    revenue_events = cur.execute(
+        "SELECT id, revenue_name, revenue_type, amount, status, created_at FROM organization_economics_revenue_events WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    cost_centers = cur.execute(
+        "SELECT id, cost_name, category, monthly_cost, status, created_at FROM organization_economics_cost_centers WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    unit_economics_snapshots = cur.execute(
+        "SELECT id, period_label, ltv, cac, payback_months, gross_margin_percent, created_at FROM organization_economics_snapshots WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    return build_qnt30454_package(customer_segments, revenue_events, cost_centers, unit_economics_snapshots)
+
+
+@app.get('/workspace/economics/summary')
+def workspace_economics_summary(session=Depends(require_auth)):
+    ensure_qnt30454_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30454_package(cur, organization_id)
+        package.update({'mission': 'QNT30454', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/economics/segments/create')
+def workspace_economics_segment_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30454_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    segment_name = (payload.get('segment_name') or '').strip()
+    if not segment_name:
+        raise HTTPException(status_code=400, detail='segment_name_required')
+    customers = int(as_float(payload.get('customers')))
+    mrr = round(as_float(payload.get('mrr')), 2)
+    churn_percent = round(as_float(payload.get('churn_percent')), 2)
+    segment_id = f'segment_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_economics_segments (id, organization_id, segment_name, customers, mrr, churn_percent, created_at) VALUES (?,?,?,?,?,?,?)",
+            (segment_id, organization_id, segment_name, customers, mrr, churn_percent, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30454', 'status': 'created', 'segment_id': segment_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/economics/revenue/create')
+def workspace_economics_revenue_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30454_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    revenue_name = (payload.get('revenue_name') or '').strip()
+    if not revenue_name:
+        raise HTTPException(status_code=400, detail='revenue_name_required')
+    revenue_type = (payload.get('revenue_type') or 'subscription').strip() or 'subscription'
+    amount = round(as_float(payload.get('amount')), 2)
+    status = (payload.get('status') or 'recognized').strip() or 'recognized'
+    revenue_id = f'revenue_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_economics_revenue_events (id, organization_id, revenue_name, revenue_type, amount, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (revenue_id, organization_id, revenue_name, revenue_type, amount, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30454', 'status': 'created', 'revenue_id': revenue_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/economics/costs/create')
+def workspace_economics_cost_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30454_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    cost_name = (payload.get('cost_name') or '').strip()
+    if not cost_name:
+        raise HTTPException(status_code=400, detail='cost_name_required')
+    category = (payload.get('category') or 'operations').strip() or 'operations'
+    monthly_cost = round(as_float(payload.get('monthly_cost')), 2)
+    status = (payload.get('status') or 'active').strip() or 'active'
+    cost_id = f'cost_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_economics_cost_centers (id, organization_id, cost_name, category, monthly_cost, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (cost_id, organization_id, cost_name, category, monthly_cost, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30454', 'status': 'created', 'cost_id': cost_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/economics/snapshots/create')
+def workspace_economics_snapshot_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30454_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    period_label = (payload.get('period_label') or 'MTD').strip() or 'MTD'
+    ltv = round(as_float(payload.get('ltv')), 2)
+    cac = round(as_float(payload.get('cac')), 2)
+    payback_months = round(as_float(payload.get('payback_months')), 2)
+    gross_margin_percent = round(as_float(payload.get('gross_margin_percent')), 2)
+    snapshot_id = f'econ_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_economics_snapshots (id, organization_id, period_label, ltv, cac, payback_months, gross_margin_percent, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (snapshot_id, organization_id, period_label, ltv, cac, payback_months, gross_margin_percent, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30454', 'status': 'created', 'snapshot_id': snapshot_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30455_schema():
+    ensure_qnt30454_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_operator_ai_commands (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                command_name TEXT NOT NULL,
+                command_type TEXT DEFAULT 'analysis',
+                target_system TEXT DEFAULT 'global',
+                status TEXT DEFAULT 'draft',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_operator_ai_copilots (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                copilot_name TEXT NOT NULL,
+                specialty TEXT DEFAULT 'operations',
+                status TEXT DEFAULT 'draft',
+                confidence_score REAL DEFAULT 0,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_operator_ai_recommendations (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                recommendation_name TEXT NOT NULL,
+                priority TEXT DEFAULT 'medium',
+                status TEXT DEFAULT 'proposed',
+                target_ref TEXT,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_operator_ai_decisions (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                decision_name TEXT NOT NULL,
+                operator_action TEXT DEFAULT 'reviewed',
+                outcome TEXT DEFAULT 'logged',
+                created_at TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30455_package(cur, organization_id):
+    ensure_qnt30455_schema()
+    commands = cur.execute(
+        "SELECT id, command_name, command_type, target_system, status, created_at FROM organization_operator_ai_commands WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    copilots = cur.execute(
+        "SELECT id, copilot_name, specialty, status, confidence_score, created_at FROM organization_operator_ai_copilots WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    recommendations = cur.execute(
+        "SELECT id, recommendation_name, priority, status, target_ref, created_at FROM organization_operator_ai_recommendations WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    decisions = cur.execute(
+        "SELECT id, decision_name, operator_action, outcome, created_at FROM organization_operator_ai_decisions WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    return build_qnt30455_package(commands, copilots, recommendations, decisions)
+
+
+@app.get('/workspace/operator-ai/summary')
+def workspace_operator_ai_summary(session=Depends(require_auth)):
+    ensure_qnt30455_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30455_package(cur, organization_id)
+        package.update({'mission': 'QNT30455', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/operator-ai/commands/create')
+def workspace_operator_ai_command_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30455_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    command_name = (payload.get('command_name') or '').strip()
+    if not command_name:
+        raise HTTPException(status_code=400, detail='command_name_required')
+    command_type = (payload.get('command_type') or 'analysis').strip() or 'analysis'
+    target_system = (payload.get('target_system') or 'global').strip() or 'global'
+    status = (payload.get('status') or 'queued').strip() or 'queued'
+    command_id = f'cmd_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_operator_ai_commands (id, organization_id, command_name, command_type, target_system, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (command_id, organization_id, command_name, command_type, target_system, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30455', 'status': 'created', 'command_id': command_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/operator-ai/copilots/create')
+def workspace_operator_ai_copilot_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30455_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    copilot_name = (payload.get('copilot_name') or '').strip()
+    if not copilot_name:
+        raise HTTPException(status_code=400, detail='copilot_name_required')
+    specialty = (payload.get('specialty') or 'operations').strip() or 'operations'
+    status = (payload.get('status') or 'active').strip() or 'active'
+    confidence_score = round(as_float(payload.get('confidence_score')), 2)
+    copilot_id = f'copilot_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_operator_ai_copilots (id, organization_id, copilot_name, specialty, status, confidence_score, created_at) VALUES (?,?,?,?,?,?,?)",
+            (copilot_id, organization_id, copilot_name, specialty, status, confidence_score, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30455', 'status': 'created', 'copilot_id': copilot_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/operator-ai/recommendations/create')
+def workspace_operator_ai_recommendation_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30455_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    recommendation_name = (payload.get('recommendation_name') or '').strip()
+    if not recommendation_name:
+        raise HTTPException(status_code=400, detail='recommendation_name_required')
+    priority = (payload.get('priority') or 'medium').strip() or 'medium'
+    status = (payload.get('status') or 'proposed').strip() or 'proposed'
+    target_ref = (payload.get('target_ref') or '').strip()
+    recommendation_id = f'rec_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_operator_ai_recommendations (id, organization_id, recommendation_name, priority, status, target_ref, created_at) VALUES (?,?,?,?,?,?,?)",
+            (recommendation_id, organization_id, recommendation_name, priority, status, target_ref, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30455', 'status': 'created', 'recommendation_id': recommendation_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/operator-ai/decisions/create')
+def workspace_operator_ai_decision_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30455_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    decision_name = (payload.get('decision_name') or '').strip()
+    if not decision_name:
+        raise HTTPException(status_code=400, detail='decision_name_required')
+    operator_action = (payload.get('operator_action') or 'reviewed').strip() or 'reviewed'
+    outcome = (payload.get('outcome') or 'logged').strip() or 'logged'
+    decision_id = f'decision_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_operator_ai_decisions (id, organization_id, decision_name, operator_action, outcome, created_at) VALUES (?,?,?,?,?,?)",
+            (decision_id, organization_id, decision_name, operator_action, outcome, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30455', 'status': 'created', 'decision_id': decision_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30456_schema():
+    ensure_qnt30455_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_compliance_policies (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                policy_name TEXT NOT NULL,
+                policy_type TEXT DEFAULT 'governance',
+                owner TEXT,
+                status TEXT DEFAULT 'draft',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_compliance_diligence_requests (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                request_name TEXT NOT NULL,
+                requester TEXT,
+                status TEXT DEFAULT 'open',
+                priority TEXT DEFAULT 'medium',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_compliance_certifications (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                certification_name TEXT NOT NULL,
+                issuing_body TEXT,
+                status TEXT DEFAULT 'draft',
+                expires_at TEXT,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_compliance_disclosures (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                disclosure_name TEXT NOT NULL,
+                audience TEXT DEFAULT 'investors',
+                status TEXT DEFAULT 'draft',
+                due_at TEXT,
+                created_at TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30456_package(cur, organization_id):
+    ensure_qnt30456_schema()
+    policies = cur.execute(
+        "SELECT id, policy_name, policy_type, owner, status, created_at FROM organization_compliance_policies WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    diligence_requests = cur.execute(
+        "SELECT id, request_name, requester, status, priority, created_at FROM organization_compliance_diligence_requests WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    certifications = cur.execute(
+        "SELECT id, certification_name, issuing_body, status, expires_at, created_at FROM organization_compliance_certifications WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    disclosures = cur.execute(
+        "SELECT id, disclosure_name, audience, status, due_at, created_at FROM organization_compliance_disclosures WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    return build_qnt30456_package(policies, diligence_requests, certifications, disclosures)
+
+
+@app.get('/workspace/compliance/summary')
+def workspace_compliance_summary(session=Depends(require_auth)):
+    ensure_qnt30456_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30456_package(cur, organization_id)
+        package.update({'mission': 'QNT30456', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/compliance/policies/create')
+def workspace_compliance_policy_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30456_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    policy_name = (payload.get('policy_name') or '').strip()
+    if not policy_name:
+        raise HTTPException(status_code=400, detail='policy_name_required')
+    policy_type = (payload.get('policy_type') or 'governance').strip() or 'governance'
+    owner = (payload.get('owner') or session.get('email') or 'compliance').strip()
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    policy_id = f'policy_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_compliance_policies (id, organization_id, policy_name, policy_type, owner, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (policy_id, organization_id, policy_name, policy_type, owner, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30456', 'status': 'created', 'policy_id': policy_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/compliance/diligence/create')
+def workspace_compliance_diligence_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30456_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    request_name = (payload.get('request_name') or '').strip()
+    if not request_name:
+        raise HTTPException(status_code=400, detail='request_name_required')
+    requester = (payload.get('requester') or 'allocator').strip() or 'allocator'
+    status = (payload.get('status') or 'open').strip() or 'open'
+    priority = (payload.get('priority') or 'medium').strip() or 'medium'
+    request_id = f'ddq_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_compliance_diligence_requests (id, organization_id, request_name, requester, status, priority, created_at) VALUES (?,?,?,?,?,?,?)",
+            (request_id, organization_id, request_name, requester, status, priority, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30456', 'status': 'created', 'request_id': request_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/compliance/certifications/create')
+def workspace_compliance_certification_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30456_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    certification_name = (payload.get('certification_name') or '').strip()
+    if not certification_name:
+        raise HTTPException(status_code=400, detail='certification_name_required')
+    issuing_body = (payload.get('issuing_body') or 'internal').strip() or 'internal'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    expires_at = (payload.get('expires_at') or '').strip() or None
+    certification_id = f'cert_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_compliance_certifications (id, organization_id, certification_name, issuing_body, status, expires_at, created_at) VALUES (?,?,?,?,?,?,?)",
+            (certification_id, organization_id, certification_name, issuing_body, status, expires_at, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30456', 'status': 'created', 'certification_id': certification_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/compliance/disclosures/create')
+def workspace_compliance_disclosure_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30456_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    disclosure_name = (payload.get('disclosure_name') or '').strip()
+    if not disclosure_name:
+        raise HTTPException(status_code=400, detail='disclosure_name_required')
+    audience = (payload.get('audience') or 'investors').strip() or 'investors'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    due_at = (payload.get('due_at') or '').strip() or None
+    disclosure_id = f'disclosure_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_compliance_disclosures (id, organization_id, disclosure_name, audience, status, due_at, created_at) VALUES (?,?,?,?,?,?,?)",
+            (disclosure_id, organization_id, disclosure_name, audience, status, due_at, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30456', 'status': 'created', 'disclosure_id': disclosure_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30457_schema():
+    ensure_qnt30456_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_fund_admin_nav_entries (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                as_of_date TEXT NOT NULL,
+                fund_nav REAL DEFAULT 0,
+                nav_per_unit REAL DEFAULT 0,
+                status TEXT DEFAULT 'draft',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_fund_admin_breaks (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                break_name TEXT NOT NULL,
+                break_type TEXT DEFAULT 'nav_break',
+                variance_amount REAL DEFAULT 0,
+                status TEXT DEFAULT 'open',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_fund_admin_flows (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                investor_name TEXT NOT NULL,
+                flow_type TEXT DEFAULT 'subscription',
+                amount REAL DEFAULT 0,
+                status TEXT DEFAULT 'pending',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_fund_admin_closes (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                close_name TEXT NOT NULL,
+                period_label TEXT DEFAULT 'MTD',
+                status TEXT DEFAULT 'draft',
+                completed_steps INTEGER DEFAULT 0,
+                total_steps INTEGER DEFAULT 0,
+                created_at TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30457_package(cur, organization_id):
+    ensure_qnt30457_schema()
+    nav_entries = cur.execute(
+        "SELECT id, as_of_date, fund_nav, nav_per_unit, status, created_at FROM organization_fund_admin_nav_entries WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    reconciliation_breaks = cur.execute(
+        "SELECT id, break_name, break_type, variance_amount, status, created_at FROM organization_fund_admin_breaks WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    subscriptions_redemptions = cur.execute(
+        "SELECT id, investor_name, flow_type, amount, status, created_at FROM organization_fund_admin_flows WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    admin_closes = cur.execute(
+        "SELECT id, close_name, period_label, status, completed_steps, total_steps, created_at FROM organization_fund_admin_closes WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    return build_qnt30457_package(nav_entries, reconciliation_breaks, subscriptions_redemptions, admin_closes)
+
+
+@app.get('/workspace/fund-admin/summary')
+def workspace_fund_admin_summary(session=Depends(require_auth)):
+    ensure_qnt30457_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30457_package(cur, organization_id)
+        package.update({'mission': 'QNT30457', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fund-admin/nav/create')
+def workspace_fund_admin_nav_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30457_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    as_of_date = (payload.get('as_of_date') or '').strip()
+    if not as_of_date:
+        raise HTTPException(status_code=400, detail='as_of_date_required')
+    fund_nav = round(as_float(payload.get('fund_nav')), 2)
+    nav_per_unit = round(as_float(payload.get('nav_per_unit')), 2)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    nav_id = f'fa_nav_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_fund_admin_nav_entries (id, organization_id, as_of_date, fund_nav, nav_per_unit, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (nav_id, organization_id, as_of_date, fund_nav, nav_per_unit, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30457', 'status': 'created', 'nav_id': nav_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fund-admin/breaks/create')
+def workspace_fund_admin_break_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30457_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    break_name = (payload.get('break_name') or '').strip()
+    if not break_name:
+        raise HTTPException(status_code=400, detail='break_name_required')
+    break_type = (payload.get('break_type') or 'nav_break').strip() or 'nav_break'
+    variance_amount = round(as_float(payload.get('variance_amount')), 2)
+    status = (payload.get('status') or 'open').strip() or 'open'
+    break_id = f'fa_break_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_fund_admin_breaks (id, organization_id, break_name, break_type, variance_amount, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (break_id, organization_id, break_name, break_type, variance_amount, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30457', 'status': 'created', 'break_id': break_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fund-admin/flows/create')
+def workspace_fund_admin_flow_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30457_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    investor_name = (payload.get('investor_name') or '').strip()
+    if not investor_name:
+        raise HTTPException(status_code=400, detail='investor_name_required')
+    flow_type = (payload.get('flow_type') or 'subscription').strip() or 'subscription'
+    amount = round(as_float(payload.get('amount')), 2)
+    status = (payload.get('status') or 'pending').strip() or 'pending'
+    flow_id = f'fa_flow_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_fund_admin_flows (id, organization_id, investor_name, flow_type, amount, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (flow_id, organization_id, investor_name, flow_type, amount, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30457', 'status': 'created', 'flow_id': flow_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fund-admin/closes/create')
+def workspace_fund_admin_close_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30457_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    close_name = (payload.get('close_name') or '').strip()
+    if not close_name:
+        raise HTTPException(status_code=400, detail='close_name_required')
+    period_label = (payload.get('period_label') or 'MTD').strip() or 'MTD'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    completed_steps = int(as_float(payload.get('completed_steps')))
+    total_steps = int(as_float(payload.get('total_steps')))
+    close_id = f'fa_close_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_fund_admin_closes (id, organization_id, close_name, period_label, status, completed_steps, total_steps, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (close_id, organization_id, close_name, period_label, status, completed_steps, total_steps, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30457', 'status': 'created', 'close_id': close_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30458_schema():
+    ensure_qnt30457_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_data_room_folders (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                folder_name TEXT NOT NULL,
+                folder_type TEXT DEFAULT 'general',
+                status TEXT DEFAULT 'draft',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_data_room_documents (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                document_name TEXT NOT NULL,
+                folder_name TEXT NOT NULL,
+                document_type TEXT DEFAULT 'pdf',
+                status TEXT DEFAULT 'draft',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_data_room_access (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                allocator_name TEXT NOT NULL,
+                access_scope TEXT DEFAULT 'standard',
+                status TEXT DEFAULT 'pending',
+                expires_at TEXT,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_data_room_sessions (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                allocator_name TEXT NOT NULL,
+                last_document TEXT,
+                status TEXT DEFAULT 'inactive',
+                created_at TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30458_package(cur, organization_id):
+    ensure_qnt30458_schema()
+    folders = cur.execute(
+        "SELECT id, folder_name, folder_type, status, created_at FROM organization_data_room_folders WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    documents = cur.execute(
+        "SELECT id, document_name, folder_name, document_type, status, created_at FROM organization_data_room_documents WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    access_grants = cur.execute(
+        "SELECT id, allocator_name, access_scope, status, expires_at, created_at FROM organization_data_room_access WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    allocator_sessions = cur.execute(
+        "SELECT id, allocator_name, last_document, status, created_at FROM organization_data_room_sessions WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    return build_qnt30458_package(folders, documents, access_grants, allocator_sessions)
+
+
+@app.get('/workspace/data-room/summary')
+def workspace_data_room_summary(session=Depends(require_auth)):
+    ensure_qnt30458_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30458_package(cur, organization_id)
+        package.update({'mission': 'QNT30458', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/data-room/folders/create')
+def workspace_data_room_folder_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30458_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    folder_name = (payload.get('folder_name') or '').strip()
+    if not folder_name:
+        raise HTTPException(status_code=400, detail='folder_name_required')
+    folder_type = (payload.get('folder_type') or 'general').strip() or 'general'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    folder_id = f'room_folder_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_data_room_folders (id, organization_id, folder_name, folder_type, status, created_at) VALUES (?,?,?,?,?,?)",
+            (folder_id, organization_id, folder_name, folder_type, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30458', 'status': 'created', 'folder_id': folder_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/data-room/documents/create')
+def workspace_data_room_document_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30458_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    document_name = (payload.get('document_name') or '').strip()
+    folder_name = (payload.get('folder_name') or '').strip()
+    if not document_name or not folder_name:
+        raise HTTPException(status_code=400, detail='document_name_and_folder_name_required')
+    document_type = (payload.get('document_type') or 'pdf').strip() or 'pdf'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    document_id = f'room_doc_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_data_room_documents (id, organization_id, document_name, folder_name, document_type, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (document_id, organization_id, document_name, folder_name, document_type, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30458', 'status': 'created', 'document_id': document_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/data-room/access/create')
+def workspace_data_room_access_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30458_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    allocator_name = (payload.get('allocator_name') or '').strip()
+    if not allocator_name:
+        raise HTTPException(status_code=400, detail='allocator_name_required')
+    access_scope = (payload.get('access_scope') or 'standard').strip() or 'standard'
+    status = (payload.get('status') or 'pending').strip() or 'pending'
+    expires_at = (payload.get('expires_at') or '').strip() or None
+    access_id = f'room_access_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_data_room_access (id, organization_id, allocator_name, access_scope, status, expires_at, created_at) VALUES (?,?,?,?,?,?,?)",
+            (access_id, organization_id, allocator_name, access_scope, status, expires_at, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30458', 'status': 'created', 'access_id': access_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/data-room/sessions/create')
+def workspace_data_room_session_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30458_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    allocator_name = (payload.get('allocator_name') or '').strip()
+    if not allocator_name:
+        raise HTTPException(status_code=400, detail='allocator_name_required')
+    last_document = (payload.get('last_document') or '').strip() or None
+    status = (payload.get('status') or 'inactive').strip() or 'inactive'
+    session_id = f'room_session_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_data_room_sessions (id, organization_id, allocator_name, last_document, status, created_at) VALUES (?,?,?,?,?,?)",
+            (session_id, organization_id, allocator_name, last_document, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30458', 'status': 'created', 'session_id': session_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30459_schema():
+    ensure_qnt30458_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_sales_enterprise_leads (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                account_name TEXT NOT NULL,
+                segment TEXT DEFAULT 'institutional',
+                status TEXT DEFAULT 'new',
+                owner TEXT,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_sales_opportunities (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                opportunity_name TEXT NOT NULL,
+                account_name TEXT NOT NULL,
+                stage TEXT DEFAULT 'qualified',
+                pipeline_value REAL DEFAULT 0,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_sales_partnerships (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                partner_name TEXT NOT NULL,
+                partnership_type TEXT DEFAULT 'distribution',
+                status TEXT DEFAULT 'draft',
+                estimated_value REAL DEFAULT 0,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_sales_partner_activities (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                partner_name TEXT NOT NULL,
+                activity_name TEXT NOT NULL,
+                status TEXT DEFAULT 'planned',
+                created_at TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30459_package(cur, organization_id):
+    ensure_qnt30459_schema()
+    enterprise_leads = cur.execute(
+        "SELECT id, account_name, segment, status, owner, created_at FROM organization_sales_enterprise_leads WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    opportunities = cur.execute(
+        "SELECT id, opportunity_name, account_name, stage, pipeline_value, created_at FROM organization_sales_opportunities WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    partnerships = cur.execute(
+        "SELECT id, partner_name, partnership_type, status, estimated_value, created_at FROM organization_sales_partnerships WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    partner_activities = cur.execute(
+        "SELECT id, partner_name, activity_name, status, created_at FROM organization_sales_partner_activities WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    return build_qnt30459_package(enterprise_leads, opportunities, partnerships, partner_activities)
+
+
+@app.get('/workspace/sales-partnerships/summary')
+def workspace_sales_partnerships_summary(session=Depends(require_auth)):
+    ensure_qnt30459_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30459_package(cur, organization_id)
+        package.update({'mission': 'QNT30459', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/sales-partnerships/leads/create')
+def workspace_sales_partnerships_lead_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30459_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    account_name = (payload.get('account_name') or '').strip()
+    if not account_name:
+        raise HTTPException(status_code=400, detail='account_name_required')
+    segment = (payload.get('segment') or 'institutional').strip() or 'institutional'
+    status = (payload.get('status') or 'new').strip() or 'new'
+    owner = (payload.get('owner') or session.get('email') or 'operator').strip()
+    lead_id = f'sales_lead_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_sales_enterprise_leads (id, organization_id, account_name, segment, status, owner, created_at) VALUES (?,?,?,?,?,?,?)",
+            (lead_id, organization_id, account_name, segment, status, owner, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30459', 'status': 'created', 'lead_id': lead_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/sales-partnerships/opps/create')
+def workspace_sales_partnerships_opp_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30459_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    opportunity_name = (payload.get('opportunity_name') or '').strip()
+    account_name = (payload.get('account_name') or '').strip()
+    if not opportunity_name or not account_name:
+        raise HTTPException(status_code=400, detail='opportunity_name_and_account_name_required')
+    stage = (payload.get('stage') or 'qualified').strip() or 'qualified'
+    pipeline_value = round(as_float(payload.get('pipeline_value')), 2)
+    opp_id = f'sales_opp_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_sales_opportunities (id, organization_id, opportunity_name, account_name, stage, pipeline_value, created_at) VALUES (?,?,?,?,?,?,?)",
+            (opp_id, organization_id, opportunity_name, account_name, stage, pipeline_value, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30459', 'status': 'created', 'opportunity_id': opp_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/sales-partnerships/partners/create')
+def workspace_sales_partnerships_partner_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30459_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    partner_name = (payload.get('partner_name') or '').strip()
+    if not partner_name:
+        raise HTTPException(status_code=400, detail='partner_name_required')
+    partnership_type = (payload.get('partnership_type') or 'distribution').strip() or 'distribution'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    estimated_value = round(as_float(payload.get('estimated_value')), 2)
+    partner_id = f'partner_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_sales_partnerships (id, organization_id, partner_name, partnership_type, status, estimated_value, created_at) VALUES (?,?,?,?,?,?,?)",
+            (partner_id, organization_id, partner_name, partnership_type, status, estimated_value, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30459', 'status': 'created', 'partnership_id': partner_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/sales-partnerships/activities/create')
+def workspace_sales_partnerships_activity_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30459_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    partner_name = (payload.get('partner_name') or '').strip()
+    activity_name = (payload.get('activity_name') or '').strip()
+    if not partner_name or not activity_name:
+        raise HTTPException(status_code=400, detail='partner_name_and_activity_name_required')
+    status = (payload.get('status') or 'planned').strip() or 'planned'
+    activity_id = f'partner_activity_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_sales_partner_activities (id, organization_id, partner_name, activity_name, status, created_at) VALUES (?,?,?,?,?,?)",
+            (activity_id, organization_id, partner_name, activity_name, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30459', 'status': 'created', 'activity_id': activity_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30460_schema():
+    ensure_qnt30459_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_mission_kpis (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                kpi_name TEXT NOT NULL,
+                category TEXT DEFAULT 'company',
+                current_value REAL DEFAULT 0,
+                target_value REAL DEFAULT 0,
+                status TEXT DEFAULT 'watch',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_mission_scorecards (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                scorecard_name TEXT NOT NULL,
+                owner TEXT,
+                score REAL DEFAULT 0,
+                status TEXT DEFAULT 'draft',
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_mission_alerts (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                alert_name TEXT NOT NULL,
+                severity TEXT DEFAULT 'medium',
+                status TEXT DEFAULT 'open',
+                target_ref TEXT,
+                created_at TEXT
+            )
+            """
+        )
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS organization_mission_initiatives (
+                id TEXT PRIMARY KEY,
+                organization_id TEXT NOT NULL,
+                initiative_name TEXT NOT NULL,
+                owner TEXT,
+                status TEXT DEFAULT 'draft',
+                progress_percent REAL DEFAULT 0,
+                created_at TEXT
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30460_package(cur, organization_id):
+    ensure_qnt30460_schema()
+    kpis = cur.execute(
+        "SELECT id, kpi_name, category, current_value, target_value, status, created_at FROM organization_mission_kpis WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    scorecards = cur.execute(
+        "SELECT id, scorecard_name, owner, score, status, created_at FROM organization_mission_scorecards WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    executive_alerts = cur.execute(
+        "SELECT id, alert_name, severity, status, target_ref, created_at FROM organization_mission_alerts WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    strategic_initiatives = cur.execute(
+        "SELECT id, initiative_name, owner, status, progress_percent, created_at FROM organization_mission_initiatives WHERE organization_id=? ORDER BY created_at DESC",
+        (organization_id,)
+    ).fetchall()
+    return build_qnt30460_package(kpis, scorecards, executive_alerts, strategic_initiatives)
+
+
+@app.get('/workspace/mission-control/summary')
+def workspace_mission_control_summary(session=Depends(require_auth)):
+    ensure_qnt30460_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30460_package(cur, organization_id)
+        package.update({'mission': 'QNT30460', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/mission-control/kpis/create')
+def workspace_mission_control_kpi_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30460_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    kpi_name = (payload.get('kpi_name') or '').strip()
+    if not kpi_name:
+        raise HTTPException(status_code=400, detail='kpi_name_required')
+    category = (payload.get('category') or 'company').strip() or 'company'
+    current_value = round(as_float(payload.get('current_value')), 2)
+    target_value = round(as_float(payload.get('target_value')), 2)
+    status = (payload.get('status') or 'watch').strip() or 'watch'
+    kpi_id = f'kpi_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_mission_kpis (id, organization_id, kpi_name, category, current_value, target_value, status, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (kpi_id, organization_id, kpi_name, category, current_value, target_value, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30460', 'status': 'created', 'kpi_id': kpi_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/mission-control/scorecards/create')
+def workspace_mission_control_scorecard_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30460_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    scorecard_name = (payload.get('scorecard_name') or '').strip()
+    if not scorecard_name:
+        raise HTTPException(status_code=400, detail='scorecard_name_required')
+    owner = (payload.get('owner') or session.get('email') or 'ceo').strip()
+    score = round(as_float(payload.get('score')), 2)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    scorecard_id = f'scorecard_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_mission_scorecards (id, organization_id, scorecard_name, owner, score, status, created_at) VALUES (?,?,?,?,?,?,?)",
+            (scorecard_id, organization_id, scorecard_name, owner, score, status, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30460', 'status': 'created', 'scorecard_id': scorecard_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/mission-control/alerts/create')
+def workspace_mission_control_alert_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30460_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    alert_name = (payload.get('alert_name') or '').strip()
+    if not alert_name:
+        raise HTTPException(status_code=400, detail='alert_name_required')
+    severity = (payload.get('severity') or 'medium').strip() or 'medium'
+    status = (payload.get('status') or 'open').strip() or 'open'
+    target_ref = (payload.get('target_ref') or '').strip()
+    alert_id = f'mission_alert_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_mission_alerts (id, organization_id, alert_name, severity, status, target_ref, created_at) VALUES (?,?,?,?,?,?,?)",
+            (alert_id, organization_id, alert_name, severity, status, target_ref, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30460', 'status': 'created', 'alert_id': alert_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/mission-control/initiatives/create')
+def workspace_mission_control_initiative_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30460_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    initiative_name = (payload.get('initiative_name') or '').strip()
+    if not initiative_name:
+        raise HTTPException(status_code=400, detail='initiative_name_required')
+    owner = (payload.get('owner') or session.get('email') or 'operator').strip()
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    progress_percent = round(as_float(payload.get('progress_percent')), 2)
+    initiative_id = f'initiative_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO organization_mission_initiatives (id, organization_id, initiative_name, owner, status, progress_percent, created_at) VALUES (?,?,?,?,?,?,?)",
+            (initiative_id, organization_id, initiative_name, owner, status, progress_percent, now)
+        )
+        conn.commit()
+        return {'mission': 'QNT30460', 'status': 'created', 'initiative_id': initiative_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30461_schema():
+    ensure_qnt30460_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_research_hypotheses (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, hypothesis_name TEXT NOT NULL, research_domain TEXT DEFAULT 'market_structure', status TEXT DEFAULT 'draft', owner TEXT, created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_research_experiments (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, experiment_name TEXT NOT NULL, dataset_name TEXT DEFAULT 'internal', status TEXT DEFAULT 'draft', sharpe_estimate REAL DEFAULT 0, created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_research_alpha_candidates (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, candidate_name TEXT NOT NULL, signal_family TEXT DEFAULT 'momentum', status TEXT DEFAULT 'draft', score REAL DEFAULT 0, created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_research_validations (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, validation_name TEXT NOT NULL, candidate_name TEXT NOT NULL, status TEXT DEFAULT 'pending', confidence REAL DEFAULT 0, created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30461_package(cur, organization_id):
+    ensure_qnt30461_schema()
+    hypotheses = cur.execute("SELECT id, hypothesis_name, research_domain, status, owner, created_at FROM organization_research_hypotheses WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    experiments = cur.execute("SELECT id, experiment_name, dataset_name, status, sharpe_estimate, created_at FROM organization_research_experiments WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    alpha_candidates = cur.execute("SELECT id, candidate_name, signal_family, status, score, created_at FROM organization_research_alpha_candidates WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    validations = cur.execute("SELECT id, validation_name, candidate_name, status, confidence, created_at FROM organization_research_validations WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30461_package(hypotheses, experiments, alpha_candidates, validations)
+
+
+@app.get('/workspace/research-lab/summary')
+def workspace_research_lab_summary(session=Depends(require_auth)):
+    ensure_qnt30461_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30461_package(cur, organization_id)
+        package.update({'mission': 'QNT30461', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/research-lab/hypotheses/create')
+def workspace_research_lab_hypothesis_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30461_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    hypothesis_name = (payload.get('hypothesis_name') or '').strip()
+    if not hypothesis_name:
+        raise HTTPException(status_code=400, detail='hypothesis_name_required')
+    research_domain = (payload.get('research_domain') or 'market_structure').strip() or 'market_structure'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    owner = (payload.get('owner') or session.get('email') or 'research').strip()
+    hypothesis_id = f'hyp_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_research_hypotheses (id, organization_id, hypothesis_name, research_domain, status, owner, created_at) VALUES (?,?,?,?,?,?,?)", (hypothesis_id, organization_id, hypothesis_name, research_domain, status, owner, now))
+        conn.commit()
+        return {'mission': 'QNT30461', 'status': 'created', 'hypothesis_id': hypothesis_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/research-lab/experiments/create')
+def workspace_research_lab_experiment_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30461_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    experiment_name = (payload.get('experiment_name') or '').strip()
+    if not experiment_name:
+        raise HTTPException(status_code=400, detail='experiment_name_required')
+    dataset_name = (payload.get('dataset_name') or 'internal').strip() or 'internal'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    sharpe_estimate = round(as_float(payload.get('sharpe_estimate')), 2)
+    experiment_id = f'exp_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_research_experiments (id, organization_id, experiment_name, dataset_name, status, sharpe_estimate, created_at) VALUES (?,?,?,?,?,?,?)", (experiment_id, organization_id, experiment_name, dataset_name, status, sharpe_estimate, now))
+        conn.commit()
+        return {'mission': 'QNT30461', 'status': 'created', 'experiment_id': experiment_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/research-lab/candidates/create')
+def workspace_research_lab_candidate_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30461_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    candidate_name = (payload.get('candidate_name') or '').strip()
+    if not candidate_name:
+        raise HTTPException(status_code=400, detail='candidate_name_required')
+    signal_family = (payload.get('signal_family') or 'momentum').strip() or 'momentum'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    score = round(as_float(payload.get('score')), 2)
+    candidate_id = f'alpha_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_research_alpha_candidates (id, organization_id, candidate_name, signal_family, status, score, created_at) VALUES (?,?,?,?,?,?,?)", (candidate_id, organization_id, candidate_name, signal_family, status, score, now))
+        conn.commit()
+        return {'mission': 'QNT30461', 'status': 'created', 'candidate_id': candidate_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/research-lab/validations/create')
+def workspace_research_lab_validation_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30461_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    validation_name = (payload.get('validation_name') or '').strip()
+    candidate_name = (payload.get('candidate_name') or '').strip()
+    if not validation_name or not candidate_name:
+        raise HTTPException(status_code=400, detail='validation_name_and_candidate_name_required')
+    status = (payload.get('status') or 'pending').strip() or 'pending'
+    confidence = round(as_float(payload.get('confidence')), 2)
+    validation_id = f'validation_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_research_validations (id, organization_id, validation_name, candidate_name, status, confidence, created_at) VALUES (?,?,?,?,?,?,?)", (validation_id, organization_id, validation_name, candidate_name, status, confidence, now))
+        conn.commit()
+        return {'mission': 'QNT30461', 'status': 'created', 'validation_id': validation_id}
+    finally:
+        conn.close()
+
+
+def ensure_qnt30462_schema():
+    ensure_qnt30461_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_autonomy_v2_models (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, model_name TEXT NOT NULL, status TEXT DEFAULT 'draft', expected_turnover REAL DEFAULT 0, risk_budget REAL DEFAULT 0, created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_autonomy_v2_plans (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, plan_name TEXT NOT NULL, strategy_name TEXT NOT NULL, status TEXT DEFAULT 'draft', allocation_weight REAL DEFAULT 0, created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_autonomy_v2_signals (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, signal_name TEXT NOT NULL, signal_strength REAL DEFAULT 0, status TEXT DEFAULT 'live', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_autonomy_v2_cycles (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, cycle_name TEXT NOT NULL, status TEXT DEFAULT 'draft', actions_executed INTEGER DEFAULT 0, created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30462_package(cur, organization_id):
+    ensure_qnt30462_schema()
+    allocation_models = cur.execute("SELECT id, model_name, status, expected_turnover, risk_budget, created_at FROM organization_autonomy_v2_models WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    execution_plans = cur.execute("SELECT id, plan_name, strategy_name, status, allocation_weight, created_at FROM organization_autonomy_v2_plans WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    signals = cur.execute("SELECT id, signal_name, signal_strength, status, created_at FROM organization_autonomy_v2_signals WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    autonomy_cycles = cur.execute("SELECT id, cycle_name, status, actions_executed, created_at FROM organization_autonomy_v2_cycles WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30462_package(allocation_models, execution_plans, signals, autonomy_cycles)
+
+
+@app.get('/workspace/autonomy-v2/summary')
+def workspace_autonomy_v2_summary(session=Depends(require_auth)):
+    ensure_qnt30462_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30462_package(cur, organization_id)
+        package.update({'mission': 'QNT30462', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/autonomy-v2/models/create')
+def workspace_autonomy_v2_model_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30462_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    model_name = (payload.get('model_name') or '').strip()
+    if not model_name:
+        raise HTTPException(status_code=400, detail='model_name_required')
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    expected_turnover = round(as_float(payload.get('expected_turnover')), 4)
+    risk_budget = round(as_float(payload.get('risk_budget')), 4)
+    model_id = f'model_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_autonomy_v2_models (id, organization_id, model_name, status, expected_turnover, risk_budget, created_at) VALUES (?,?,?,?,?,?,?)", (model_id, organization_id, model_name, status, expected_turnover, risk_budget, now))
+        conn.commit()
+        return {'mission': 'QNT30462', 'status': 'created', 'model_id': model_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/autonomy-v2/plans/create')
+def workspace_autonomy_v2_plan_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30462_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    plan_name = (payload.get('plan_name') or '').strip()
+    strategy_name = (payload.get('strategy_name') or '').strip()
+    if not plan_name or not strategy_name:
+        raise HTTPException(status_code=400, detail='plan_name_and_strategy_name_required')
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    allocation_weight = round(as_float(payload.get('allocation_weight')), 4)
+    plan_id = f'v2plan_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_autonomy_v2_plans (id, organization_id, plan_name, strategy_name, status, allocation_weight, created_at) VALUES (?,?,?,?,?,?,?)", (plan_id, organization_id, plan_name, strategy_name, status, allocation_weight, now))
+        conn.commit()
+        return {'mission': 'QNT30462', 'status': 'created', 'plan_id': plan_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/autonomy-v2/signals/create')
+def workspace_autonomy_v2_signal_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30462_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    signal_name = (payload.get('signal_name') or '').strip()
+    if not signal_name:
+        raise HTTPException(status_code=400, detail='signal_name_required')
+    signal_strength = round(as_float(payload.get('signal_strength')), 4)
+    status = (payload.get('status') or 'live').strip() or 'live'
+    signal_id = f'signal_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_autonomy_v2_signals (id, organization_id, signal_name, signal_strength, status, created_at) VALUES (?,?,?,?,?,?)", (signal_id, organization_id, signal_name, signal_strength, status, now))
+        conn.commit()
+        return {'mission': 'QNT30462', 'status': 'created', 'signal_id': signal_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/autonomy-v2/cycles/create')
+def workspace_autonomy_v2_cycle_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30462_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    cycle_name = (payload.get('cycle_name') or '').strip()
+    if not cycle_name:
+        raise HTTPException(status_code=400, detail='cycle_name_required')
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    actions_executed = int(as_float(payload.get('actions_executed')))
+    cycle_id = f'cycle_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_autonomy_v2_cycles (id, organization_id, cycle_name, status, actions_executed, created_at) VALUES (?,?,?,?,?,?)", (cycle_id, organization_id, cycle_name, status, actions_executed, now))
+        conn.commit()
+        return {'mission': 'QNT30462', 'status': 'created', 'cycle_id': cycle_id}
+    finally:
+        conn.close()
+
+
+def ensure_qnt30463_schema():
+    ensure_qnt30462_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_full_autonomy_pools (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, pool_name TEXT NOT NULL, capital_amount REAL DEFAULT 0, status TEXT DEFAULT 'active', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_full_autonomy_allocations (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, strategy_name TEXT NOT NULL, score REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_full_autonomy_decisions (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, strategy_name TEXT NOT NULL, signal REAL DEFAULT 0, status TEXT DEFAULT 'queued', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_full_autonomy_runs (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, run_name TEXT NOT NULL, status TEXT DEFAULT 'draft', decisions_count INTEGER DEFAULT 0, created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30463_package(cur, organization_id):
+    ensure_qnt30463_schema()
+    capital_pools = cur.execute("SELECT id, pool_name, capital_amount, status, created_at FROM organization_full_autonomy_pools WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    strategy_allocations = cur.execute("SELECT id, strategy_name, score, status, created_at FROM organization_full_autonomy_allocations WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    execution_decisions = cur.execute("SELECT id, strategy_name, signal, status, created_at FROM organization_full_autonomy_decisions WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    autonomous_runs = cur.execute("SELECT id, run_name, status, decisions_count, created_at FROM organization_full_autonomy_runs WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30463_package(capital_pools, strategy_allocations, execution_decisions, autonomous_runs)
+
+
+@app.get('/workspace/full-autonomy/summary')
+def workspace_full_autonomy_summary(session=Depends(require_auth)):
+    ensure_qnt30463_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30463_package(cur, organization_id)
+        package.update({'mission': 'QNT30463', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/full-autonomy/pools/create')
+def workspace_full_autonomy_pool_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30463_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    pool_name = (payload.get('pool_name') or '').strip()
+    if not pool_name:
+        raise HTTPException(status_code=400, detail='pool_name_required')
+    capital_amount = round(as_float(payload.get('capital_amount')), 2)
+    status = (payload.get('status') or 'active').strip() or 'active'
+    pool_id = f'pool_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_full_autonomy_pools (id, organization_id, pool_name, capital_amount, status, created_at) VALUES (?,?,?,?,?,?)", (pool_id, organization_id, pool_name, capital_amount, status, now))
+        conn.commit()
+        return {'mission': 'QNT30463', 'status': 'created', 'pool_id': pool_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/full-autonomy/allocations/create')
+def workspace_full_autonomy_allocation_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30463_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    strategy_name = (payload.get('strategy_name') or '').strip()
+    if not strategy_name:
+        raise HTTPException(status_code=400, detail='strategy_name_required')
+    score = round(as_float(payload.get('score')), 4)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    allocation_id = f'alloc_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_full_autonomy_allocations (id, organization_id, strategy_name, score, status, created_at) VALUES (?,?,?,?,?,?)", (allocation_id, organization_id, strategy_name, score, status, now))
+        conn.commit()
+        return {'mission': 'QNT30463', 'status': 'created', 'allocation_id': allocation_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/full-autonomy/decisions/create')
+def workspace_full_autonomy_decision_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30463_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    strategy_name = (payload.get('strategy_name') or '').strip()
+    if not strategy_name:
+        raise HTTPException(status_code=400, detail='strategy_name_required')
+    signal = round(as_float(payload.get('signal')), 4)
+    status = (payload.get('status') or 'queued').strip() or 'queued'
+    decision_id = f'full_decision_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_full_autonomy_decisions (id, organization_id, strategy_name, signal, status, created_at) VALUES (?,?,?,?,?,?)", (decision_id, organization_id, strategy_name, signal, status, now))
+        conn.commit()
+        return {'mission': 'QNT30463', 'status': 'created', 'decision_id': decision_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/full-autonomy/runs/create')
+def workspace_full_autonomy_run_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30463_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    run_name = (payload.get('run_name') or '').strip()
+    if not run_name:
+        raise HTTPException(status_code=400, detail='run_name_required')
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    decisions_count = int(as_float(payload.get('decisions_count')))
+    run_id = f'run_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_full_autonomy_runs (id, organization_id, run_name, status, decisions_count, created_at) VALUES (?,?,?,?,?,?)", (run_id, organization_id, run_name, status, decisions_count, now))
+        conn.commit()
+        return {'mission': 'QNT30463', 'status': 'created', 'run_id': run_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30464_schema():
+    ensure_qnt30463_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_global_network_funds (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, fund_name TEXT NOT NULL, jurisdiction TEXT DEFAULT 'US', capital_base REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_global_network_transfers (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, from_fund TEXT NOT NULL, to_fund TEXT NOT NULL, amount REAL DEFAULT 0, status TEXT DEFAULT 'pending', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_global_network_links (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, source_fund TEXT NOT NULL, target_strategy TEXT NOT NULL, allocation_weight REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_global_network_cycles (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, cycle_name TEXT NOT NULL, status TEXT DEFAULT 'draft', actions_count INTEGER DEFAULT 0, created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30464_package(cur, organization_id):
+    ensure_qnt30464_schema()
+    funds = cur.execute("SELECT id, fund_name, jurisdiction, capital_base, status, created_at FROM organization_global_network_funds WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    capital_transfers = cur.execute("SELECT id, from_fund, to_fund, amount, status, created_at FROM organization_global_network_transfers WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    allocation_links = cur.execute("SELECT id, source_fund, target_strategy, allocation_weight, status, created_at FROM organization_global_network_links WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    orchestration_cycles = cur.execute("SELECT id, cycle_name, status, actions_count, created_at FROM organization_global_network_cycles WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30464_package(funds, capital_transfers, allocation_links, orchestration_cycles)
+
+
+@app.get('/workspace/global-network/summary')
+def workspace_global_network_summary(session=Depends(require_auth)):
+    ensure_qnt30464_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30464_package(cur, organization_id)
+        package.update({'mission': 'QNT30464', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/global-network/funds/create')
+def workspace_global_network_fund_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30464_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    fund_name = (payload.get('fund_name') or '').strip()
+    if not fund_name:
+        raise HTTPException(status_code=400, detail='fund_name_required')
+    jurisdiction = (payload.get('jurisdiction') or 'US').strip() or 'US'
+    capital_base = round(as_float(payload.get('capital_base')), 2)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    fund_id = f'network_fund_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_global_network_funds (id, organization_id, fund_name, jurisdiction, capital_base, status, created_at) VALUES (?,?,?,?,?,?,?)", (fund_id, organization_id, fund_name, jurisdiction, capital_base, status, now))
+        conn.commit()
+        return {'mission': 'QNT30464', 'status': 'created', 'fund_id': fund_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/global-network/transfers/create')
+def workspace_global_network_transfer_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30464_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    from_fund = (payload.get('from_fund') or '').strip()
+    to_fund = (payload.get('to_fund') or '').strip()
+    if not from_fund or not to_fund:
+        raise HTTPException(status_code=400, detail='from_fund_and_to_fund_required')
+    amount = round(as_float(payload.get('amount')), 2)
+    status = (payload.get('status') or 'pending').strip() or 'pending'
+    transfer_id = f'transfer_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_global_network_transfers (id, organization_id, from_fund, to_fund, amount, status, created_at) VALUES (?,?,?,?,?,?,?)", (transfer_id, organization_id, from_fund, to_fund, amount, status, now))
+        conn.commit()
+        return {'mission': 'QNT30464', 'status': 'created', 'transfer_id': transfer_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/global-network/links/create')
+def workspace_global_network_link_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30464_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    source_fund = (payload.get('source_fund') or '').strip()
+    target_strategy = (payload.get('target_strategy') or '').strip()
+    if not source_fund or not target_strategy:
+        raise HTTPException(status_code=400, detail='source_fund_and_target_strategy_required')
+    allocation_weight = round(as_float(payload.get('allocation_weight')), 4)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    link_id = f'link_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_global_network_links (id, organization_id, source_fund, target_strategy, allocation_weight, status, created_at) VALUES (?,?,?,?,?,?,?)", (link_id, organization_id, source_fund, target_strategy, allocation_weight, status, now))
+        conn.commit()
+        return {'mission': 'QNT30464', 'status': 'created', 'link_id': link_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/global-network/cycles/create')
+def workspace_global_network_cycle_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30464_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    cycle_name = (payload.get('cycle_name') or '').strip()
+    if not cycle_name:
+        raise HTTPException(status_code=400, detail='cycle_name_required')
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    actions_count = int(as_float(payload.get('actions_count')))
+    cycle_id = f'network_cycle_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_global_network_cycles (id, organization_id, cycle_name, status, actions_count, created_at) VALUES (?,?,?,?,?,?)", (cycle_id, organization_id, cycle_name, status, actions_count, now))
+        conn.commit()
+        return {'mission': 'QNT30464', 'status': 'created', 'cycle_id': cycle_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30465_schema():
+    ensure_qnt30464_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_fund_structure_entities (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, entity_name TEXT NOT NULL, entity_type TEXT DEFAULT 'management_company', jurisdiction TEXT DEFAULT 'US', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_fund_structure_jurisdictions (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, jurisdiction_name TEXT NOT NULL, regulatory_profile TEXT DEFAULT 'standard', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_fund_structure_structures (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, structure_name TEXT NOT NULL, master_entity TEXT NOT NULL, feeder_entity TEXT NOT NULL, status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_fund_structure_controls (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, entity_name TEXT NOT NULL, control_name TEXT NOT NULL, status TEXT DEFAULT 'draft', created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30465_package(cur, organization_id):
+    ensure_qnt30465_schema()
+    entities = cur.execute("SELECT id, entity_name, entity_type, jurisdiction, status, created_at FROM organization_fund_structure_entities WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    jurisdictions = cur.execute("SELECT id, jurisdiction_name, regulatory_profile, status, created_at FROM organization_fund_structure_jurisdictions WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    fund_structures = cur.execute("SELECT id, structure_name, master_entity, feeder_entity, status, created_at FROM organization_fund_structure_structures WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    compliance_links = cur.execute("SELECT id, entity_name, control_name, status, created_at FROM organization_fund_structure_controls WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30465_package(entities, jurisdictions, fund_structures, compliance_links)
+
+
+@app.get('/workspace/fund-structure/summary')
+def workspace_fund_structure_summary(session=Depends(require_auth)):
+    ensure_qnt30465_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30465_package(cur, organization_id)
+        package.update({'mission': 'QNT30465', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fund-structure/entities/create')
+def workspace_fund_structure_entity_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30465_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    entity_name = (payload.get('entity_name') or '').strip()
+    if not entity_name:
+        raise HTTPException(status_code=400, detail='entity_name_required')
+    entity_type = (payload.get('entity_type') or 'management_company').strip() or 'management_company'
+    jurisdiction = (payload.get('jurisdiction') or 'US').strip() or 'US'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    entity_id = f'entity_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_fund_structure_entities (id, organization_id, entity_name, entity_type, jurisdiction, status, created_at) VALUES (?,?,?,?,?,?,?)", (entity_id, organization_id, entity_name, entity_type, jurisdiction, status, now))
+        conn.commit()
+        return {'mission': 'QNT30465', 'status': 'created', 'entity_id': entity_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fund-structure/jurisdictions/create')
+def workspace_fund_structure_jurisdiction_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30465_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    jurisdiction_name = (payload.get('jurisdiction_name') or '').strip()
+    if not jurisdiction_name:
+        raise HTTPException(status_code=400, detail='jurisdiction_name_required')
+    regulatory_profile = (payload.get('regulatory_profile') or 'standard').strip() or 'standard'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    jurisdiction_id = f'jurisdiction_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_fund_structure_jurisdictions (id, organization_id, jurisdiction_name, regulatory_profile, status, created_at) VALUES (?,?,?,?,?,?)", (jurisdiction_id, organization_id, jurisdiction_name, regulatory_profile, status, now))
+        conn.commit()
+        return {'mission': 'QNT30465', 'status': 'created', 'jurisdiction_id': jurisdiction_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fund-structure/structures/create')
+def workspace_fund_structure_structure_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30465_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    structure_name = (payload.get('structure_name') or '').strip()
+    master_entity = (payload.get('master_entity') or '').strip()
+    feeder_entity = (payload.get('feeder_entity') or '').strip()
+    if not structure_name or not master_entity or not feeder_entity:
+        raise HTTPException(status_code=400, detail='structure_name_master_entity_feeder_entity_required')
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    structure_id = f'structure_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_fund_structure_structures (id, organization_id, structure_name, master_entity, feeder_entity, status, created_at) VALUES (?,?,?,?,?,?,?)", (structure_id, organization_id, structure_name, master_entity, feeder_entity, status, now))
+        conn.commit()
+        return {'mission': 'QNT30465', 'status': 'created', 'structure_id': structure_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fund-structure/controls/create')
+def workspace_fund_structure_control_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30465_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    entity_name = (payload.get('entity_name') or '').strip()
+    control_name = (payload.get('control_name') or '').strip()
+    if not entity_name or not control_name:
+        raise HTTPException(status_code=400, detail='entity_name_and_control_name_required')
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    control_id = f'control_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_fund_structure_controls (id, organization_id, entity_name, control_name, status, created_at) VALUES (?,?,?,?,?,?)", (control_id, organization_id, entity_name, control_name, status, now))
+        conn.commit()
+        return {'mission': 'QNT30465', 'status': 'created', 'control_id': control_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30466_schema():
+    ensure_qnt30465_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_investor_portal_users (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, investor_name TEXT NOT NULL, access_tier TEXT DEFAULT 'standard', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_investor_portal_access (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, investor_name TEXT NOT NULL, report_name TEXT NOT NULL, status TEXT DEFAULT 'draft', expires_at TEXT, created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_investor_portal_sessions (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, investor_name TEXT NOT NULL, last_page TEXT DEFAULT 'dashboard', status TEXT DEFAULT 'inactive', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_investor_portal_deliveries (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, investor_name TEXT NOT NULL, report_name TEXT NOT NULL, channel TEXT DEFAULT 'portal', status TEXT DEFAULT 'queued', created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30466_package(cur, organization_id):
+    ensure_qnt30466_schema()
+    portal_users = cur.execute("SELECT id, investor_name, access_tier, status, created_at FROM organization_investor_portal_users WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    report_access = cur.execute("SELECT id, investor_name, report_name, status, expires_at, created_at FROM organization_investor_portal_access WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    portal_sessions = cur.execute("SELECT id, investor_name, last_page, status, created_at FROM organization_investor_portal_sessions WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    delivery_logs = cur.execute("SELECT id, investor_name, report_name, channel, status, created_at FROM organization_investor_portal_deliveries WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30466_package(portal_users, report_access, portal_sessions, delivery_logs)
+
+
+@app.get('/workspace/investor-portal/summary')
+def workspace_investor_portal_summary(session=Depends(require_auth)):
+    ensure_qnt30466_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30466_package(cur, organization_id)
+        package.update({'mission': 'QNT30466', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/investor-portal/users/create')
+def workspace_investor_portal_user_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30466_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    investor_name = (payload.get('investor_name') or '').strip()
+    if not investor_name:
+        raise HTTPException(status_code=400, detail='investor_name_required')
+    access_tier = (payload.get('access_tier') or 'standard').strip() or 'standard'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    user_id = f'portal_user_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_investor_portal_users (id, organization_id, investor_name, access_tier, status, created_at) VALUES (?,?,?,?,?,?)", (user_id, organization_id, investor_name, access_tier, status, now))
+        conn.commit()
+        return {'mission': 'QNT30466', 'status': 'created', 'user_id': user_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/investor-portal/access/create')
+def workspace_investor_portal_access_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30466_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    investor_name = (payload.get('investor_name') or '').strip()
+    report_name = (payload.get('report_name') or '').strip()
+    if not investor_name or not report_name:
+        raise HTTPException(status_code=400, detail='investor_name_and_report_name_required')
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    expires_at = (payload.get('expires_at') or '').strip() or None
+    access_id = f'portal_access_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_investor_portal_access (id, organization_id, investor_name, report_name, status, expires_at, created_at) VALUES (?,?,?,?,?,?,?)", (access_id, organization_id, investor_name, report_name, status, expires_at, now))
+        conn.commit()
+        return {'mission': 'QNT30466', 'status': 'created', 'access_id': access_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/investor-portal/sessions/create')
+def workspace_investor_portal_session_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30466_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    investor_name = (payload.get('investor_name') or '').strip()
+    if not investor_name:
+        raise HTTPException(status_code=400, detail='investor_name_required')
+    last_page = (payload.get('last_page') or 'dashboard').strip() or 'dashboard'
+    status = (payload.get('status') or 'inactive').strip() or 'inactive'
+    session_id = f'portal_session_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_investor_portal_sessions (id, organization_id, investor_name, last_page, status, created_at) VALUES (?,?,?,?,?,?)", (session_id, organization_id, investor_name, last_page, status, now))
+        conn.commit()
+        return {'mission': 'QNT30466', 'status': 'created', 'session_id': session_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/investor-portal/deliveries/create')
+def workspace_investor_portal_delivery_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30466_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    investor_name = (payload.get('investor_name') or '').strip()
+    report_name = (payload.get('report_name') or '').strip()
+    if not investor_name or not report_name:
+        raise HTTPException(status_code=400, detail='investor_name_and_report_name_required')
+    channel = (payload.get('channel') or 'portal').strip() or 'portal'
+    status = (payload.get('status') or 'queued').strip() or 'queued'
+    delivery_id = f'portal_delivery_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_investor_portal_deliveries (id, organization_id, investor_name, report_name, channel, status, created_at) VALUES (?,?,?,?,?,?,?)", (delivery_id, organization_id, investor_name, report_name, channel, status, now))
+        conn.commit()
+        return {'mission': 'QNT30466', 'status': 'created', 'delivery_id': delivery_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30467_schema():
+    ensure_qnt30466_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_distribution_programs (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, program_name TEXT NOT NULL, reward_type TEXT DEFAULT 'cash', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_distribution_leads (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, referrer_name TEXT NOT NULL, lead_name TEXT NOT NULL, estimated_value REAL DEFAULT 0, status TEXT DEFAULT 'new', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_distribution_loops (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, loop_name TEXT NOT NULL, channel TEXT DEFAULT 'referral', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_distribution_campaigns (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, campaign_name TEXT NOT NULL, channel TEXT DEFAULT 'social', spend REAL DEFAULT 0, roi REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30467_package(cur, organization_id):
+    ensure_qnt30467_schema()
+    referral_programs = cur.execute("SELECT id, program_name, reward_type, status, created_at FROM organization_distribution_programs WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    referral_leads = cur.execute("SELECT id, referrer_name, lead_name, estimated_value, status, created_at FROM organization_distribution_leads WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    growth_loops = cur.execute("SELECT id, loop_name, channel, status, created_at FROM organization_distribution_loops WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    acquisition_campaigns = cur.execute("SELECT id, campaign_name, channel, spend, roi, status, created_at FROM organization_distribution_campaigns WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30467_package(referral_programs, referral_leads, growth_loops, acquisition_campaigns)
+
+
+@app.get('/workspace/distribution-growth/summary')
+def workspace_distribution_growth_summary(session=Depends(require_auth)):
+    ensure_qnt30467_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30467_package(cur, organization_id)
+        package.update({'mission': 'QNT30467', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/distribution-growth/programs/create')
+def workspace_distribution_growth_program_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30467_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    program_name = (payload.get('program_name') or '').strip()
+    if not program_name:
+        raise HTTPException(status_code=400, detail='program_name_required')
+    reward_type = (payload.get('reward_type') or 'cash').strip() or 'cash'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    program_id = f'growth_program_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_distribution_programs (id, organization_id, program_name, reward_type, status, created_at) VALUES (?,?,?,?,?,?)", (program_id, organization_id, program_name, reward_type, status, now))
+        conn.commit()
+        return {'mission': 'QNT30467', 'status': 'created', 'program_id': program_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/distribution-growth/leads/create')
+def workspace_distribution_growth_lead_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30467_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    referrer_name = (payload.get('referrer_name') or '').strip()
+    lead_name = (payload.get('lead_name') or '').strip()
+    if not referrer_name or not lead_name:
+        raise HTTPException(status_code=400, detail='referrer_name_and_lead_name_required')
+    estimated_value = round(as_float(payload.get('estimated_value')), 2)
+    status = (payload.get('status') or 'new').strip() or 'new'
+    lead_id = f'referral_lead_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_distribution_leads (id, organization_id, referrer_name, lead_name, estimated_value, status, created_at) VALUES (?,?,?,?,?,?,?)", (lead_id, organization_id, referrer_name, lead_name, estimated_value, status, now))
+        conn.commit()
+        return {'mission': 'QNT30467', 'status': 'created', 'lead_id': lead_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/distribution-growth/loops/create')
+def workspace_distribution_growth_loop_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30467_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    loop_name = (payload.get('loop_name') or '').strip()
+    if not loop_name:
+        raise HTTPException(status_code=400, detail='loop_name_required')
+    channel = (payload.get('channel') or 'referral').strip() or 'referral'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    loop_id = f'growth_loop_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_distribution_loops (id, organization_id, loop_name, channel, status, created_at) VALUES (?,?,?,?,?,?)", (loop_id, organization_id, loop_name, channel, status, now))
+        conn.commit()
+        return {'mission': 'QNT30467', 'status': 'created', 'loop_id': loop_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/distribution-growth/campaigns/create')
+def workspace_distribution_growth_campaign_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30467_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    campaign_name = (payload.get('campaign_name') or '').strip()
+    if not campaign_name:
+        raise HTTPException(status_code=400, detail='campaign_name_required')
+    channel = (payload.get('channel') or 'social').strip() or 'social'
+    spend = round(as_float(payload.get('spend')), 2)
+    roi = round(as_float(payload.get('roi')), 2)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    campaign_id = f'growth_campaign_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_distribution_campaigns (id, organization_id, campaign_name, channel, spend, roi, status, created_at) VALUES (?,?,?,?,?,?,?,?)", (campaign_id, organization_id, campaign_name, channel, spend, roi, status, now))
+        conn.commit()
+        return {'mission': 'QNT30467', 'status': 'created', 'campaign_id': campaign_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30468_schema():
+    ensure_qnt30467_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_brand_media_assets (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, asset_name TEXT NOT NULL, asset_type TEXT DEFAULT 'article', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_brand_media_channels (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, channel_name TEXT NOT NULL, channel_type TEXT DEFAULT 'social', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_brand_media_campaigns (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, campaign_name TEXT NOT NULL, objective TEXT DEFAULT 'authority', estimated_reach REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_brand_media_press_hits (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, publication_name TEXT NOT NULL, headline TEXT NOT NULL, estimated_value REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30468_package(cur, organization_id):
+    ensure_qnt30468_schema()
+    media_assets = cur.execute("SELECT id, asset_name, asset_type, status, created_at FROM organization_brand_media_assets WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    distribution_channels = cur.execute("SELECT id, channel_name, channel_type, status, created_at FROM organization_brand_media_channels WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    campaigns = cur.execute("SELECT id, campaign_name, objective, estimated_reach, status, created_at FROM organization_brand_media_campaigns WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    press_hits = cur.execute("SELECT id, publication_name, headline, estimated_value, status, created_at FROM organization_brand_media_press_hits WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30468_package(media_assets, distribution_channels, campaigns, press_hits)
+
+
+@app.get('/workspace/brand-media/summary')
+def workspace_brand_media_summary(session=Depends(require_auth)):
+    ensure_qnt30468_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30468_package(cur, organization_id)
+        package.update({'mission': 'QNT30468', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/brand-media/assets/create')
+def workspace_brand_media_asset_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30468_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    asset_name = (payload.get('asset_name') or '').strip()
+    if not asset_name:
+        raise HTTPException(status_code=400, detail='asset_name_required')
+    asset_type = (payload.get('asset_type') or 'article').strip() or 'article'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    asset_id = f'brand_asset_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_brand_media_assets (id, organization_id, asset_name, asset_type, status, created_at) VALUES (?,?,?,?,?,?)", (asset_id, organization_id, asset_name, asset_type, status, now))
+        conn.commit()
+        return {'mission': 'QNT30468', 'status': 'created', 'asset_id': asset_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/brand-media/channels/create')
+def workspace_brand_media_channel_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30468_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    channel_name = (payload.get('channel_name') or '').strip()
+    if not channel_name:
+        raise HTTPException(status_code=400, detail='channel_name_required')
+    channel_type = (payload.get('channel_type') or 'social').strip() or 'social'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    channel_id = f'brand_channel_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_brand_media_channels (id, organization_id, channel_name, channel_type, status, created_at) VALUES (?,?,?,?,?,?)", (channel_id, organization_id, channel_name, channel_type, status, now))
+        conn.commit()
+        return {'mission': 'QNT30468', 'status': 'created', 'channel_id': channel_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/brand-media/campaigns/create')
+def workspace_brand_media_campaign_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30468_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    campaign_name = (payload.get('campaign_name') or '').strip()
+    if not campaign_name:
+        raise HTTPException(status_code=400, detail='campaign_name_required')
+    objective = (payload.get('objective') or 'authority').strip() or 'authority'
+    estimated_reach = round(as_float(payload.get('estimated_reach')), 2)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    campaign_id = f'brand_campaign_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_brand_media_campaigns (id, organization_id, campaign_name, objective, estimated_reach, status, created_at) VALUES (?,?,?,?,?,?,?)", (campaign_id, organization_id, campaign_name, objective, estimated_reach, status, now))
+        conn.commit()
+        return {'mission': 'QNT30468', 'status': 'created', 'campaign_id': campaign_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/brand-media/press/create')
+def workspace_brand_media_press_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30468_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    publication_name = (payload.get('publication_name') or '').strip()
+    headline = (payload.get('headline') or '').strip()
+    if not publication_name or not headline:
+        raise HTTPException(status_code=400, detail='publication_name_and_headline_required')
+    estimated_value = round(as_float(payload.get('estimated_value')), 2)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    press_id = f'press_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_brand_media_press_hits (id, organization_id, publication_name, headline, estimated_value, status, created_at) VALUES (?,?,?,?,?,?,?)", (press_id, organization_id, publication_name, headline, estimated_value, status, now))
+        conn.commit()
+        return {'mission': 'QNT30468', 'status': 'created', 'press_id': press_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30469_schema():
+    ensure_qnt30468_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_platform_api_clients (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, client_name TEXT NOT NULL, scope TEXT DEFAULT 'read_only', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_platform_integration_endpoints (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, endpoint_name TEXT NOT NULL, provider_name TEXT NOT NULL, status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_platform_webhooks (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, event_name TEXT NOT NULL, target_url TEXT NOT NULL, status TEXT DEFAULT 'queued', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_platform_usage_logs (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, client_name TEXT NOT NULL, route_name TEXT NOT NULL, status TEXT DEFAULT 'success', latency_ms REAL DEFAULT 0, created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30469_package(cur, organization_id):
+    ensure_qnt30469_schema()
+    api_clients = cur.execute("SELECT id, client_name, scope, status, created_at FROM organization_platform_api_clients WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    integration_endpoints = cur.execute("SELECT id, endpoint_name, provider_name, status, created_at FROM organization_platform_integration_endpoints WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    webhook_events = cur.execute("SELECT id, event_name, target_url, status, created_at FROM organization_platform_webhooks WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    api_usage_logs = cur.execute("SELECT id, client_name, route_name, status, latency_ms, created_at FROM organization_platform_usage_logs WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30469_package(api_clients, integration_endpoints, webhook_events, api_usage_logs)
+
+
+@app.get('/workspace/platform-gateway/summary')
+def workspace_platform_gateway_summary(session=Depends(require_auth)):
+    ensure_qnt30469_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30469_package(cur, organization_id)
+        package.update({'mission': 'QNT30469', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/platform-gateway/clients/create')
+def workspace_platform_gateway_client_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30469_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    client_name = (payload.get('client_name') or '').strip()
+    if not client_name:
+        raise HTTPException(status_code=400, detail='client_name_required')
+    scope = (payload.get('scope') or 'read_only').strip() or 'read_only'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    client_id = f'api_client_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_platform_api_clients (id, organization_id, client_name, scope, status, created_at) VALUES (?,?,?,?,?,?)", (client_id, organization_id, client_name, scope, status, now))
+        conn.commit()
+        return {'mission': 'QNT30469', 'status': 'created', 'client_id': client_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/platform-gateway/endpoints/create')
+def workspace_platform_gateway_endpoint_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30469_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    endpoint_name = (payload.get('endpoint_name') or '').strip()
+    provider_name = (payload.get('provider_name') or '').strip()
+    if not endpoint_name or not provider_name:
+        raise HTTPException(status_code=400, detail='endpoint_name_and_provider_name_required')
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    endpoint_id = f'endpoint_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_platform_integration_endpoints (id, organization_id, endpoint_name, provider_name, status, created_at) VALUES (?,?,?,?,?,?)", (endpoint_id, organization_id, endpoint_name, provider_name, status, now))
+        conn.commit()
+        return {'mission': 'QNT30469', 'status': 'created', 'endpoint_id': endpoint_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/platform-gateway/webhooks/create')
+def workspace_platform_gateway_webhook_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30469_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    event_name = (payload.get('event_name') or '').strip()
+    target_url = (payload.get('target_url') or '').strip()
+    if not event_name or not target_url:
+        raise HTTPException(status_code=400, detail='event_name_and_target_url_required')
+    status = (payload.get('status') or 'queued').strip() or 'queued'
+    webhook_id = f'webhook_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_platform_webhooks (id, organization_id, event_name, target_url, status, created_at) VALUES (?,?,?,?,?,?)", (webhook_id, organization_id, event_name, target_url, status, now))
+        conn.commit()
+        return {'mission': 'QNT30469', 'status': 'created', 'webhook_id': webhook_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/platform-gateway/usage/create')
+def workspace_platform_gateway_usage_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30469_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    client_name = (payload.get('client_name') or '').strip()
+    route_name = (payload.get('route_name') or '').strip()
+    if not client_name or not route_name:
+        raise HTTPException(status_code=400, detail='client_name_and_route_name_required')
+    status = (payload.get('status') or 'success').strip() or 'success'
+    latency_ms = round(as_float(payload.get('latency_ms')), 2)
+    usage_id = f'usage_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_platform_usage_logs (id, organization_id, client_name, route_name, status, latency_ms, created_at) VALUES (?,?,?,?,?,?,?)", (usage_id, organization_id, client_name, route_name, status, latency_ms, now))
+        conn.commit()
+        return {'mission': 'QNT30469', 'status': 'created', 'usage_id': usage_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30470_schema():
+    ensure_qnt30469_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_connectivity_brokers (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, broker_name TEXT NOT NULL, connection_type TEXT DEFAULT 'execution', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_connectivity_custodians (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, custodian_name TEXT NOT NULL, asset_scope TEXT DEFAULT 'multi_asset', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_connectivity_primes (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, provider_name TEXT NOT NULL, service_type TEXT DEFAULT 'financing', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_connectivity_health_logs (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, system_name TEXT NOT NULL, uptime_percent REAL DEFAULT 0, latency_ms REAL DEFAULT 0, status TEXT DEFAULT 'unknown', created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30470_package(cur, organization_id):
+    ensure_qnt30470_schema()
+    broker_connections = cur.execute("SELECT id, broker_name, connection_type, status, created_at FROM organization_connectivity_brokers WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    custodian_links = cur.execute("SELECT id, custodian_name, asset_scope, status, created_at FROM organization_connectivity_custodians WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    prime_services = cur.execute("SELECT id, provider_name, service_type, status, created_at FROM organization_connectivity_primes WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    connectivity_health_logs = cur.execute("SELECT id, system_name, uptime_percent, latency_ms, status, created_at FROM organization_connectivity_health_logs WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30470_package(broker_connections, custodian_links, prime_services, connectivity_health_logs)
+
+
+@app.get('/workspace/connectivity-mesh/summary')
+def workspace_connectivity_mesh_summary(session=Depends(require_auth)):
+    ensure_qnt30470_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30470_package(cur, organization_id)
+        package.update({'mission': 'QNT30470', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/connectivity-mesh/brokers/create')
+def workspace_connectivity_mesh_broker_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30470_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    broker_name = (payload.get('broker_name') or '').strip()
+    if not broker_name:
+        raise HTTPException(status_code=400, detail='broker_name_required')
+    connection_type = (payload.get('connection_type') or 'execution').strip() or 'execution'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    broker_id = f'broker_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_connectivity_brokers (id, organization_id, broker_name, connection_type, status, created_at) VALUES (?,?,?,?,?,?)", (broker_id, organization_id, broker_name, connection_type, status, now))
+        conn.commit()
+        return {'mission': 'QNT30470', 'status': 'created', 'broker_id': broker_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/connectivity-mesh/custodians/create')
+def workspace_connectivity_mesh_custodian_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30470_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    custodian_name = (payload.get('custodian_name') or '').strip()
+    if not custodian_name:
+        raise HTTPException(status_code=400, detail='custodian_name_required')
+    asset_scope = (payload.get('asset_scope') or 'multi_asset').strip() or 'multi_asset'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    custodian_id = f'custodian_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_connectivity_custodians (id, organization_id, custodian_name, asset_scope, status, created_at) VALUES (?,?,?,?,?,?)", (custodian_id, organization_id, custodian_name, asset_scope, status, now))
+        conn.commit()
+        return {'mission': 'QNT30470', 'status': 'created', 'custodian_id': custodian_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/connectivity-mesh/primes/create')
+def workspace_connectivity_mesh_prime_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30470_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    provider_name = (payload.get('provider_name') or '').strip()
+    if not provider_name:
+        raise HTTPException(status_code=400, detail='provider_name_required')
+    service_type = (payload.get('service_type') or 'financing').strip() or 'financing'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    prime_id = f'prime_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_connectivity_primes (id, organization_id, provider_name, service_type, status, created_at) VALUES (?,?,?,?,?,?)", (prime_id, organization_id, provider_name, service_type, status, now))
+        conn.commit()
+        return {'mission': 'QNT30470', 'status': 'created', 'prime_id': prime_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/connectivity-mesh/health/create')
+def workspace_connectivity_mesh_health_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30470_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    system_name = (payload.get('system_name') or '').strip()
+    if not system_name:
+        raise HTTPException(status_code=400, detail='system_name_required')
+    uptime_percent = round(as_float(payload.get('uptime_percent')), 2)
+    latency_ms = round(as_float(payload.get('latency_ms')), 2)
+    status = (payload.get('status') or 'unknown').strip() or 'unknown'
+    log_id = f'health_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_connectivity_health_logs (id, organization_id, system_name, uptime_percent, latency_ms, status, created_at) VALUES (?,?,?,?,?,?,?)", (log_id, organization_id, system_name, uptime_percent, latency_ms, status, now))
+        conn.commit()
+        return {'mission': 'QNT30470', 'status': 'created', 'log_id': log_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30471_schema():
+    ensure_qnt30470_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_multi_asset_connectors (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, asset_class TEXT NOT NULL, provider_name TEXT NOT NULL, status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_multi_asset_universes (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, universe_name TEXT NOT NULL, asset_class TEXT NOT NULL, supported_notional REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_multi_asset_profiles (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, profile_name TEXT NOT NULL, asset_class TEXT NOT NULL, risk_mode TEXT DEFAULT 'standard', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_multi_asset_health_logs (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, asset_class TEXT NOT NULL, uptime_percent REAL DEFAULT 0, latency_ms REAL DEFAULT 0, status TEXT DEFAULT 'unknown', created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30471_package(cur, organization_id):
+    ensure_qnt30471_schema()
+    asset_connectors = cur.execute("SELECT id, asset_class, provider_name, status, created_at FROM organization_multi_asset_connectors WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    market_universes = cur.execute("SELECT id, universe_name, asset_class, supported_notional, status, created_at FROM organization_multi_asset_universes WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    execution_profiles = cur.execute("SELECT id, profile_name, asset_class, risk_mode, status, created_at FROM organization_multi_asset_profiles WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    asset_health_logs = cur.execute("SELECT id, asset_class, uptime_percent, latency_ms, status, created_at FROM organization_multi_asset_health_logs WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30471_package(asset_connectors, market_universes, execution_profiles, asset_health_logs)
+
+
+@app.get('/workspace/multi-asset/summary')
+def workspace_multi_asset_summary(session=Depends(require_auth)):
+    ensure_qnt30471_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30471_package(cur, organization_id)
+        package.update({'mission': 'QNT30471', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/multi-asset/connectors/create')
+def workspace_multi_asset_connector_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30471_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    asset_class = (payload.get('asset_class') or '').strip()
+    provider_name = (payload.get('provider_name') or '').strip()
+    if not asset_class or not provider_name:
+        raise HTTPException(status_code=400, detail='asset_class_and_provider_name_required')
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    connector_id = f'asset_connector_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_multi_asset_connectors (id, organization_id, asset_class, provider_name, status, created_at) VALUES (?,?,?,?,?,?)", (connector_id, organization_id, asset_class, provider_name, status, now))
+        conn.commit()
+        return {'mission': 'QNT30471', 'status': 'created', 'connector_id': connector_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/multi-asset/universes/create')
+def workspace_multi_asset_universe_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30471_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    universe_name = (payload.get('universe_name') or '').strip()
+    asset_class = (payload.get('asset_class') or '').strip()
+    if not universe_name or not asset_class:
+        raise HTTPException(status_code=400, detail='universe_name_and_asset_class_required')
+    supported_notional = round(as_float(payload.get('supported_notional')), 2)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    universe_id = f'universe_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_multi_asset_universes (id, organization_id, universe_name, asset_class, supported_notional, status, created_at) VALUES (?,?,?,?,?,?,?)", (universe_id, organization_id, universe_name, asset_class, supported_notional, status, now))
+        conn.commit()
+        return {'mission': 'QNT30471', 'status': 'created', 'universe_id': universe_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/multi-asset/profiles/create')
+def workspace_multi_asset_profile_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30471_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    profile_name = (payload.get('profile_name') or '').strip()
+    asset_class = (payload.get('asset_class') or '').strip()
+    if not profile_name or not asset_class:
+        raise HTTPException(status_code=400, detail='profile_name_and_asset_class_required')
+    risk_mode = (payload.get('risk_mode') or 'standard').strip() or 'standard'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    profile_id = f'profile_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_multi_asset_profiles (id, organization_id, profile_name, asset_class, risk_mode, status, created_at) VALUES (?,?,?,?,?,?,?)", (profile_id, organization_id, profile_name, asset_class, risk_mode, status, now))
+        conn.commit()
+        return {'mission': 'QNT30471', 'status': 'created', 'profile_id': profile_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/multi-asset/health/create')
+def workspace_multi_asset_health_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30471_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    asset_class = (payload.get('asset_class') or '').strip()
+    if not asset_class:
+        raise HTTPException(status_code=400, detail='asset_class_required')
+    uptime_percent = round(as_float(payload.get('uptime_percent')), 2)
+    latency_ms = round(as_float(payload.get('latency_ms')), 2)
+    status = (payload.get('status') or 'unknown').strip() or 'unknown'
+    log_id = f'asset_health_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_multi_asset_health_logs (id, organization_id, asset_class, uptime_percent, latency_ms, status, created_at) VALUES (?,?,?,?,?,?,?)", (log_id, organization_id, asset_class, uptime_percent, latency_ms, status, now))
+        conn.commit()
+        return {'mission': 'QNT30471', 'status': 'created', 'log_id': log_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30473_schema():
+    ensure_qnt30472_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_revenue_ops_accounts (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, account_name TEXT NOT NULL, account_type TEXT DEFAULT 'subscription', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_revenue_ops_invoices (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, invoice_name TEXT NOT NULL, invoice_amount REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_revenue_ops_subscriptions (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, subscription_name TEXT NOT NULL, plan_name TEXT DEFAULT 'Plan', mrr_amount REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_revenue_ops_collections (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, account_name TEXT NOT NULL, amount_collected REAL DEFAULT 0, status TEXT DEFAULT 'pending', created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30473_package(cur, organization_id):
+    ensure_qnt30473_schema()
+    billing_accounts = cur.execute("SELECT id, account_name, account_type, status, created_at FROM organization_revenue_ops_accounts WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    invoices = cur.execute("SELECT id, invoice_name, invoice_amount, status, created_at FROM organization_revenue_ops_invoices WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    subscriptions = cur.execute("SELECT id, subscription_name, plan_name, mrr_amount, status, created_at FROM organization_revenue_ops_subscriptions WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    collections_logs = cur.execute("SELECT id, account_name, amount_collected, status, created_at FROM organization_revenue_ops_collections WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30473_package(billing_accounts, invoices, subscriptions, collections_logs)
+
+
+@app.get('/workspace/revenue-ops/summary')
+def workspace_revenue_ops_summary(session=Depends(require_auth)):
+    ensure_qnt30473_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30473_package(cur, organization_id)
+        package.update({'mission': 'QNT30473', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/revenue-ops/accounts/create')
+def workspace_revenue_ops_account_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30473_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    account_name = (payload.get('account_name') or '').strip()
+    if not account_name:
+        raise HTTPException(status_code=400, detail='account_name_required')
+    account_type = (payload.get('account_type') or 'subscription').strip() or 'subscription'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    account_id = f'rev_account_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_revenue_ops_accounts (id, organization_id, account_name, account_type, status, created_at) VALUES (?,?,?,?,?,?)", (account_id, organization_id, account_name, account_type, status, now))
+        conn.commit()
+        return {'mission': 'QNT30473', 'status': 'created', 'account_id': account_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/revenue-ops/invoices/create')
+def workspace_revenue_ops_invoice_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30473_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    invoice_name = (payload.get('invoice_name') or '').strip()
+    if not invoice_name:
+        raise HTTPException(status_code=400, detail='invoice_name_required')
+    invoice_amount = round(as_float(payload.get('invoice_amount')), 2)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    invoice_id = f'rev_invoice_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_revenue_ops_invoices (id, organization_id, invoice_name, invoice_amount, status, created_at) VALUES (?,?,?,?,?,?)", (invoice_id, organization_id, invoice_name, invoice_amount, status, now))
+        conn.commit()
+        return {'mission': 'QNT30473', 'status': 'created', 'invoice_id': invoice_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/revenue-ops/subscriptions/create')
+def workspace_revenue_ops_subscription_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30473_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    subscription_name = (payload.get('subscription_name') or '').strip()
+    if not subscription_name:
+        raise HTTPException(status_code=400, detail='subscription_name_required')
+    plan_name = (payload.get('plan_name') or 'Plan').strip() or 'Plan'
+    mrr_amount = round(as_float(payload.get('mrr_amount')), 2)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    subscription_id = f'rev_sub_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_revenue_ops_subscriptions (id, organization_id, subscription_name, plan_name, mrr_amount, status, created_at) VALUES (?,?,?,?,?,?,?)", (subscription_id, organization_id, subscription_name, plan_name, mrr_amount, status, now))
+        conn.commit()
+        return {'mission': 'QNT30473', 'status': 'created', 'subscription_id': subscription_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/revenue-ops/collections/create')
+def workspace_revenue_ops_collection_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30473_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    account_name = (payload.get('account_name') or '').strip()
+    if not account_name:
+        raise HTTPException(status_code=400, detail='account_name_required')
+    amount_collected = round(as_float(payload.get('amount_collected')), 2)
+    status = (payload.get('status') or 'pending').strip() or 'pending'
+    collection_id = f'rev_collection_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_revenue_ops_collections (id, organization_id, account_name, amount_collected, status, created_at) VALUES (?,?,?,?,?,?)", (collection_id, organization_id, account_name, amount_collected, status, now))
+        conn.commit()
+        return {'mission': 'QNT30473', 'status': 'created', 'collection_id': collection_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30475_schema():
+    ensure_qnt30474_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_fundraising_targets (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, target_name TEXT NOT NULL, channel_name TEXT DEFAULT 'allocator', target_amount REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_fundraising_offers (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, investor_name TEXT NOT NULL, offer_amount REAL DEFAULT 0, vehicle_name TEXT DEFAULT 'Fund Vehicle', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_fundraising_commitments (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, investor_name TEXT NOT NULL, commitment_amount REAL DEFAULT 0, status TEXT DEFAULT 'open', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_fundraising_conversions (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, investor_name TEXT NOT NULL, converted_amount REAL DEFAULT 0, status TEXT DEFAULT 'pending', created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30475_package(cur, organization_id):
+    ensure_qnt30475_schema()
+    fundraising_targets = cur.execute("SELECT id, target_name, channel_name, target_amount, status, created_at FROM organization_fundraising_targets WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    allocation_offers = cur.execute("SELECT id, investor_name, offer_amount, vehicle_name, status, created_at FROM organization_fundraising_offers WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    commitment_events = cur.execute("SELECT id, investor_name, commitment_amount, status, created_at FROM organization_fundraising_commitments WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    conversion_logs = cur.execute("SELECT id, investor_name, converted_amount, status, created_at FROM organization_fundraising_conversions WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30475_package(fundraising_targets, allocation_offers, commitment_events, conversion_logs)
+
+
+@app.get('/workspace/fundraising-pipeline/summary')
+def workspace_fundraising_pipeline_summary(session=Depends(require_auth)):
+    ensure_qnt30475_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30475_package(cur, organization_id)
+        package.update({'mission': 'QNT30475', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fundraising-pipeline/targets/create')
+def workspace_fundraising_target_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30475_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    target_name = (payload.get('target_name') or '').strip()
+    if not target_name:
+        raise HTTPException(status_code=400, detail='target_name_required')
+    channel_name = (payload.get('channel_name') or 'allocator').strip() or 'allocator'
+    target_amount = round(as_float(payload.get('target_amount')), 2)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    target_id = f'raise_target_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_fundraising_targets (id, organization_id, target_name, channel_name, target_amount, status, created_at) VALUES (?,?,?,?,?,?,?)", (target_id, organization_id, target_name, channel_name, target_amount, status, now))
+        conn.commit()
+        return {'mission': 'QNT30475', 'status': 'created', 'target_id': target_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fundraising-pipeline/offers/create')
+def workspace_fundraising_offer_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30475_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    investor_name = (payload.get('investor_name') or '').strip()
+    if not investor_name:
+        raise HTTPException(status_code=400, detail='investor_name_required')
+    offer_amount = round(as_float(payload.get('offer_amount')), 2)
+    vehicle_name = (payload.get('vehicle_name') or 'Fund Vehicle').strip() or 'Fund Vehicle'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    offer_id = f'raise_offer_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_fundraising_offers (id, organization_id, investor_name, offer_amount, vehicle_name, status, created_at) VALUES (?,?,?,?,?,?)", (offer_id, organization_id, investor_name, offer_amount, vehicle_name, status, now))
+        conn.commit()
+        return {'mission': 'QNT30475', 'status': 'created', 'offer_id': offer_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fundraising-pipeline/commitments/create')
+def workspace_fundraising_commitment_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30475_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    investor_name = (payload.get('investor_name') or '').strip()
+    if not investor_name:
+        raise HTTPException(status_code=400, detail='investor_name_required')
+    commitment_amount = round(as_float(payload.get('commitment_amount')), 2)
+    status = (payload.get('status') or 'open').strip() or 'open'
+    commitment_id = f'raise_commitment_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_fundraising_commitments (id, organization_id, investor_name, commitment_amount, status, created_at) VALUES (?,?,?,?,?,?)", (commitment_id, organization_id, investor_name, commitment_amount, status, now))
+        conn.commit()
+        return {'mission': 'QNT30475', 'status': 'created', 'commitment_id': commitment_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fundraising-pipeline/conversions/create')
+def workspace_fundraising_conversion_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30475_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    investor_name = (payload.get('investor_name') or '').strip()
+    if not investor_name:
+        raise HTTPException(status_code=400, detail='investor_name_required')
+    converted_amount = round(as_float(payload.get('converted_amount')), 2)
+    status = (payload.get('status') or 'pending').strip() or 'pending'
+    conversion_id = f'raise_conversion_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_fundraising_conversions (id, organization_id, investor_name, converted_amount, status, created_at) VALUES (?,?,?,?,?,?)", (conversion_id, organization_id, investor_name, converted_amount, status, now))
+        conn.commit()
+        return {'mission': 'QNT30475', 'status': 'created', 'conversion_id': conversion_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30476_schema():
+    ensure_qnt30475_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_governance_committees (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, committee_name TEXT NOT NULL, committee_type TEXT DEFAULT 'investment', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_governance_requests (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, request_name TEXT NOT NULL, request_value REAL DEFAULT 0, request_type TEXT DEFAULT 'investment', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_governance_votes (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, request_name TEXT NOT NULL, member_name TEXT NOT NULL, vote_result TEXT DEFAULT 'pending', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_governance_audits (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, event_name TEXT NOT NULL, actor_name TEXT NOT NULL, status TEXT DEFAULT 'logged', created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30476_package(cur, organization_id):
+    ensure_qnt30476_schema()
+    committees = cur.execute("SELECT id, committee_name, committee_type, status, created_at FROM organization_governance_committees WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    approval_requests = cur.execute("SELECT id, request_name, request_value, request_type, status, created_at FROM organization_governance_requests WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    approval_votes = cur.execute("SELECT id, request_name, member_name, vote_result, created_at FROM organization_governance_votes WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    governance_audit_logs = cur.execute("SELECT id, event_name, actor_name, status, created_at FROM organization_governance_audits WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30476_package(committees, approval_requests, approval_votes, governance_audit_logs)
+
+
+@app.get('/workspace/governance-approval/summary')
+def workspace_governance_approval_summary(session=Depends(require_auth)):
+    ensure_qnt30476_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30476_package(cur, organization_id)
+        package.update({'mission': 'QNT30476', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/governance-approval/committees/create')
+def workspace_governance_committee_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30476_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    committee_name = (payload.get('committee_name') or '').strip()
+    if not committee_name:
+        raise HTTPException(status_code=400, detail='committee_name_required')
+    committee_type = (payload.get('committee_type') or 'investment').strip() or 'investment'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    committee_id = f'gov_committee_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_governance_committees (id, organization_id, committee_name, committee_type, status, created_at) VALUES (?,?,?,?,?,?)", (committee_id, organization_id, committee_name, committee_type, status, now))
+        conn.commit()
+        return {'mission': 'QNT30476', 'status': 'created', 'committee_id': committee_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/governance-approval/requests/create')
+def workspace_governance_request_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30476_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    request_name = (payload.get('request_name') or '').strip()
+    if not request_name:
+        raise HTTPException(status_code=400, detail='request_name_required')
+    request_value = round(as_float(payload.get('request_value')), 2)
+    request_type = (payload.get('request_type') or 'investment').strip() or 'investment'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    request_id = f'gov_request_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_governance_requests (id, organization_id, request_name, request_value, request_type, status, created_at) VALUES (?,?,?,?,?,?,?)", (request_id, organization_id, request_name, request_value, request_type, status, now))
+        conn.commit()
+        return {'mission': 'QNT30476', 'status': 'created', 'request_id': request_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/governance-approval/votes/create')
+def workspace_governance_vote_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30476_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    request_name = (payload.get('request_name') or '').strip()
+    member_name = (payload.get('member_name') or '').strip()
+    if not request_name or not member_name:
+        raise HTTPException(status_code=400, detail='request_name_and_member_name_required')
+    vote_result = (payload.get('vote_result') or 'pending').strip() or 'pending'
+    vote_id = f'gov_vote_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_governance_votes (id, organization_id, request_name, member_name, vote_result, created_at) VALUES (?,?,?,?,?,?)", (vote_id, organization_id, request_name, member_name, vote_result, now))
+        conn.commit()
+        return {'mission': 'QNT30476', 'status': 'created', 'vote_id': vote_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/governance-approval/audits/create')
+def workspace_governance_audit_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30476_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    event_name = (payload.get('event_name') or '').strip()
+    actor_name = (payload.get('actor_name') or '').strip()
+    if not event_name or not actor_name:
+        raise HTTPException(status_code=400, detail='event_name_and_actor_name_required')
+    status = (payload.get('status') or 'logged').strip() or 'logged'
+    audit_id = f'gov_audit_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_governance_audits (id, organization_id, event_name, actor_name, status, created_at) VALUES (?,?,?,?,?,?)", (audit_id, organization_id, event_name, actor_name, status, now))
+        conn.commit()
+        return {'mission': 'QNT30476', 'status': 'created', 'audit_id': audit_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30477_schema():
+    ensure_qnt30476_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_portfolio_exposures (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, bucket_name TEXT NOT NULL, asset_class TEXT DEFAULT 'equities', gross_exposure REAL DEFAULT 0, net_exposure REAL DEFAULT 0, status TEXT DEFAULT 'active', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_portfolio_factors (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, factor_name TEXT NOT NULL, factor_score REAL DEFAULT 0, direction TEXT DEFAULT 'long', status TEXT DEFAULT 'active', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_portfolio_stress_tests (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, scenario_name TEXT NOT NULL, pnl_impact REAL DEFAULT 0, capital_impact REAL DEFAULT 0, status TEXT DEFAULT 'passed', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_portfolio_concentrations (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, position_name TEXT NOT NULL, weight_percent REAL DEFAULT 0, status TEXT DEFAULT 'normal', created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30477_package(cur, organization_id):
+    ensure_qnt30477_schema()
+    exposure_rows = cur.execute("SELECT id, bucket_name, asset_class, gross_exposure, net_exposure, status, created_at FROM organization_portfolio_exposures WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    factor_rows = cur.execute("SELECT id, factor_name, factor_score, direction, status, created_at FROM organization_portfolio_factors WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    stress_rows = cur.execute("SELECT id, scenario_name, pnl_impact, capital_impact, status, created_at FROM organization_portfolio_stress_tests WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    concentration_rows = cur.execute("SELECT id, position_name, weight_percent, status, created_at FROM organization_portfolio_concentrations WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30477_package(exposure_rows, factor_rows, stress_rows, concentration_rows)
+
+
+@app.get('/workspace/portfolio-risk/summary')
+def workspace_portfolio_risk_summary(session=Depends(require_auth)):
+    ensure_qnt30477_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30477_package(cur, organization_id)
+        package.update({'mission': 'QNT30477', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/portfolio-risk/exposures/create')
+def workspace_portfolio_risk_exposure_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30477_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    bucket_name = (payload.get('bucket_name') or '').strip()
+    if not bucket_name:
+        raise HTTPException(status_code=400, detail='bucket_name_required')
+    asset_class = (payload.get('asset_class') or 'equities').strip() or 'equities'
+    gross_exposure = round(as_float(payload.get('gross_exposure')), 4)
+    net_exposure = round(as_float(payload.get('net_exposure')), 4)
+    status = (payload.get('status') or 'active').strip() or 'active'
+    exposure_id = f'portfolio_exposure_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_portfolio_exposures (id, organization_id, bucket_name, asset_class, gross_exposure, net_exposure, status, created_at) VALUES (?,?,?,?,?,?,?,?)", (exposure_id, organization_id, bucket_name, asset_class, gross_exposure, net_exposure, status, now))
+        conn.commit()
+        return {'mission': 'QNT30477', 'status': 'created', 'exposure_id': exposure_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/portfolio-risk/factors/create')
+def workspace_portfolio_risk_factor_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30477_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    factor_name = (payload.get('factor_name') or '').strip()
+    if not factor_name:
+        raise HTTPException(status_code=400, detail='factor_name_required')
+    factor_score = round(as_float(payload.get('factor_score')), 4)
+    direction = (payload.get('direction') or 'long').strip() or 'long'
+    status = (payload.get('status') or 'active').strip() or 'active'
+    factor_id = f'portfolio_factor_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_portfolio_factors (id, organization_id, factor_name, factor_score, direction, status, created_at) VALUES (?,?,?,?,?,?,?)", (factor_id, organization_id, factor_name, factor_score, direction, status, now))
+        conn.commit()
+        return {'mission': 'QNT30477', 'status': 'created', 'factor_id': factor_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/portfolio-risk/stress/create')
+def workspace_portfolio_risk_stress_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30477_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    scenario_name = (payload.get('scenario_name') or '').strip()
+    if not scenario_name:
+        raise HTTPException(status_code=400, detail='scenario_name_required')
+    pnl_impact = round(as_float(payload.get('pnl_impact')), 4)
+    capital_impact = round(as_float(payload.get('capital_impact')), 4)
+    status = (payload.get('status') or 'passed').strip() or 'passed'
+    stress_id = f'portfolio_stress_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_portfolio_stress_tests (id, organization_id, scenario_name, pnl_impact, capital_impact, status, created_at) VALUES (?,?,?,?,?,?,?)", (stress_id, organization_id, scenario_name, pnl_impact, capital_impact, status, now))
+        conn.commit()
+        return {'mission': 'QNT30477', 'status': 'created', 'stress_id': stress_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/portfolio-risk/concentrations/create')
+def workspace_portfolio_risk_concentration_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30477_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    position_name = (payload.get('position_name') or '').strip()
+    if not position_name:
+        raise HTTPException(status_code=400, detail='position_name_required')
+    weight_percent = round(as_float(payload.get('weight_percent')), 4)
+    status = (payload.get('status') or 'normal').strip() or 'normal'
+    concentration_id = f'portfolio_concentration_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_portfolio_concentrations (id, organization_id, position_name, weight_percent, status, created_at) VALUES (?,?,?,?,?,?)", (concentration_id, organization_id, position_name, weight_percent, status, now))
+        conn.commit()
+        return {'mission': 'QNT30477', 'status': 'created', 'concentration_id': concentration_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30478_schema():
+    ensure_qnt30477_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_strategy_activations (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, strategy_name TEXT NOT NULL, activation_mode TEXT DEFAULT 'manual', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_strategy_deployments (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, strategy_name TEXT NOT NULL, allocated_capital REAL DEFAULT 0, deployment_state TEXT DEFAULT 'warming', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_strategy_capital_gates (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, gate_name TEXT NOT NULL, released_capital REAL DEFAULT 0, approval_source TEXT DEFAULT 'risk_engine', status TEXT DEFAULT 'closed', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_strategy_runtime_monitors (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, strategy_name TEXT NOT NULL, heartbeat_seconds INTEGER DEFAULT 0, runtime_note TEXT DEFAULT 'stable', status TEXT DEFAULT 'unknown', created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30478_package(cur, organization_id):
+    ensure_qnt30478_schema()
+    activation_rows = cur.execute("SELECT id, strategy_name, activation_mode, status, created_at FROM organization_strategy_activations WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    deployment_rows = cur.execute("SELECT id, strategy_name, allocated_capital, deployment_state, status, created_at FROM organization_strategy_deployments WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    capital_gate_rows = cur.execute("SELECT id, gate_name, released_capital, approval_source, status, created_at FROM organization_strategy_capital_gates WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    runtime_rows = cur.execute("SELECT id, strategy_name, heartbeat_seconds, runtime_note, status, created_at FROM organization_strategy_runtime_monitors WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30478_package(activation_rows, deployment_rows, capital_gate_rows, runtime_rows)
+
+
+@app.get('/workspace/strategy-control/summary')
+def workspace_strategy_control_summary(session=Depends(require_auth)):
+    ensure_qnt30478_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30478_package(cur, organization_id)
+        package.update({'mission': 'QNT30478', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/strategy-control/activations/create')
+def workspace_strategy_control_activation_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30478_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    strategy_name = (payload.get('strategy_name') or '').strip()
+    if not strategy_name:
+        raise HTTPException(status_code=400, detail='strategy_name_required')
+    activation_mode = (payload.get('activation_mode') or 'manual').strip() or 'manual'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    activation_id = f'strategy_activation_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_strategy_activations (id, organization_id, strategy_name, activation_mode, status, created_at) VALUES (?,?,?,?,?,?)", (activation_id, organization_id, strategy_name, activation_mode, status, now))
+        conn.commit()
+        return {'mission': 'QNT30478', 'status': 'created', 'activation_id': activation_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/strategy-control/deployments/create')
+def workspace_strategy_control_deployment_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30478_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    strategy_name = (payload.get('strategy_name') or '').strip()
+    if not strategy_name:
+        raise HTTPException(status_code=400, detail='strategy_name_required')
+    allocated_capital = round(as_float(payload.get('allocated_capital')), 4)
+    deployment_state = (payload.get('deployment_state') or 'warming').strip() or 'warming'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    deployment_id = f'strategy_deployment_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_strategy_deployments (id, organization_id, strategy_name, allocated_capital, deployment_state, status, created_at) VALUES (?,?,?,?,?,?,?)", (deployment_id, organization_id, strategy_name, allocated_capital, deployment_state, status, now))
+        conn.commit()
+        return {'mission': 'QNT30478', 'status': 'created', 'deployment_id': deployment_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/strategy-control/gates/create')
+def workspace_strategy_control_gate_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30478_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    gate_name = (payload.get('gate_name') or '').strip()
+    if not gate_name:
+        raise HTTPException(status_code=400, detail='gate_name_required')
+    released_capital = round(as_float(payload.get('released_capital')), 4)
+    approval_source = (payload.get('approval_source') or 'risk_engine').strip() or 'risk_engine'
+    status = (payload.get('status') or 'closed').strip() or 'closed'
+    gate_id = f'strategy_gate_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_strategy_capital_gates (id, organization_id, gate_name, released_capital, approval_source, status, created_at) VALUES (?,?,?,?,?,?,?)", (gate_id, organization_id, gate_name, released_capital, approval_source, status, now))
+        conn.commit()
+        return {'mission': 'QNT30478', 'status': 'created', 'gate_id': gate_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/strategy-control/runtime/create')
+def workspace_strategy_control_runtime_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30478_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    strategy_name = (payload.get('strategy_name') or '').strip()
+    if not strategy_name:
+        raise HTTPException(status_code=400, detail='strategy_name_required')
+    heartbeat_seconds = int(as_float(payload.get('heartbeat_seconds')))
+    runtime_note = (payload.get('runtime_note') or 'stable').strip() or 'stable'
+    status = (payload.get('status') or 'unknown').strip() or 'unknown'
+    runtime_id = f'strategy_runtime_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_strategy_runtime_monitors (id, organization_id, strategy_name, heartbeat_seconds, runtime_note, status, created_at) VALUES (?,?,?,?,?,?,?)", (runtime_id, organization_id, strategy_name, heartbeat_seconds, runtime_note, status, now))
+        conn.commit()
+        return {'mission': 'QNT30478', 'status': 'created', 'runtime_id': runtime_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30479_schema():
+    ensure_qnt30478_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_signal_bridge_signals (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, signal_name TEXT NOT NULL, signal_strength REAL DEFAULT 0, signal_type TEXT DEFAULT 'momentum', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_signal_bridge_routes (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, signal_name TEXT NOT NULL, target_strategy TEXT NOT NULL, routing_mode TEXT DEFAULT 'policy', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_signal_bridge_intents (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, strategy_name TEXT NOT NULL, target_notional REAL DEFAULT 0, order_side TEXT DEFAULT 'buy', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_signal_bridge_cycles (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, cycle_name TEXT NOT NULL, processed_signals INTEGER DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30479_package(cur, organization_id):
+    ensure_qnt30479_schema()
+    signal_rows = cur.execute("SELECT id, signal_name, signal_strength, signal_type, status, created_at FROM organization_signal_bridge_signals WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    routing_rows = cur.execute("SELECT id, signal_name, target_strategy, routing_mode, status, created_at FROM organization_signal_bridge_routes WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    execution_intent_rows = cur.execute("SELECT id, strategy_name, target_notional, order_side, status, created_at FROM organization_signal_bridge_intents WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    automation_cycle_rows = cur.execute("SELECT id, cycle_name, processed_signals, status, created_at FROM organization_signal_bridge_cycles WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30479_package(signal_rows, routing_rows, execution_intent_rows, automation_cycle_rows)
+
+
+@app.get('/workspace/signal-bridge/summary')
+def workspace_signal_bridge_summary(session=Depends(require_auth)):
+    ensure_qnt30479_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30479_package(cur, organization_id)
+        package.update({'mission': 'QNT30479', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/signal-bridge/signals/create')
+def workspace_signal_bridge_signal_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30479_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    signal_name = (payload.get('signal_name') or '').strip()
+    if not signal_name:
+        raise HTTPException(status_code=400, detail='signal_name_required')
+    signal_strength = round(as_float(payload.get('signal_strength')), 4)
+    signal_type = (payload.get('signal_type') or 'momentum').strip() or 'momentum'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    signal_id = f'signal_bridge_signal_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_signal_bridge_signals (id, organization_id, signal_name, signal_strength, signal_type, status, created_at) VALUES (?,?,?,?,?,?,?)", (signal_id, organization_id, signal_name, signal_strength, signal_type, status, now))
+        conn.commit()
+        return {'mission': 'QNT30479', 'status': 'created', 'signal_id': signal_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/signal-bridge/routes/create')
+def workspace_signal_bridge_route_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30479_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    signal_name = (payload.get('signal_name') or '').strip()
+    target_strategy = (payload.get('target_strategy') or '').strip()
+    if not signal_name or not target_strategy:
+        raise HTTPException(status_code=400, detail='signal_name_and_target_strategy_required')
+    routing_mode = (payload.get('routing_mode') or 'policy').strip() or 'policy'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    routing_id = f'signal_bridge_route_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_signal_bridge_routes (id, organization_id, signal_name, target_strategy, routing_mode, status, created_at) VALUES (?,?,?,?,?,?,?)", (routing_id, organization_id, signal_name, target_strategy, routing_mode, status, now))
+        conn.commit()
+        return {'mission': 'QNT30479', 'status': 'created', 'routing_id': routing_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/signal-bridge/intents/create')
+def workspace_signal_bridge_intent_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30479_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    strategy_name = (payload.get('strategy_name') or '').strip()
+    if not strategy_name:
+        raise HTTPException(status_code=400, detail='strategy_name_required')
+    target_notional = round(as_float(payload.get('target_notional')), 4)
+    order_side = (payload.get('order_side') or 'buy').strip() or 'buy'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    intent_id = f'signal_bridge_intent_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_signal_bridge_intents (id, organization_id, strategy_name, target_notional, order_side, status, created_at) VALUES (?,?,?,?,?,?,?)", (intent_id, organization_id, strategy_name, target_notional, order_side, status, now))
+        conn.commit()
+        return {'mission': 'QNT30479', 'status': 'created', 'intent_id': intent_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/signal-bridge/cycles/create')
+def workspace_signal_bridge_cycle_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30479_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    cycle_name = (payload.get('cycle_name') or '').strip()
+    if not cycle_name:
+        raise HTTPException(status_code=400, detail='cycle_name_required')
+    processed_signals = int(as_float(payload.get('processed_signals')))
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    cycle_id = f'signal_bridge_cycle_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_signal_bridge_cycles (id, organization_id, cycle_name, processed_signals, status, created_at) VALUES (?,?,?,?,?,?)", (cycle_id, organization_id, cycle_name, processed_signals, status, now))
+        conn.commit()
+        return {'mission': 'QNT30479', 'status': 'created', 'cycle_id': cycle_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30480_schema():
+    ensure_qnt30479_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_order_dispatch_orders (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, strategy_name TEXT NOT NULL, symbol TEXT DEFAULT 'SPY', order_notional REAL DEFAULT 0, side TEXT DEFAULT 'buy', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_order_dispatch_dispatches (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, broker_name TEXT NOT NULL, symbol TEXT DEFAULT 'SPY', dispatch_notional REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_order_dispatch_acks (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, broker_name TEXT NOT NULL, broker_order_id TEXT DEFAULT 'broker_order', latency_ms INTEGER DEFAULT 0, status TEXT DEFAULT 'pending', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_order_dispatch_flows (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, flow_name TEXT NOT NULL, processed_orders INTEGER DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30480_package(cur, organization_id):
+    ensure_qnt30480_schema()
+    order_rows = cur.execute("SELECT id, strategy_name, symbol, order_notional, side, status, created_at FROM organization_order_dispatch_orders WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    dispatch_rows = cur.execute("SELECT id, broker_name, symbol, dispatch_notional, status, created_at FROM organization_order_dispatch_dispatches WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    broker_ack_rows = cur.execute("SELECT id, broker_name, broker_order_id, latency_ms, status, created_at FROM organization_order_dispatch_acks WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    orchestration_rows = cur.execute("SELECT id, flow_name, processed_orders, status, created_at FROM organization_order_dispatch_flows WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30480_package(order_rows, dispatch_rows, broker_ack_rows, orchestration_rows)
+
+
+@app.get('/workspace/order-dispatch/summary')
+def workspace_order_dispatch_summary(session=Depends(require_auth)):
+    ensure_qnt30480_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30480_package(cur, organization_id)
+        package.update({'mission': 'QNT30480', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/order-dispatch/orders/create')
+def workspace_order_dispatch_order_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30480_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    strategy_name = (payload.get('strategy_name') or '').strip()
+    if not strategy_name:
+        raise HTTPException(status_code=400, detail='strategy_name_required')
+    symbol = (payload.get('symbol') or 'SPY').strip() or 'SPY'
+    order_notional = round(as_float(payload.get('order_notional')), 4)
+    side = (payload.get('side') or 'buy').strip() or 'buy'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    order_id = f'order_dispatch_order_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_order_dispatch_orders (id, organization_id, strategy_name, symbol, order_notional, side, status, created_at) VALUES (?,?,?,?,?,?,?,?)", (order_id, organization_id, strategy_name, symbol, order_notional, side, status, now))
+        conn.commit()
+        return {'mission': 'QNT30480', 'status': 'created', 'order_id': order_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/order-dispatch/dispatches/create')
+def workspace_order_dispatch_dispatch_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30480_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    broker_name = (payload.get('broker_name') or '').strip()
+    if not broker_name:
+        raise HTTPException(status_code=400, detail='broker_name_required')
+    symbol = (payload.get('symbol') or 'SPY').strip() or 'SPY'
+    dispatch_notional = round(as_float(payload.get('dispatch_notional')), 4)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    dispatch_id = f'order_dispatch_dispatch_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_order_dispatch_dispatches (id, organization_id, broker_name, symbol, dispatch_notional, status, created_at) VALUES (?,?,?,?,?,?,?)", (dispatch_id, organization_id, broker_name, symbol, dispatch_notional, status, now))
+        conn.commit()
+        return {'mission': 'QNT30480', 'status': 'created', 'dispatch_id': dispatch_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/order-dispatch/acks/create')
+def workspace_order_dispatch_ack_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30480_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    broker_name = (payload.get('broker_name') or '').strip()
+    if not broker_name:
+        raise HTTPException(status_code=400, detail='broker_name_required')
+    broker_order_id = (payload.get('broker_order_id') or 'broker_order').strip() or 'broker_order'
+    latency_ms = int(as_float(payload.get('latency_ms')))
+    status = (payload.get('status') or 'pending').strip() or 'pending'
+    ack_id = f'order_dispatch_ack_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_order_dispatch_acks (id, organization_id, broker_name, broker_order_id, latency_ms, status, created_at) VALUES (?,?,?,?,?,?,?)", (ack_id, organization_id, broker_name, broker_order_id, latency_ms, status, now))
+        conn.commit()
+        return {'mission': 'QNT30480', 'status': 'created', 'ack_id': ack_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/order-dispatch/flows/create')
+def workspace_order_dispatch_flow_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30480_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    flow_name = (payload.get('flow_name') or '').strip()
+    if not flow_name:
+        raise HTTPException(status_code=400, detail='flow_name_required')
+    processed_orders = int(as_float(payload.get('processed_orders')))
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    flow_id = f'order_dispatch_flow_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_order_dispatch_flows (id, organization_id, flow_name, processed_orders, status, created_at) VALUES (?,?,?,?,?,?)", (flow_id, organization_id, flow_name, processed_orders, status, now))
+        conn.commit()
+        return {'mission': 'QNT30480', 'status': 'created', 'flow_id': flow_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30481_schema():
+    ensure_qnt30480_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_fill_lifecycle_fills (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, symbol TEXT DEFAULT 'SPY', fill_qty REAL DEFAULT 0, fill_price REAL DEFAULT 0, fill_notional REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_fill_lifecycle_positions (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, symbol TEXT DEFAULT 'SPY', position_qty REAL DEFAULT 0, position_notional REAL DEFAULT 0, realized_pnl REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_fill_lifecycle_events (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, symbol TEXT DEFAULT 'SPY', event_name TEXT DEFAULT 'fill_to_position', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_fill_lifecycle_reconciliations (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, recon_name TEXT NOT NULL, broker_value REAL DEFAULT 0, internal_value REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30481_package(cur, organization_id):
+    ensure_qnt30481_schema()
+    fill_rows = cur.execute("SELECT id, symbol, fill_qty, fill_price, fill_notional, status, created_at FROM organization_fill_lifecycle_fills WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    position_rows = cur.execute("SELECT id, symbol, position_qty, position_notional, realized_pnl, status, created_at FROM organization_fill_lifecycle_positions WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    lifecycle_rows = cur.execute("SELECT id, symbol, event_name, status, created_at FROM organization_fill_lifecycle_events WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    reconciliation_rows = cur.execute("SELECT id, recon_name, broker_value, internal_value, status, created_at FROM organization_fill_lifecycle_reconciliations WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30481_package(fill_rows, position_rows, lifecycle_rows, reconciliation_rows)
+
+
+@app.get('/workspace/fill-lifecycle/summary')
+def workspace_fill_lifecycle_summary(session=Depends(require_auth)):
+    ensure_qnt30481_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30481_package(cur, organization_id)
+        package.update({'mission': 'QNT30481', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fill-lifecycle/fills/create')
+def workspace_fill_lifecycle_fill_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30481_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    symbol = (payload.get('symbol') or 'SPY').strip() or 'SPY'
+    fill_qty = round(as_float(payload.get('fill_qty')), 4)
+    fill_price = round(as_float(payload.get('fill_price')), 4)
+    fill_notional = round(as_float(payload.get('fill_notional')), 4)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    fill_id = f'fill_lifecycle_fill_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_fill_lifecycle_fills (id, organization_id, symbol, fill_qty, fill_price, fill_notional, status, created_at) VALUES (?,?,?,?,?,?,?,?)", (fill_id, organization_id, symbol, fill_qty, fill_price, fill_notional, status, now))
+        conn.commit()
+        return {'mission': 'QNT30481', 'status': 'created', 'fill_id': fill_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fill-lifecycle/positions/create')
+def workspace_fill_lifecycle_position_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30481_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    symbol = (payload.get('symbol') or 'SPY').strip() or 'SPY'
+    position_qty = round(as_float(payload.get('position_qty')), 4)
+    position_notional = round(as_float(payload.get('position_notional')), 4)
+    realized_pnl = round(as_float(payload.get('realized_pnl')), 4)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    position_id = f'fill_lifecycle_position_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_fill_lifecycle_positions (id, organization_id, symbol, position_qty, position_notional, realized_pnl, status, created_at) VALUES (?,?,?,?,?,?,?,?)", (position_id, organization_id, symbol, position_qty, position_notional, realized_pnl, status, now))
+        conn.commit()
+        return {'mission': 'QNT30481', 'status': 'created', 'position_id': position_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fill-lifecycle/events/create')
+def workspace_fill_lifecycle_event_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30481_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    symbol = (payload.get('symbol') or 'SPY').strip() or 'SPY'
+    event_name = (payload.get('event_name') or 'fill_to_position').strip() or 'fill_to_position'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    event_id = f'fill_lifecycle_event_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_fill_lifecycle_events (id, organization_id, symbol, event_name, status, created_at) VALUES (?,?,?,?,?,?)", (event_id, organization_id, symbol, event_name, status, now))
+        conn.commit()
+        return {'mission': 'QNT30481', 'status': 'created', 'event_id': event_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/fill-lifecycle/reconciliations/create')
+def workspace_fill_lifecycle_reconciliation_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30481_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    recon_name = (payload.get('recon_name') or '').strip()
+    if not recon_name:
+        raise HTTPException(status_code=400, detail='recon_name_required')
+    broker_value = round(as_float(payload.get('broker_value')), 4)
+    internal_value = round(as_float(payload.get('internal_value')), 4)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    recon_id = f'fill_lifecycle_recon_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_fill_lifecycle_reconciliations (id, organization_id, recon_name, broker_value, internal_value, status, created_at) VALUES (?,?,?,?,?,?,?)", (recon_id, organization_id, recon_name, broker_value, internal_value, status, now))
+        conn.commit()
+        return {'mission': 'QNT30481', 'status': 'created', 'recon_id': recon_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30482_schema():
+    ensure_qnt30481_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_performance_pnl (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, book_name TEXT NOT NULL, pnl_value REAL DEFAULT 0, pnl_type TEXT DEFAULT 'realized', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_performance_nav (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, vehicle_name TEXT NOT NULL, nav_value REAL DEFAULT 0, share_count REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_performance_attribution (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, source_name TEXT NOT NULL, contribution_value REAL DEFAULT 0, bucket_type TEXT DEFAULT 'strategy', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_performance_valuation (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, symbol TEXT DEFAULT 'SPY', market_value REAL DEFAULT 0, price_mark REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30482_package(cur, organization_id):
+    ensure_qnt30482_schema()
+    pnl_rows = cur.execute("SELECT id, book_name, pnl_value, pnl_type, status, created_at FROM organization_performance_pnl WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    nav_rows = cur.execute("SELECT id, vehicle_name, nav_value, share_count, status, created_at FROM organization_performance_nav WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    attribution_rows = cur.execute("SELECT id, source_name, contribution_value, bucket_type, status, created_at FROM organization_performance_attribution WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    valuation_rows = cur.execute("SELECT id, symbol, market_value, price_mark, status, created_at FROM organization_performance_valuation WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30482_package(pnl_rows, nav_rows, attribution_rows, valuation_rows)
+
+
+@app.get('/workspace/performance-engine/summary')
+def workspace_performance_engine_summary(session=Depends(require_auth)):
+    ensure_qnt30482_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30482_package(cur, organization_id)
+        package.update({'mission': 'QNT30482', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/performance-engine/pnl/create')
+def workspace_performance_engine_pnl_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30482_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    book_name = (payload.get('book_name') or '').strip()
+    if not book_name:
+        raise HTTPException(status_code=400, detail='book_name_required')
+    pnl_value = round(as_float(payload.get('pnl_value')), 4)
+    pnl_type = (payload.get('pnl_type') or 'realized').strip() or 'realized'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    pnl_id = f'performance_pnl_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_performance_pnl (id, organization_id, book_name, pnl_value, pnl_type, status, created_at) VALUES (?,?,?,?,?,?,?)", (pnl_id, organization_id, book_name, pnl_value, pnl_type, status, now))
+        conn.commit()
+        return {'mission': 'QNT30482', 'status': 'created', 'pnl_id': pnl_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/performance-engine/nav/create')
+def workspace_performance_engine_nav_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30482_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    vehicle_name = (payload.get('vehicle_name') or '').strip()
+    if not vehicle_name:
+        raise HTTPException(status_code=400, detail='vehicle_name_required')
+    nav_value = round(as_float(payload.get('nav_value')), 4)
+    share_count = round(as_float(payload.get('share_count')), 4)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    nav_id = f'performance_nav_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_performance_nav (id, organization_id, vehicle_name, nav_value, share_count, status, created_at) VALUES (?,?,?,?,?,?,?)", (nav_id, organization_id, vehicle_name, nav_value, share_count, status, now))
+        conn.commit()
+        return {'mission': 'QNT30482', 'status': 'created', 'nav_id': nav_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/performance-engine/attribution/create')
+def workspace_performance_engine_attribution_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30482_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    source_name = (payload.get('source_name') or '').strip()
+    if not source_name:
+        raise HTTPException(status_code=400, detail='source_name_required')
+    contribution_value = round(as_float(payload.get('contribution_value')), 4)
+    bucket_type = (payload.get('bucket_type') or 'strategy').strip() or 'strategy'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    attribution_id = f'performance_attr_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_performance_attribution (id, organization_id, source_name, contribution_value, bucket_type, status, created_at) VALUES (?,?,?,?,?,?,?)", (attribution_id, organization_id, source_name, contribution_value, bucket_type, status, now))
+        conn.commit()
+        return {'mission': 'QNT30482', 'status': 'created', 'attribution_id': attribution_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/performance-engine/valuation/create')
+def workspace_performance_engine_valuation_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30482_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    symbol = (payload.get('symbol') or 'SPY').strip() or 'SPY'
+    market_value = round(as_float(payload.get('market_value')), 4)
+    price_mark = round(as_float(payload.get('price_mark')), 4)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    valuation_id = f'performance_val_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_performance_valuation (id, organization_id, symbol, market_value, price_mark, status, created_at) VALUES (?,?,?,?,?,?,?)", (valuation_id, organization_id, symbol, market_value, price_mark, status, now))
+        conn.commit()
+        return {'mission': 'QNT30482', 'status': 'created', 'valuation_id': valuation_id}
+    finally:
+        conn.close()
+
+
+
+def ensure_qnt30483_schema():
+    ensure_qnt30482_schema()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_rebalancing_cycles (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, rebalance_name TEXT NOT NULL, rebalance_mode TEXT DEFAULT 'risk_budget', status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_rebalancing_allocations (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, strategy_name TEXT NOT NULL, target_capital REAL DEFAULT 0, weight_percent REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_rebalancing_triggers (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, trigger_name TEXT NOT NULL, trigger_value REAL DEFAULT 0, threshold_value REAL DEFAULT 0, status TEXT DEFAULT 'draft', created_at TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS organization_rebalancing_adjustments (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, strategy_name TEXT NOT NULL, adjusted_capital REAL DEFAULT 0, adjustment_reason TEXT DEFAULT 'rebalance', status TEXT DEFAULT 'draft', created_at TEXT)")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _build_qnt30483_package(cur, organization_id):
+    ensure_qnt30483_schema()
+    rebalance_rows = cur.execute("SELECT id, rebalance_name, rebalance_mode, status, created_at FROM organization_rebalancing_cycles WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    allocation_rows = cur.execute("SELECT id, strategy_name, target_capital, weight_percent, status, created_at FROM organization_rebalancing_allocations WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    trigger_rows = cur.execute("SELECT id, trigger_name, trigger_value, threshold_value, status, created_at FROM organization_rebalancing_triggers WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    adjustment_rows = cur.execute("SELECT id, strategy_name, adjusted_capital, adjustment_reason, status, created_at FROM organization_rebalancing_adjustments WHERE organization_id=? ORDER BY created_at DESC", (organization_id,)).fetchall()
+    return build_qnt30483_package(rebalance_rows, allocation_rows, trigger_rows, adjustment_rows)
+
+
+@app.get('/workspace/rebalancing-engine/summary')
+def workspace_rebalancing_engine_summary(session=Depends(require_auth)):
+    ensure_qnt30483_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        package = _build_qnt30483_package(cur, organization_id)
+        package.update({'mission': 'QNT30483', 'workspace': {'organization_id': organization_id}})
+        return package
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/rebalancing-engine/rebalances/create')
+def workspace_rebalancing_rebalance_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30483_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    rebalance_name = (payload.get('rebalance_name') or '').strip()
+    if not rebalance_name:
+        raise HTTPException(status_code=400, detail='rebalance_name_required')
+    rebalance_mode = (payload.get('rebalance_mode') or 'risk_budget').strip() or 'risk_budget'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    rebalance_id = f'rebalance_cycle_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_rebalancing_cycles (id, organization_id, rebalance_name, rebalance_mode, status, created_at) VALUES (?,?,?,?,?,?)", (rebalance_id, organization_id, rebalance_name, rebalance_mode, status, now))
+        conn.commit()
+        return {'mission': 'QNT30483', 'status': 'created', 'rebalance_id': rebalance_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/rebalancing-engine/allocations/create')
+def workspace_rebalancing_allocation_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30483_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    strategy_name = (payload.get('strategy_name') or '').strip()
+    if not strategy_name:
+        raise HTTPException(status_code=400, detail='strategy_name_required')
+    target_capital = round(as_float(payload.get('target_capital')), 4)
+    weight_percent = round(as_float(payload.get('weight_percent')), 4)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    allocation_id = f'rebalance_allocation_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_rebalancing_allocations (id, organization_id, strategy_name, target_capital, weight_percent, status, created_at) VALUES (?,?,?,?,?,?,?)", (allocation_id, organization_id, strategy_name, target_capital, weight_percent, status, now))
+        conn.commit()
+        return {'mission': 'QNT30483', 'status': 'created', 'allocation_id': allocation_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/rebalancing-engine/triggers/create')
+def workspace_rebalancing_trigger_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30483_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    trigger_name = (payload.get('trigger_name') or '').strip()
+    if not trigger_name:
+        raise HTTPException(status_code=400, detail='trigger_name_required')
+    trigger_value = round(as_float(payload.get('trigger_value')), 4)
+    threshold_value = round(as_float(payload.get('threshold_value')), 4)
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    trigger_id = f'rebalance_trigger_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_rebalancing_triggers (id, organization_id, trigger_name, trigger_value, threshold_value, status, created_at) VALUES (?,?,?,?,?,?,?)", (trigger_id, organization_id, trigger_name, trigger_value, threshold_value, status, now))
+        conn.commit()
+        return {'mission': 'QNT30483', 'status': 'created', 'trigger_id': trigger_id}
+    finally:
+        conn.close()
+
+
+@app.post('/workspace/rebalancing-engine/adjustments/create')
+def workspace_rebalancing_adjustment_create(payload: dict, session=Depends(require_auth)):
+    ensure_qnt30483_schema()
+    ctx, org, active, organization_id = _require_workspace_org(session)
+    _workspace_admin_allowed(active, session)
+    strategy_name = (payload.get('strategy_name') or '').strip()
+    if not strategy_name:
+        raise HTTPException(status_code=400, detail='strategy_name_required')
+    adjusted_capital = round(as_float(payload.get('adjusted_capital')), 4)
+    adjustment_reason = (payload.get('adjustment_reason') or 'rebalance').strip() or 'rebalance'
+    status = (payload.get('status') or 'draft').strip() or 'draft'
+    adjustment_id = f'rebalance_adjustment_{uuid.uuid4().hex[:10]}'
+    now = now_iso()
+    conn = _workspace_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO organization_rebalancing_adjustments (id, organization_id, strategy_name, adjusted_capital, adjustment_reason, status, created_at) VALUES (?,?,?,?,?,?,?)", (adjustment_id, organization_id, strategy_name, adjusted_capital, adjustment_reason, status, now))
+        conn.commit()
+        return {'mission': 'QNT30483', 'status': 'created', 'adjustment_id': adjustment_id}
+    finally:
+        conn.close()
+
+
+
+# QNT30531 / QNT30535C — production integration import final fix
+try:
+    from .qnt30531_integration import integrate_qnt30531
+except Exception:
+    from backend.app.qnt30531_integration import integrate_qnt30531
+
+integrate_qnt30531(app)
+
+# QNT30532 — legacy compatibility routes
+@app.get("/api/v1/reports/nav")
+def qnt30532_legacy_nav_report():
+    try:
+        import json as _json
+        from pathlib import Path as _Path
+        nav_file = _Path(__file__).resolve().parents[2] / "data" / "qnt30510_current_nav.json"
+        if nav_file.exists():
+            return _json.loads(nav_file.read_text(encoding="utf-8"))
+    except Exception:
+        pass
+    return {"updated_at": "", "nav_snapshot": {}}
+
+from backend.app.qnt30610_governance_router import router as qnt30610_governance_router
+
+from backend.app.qnt30611_daily_packet_router import router as qnt30611_daily_packet_router
+
+from backend.app.qnt30612_pdf_report_router import router as qnt30612_pdf_report_router
+
+from backend.app.qnt30613_scheduler_distribution_router import router as qnt30613_scheduler_distribution_router
+
+from backend.app.qnt30614_delivery_router import router as qnt30614_delivery_router
+from backend.app.qnt30615_distribution_console_router import router as qnt30615_distribution_console_router
+from backend.app.qnt30616_access_control_router import router as qnt30616_access_control_router
+from backend.app.qnt30617_identity_registry_router import router as qnt30617_identity_registry_router
+from backend.app.qnt30618_notice_routing_router import router as qnt30618_notice_routing_router
+from backend.app.qnt30619_notification_campaign_router import router as qnt30619_notification_campaign_router
+from backend.app.qnt30620_crm_router import router as qnt30620_crm_router
+from backend.app.qnt30621_pipeline_router import router as qnt30621_pipeline_router
+from backend.app.qnt30622_meeting_tracker_router import router as qnt30622_meeting_tracker_router
+from backend.app.qnt30627_statement_batch_router import router as qnt30627_statement_batch_router
+from backend.app.qnt30628_performance_engine_router import router as qnt30628_performance_engine_router
+from backend.app.qnt30629_strategy_execution_router import router as qnt30629_strategy_execution_router
+from backend.app.qnt30630_allocation_engine_router import router as qnt30630_allocation_engine_router
+from backend.app.qnt30631_broker_integration_router import router as qnt30631_broker_integration_router
+from backend.app.qnt30632_autonomous_fund_router import router as qnt30632_autonomous_fund_router
+from backend.app.qnt30633_governance_compliance_router import router as qnt30633_governance_compliance_router
+from backend.app.qnt30636_operations_fund_admin_router import router as qnt30636_operations_fund_admin_router
+from backend.app.qnt30650_strategic_decision_router import router as qnt30650_strategic_decision_router
+from backend.app.qnt30651_autonomous_growth_router import router as qnt30651_autonomous_growth_router
+from backend.app.qnt30652_institutional_compliance_router import router as qnt30652_institutional_compliance_router
+from backend.app.qnt30653_multi_fund_architecture_router import router as qnt30653_multi_fund_architecture_router
+from backend.app.qnt30654_global_capital_network_router import router as qnt30654_global_capital_network_router
+from backend.app.qnt30655_sovereign_treasury_router import router as qnt30655_sovereign_treasury_router
+from backend.app.qnt30656_capital_mobility_router import router as qnt30656_capital_mobility_router
+from backend.app.qnt30657_allocator_command_router import router as qnt30657_allocator_command_router
+from backend.app.qnt30658_institutional_conversion_router import router as qnt30658_institutional_conversion_router
+from backend.app.qnt30659_institutional_closing_router import router as qnt30659_institutional_closing_router
+from backend.app.qnt30660_post_close_activation_router import router as qnt30660_post_close_activation_router
+from backend.app.qnt30661_live_capital_deployment_router import router as qnt30661_live_capital_deployment_router
+from backend.app.qnt30662_execution_governance_command_router import router as qnt30662_execution_governance_command_router
+from backend.app.qnt30663_capital_committee_oversight_router import router as qnt30663_capital_committee_oversight_router
+from backend.app.qnt30664_institutional_release_authority_router import router as qnt30664_institutional_release_authority_router
+from backend.app.qnt30665_capital_dispatch_supervision_router import router as qnt30665_capital_dispatch_supervision_router
+from backend.app.qnt30666_live_allocation_control_tower_router import router as qnt30666_live_allocation_control_tower_router
+from backend.app.qnt30667_allocation_oversight_fabric_router import router as qnt30667_allocation_oversight_fabric_router
+from backend.app.qnt30668_allocation_escalation_command_router import router as qnt30668_allocation_escalation_command_router
+
+app.include_router(qnt30609_supervisory_control_router)
+
+app.include_router(qnt30610_governance_router)
+
+app.include_router(qnt30611_daily_packet_router)
+
+app.include_router(qnt30612_pdf_report_router)
+
+app.include_router(qnt30613_scheduler_distribution_router)
+
+app.include_router(qnt30614_delivery_router)
+app.include_router(qnt30615_distribution_console_router)
+app.include_router(qnt30616_access_control_router)
+app.include_router(qnt30617_identity_registry_router)
+app.include_router(qnt30618_notice_routing_router)
+app.include_router(qnt30619_notification_campaign_router)
+app.include_router(qnt30620_crm_router)
+app.include_router(qnt30621_pipeline_router)
+app.include_router(qnt30622_meeting_tracker_router)
+app.include_router(qnt30627_statement_batch_router)
+app.include_router(qnt30628_performance_engine_router)
+app.include_router(qnt30629_strategy_execution_router)
+app.include_router(qnt30630_allocation_engine_router)
+app.include_router(qnt30631_broker_integration_router)
+app.include_router(qnt30632_autonomous_fund_router)
+app.include_router(qnt30633_governance_compliance_router)
+app.include_router(qnt30636_operations_fund_admin_router)
+app.include_router(qnt30650_strategic_decision_router)
+app.include_router(qnt30651_autonomous_growth_router)
+app.include_router(qnt30652_institutional_compliance_router)
+app.include_router(qnt30653_multi_fund_architecture_router)
+app.include_router(qnt30654_global_capital_network_router)
+app.include_router(qnt30655_sovereign_treasury_router)
+app.include_router(qnt30656_capital_mobility_router)
+app.include_router(qnt30657_allocator_command_router)
+app.include_router(qnt30658_institutional_conversion_router)
+app.include_router(qnt30659_institutional_closing_router)
+app.include_router(qnt30660_post_close_activation_router)
+app.include_router(qnt30661_live_capital_deployment_router)
+app.include_router(qnt30662_execution_governance_command_router)
+app.include_router(qnt30663_capital_committee_oversight_router)
+app.include_router(qnt30664_institutional_release_authority_router)
+app.include_router(qnt30665_capital_dispatch_supervision_router)
+app.include_router(qnt30666_live_allocation_control_tower_router)
+app.include_router(qnt30667_allocation_oversight_fabric_router)
+app.include_router(qnt30668_allocation_escalation_command_router)
+
+from backend.app.qnt30623_onboarding_router import router as qnt30623_onboarding_router
+from backend.app.qnt30624_capital_ledger_router import router as qnt30624_capital_ledger_router
+from backend.app.qnt30625_waterfall_router import router as qnt30625_waterfall_router
+from backend.app.qnt30626_equalization_router import router as qnt30626_equalization_router
+app.include_router(qnt30623_onboarding_router)
+app.include_router(qnt30624_capital_ledger_router)
+app.include_router(qnt30625_waterfall_router)
+app.include_router(qnt30626_equalization_router)
+
+from backend.app.qnt30669_allocation_release_convergence_layer_router import router as qnt30669_allocation_release_convergence_layer_router
+from backend.app.qnt30670_live_allocation_release_authority_mesh_router import router as qnt30670_live_allocation_release_authority_mesh_router
+app.include_router(qnt30669_allocation_release_convergence_layer_router)
+app.include_router(qnt30670_live_allocation_release_authority_mesh_router)
+from backend.app.qnt30671_live_allocation_clearance_grid_router import router as qnt30671_live_allocation_clearance_grid_router
+app.include_router(qnt30671_live_allocation_clearance_grid_router)
+
+app.include_router(qnt30672_router)
+
+app.include_router(qnt30673_router)
+
+app.include_router(qnt30674_router)
+
+app.include_router(qnt30675_router)
+app.include_router(qnt30676_router)
+app.include_router(qnt30677_router)
+
+app.include_router(qnt30678_router)
+app.include_router(qnt30679_router)
+app.include_router(qnt30680_router)
+
+app.include_router(qnt30681_router)
+
+app.include_router(qnt30682_router)
+
+app.include_router(qnt30683_router)
+
+app.include_router(qnt30684_router)
+
+app.include_router(qnt30685_router)
+
+app.include_router(qnt30686_router)
+
+app.include_router(qnt30687_router)
+
+app.include_router(qnt30688_router)
+
+app.include_router(qnt30689_router)
+
+app.include_router(qnt30690_router)
+
+app.include_router(qnt30691_router)
+
+app.include_router(qnt30692_router)
+
+app.include_router(qnt30693_router)
+
+app.include_router(qnt30694_router)
+
+app.include_router(qnt30695_router)
+
+app.include_router(qnt30696_router)
+
+app.include_router(qnt30697_router)
+app.include_router(qnt30700_router)
+app.include_router(qnt30702_router)
+app.include_router(qnt30703_router)
+app.include_router(qnt30704_router)
+app.include_router(qnt30705_router)
+app.include_router(qnt30706_router)
+app.include_router(qnt30707_router)
+app.include_router(qnt30708_router)
+app.include_router(qnt30709_router)
+app.include_router(qnt30710_router)
+app.include_router(qnt30711_router)
+app.include_router(qnt30712_router)
+app.include_router(qnt30713_router)
+app.include_router(qnt30714_router)
+app.include_router(qnt30715_router)
+app.include_router(qnt30716_router)
+app.include_router(qnt30717_router)
+app.include_router(qnt30718_router)
+app.include_router(qnt30719_router)
+app.include_router(qnt30720_router)
+app.include_router(qnt30721_router)
+app.include_router(qnt30722_router)
+app.include_router(qnt30723_router)
+app.include_router(qnt30724_router)
+app.include_router(qnt30725_router)
+app.include_router(qnt30726_router)
+app.include_router(qnt30727_router)
+app.include_router(qnt30728_router)
+app.include_router(qnt30729_router)
+app.include_router(qnt30730_router)
+app.include_router(qnt30731_router)
+app.include_router(qnt30732_router)
+app.include_router(qnt30733_router)
+app.include_router(qnt30734_router)
+app.include_router(qnt30735_router)
+app.include_router(qnt30736_router)
+app.include_router(qnt30737_router)
+app.include_router(qnt30738_router)
+app.include_router(qnt30739_router)
+app.include_router(qnt30740_router)
+app.include_router(qnt30741_router)
+app.include_router(qnt30742_router)
+app.include_router(qnt30743_router)
+app.include_router(qnt30744_router)
+app.include_router(qnt30745_router)
+app.include_router(qnt30746_router)
+app.include_router(qnt30747_router)
+app.include_router(qnt30748_router)
+app.include_router(qnt30749_router)
+app.include_router(qnt30750_router)
+app.include_router(qnt30751_router)
+app.include_router(qnt30752_router)
+app.include_router(qnt30753_router)
+app.include_router(qnt30754_router)
+app.include_router(qnt30755_router)
+app.include_router(qnt30756_router)
+app.include_router(qnt30757_router)
+app.include_router(qnt30758_router)
+app.include_router(qnt30759_router)
+app.include_router(qnt30760_router)
+app.include_router(qnt30761_router)
+app.include_router(qnt30762_router)
+app.include_router(qnt30763_router)
+app.include_router(qnt30764_router)
+app.include_router(qnt30765_router)
+app.include_router(qnt30766_router)
+app.include_router(qnt30767_router)
+app.include_router(qnt30768_router)
+app.include_router(qnt30769_router)
+app.include_router(qnt30770_router)
+app.include_router(qnt30771_router)
+app.include_router(qnt30772_router)
+app.include_router(qnt30773_router)
+app.include_router(qnt40002_router)
+app.include_router(qnt40003_router)
+app.include_router(qnt40004_router)
+app.include_router(qnt40005_router)
+app.include_router(qnt40006_router)
+app.include_router(qnt40007_router)
+app.include_router(qnt40008_router)
+app.include_router(qnt40009_router)
+app.include_router(qnt40010_router)
+app.include_router(qnt40011_router)
+app.include_router(qnt40012_router)
+app.include_router(qnt40013_router)
+app.include_router(qnt40014_router)
+app.include_router(qnt40015_router)
+app.include_router(qnt40016_router)
+app.include_router(qnt40017_router)
+app.include_router(qnt40018_router)
+app.include_router(qnt40019_router)
+app.include_router(qnt40020_router)
+app.include_router(qnt40021_router)
+
+app.include_router(qnt40022_router)
+app.include_router(qnt40023_router)
+app.include_router(qnt40024_router)
+app.include_router(qnt40025_router)
+app.include_router(qnt40026_router)
+app.include_router(qnt40027_router)
+app.include_router(qnt40028_router)
+app.include_router(qnt40029_router)
+app.include_router(qnt40030_router)
+app.include_router(qnt40031_router)
+app.include_router(qnt40032_router)
+app.include_router(qnt40033_router)
+app.include_router(qnt40034_router)
+app.include_router(qnt40035_router)
+app.include_router(qnt50001_router)
+app.include_router(qnt50002_router)
+app.include_router(qnt50003_router)
+app.include_router(qnt50004_router)
+app.include_router(qnt50005_router)
+app.include_router(qnt50006_router)
+app.include_router(qnt50007_router)
+app.include_router(qnt50008_router)
+app.include_router(qnt50009_router)
+app.include_router(qnt50010_router)
+app.include_router(qnt50011_router)
+app.include_router(qnt50012_router)
+app.include_router(qnt50013_router)
+app.include_router(qnt50014_router)
+app.include_router(qnt50015_router)
+app.include_router(qnt50018_router)
+app.include_router(qnt50022_router)
+app.include_router(qnt50023_router)
+app.include_router(qnt50024_router)
+app.include_router(qnt50025_router)
+app.include_router(qnt50026_router)
+app.include_router(qnt50027_router)
+app.include_router(qnt50028_router)
+app.include_router(qnt50029_router)
+app.include_router(qnt50030_router)
+app.include_router(qnt50031_router)
+app.include_router(qnt50033_router)
+app.include_router(qnt50034_router)
+app.include_router(qnt50035_router)
+app.include_router(qnt50036_router)
+app.include_router(qntreal01a_router)
+app.include_router(qntreal01b_router)
+app.include_router(qntreal01c_router)
+app.include_router(qntreal01d_router)
+app.include_router(qntreal01e_router)
+
+app.include_router(qntreal01f_router)
+app.include_router(qntreal01g_router)
+app.include_router(qntreal01i_router)
+app.include_router(qntreal01j_router)

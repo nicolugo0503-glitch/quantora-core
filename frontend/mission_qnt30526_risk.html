@@ -1,0 +1,14 @@
+<html><body><h1>QNT30526 Risk Governor</h1>
+<button onclick="kill()">KILL SWITCH</button>
+<button onclick="reset()">RESET</button>
+<pre id='out'></pre>
+<script>
+async function kill(){
+ const r = await fetch('/api/risk/kill',{method:'POST'});
+ out.innerText = JSON.stringify(await r.json(),null,2);
+}
+async function reset(){
+ const r = await fetch('/api/risk/reset',{method:'POST'});
+ out.innerText = JSON.stringify(await r.json(),null,2);
+}
+</script></body></html>

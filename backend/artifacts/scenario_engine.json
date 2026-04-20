@@ -1,0 +1,13 @@
+{
+  "version": "30359",
+  "scenarios": [],
+  "runs": [],
+  "telemetry": {
+    "scenarios_defined": 0,
+    "runs_executed": 0,
+    "breach_runs": 0,
+    "worst_drawdown_pct": 0.0,
+    "last_run_at": null,
+    "last_scenario_id": null
+  }
+}

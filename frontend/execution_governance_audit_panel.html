@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — Execution Governance & Audit</title>
+  <style>
+    :root{--bg:#07111f;--panel:#0f1d31;--panel2:#132742;--line:#22314e;--text:#e5eefc;--muted:#9bb0d1;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(15,29,49,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .sub{color:var(--muted);max-width:980px;line-height:1.5}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    button{border-radius:10px;border:none;background:var(--accent);color:var(--text);padding:10px 12px;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}.stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}
+    th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #274168;background:#0b1a2c;font-size:12px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:180px;white-space:pre-wrap}
+    @media (max-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:1fr}}
+    @media (max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT30448 — Execution Governance & Audit</h1>
+      <div class="sub">Approval logs, live control rules, execution audit trails, and failure registry. This is the control layer that makes autonomous capital institutionally defensible.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="loadAll()">Refresh</button>
+      <button onclick="seedRule()">Seed Rule</button>
+      <button onclick="seedApproval()">Seed Approval</button>
+      <button onclick="seedAudit()">Seed Audit Event</button>
+      <button onclick="seedFailure()">Seed Failure</button>
+    </div>
+  </div>
+
+  <div class="grid" id="summaryGrid"></div>
+
+  <div class="layout">
+    <div class="stack">
+      <div class="card">
+        <h2>Control Rules</h2>
+        <div class="table-wrap"><table id="ruleTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Approvals</h2>
+        <div class="table-wrap"><table id="approvalTable"></table></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card">
+        <h2>Audit Trail</h2>
+        <div class="table-wrap"><table id="auditTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Execution Failures</h2>
+        <div class="table-wrap"><table id="failureTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Governance Health</h2>
+        <div class="pills" id="healthPills"></div>
+      </div>
+      <div class="card">
+        <h2>Last Action</h2>
+        <pre id="actionOut">No action yet.</pre>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const api=(path, opts={})=>fetch(path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok) throw new Error(d.detail||'request_failed'); return d;});
+function table(el, headers, rows){
+  const thead = `<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  const body = rows.length ? rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${headers.length}">No data</td></tr>`;
+  el.innerHTML = thead + body;
+}
+function renderSummary(summary){
+  const labels = [
+    ['Active Rules', summary.active_rules],
+    ['Approvals', summary.approvals_logged],
+    ['Approved', summary.approved_actions],
+    ['Rejected', summary.rejected_actions],
+    ['Audit Events', summary.audit_events],
+    ['Governance Score', summary.governance_score]
+  ];
+  document.getElementById('summaryGrid').innerHTML = labels.map(([label,val])=>`<div class="card"><div class="label">${label}</div><div class="value">${val}</div></div>`).join('');
+}
+function pills(target, items){
+  document.getElementById(target).innerHTML = items.map(([label,klass])=>`<span class="pill ${klass}">${label}</span>`).join('');
+}
+async function loadAll(){
+  const data = await api('/workspace/governance/summary');
+  renderSummary(data.summary);
+  table(document.getElementById('ruleTable'),
+    ['Rule','Type','Threshold','Status','Created'],
+    (data.rules||[]).map(r=>[r.rule_name, r.rule_type, r.threshold_value, r.status, r.created_at||'-'])
+  );
+  table(document.getElementById('approvalTable'),
+    ['Created','Plan','Decision','Reviewer','Reason'],
+    (data.approvals||[]).map(r=>[r.created_at||'-', r.plan_name, r.decision, r.reviewer, r.reason||'-'])
+  );
+  table(document.getElementById('auditTable'),
+    ['Created','Event','Actor','Target','Status'],
+    (data.audit_events||[]).map(r=>[r.created_at||'-', r.event_type, r.actor, r.target_ref, r.status])
+  );
+  table(document.getElementById('failureTable'),
+    ['Created','Type','Severity','Status','Execution'],
+    (data.execution_failures||[]).map(r=>[r.created_at||'-', r.failure_type, r.severity, r.status, r.execution_id||'-'])
+  );
+  pills('healthPills', [
+    [`Rules ${data.governance_health.rules_ready?'Ready':'Missing'}`, data.governance_health.rules_ready?'good':'warn'],
+    [`Approvals ${data.governance_health.approval_log_ready?'Ready':'Missing'}`, data.governance_health.approval_log_ready?'good':'warn'],
+    [`Audit ${data.governance_health.audit_trail_ready?'Ready':'Missing'}`, data.governance_health.audit_trail_ready?'good':'warn'],
+    [`Failures ${data.governance_health.failure_registry_ready?'Ready':'Missing'}`, data.governance_health.failure_registry_ready?'good':'warn'],
+    [`Score ${data.governance_health.governance_score}`, data.governance_health.governance_score>=85?'good':'warn']
+  ]);
+}
+async function seedRule(){
+  const res = await api('/workspace/governance/rules/create', {method:'POST', body: JSON.stringify({rule_name:'Max Allocation Drift', rule_type:'allocation_limit', threshold_value:15000, status:'active'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedApproval(){
+  const res = await api('/workspace/governance/approvals/create', {method:'POST', body: JSON.stringify({plan_name:'Increase Momentum Allocation', decision:'approved', reviewer:'operator', reason:'Within mandate'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedAudit(){
+  const res = await api('/workspace/governance/audit/create', {method:'POST', body: JSON.stringify({event_type:'plan_executed', actor:'system', target_ref:'plan_demo_1', status:'logged'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedFailure(){
+  const res = await api('/workspace/governance/failures/create', {method:'POST', body: JSON.stringify({execution_id:'exec_demo_1', failure_type:'broker_reject', severity:'high', status:'open'})});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+loadAll().catch(err => document.getElementById('actionOut').textContent = String(err));
+</script>
+</body>
+</html>

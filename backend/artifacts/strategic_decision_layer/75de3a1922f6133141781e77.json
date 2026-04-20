@@ -1,0 +1,13 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "product_scale_score": 70.0,
+    "product_retire_score": 38.0,
+    "high_confidence_threshold": 82.0,
+    "distribution_priority_floor": 55.0,
+    "max_directives": 5
+  },
+  "runs": [],
+  "created_at": 1775712869,
+  "updated_at": 1775712869
+}

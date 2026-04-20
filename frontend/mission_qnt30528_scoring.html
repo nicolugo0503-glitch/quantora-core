@@ -1,0 +1,12 @@
+<html><body><h1>QNT30528 Strategy Scoring</h1>
+<button onclick="run()">Compute + Rank</button>
+<pre id='out'></pre>
+<script>
+async function run(){
+  await fetch('/api/scoring/update',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({strategy_id:1,pnl:500,drawdown:-50,sharpe:1.2})});
+  await fetch('/api/scoring/compute',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({strategy_id:1})});
+  const res = await fetch('/api/scoring/rank');
+  const d = await res.json();
+  out.innerText = JSON.stringify(d,null,2);
+}
+</script></body></html>

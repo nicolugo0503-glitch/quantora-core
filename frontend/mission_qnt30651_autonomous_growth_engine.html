@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>QNT30651 Autonomous Growth Engine</title>
+  <style>
+    :root { --bg:#06101d; --panel:#0f1d31; --panel2:#0b1628; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#2563eb; --good:#10b981; --warn:#f59e0b; --bad:#ef4444; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#040b15 0%,#0a1424 100%); color:var(--text); }
+    .wrap { max-width:1540px; margin:0 auto; padding:24px; }
+    .hero,.panel,.metric { background:rgba(15,29,49,.96); border:1px solid var(--line); border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,.18); padding:18px; }
+    .hero { margin-bottom:18px; }
+    .muted { color:var(--muted); line-height:1.55; }
+    .toolbar { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    button,a.btn { border:none; background:var(--accent); color:#fff; padding:10px 14px; border-radius:10px; font-weight:700; text-decoration:none; cursor:pointer; }
+    button.secondary,a.secondary { background:#1d4ed8; }
+    .metric-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:14px; margin-bottom:18px; }
+    .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .value { font-size:28px; font-weight:800; margin-top:8px; }
+    .status { font-size:15px; font-weight:700; margin-top:10px; }
+    .grid { display:grid; grid-template-columns:1.2fr 1fr; gap:16px; margin-bottom:16px; }
+    .stack { display:grid; gap:16px; }
+    .section-title { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px; }
+    .section-title h2 { margin:0; font-size:18px; }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th,td { padding:10px; border-bottom:1px solid #1e2d47; text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-size:12px; text-transform:uppercase; }
+    .pill { display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid #2a3c60; background:#0a1526; }
+    .good { color:#d1fae5; border-color:#14532d; }
+    .warn { color:#fde68a; border-color:#92400e; }
+    .bad { color:#fecaca; border-color:#7f1d1d; }
+    pre { margin:0; background:var(--panel2); border:1px solid #1e2d47; border-radius:14px; padding:14px; white-space:pre-wrap; min-height:180px; max-height:420px; overflow:auto; }
+    .tiny { color:var(--muted); font-size:12px; }
+    @media (max-width:1100px){ .metric-grid,.grid{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="label">Institutional Mission</div>
+    <h1 style="margin:8px 0;">QNT30651 — Autonomous Growth Engine</h1>
+    <div class="muted">This layer converts strategic decisions into governed growth actions: launch queues, channel activation, coverage sequences, and reinvestment plans. It is the institution's compound-growth operator, not a marketing dashboard.</div>
+    <div class="toolbar">
+      <a class="btn" href="index.html">Back to Command Center</a>
+      <button onclick="runLayer()">Run Growth Cycle</button>
+      <button class="secondary" onclick="refreshAll()">Refresh Summary</button>
+    </div>
+  </section>
+
+  <section class="metric-grid">
+    <div class="metric"><div class="label">Autonomy Posture</div><div class="value" id="posture">-</div><div class="status" id="postureTag"></div></div>
+    <div class="metric"><div class="label">Growth Capacity</div><div class="value" id="capacity">-</div><div class="status" id="capacityTag"></div></div>
+    <div class="metric"><div class="label">Launch Queue</div><div class="value" id="launchCount">-</div><div class="status">Governed product growth</div></div>
+    <div class="metric"><div class="label">Channel Sequences</div><div class="value" id="channelCount">-</div><div class="status">Distribution expansion agenda</div></div>
+    <div class="metric"><div class="label">Weighted Pipeline</div><div class="value" id="pipeline">-</div><div class="status">Capital demand pressure</div></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Launch Queue</h2><span class="tiny">Product scaling and incubation agenda</span></div>
+      <table id="launchTable"><thead><tr><th>Initiative</th><th>Type</th><th>Strategy</th><th>Priority</th><th>Readiness</th><th>Objective</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="stack">
+      <div class="panel">
+        <div class="section-title"><h2>Reinvestment Plan</h2><span class="tiny">Capital growth budget</span></div>
+        <pre id="reinvestmentPlan">Loading…</pre>
+      </div>
+      <div class="panel">
+        <div class="section-title"><h2>Constraints</h2><span class="tiny">Growth governance</span></div>
+        <pre id="constraints">Loading…</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Channel Sequences</h2><span class="tiny">Where growth gets activated</span></div>
+      <table id="channelTable"><thead><tr><th>Channel</th><th>Priority</th><th>Score</th><th>Next Action</th><th>Coverage Ready</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="panel">
+      <div class="section-title"><h2>Investor Sequences</h2><span class="tiny">Coverage ownership queue</span></div>
+      <table id="investorTable"><thead><tr><th>Investor</th><th>Owner</th><th>Sequence</th><th>Urgency</th><th>Next Action</th></tr></thead><tbody></tbody></table>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Strategic Snapshot</h2><span class="tiny">Decision layer dependency</span></div>
+      <pre id="strategicSnapshot">Loading…</pre>
+    </div>
+    <div class="panel">
+      <div class="section-title"><h2>Growth Audit Trail</h2><span class="tiny">Latest autonomous growth cycle</span></div>
+      <pre id="auditTrail">Loading…</pre>
+    </div>
+  </section>
+</div>
+<script>
+  const fmtMoney = v => new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Number(v||0));
+  const fmtPct = v => `${Number(v||0).toFixed(2)}%`;
+  const pill = (text, cls='') => `<span class="pill ${cls}">${text}</span>`;
+
+  async function getJson(url, opts) {
+    const res = await fetch(url, opts);
+    if (!res.ok) throw new Error(`${url} -> ${res.status}`);
+    return res.json();
+  }
+
+  function severityClass(text='') {
+    const t = String(text).toLowerCase();
+    if (t.includes('critical') || t.includes('watch')) return 'bad';
+    if (t.includes('prepare') || t.includes('sequenced') || t.includes('growth-watch')) return 'warn';
+    return 'good';
+  }
+
+  function fillTable(id, rows, renderer, colspan=6) {
+    const tbody = document.querySelector(`#${id} tbody`);
+    tbody.innerHTML = rows.length ? rows.map(renderer).join('') : `<tr><td colspan="${colspan}" class="tiny">No rows available.</td></tr>`;
+  }
+
+  async function refreshAll() {
+    try {
+      const [summary, audit] = await Promise.all([
+        getJson('/api/autonomous-growth-engine/summary'),
+        getJson('/api/autonomous-growth-engine/audit')
+      ]);
+      renderSummary(summary, audit);
+    } catch (err) {
+      document.getElementById('auditTrail').textContent = `Autonomous Growth Engine unavailable. ${err.message}`;
+    }
+  }
+
+  async function runLayer() {
+    const result = await getJson('/api/autonomous-growth-engine/run', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ trigger:'manual-ui' })
+    });
+    renderSummary(result.summary, { latest_run: result.run, runs: [result.run], run_count: 1 });
+  }
+
+  function renderSummary(summary, audit) {
+    document.getElementById('posture').textContent = summary.autonomy_posture || '-';
+    document.getElementById('postureTag').innerHTML = pill(summary.autonomy_posture || 'unknown', severityClass(summary.autonomy_posture));
+    document.getElementById('capacity').textContent = fmtPct(summary.growth_capacity_score || 0);
+    document.getElementById('capacityTag').innerHTML = pill((summary.growth_capacity_score || 0) >= 76 ? 'autonomy released' : ((summary.growth_capacity_score || 0) >= 60 ? 'sequenced growth' : 'restricted'), severityClass((summary.growth_capacity_score || 0) >= 76 ? 'good' : 'prepare'));
+    document.getElementById('launchCount').textContent = String((summary.launch_queue || []).length);
+    document.getElementById('channelCount').textContent = String((summary.channel_sequences || []).length);
+    document.getElementById('pipeline').textContent = fmtMoney(summary.pipeline_snapshot?.weighted_pipeline_amount || 0);
+
+    fillTable('launchTable', summary.launch_queue || [], row => `
+      <tr>
+        <td>${row.product_id || row.initiative_id || '-'}</td>
+        <td>${pill(row.initiative_type || '-', severityClass(row.initiative_type))}</td>
+        <td>${row.linked_strategy || '-'}</td>
+        <td>${pill(row.priority || '-', severityClass(row.priority))}</td>
+        <td>${fmtPct(row.readiness_score || 0)}</td>
+        <td>${row.objective || '-'}</td>
+      </tr>`, 6);
+
+    fillTable('channelTable', summary.channel_sequences || [], row => `
+      <tr>
+        <td>${row.channel || '-'}</td>
+        <td>${pill(row.priority || '-', severityClass(row.priority))}</td>
+        <td>${fmtPct(row.sequence_score || 0)}</td>
+        <td>${row.next_action || '-'}</td>
+        <td>${row.coverage_ready_relationships || 0}</td>
+      </tr>`, 5);
+
+    fillTable('investorTable', summary.investor_sequences || [], row => `
+      <tr>
+        <td>${row.investor_id || '-'}</td>
+        <td>${row.owner || '-'}</td>
+        <td>${pill(row.sequence_type || '-', severityClass(row.sequence_type))}</td>
+        <td>${fmtPct(row.urgency_score || 0)}</td>
+        <td>${row.next_action || '-'}</td>
+      </tr>`, 5);
+
+    document.getElementById('reinvestmentPlan').textContent = JSON.stringify(summary.reinvestment_plan || {}, null, 2);
+    document.getElementById('constraints').textContent = JSON.stringify(summary.constraints || [], null, 2);
+    document.getElementById('strategicSnapshot').textContent = JSON.stringify({
+      strategic_summary: summary.strategic_summary || {},
+      crm_snapshot: summary.crm_snapshot || {},
+      pipeline_snapshot: summary.pipeline_snapshot || {},
+      execution_agenda: summary.execution_agenda || []
+    }, null, 2);
+    document.getElementById('auditTrail').textContent = JSON.stringify({
+      run_count: audit.run_count || (audit.runs || []).length || 0,
+      latest_run: audit.latest_run || null
+    }, null, 2);
+  }
+
+  refreshAll();
+</script>
+</body>
+</html>

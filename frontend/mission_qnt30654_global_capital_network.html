@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>QNT30654 Global Capital Network</title>
+  <style>
+    :root { --bg:#06101d; --panel:#0f1d31; --panel2:#0b1628; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#2563eb; --good:#10b981; --warn:#f59e0b; --bad:#ef4444; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#040b15 0%,#0a1424 100%); color:var(--text); }
+    .wrap { max-width:1540px; margin:0 auto; padding:24px; }
+    .hero,.panel,.metric { background:rgba(15,29,49,.96); border:1px solid var(--line); border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,.18); padding:18px; }
+    .hero { margin-bottom:18px; }
+    .muted { color:var(--muted); line-height:1.55; }
+    .toolbar { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    button,a.btn { border:none; background:var(--accent); color:#fff; padding:10px 14px; border-radius:10px; font-weight:700; text-decoration:none; cursor:pointer; }
+    button.secondary,a.secondary { background:#1d4ed8; }
+    .metric-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:14px; margin-bottom:18px; }
+    .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .value { font-size:28px; font-weight:800; margin-top:8px; }
+    .status { font-size:15px; font-weight:700; margin-top:10px; }
+    .grid { display:grid; grid-template-columns:1.2fr 1fr; gap:16px; margin-bottom:16px; }
+    .stack { display:grid; gap:16px; }
+    .section-title { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px; }
+    .section-title h2 { margin:0; font-size:18px; }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th,td { padding:10px; border-bottom:1px solid #1e2d47; text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-size:12px; text-transform:uppercase; }
+    .pill { display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid #2a3c60; background:#0a1526; }
+    .good { color:#d1fae5; border-color:#14532d; }
+    .warn { color:#fde68a; border-color:#92400e; }
+    .bad { color:#fecaca; border-color:#7f1d1d; }
+    pre { margin:0; background:var(--panel2); border:1px solid #1e2d47; border-radius:14px; padding:14px; white-space:pre-wrap; min-height:180px; max-height:420px; overflow:auto; }
+    .tiny { color:var(--muted); font-size:12px; }
+    @media (max-width:1100px){ .metric-grid,.grid{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="label">Institutional Mission</div>
+    <h1 style="margin:8px 0;">QNT30654 — Global Capital Network</h1>
+    <div class="muted">This layer converts Quantora into a cross-border capital routing institution with allocator segmentation, corridor activation, jurisdiction-aware mobilization, and governed global network posture.</div>
+    <div class="toolbar">
+      <a class="btn" href="index.html">Back to Command Center</a>
+      <button onclick="runLayer()">Run Global Network Cycle</button>
+      <button class="secondary" onclick="refreshAll()">Refresh Summary</button>
+    </div>
+  </section>
+
+  <section class="metric-grid">
+    <div class="metric"><div class="label">Network Posture</div><div class="value" id="networkPosture">-</div><div class="status" id="postureTag"></div></div>
+    <div class="metric"><div class="label">Activation Score</div><div class="value" id="activationScore">-</div><div class="status" id="activationTag"></div></div>
+    <div class="metric"><div class="label">Approved Corridors</div><div class="value" id="approvedCorridors">-</div><div class="status">Live cross-border routes</div></div>
+    <div class="metric"><div class="label">Total Corridors</div><div class="value" id="corridorCount">-</div><div class="status">Global network map</div></div>
+    <div class="metric"><div class="label">Target External Capacity</div><div class="value" id="targetCapacity">-</div><div class="status">Allocator demand surface</div></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Capital Corridors</h2><span class="tiny">Cross-border routes</span></div>
+      <table id="corridorTable"><thead><tr><th>Corridor</th><th>Vehicle</th><th>Status</th><th>Readiness</th><th>Reserve Mobility</th><th>Risk</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="stack">
+      <div class="panel">
+        <div class="section-title"><h2>Policy</h2><span class="tiny">Institutional thresholds</span></div>
+        <pre id="policy">Loading…</pre>
+      </div>
+      <div class="panel">
+        <div class="section-title"><h2>Readiness Matrix</h2><span class="tiny">Cross-border launch posture</span></div>
+        <pre id="readiness">Loading…</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Allocator Segments</h2><span class="tiny">Demand targeting</span></div>
+      <table id="segmentTable"><thead><tr><th>Segment</th><th>Allocator Count</th><th>Avg Ticket</th><th>Activation</th><th>Expected Capacity</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="panel">
+      <div class="section-title"><h2>Capital Map</h2><span class="tiny">Coverage and capacity</span></div>
+      <pre id="capitalMap">Loading…</pre>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Dependencies</h2><span class="tiny">Strategic, growth, compliance, and multi-fund inputs</span></div>
+      <pre id="dependencies">Loading…</pre>
+    </div>
+    <div class="panel">
+      <div class="section-title"><h2>Network Actions</h2><span class="tiny">Executive execution agenda</span></div>
+      <pre id="actions">Loading…</pre>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Audit Trail</h2><span class="tiny">Latest global network cycle</span></div>
+      <pre id="auditTrail">Loading…</pre>
+    </div>
+    <div class="panel">
+      <div class="section-title"><h2>Risk Constraints</h2><span class="tiny">Jurisdiction and readiness controls</span></div>
+      <pre id="riskConstraints">Loading…</pre>
+    </div>
+  </section>
+</div>
+<script>
+  const fmtPct = v => `${Number(v||0).toFixed(2)}%`;
+  const fmtMoney = v => `$${Number(v||0).toLocaleString(undefined,{maximumFractionDigits:2})}`;
+  const pill = (text, cls='') => `<span class="pill ${cls}">${text}</span>`;
+  async function getJson(url, opts) {
+    const res = await fetch(url, opts);
+    if (!res.ok) throw new Error(`${url} -> ${res.status}`);
+    return res.json();
+  }
+  function severityClass(text='') {
+    const t = String(text).toLowerCase();
+    if (t.includes('blocked') || t.includes('stage') || t.includes('risk')) return 'bad';
+    if (t.includes('controlled') || t.includes('staging')) return 'warn';
+    return 'good';
+  }
+  function fillTable(id, rows, renderer, colspan=5) {
+    const tbody = document.querySelector(`#${id} tbody`);
+    tbody.innerHTML = rows.length ? rows.map(renderer).join('') : `<tr><td colspan="${colspan}" class="tiny">No rows available.</td></tr>`;
+  }
+  async function refreshAll() {
+    try {
+      const [summary, audit] = await Promise.all([
+        getJson('/api/global-capital-network/summary'),
+        getJson('/api/global-capital-network/audit')
+      ]);
+      renderSummary(summary, audit);
+    } catch (err) {
+      document.getElementById('auditTrail').textContent = `Global Capital Network unavailable. ${err.message}`;
+    }
+  }
+  async function runLayer() {
+    const result = await getJson('/api/global-capital-network/run', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ trigger:'manual-ui' })
+    });
+    renderSummary(result.summary, { latest_run: result.run, runs: [result.run], run_count: 1 });
+  }
+  function renderSummary(summary, audit) {
+    document.getElementById('networkPosture').textContent = summary.network_posture || '-';
+    document.getElementById('postureTag').innerHTML = pill(summary.network_posture || 'unknown', severityClass(summary.network_posture));
+    document.getElementById('activationScore').textContent = fmtPct(summary.activation_score || 0);
+    document.getElementById('activationTag').innerHTML = pill((summary.activation_score || 0) >= 75 ? 'network active' : 'network staged', severityClass((summary.activation_score || 0) >= 75 ? 'global' : 'controlled'));
+    document.getElementById('approvedCorridors').textContent = String(summary.approved_corridor_count || 0);
+    document.getElementById('corridorCount').textContent = String(summary.corridor_count || 0);
+    document.getElementById('targetCapacity').textContent = fmtMoney((summary.capital_map || {}).target_external_capacity || 0);
+    fillTable('corridorTable', summary.capital_corridors || [], row => `
+      <tr>
+        <td>${row.corridor_name || '-'}</td>
+        <td>${row.launch_vehicle || '-'}</td>
+        <td>${pill(row.activation_status || '-', severityClass(row.activation_status))}</td>
+        <td>${fmtPct(row.readiness_score || 0)}</td>
+        <td>${fmtPct(row.reserve_mobility_score || 0)}</td>
+        <td>${fmtPct(row.jurisdiction_risk_score || 0)}</td>
+      </tr>`, 6);
+    fillTable('segmentTable', summary.allocator_segments || [], row => `
+      <tr>
+        <td>${row.segment || '-'}</td>
+        <td>${row.target_allocator_count || 0}</td>
+        <td>${fmtMoney(row.average_ticket_millions || 0)}M</td>
+        <td>${fmtPct(row.activation_score || 0)}</td>
+        <td>${fmtMoney(row.expected_capacity || 0)}</td>
+      </tr>`, 5);
+    document.getElementById('policy').textContent = JSON.stringify(summary.policy || {}, null, 2);
+    document.getElementById('readiness').textContent = JSON.stringify(summary.readiness_matrix || {}, null, 2);
+    document.getElementById('capitalMap').textContent = JSON.stringify(summary.capital_map || {}, null, 2);
+    document.getElementById('dependencies').textContent = JSON.stringify(summary.network_dependencies || {}, null, 2);
+    document.getElementById('actions').textContent = JSON.stringify(summary.network_actions || [], null, 2);
+    document.getElementById('riskConstraints').textContent = JSON.stringify(summary.risk_constraints || {}, null, 2);
+    document.getElementById('auditTrail').textContent = JSON.stringify({
+      run_count: audit.run_count || (audit.runs || []).length || 0,
+      latest_run: audit.latest_run || null
+    }, null, 2);
+  }
+  refreshAll();
+</script>
+</body>
+</html>

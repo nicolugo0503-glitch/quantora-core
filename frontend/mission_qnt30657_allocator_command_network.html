@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QNT30657 — Allocator Command Network</title>
+  <style>
+    :root { --bg:#07111f; --panel:#0d1b2d; --panel2:#10233b; --line:#1f3556; --text:#e8eef8; --muted:#9fb3d8; --accent:#5aa9ff; --good:#0f9d58; --warn:#d97706; --bad:#dc2626; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,system-ui,-apple-system,sans-serif; background:linear-gradient(180deg,#07111f,#0a1526); color:var(--text); }
+    .wrap { max-width:1440px; margin:0 auto; padding:24px; }
+    .hero, .panel, .metric { background:rgba(13,27,45,.96); border:1px solid var(--line); border-radius:18px; box-shadow:0 18px 40px rgba(0,0,0,.24); }
+    .hero { padding:24px; margin-bottom:18px; }
+    .label { color:var(--accent); text-transform:uppercase; letter-spacing:.14em; font-size:12px; }
+    .muted { color:var(--muted); }
+    .toolbar { display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; }
+    button, .btn { border:0; border-radius:12px; padding:11px 15px; cursor:pointer; font-weight:700; background:var(--accent); color:#07111f; text-decoration:none; }
+    button.secondary, .btn.secondary { background:#152b46; color:var(--text); border:1px solid var(--line); }
+    .metric-grid, .grid { display:grid; gap:16px; margin-bottom:18px; }
+    .metric-grid { grid-template-columns:repeat(5,1fr); }
+    .grid { grid-template-columns:1.3fr .7fr; }
+    .metric { padding:18px; min-height:124px; }
+    .metric .value { font-size:30px; font-weight:800; margin:8px 0; }
+    .metric .status { color:var(--muted); font-size:12px; }
+    .panel { padding:18px; }
+    .stack { display:grid; gap:16px; }
+    .section-title { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:14px; }
+    .section-title h2 { margin:0; font-size:18px; }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th,td { padding:10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-size:12px; text-transform:uppercase; }
+    .pill { display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid #2a3c60; background:#0a1526; }
+    .good { color:#d1fae5; border-color:#14532d; }
+    .warn { color:#fde68a; border-color:#92400e; }
+    .bad { color:#fecaca; border-color:#7f1d1d; }
+    pre { margin:0; background:var(--panel2); border:1px solid var(--line); border-radius:14px; padding:14px; white-space:pre-wrap; min-height:180px; max-height:420px; overflow:auto; }
+    .tiny { color:var(--muted); font-size:12px; }
+    @media (max-width:1100px){ .metric-grid,.grid{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="label">Institutional Mission</div>
+    <h1 style="margin:8px 0;">QNT30657 — Allocator Command Network</h1>
+    <div class="muted">This layer converts global corridor readiness into live allocator command. Quantora now decides which allocators deserve immediate institutional engagement, where ticket capture is most credible, and which relationships must still be compounded before capital committee conversion.</div>
+    <div class="toolbar">
+      <a class="btn" href="index.html">Back to Command Center</a>
+      <button onclick="runLayer()">Run Allocator Command Cycle</button>
+      <button class="secondary" onclick="refreshAll()">Refresh Summary</button>
+    </div>
+  </section>
+
+  <section class="metric-grid">
+    <div class="metric"><div class="label">Command Posture</div><div class="value" id="commandPosture">-</div><div class="status" id="commandTag"></div></div>
+    <div class="metric"><div class="label">Command Network Score</div><div class="value" id="commandScore">-</div><div class="status">Allocator command authority</div></div>
+    <div class="metric"><div class="label">Ticket Pipeline</div><div class="value" id="ticketPipeline">-</div><div class="status">Institutional ticket surface</div></div>
+    <div class="metric"><div class="label">Commanded Allocators</div><div class="value" id="commandedCount">-</div><div class="status">Immediate engagement-ready</div></div>
+    <div class="metric"><div class="label">Avg Relationship Gap</div><div class="value" id="relationshipGap">-</div><div class="status">Coverage friction</div></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Allocator Book</h2><span class="tiny">Priority coverage universe</span></div>
+      <table id="bookTable"><thead><tr><th>Allocator</th><th>Segment</th><th>Region</th><th>Conviction</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="stack">
+      <div class="panel"><div class="section-title"><h2>Policy</h2><span class="tiny">Command thresholds</span></div><pre id="policy">Loading…</pre></div>
+      <div class="panel"><div class="section-title"><h2>Overview</h2><span class="tiny">Allocator command posture</span></div><pre id="overview">Loading…</pre></div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Command Routes</h2><span class="tiny">Where Quantora should push now</span></div>
+      <table id="routeTable"><thead><tr><th>Allocator</th><th>Corridor</th><th>Ticket</th><th>Command</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="panel">
+      <div class="section-title"><h2>Coverage Matrix</h2><span class="tiny">Relationship conversion readiness</span></div>
+      <table id="coverageTable"><thead><tr><th>Allocator</th><th>Coverage</th><th>Gap</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel"><div class="section-title"><h2>Engagement Queue</h2><span class="tiny">Institutional next actions</span></div><pre id="engagementQueue">Loading…</pre></div>
+    <div class="panel"><div class="section-title"><h2>Dependencies</h2><span class="tiny">Strategic, growth, network, treasury, and mobility inputs</span></div><pre id="dependencies">Loading…</pre></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel"><div class="section-title"><h2>Allocator Command Actions</h2><span class="tiny">Executive allocator agenda</span></div><pre id="actions">Loading…</pre></div>
+    <div class="panel"><div class="section-title"><h2>Audit Trail</h2><span class="tiny">Latest allocator command cycle</span></div><pre id="auditTrail">Loading…</pre></div>
+  </section>
+</div>
+<script>
+  const fmtPct = v => `${Number(v||0).toFixed(2)}%`;
+  const fmtMoney = v => `$${Number(v||0).toLocaleString(undefined,{maximumFractionDigits:2})}M`;
+  const pill = (text, cls='') => `<span class="pill ${cls}">${text}</span>`;
+  function severityClass(text='') {
+    const t = String(text).toLowerCase();
+    if (t.includes('constrained') || t.includes('monitor') || t.includes('build')) return 'bad';
+    if (t.includes('stage') || t.includes('nurture') || t.includes('building')) return 'warn';
+    return 'good';
+  }
+  async function getJson(url, opts) {
+    const res = await fetch(url, opts);
+    if (!res.ok) throw new Error(`${url} -> ${res.status}`);
+    return res.json();
+  }
+  function fillTable(id, rows, renderer, colspan=4) {
+    const tbody = document.querySelector(`#${id} tbody`);
+    tbody.innerHTML = rows.length ? rows.map(renderer).join('') : `<tr><td colspan="${colspan}" class="tiny">No rows available.</td></tr>`;
+  }
+  async function refreshAll() {
+    try {
+      const [summary, audit] = await Promise.all([
+        getJson('/api/allocator-command-network/summary'),
+        getJson('/api/allocator-command-network/audit')
+      ]);
+      renderSummary(summary, audit);
+    } catch (err) {
+      document.getElementById('auditTrail').textContent = `Allocator command layer unavailable. ${err.message}`;
+    }
+  }
+  async function runLayer() {
+    const result = await getJson('/api/allocator-command-network/run', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ trigger:'manual-ui' })
+    });
+    renderSummary(result.summary, { latest_run: result.run, runs:[result.run], run_count:1 });
+  }
+  function renderSummary(summary, audit) {
+    const o = summary.allocator_command_overview || {};
+    document.getElementById('commandPosture').textContent = o.allocator_command_posture || '-';
+    document.getElementById('commandTag').innerHTML = pill(o.allocator_command_posture || 'unknown', severityClass(o.allocator_command_posture));
+    document.getElementById('commandScore').textContent = fmtPct(o.command_network_score || 0);
+    document.getElementById('ticketPipeline').textContent = fmtMoney(o.allocator_ticket_pipeline_millions || 0);
+    document.getElementById('commandedCount').textContent = Number(o.commanded_allocator_count || 0).toLocaleString();
+    document.getElementById('relationshipGap').textContent = fmtPct(o.average_relationship_gap || 0);
+    fillTable('bookTable', summary.allocator_book || [], row => `
+      <tr><td>${row.allocator_name || '-'}</td><td>${row.segment || '-'}</td><td>${row.coverage_region || '-'}</td><td>${fmtPct(row.allocator_conviction_score || 0)}</td><td>${pill(row.status || '-', severityClass(row.status))}</td></tr>`, 5);
+    fillTable('routeTable', summary.command_routes || [], row => `
+      <tr><td>${row.allocator_name || '-'}</td><td>${row.linked_corridor || '-'}</td><td>${fmtMoney(row.planned_ticket_millions || 0)}</td><td>${fmtPct(row.command_score || 0)}</td><td>${pill(row.status || '-', severityClass(row.status))}</td></tr>`, 5);
+    fillTable('coverageTable', summary.coverage_matrix || [], row => `
+      <tr><td>${row.allocator_name || '-'}</td><td>${fmtPct(row.coverage_score || 0)}</td><td>${fmtPct(row.relationship_gap_score || 0)}</td><td>${pill(row.coverage_status || '-', severityClass(row.coverage_status))}</td></tr>`, 4);
+    document.getElementById('policy').textContent = JSON.stringify(summary.policy || {}, null, 2);
+    document.getElementById('overview').textContent = JSON.stringify(summary.allocator_command_overview || {}, null, 2);
+    document.getElementById('engagementQueue').textContent = JSON.stringify(summary.engagement_queue || [], null, 2);
+    document.getElementById('dependencies').textContent = JSON.stringify(summary.allocator_command_dependencies || {}, null, 2);
+    document.getElementById('actions').textContent = JSON.stringify(summary.allocator_command_actions || [], null, 2);
+    document.getElementById('auditTrail').textContent = JSON.stringify({ run_count: audit.run_count || 0, latest_run: audit.latest_run || null }, null, 2);
+  }
+  refreshAll();
+</script>
+</body>
+</html>

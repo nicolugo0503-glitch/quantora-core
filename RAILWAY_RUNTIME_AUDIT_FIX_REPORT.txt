@@ -1,0 +1,33 @@
+QNT30476 FULL RAILWAY AUDITED FIX
+
+Root cause fixed:
+- backend/app/main.py imported backend modules that were missing from the deployed archive.
+
+Modules injected back into /backend:
+- qnt30449_institutional_reporting_lp_statements
+- qnt30452_treasury_cash_liquidity_control_tower
+- qnt30453_investor_crm_capital_raise_pipeline
+- qnt30454_revenue_intelligence_unit_economics
+- qnt30456_institutional_compliance_diligence_vault
+- qnt30457_fund_admin_nav_reconciliation_engine
+- qnt30458_institutional_data_room_allocator_access_layer
+- qnt30459_institutional_sales_partnership_engine
+- qnt30461_strategy_research_lab_alpha_pipeline
+- qnt30462_autonomous_execution_capital_allocation_v2
+- qnt30464_global_capital_network_multi_fund_orchestration
+- qnt30465_cross_border_entity_jurisdiction_fund_structure
+- qnt30466_institutional_investor_portal_secure_reporting_access
+- qnt30467_distribution_flywheel_referral_growth_engine
+- qnt30468_brand_authority_media_distribution_engine
+- qnt30469_platform_api_external_integration_gateway
+- qnt30470_broker_custodian_prime_services_connectivity_mesh
+- qnt30472_treasury_cash_management_yield_optimization_layer
+- qnt30473_revenue_operations_billing_intelligence_layer
+- qnt30474_investor_crm_relationship_intelligence_layer
+- qnt30475_fundraising_pipeline_allocation_conversion_engine
+- qnt30476_governance_committee_investment_approval_workflow_layer
+
+Deployment status:
+- Full project preserved
+- Railway-safe Dockerfile preserved
+- Runtime import chain repaired

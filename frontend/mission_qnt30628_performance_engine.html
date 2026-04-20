@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QNT30628 Performance Engine</title>
+<style>
+:root{--bg:#07090d;--panel:#0f141c;--panel2:#131a24;--line:#243042;--text:#f3f6fb;--muted:#94a3b8;--accent:#e2e8f0;--good:#86efac;--warn:#fbbf24}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#05070a,#0a1017);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.wrap{max-width:1440px;margin:0 auto;padding:24px}.hero,.card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:20px;box-shadow:0 18px 50px rgba(0,0,0,.24)}
+.hero{padding:24px 26px}.label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}h1{margin:10px 0 8px;font-size:34px}.sub{max-width:980px;color:var(--muted);line-height:1.6}
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}.btn{border:none;border-radius:12px;padding:11px 16px;font-weight:700;cursor:pointer}.btn.primary{background:#fff;color:#05070a}.btn.secondary{background:#151d28;color:var(--text);border:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:18px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}.card{padding:18px}.value{font-size:28px;font-weight:800;margin-top:8px}.tiny{color:var(--muted);font-size:12px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #1d2633;font-size:13px}th{color:var(--muted);font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.08em}
+pre{background:#09111a;border:1px solid var(--line);padding:14px;border-radius:14px;overflow:auto;color:#dbe7f5;min-height:280px}
+.chart{height:300px;display:flex;align-items:flex-end;gap:8px;padding:10px 4px 0 4px}.bar-wrap{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px;height:100%}.bar{width:100%;max-width:60px;border-radius:10px 10px 0 0;background:linear-gradient(180deg,#f8fafc,#64748b)}.bar.neg{background:linear-gradient(180deg,#fbbf24,#92400e)}.bar-label{font-size:11px;color:var(--muted)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+@media(max-width:1100px){.grid,.split,.stats{grid-template-columns:1fr 1fr}}@media(max-width:760px){.grid,.split,.stats{grid-template-columns:1fr}.wrap{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="label">QNT30628</div>
+    <h1>Institutional Performance Engine</h1>
+    <div class="sub">Deterministic performance truth layer for strategy returns, investor-level attribution, time-series snapshots, drawdown tracking, and allocation-grade portfolio measurement. This is the analytics spine that turns capital accounting into a real fund operating record.</div>
+    <div class="toolbar">
+      <button class="btn primary" onclick="snapshotNow()">Capture Snapshot</button>
+      <button class="btn secondary" onclick="bootstrapDemo()">Bootstrap Demo History</button>
+      <button class="btn secondary" onclick="loadAll()">Refresh</button>
+      <button class="btn secondary" onclick="window.location.href='index.html'">Back to Command Center</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="card"><div class="label">Current NAV</div><div id="currentNav" class="value">-</div><div class="tiny">Marked portfolio value</div></div>
+    <div class="card"><div class="label">Net PnL</div><div id="netPnl" class="value">-</div><div class="tiny">Live realized + unrealized</div></div>
+    <div class="card"><div class="label">Portfolio Return</div><div id="portfolioReturn" class="value">-</div><div class="tiny">Flow-adjusted portfolio view</div></div>
+    <div class="card"><div class="label">Sharpe / Max DD</div><div id="riskStats" class="value">-</div><div class="tiny">Risk-adjusted context</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="label">Time Series</div>
+      <div id="chart" class="chart"></div>
+    </div>
+    <div class="card">
+      <div class="label">Engine Summary</div>
+      <pre id="summaryBox">Loading...</pre>
+    </div>
+  </div>
+
+  <div class="split">
+    <div class="card">
+      <div class="label">Strategy Breakdown</div>
+      <table>
+        <thead><tr><th>Strategy</th><th>Invested</th><th>PnL</th><th>Return</th><th>Exposure</th></tr></thead>
+        <tbody id="strategyRows"><tr><td colspan="5">Loading...</td></tr></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="label">Investor Attribution</div>
+      <table>
+        <thead><tr><th>Investor</th><th>Ending NAV</th><th>PnL</th><th>Return</th><th>Ownership</th></tr></thead>
+        <tbody id="investorRows"><tr><td colspan="5">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(Number(v||0));
+const pct=v=>`${Number(v||0).toFixed(2)}%`;
+async function j(url, options){ const r = await fetch(url, options); const d = await r.json(); if(!r.ok) throw new Error(d.detail || 'request failed'); return d; }
+function renderChart(series){
+  const box = document.getElementById('chart');
+  if(!series.length){ box.innerHTML = '<div class="tiny">No history captured yet.</div>'; return; }
+  const maxAbs = Math.max(...series.map(x => Math.abs(Number(x.return_pct||0))), 1);
+  box.innerHTML = series.slice(-12).map(row => {
+    const h = Math.max(8, Math.round((Math.abs(Number(row.return_pct||0)) / maxAbs) * 220));
+    const cls = Number(row.return_pct||0) < 0 ? 'bar neg' : 'bar';
+    return `<div class="bar-wrap"><div class="tiny">${pct(row.return_pct)}</div><div class="${cls}" style="height:${h}px"></div><div class="bar-label">${row.date.slice(5)}</div></div>`;
+  }).join('');
+}
+function renderSummary(s){
+  document.getElementById('currentNav').textContent = money(s.current_nav);
+  document.getElementById('netPnl').textContent = money(s.net_pnl);
+  document.getElementById('portfolioReturn').textContent = pct(s.portfolio_return_pct);
+  document.getElementById('riskStats').textContent = `${Number(s.sharpe_ratio||0).toFixed(2)} / ${pct(s.max_drawdown_pct)}`;
+  document.getElementById('summaryBox').textContent = JSON.stringify(s, null, 2);
+}
+function renderStrategies(rows){
+  document.getElementById('strategyRows').innerHTML = rows.length ? rows.map(r => `<tr><td>${r.strategy}</td><td>${money(r.invested_capital)}</td><td>${money(r.pnl_amount)}</td><td>${pct(r.return_pct)}</td><td>${pct(r.exposure_pct)}</td></tr>`).join('') : '<tr><td colspan="5">No strategy allocations found.</td></tr>';
+}
+function renderInvestors(rows){
+  document.getElementById('investorRows').innerHTML = rows.length ? rows.map(r => `<tr><td>${r.investor_name}</td><td>${money(r.ending_nav)}</td><td>${money(r.pnl_amount)}</td><td>${pct(r.return_pct)}</td><td>${pct(r.ownership_pct)}</td></tr>`).join('') : '<tr><td colspan="5">No investor performance rows found.</td></tr>';
+}
+async function loadAll(){
+  const data = await j('/api/performance-engine/summary');
+  renderSummary(data.summary || {});
+  renderChart(data.series || []);
+  renderStrategies(data.strategy_breakdown || []);
+  renderInvestors(data.investor_breakdown || []);
+}
+async function snapshotNow(){
+  await j('/api/performance-engine/snapshot', {method:'POST', headers:{'Content-Type':'application/json'}, body:'{}'});
+  await loadAll();
+}
+async function bootstrapDemo(){
+  await j('/api/performance-engine/bootstrap-demo', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({months:6})});
+  await loadAll();
+}
+loadAll();
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 180,
+    "minimum_score": 95.0,
+    "require_treasury_confirmed": true,
+    "require_fund_admin_ready": true,
+    "require_transparency_clear": true,
+    "require_reporting_clear": true,
+    "minimum_confirmation_coverage": 0.9,
+    "max_investor_discrepancies": 2,
+    "max_critical_investor_discrepancies": 0,
+    "minimum_statement_alignment_score": 0.98,
+    "minimum_delivery_ack_score": 0.95,
+    "minimum_dispute_resolution_score": 0.95
+  },
+  "runs": [],
+  "alerts": [],
+  "investor_book": [],
+  "confirmation_requests": [],
+  "attestations": [],
+  "latest_run": null,
+  "last_context": {}
+}

@@ -1,0 +1,6 @@
+{
+  "base_zip": "QUANTORA_FULL_PROJECT_QNT30534_PERFORMANCE_PNL_ENGINE.zip",
+  "fixed_file": "backend/app/main.py",
+  "issue": "ModuleNotFoundError: No module named 'qnt30531_integration'",
+  "fix": "Use package-safe relative/absolute import fallback for qnt30531_integration"
+}

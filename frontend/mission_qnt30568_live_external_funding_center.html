@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30568 Live External Funding Deployment</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1280px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:420px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+@media(max-width:1100px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30568 · Live External Funding Deployment</h1>
+        <div style="color:#9fb3d8">Deployment pass that turns provider activation into operational live-readiness. Checks secrets, webhook readiness, customer readiness, and enables or disables live funding mode.</div>
+      </div>
+      <div class="row">
+        <a href="mission_qnt30567_live_provider_activation_center.html">Provider Activation</a>
+        <a href="investor_portal.html">Investor Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Provider</div><div id="provider" class="value">-</div></div>
+    <div class="card"><div class="label">Mode</div><div id="mode" class="value">-</div></div>
+    <div class="card"><div class="label">Status</div><div id="status" class="value">-</div></div>
+    <div class="card"><div class="label">Live Ready</div><div id="ready" class="value">-</div></div>
+    <div class="card"><div class="label">Live Enabled</div><div id="enabled" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <button onclick="check()">Check Deployment</button>
+      <button onclick="enable()">Enable Live</button>
+      <button onclick="disableLive()">Disable Live</button>
+      <button onclick="showTemplate()">Show Env Template</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Deployment State</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+function asBool(v){ return v ? 'YES' : 'NO'; }
+async function load(){
+  const res = await j('/api/live-funding-deployment/status');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  document.getElementById('provider').textContent = String(d.provider || '-').toUpperCase();
+  document.getElementById('mode').textContent = String(d.mode || '-').toUpperCase();
+  document.getElementById('status').textContent = String(d.deployment_status || '-').toUpperCase();
+  document.getElementById('ready').textContent = asBool(d.live_ready);
+  document.getElementById('enabled').textContent = asBool(d.live_enabled);
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function check(){ await j('/api/live-funding-deployment/check', {method:'POST'}); await load(); }
+async function enable(){ const res = await j('/api/live-funding-deployment/enable', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({force:false})}); document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); await load(); }
+async function disableLive(){ await j('/api/live-funding-deployment/disable', {method:'POST'}); await load(); }
+async function showTemplate(){ const res = await j('/api/live-funding-deployment/env-template'); document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); }
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+{
+  "promotion_router": {
+    "enabled": true,
+    "last_updated_at": "2026-03-31T08:14:41Z",
+    "last_routing_at": "2026-03-31T08:14:41Z",
+    "last_execution_gate_at": "2026-03-31T08:14:41Z",
+    "approved_routes": 1,
+    "sandbox_routes": 1,
+    "blocked_routes": 0,
+    "gated_orders": 2,
+    "released_orders": 1,
+    "telemetry": [
+      {
+        "timestamp": "2026-03-31T08:14:41Z",
+        "event": "candidate.routed",
+        "candidate_id": "cand_1001",
+        "verdict": "APPROVED",
+        "target": "funded_live"
+      },
+      {
+        "timestamp": "2026-03-31T08:14:41Z",
+        "event": "candidate.routed",
+        "candidate_id": "cand_1002",
+        "verdict": "WATCHLIST",
+        "target": "sandbox"
+      },
+      {
+        "timestamp": "2026-03-31T08:14:41Z",
+        "event": "execution.gated",
+        "candidate_id": "cand_1003",
+        "allow_execution": false,
+        "lane": "blocked"
+      },
+      {
+        "timestamp": "2026-03-31T08:14:41Z",
+        "event": "execution.gated",
+        "candidate_id": "cand_1001",
+        "allow_execution": true,
+        "lane": "live"
+      }
+    ]
+  },
+  "routing_rules": {
+    "approved_target": "funded_live",
+    "watchlist_target": "sandbox",
+    "rejected_target": "blocked",
+    "max_watchlist_capital_pct": 0.5,
+    "require_approval_for_execution": true,
+    "block_rejected_execution": true
+  },
+  "routes": [
+    {
+      "route_id": "route_0001",
+      "timestamp": "2026-03-31T08:14:41Z",
+      "candidate_id": "cand_1001",
+      "strategy_name": "Momentum Core Variant 1",
+      "verdict": "APPROVED",
+      "target": "funded_live",
+      "requested_capital": 50000.0,
+      "allocated_capital": 50000.0,
+      "execution_mode": "live"
+    },
+    {
+      "route_id": "route_0002",
+      "timestamp": "2026-03-31T08:14:41Z",
+      "candidate_id": "cand_1002",
+      "strategy_name": "Mean Reversion Core Variant 2",
+      "verdict": "WATCHLIST",
+      "target": "sandbox",
+      "requested_capital": 20000.0,
+      "allocated_capital": 10000.0,
+      "execution_mode": "sandbox"
+    }
+  ],
+  "execution_decisions": [
+    {
+      "decision_id": "gate_0001",
+      "timestamp": "2026-03-31T08:14:41Z",
+      "candidate_id": "cand_1003",
+      "strategy_name": "Crypto Breakout Variant 3",
+      "verdict": "REJECTED",
+      "requested_order_notional": 9000.0,
+      "allow_execution": false,
+      "execution_lane": "blocked",
+      "reason": "rejected_execution_blocked"
+    },
+    {
+      "decision_id": "gate_0002",
+      "timestamp": "2026-03-31T08:14:41Z",
+      "candidate_id": "cand_1001",
+      "strategy_name": "Momentum Core Variant 1",
+      "verdict": "APPROVED",
+      "requested_order_notional": 12000.0,
+      "allow_execution": true,
+      "execution_lane": "live",
+      "reason": "approved_for_live_execution"
+    }
+  ],
+  "history": [
+    {
+      "timestamp": "2026-03-31T08:14:41Z",
+      "event": "candidate.routed",
+      "candidate_id": "cand_1001",
+      "verdict": "APPROVED"
+    },
+    {
+      "timestamp": "2026-03-31T08:14:41Z",
+      "event": "candidate.routed",
+      "candidate_id": "cand_1002",
+      "verdict": "WATCHLIST"
+    },
+    {
+      "timestamp": "2026-03-31T08:14:41Z",
+      "event": "execution.gated",
+      "candidate_id": "cand_1003",
+      "allow_execution": false
+    },
+    {
+      "timestamp": "2026-03-31T08:14:41Z",
+      "event": "execution.gated",
+      "candidate_id": "cand_1001",
+      "allow_execution": true
+    }
+  ]
+}

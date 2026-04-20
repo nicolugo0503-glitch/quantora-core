@@ -1,0 +1,26 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 180,
+    "minimum_score": 96.0,
+    "require_operator_clear": true,
+    "require_release_clear": true,
+    "require_safety_clear": true,
+    "require_recovery_clear": true,
+    "require_cash_closure_clear": true,
+    "require_fund_admin_ready": true,
+    "max_open_discrepancies": 1,
+    "max_critical_discrepancies": 0,
+    "minimum_cash_position_score": 0.985,
+    "minimum_ledger_match_score": 0.985,
+    "minimum_bank_venue_confirmation_score": 0.98,
+    "minimum_pending_settlement_coverage_score": 0.97,
+    "minimum_attestation_quality_score": 0.98
+  },
+  "runs": [],
+  "alerts": [],
+  "treasury_book": [],
+  "attestations": [],
+  "latest_run": null,
+  "last_context": {}
+}

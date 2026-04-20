@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QNT30670 — Live Allocation Release Authority Mesh</title>
+  <style>
+    :root { color-scheme: dark; --bg:#07111f; --panel:#0d1b2a; --panel2:#102235; --line:#1f3550; --text:#e8f0ff; --muted:#9bb0cc; --good:#123a2a; --warn:#4a3512; --bad:#4a1f24; }
+    * { box-sizing:border-box; } body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#07111f,#0b1422 45%,#0d1727); color:var(--text); }
+    .wrap { max-width:1500px; margin:0 auto; padding:24px; }
+    .hero,.panel { background:rgba(13,27,42,.92); border:1px solid var(--line); border-radius:18px; box-shadow:0 16px 50px rgba(0,0,0,.24); }
+    .hero { padding:24px; margin-bottom:18px; } .hero p,.tiny { color:var(--muted); }
+    .actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:16px; }
+    a,button { border:none; border-radius:12px; padding:11px 16px; font-weight:700; cursor:pointer; text-decoration:none; }
+    a,button { background:#58a6ff; color:#04111f; } button.secondary { background:#1d3557; color:#dce8ff; }
+    .metric-grid,.grid { display:grid; gap:16px; margin-bottom:18px; }
+    .metric-grid { grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); }
+    .metric { background:var(--panel2); border:1px solid var(--line); border-radius:16px; padding:16px; }
+    .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .value { font-size:28px; font-weight:800; margin-top:8px; }
+    .grid { grid-template-columns:2fr 1fr; } .stack { display:grid; gap:16px; }
+    .panel { padding:18px; overflow:auto; }
+    .section-title { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
+    .section-title h2 { margin:0; font-size:18px; }
+    table { width:100%; border-collapse:collapse; } th,td { padding:10px 8px; border-bottom:1px solid rgba(255,255,255,.07); text-align:left; font-size:14px; }
+    th { color:#98afd1; font-size:12px; text-transform:uppercase; letter-spacing:.06em; }
+    pre { white-space:pre-wrap; word-break:break-word; margin:0; color:#d7e6ff; }
+    .pill { display:inline-flex; border-radius:999px; padding:4px 10px; font-size:12px; font-weight:700; }
+    .good { background:var(--good); color:#9ef0c2; } .warn { background:var(--warn); color:#ffd27d; } .bad { background:var(--bad); color:#ff9cab; }
+    @media (max-width: 1100px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="tiny">Institutional Layer · QNT30670</div>
+    <h1 style="margin:8px 0;">QNT30670 — Live Allocation Release Authority Mesh</h1>
+    <p>Unify live allocation control, dispatch authority, convergence posture, and compliance proof before governed live allocation release.</p>
+    <div class="actions">
+      <a href="index.html">Back to Command Center</a>
+      <button onclick="runLayer()">Run Authority Mesh Cycle</button>
+      <button class="secondary" onclick="refreshAll()">Refresh Summary</button>
+    </div>
+  </section>
+
+  <section class="metric-grid">
+    <div class="metric"><div class="label">Authority Mesh Posture</div><div class="value" id="posture">-</div><div class="status" id="postureTag"></div></div>
+    <div class="metric"><div class="label">Authority Mesh Score</div><div class="value" id="score">-</div><div class="status">Authority Mesh confidence</div></div>
+    <div class="metric"><div class="label">Escalatable Capital</div><div class="value" id="capital">-</div><div class="status">Governed live release capital</div></div>
+    <div class="metric"><div class="label">Approve Count</div><div class="value" id="approveCount">-</div><div class="status">Approved authority mesh lanes</div></div>
+    <div class="metric"><div class="label">Avg Authority Mesh Stress</div><div class="value" id="stress">-</div><div class="status">Authority Mesh stress</div></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Authority Mesh Book</h2><span class="tiny">Governed convergence cases</span></div>
+      <table id="bookTable"><thead><tr><th>Allocator</th><th>Strategy</th><th>Product</th><th>Capital</th><th>Readiness</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="stack">
+      <div class="panel"><div class="section-title"><h2>Policy</h2><span class="tiny">Authority Mesh thresholds</span></div><pre id="policy">Loading…</pre></div>
+      <div class="panel"><div class="section-title"><h2>Overview</h2><span class="tiny">Authority Mesh posture</span></div><pre id="overview">Loading…</pre></div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Authority Mesh Lanes</h2><span class="tiny">Authority Mesh windows</span></div>
+      <table id="laneTable"><thead><tr><th>Allocator</th><th>Strategy</th><th>Window</th><th>Lane Score</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="panel">
+      <div class="section-title"><h2>Authority Mesh Matrix</h2><span class="tiny">Final convergence authority</span></div>
+      <table id="matrixTable"><thead><tr><th>Allocator</th><th>Strategy</th><th>Product</th><th>Authority</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel"><div class="section-title"><h2>Authority Mesh Queue</h2><span class="tiny">Authority Mesh actions</span></div><pre id="queue">Loading…</pre></div>
+    <div class="panel"><div class="section-title"><h2>Dependencies</h2><span class="tiny">Escalation, release, dispatch, compliance</span></div><pre id="dependencies">Loading…</pre></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel"><div class="section-title"><h2>Authority Mesh Actions</h2><span class="tiny">Executive agenda</span></div><pre id="actions">Loading…</pre></div>
+    <div class="panel"><div class="section-title"><h2>Audit Trail</h2><span class="tiny">Latest convergence cycle</span></div><pre id="auditTrail">Loading…</pre></div>
+  </section>
+</div>
+<script>
+  const fmtPct = v => `${Number(v||0).toFixed(2)}%`;
+  const fmtMoney = v => `$${Number(v||0).toLocaleString(undefined,{maximumFractionDigits:2})}M`;
+  const pill = (text, cls='') => `<span class="pill ${cls}">${text}</span>`;
+  function severityClass(text='') {
+    const t = String(text).toLowerCase();
+    if (t.includes('hold') || t.includes('constrained')) return 'bad';
+    if (t.includes('review')) return 'warn';
+    return 'good';
+  }
+  async function getJson(url, opts) {
+    const res = await fetch(url, opts);
+    if (!res.ok) throw new Error(`${url} -> ${res.status}`);
+    return res.json();
+  }
+  function fillTable(id, rows, renderer, colspan=5) {
+    const tbody = document.querySelector(`#${id} tbody`);
+    tbody.innerHTML = rows.length ? rows.map(renderer).join('') : `<tr><td colspan="${colspan}" class="tiny">No rows available.</td></tr>`;
+  }
+  async function refreshAll() {
+    try {
+      const [summary, audit] = await Promise.all([
+        getJson('/api/live-allocation-release-authority-mesh/summary'),
+        getJson('/api/live-allocation-release-authority-mesh/audit')
+      ]);
+      renderSummary(summary, audit);
+    } catch (err) {
+      document.getElementById('auditTrail').textContent = `Allocation convergence unavailable. ${err.message}`;
+    }
+  }
+  async function runLayer() {
+    const result = await getJson('/api/live-allocation-release-authority-mesh/run', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ trigger:'manual-ui' })
+    });
+    renderSummary(result.summary, { latest_run: result.run, runs:[result.run], run_count:1 });
+  }
+  function renderSummary(summary, audit) {
+    const o = summary.live_allocation_release_overview || {};
+    document.getElementById('posture').textContent = o.live_allocation_release_posture || '-';
+    document.getElementById('postureTag').innerHTML = pill(o.live_allocation_release_posture || 'unknown', severityClass(o.live_allocation_release_posture));
+    document.getElementById('score').textContent = fmtPct(o.live_allocation_release_score || 0);
+    document.getElementById('capital').textContent = fmtMoney(o.escalatable_capital_millions || 0);
+    document.getElementById('approveCount').textContent = Number(o.approve_count || 0).toLocaleString();
+    document.getElementById('stress').textContent = fmtPct(o.average_mesh_stress || 0);
+    fillTable('bookTable', summary.mesh_book || [], row => `
+      <tr><td>${row.allocator_name || '-'}</td><td>${row.strategy_id || '-'}</td><td>${row.product_id || '-'}</td><td>${fmtMoney(row.capital_target_millions || 0)}</td><td>${fmtPct(row.mesh_readiness_score || 0)}</td><td>${pill(row.mesh_status || '-', severityClass(row.mesh_status))}</td></tr>`, 6);
+    fillTable('laneTable', summary.mesh_lanes || [], row => `
+      <tr><td>${row.allocator_name || '-'}</td><td>${row.strategy_id || '-'}</td><td>${row.mesh_window || '-'}</td><td>${fmtPct(row.mesh_lane_score || 0)}</td><td>${pill(row.lane_status || '-', severityClass(row.lane_status))}</td></tr>`, 5);
+    fillTable('matrixTable', summary.mesh_matrix || [], row => `
+      <tr><td>${row.allocator_name || '-'}</td><td>${row.strategy_id || '-'}</td><td>${row.product_id || '-'}</td><td>${fmtPct(row.mesh_authority_score || 0)}</td><td>${pill(row.mesh_authority_status || '-', severityClass(row.mesh_authority_status))}</td></tr>`, 5);
+    document.getElementById('policy').textContent = JSON.stringify(summary.policy || {}, null, 2);
+    document.getElementById('overview').textContent = JSON.stringify(summary.live_allocation_release_overview || {}, null, 2);
+    document.getElementById('queue').textContent = JSON.stringify(summary.mesh_queue || [], null, 2);
+    document.getElementById('dependencies').textContent = JSON.stringify(summary.mesh_dependencies || {}, null, 2);
+    document.getElementById('actions').textContent = JSON.stringify(summary.mesh_actions || [], null, 2);
+    document.getElementById('auditTrail').textContent = JSON.stringify({ run_count: audit.run_count || 0, latest_run: audit.latest_run || null }, null, 2);
+  }
+  refreshAll();
+</script>
+</body>
+</html>

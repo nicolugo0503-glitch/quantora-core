@@ -1,0 +1,314 @@
+{
+  "generated_by": "QNT50002",
+  "status": "degraded",
+  "execution_mode": "paper",
+  "safe_mode": true,
+  "total_capital": 1000000.0,
+  "reserve_target_weight": 0.1,
+  "max_strategy_weight": 0.35,
+  "max_regime_shift_pct": 0.15,
+  "last_regime": "neutral",
+  "strategies": [
+    {
+      "strategy_id": "alpha_trend",
+      "name": "Alpha Trend",
+      "symbol": "BTCUSDT",
+      "asset_class": "crypto",
+      "signal_strength": 0.82,
+      "conviction": 0.76,
+      "liquidity_score": 0.91,
+      "risk_budget": 0.24,
+      "drawdown_pct": 0.03,
+      "max_drawdown_limit": 0.12,
+      "preferred_regimes": [
+        "bull",
+        "neutral"
+      ],
+      "enabled": true
+    },
+    {
+      "strategy_id": "beta_mean_revert",
+      "name": "Beta Mean Revert",
+      "symbol": "ETHUSDT",
+      "asset_class": "crypto",
+      "signal_strength": 0.68,
+      "conviction": 0.63,
+      "liquidity_score": 0.88,
+      "risk_budget": 0.18,
+      "drawdown_pct": 0.04,
+      "max_drawdown_limit": 0.1,
+      "preferred_regimes": [
+        "neutral",
+        "range"
+      ],
+      "enabled": true
+    },
+    {
+      "strategy_id": "macro_defense",
+      "name": "Macro Defense",
+      "symbol": "USDTUSD",
+      "asset_class": "cash_overlay",
+      "signal_strength": 0.51,
+      "conviction": 0.9,
+      "liquidity_score": 1.0,
+      "risk_budget": 0.3,
+      "drawdown_pct": 0.01,
+      "max_drawdown_limit": 0.06,
+      "preferred_regimes": [
+        "stress",
+        "bear",
+        "neutral"
+      ],
+      "enabled": true
+    }
+  ],
+  "latest_plan": {
+    "mission": "QNT50002",
+    "plan_id": "alloc_plan_37b859ebf9",
+    "decision_id": "alloc_dec_a8337da99c",
+    "generated_at": 1776402801,
+    "capital": 1000000.0,
+    "reserve_weight": 0.1,
+    "reserve_capital": 100000.0,
+    "deployable_capital": 900000.0,
+    "regime": "neutral",
+    "liquidity_state": "normal",
+    "max_strategy_weight": 0.35,
+    "allocations": [
+      {
+        "strategy_id": "macro_defense",
+        "name": "Macro Defense",
+        "symbol": "USDTUSD",
+        "asset_class": "cash_overlay",
+        "score": 0.1350837,
+        "weight": 0.35,
+        "target_capital": 315000.0,
+        "risk_budget": 0.3,
+        "preferred_regimes": [
+          "stress",
+          "bear",
+          "neutral"
+        ]
+      },
+      {
+        "strategy_id": "alpha_trend",
+        "name": "Alpha Trend",
+        "symbol": "BTCUSDT",
+        "asset_class": "crypto",
+        "score": 0.12678356,
+        "weight": 0.35,
+        "target_capital": 315000.0,
+        "risk_budget": 0.24,
+        "preferred_regimes": [
+          "bull",
+          "neutral"
+        ]
+      },
+      {
+        "strategy_id": "beta_mean_revert",
+        "name": "Beta Mean Revert",
+        "symbol": "ETHUSDT",
+        "asset_class": "crypto",
+        "score": 0.05716405,
+        "weight": 0.17918,
+        "target_capital": 161262.0,
+        "risk_budget": 0.18,
+        "preferred_regimes": [
+          "neutral",
+          "range"
+        ]
+      }
+    ],
+    "status": "approved",
+    "approved_at": 1776402801,
+    "approver": "smoke_committee",
+    "approval_notes": "approved"
+  },
+  "history": [
+    {
+      "mission": "QNT50002",
+      "plan_id": "alloc_plan_37b859ebf9",
+      "decision_id": "alloc_dec_a8337da99c",
+      "generated_at": 1776402801,
+      "capital": 1000000.0,
+      "reserve_weight": 0.1,
+      "reserve_capital": 100000.0,
+      "deployable_capital": 900000.0,
+      "regime": "neutral",
+      "liquidity_state": "normal",
+      "max_strategy_weight": 0.35,
+      "allocations": [
+        {
+          "strategy_id": "macro_defense",
+          "name": "Macro Defense",
+          "symbol": "USDTUSD",
+          "asset_class": "cash_overlay",
+          "score": 0.1350837,
+          "weight": 0.35,
+          "target_capital": 315000.0,
+          "risk_budget": 0.3,
+          "preferred_regimes": [
+            "stress",
+            "bear",
+            "neutral"
+          ]
+        },
+        {
+          "strategy_id": "alpha_trend",
+          "name": "Alpha Trend",
+          "symbol": "BTCUSDT",
+          "asset_class": "crypto",
+          "score": 0.12678356,
+          "weight": 0.35,
+          "target_capital": 315000.0,
+          "risk_budget": 0.24,
+          "preferred_regimes": [
+            "bull",
+            "neutral"
+          ]
+        },
+        {
+          "strategy_id": "beta_mean_revert",
+          "name": "Beta Mean Revert",
+          "symbol": "ETHUSDT",
+          "asset_class": "crypto",
+          "score": 0.05716405,
+          "weight": 0.17918,
+          "target_capital": 161262.0,
+          "risk_budget": 0.18,
+          "preferred_regimes": [
+            "neutral",
+            "range"
+          ]
+        }
+      ],
+      "status": "approved",
+      "approved_at": 1776402801,
+      "approver": "smoke_committee",
+      "approval_notes": "approved"
+    }
+  ],
+  "committee_log": [
+    {
+      "plan_id": "alloc_plan_37b859ebf9",
+      "decision_id": "alloc_dec_a8337da99c",
+      "approved_at": 1776402801,
+      "approver": "smoke_committee",
+      "notes": "approved"
+    }
+  ],
+  "rebalance_preview": {
+    "mission": "QNT50002",
+    "plan_id": "alloc_plan_37b859ebf9",
+    "decision_id": "alloc_dec_a8337da99c",
+    "generated_at": 1776402801,
+    "capital": 1000000.0,
+    "reserve_weight": 0.1,
+    "reserve_capital": 100000.0,
+    "deployable_capital": 900000.0,
+    "regime": "neutral",
+    "liquidity_state": "normal",
+    "max_strategy_weight": 0.35,
+    "allocations": [
+      {
+        "strategy_id": "macro_defense",
+        "name": "Macro Defense",
+        "symbol": "USDTUSD",
+        "asset_class": "cash_overlay",
+        "score": 0.1350837,
+        "weight": 0.35,
+        "target_capital": 315000.0,
+        "risk_budget": 0.3,
+        "preferred_regimes": [
+          "stress",
+          "bear",
+          "neutral"
+        ]
+      },
+      {
+        "strategy_id": "alpha_trend",
+        "name": "Alpha Trend",
+        "symbol": "BTCUSDT",
+        "asset_class": "crypto",
+        "score": 0.12678356,
+        "weight": 0.35,
+        "target_capital": 315000.0,
+        "risk_budget": 0.24,
+        "preferred_regimes": [
+          "bull",
+          "neutral"
+        ]
+      },
+      {
+        "strategy_id": "beta_mean_revert",
+        "name": "Beta Mean Revert",
+        "symbol": "ETHUSDT",
+        "asset_class": "crypto",
+        "score": 0.05716405,
+        "weight": 0.17918,
+        "target_capital": 161262.0,
+        "risk_budget": 0.18,
+        "preferred_regimes": [
+          "neutral",
+          "range"
+        ]
+      }
+    ],
+    "status": "proposed"
+  },
+  "export_queue": [
+    {
+      "plan_id": "alloc_plan_37b859ebf9",
+      "decision_id": "alloc_dec_a8337da99c",
+      "generated_at": 1776402801,
+      "tickets": [
+        {
+          "allocation_id": "alloc_plan_37b859ebf9",
+          "decision_id": "alloc_dec_a8337da99c",
+          "strategy_id": "macro_defense",
+          "symbol": "USDTUSD",
+          "target_capital": 315000.0,
+          "weight": 0.35,
+          "risk_tag": "REGIME_NEUTRAL"
+        },
+        {
+          "allocation_id": "alloc_plan_37b859ebf9",
+          "decision_id": "alloc_dec_a8337da99c",
+          "strategy_id": "alpha_trend",
+          "symbol": "BTCUSDT",
+          "target_capital": 315000.0,
+          "weight": 0.35,
+          "risk_tag": "REGIME_NEUTRAL"
+        },
+        {
+          "allocation_id": "alloc_plan_37b859ebf9",
+          "decision_id": "alloc_dec_a8337da99c",
+          "strategy_id": "beta_mean_revert",
+          "symbol": "ETHUSDT",
+          "target_capital": 161262.0,
+          "weight": 0.17918,
+          "risk_tag": "REGIME_NEUTRAL"
+        }
+      ]
+    }
+  ],
+  "audit_log": [
+    {
+      "event_id": "allocation_audit_1776402801602103064",
+      "event_type": "allocation_plan_approved",
+      "timestamp": 1776402801,
+      "plan_id": "alloc_plan_37b859ebf9",
+      "decision_id": "alloc_dec_a8337da99c",
+      "approver": "smoke_committee"
+    },
+    {
+      "event_id": "allocation_audit_1776402801597722928",
+      "event_type": "allocation_plan_proposed",
+      "timestamp": 1776402801,
+      "plan_id": "alloc_plan_37b859ebf9",
+      "decision_id": "alloc_dec_a8337da99c",
+      "regime": "neutral",
+      "capital": 1000000.0
+    }
+  ]
+}

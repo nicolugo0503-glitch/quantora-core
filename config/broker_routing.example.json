@@ -1,0 +1,12 @@
+{
+  "mission": "QNT30331",
+  "layer": "qnt30331-real-broker-order-routing",
+  "routing_mode": "paper-first",
+  "live_requires_governance_approval": true,
+  "risk_gate_required": true,
+  "alpaca_env": [
+    "ALPACA_API_KEY",
+    "ALPACA_SECRET_KEY",
+    "ALPACA_BASE_URL"
+  ]
+}

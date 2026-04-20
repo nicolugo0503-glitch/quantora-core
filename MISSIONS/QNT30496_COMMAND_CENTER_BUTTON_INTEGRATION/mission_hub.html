@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantora Conversation Missions Hub</title>
+  <style>
+    body {
+      margin: 0;
+      background: #08111f;
+      color: #eef4ff;
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 24px;
+    }
+    .wrap { max-width: 1200px; margin: 0 auto; }
+    .hero {
+      background: #0e1a2b;
+      border: 1px solid #1f3556;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .card {
+      background: #0e1a2b;
+      border: 1px solid #1f3556;
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .code {
+      color: #8fb2ff;
+      font-size: 12px;
+      margin-bottom: 6px;
+      letter-spacing: 0.08em;
+    }
+    .title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .notes {
+      color: #9bb0ce;
+      font-size: 14px;
+      line-height: 1.4;
+      min-height: 58px;
+    }
+    .actions {
+      margin-top: 14px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    a.btn {
+      display: inline-block;
+      text-decoration: none;
+      color: #fff;
+      background: #2455d6;
+      border: 1px solid #3f6fff;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+    .small {
+      color: #9bb0ce;
+      font-size: 12px;
+      margin-top: 6px;
+    }
+    @media (max-width: 960px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1>Quantora Conversation Missions Hub</h1>
+      <p>This hub gives you one place to access every mission added in this conversation, without modifying your existing command center structure.</p>
+      <p class="small">Use the injected button script for in-shell buttons, or open the mission files directly from here.</p>
+    </div>
+
+    <div id="cards" class="grid"></div>
+  </div>
+
+  <script>
+    fetch("mission_button_manifest.json")
+      .then(r => r.json())
+      .then(manifest => {
+        const cards = document.getElementById("cards");
+        manifest.buttons.forEach(meta => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <div class="code">${meta.mission_code}</div>
+            <div class="title">${meta.title}</div>
+            <div class="notes">${meta.notes || ""}</div>
+            <div class="actions">
+              <a class="btn" href="../../${meta.relative_path}" target="_blank">Open Mission Asset</a>
+            </div>
+            <div class="small">${meta.relative_path}</div>
+          `;
+          cards.appendChild(card);
+        });
+      });
+  </script>
+</body>
+</html>

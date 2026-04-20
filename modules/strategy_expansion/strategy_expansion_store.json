@@ -1,0 +1,43 @@
+{
+  "module": "QNT30641",
+  "name": "Global Strategy Expansion Layer",
+  "created_at": "2026-04-08T19:23:41.117210+00:00",
+  "registry": [
+    {
+      "strategy_id": "STRAT_BTC_MOMO",
+      "name": "BTC Momentum",
+      "manager_type": "internal",
+      "manager_name": "Quantora",
+      "asset_class": "crypto",
+      "risk_band": "high",
+      "vehicle_ids": [
+        "VEHICLE_ALPHA"
+      ],
+      "execution_ready": true,
+      "reporting_ready": true,
+      "compliance_ready": true,
+      "approval_status": "approved",
+      "created_at": "2026-04-08T19:23:41.117231+00:00",
+      "updated_at": "2026-04-08T19:23:41.117235+00:00"
+    },
+    {
+      "strategy_id": "STRAT_MACRO_EXT_01",
+      "name": "Global Macro Sleeve",
+      "manager_type": "external",
+      "manager_name": "External Manager A",
+      "asset_class": "macro",
+      "risk_band": "medium",
+      "vehicle_ids": [
+        "VEHICLE_ALPHA",
+        "VEHICLE_INCOME"
+      ],
+      "execution_ready": true,
+      "reporting_ready": true,
+      "compliance_ready": false,
+      "approval_status": "pending",
+      "created_at": "2026-04-08T19:23:41.117239+00:00",
+      "updated_at": "2026-04-08T19:23:41.117243+00:00"
+    }
+  ],
+  "audit": []
+}

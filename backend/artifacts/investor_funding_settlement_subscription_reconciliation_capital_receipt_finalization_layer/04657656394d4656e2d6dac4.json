@@ -1,0 +1,22 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 365,
+    "minimum_score": 95.0,
+    "minimum_settlement_readiness": 0.95,
+    "minimum_reconciliation_readiness": 0.95,
+    "minimum_receipt_finalization_readiness": 0.95,
+    "maximum_unreconciled_items": 0,
+    "maximum_outstanding_receipts": 0,
+    "require_paid_capital_call": true,
+    "require_completed_funding": true,
+    "require_capital_ledger_entry": true
+  },
+  "runs": [],
+  "alerts": [],
+  "funding_settlement_events": [],
+  "subscription_reconciliation_events": [],
+  "capital_receipt_finalization_events": [],
+  "latest_run": null,
+  "last_context": {}
+}

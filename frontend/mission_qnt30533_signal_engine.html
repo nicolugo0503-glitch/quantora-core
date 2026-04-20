@@ -1,0 +1,45 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>QNT30533 Signal Engine</title>
+      <style>
+        body{font-family:Arial,Helvetica,sans-serif;background:#08111f;color:#eef4ff;padding:24px}
+        button{background:#2455d6;color:#fff;border:1px solid #3f6fff;border-radius:10px;padding:10px 14px;cursor:pointer;margin-right:8px}
+        textarea,pre{width:100%;min-height:220px;background:#07111f;border:1px solid #1f3556;border-radius:10px;padding:14px;color:#eef4ff;overflow:auto}
+      </style>
+    </head>
+    <body>
+      <h1>QNT30533 — Signal Engine</h1>
+      <button onclick="generate()">Generate Signals</button>
+      <button onclick="buildTick()">Build Tick Payload</button>
+      <button onclick="sendTick()">Send To Live Fund</button>
+      <textarea id="pricesBox">{
+  "BTCUSD": [65000, 65500, 66200],
+  "ETHUSD": [3200, 3180, 3210],
+  "SOLUSD": [145, 149, 153]
+}</textarea>
+      <pre id="out">ready</pre>
+      <script>
+        async function post(url, body){
+          const r = await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body: JSON.stringify(body)});
+          return await r.json();
+        }
+        function getPrices(){ return JSON.parse(document.getElementById('pricesBox').value); }
+        async function generate(){
+          const data = await post('/api/signals/generate', {prices: getPrices(), universe:['BTCUSD','ETHUSD','SOLUSD']});
+          document.getElementById('out').textContent = JSON.stringify(data,null,2);
+        }
+        async function buildTick(){
+          const data = await post('/api/signals/build-tick', {fund_id:'FUND1', capital:100000, prices:getPrices(), universe:['BTCUSD','ETHUSD','SOLUSD'], dry_run:true});
+          document.getElementById('out').textContent = JSON.stringify(data,null,2);
+        }
+        async function sendTick(){
+          const built = await post('/api/signals/build-tick', {fund_id:'FUND1', capital:100000, prices:getPrices(), universe:['BTCUSD','ETHUSD','SOLUSD'], dry_run:true});
+          const data = await post('/api/fund/tick', built);
+          document.getElementById('out').textContent = JSON.stringify({built_tick:built, fund_response:data}, null, 2);
+        }
+      </script>
+    </body>
+    </html>

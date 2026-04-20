@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30363 Capital Committee Engine</title>
+  <style>
+    :root { --bg:#07111f; --panel:#0f1d31; --panel2:#132742; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#60a5fa; }
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .shell{max-width:1280px;margin:0 auto;padding:24px}.panel{background:rgba(15,29,49,.95);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px}
+    .metrics,.row{display:grid;gap:12px}.metrics{grid-template-columns:repeat(4,minmax(0,1fr))}.row{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .metric{background:#0a1526;border:1px solid #1e2d47;border-radius:14px;padding:14px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:26px;font-weight:700;margin-top:8px}
+    textarea,input,select{width:100%;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;padding:11px 12px} textarea{min-height:180px}
+    button{border:none;background:var(--accent);color:white;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700} button.secondary{background:#1d4ed8}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:260px;white-space:pre-wrap}.tiny{color:var(--muted);font-size:12px}
+    @media(max-width:900px){.metrics,.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">
+      <div>
+        <h1 style="margin:0 0 8px 0;">Capital Committee Engine + Allocation Vote Compiler</h1>
+        <div class="tiny">Govern capital proposals through committee quorum, weighted votes, and compiled allocation decisions.</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="secondary" onclick="window.location.href='index.html'">Command Center</button>
+        <button onclick="loadStatus()">Refresh</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="label">Committees</div><div class="value" id="m1">-</div></div>
+    <div class="metric"><div class="label">Proposals</div><div class="value" id="m2">-</div></div>
+    <div class="metric"><div class="label">Approved</div><div class="value" id="m3">-</div></div>
+    <div class="metric"><div class="label">Pending</div><div class="value" id="m4">-</div></div>
+  </div>
+
+  <div class="row">
+    <div class="panel">
+      <h2 style="margin-top:0">Committee Setup</h2>
+      <textarea id="committee_body">{
+  "committees": [
+    {
+      "committee_id": "capital_committee_primary",
+      "name": "Primary Capital Committee",
+      "quorum": 2,
+      "approval_threshold": 0.6,
+      "members": [
+        {"member_id":"cio","role":"chair","weight":1.5},
+        {"member_id":"risk","role":"risk","weight":1.0},
+        {"member_id":"allocator","role":"allocator","weight":1.0}
+      ]
+    }
+  ]
+}</textarea>
+      <div style="margin-top:10px"><button onclick="upsertCommittees()">Upsert Committees</button></div>
+    </div>
+
+    <div class="panel">
+      <h2 style="margin-top:0">Proposal + Voting</h2>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+        <input id="title" value="Increase NVDA breakout capital">
+        <input id="requested_capital" type="number" value="50000">
+        <input id="strategy_id" value="nvda_breakout">
+        <input id="proposal_id" placeholder="proposal id after create">
+        <input id="member_id" value="cio">
+        <select id="decision"><option value="approve">approve</option><option value="reject">reject</option></select>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <button onclick="createProposal()">Create Proposal</button>
+        <button onclick="castVote()">Cast Vote</button>
+        <button class="secondary" onclick="compileAllocation()">Compile</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel"><h2 style="margin-top:0">Output</h2><pre id="out">Loading...</pre></div>
+</div>
+
+<script>
+const API = "http://127.0.0.1:8010";
+async function req(path, method="GET", body=null){
+  const res = await fetch(API + path, {method, headers:{"Content-Type":"application/json"}, body: body ? JSON.stringify(body) : null});
+  const data = await res.json();
+  if(!res.ok) throw new Error(JSON.stringify(data));
+  return data;
+}
+function render(data){
+  document.getElementById("m1").textContent = data.committee_count ?? "-";
+  document.getElementById("m2").textContent = data.proposal_count ?? "-";
+  document.getElementById("m3").textContent = data.approved_count ?? "-";
+  document.getElementById("m4").textContent = data.pending_count ?? "-";
+  document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+}
+async function loadStatus(){ try{ render(await req("/capital-committee/status")); } catch(e){ document.getElementById("out").textContent = String(e); } }
+async function upsertCommittees(){
+  try{
+    const body = JSON.parse(document.getElementById("committee_body").value);
+    const data = await req("/capital-committee/committees/upsert", "POST", body);
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2); await loadStatus();
+  }catch(e){ document.getElementById("out").textContent = String(e); }
+}
+async function createProposal(){
+  try{
+    const body = { committee_id:"capital_committee_primary", title:document.getElementById("title").value, requested_capital:parseFloat(document.getElementById("requested_capital").value), strategy_id:document.getElementById("strategy_id").value };
+    const data = await req("/capital-committee/proposals/create", "POST", body);
+    document.getElementById("proposal_id").value = data.proposal.proposal_id;
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2); await loadStatus();
+  }catch(e){ document.getElementById("out").textContent = String(e); }
+}
+async function castVote(){
+  try{
+    const body = { proposal_id:document.getElementById("proposal_id").value, member_id:document.getElementById("member_id").value, decision:document.getElementById("decision").value };
+    const data = await req("/capital-committee/votes/cast", "POST", body);
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2); await loadStatus();
+  }catch(e){ document.getElementById("out").textContent = String(e); }
+}
+async function compileAllocation(){
+  try{
+    const body = { proposal_id:document.getElementById("proposal_id").value };
+    const data = await req("/capital-committee/allocations/compile", "POST", body);
+    document.getElementById("out").textContent = JSON.stringify(data, null, 2); await loadStatus();
+  }catch(e){ document.getElementById("out").textContent = String(e); }
+}
+loadStatus();
+</script>
+</body>
+</html>

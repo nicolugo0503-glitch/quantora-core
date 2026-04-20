@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30566 External Funding Rails</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1280px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:24px;font-weight:800;margin-top:6px}
+button,a,input,select{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,select{width:100%;background:#07111f;color:#fff;border:1px solid #203251}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:380px}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px}
+small{color:#9fb3d8}
+@media(max-width:1000px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30566 · Payment Provider / External Funding Rails</h1>
+        <div style="color:#9fb3d8">Provider abstraction layer for real-world funding readiness. This build is provider-ready and webhook-ready, but remains simulated until live provider credentials and endpoints are configured.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="mission_qnt30565_funding_center.html">Funding Rails</a>
+        <a href="investor_portal.html">Investor Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Provider</div><div id="provider" class="value">-</div></div>
+    <div class="card"><div class="label">Connected</div><div id="connected" class="value">-</div></div>
+    <div class="card"><div class="label">Methods</div><div id="methods" class="value">-</div></div>
+    <div class="card"><div class="label">Webhook Events</div><div id="events" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <select id="providerName"><option value="stripe_simulated">stripe_simulated</option><option value="dwolla_simulated">dwolla_simulated</option></select>
+      <input id="methodLabel" placeholder="Payment method label">
+      <input id="amount" placeholder="Deposit amount">
+      <button onclick="connectProvider()">Connect</button>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="attachMethod()">Attach Method</button>
+      <button onclick="createIntent()">Create External Intent</button>
+      <button onclick="confirmIntent()">Confirm Intent</button>
+      <button onclick="simulateWebhook()">Simulate Webhook Success</button>
+    </div>
+    <small>Webhook simulation uses the package's internal dev signature. This is still a simulated external provider layer.</small>
+  </div>
+
+  <div class="card">
+    <div class="label">Provider State</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const status = await j('/api/user-payment-provider/status');
+  const hooks = await j('/api/payment-provider/webhooks');
+  if(!status.ok){ document.getElementById('raw').textContent = JSON.stringify(status.data, null, 2); return; }
+  document.getElementById('provider').textContent = String(status.data.provider || '-').toUpperCase();
+  document.getElementById('connected').textContent = status.data.connected ? 'YES' : 'NO';
+  document.getElementById('methods').textContent = String((status.data.payment_methods || []).length);
+  document.getElementById('events').textContent = String((hooks.data.events || []).length);
+  document.getElementById('raw').textContent = JSON.stringify({provider_status: status.data, webhook_events: hooks.data.events || []}, null, 2);
+}
+async function connectProvider(){
+  const provider = document.getElementById('providerName').value;
+  await j('/api/user-payment-provider/connect', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({provider})});
+  await load();
+}
+async function attachMethod(){
+  const label = document.getElementById('methodLabel').value || 'External Method';
+  await j('/api/user-payment-provider/method', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({type:'bank', label})});
+  await load();
+}
+async function createIntent(){
+  const amount = Number(document.getElementById('amount').value || 0);
+  await j('/api/user-payment-provider/deposit-intent', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({amount})});
+  await load();
+}
+async function confirmIntent(){
+  const intents = await j('/api/user-funding/intents');
+  const latest = (intents.data.payment_intents || [])[0];
+  if(!latest){ alert('No intent found'); return; }
+  await j('/api/user-payment-provider/confirm', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({intent_id: latest.intent_id})});
+  await load();
+}
+async function simulateWebhook(){
+  const intents = await j('/api/user-funding/intents');
+  const latest = (intents.data.payment_intents || [])[0];
+  const me = await j('/api/user/me');
+  if(!latest || !me.ok){ alert('Need signed-in user and external intent first'); return; }
+  const payload = {type:'payment_intent.succeeded', email: me.data.user.email, intent_id: latest.intent_id};
+  const secret = 'quantora-dev-webhook-secret';
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey('raw', enc.encode(secret), {name:'HMAC', hash:'SHA-256'}, false, ['sign']);
+  const sigBuf = await crypto.subtle.sign('HMAC', key, enc.encode(JSON.stringify(payload)));
+  const sig = Array.from(new Uint8Array(sigBuf)).map(x=>x.toString(16).padStart(2,'0')).join('');
+  await fetch('/api/payment-provider/webhook', {method:'POST', headers:{'Content-Type':'application/json','x-quantora-signature':sig}, body: JSON.stringify(payload)});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+{
+  "venue_governor": {
+    "last_updated_at": "2026-03-31T16:08:21Z",
+    "enabled": true,
+    "last_policy_update_at": null,
+    "last_selection_at": "2026-03-31T16:08:21Z",
+    "selection_count": 1,
+    "blocked_venues": 1,
+    "fallback_count": 0,
+    "telemetry": [
+      {
+        "timestamp": "2026-03-31T16:08:21Z",
+        "event": "venues.ingested",
+        "venue_count": 3
+      },
+      {
+        "timestamp": "2026-03-31T16:08:21Z",
+        "event": "venues.ingested",
+        "venue_count": 3
+      },
+      {
+        "timestamp": "2026-03-31T16:08:21Z",
+        "event": "venue.selected",
+        "selected_venue": "lit_nyse",
+        "fallback_used": false
+      }
+    ]
+  },
+  "policy": {
+    "mode": "adaptive_guarded",
+    "max_venues": 1,
+    "min_score": 75.0,
+    "avoid_flagged": true,
+    "fallback_enabled": true,
+    "fallback_venue_id": "lit_nyse"
+  },
+  "venues": [
+    {
+      "venue_id": "lit_nyse",
+      "venue_name": "Lit NYSE",
+      "quality_score": 93.0,
+      "flagged": false,
+      "avg_slippage_bps": 2.8,
+      "fill_rate": 0.985,
+      "reject_rate": 0.01,
+      "avg_latency_ms": 29.0
+    },
+    {
+      "venue_id": "lit_nasdaq",
+      "venue_name": "Lit NASDAQ",
+      "quality_score": 89.5,
+      "flagged": false,
+      "avg_slippage_bps": 3.6,
+      "fill_rate": 0.978,
+      "reject_rate": 0.012,
+      "avg_latency_ms": 26.0
+    },
+    {
+      "venue_id": "dark_pool_x",
+      "venue_name": "Dark Pool X",
+      "quality_score": 56.0,
+      "flagged": true,
+      "avg_slippage_bps": 10.2,
+      "fill_rate": 0.84,
+      "reject_rate": 0.06,
+      "avg_latency_ms": 71.0
+    }
+  ],
+  "decisions": [
+    {
+      "decision_id": "venue_0001",
+      "timestamp": "2026-03-31T16:08:21Z",
+      "order_id": "sig_0001",
+      "symbol": "AAPL",
+      "side": "buy",
+      "selected_venue": "lit_nyse",
+      "selected_venue_name": "Lit NYSE",
+      "score": 93.0,
+      "fallback_used": false,
+      "reason": "highest_quality_score",
+      "blocked": false
+    }
+  ],
+  "history": [
+    {
+      "timestamp": "2026-03-31T16:08:19Z",
+      "event": "adaptive_execution.override_dispatched",
+      "decision_id": "policy_0002",
+      "mode": "defensive"
+    },
+    {
+      "timestamp": "2026-03-31T16:08:21Z",
+      "event": "venues.ingested",
+      "venue_count": 3
+    },
+    {
+      "timestamp": "2026-03-31T16:08:21Z",
+      "event": "venues.ingested",
+      "venue_count": 3
+    },
+    {
+      "timestamp": "2026-03-31T16:08:21Z",
+      "event": "venue.selected",
+      "selected_venue": "lit_nyse"
+    }
+  ]
+}

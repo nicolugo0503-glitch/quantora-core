@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30584 Strategy Sleeve Execution Registry</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr auto auto;gap:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1100px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30584 · Strategy Sleeve Execution Registry</h1>
+        <div style="color:#9fb3d8">Tracks which strategy sleeves have actually been deployed against the target allocation plan. This is the execution registry between allocation and live capital deployment.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30583_portfolio_allocation_engine.html">Allocation Engine</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Sleeves</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Target Allocated</div><div id="target" class="value">-</div></div>
+    <div class="card"><div class="label">Deployed</div><div id="deployed" class="value">-</div></div>
+    <div class="card"><div class="label">Undeployed</div><div id="undeployed" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="adminEmail" placeholder="Investor email (admin deploy)">
+      <input id="sleeveId" placeholder="Sleeve id">
+      <input id="amount" placeholder="Deployed amount">
+      <button onclick="deploySleeve()">Deploy</button>
+      <button onclick="syncSleeves()">Sync</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Sleeve Registry</div>
+    <table>
+      <thead><tr><th>Sleeve</th><th>Target %</th><th>Target Amount</th><th>Deployed</th><th>Status</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Execution Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/strategy-sleeves/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  document.getElementById('count').textContent = String(d.sleeve_count || 0);
+  document.getElementById('target').textContent = money(d.target_allocated_amount || 0);
+  document.getElementById('deployed').textContent = money(d.deployed_amount || 0);
+  document.getElementById('undeployed').textContent = money(d.undeployed_amount || 0);
+  document.getElementById('rows').innerHTML = (d.sleeves || []).map(s =>
+    `<tr><td>${s.strategy_name}</td><td>${Number(s.target_pct||0).toFixed(2)}%</td><td>${money(s.allocated_amount)}</td><td>${money(s.deployed_amount)}</td><td>${s.execution_status}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function deploySleeve(){
+  const payload = {
+    email: document.getElementById('adminEmail').value,
+    sleeve_id: document.getElementById('sleeveId').value,
+    deployed_amount: Number(document.getElementById('amount').value || 0)
+  };
+  await j('/api/strategy-sleeves/deploy', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function syncSleeves(){
+  await j('/api/strategy-sleeves/sync', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({note:'manual sync from UI'})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

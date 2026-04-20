@@ -1,0 +1,9 @@
+{
+  "base_zip": "QUANTORA_FULL_PROJECT_QNT30531_PRODUCTION_INTEGRATION_AUDIT_FIX_PASS.zip",
+  "changes": [
+    "Added legacy route /api/v1/reports/nav",
+    "Added QNT30532 route normalization map",
+    "Added cleanup verification page",
+    "Added registry entry for QNT30532"
+  ]
+}

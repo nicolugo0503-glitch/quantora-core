@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30598 Investor Allocation Confirmation + Contract Note Registry</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input,textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+textarea{min-height:84px}
+.row{display:grid;grid-template-columns:2fr 2fr auto auto auto;gap:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1300px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30598 · Investor Allocation Confirmation + Contract Note Registry</h1>
+        <div style="color:#9fb3d8">Creates allocation confirmations from official NAV and processed capital activity. This is the investor-facing contract note registry.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30597_nav_strike.html">NAV Strike</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Notes</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Delivered</div><div id="delivered" class="value">-</div></div>
+    <div class="card"><div class="label">Acknowledged</div><div id="acked" class="value">-</div></div>
+    <div class="card"><div class="label">Allocated NAV</div><div id="allocated" class="value">-</div></div>
+    <div class="card"><div class="label">Net Capital Activity</div><div id="flow" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="title" placeholder="Confirmation title">
+      <textarea id="notes" placeholder="Notes"></textarea>
+      <button onclick="generateNote()">Generate</button>
+      <button onclick="deliverLatest()">Deliver</button>
+      <button onclick="ackLatest()">Acknowledge</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Contract Note Registry</div>
+    <table>
+      <thead><tr><th>Title</th><th>Official NAV</th><th>Net Capital Activity</th><th>Allocated NAV</th><th>Status</th><th>Ack</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Allocation Confirmation Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/allocation-confirmations/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  const latest = d.latest_note || {};
+  document.getElementById('count').textContent = String(d.note_count || 0);
+  document.getElementById('delivered').textContent = String(d.delivered_count || 0);
+  document.getElementById('acked').textContent = String(d.acknowledged_count || 0);
+  document.getElementById('allocated').textContent = money(latest.allocated_nav || 0);
+  document.getElementById('flow').textContent = money(latest.net_capital_activity || 0);
+  document.getElementById('rows').innerHTML = (d.notes || []).map(n =>
+    `<tr><td>${n.title}</td><td>${money(n.official_nav)}</td><td>${money(n.net_capital_activity)}</td><td>${money(n.allocated_nav)}</td><td>${n.status}</td><td>${n.ack_status}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function generateNote(){
+  await j('/api/allocation-confirmations/generate', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({title: document.getElementById('title').value})});
+  await load();
+}
+async function deliverLatest(){
+  const res = await j('/api/allocation-confirmations');
+  const latest = (res.data.notes || [])[0];
+  if(!latest) return;
+  await j('/api/allocation-confirmations/deliver', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({note_id: latest.note_id, notes: document.getElementById('notes').value})});
+  await load();
+}
+async function ackLatest(){
+  const res = await j('/api/allocation-confirmations');
+  const latest = (res.data.notes || [])[0];
+  if(!latest) return;
+  await j('/api/allocation-confirmations/ack', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({note_id: latest.note_id})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

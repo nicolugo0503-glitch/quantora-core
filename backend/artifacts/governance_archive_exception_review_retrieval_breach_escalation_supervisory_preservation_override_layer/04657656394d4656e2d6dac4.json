@@ -1,0 +1,734 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 365,
+    "minimum_score": 96.0,
+    "minimum_archive_exception_review_readiness": 0.97,
+    "minimum_retrieval_breach_escalation_readiness": 0.97,
+    "minimum_supervisory_preservation_override_readiness": 0.97,
+    "maximum_open_retrieval_breaches": 0
+  },
+  "runs": [
+    {
+      "run_id": "qnt40030_1776234438",
+      "captured_at": "2026-04-15T06:27:18.110984+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776233477",
+      "captured_at": "2026-04-15T06:11:17.181389+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776233474",
+      "captured_at": "2026-04-15T06:11:14.268143+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776233376",
+      "captured_at": "2026-04-15T06:09:36.817093+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776233373",
+      "captured_at": "2026-04-15T06:09:33.974612+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776232178",
+      "captured_at": "2026-04-15T05:49:38.862259+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776232174",
+      "captured_at": "2026-04-15T05:49:34.594505+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776231883",
+      "captured_at": "2026-04-15T05:44:43.492349+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776231879",
+      "captured_at": "2026-04-15T05:44:39.338619+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776231534",
+      "captured_at": "2026-04-15T05:38:54.299954+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776231530",
+      "captured_at": "2026-04-15T05:38:50.348724+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776231262",
+      "captured_at": "2026-04-15T05:34:22.897609+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776231258",
+      "captured_at": "2026-04-15T05:34:18.932672+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776231251",
+      "captured_at": "2026-04-15T05:34:11.015772+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776231247",
+      "captured_at": "2026-04-15T05:34:07.007327+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776230210",
+      "captured_at": "2026-04-15T05:16:50.656962+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776230206",
+      "captured_at": "2026-04-15T05:16:46.636340+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776230198",
+      "captured_at": "2026-04-15T05:16:38.893350+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40030_1776229675",
+      "captured_at": "2026-04-15T05:07:55.490967+00:00",
+      "archive_exception_review_readiness": 0.99,
+      "retrieval_breach_escalation_readiness": 0.99,
+      "supervisory_preservation_override_readiness": 0.99,
+      "open_retrieval_breaches": 0,
+      "score": 92.0,
+      "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+      "reasons": [
+        "permanent record seal posture must be established before supervisory preservation override"
+      ],
+      "alerts": [
+        "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    }
+  ],
+  "alerts": [
+    {
+      "captured_at": "2026-04-15T06:27:18.110991+00:00",
+      "code": "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+    }
+  ],
+  "archive_exception_reviews": [
+    {
+      "id": "archive_exception_review_1776234438",
+      "captured_at": "2026-04-15T06:27:18.107800+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776233477",
+      "captured_at": "2026-04-15T06:11:17.176970+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776233474",
+      "captured_at": "2026-04-15T06:11:14.265671+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776233376",
+      "captured_at": "2026-04-15T06:09:36.814582+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776233373",
+      "captured_at": "2026-04-15T06:09:33.972720+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776232178",
+      "captured_at": "2026-04-15T05:49:38.858755+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776232174",
+      "captured_at": "2026-04-15T05:49:34.590975+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776231883",
+      "captured_at": "2026-04-15T05:44:43.488725+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776231879",
+      "captured_at": "2026-04-15T05:44:39.335106+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776231534",
+      "captured_at": "2026-04-15T05:38:54.296932+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776231530",
+      "captured_at": "2026-04-15T05:38:50.345490+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776231262",
+      "captured_at": "2026-04-15T05:34:22.894412+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776231258",
+      "captured_at": "2026-04-15T05:34:18.929307+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776231251",
+      "captured_at": "2026-04-15T05:34:11.010915+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776231247",
+      "captured_at": "2026-04-15T05:34:07.003984+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776230210",
+      "captured_at": "2026-04-15T05:16:50.654499+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776230206",
+      "captured_at": "2026-04-15T05:16:46.633923+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776230198",
+      "captured_at": "2026-04-15T05:16:38.890490+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    },
+    {
+      "id": "archive_exception_review_1776229675",
+      "captured_at": "2026-04-15T05:07:55.488392+00:00",
+      "schedule_name": "annual governance archive exception review FY2025",
+      "archive_exception_review_readiness": 0.99
+    }
+  ],
+  "retrieval_breach_escalations": [
+    {
+      "id": "retrieval_breach_escalation_1776234438",
+      "captured_at": "2026-04-15T06:27:18.108501+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776233477",
+      "captured_at": "2026-04-15T06:11:17.177634+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776233474",
+      "captured_at": "2026-04-15T06:11:14.266290+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776233376",
+      "captured_at": "2026-04-15T06:09:36.815320+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776233373",
+      "captured_at": "2026-04-15T06:09:33.973308+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776232178",
+      "captured_at": "2026-04-15T05:49:38.859775+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776232174",
+      "captured_at": "2026-04-15T05:49:34.592003+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776231883",
+      "captured_at": "2026-04-15T05:44:43.489813+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776231879",
+      "captured_at": "2026-04-15T05:44:39.336122+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776231534",
+      "captured_at": "2026-04-15T05:38:54.297843+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776231530",
+      "captured_at": "2026-04-15T05:38:50.346397+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776231262",
+      "captured_at": "2026-04-15T05:34:22.895213+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776231258",
+      "captured_at": "2026-04-15T05:34:18.930421+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776231251",
+      "captured_at": "2026-04-15T05:34:11.012446+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776231247",
+      "captured_at": "2026-04-15T05:34:07.004926+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776230210",
+      "captured_at": "2026-04-15T05:16:50.655214+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776230206",
+      "captured_at": "2026-04-15T05:16:46.634738+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776230198",
+      "captured_at": "2026-04-15T05:16:38.891272+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    },
+    {
+      "id": "retrieval_breach_escalation_1776229675",
+      "captured_at": "2026-04-15T05:07:55.489397+00:00",
+      "index_name": "board retrieval breach escalation FY2025",
+      "retrieval_breach_escalation_readiness": 0.99
+    }
+  ],
+  "supervisory_preservation_overrides": [
+    {
+      "id": "supervisory_preservation_override_1776234438",
+      "captured_at": "2026-04-15T06:27:18.109578+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776233477",
+      "captured_at": "2026-04-15T06:11:17.180221+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776233474",
+      "captured_at": "2026-04-15T06:11:14.267219+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776233376",
+      "captured_at": "2026-04-15T06:09:36.815899+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776233373",
+      "captured_at": "2026-04-15T06:09:33.973857+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776232178",
+      "captured_at": "2026-04-15T05:49:38.860836+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776232174",
+      "captured_at": "2026-04-15T05:49:34.593005+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776231883",
+      "captured_at": "2026-04-15T05:44:43.490864+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776231879",
+      "captured_at": "2026-04-15T05:44:39.337093+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776231534",
+      "captured_at": "2026-04-15T05:38:54.298873+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776231530",
+      "captured_at": "2026-04-15T05:38:50.347502+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776231262",
+      "captured_at": "2026-04-15T05:34:22.896289+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776231258",
+      "captured_at": "2026-04-15T05:34:18.931628+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776231251",
+      "captured_at": "2026-04-15T05:34:11.013834+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776231247",
+      "captured_at": "2026-04-15T05:34:07.005775+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776230210",
+      "captured_at": "2026-04-15T05:16:50.655855+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776230206",
+      "captured_at": "2026-04-15T05:16:46.635347+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776230198",
+      "captured_at": "2026-04-15T05:16:38.892163+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    },
+    {
+      "id": "supervisory_preservation_override_1776229675",
+      "captured_at": "2026-04-15T05:07:55.490170+00:00",
+      "supervision_name": "supervisory preservation override FY2025",
+      "supervisory_preservation_override_readiness": 0.99
+    }
+  ],
+  "latest_run": {
+    "run_id": "qnt40030_1776234438",
+    "captured_at": "2026-04-15T06:27:18.110984+00:00",
+    "archive_exception_review_readiness": 0.99,
+    "retrieval_breach_escalation_readiness": 0.99,
+    "supervisory_preservation_override_readiness": 0.99,
+    "open_retrieval_breaches": 0,
+    "score": 92.0,
+    "band": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+    "posture": "SUPERVISORY_PRESERVATION_OVERRIDE_WATCH",
+    "reasons": [
+      "permanent record seal posture must be established before supervisory preservation override"
+    ],
+    "alerts": [
+      "PERMANENT_ARCHIVE_SUPERVISION_POSTURE_NOT_ESTABLISHED"
+    ],
+    "operator_review_required": true
+  },
+  "last_context": {
+    "captured_at": "2026-04-15T06:27:18.110954+00:00",
+    "dep_a_summary": {
+      "posture": null,
+      "score": 92.0
+    }
+  }
+}

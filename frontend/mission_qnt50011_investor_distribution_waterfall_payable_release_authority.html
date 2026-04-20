@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QNT50011 — Investor Distribution Waterfall + Payable Release Authority</title>
+  <style>
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#07101d;color:#edf4ff}
+    .wrap{max-width:1120px;margin:0 auto;padding:32px}
+    .hero,.card{background:#0d1a2c;border:1px solid #223754;border-radius:18px;padding:24px;box-shadow:0 12px 34px rgba(0,0,0,.28)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:18px}
+    h1,h2{margin:0 0 12px}
+    .eyebrow{letter-spacing:.18em;text-transform:uppercase;color:#89b9ff;font-size:12px}
+    .pill{display:inline-block;padding:8px 12px;border-radius:999px;background:#163457;margin:6px 8px 0 0}
+    ul{padding-left:18px;line-height:1.6}
+    code{background:#091425;padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Quantora • Investor Distribution Governance</div>
+      <h1>QNT50011 — Investor Distribution Waterfall + Payable Release Authority</h1>
+      <p>Quantora now computes investor distribution waterfalls, binds each payable to treasury transfers, and enforces transfer-specific payable authority before cash leaves the institution. Distribution batches inherit performance, treasury, and investor registry context before release.</p>
+      <span class="pill">Waterfall allocation</span>
+      <span class="pill">Batch authority</span>
+      <span class="pill">Transfer binding</span>
+      <span class="pill">Investor payable release gate</span>
+    </section>
+    <div class="grid">
+      <section class="card">
+        <h2>Control Flow</h2>
+        <ul>
+          <li><code>register-batch</code> computes a payable waterfall across registered investors.</li>
+          <li><code>attest</code> captures operations, finance, and reporting evidence.</li>
+          <li><code>authorize-batch</code> approves the distribution envelope against treasury and performance constraints.</li>
+          <li><code>bind-transfer</code> maps treasury transfers to investor lines.</li>
+          <li><code>authorize-payable</code> issues transfer-specific release authority.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Institutional Checks</h2>
+        <ul>
+          <li>Treasury capacity is checked before payable authority is granted.</li>
+          <li>Settlement and reconciliation breaks can block distributions.</li>
+          <li>Only approved distribution transfers can be released for execution.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Endpoints</h2>
+        <ul>
+          <li><code>GET /investor-distributions/health</code></li>
+          <li><code>POST /investor-distributions/register-batch</code></li>
+          <li><code>POST /investor-distributions/authorize-batch</code></li>
+          <li><code>POST /investor-distributions/bind-transfer</code></li>
+          <li><code>POST /investor-distributions/authorize-payable</code></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_snapshots": 120,
+    "retain_runs": 120,
+    "auto_safe_mode_on_integrity_break": true,
+    "require_chain_integrity": true,
+    "require_clean_reconciliation": true,
+    "require_recovery_before_resume": true,
+    "max_open_critical_incidents": 0,
+    "min_valid_snapshot_score": 78.0
+  },
+  "safe_mode": false,
+  "state_snapshots": [],
+  "recovery_runs": [],
+  "alerts": [],
+  "created_at": 1776223536,
+  "updated_at": 1776223536
+}

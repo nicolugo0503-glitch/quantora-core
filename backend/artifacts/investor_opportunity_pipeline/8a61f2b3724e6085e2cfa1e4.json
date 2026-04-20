@@ -1,0 +1,23 @@
+{
+  "email": "qnt30650@test.local",
+  "opportunities": [
+    {
+      "opportunity_id": "opp_1775711166",
+      "investor_id": "",
+      "opportunity_name": "Institutional Raise A",
+      "stage": "soft_commit",
+      "target_amount": 1000000.0,
+      "probability": 70,
+      "expected_close_date": "",
+      "owner": "Desk A",
+      "source_channel": "family_office",
+      "notes": "",
+      "status": "open",
+      "created_at": 1775711166,
+      "updated_at": 1775711166
+    }
+  ],
+  "milestones": [],
+  "created_at": 1775711166,
+  "updated_at": 1775711166
+}

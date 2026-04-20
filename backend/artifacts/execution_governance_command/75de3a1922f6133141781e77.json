@@ -1,0 +1,14 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "priority_command_count": 8,
+    "minimum_governance_score": 82.0,
+    "minimum_supervisory_score": 78.0,
+    "minimum_venue_quality_score": 70.0,
+    "maximum_execution_stress_score": 28.0,
+    "maximum_drift_score": 24.0
+  },
+  "runs": [],
+  "created_at": 1775718524,
+  "updated_at": 1775718524
+}

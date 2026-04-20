@@ -1,0 +1,3366 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 365,
+    "minimum_score": 96.0,
+    "minimum_board_reporting_agenda_readiness": 0.97,
+    "minimum_annual_meeting_materials_readiness": 0.97,
+    "minimum_governance_lock_readiness": 0.97,
+    "maximum_pending_lock_exceptions": 0
+  },
+  "runs": [
+    {
+      "run_id": "qnt40026_1776234543",
+      "captured_at": "2026-04-15T06:29:03.891965+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234542",
+      "captured_at": "2026-04-15T06:29:02.274564+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234539",
+      "captured_at": "2026-04-15T06:28:59.632851+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234537",
+      "captured_at": "2026-04-15T06:28:57.599241+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234535",
+      "captured_at": "2026-04-15T06:28:55.271485+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234533",
+      "captured_at": "2026-04-15T06:28:53.796084+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234531",
+      "captured_at": "2026-04-15T06:28:51.616782+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234530",
+      "captured_at": "2026-04-15T06:28:50.157835+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234527",
+      "captured_at": "2026-04-15T06:28:47.933875+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234526",
+      "captured_at": "2026-04-15T06:28:46.524904+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234524",
+      "captured_at": "2026-04-15T06:28:44.391325+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234522",
+      "captured_at": "2026-04-15T06:28:42.239773+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234520",
+      "captured_at": "2026-04-15T06:28:40.099727+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234518",
+      "captured_at": "2026-04-15T06:28:38.346660+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234439",
+      "captured_at": "2026-04-15T06:27:19.496839+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234438",
+      "captured_at": "2026-04-15T06:27:18.097296+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234435",
+      "captured_at": "2026-04-15T06:27:15.903635+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234434",
+      "captured_at": "2026-04-15T06:27:14.516739+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234432",
+      "captured_at": "2026-04-15T06:27:12.516528+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234431",
+      "captured_at": "2026-04-15T06:27:11.138465+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234429",
+      "captured_at": "2026-04-15T06:27:09.070714+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234427",
+      "captured_at": "2026-04-15T06:27:07.810044+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234425",
+      "captured_at": "2026-04-15T06:27:05.945556+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234424",
+      "captured_at": "2026-04-15T06:27:04.624999+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234422",
+      "captured_at": "2026-04-15T06:27:02.715455+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234421",
+      "captured_at": "2026-04-15T06:27:01.476342+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234419",
+      "captured_at": "2026-04-15T06:26:59.577839+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234417",
+      "captured_at": "2026-04-15T06:26:57.567519+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234415",
+      "captured_at": "2026-04-15T06:26:55.741995+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776234414",
+      "captured_at": "2026-04-15T06:26:54.291973+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776233477",
+      "captured_at": "2026-04-15T06:11:17.167599+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776233475",
+      "captured_at": "2026-04-15T06:11:15.427765+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776233474",
+      "captured_at": "2026-04-15T06:11:14.257322+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776233472",
+      "captured_at": "2026-04-15T06:11:12.188864+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776233376",
+      "captured_at": "2026-04-15T06:09:36.803169+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776233375",
+      "captured_at": "2026-04-15T06:09:35.103825+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776233373",
+      "captured_at": "2026-04-15T06:09:33.965819+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776233372",
+      "captured_at": "2026-04-15T06:09:32.343684+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776232178",
+      "captured_at": "2026-04-15T05:49:38.846751+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776232176",
+      "captured_at": "2026-04-15T05:49:36.298674+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776232174",
+      "captured_at": "2026-04-15T05:49:34.576784+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776232171",
+      "captured_at": "2026-04-15T05:49:31.893565+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776231883",
+      "captured_at": "2026-04-15T05:44:43.474951+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776231880",
+      "captured_at": "2026-04-15T05:44:40.962015+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776231879",
+      "captured_at": "2026-04-15T05:44:39.320605+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776231876",
+      "captured_at": "2026-04-15T05:44:36.742010+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776231534",
+      "captured_at": "2026-04-15T05:38:54.285365+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776231531",
+      "captured_at": "2026-04-15T05:38:51.899840+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776231530",
+      "captured_at": "2026-04-15T05:38:50.334614+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776231527",
+      "captured_at": "2026-04-15T05:38:47.921003+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776231262",
+      "captured_at": "2026-04-15T05:34:22.876628+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776231260",
+      "captured_at": "2026-04-15T05:34:20.572464+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776231258",
+      "captured_at": "2026-04-15T05:34:18.918325+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776231256",
+      "captured_at": "2026-04-15T05:34:16.627905+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776231250",
+      "captured_at": "2026-04-15T05:34:10.994492+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776231248",
+      "captured_at": "2026-04-15T05:34:08.594405+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776231246",
+      "captured_at": "2026-04-15T05:34:06.988682+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776231244",
+      "captured_at": "2026-04-15T05:34:04.656341+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776230210",
+      "captured_at": "2026-04-15T05:16:50.642279+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776230208",
+      "captured_at": "2026-04-15T05:16:48.103901+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776230206",
+      "captured_at": "2026-04-15T05:16:46.619598+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776230204",
+      "captured_at": "2026-04-15T05:16:44.447446+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776230198",
+      "captured_at": "2026-04-15T05:16:38.880700+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776230196",
+      "captured_at": "2026-04-15T05:16:36.823574+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776230195",
+      "captured_at": "2026-04-15T05:16:35.455727+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776230193",
+      "captured_at": "2026-04-15T05:16:33.329441+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776229675",
+      "captured_at": "2026-04-15T05:07:55.478301+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776229673",
+      "captured_at": "2026-04-15T05:07:53.501290+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776229672",
+      "captured_at": "2026-04-15T05:07:52.135191+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776229669",
+      "captured_at": "2026-04-15T05:07:49.891633+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776229379",
+      "captured_at": "2026-04-15T05:02:59.418113+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776229377",
+      "captured_at": "2026-04-15T05:02:57.217653+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776229376",
+      "captured_at": "2026-04-15T05:02:56.050960+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776229374",
+      "captured_at": "2026-04-15T05:02:54.166136+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776229368",
+      "captured_at": "2026-04-15T05:02:48.934581+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776229367",
+      "captured_at": "2026-04-15T05:02:47.148110+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776229365",
+      "captured_at": "2026-04-15T05:02:45.821585+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776229364",
+      "captured_at": "2026-04-15T05:02:44.225641+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776228192",
+      "captured_at": "2026-04-15T04:43:12.180418+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776228190",
+      "captured_at": "2026-04-15T04:43:10.933187+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776228190",
+      "captured_at": "2026-04-15T04:43:10.118013+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776228189",
+      "captured_at": "2026-04-15T04:43:09.139973+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776228185",
+      "captured_at": "2026-04-15T04:43:05.309641+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776228184",
+      "captured_at": "2026-04-15T04:43:04.159127+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776227831",
+      "captured_at": "2026-04-15T04:37:11.809996+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776227830",
+      "captured_at": "2026-04-15T04:37:10.881364+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    },
+    {
+      "run_id": "qnt40026_1776227827",
+      "captured_at": "2026-04-15T04:37:07.645591+00:00",
+      "board_reporting_agenda_readiness": 0.99,
+      "annual_meeting_materials_readiness": 0.99,
+      "governance_lock_readiness": 0.99,
+      "pending_lock_exceptions": 0,
+      "score": 86.0,
+      "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+      "reasons": [
+        "annual investor communications posture must be established before governance lock",
+        "annual report archive posture must be established before governance lock"
+      ],
+      "alerts": [
+        "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+        "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+      ],
+      "operator_review_required": true
+    }
+  ],
+  "alerts": [
+    {
+      "captured_at": "2026-04-15T06:29:03.891974+00:00",
+      "code": "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED"
+    },
+    {
+      "captured_at": "2026-04-15T06:29:03.891976+00:00",
+      "code": "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+    }
+  ],
+  "board_reporting_agendas": [
+    {
+      "id": "board_reporting_agenda_1776234543",
+      "captured_at": "2026-04-15T06:29:03.882533+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234542",
+      "captured_at": "2026-04-15T06:29:02.266070+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234539",
+      "captured_at": "2026-04-15T06:28:59.622919+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234537",
+      "captured_at": "2026-04-15T06:28:57.590592+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234535",
+      "captured_at": "2026-04-15T06:28:55.264011+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234533",
+      "captured_at": "2026-04-15T06:28:53.788070+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234531",
+      "captured_at": "2026-04-15T06:28:51.609125+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234530",
+      "captured_at": "2026-04-15T06:28:50.148289+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234527",
+      "captured_at": "2026-04-15T06:28:47.926737+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234526",
+      "captured_at": "2026-04-15T06:28:46.515758+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234524",
+      "captured_at": "2026-04-15T06:28:44.383079+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234522",
+      "captured_at": "2026-04-15T06:28:42.232161+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234520",
+      "captured_at": "2026-04-15T06:28:40.086906+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234518",
+      "captured_at": "2026-04-15T06:28:38.315481+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234439",
+      "captured_at": "2026-04-15T06:27:19.488778+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234438",
+      "captured_at": "2026-04-15T06:27:18.090099+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234435",
+      "captured_at": "2026-04-15T06:27:15.896362+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234434",
+      "captured_at": "2026-04-15T06:27:14.509972+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234432",
+      "captured_at": "2026-04-15T06:27:12.509111+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234431",
+      "captured_at": "2026-04-15T06:27:11.128599+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234429",
+      "captured_at": "2026-04-15T06:27:09.061902+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234427",
+      "captured_at": "2026-04-15T06:27:07.802996+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234425",
+      "captured_at": "2026-04-15T06:27:05.939026+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234424",
+      "captured_at": "2026-04-15T06:27:04.618368+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234422",
+      "captured_at": "2026-04-15T06:27:02.707480+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234421",
+      "captured_at": "2026-04-15T06:27:01.470058+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234419",
+      "captured_at": "2026-04-15T06:26:59.571468+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234417",
+      "captured_at": "2026-04-15T06:26:57.560165+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234415",
+      "captured_at": "2026-04-15T06:26:55.734177+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776234414",
+      "captured_at": "2026-04-15T06:26:54.281362+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776233477",
+      "captured_at": "2026-04-15T06:11:17.161067+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776233475",
+      "captured_at": "2026-04-15T06:11:15.422130+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776233474",
+      "captured_at": "2026-04-15T06:11:14.251210+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776233472",
+      "captured_at": "2026-04-15T06:11:12.182819+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776233376",
+      "captured_at": "2026-04-15T06:09:36.797762+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776233375",
+      "captured_at": "2026-04-15T06:09:35.097437+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776233373",
+      "captured_at": "2026-04-15T06:09:33.959762+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776233372",
+      "captured_at": "2026-04-15T06:09:32.338039+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776232178",
+      "captured_at": "2026-04-15T05:49:38.839080+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776232176",
+      "captured_at": "2026-04-15T05:49:36.290844+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776232174",
+      "captured_at": "2026-04-15T05:49:34.568646+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776232171",
+      "captured_at": "2026-04-15T05:49:31.885032+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776231883",
+      "captured_at": "2026-04-15T05:44:43.464945+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776231880",
+      "captured_at": "2026-04-15T05:44:40.954414+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776231879",
+      "captured_at": "2026-04-15T05:44:39.312608+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776231876",
+      "captured_at": "2026-04-15T05:44:36.734494+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776231534",
+      "captured_at": "2026-04-15T05:38:54.277819+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776231531",
+      "captured_at": "2026-04-15T05:38:51.893264+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776231530",
+      "captured_at": "2026-04-15T05:38:50.327814+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776231527",
+      "captured_at": "2026-04-15T05:38:47.914592+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776231262",
+      "captured_at": "2026-04-15T05:34:22.868607+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776231260",
+      "captured_at": "2026-04-15T05:34:20.563563+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776231258",
+      "captured_at": "2026-04-15T05:34:18.911468+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776231256",
+      "captured_at": "2026-04-15T05:34:16.620674+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776231250",
+      "captured_at": "2026-04-15T05:34:10.985511+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776231248",
+      "captured_at": "2026-04-15T05:34:08.586544+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776231246",
+      "captured_at": "2026-04-15T05:34:06.982703+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776231244",
+      "captured_at": "2026-04-15T05:34:04.649601+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776230210",
+      "captured_at": "2026-04-15T05:16:50.636098+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776230208",
+      "captured_at": "2026-04-15T05:16:48.097469+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776230206",
+      "captured_at": "2026-04-15T05:16:46.611326+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776230204",
+      "captured_at": "2026-04-15T05:16:44.442327+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776230198",
+      "captured_at": "2026-04-15T05:16:38.874798+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776230196",
+      "captured_at": "2026-04-15T05:16:36.817485+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776230195",
+      "captured_at": "2026-04-15T05:16:35.449426+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776230193",
+      "captured_at": "2026-04-15T05:16:33.323758+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776229675",
+      "captured_at": "2026-04-15T05:07:55.470769+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776229673",
+      "captured_at": "2026-04-15T05:07:53.495230+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776229672",
+      "captured_at": "2026-04-15T05:07:52.129835+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776229669",
+      "captured_at": "2026-04-15T05:07:49.886124+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776229379",
+      "captured_at": "2026-04-15T05:02:59.411444+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776229377",
+      "captured_at": "2026-04-15T05:02:57.212706+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776229376",
+      "captured_at": "2026-04-15T05:02:56.045195+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776229374",
+      "captured_at": "2026-04-15T05:02:54.160970+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776229368",
+      "captured_at": "2026-04-15T05:02:48.928327+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776229367",
+      "captured_at": "2026-04-15T05:02:47.142513+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776229365",
+      "captured_at": "2026-04-15T05:02:45.817399+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776229364",
+      "captured_at": "2026-04-15T05:02:44.221297+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776228192",
+      "captured_at": "2026-04-15T04:43:12.176564+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776228190",
+      "captured_at": "2026-04-15T04:43:10.929106+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776228190",
+      "captured_at": "2026-04-15T04:43:10.114784+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776228189",
+      "captured_at": "2026-04-15T04:43:09.137831+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776228185",
+      "captured_at": "2026-04-15T04:43:05.306339+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776228184",
+      "captured_at": "2026-04-15T04:43:04.155352+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776227831",
+      "captured_at": "2026-04-15T04:37:11.806151+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776227830",
+      "captured_at": "2026-04-15T04:37:10.878608+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    },
+    {
+      "id": "board_reporting_agenda_1776227827",
+      "captured_at": "2026-04-15T04:37:07.644242+00:00",
+      "agenda_name": "annual board reporting agenda FY2025",
+      "board_reporting_agenda_readiness": 0.99
+    }
+  ],
+  "annual_meeting_materials": [
+    {
+      "id": "annual_meeting_materials_1776234543",
+      "captured_at": "2026-04-15T06:29:03.884765+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234542",
+      "captured_at": "2026-04-15T06:29:02.268478+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234539",
+      "captured_at": "2026-04-15T06:28:59.625719+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234537",
+      "captured_at": "2026-04-15T06:28:57.592811+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234535",
+      "captured_at": "2026-04-15T06:28:55.266095+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234533",
+      "captured_at": "2026-04-15T06:28:53.790183+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234531",
+      "captured_at": "2026-04-15T06:28:51.611214+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234530",
+      "captured_at": "2026-04-15T06:28:50.152159+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234527",
+      "captured_at": "2026-04-15T06:28:47.928671+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234526",
+      "captured_at": "2026-04-15T06:28:46.519160+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234524",
+      "captured_at": "2026-04-15T06:28:44.385338+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234522",
+      "captured_at": "2026-04-15T06:28:42.233997+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234520",
+      "captured_at": "2026-04-15T06:28:40.089777+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234518",
+      "captured_at": "2026-04-15T06:28:38.317311+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234439",
+      "captured_at": "2026-04-15T06:27:19.490734+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234438",
+      "captured_at": "2026-04-15T06:27:18.091674+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234435",
+      "captured_at": "2026-04-15T06:27:15.898606+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234434",
+      "captured_at": "2026-04-15T06:27:14.511618+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234432",
+      "captured_at": "2026-04-15T06:27:12.510900+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234431",
+      "captured_at": "2026-04-15T06:27:11.131899+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234429",
+      "captured_at": "2026-04-15T06:27:09.063763+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234427",
+      "captured_at": "2026-04-15T06:27:07.804773+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234425",
+      "captured_at": "2026-04-15T06:27:05.940933+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234424",
+      "captured_at": "2026-04-15T06:27:04.620113+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234422",
+      "captured_at": "2026-04-15T06:27:02.709280+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234421",
+      "captured_at": "2026-04-15T06:27:01.471821+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234419",
+      "captured_at": "2026-04-15T06:26:59.573155+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234417",
+      "captured_at": "2026-04-15T06:26:57.561672+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234415",
+      "captured_at": "2026-04-15T06:26:55.737230+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776234414",
+      "captured_at": "2026-04-15T06:26:54.283878+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776233477",
+      "captured_at": "2026-04-15T06:11:17.162824+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776233475",
+      "captured_at": "2026-04-15T06:11:15.423404+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776233474",
+      "captured_at": "2026-04-15T06:11:14.252838+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776233472",
+      "captured_at": "2026-04-15T06:11:12.184501+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776233376",
+      "captured_at": "2026-04-15T06:09:36.799052+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776233375",
+      "captured_at": "2026-04-15T06:09:35.099168+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776233373",
+      "captured_at": "2026-04-15T06:09:33.961437+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776233372",
+      "captured_at": "2026-04-15T06:09:32.339483+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776232178",
+      "captured_at": "2026-04-15T05:49:38.841070+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776232176",
+      "captured_at": "2026-04-15T05:49:36.292772+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776232174",
+      "captured_at": "2026-04-15T05:49:34.570852+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776232171",
+      "captured_at": "2026-04-15T05:49:31.887117+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776231883",
+      "captured_at": "2026-04-15T05:44:43.467033+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776231880",
+      "captured_at": "2026-04-15T05:44:40.956292+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776231879",
+      "captured_at": "2026-04-15T05:44:39.314455+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776231876",
+      "captured_at": "2026-04-15T05:44:36.736396+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776231534",
+      "captured_at": "2026-04-15T05:38:54.279698+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776231531",
+      "captured_at": "2026-04-15T05:38:51.894962+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776231530",
+      "captured_at": "2026-04-15T05:38:50.329585+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776231527",
+      "captured_at": "2026-04-15T05:38:47.916180+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776231262",
+      "captured_at": "2026-04-15T05:34:22.870467+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776231260",
+      "captured_at": "2026-04-15T05:34:20.565429+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776231258",
+      "captured_at": "2026-04-15T05:34:18.913092+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776231256",
+      "captured_at": "2026-04-15T05:34:16.623012+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776231250",
+      "captured_at": "2026-04-15T05:34:10.987703+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776231248",
+      "captured_at": "2026-04-15T05:34:08.588968+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776231246",
+      "captured_at": "2026-04-15T05:34:06.984359+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776231244",
+      "captured_at": "2026-04-15T05:34:04.651679+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776230210",
+      "captured_at": "2026-04-15T05:16:50.637755+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776230208",
+      "captured_at": "2026-04-15T05:16:48.099067+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776230206",
+      "captured_at": "2026-04-15T05:16:46.614727+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776230204",
+      "captured_at": "2026-04-15T05:16:44.443703+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776230198",
+      "captured_at": "2026-04-15T05:16:38.876280+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776230196",
+      "captured_at": "2026-04-15T05:16:36.819037+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776230195",
+      "captured_at": "2026-04-15T05:16:35.451042+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776230193",
+      "captured_at": "2026-04-15T05:16:33.325325+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776229675",
+      "captured_at": "2026-04-15T05:07:55.473206+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776229673",
+      "captured_at": "2026-04-15T05:07:53.496923+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776229672",
+      "captured_at": "2026-04-15T05:07:52.131433+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776229669",
+      "captured_at": "2026-04-15T05:07:49.887672+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776229379",
+      "captured_at": "2026-04-15T05:02:59.413254+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776229377",
+      "captured_at": "2026-04-15T05:02:57.213874+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776229376",
+      "captured_at": "2026-04-15T05:02:56.046857+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776229374",
+      "captured_at": "2026-04-15T05:02:54.162220+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776229368",
+      "captured_at": "2026-04-15T05:02:48.929777+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776229367",
+      "captured_at": "2026-04-15T05:02:47.144098+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776229365",
+      "captured_at": "2026-04-15T05:02:45.818494+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776229364",
+      "captured_at": "2026-04-15T05:02:44.222668+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776228192",
+      "captured_at": "2026-04-15T04:43:12.177378+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776228190",
+      "captured_at": "2026-04-15T04:43:10.929899+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776228190",
+      "captured_at": "2026-04-15T04:43:10.115577+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776228189",
+      "captured_at": "2026-04-15T04:43:09.138356+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776228185",
+      "captured_at": "2026-04-15T04:43:05.307603+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776228184",
+      "captured_at": "2026-04-15T04:43:04.156942+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776227831",
+      "captured_at": "2026-04-15T04:37:11.807188+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776227830",
+      "captured_at": "2026-04-15T04:37:10.879288+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    },
+    {
+      "id": "annual_meeting_materials_1776227827",
+      "captured_at": "2026-04-15T04:37:07.644597+00:00",
+      "materials_name": "annual meeting materials FY2025",
+      "annual_meeting_materials_readiness": 0.99
+    }
+  ],
+  "governance_locks": [
+    {
+      "id": "governance_lock_1776234543",
+      "captured_at": "2026-04-15T06:29:03.886919+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234542",
+      "captured_at": "2026-04-15T06:29:02.270984+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234539",
+      "captured_at": "2026-04-15T06:28:59.627712+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234537",
+      "captured_at": "2026-04-15T06:28:57.594850+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234535",
+      "captured_at": "2026-04-15T06:28:55.267862+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234533",
+      "captured_at": "2026-04-15T06:28:53.792349+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234531",
+      "captured_at": "2026-04-15T06:28:51.613060+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234530",
+      "captured_at": "2026-04-15T06:28:50.153962+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234527",
+      "captured_at": "2026-04-15T06:28:47.930414+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234526",
+      "captured_at": "2026-04-15T06:28:46.521455+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234524",
+      "captured_at": "2026-04-15T06:28:44.387367+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234522",
+      "captured_at": "2026-04-15T06:28:42.235908+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234520",
+      "captured_at": "2026-04-15T06:28:40.092358+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234518",
+      "captured_at": "2026-04-15T06:28:38.319069+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234439",
+      "captured_at": "2026-04-15T06:27:19.493861+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234438",
+      "captured_at": "2026-04-15T06:27:18.093471+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234435",
+      "captured_at": "2026-04-15T06:27:15.900486+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234434",
+      "captured_at": "2026-04-15T06:27:14.513280+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234432",
+      "captured_at": "2026-04-15T06:27:12.513466+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234431",
+      "captured_at": "2026-04-15T06:27:11.133685+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234429",
+      "captured_at": "2026-04-15T06:27:09.067347+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234427",
+      "captured_at": "2026-04-15T06:27:07.806717+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234425",
+      "captured_at": "2026-04-15T06:27:05.942565+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234424",
+      "captured_at": "2026-04-15T06:27:04.621870+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234422",
+      "captured_at": "2026-04-15T06:27:02.711008+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234421",
+      "captured_at": "2026-04-15T06:27:01.473275+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234419",
+      "captured_at": "2026-04-15T06:26:59.574625+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234417",
+      "captured_at": "2026-04-15T06:26:57.564386+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234415",
+      "captured_at": "2026-04-15T06:26:55.738992+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776234414",
+      "captured_at": "2026-04-15T06:26:54.285366+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776233477",
+      "captured_at": "2026-04-15T06:11:17.164366+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776233475",
+      "captured_at": "2026-04-15T06:11:15.424871+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776233474",
+      "captured_at": "2026-04-15T06:11:14.254327+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776233472",
+      "captured_at": "2026-04-15T06:11:12.186067+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776233376",
+      "captured_at": "2026-04-15T06:09:36.800567+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776233375",
+      "captured_at": "2026-04-15T06:09:35.100865+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776233373",
+      "captured_at": "2026-04-15T06:09:33.962899+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776233372",
+      "captured_at": "2026-04-15T06:09:32.340947+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776232178",
+      "captured_at": "2026-04-15T05:49:38.842926+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776232176",
+      "captured_at": "2026-04-15T05:49:36.294877+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776232174",
+      "captured_at": "2026-04-15T05:49:34.572968+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776232171",
+      "captured_at": "2026-04-15T05:49:31.889360+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776231883",
+      "captured_at": "2026-04-15T05:44:43.469216+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776231880",
+      "captured_at": "2026-04-15T05:44:40.958347+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776231879",
+      "captured_at": "2026-04-15T05:44:39.316772+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776231876",
+      "captured_at": "2026-04-15T05:44:36.738258+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776231534",
+      "captured_at": "2026-04-15T05:38:54.281637+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776231531",
+      "captured_at": "2026-04-15T05:38:51.896571+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776231530",
+      "captured_at": "2026-04-15T05:38:50.331304+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776231527",
+      "captured_at": "2026-04-15T05:38:47.917786+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776231262",
+      "captured_at": "2026-04-15T05:34:22.872439+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776231260",
+      "captured_at": "2026-04-15T05:34:20.568977+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776231258",
+      "captured_at": "2026-04-15T05:34:18.914772+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776231256",
+      "captured_at": "2026-04-15T05:34:16.624955+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776231250",
+      "captured_at": "2026-04-15T05:34:10.989835+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776231248",
+      "captured_at": "2026-04-15T05:34:08.591245+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776231246",
+      "captured_at": "2026-04-15T05:34:06.985903+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776231244",
+      "captured_at": "2026-04-15T05:34:04.653391+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776230210",
+      "captured_at": "2026-04-15T05:16:50.639435+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776230208",
+      "captured_at": "2026-04-15T05:16:48.100914+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776230206",
+      "captured_at": "2026-04-15T05:16:46.616698+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776230204",
+      "captured_at": "2026-04-15T05:16:44.444850+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776230198",
+      "captured_at": "2026-04-15T05:16:38.877760+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776230196",
+      "captured_at": "2026-04-15T05:16:36.820781+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776230195",
+      "captured_at": "2026-04-15T05:16:35.452565+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776230193",
+      "captured_at": "2026-04-15T05:16:33.327014+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776229675",
+      "captured_at": "2026-04-15T05:07:55.474768+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776229673",
+      "captured_at": "2026-04-15T05:07:53.498660+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776229672",
+      "captured_at": "2026-04-15T05:07:52.132726+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776229669",
+      "captured_at": "2026-04-15T05:07:49.889189+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776229379",
+      "captured_at": "2026-04-15T05:02:59.414751+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776229377",
+      "captured_at": "2026-04-15T05:02:57.215249+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776229376",
+      "captured_at": "2026-04-15T05:02:56.048477+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776229374",
+      "captured_at": "2026-04-15T05:02:54.163410+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776229368",
+      "captured_at": "2026-04-15T05:02:48.931362+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776229367",
+      "captured_at": "2026-04-15T05:02:47.145674+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776229365",
+      "captured_at": "2026-04-15T05:02:45.819642+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776229364",
+      "captured_at": "2026-04-15T05:02:44.223754+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776228192",
+      "captured_at": "2026-04-15T04:43:12.178466+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776228190",
+      "captured_at": "2026-04-15T04:43:10.931102+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776228190",
+      "captured_at": "2026-04-15T04:43:10.116351+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776228189",
+      "captured_at": "2026-04-15T04:43:09.138884+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776228185",
+      "captured_at": "2026-04-15T04:43:05.308397+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776228184",
+      "captured_at": "2026-04-15T04:43:04.158167+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776227831",
+      "captured_at": "2026-04-15T04:37:11.808222+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776227830",
+      "captured_at": "2026-04-15T04:37:10.879969+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    },
+    {
+      "id": "governance_lock_1776227827",
+      "captured_at": "2026-04-15T04:37:07.644968+00:00",
+      "lock_name": "investor communication governance final lock FY2025",
+      "governance_lock_readiness": 0.99
+    }
+  ],
+  "latest_run": {
+    "run_id": "qnt40026_1776234543",
+    "captured_at": "2026-04-15T06:29:03.891965+00:00",
+    "board_reporting_agenda_readiness": 0.99,
+    "annual_meeting_materials_readiness": 0.99,
+    "governance_lock_readiness": 0.99,
+    "pending_lock_exceptions": 0,
+    "score": 86.0,
+    "band": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+    "posture": "BOARD_COMMUNICATION_GOVERNANCE_REMEDIATION_REQUIRED",
+    "reasons": [
+      "annual investor communications posture must be established before governance lock",
+      "annual report archive posture must be established before governance lock"
+    ],
+    "alerts": [
+      "ANNUAL_COMMUNICATIONS_POSTURE_NOT_ESTABLISHED",
+      "ANNUAL_REPORT_ARCHIVE_POSTURE_NOT_ESTABLISHED"
+    ],
+    "operator_review_required": true
+  },
+  "last_context": {
+    "captured_at": "2026-04-15T06:29:03.891869+00:00",
+    "dep_a_summary": {
+      "posture": "ANNUAL_COMMUNICATIONS_CONTROL_REMEDIATION_REQUIRED",
+      "score": 86.0
+    },
+    "dep_b_summary": {
+      "posture": "ANNUAL_REPORT_RELEASE_REMEDIATION_REQUIRED",
+      "score": 88.0
+    }
+  }
+}

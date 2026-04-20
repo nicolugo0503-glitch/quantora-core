@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30615 Real Distribution Console + Investor Delivery Inbox</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1440px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1400px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30615 · Real Distribution Console + Investor Delivery Inbox</h1>
+        <div style="color:#9fb3d8">Creates a live investor-facing inbox on top of delivered packets and reports, with read, star, and archive actions.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30614_delivery_router.html">Delivery Router</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Inbox</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Unread</div><div id="unread" class="value">-</div></div>
+    <div class="card"><div class="label">Starred</div><div id="starred" class="value">-</div></div>
+    <div class="card"><div class="label">Archived</div><div id="archived" class="value">-</div></div>
+    <div class="card"><div class="label">Latest Title</div><div id="latest" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <input id="inboxId" placeholder="Inbox ID">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="syncInbox()">Sync Inbox</button>
+      <button onclick="openItem()">Open</button>
+      <button onclick="starItem()">Star</button>
+      <button onclick="archiveItem()">Archive</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Investor Delivery Inbox</div>
+    <table>
+      <thead><tr><th>Title</th><th>Channel</th><th>Read</th><th>Starred</th><th>Archived</th><th>Inbox ID</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Distribution Console Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/distribution-console/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data,null,2); return; }
+  const d = res.data || {};
+  const latest = d.latest_item || {};
+  document.getElementById('count').textContent = String(d.inbox_count || 0);
+  document.getElementById('unread').textContent = String(d.unread_count || 0);
+  document.getElementById('starred').textContent = String(d.starred_count || 0);
+  document.getElementById('archived').textContent = String(d.archived_count || 0);
+  document.getElementById('latest').textContent = String(latest.title || '-');
+  document.getElementById('rows').innerHTML = (d.inbox_items || []).map(x =>
+    `<tr><td>${x.title}</td><td>${x.channel}</td><td>${x.read_status}</td><td>${x.starred}</td><td>${x.archived}</td><td>${x.inbox_id}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function syncInbox(){
+  await j('/api/distribution-console/sync', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({})});
+  await load();
+}
+async function openItem(){
+  await j('/api/distribution-console/open', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({inbox_id: document.getElementById('inboxId').value})});
+  await load();
+}
+async function starItem(){
+  await j('/api/distribution-console/star', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({inbox_id: document.getElementById('inboxId').value, starred: true})});
+  await load();
+}
+async function archiveItem(){
+  await j('/api/distribution-console/archive', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({inbox_id: document.getElementById('inboxId').value})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QNT30629 Strategy Execution Engine</title>
+<style>
+:root{--bg:#06090d;--panel:#10161f;--panel2:#151d28;--line:#223042;--text:#f7fafc;--muted:#98a6b8;--accent:#f8fafc;--good:#86efac;--warn:#fbbf24;--bad:#fda4af}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#05070a,#0b1119);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.wrap{max-width:1480px;margin:0 auto;padding:24px}.hero,.card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:20px;box-shadow:0 16px 42px rgba(0,0,0,.26)}
+.hero{padding:24px 26px}.label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}h1{margin:10px 0 8px;font-size:34px}.sub{max-width:1060px;color:var(--muted);line-height:1.6}.toolbar,.form-grid{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}.btn,input,select{border-radius:12px;border:1px solid var(--line);padding:11px 14px;font:inherit}.btn{background:#151d28;color:var(--text);cursor:pointer;font-weight:700}.btn.primary{background:#fff;color:#05070a}.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:18px}.card{padding:18px}.value{font-size:28px;font-weight:800;margin-top:8px}.tiny{color:var(--muted);font-size:12px}
+.split{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:18px}.triple{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:18px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #1d2633;font-size:13px;vertical-align:top}th{color:var(--muted);font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.08em}pre{background:#09111a;border:1px solid var(--line);padding:14px;border-radius:14px;overflow:auto;color:#dbe7f5;min-height:280px;max-height:560px}
+.pill{display:inline-block;padding:8px 10px;border-radius:999px;border:1px solid var(--line);font-size:12px;color:var(--muted)}.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+@media(max-width:1100px){.split,.triple,.stats{grid-template-columns:1fr 1fr}}@media(max-width:760px){.split,.triple,.stats{grid-template-columns:1fr}.wrap{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="label">QNT30629</div>
+    <h1>Strategy Execution Engine</h1>
+    <div class="sub">Capital-to-trade truth layer connecting investor allocations to strategy sleeves, trade outcomes, and attributable PnL. This is the bridge that turns accounting into live deployable capital and makes investor performance institutionally explainable.</div>
+    <div class="toolbar">
+      <button class="btn primary" onclick="bootstrapDemo()">Bootstrap Institutional Demo</button>
+      <button class="btn" onclick="syncAllocations()">Sync Allocation Map</button>
+      <button class="btn" onclick="loadAll()">Refresh</button>
+      <button class="btn" onclick="window.location.href='mission_qnt30628_performance_engine.html'">Open Performance Engine</button>
+      <button class="btn" onclick="window.location.href='mission_qnt30627_statement_batch.html'">Open Statement Engine</button>
+      <button class="btn" onclick="window.location.href='index.html'">Back to Command Center</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="card"><div class="label">Allocated Capital</div><div id="allocated" class="value">-</div><div class="tiny">Mapped from investor capital ledger</div></div>
+    <div class="card"><div class="label">Deployed Notional</div><div id="deployed" class="value">-</div><div class="tiny">Trade notional executed across sleeves</div></div>
+    <div class="card"><div class="label">Trade PnL</div><div id="pnl" class="value">-</div><div class="tiny">Gross realized + unrealized outcome</div></div>
+    <div class="card"><div class="label">Portfolio Return</div><div id="ret" class="value">-</div><div class="tiny">Execution-linked return on allocated capital</div></div>
+    <div class="card"><div class="label">Trades / Strategies</div><div id="counts" class="value">-</div><div class="tiny">Tape breadth and active books</div></div>
+  </div>
+
+  <div class="split">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div>
+          <div class="label">Trade Recording Console</div>
+          <div class="tiny">Institutional capture for new execution events.</div>
+        </div>
+        <div id="lastTradePill" class="pill">No trade captured</div>
+      </div>
+      <div class="form-grid">
+        <input id="strategyName" placeholder="Strategy Name" value="Alpha Core" />
+        <input id="sleeveId" placeholder="Sleeve ID" value="alpha_core" />
+        <input id="symbol" placeholder="Symbol" value="SPY" />
+        <select id="side"><option value="buy">Buy</option><option value="sell">Sell</option></select>
+        <input id="qty" type="number" step="0.000001" placeholder="Qty" value="100" />
+        <input id="entry" type="number" step="0.000001" placeholder="Entry Price" value="540" />
+        <input id="exit" type="number" step="0.000001" placeholder="Exit Price" value="548" />
+        <select id="status"><option value="closed">Closed</option><option value="open">Open</option></select>
+        <button class="btn primary" onclick="recordTrade()">Record Trade</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="label">Engine Summary</div>
+      <pre id="summaryBox">Loading...</pre>
+    </div>
+  </div>
+
+  <div class="triple">
+    <div class="card">
+      <div class="label">Strategy Outcomes</div>
+      <table>
+        <thead><tr><th>Strategy</th><th>Allocated</th><th>PnL</th><th>Return</th><th>Trades</th></tr></thead>
+        <tbody id="strategyRows"><tr><td colspan="5">Loading...</td></tr></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="label">Investor Attribution</div>
+      <table>
+        <thead><tr><th>Investor</th><th>Ending NAV</th><th>PnL</th><th>Return</th><th>Strategies</th></tr></thead>
+        <tbody id="investorRows"><tr><td colspan="5">Loading...</td></tr></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="label">Trade Tape</div>
+      <table>
+        <thead><tr><th>Symbol</th><th>Strategy</th><th>Status</th><th>PnL</th><th>Executed</th></tr></thead>
+        <tbody id="tradeRows"><tr><td colspan="5">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(Number(v||0));
+const pct=v=>`${Number(v||0).toFixed(2)}%`;
+const stamp=ts=>ts?new Date(Number(ts)*1000).toISOString().slice(0,10):'-';
+async function j(url, options){ const r = await fetch(url, options); const d = await r.json(); if(!r.ok) throw new Error(d.detail || 'request failed'); return d; }
+function renderSummary(summary){
+  document.getElementById('allocated').textContent = money(summary.total_allocated_capital);
+  document.getElementById('deployed').textContent = money(summary.total_deployed_notional);
+  document.getElementById('pnl').textContent = money(summary.total_pnl);
+  document.getElementById('ret').textContent = pct(summary.portfolio_return_pct);
+  document.getElementById('counts').textContent = `${summary.trade_count || 0} / ${summary.strategy_count || 0}`;
+  document.getElementById('summaryBox').textContent = JSON.stringify(summary, null, 2);
+  document.getElementById('lastTradePill').textContent = summary.last_trade_at ? `Last trade ${stamp(summary.last_trade_at)}` : 'No trade captured';
+}
+function renderStrategies(rows){
+  document.getElementById('strategyRows').innerHTML = rows.length ? rows.map(r => `<tr><td>${r.strategy_name}</td><td>${money(r.allocated_capital)}</td><td class="${Number(r.gross_pnl||0)>=0?'good':'bad'}">${money(r.gross_pnl)}</td><td>${pct(r.return_pct)}</td><td>${r.trade_count}</td></tr>`).join('') : '<tr><td colspan="5">No strategy outcomes yet.</td></tr>';
+}
+function renderInvestors(rows){
+  document.getElementById('investorRows').innerHTML = rows.length ? rows.map(r => `<tr><td>${r.investor_name}</td><td>${money(r.ending_nav)}</td><td class="${Number(r.pnl_amount||0)>=0?'good':'bad'}">${money(r.pnl_amount)}</td><td>${pct(r.return_pct)}</td><td>${(r.strategies||[]).length}</td></tr>`).join('') : '<tr><td colspan="5">No investor attribution available.</td></tr>';
+}
+function renderTrades(rows){
+  document.getElementById('tradeRows').innerHTML = rows.length ? rows.slice(0,12).map(r => `<tr><td>${r.symbol}</td><td>${r.strategy_name}</td><td>${r.status}</td><td class="${Number(r.gross_pnl||0)>=0?'good':'bad'}">${money(r.gross_pnl)}</td><td>${stamp(r.executed_at)}</td></tr>`).join('') : '<tr><td colspan="5">No trades captured.</td></tr>';
+}
+async function loadAll(){
+  const data = await j('/api/strategy-execution/summary');
+  renderSummary(data.summary || {});
+  renderStrategies(data.strategy_outcomes || []);
+  renderInvestors(data.investor_attribution || []);
+  renderTrades(data.trade_tape || []);
+}
+async function bootstrapDemo(){
+  await j('/api/strategy-execution/bootstrap-demo', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({})});
+  await loadAll();
+}
+async function syncAllocations(){
+  await j('/api/strategy-execution/sync', {method:'POST', headers:{'Content-Type':'application/json'}, body:'{}'});
+  await loadAll();
+}
+async function recordTrade(){
+  const status = document.getElementById('status').value;
+  const payload = {
+    strategy_name: document.getElementById('strategyName').value,
+    sleeve_id: document.getElementById('sleeveId').value,
+    symbol: document.getElementById('symbol').value,
+    side: document.getElementById('side').value,
+    qty: Number(document.getElementById('qty').value || 0),
+    entry_price: Number(document.getElementById('entry').value || 0),
+    status,
+  };
+  if(status === 'closed') payload.exit_price = Number(document.getElementById('exit').value || 0);
+  else payload.mark_price = Number(document.getElementById('exit').value || 0);
+  await j('/api/strategy-execution/trade', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await loadAll();
+}
+loadAll();
+</script>
+</body>
+</html>

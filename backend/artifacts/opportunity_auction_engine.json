@@ -1,0 +1,101 @@
+{
+  "auction_engine": {
+    "enabled": true,
+    "last_updated_at": "2026-03-31T14:34:25Z",
+    "last_auction_at": "2026-03-31T14:34:25Z",
+    "last_award_at": "2026-03-31T14:34:25Z",
+    "auction_count": 1,
+    "awarded_candidates": 2,
+    "rejected_candidates": 1,
+    "total_awarded_capital": 55000.0,
+    "telemetry": [
+      {
+        "timestamp": "2026-03-31T14:34:25Z",
+        "event": "auction.ran",
+        "bid_count": 3
+      },
+      {
+        "timestamp": "2026-03-31T14:34:25Z",
+        "event": "capital.awarded",
+        "winner_count": 2,
+        "awarded_capital": 55000.0
+      }
+    ]
+  },
+  "auction_rules": {
+    "min_bid_score": 70.0,
+    "max_winners": 3,
+    "max_capital_per_winner": 60000.0,
+    "priority_multiplier": 1.15,
+    "confidence_multiplier_weight": 0.35,
+    "edge_multiplier_weight": 0.3,
+    "validation_required": true
+  },
+  "bids": [
+    {
+      "candidate_id": "cand_3001",
+      "strategy_name": "Momentum Auction A",
+      "verdict": "APPROVED",
+      "priority": true,
+      "base_score": 84.0,
+      "confidence": 0.79,
+      "edge_score": 73.0,
+      "requested_capital": 40000.0,
+      "bid_score": 153.58
+    },
+    {
+      "candidate_id": "cand_3003",
+      "strategy_name": "Breakout Auction C",
+      "verdict": "APPROVED",
+      "priority": false,
+      "base_score": 81.0,
+      "confidence": 0.74,
+      "edge_score": 70.0,
+      "requested_capital": 30000.0,
+      "bid_score": 127.9
+    },
+    {
+      "candidate_id": "cand_3002",
+      "strategy_name": "Reversion Auction B",
+      "verdict": "WATCHLIST",
+      "priority": false,
+      "base_score": 76.0,
+      "confidence": 0.68,
+      "edge_score": 66.0,
+      "requested_capital": 22000.0,
+      "bid_score": 119.6
+    }
+  ],
+  "awards": [
+    {
+      "award_id": "award_0001",
+      "timestamp": "2026-03-31T14:34:25Z",
+      "candidate_id": "cand_3001",
+      "strategy_name": "Momentum Auction A",
+      "bid_score": 153.58,
+      "awarded_capital": 40000.0,
+      "verdict": "APPROVED"
+    },
+    {
+      "award_id": "award_0002",
+      "timestamp": "2026-03-31T14:34:25Z",
+      "candidate_id": "cand_3003",
+      "strategy_name": "Breakout Auction C",
+      "bid_score": 127.9,
+      "awarded_capital": 15000.0,
+      "verdict": "APPROVED"
+    }
+  ],
+  "history": [
+    {
+      "timestamp": "2026-03-31T14:34:25Z",
+      "event": "auction.ran",
+      "bid_count": 3
+    },
+    {
+      "timestamp": "2026-03-31T14:34:25Z",
+      "event": "capital.awarded",
+      "winner_count": 2
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "bindable_system_objects": [
+    "execution_bridge",
+    "fund_engine",
+    "nav_engine",
+    "investor_dashboard_engine",
+    "monetization_engine",
+    "alpaca_client",
+    "runtime_engine"
+  ],
+  "alpaca_client_expected_methods": [
+    "get_all_positions",
+    "get_open_orders"
+  ],
+  "runtime_engine_expected_attributes": [
+    "state",
+    "safety"
+  ],
+  "runtime_engine_safety_expected_methods": [
+    "set_kill_switch",
+    "set_paused"
+  ],
+  "investor_dashboard_engine_expected_methods": [
+    "build_dashboard_rows"
+  ],
+  "execution_bridge_expected_methods": [
+    "build_execution_sync_packet"
+  ],
+  "fund_engine_expected_methods": [
+    "allocate"
+  ],
+  "nav_engine_expected_methods": [
+    "snapshot_dict"
+  ]
+}

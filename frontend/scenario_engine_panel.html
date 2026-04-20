@@ -1,0 +1,93 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora Scenario Engine + Stress Testing Fabric</title>
+  <style>
+    body { font-family: Inter, Arial, sans-serif; margin: 0; background:#08111f; color:#e5eefc; }
+    .wrap { max-width: 1180px; margin:0 auto; padding:24px; }
+    .panel { background:#0f1d31; border:1px solid #22314e; border-radius:18px; padding:18px; margin-bottom:16px; }
+    .grid { display:grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap:16px; }
+    input, textarea, select { width:100%; padding:10px 12px; border-radius:10px; border:1px solid #22314e; background:#132742; color:#e5eefc; }
+    textarea { min-height:120px; }
+    button { border:none; background:#3b82f6; color:white; padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer; }
+    pre { background:#06101d; border:1px solid #1e2d47; padding:14px; border-radius:14px; white-space:pre-wrap; overflow:auto; min-height:220px; }
+    .row { display:grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap:10px; }
+    a { color:#93c5fd; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="panel">
+    <h1>Scenario Engine + Stress Testing Fabric</h1>
+    <p>Pressure-test allocation, autonomy, and cross-market risk before deployment.</p>
+    <p><a href="index.html">Back to Command Center</a></p>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <h2>Define Scenario</h2>
+      <div class="row">
+        <input id="name" placeholder="Scenario name" value="Cross-market liquidity shock">
+        <select id="shock"><option>liquidity_crunch</option><option>volatility_spike</option><option>correlation_break</option><option>gap_down</option></select>
+        <select id="market"><option>multi_market</option><option>equities</option><option>crypto</option><option>forex</option><option>futures</option></select>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <input id="severity" type="number" step="0.01" value="0.42">
+        <input id="volmult" type="number" step="0.1" value="1.9">
+        <input id="liq" type="number" step="0.01" value="0.31">
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <input id="spread" type="number" step="0.1" value="2.1">
+        <input id="corr" type="number" step="0.01" value="0.22">
+        <input id="symbol" placeholder="Optional symbol">
+      </div>
+      <textarea id="notes" placeholder="Scenario notes">Stress-test autonomy, capital reserves, and execution cost under a sudden liquidity withdrawal.</textarea>
+      <div style="margin-top:10px;"><button onclick="defineScenario()">Define Scenario</button></div>
+    </div>
+    <div class="panel">
+      <h2>Run Stress Test</h2>
+      <div class="row">
+        <input id="scenarioId" placeholder="Scenario ID from previous result">
+        <button onclick="loadStatus()">Refresh Status</button>
+        <button onclick="runStress()">Run Stress Test</button>
+      </div>
+      <p>Runs scenario verdicting with portfolio risk, allocator treasury, autonomy mode, and execution slippage context.</p>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="panel"><h2>Status</h2><pre id="status"></pre></div>
+    <div class="panel"><h2>Result</h2><pre id="result"></pre></div>
+  </div>
+</div>
+<script>
+async function api(path, method='GET', body=null){
+  const res = await fetch(`http://127.0.0.1:8010${path}`, {
+    method,
+    headers: {'Content-Type':'application/json','X-Admin-Email':'nicolugo0503@gmail.com'},
+    body: body ? JSON.stringify(body) : null
+  });
+  return res.json();
+}
+async function loadStatus(){ document.getElementById('status').textContent = JSON.stringify(await api('/scenario-engine/status'), null, 2); }
+async function defineScenario(){
+  const data = await api('/scenario-engine/define', 'POST', {
+    name: name.value, shock_type: shock.value, market: market.value, symbol: symbol.value || null,
+    severity: Number(severity.value), volatility_multiplier: Number(volmult.value),
+    liquidity_haircut: Number(liq.value), spread_multiplier: Number(spread.value),
+    correlation_jump: Number(corr.value), notes: notes.value
+  });
+  if(data.scenario && data.scenario.scenario_id) scenarioId.value = data.scenario.scenario_id;
+  document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+  loadStatus();
+}
+async function runStress(){
+  const data = await api('/scenario-engine/run', 'POST', {scenario_id: scenarioId.value});
+  document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+  loadStatus();
+}
+loadStatus();
+</script>
+</body>
+</html>

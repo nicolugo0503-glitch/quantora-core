@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>QNT30650 Strategic Decision Layer</title>
+  <style>
+    :root { --bg:#06101d; --panel:#0f1d31; --panel2:#0b1628; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#3b82f6; --good:#10b981; --warn:#f59e0b; --bad:#ef4444; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#040b15 0%,#0a1424 100%); color:var(--text); }
+    .wrap { max-width:1520px; margin:0 auto; padding:24px; }
+    .hero,.panel,.metric { background:rgba(15,29,49,.96); border:1px solid var(--line); border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,.18); }
+    .hero,.panel,.metric { padding:18px; }
+    .hero { margin-bottom:18px; }
+    .muted { color:var(--muted); line-height:1.55; }
+    .toolbar { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    button,a.btn { border:none; background:var(--accent); color:#fff; padding:10px 14px; border-radius:10px; font-weight:700; text-decoration:none; cursor:pointer; }
+    button.secondary,a.secondary { background:#1d4ed8; }
+    .metric-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:14px; margin-bottom:18px; }
+    .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .value { font-size:28px; font-weight:800; margin-top:8px; }
+    .status { font-size:15px; font-weight:700; margin-top:10px; }
+    .grid { display:grid; grid-template-columns:1.3fr 1fr; gap:16px; margin-bottom:16px; }
+    .stack { display:grid; gap:16px; }
+    .section-title { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px; }
+    .section-title h2 { margin:0; font-size:18px; }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th,td { padding:10px; border-bottom:1px solid #1e2d47; text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-size:12px; text-transform:uppercase; }
+    .pill { display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid #2a3c60; background:#0a1526; }
+    .good { color:#d1fae5; border-color:#14532d; }
+    .warn { color:#fde68a; border-color:#92400e; }
+    .bad { color:#fecaca; border-color:#7f1d1d; }
+    pre { margin:0; background:var(--panel2); border:1px solid #1e2d47; border-radius:14px; padding:14px; white-space:pre-wrap; min-height:180px; max-height:420px; overflow:auto; }
+    .tiny { color:var(--muted); font-size:12px; }
+    @media (max-width:1100px){ .metric-grid,.grid{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="label">Institutional Mission</div>
+    <h1 style="margin:8px 0;">QNT30650 — Strategic Decision Layer</h1>
+    <div class="muted">Executive intelligence above allocation, portfolio construction, productization, and distribution. This layer decides what capital should scale, what should be governed, and where the institution should concentrate next.</div>
+    <div class="toolbar">
+      <a class="btn" href="index.html">Back to Command Center</a>
+      <button onclick="runLayer()">Run Executive Cycle</button>
+      <button class="secondary" onclick="refreshAll()">Refresh Summary</button>
+    </div>
+  </section>
+
+  <section class="metric-grid">
+    <div class="metric"><div class="label">Operating Posture</div><div class="value" id="posture">-</div><div class="status" id="postureTag"></div></div>
+    <div class="metric"><div class="label">Confidence Score</div><div class="value" id="confidence">-</div><div class="status" id="confidenceTag"></div></div>
+    <div class="metric"><div class="label">Total NAV</div><div class="value" id="nav">-</div><div class="status">Institution capital base</div></div>
+    <div class="metric"><div class="label">Deployable Capital</div><div class="value" id="deployable">-</div><div class="status">Actionable balance</div></div>
+    <div class="metric"><div class="label">Weighted Pipeline</div><div class="value" id="pipeline">-</div><div class="status" id="pipelineTag"></div></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Capital Directives</h2><span class="tiny">Allocation authority output</span></div>
+      <table id="directivesTable"><thead><tr><th>Strategy</th><th>Action</th><th>Delta</th><th>Target Weight</th><th>Confidence</th><th>Reason</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="stack">
+      <div class="panel">
+        <div class="section-title"><h2>Market Snapshot</h2><span class="tiny">Firm state</span></div>
+        <pre id="marketSnapshot">Loading…</pre>
+      </div>
+      <div class="panel">
+        <div class="section-title"><h2>Risk Alerts</h2><span class="tiny">Governance interrupts</span></div>
+        <pre id="riskAlerts">Loading…</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Strategy Rankings</h2><span class="tiny">Scale, maintain, watch, retire</span></div>
+      <table id="rankingsTable"><thead><tr><th>Rank</th><th>Strategy</th><th>Score</th><th>Return</th><th>Vol</th><th>Exposure</th><th>Action</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="panel">
+      <div class="section-title"><h2>Distribution Priorities</h2><span class="tiny">Channel allocation focus</span></div>
+      <table id="channelsTable"><thead><tr><th>Channel</th><th>Priority</th><th>Score</th><th>Focus</th></tr></thead><tbody></tbody></table>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Product Decisions</h2><span class="tiny">Institutional packaging authority</span></div>
+      <table id="productsTable"><thead><tr><th>Product</th><th>Strategy</th><th>Action</th><th>Priority</th><th>Score</th><th>Reason</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="panel">
+      <div class="section-title"><h2>Audit Trail</h2><span class="tiny">Latest executive cycle</span></div>
+      <pre id="auditTrail">Loading…</pre>
+    </div>
+  </section>
+</div>
+<script>
+  const fmtMoney = v => new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Number(v||0));
+  const fmtPct = v => `${Number(v||0).toFixed(2)}%`;
+  const pill = (text, cls='') => `<span class="pill ${cls}">${text}</span>`;
+
+  async function getJson(url, opts) {
+    const res = await fetch(url, opts);
+    if (!res.ok) throw new Error(`${url} -> ${res.status}`);
+    return res.json();
+  }
+
+  function severityClass(text='') {
+    const t = String(text).toLowerCase();
+    if (t.includes('critical') || t.includes('retire') || t.includes('governed')) return 'bad';
+    if (t.includes('watch') || t.includes('warning') || t.includes('incubate') || t.includes('medium')) return 'warn';
+    return 'good';
+  }
+
+  function fillTable(id, rows, renderer) {
+    const tbody = document.querySelector(`#${id} tbody`);
+    tbody.innerHTML = rows.length ? rows.map(renderer).join('') : `<tr><td colspan="8" class="tiny">No rows available.</td></tr>`;
+  }
+
+  async function refreshAll() {
+    try {
+      const [summary, audit] = await Promise.all([
+        getJson('/api/strategic-decision-layer/summary'),
+        getJson('/api/strategic-decision-layer/audit')
+      ]);
+      renderSummary(summary, audit);
+    } catch (err) {
+      document.getElementById('auditTrail').textContent = `Strategic Decision Layer unavailable. ${err.message}`;
+    }
+  }
+
+  async function runLayer() {
+    const result = await getJson('/api/strategic-decision-layer/run', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ trigger:'manual-ui' })
+    });
+    renderSummary(result.summary, { latest_run: result.run, runs: [result.run], run_count: 1 });
+  }
+
+  function renderSummary(summary, audit) {
+    document.getElementById('posture').textContent = summary.operating_posture || '-';
+    document.getElementById('postureTag').innerHTML = pill(summary.operating_posture || 'unknown', severityClass(summary.operating_posture));
+    document.getElementById('confidence').textContent = fmtPct(summary.confidence_score || 0);
+    document.getElementById('confidenceTag').innerHTML = pill((summary.confidence_score || 0) >= 75 ? 'high conviction' : ((summary.confidence_score || 0) >= 60 ? 'measured' : 'defensive'), severityClass((summary.confidence_score || 0) >= 75 ? 'good' : 'watch'));
+    document.getElementById('nav').textContent = fmtMoney(summary.capital_overview?.total_nav || 0);
+    document.getElementById('deployable').textContent = fmtMoney(summary.capital_overview?.deployable_capital || 0);
+    document.getElementById('pipeline').textContent = fmtMoney(summary.pipeline_overview?.weighted_pipeline_amount || 0);
+    document.getElementById('pipelineTag').innerHTML = pill(`${summary.pipeline_overview?.open_opportunities || 0} open opportunities`, 'good');
+
+    fillTable('directivesTable', summary.capital_directives || [], row => `
+      <tr>
+        <td>${row.strategy_name || row.strategy_id || '-'}</td>
+        <td>${pill(row.action || '-', severityClass(row.action))}</td>
+        <td>${fmtMoney(row.allocation_delta || 0)}</td>
+        <td>${fmtPct(row.target_weight_pct || 0)}</td>
+        <td>${fmtPct((Number(row.confidence||0)*100))}</td>
+        <td>${row.reason || '-'}</td>
+      </tr>`);
+
+    fillTable('rankingsTable', summary.strategy_rankings || [], row => `
+      <tr>
+        <td>${row.rank || '-'}</td>
+        <td>${row.strategy_name || row.strategy_id || '-'}</td>
+        <td>${fmtPct(row.score || 0)}</td>
+        <td>${fmtPct(row.return_pct || 0)}</td>
+        <td>${fmtPct(row.volatility_pct || 0)}</td>
+        <td>${fmtPct(row.exposure_pct || 0)}</td>
+        <td>${pill(row.executive_action || '-', severityClass(row.executive_action))}</td>
+      </tr>`);
+
+    fillTable('channelsTable', summary.distribution_priorities || [], row => `
+      <tr>
+        <td>${row.channel || '-'}</td>
+        <td>${pill(row.priority || '-', severityClass(row.priority))}</td>
+        <td>${fmtPct(row.score || 0)}</td>
+        <td>${row.recommended_focus || '-'}</td>
+      </tr>`);
+
+    fillTable('productsTable', summary.product_decisions || [], row => `
+      <tr>
+        <td>${row.product_id || '-'}</td>
+        <td>${row.linked_strategy_name || row.linked_strategy_id || '-'}</td>
+        <td>${pill(row.action || '-', severityClass(row.action))}</td>
+        <td>${pill(row.distribution_priority || '-', severityClass(row.distribution_priority))}</td>
+        <td>${fmtPct(row.product_score || 0)}</td>
+        <td>${row.reason || '-'}</td>
+      </tr>`);
+
+    document.getElementById('marketSnapshot').textContent = JSON.stringify(summary.market_snapshot || {}, null, 2);
+    document.getElementById('riskAlerts').textContent = JSON.stringify(summary.risk_alerts || [], null, 2);
+    document.getElementById('auditTrail').textContent = JSON.stringify({
+      run_count: audit.run_count || (audit.runs || []).length || 0,
+      latest_run: audit.latest_run || null
+    }, null, 2);
+  }
+
+  refreshAll();
+</script>
+</body>
+</html>

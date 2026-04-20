@@ -1,0 +1,179 @@
+{
+  "portfolio_brain": {
+    "enabled": true,
+    "last_updated_at": "2026-03-31T06:24:44Z",
+    "last_coordination_at": "2026-03-31T06:24:44Z",
+    "last_allocator_sync_at": "2026-03-31T06:24:44Z",
+    "last_regime_tag": "balanced_trend",
+    "coordination_cycles": 1,
+    "active_overlays": 3,
+    "cross_strategy_conflicts": 2,
+    "capital_rotation_score": 100.0,
+    "diversification_score": 70.0,
+    "telemetry": [
+      {
+        "timestamp": "2026-03-31T06:24:44Z",
+        "event": "coordination.evaluated",
+        "active_overlays": 3,
+        "conflict_count": 2,
+        "diversification_score": 70.0
+      }
+    ]
+  },
+  "strategies": [
+    {
+      "strategy_name": "AAPL Momentum",
+      "market": "equities",
+      "symbols": [
+        "AAPL",
+        "QQQ"
+      ],
+      "realized_pnl": 1200,
+      "unrealized_pnl": 140,
+      "win_rate": 0.61,
+      "confidence": 0.72,
+      "volatility": 0.22,
+      "activity": 8,
+      "regime_fit": 0.67,
+      "strategy_id": "strat_001",
+      "score": 389.26,
+      "status": "active",
+      "coordination_flag": "overlap_conflict",
+      "adjusted_score": 374.26,
+      "recommended_state": "active",
+      "allocation_pct": 38.33
+    },
+    {
+      "strategy_name": "NVDA Breakout",
+      "market": "equities",
+      "symbols": [
+        "NVDA"
+      ],
+      "realized_pnl": 980,
+      "unrealized_pnl": 60,
+      "win_rate": 0.57,
+      "confidence": 0.69,
+      "volatility": 0.3,
+      "activity": 5,
+      "regime_fit": 0.62,
+      "strategy_id": "strat_002",
+      "score": 314.56,
+      "status": "active",
+      "coordination_flag": "clear",
+      "adjusted_score": 314.56,
+      "recommended_state": "active",
+      "allocation_pct": 32.21
+    },
+    {
+      "strategy_name": "BTC Carry",
+      "market": "crypto",
+      "symbols": [
+        "BTCUSD"
+      ],
+      "realized_pnl": 860,
+      "unrealized_pnl": 110,
+      "win_rate": 0.59,
+      "confidence": 0.66,
+      "volatility": 0.35,
+      "activity": 4,
+      "regime_fit": 0.71,
+      "strategy_id": "strat_003",
+      "score": 287.68,
+      "status": "active",
+      "coordination_flag": "clear",
+      "adjusted_score": 287.68,
+      "recommended_state": "active",
+      "allocation_pct": 29.46
+    },
+    {
+      "strategy_name": "AAPL Mean Revert",
+      "market": "equities",
+      "symbols": [
+        "AAPL"
+      ],
+      "realized_pnl": 300,
+      "unrealized_pnl": 25,
+      "win_rate": 0.52,
+      "confidence": 0.51,
+      "volatility": 0.18,
+      "activity": 3,
+      "regime_fit": 0.45,
+      "strategy_id": "strat_004",
+      "score": 114.38,
+      "status": "active",
+      "coordination_flag": "overlap_conflict",
+      "adjusted_score": 99.38,
+      "recommended_state": "paused",
+      "allocation_pct": 0.0
+    }
+  ],
+  "coordination": {
+    "max_active_strategies": 3,
+    "max_symbol_overlap": 1,
+    "conflict_penalty": 15.0,
+    "rotation_threshold": 65.0,
+    "min_diversification_score": 45.0,
+    "auto_pause_on_conflict": true
+  },
+  "allocations": [
+    {
+      "strategy_id": "strat_001",
+      "strategy_name": "AAPL Momentum",
+      "recommended_state": "active",
+      "allocation_pct": 38.33,
+      "adjusted_score": 374.26,
+      "market": "equities",
+      "recommended_notional": 86242.5,
+      "reserve_pct": 10.0
+    },
+    {
+      "strategy_id": "strat_002",
+      "strategy_name": "NVDA Breakout",
+      "recommended_state": "active",
+      "allocation_pct": 32.21,
+      "adjusted_score": 314.56,
+      "market": "equities",
+      "recommended_notional": 72472.5,
+      "reserve_pct": 10.0
+    },
+    {
+      "strategy_id": "strat_003",
+      "strategy_name": "BTC Carry",
+      "recommended_state": "active",
+      "allocation_pct": 29.46,
+      "adjusted_score": 287.68,
+      "market": "crypto",
+      "recommended_notional": 66285.0,
+      "reserve_pct": 10.0
+    },
+    {
+      "strategy_id": "strat_004",
+      "strategy_name": "AAPL Mean Revert",
+      "recommended_state": "paused",
+      "allocation_pct": 0.0,
+      "adjusted_score": 99.38,
+      "market": "equities",
+      "recommended_notional": 0.0,
+      "reserve_pct": 10.0
+    }
+  ],
+  "history": [
+    {
+      "timestamp": "2026-03-31T06:24:44Z",
+      "event": "snapshot.ingested",
+      "strategy_count": 4
+    },
+    {
+      "timestamp": "2026-03-31T06:24:44Z",
+      "event": "coordination.completed",
+      "active_count": 3,
+      "conflicts": 2
+    },
+    {
+      "timestamp": "2026-03-31T06:24:44Z",
+      "event": "allocator.synced",
+      "total_capital": 250000.0,
+      "deployable_capital": 225000.0
+    }
+  ]
+}

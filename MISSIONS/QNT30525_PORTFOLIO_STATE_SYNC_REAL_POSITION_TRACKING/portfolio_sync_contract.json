@@ -1,0 +1,29 @@
+{
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/portfolio/sync"
+    },
+    {
+      "method": "GET",
+      "path": "/api/portfolio/state"
+    },
+    {
+      "method": "GET",
+      "path": "/api/portfolio/history"
+    }
+  ],
+  "outputs": [
+    "positions",
+    "account",
+    "position_count",
+    "total_market_value",
+    "total_unrealized_pnl",
+    "total_realized_pnl",
+    "total_pnl"
+  ],
+  "broker_adapter_expected_methods": [
+    "get_all_positions",
+    "get_account"
+  ]
+}

@@ -1,0 +1,3 @@
+{"ts": "2026-04-14T07:11:05.447176+00:00", "event": "state_recovered_on_boot", "payload": {"status": "idle", "cycle_count": 0}}
+{"ts": "2026-04-14T07:19:06.469592+00:00", "event": "state_recovered_on_boot", "payload": {"status": "idle", "cycle_count": 0}}
+{"ts": "2026-04-14T08:15:15.230162+00:00", "event": "state_recovered_on_boot", "payload": {"status": "idle", "cycle_count": 0}}

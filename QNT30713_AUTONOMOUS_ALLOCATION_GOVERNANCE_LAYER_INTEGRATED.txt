@@ -1,0 +1,6 @@
+QNT30713 integrated:
+- backend/app/qnt30713_autonomous_allocation_governance_layer_router.py
+- frontend/mission_qnt30713_autonomous_allocation_governance_layer.html
+- backend/test_qnt30713_smoke.py
+- mission registry entry added
+- main router import and include added

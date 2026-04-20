@@ -1,0 +1,38 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>QNT50022 - Full Autonomous Hedge Fund Control Loop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background:#0f172a; color:#e2e8f0; }
+    .card { background:#111827; border:1px solid #334155; border-radius:12px; padding:20px; max-width:1000px; }
+    h1,h2 { margin-top:0; }
+    code { background:#1e293b; padding:2px 6px; border-radius:6px; }
+    ul { line-height:1.6; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>QNT50022 — Full Autonomous Hedge Fund Control Loop (End-to-End Self-Operating System)</h1>
+    <p>Mission control layer that synchronizes deployment, risk, performance, treasury, and autonomous execution into one auditable operating loop.</p>
+    <h2>Capabilities</h2>
+    <ul>
+      <li>Builds a unified control snapshot from <code>QNT50003</code>, <code>QNT50004</code>, <code>QNT50005</code>, <code>QNT50006</code>, <code>QNT50008</code>, and <code>QNT50018</code>.</li>
+      <li>Applies gating rules before autonomous execution is allowed.</li>
+      <li>Creates end-to-end control plans and executes live/paper autonomous cycles through the existing execution path.</li>
+      <li>Persists plans, cycles, escalations, and audit events for governance-grade supervision.</li>
+    </ul>
+    <h2>Primary endpoints</h2>
+    <ul>
+      <li><code>GET /autonomous-control/health</code></li>
+      <li><code>GET /autonomous-control/summary</code></li>
+      <li><code>POST /autonomous-control/sync-context</code></li>
+      <li><code>POST /autonomous-control/plan-loop</code></li>
+      <li><code>POST /autonomous-control/execute-loop</code></li>
+      <li><code>POST /autonomous-control/reset</code></li>
+    </ul>
+  </div>
+</body>
+</html>

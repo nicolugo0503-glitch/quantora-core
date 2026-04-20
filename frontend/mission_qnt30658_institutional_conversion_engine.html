@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QNT30658 — Institutional Conversion Engine</title>
+  <style>
+    :root { --bg:#07111f; --panel:#0d1b2d; --panel2:#10233b; --line:#1f3556; --text:#e8eef8; --muted:#9fb3d8; --accent:#5aa9ff; --good:#0f9d58; --warn:#d97706; --bad:#dc2626; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,system-ui,-apple-system,sans-serif; background:linear-gradient(180deg,#07111f,#0a1526); color:var(--text); }
+    .wrap { max-width:1440px; margin:0 auto; padding:24px; }
+    .hero, .panel, .metric { background:rgba(13,27,45,.96); border:1px solid var(--line); border-radius:18px; box-shadow:0 18px 40px rgba(0,0,0,.24); }
+    .hero { padding:24px; margin-bottom:18px; }
+    .label { color:var(--accent); text-transform:uppercase; letter-spacing:.14em; font-size:12px; }
+    .muted { color:var(--muted); }
+    .toolbar { display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; }
+    button, .btn { border:0; border-radius:12px; padding:11px 15px; cursor:pointer; font-weight:700; background:var(--accent); color:#07111f; text-decoration:none; }
+    button.secondary, .btn.secondary { background:#152b46; color:var(--text); border:1px solid var(--line); }
+    .metric-grid, .grid { display:grid; gap:16px; margin-bottom:18px; }
+    .metric-grid { grid-template-columns:repeat(5,1fr); }
+    .grid { grid-template-columns:1.3fr .7fr; }
+    .metric { padding:18px; min-height:124px; }
+    .metric .value { font-size:30px; font-weight:800; margin:8px 0; }
+    .metric .status { color:var(--muted); font-size:12px; }
+    .panel { padding:18px; }
+    .stack { display:grid; gap:16px; }
+    .section-title { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:14px; }
+    .section-title h2 { margin:0; font-size:18px; }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th,td { padding:10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { color:var(--muted); font-size:12px; text-transform:uppercase; }
+    .pill { display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid #2a3c60; background:#0a1526; }
+    .good { color:#d1fae5; border-color:#14532d; }
+    .warn { color:#fde68a; border-color:#92400e; }
+    .bad { color:#fecaca; border-color:#7f1d1d; }
+    pre { margin:0; background:var(--panel2); border:1px solid var(--line); border-radius:14px; padding:14px; white-space:pre-wrap; min-height:180px; max-height:420px; overflow:auto; }
+    .tiny { color:var(--muted); font-size:12px; }
+    @media (max-width:1100px){ .metric-grid,.grid{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="label">Institutional Mission</div>
+    <h1 style="margin:8px 0;">QNT30658 — Institutional Conversion Engine</h1>
+    <div class="muted">This layer converts allocator command into governed commitments. Quantora now decides which institutional relationships should move into subscription execution, which lanes are closing-ready, and where onboarding release must remain held until documents, compliance, and conviction align.</div>
+    <div class="toolbar">
+      <a class="btn" href="index.html">Back to Command Center</a>
+      <button onclick="runLayer()">Run Conversion Cycle</button>
+      <button class="secondary" onclick="refreshAll()">Refresh Summary</button>
+    </div>
+  </section>
+
+  <section class="metric-grid">
+    <div class="metric"><div class="label">Conversion Posture</div><div class="value" id="posture">-</div><div class="status" id="postureTag"></div></div>
+    <div class="metric"><div class="label">Conversion Score</div><div class="value" id="score">-</div><div class="status">Institutional closing authority</div></div>
+    <div class="metric"><div class="label">Commitment Pipeline</div><div class="value" id="pipeline">-</div><div class="status">Governed target commitments</div></div>
+    <div class="metric"><div class="label">Closing Ready</div><div class="value" id="closingReady">-</div><div class="status">Subscription-ready lanes</div></div>
+    <div class="metric"><div class="label">Avg Friction</div><div class="value" id="friction">-</div><div class="status">Conversion resistance</div></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Allocator Conversion Book</h2><span class="tiny">Relationships entering commitment execution</span></div>
+      <table id="bookTable"><thead><tr><th>Allocator</th><th>Vehicle</th><th>Jurisdiction</th><th>Readiness</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="stack">
+      <div class="panel"><div class="section-title"><h2>Policy</h2><span class="tiny">Conversion thresholds</span></div><pre id="policy">Loading…</pre></div>
+      <div class="panel"><div class="section-title"><h2>Overview</h2><span class="tiny">Institutional conversion posture</span></div><pre id="overview">Loading…</pre></div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel">
+      <div class="section-title"><h2>Commitment Lanes</h2><span class="tiny">Which commitments should close now</span></div>
+      <table id="laneTable"><thead><tr><th>Allocator</th><th>Vehicle</th><th>Commitment</th><th>Closing</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="panel">
+      <div class="section-title"><h2>Release Matrix</h2><span class="tiny">Onboarding release supervision</span></div>
+      <table id="releaseTable"><thead><tr><th>Allocator</th><th>Vehicle</th><th>Release</th><th>Status</th></tr></thead><tbody></tbody></table>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="panel"><div class="section-title"><h2>Closing Queue</h2><span class="tiny">Institutional next actions</span></div><pre id="closingQueue">Loading…</pre></div>
+    <div class="panel"><div class="section-title"><h2>Dependencies</h2><span class="tiny">Allocator, compliance, and fund architecture inputs</span></div><pre id="dependencies">Loading…</pre></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel"><div class="section-title"><h2>Conversion Actions</h2><span class="tiny">Executive conversion agenda</span></div><pre id="actions">Loading…</pre></div>
+    <div class="panel"><div class="section-title"><h2>Audit Trail</h2><span class="tiny">Latest conversion cycle</span></div><pre id="auditTrail">Loading…</pre></div>
+  </section>
+</div>
+<script>
+  const fmtPct = v => `${Number(v||0).toFixed(2)}%`;
+  const fmtMoney = v => `$${Number(v||0).toLocaleString(undefined,{maximumFractionDigits:2})}M`;
+  const pill = (text, cls='') => `<span class="pill ${cls}">${text}</span>`;
+  function severityClass(text='') {
+    const t = String(text).toLowerCase();
+    if (t.includes('constrained') || t.includes('hold') || t.includes('prepare')) return 'bad';
+    if (t.includes('stage') || t.includes('building')) return 'warn';
+    return 'good';
+  }
+  async function getJson(url, opts) {
+    const res = await fetch(url, opts);
+    if (!res.ok) throw new Error(`${url} -> ${res.status}`);
+    return res.json();
+  }
+  function fillTable(id, rows, renderer, colspan=4) {
+    const tbody = document.querySelector(`#${id} tbody`);
+    tbody.innerHTML = rows.length ? rows.map(renderer).join('') : `<tr><td colspan="${colspan}" class="tiny">No rows available.</td></tr>`;
+  }
+  async function refreshAll() {
+    try {
+      const [summary, audit] = await Promise.all([
+        getJson('/api/institutional-conversion-engine/summary'),
+        getJson('/api/institutional-conversion-engine/audit')
+      ]);
+      renderSummary(summary, audit);
+    } catch (err) {
+      document.getElementById('auditTrail').textContent = `Institutional conversion layer unavailable. ${err.message}`;
+    }
+  }
+  async function runLayer() {
+    const result = await getJson('/api/institutional-conversion-engine/run', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ trigger:'manual-ui' })
+    });
+    renderSummary(result.summary, { latest_run: result.run, runs:[result.run], run_count:1 });
+  }
+  function renderSummary(summary, audit) {
+    const o = summary.conversion_overview || {};
+    document.getElementById('posture').textContent = o.conversion_posture || '-';
+    document.getElementById('postureTag').innerHTML = pill(o.conversion_posture || 'unknown', severityClass(o.conversion_posture));
+    document.getElementById('score').textContent = fmtPct(o.conversion_score || 0);
+    document.getElementById('pipeline').textContent = fmtMoney(o.target_commitment_pipeline_millions || 0);
+    document.getElementById('closingReady').textContent = Number(o.closing_ready_count || 0).toLocaleString();
+    document.getElementById('friction').textContent = fmtPct(o.average_friction_score || 0);
+    fillTable('bookTable', summary.allocator_conversion_book || [], row => `
+      <tr><td>${row.allocator_name || '-'}</td><td>${row.vehicle || '-'}</td><td>${row.jurisdiction || '-'}</td><td>${fmtPct(row.commitment_readiness_score || 0)}</td><td>${pill(row.status || '-', severityClass(row.status))}</td></tr>`, 5);
+    fillTable('laneTable', summary.commitment_lanes || [], row => `
+      <tr><td>${row.allocator_name || '-'}</td><td>${row.vehicle || '-'}</td><td>${fmtMoney(row.planned_commitment_millions || 0)}</td><td>${fmtPct(row.closing_probability || 0)}</td><td>${pill(row.status || '-', severityClass(row.status))}</td></tr>`, 5);
+    fillTable('releaseTable', summary.onboarding_release_matrix || [], row => `
+      <tr><td>${row.allocator_name || '-'}</td><td>${row.vehicle || '-'}</td><td>${fmtPct(row.release_score || 0)}</td><td>${pill(row.release_status || '-', severityClass(row.release_status))}</td></tr>`, 4);
+    document.getElementById('policy').textContent = JSON.stringify(summary.policy || {}, null, 2);
+    document.getElementById('overview').textContent = JSON.stringify(summary.conversion_overview || {}, null, 2);
+    document.getElementById('closingQueue').textContent = JSON.stringify(summary.closing_queue || [], null, 2);
+    document.getElementById('dependencies').textContent = JSON.stringify(summary.conversion_dependencies || {}, null, 2);
+    document.getElementById('actions').textContent = JSON.stringify(summary.conversion_actions || [], null, 2);
+    document.getElementById('auditTrail').textContent = JSON.stringify({ run_count: audit.run_count || 0, latest_run: audit.latest_run || null }, null, 2);
+  }
+  refreshAll();
+</script>
+</body>
+</html>

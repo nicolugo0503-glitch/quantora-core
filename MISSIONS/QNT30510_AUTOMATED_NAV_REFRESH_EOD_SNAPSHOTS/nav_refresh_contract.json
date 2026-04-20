@@ -1,0 +1,28 @@
+{
+  "files": {
+    "current_nav_file": "data/qnt30510_current_nav.json",
+    "eod_nav_file": "data/qnt30510_eod_nav_snapshots.jsonl"
+  },
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/nav/refresh"
+    },
+    {
+      "method": "POST",
+      "path": "/api/nav/eod-snapshot"
+    },
+    {
+      "method": "GET",
+      "path": "/api/nav/current"
+    },
+    {
+      "method": "GET",
+      "path": "/api/nav/eod-snapshots"
+    }
+  ],
+  "eod_policy": {
+    "automatic_window_utc_hour_gte": 23,
+    "one_snapshot_per_day": true
+  }
+}

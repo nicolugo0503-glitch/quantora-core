@@ -1,0 +1,18 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "lock_period_after_close": true,
+    "require_clean_reconciliation": true,
+    "require_safe_delivery_context": true,
+    "max_nav_break_tolerance": 0.01,
+    "default_hurdle_rate_pct": 8.0,
+    "default_gp_carry_pct": 20.0
+  },
+  "close_runs": [],
+  "nav_history": [],
+  "capital_flows": [],
+  "compliance_events": [],
+  "statement_events": [],
+  "created_at": 1776223536,
+  "updated_at": 1776223536
+}

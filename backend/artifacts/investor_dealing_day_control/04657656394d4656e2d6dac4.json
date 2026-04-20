@@ -1,0 +1,25 @@
+{
+  "email": "operator@quantora.test",
+  "cutoff_policy": {
+    "cutoff_hour_utc": 17,
+    "dealing_frequency": "daily",
+    "same_day_processing": true
+  },
+  "dealing_days": [
+    {
+      "day_id": "deal_1776220060",
+      "dealing_date": "2026-04-15",
+      "cutoff_status": "applied",
+      "cutoff_applied_at": 1776220060,
+      "pending_request_count": 0,
+      "pending_subscription_amount": 0,
+      "pending_redemption_amount": 0,
+      "net_pending_flow": 0,
+      "status": "cutoff_locked",
+      "notes": "locked for nav strike and transaction freeze enforcement",
+      "created_at": 1776220060
+    }
+  ],
+  "created_at": 1776220060,
+  "updated_at": 1776220060
+}

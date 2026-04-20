@@ -1,0 +1,43 @@
+{
+  "users": [
+    {
+      "email": "qnt30650@test.local",
+      "password": "pbkdf2_sha256$120000$495e1456b91ef8cb45cae5ca50e4ad801701c92ed6dcc802bf37e4ef5c164f0a",
+      "display_name": "QNT Operator",
+      "operator_id": "operator_DB02FEF8",
+      "plan": "free",
+      "subscription_status": "free",
+      "stripe_customer_id": null,
+      "subscription_id": null,
+      "current_period_end": null,
+      "billing_email": "qnt30650@test.local",
+      "billing_updated_at": null
+    },
+    {
+      "email": "growth@test.quantora",
+      "password": "pbkdf2_sha256$120000$ad20a6f7bdecde9758ddfad68a48ad7f5944a1b7b9ec52baeca5483186c53ee7",
+      "display_name": "Growth Operator",
+      "operator_id": "operator_B92E00AA",
+      "plan": "free",
+      "subscription_status": "free",
+      "stripe_customer_id": null,
+      "subscription_id": null,
+      "current_period_end": null,
+      "billing_email": "growth@test.quantora",
+      "billing_updated_at": null
+    },
+    {
+      "email": "admin@quantora.local",
+      "password": "pbkdf2_sha256$120000$0ee7a9933b891cf0c1963295a50c94710b0879a6f0ad02f4b6cad6c10b6f8ff2",
+      "display_name": "Governance Admin",
+      "operator_id": "operator_F5E2C5BA",
+      "plan": "free",
+      "subscription_status": "free",
+      "stripe_customer_id": null,
+      "subscription_id": null,
+      "current_period_end": null,
+      "billing_email": "admin@quantora.local",
+      "billing_updated_at": null
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "allocator_priority_count": 8,
+    "minimum_allocator_conviction": 72.0,
+    "maximum_relationship_gap": 34.0,
+    "minimum_conversion_readiness": 68.0,
+    "minimum_command_score": 74.0,
+    "minimum_ticket_capture_ratio": 58.0
+  },
+  "runs": [],
+  "created_at": 1775714728,
+  "updated_at": 1775714728
+}

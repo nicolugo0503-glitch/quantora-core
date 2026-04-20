@@ -1,0 +1,33 @@
+{
+  "email": "operator@example.com",
+  "accounts": [
+    {
+      "investor_id": "inv_demo_001",
+      "capital": 1250000.0
+    },
+    {
+      "investor_id": "inv_demo_002",
+      "capital": 875000.0
+    }
+  ],
+  "allocations": [
+    {
+      "strategy_id": "alpha_core",
+      "allocated_amount": 520000.0
+    },
+    {
+      "strategy_id": "macro_fx",
+      "allocated_amount": 340000.0
+    },
+    {
+      "strategy_id": "rates_defense",
+      "allocated_amount": 210000.0
+    }
+  ],
+  "entries": [
+    {
+      "entry_id": "cap_demo_1",
+      "amount": 2125000.0
+    }
+  ]
+}

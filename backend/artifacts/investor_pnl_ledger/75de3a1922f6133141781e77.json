@@ -1,0 +1,52 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "positions": [
+    {
+      "position_id": "pos_alpha_core",
+      "sleeve_id": "alpha_core",
+      "symbol": "SPY",
+      "qty": 1000.0,
+      "avg_price": 520.0,
+      "mark_price": 542.0,
+      "realized_pnl": 18000.0,
+      "unrealized_pnl": 24000.0,
+      "updated_at": 1775662020
+    },
+    {
+      "position_id": "pos_macro_fx",
+      "sleeve_id": "macro_fx",
+      "symbol": "DX1",
+      "qty": 40.0,
+      "avg_price": 105.0,
+      "mark_price": 112.0,
+      "realized_pnl": 12000.0,
+      "unrealized_pnl": 9000.0,
+      "updated_at": 1775662020
+    },
+    {
+      "position_id": "pos_credit_income",
+      "sleeve_id": "credit_income",
+      "symbol": "LQD",
+      "qty": 1200.0,
+      "avg_price": 108.0,
+      "mark_price": 111.0,
+      "realized_pnl": 6000.0,
+      "unrealized_pnl": 4000.0,
+      "updated_at": 1775662020
+    },
+    {
+      "position_id": "pos_treasury_arb",
+      "sleeve_id": "treasury_arb",
+      "symbol": "IEF",
+      "qty": 900.0,
+      "avg_price": 94.0,
+      "mark_price": 95.5,
+      "realized_pnl": 3000.0,
+      "unrealized_pnl": 1500.0,
+      "updated_at": 1775662020
+    }
+  ],
+  "ledger": [],
+  "created_at": 1775662020,
+  "updated_at": 1775662020
+}

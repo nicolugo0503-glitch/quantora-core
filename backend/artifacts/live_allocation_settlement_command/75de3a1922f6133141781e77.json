@@ -1,0 +1,14 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "policy": {
+    "minimum_settlement_score": 83.0,
+    "maximum_settlement_stress_score": 28.0,
+    "minimum_cash_coverage_pct": 88.0,
+    "minimum_wire_instruction_completion_pct": 92.0,
+    "minimum_broker_confirm_readiness_pct": 86.0,
+    "maximum_open_exception_count": 1
+  },
+  "runs": [],
+  "created_at": 1775794566,
+  "updated_at": 1775794566
+}

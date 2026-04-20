@@ -1,0 +1,52 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora Real Venue Connectors + Unified Execution Bus</title>
+  <style>
+    body{margin:0;font-family:Inter,Arial,sans-serif;background:#07111f;color:#e5eefc}
+    .shell{max-width:1200px;margin:0 auto;padding:24px}.panel{background:#0f1d31;border:1px solid #22314e;border-radius:18px;padding:16px;margin-bottom:16px}
+    input,select,button{padding:10px;border-radius:10px;border:1px solid #22314e;background:#132742;color:#e5eefc}button{background:#2563eb;cursor:pointer}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.row{display:flex;gap:10px;flex-wrap:wrap}.wide{width:100%}
+    pre{background:#06101d;border:1px solid #1e2d47;border-radius:12px;padding:14px;white-space:pre-wrap;min-height:180px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <div class="panel"><h1>Real Venue Connectors + Unified Execution Bus</h1><p>Normalize live and paper submission across venue-backed connectors with unified acks, fills, and lifecycle telemetry.</p><div class="row"><button onclick="loadStatus()">Refresh Status</button><button onclick="location.href='index.html'">Command Center</button></div></div>
+  <div class="panel grid">
+    <div><label>Connector ID</label><input id="connector_id" value="ibkr_paper"></div>
+    <div><label>Venue ID</label><input id="venue_id" value="ibkr"></div>
+    <div><label>Market</label><select id="market"><option>equities</option><option>crypto</option><option>forex</option><option>futures</option></select></div>
+    <div><label>Mode</label><select id="mode"><option>paper</option><option>live</option></select></div>
+    <div><label>Status</label><select id="status"><option>active</option><option>standby</option><option>disabled</option></select></div>
+    <div><label>Latency ms</label><input id="latency_ms" type="number" value="31"></div>
+  </div>
+  <div class="panel"><div class="row"><button onclick="upsertConnector()">Upsert Connector</button></div></div>
+  <div class="panel grid">
+    <div><label>Symbol</label><input id="symbol" value="AAPL"></div>
+    <div><label>Side</label><select id="side"><option>buy</option><option>sell</option></select></div>
+    <div><label>Qty</label><input id="qty" type="number" step="0.01" value="5"></div>
+    <div><label>Order Type</label><select id="order_type"><option>market</option><option>limit</option></select></div>
+    <div><label>Execution Mode</label><select id="execution_mode"><option>paper</option><option>live</option></select></div>
+    <div><label>Urgency</label><select id="urgency"><option>balanced</option><option>aggressive</option><option>patient</option></select></div>
+  </div>
+  <div class="panel"><div class="row"><button onclick="submitOrder()">Submit Intent</button><button onclick="ackOrder()">Ack Last Order</button><button onclick="fillOrder()">Fill Last Order</button></div></div>
+  <div class="panel"><pre id="out">Ready.</pre></div>
+</div>
+<script>
+const api='http://127.0.0.1:8010'; let lastOrderId=null;
+async function req(path, method='GET', body){ const res=await fetch(api+path,{method,headers:{'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined}); const txt=await res.text(); try{return JSON.parse(txt)}catch{return {raw:txt,status:res.status}} }
+function show(x){ document.getElementById('out').textContent = JSON.stringify(x,null,2); }
+async function loadStatus(){ show(await req('/execution-bus/status')); }
+async function upsertConnector(){ show(await req('/execution-bus/connectors/upsert','POST',{connector_id:connector_id.value,venue_id:venue_id.value,market:market.value,mode:mode.value,status:status.value,latency_ms:Number(latency_ms.value),reliability_score:99.1,order_types:['market','limit'],tif_options:['day','gtc']})); }
+async function submitOrder(){ const r=await req('/execution-bus/submit','POST',{symbol:symbol.value,side:side.value,qty:Number(qty.value),market:market.value,execution_mode:execution_mode.value,urgency:urgency.value,order_type:order_type.value,tif:'day'}); lastOrderId=r.order_id||null; show(r); }
+async function ackOrder(){ if(!lastOrderId) return show({error:'no lastOrderId'}); show(await req('/execution-bus/ack','POST',{order_id:lastOrderId,ack_status:'accepted',ack_latency_ms:21})); }
+async function fillOrder(){ if(!lastOrderId) return show({error:'no lastOrderId'}); show(await req('/execution-bus/fill','POST',{order_id:lastOrderId,filled_qty:Number(qty.value),avg_fill_price:181.25,fill_latency_ms:58,fill_status:'filled'})); }
+loadStatus();
+</script>
+</body>
+</html>

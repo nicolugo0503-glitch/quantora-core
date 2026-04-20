@@ -1,0 +1,36 @@
+{
+  "base_zip": "QUANTORA_FULL_PROJECT_QNT30427_PORTFOLIO_RISK_GOVERNANCE_MERGED.zip",
+  "applied_missions": [
+    "QNT30428",
+    "QNT30429",
+    "QNT30431",
+    "QNT30436",
+    "QNT30438",
+    "QNT30439",
+    "QNT30440",
+    "QNT30441"
+  ],
+  "missing_or_unavailable_missions": [
+    "QNT30430",
+    "QNT30432",
+    "QNT30433",
+    "QNT30434",
+    "QNT30435",
+    "QNT30437"
+  ],
+  "notes": [
+    "This package was created by overlaying the available post-QNT30427 mission ZIPs onto the QNT30427 merged base.",
+    "Where later mission ZIPs were not available in the workspace, they could not be included.",
+    "This is a mechanical merge of available artifacts, not a source-controlled reconciliation."
+  ],
+  "file_counts_by_applied_zip": {
+    "QNT30428": 617,
+    "QNT30429": 619,
+    "QNT30431": 624,
+    "QNT30436": 5,
+    "QNT30438": 4,
+    "QNT30439": 9,
+    "QNT30440": 14,
+    "QNT30441": 19
+  }
+}

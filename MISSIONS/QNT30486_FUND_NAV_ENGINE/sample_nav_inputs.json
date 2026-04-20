@@ -1,0 +1,24 @@
+{
+  "funds": [
+    {
+      "fund_id": "FUND1",
+      "cash": 250000.0,
+      "liabilities": 10000.0,
+      "total_shares": 100000.0,
+      "positions": [
+        {
+          "strategy_id": "STRAT_BTC_MOMO",
+          "market_value": 300000.0,
+          "unrealized_pnl": 15000.0,
+          "realized_pnl": 5000.0
+        },
+        {
+          "strategy_id": "STRAT_YIELD_LOW_RISK",
+          "market_value": 180000.0,
+          "unrealized_pnl": 2000.0,
+          "realized_pnl": 1000.0
+        }
+      ]
+    }
+  ]
+}

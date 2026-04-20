@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quantora Autonomous Decision Layer</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff}
+.container{max-width:1500px;margin:auto;padding:24px}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:14px;padding:16px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.label{color:#9fb3d8;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:bold}
+.good{color:#10b981}.warn{color:#f59e0b}.bad{color:#ef4444}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left}
+.table th{color:#9fb3d8;font-size:12px;text-transform:uppercase}
+pre{background:#07111f;border-radius:10px;padding:12px;border:1px solid #203251;overflow:auto}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <h1>Autonomous Decision Layer</h1>
+    <div style="color:#9fb3d8;max-width:980px">Decision intelligence view across signals, allocation intent, scoring state, and live fund posture. Frontend-only and safe on the stable Quantora base.</div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Decision State</div><div id="decisionState" class="value">-</div></div>
+    <div class="card"><div class="label">Signal Engine</div><div id="signalState" class="value">-</div></div>
+    <div class="card"><div class="label">Allocation Intent</div><div id="allocIntent" class="value">-</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Latest Signals</h2>
+      <table class="table">
+        <thead><tr><th>Asset</th><th>Signal</th><th>Decision Weight</th></tr></thead>
+        <tbody id="signalsTable"></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Decision Brief</h2>
+      <pre id="decisionBrief">loading...</pre>
+    </div>
+
+    <div class="card">
+      <h2>Allocation Translation</h2>
+      <pre id="allocBox">loading...</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Autonomy Notes</h2>
+    <div id="notes">loading...</div>
+  </div>
+</div>
+
+<script>
+async function fetchJson(url, opts){
+  try{
+    const r = await fetch(url, opts || {});
+    return await r.json();
+  }catch(e){ return {error:String(e)}; }
+}
+function fmt(v){
+  if(typeof v !== 'number' || Number.isNaN(v)) return '-';
+  return v.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+async function load(){
+  const signals = await fetchJson('/api/signals/last');
+  const alloc = await fetchJson('/api/auto-allocator/last');
+  const scoring = await fetchJson('/api/scoring/state');
+  const fund = await fetchJson('/api/fund/state');
+
+  const signalMap = signals.signals || {};
+  const signalKeys = Object.keys(signalMap);
+  document.getElementById('signalState').innerText = signalKeys.length ? 'ACTIVE' : 'STANDBY';
+  document.getElementById('signalState').className = 'value ' + (signalKeys.length ? 'good' : 'warn');
+  document.getElementById('decisionState').innerText = fund.running ? 'LIVE' : 'PAUSED';
+  document.getElementById('decisionState').className = 'value ' + (fund.running ? 'good' : 'warn');
+  document.getElementById('allocIntent').innerText = alloc.source || 'UNSET';
+
+  const rows = signalKeys.length ? signalKeys.map(asset => {
+    const sig = Number(signalMap[asset] || 0);
+    return `<tr><td>${asset}</td><td class="${sig >= 0 ? 'good' : 'bad'}">${fmt(sig)}</td><td>${fmt(sig * 100)}%</td></tr>`;
+  }).join('') : '<tr><td colspan="3">No signal snapshot yet</td></tr>';
+  document.getElementById('signalsTable').innerHTML = rows;
+
+  document.getElementById('decisionBrief').innerText = JSON.stringify({
+    signal_snapshot: signals,
+    fund_state: fund,
+    scored_strategies: Object.keys(scoring.scores || {}).length
+  }, null, 2);
+
+  document.getElementById('allocBox').innerText = JSON.stringify(alloc, null, 2);
+
+  const notes = [];
+  if (signalKeys.length) notes.push('Signal engine is producing an active asset map for the fund loop.');
+  if (fund.running) notes.push('Live fund mode is running and can consume autonomous signals.');
+  if (alloc.source) notes.push('Allocator is exposing a routing source for capital translation.');
+  if (!notes.length) notes.push('Decision layer is waiting for live signal and allocation data.');
+  document.getElementById('notes').innerHTML = notes.map(n => `<div class="card" style="margin-bottom:10px"><div style="color:#9fb3d8">${n}</div></div>`).join('');
+}
+load();
+setInterval(load, 5000);
+</script>
+</body>
+</html>

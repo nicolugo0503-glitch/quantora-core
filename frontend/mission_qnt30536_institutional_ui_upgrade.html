@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora Institutional Command Center</title>
+  <style>
+    :root{
+      --bg:#06101d;
+      --panel:#0d1a2b;
+      --panel2:#101f33;
+      --line:#203251;
+      --text:#eaf1ff;
+      --muted:#9fb3d8;
+      --accent:#2455d6;
+      --good:#10b981;
+      --bad:#ef4444;
+      --warn:#f59e0b;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,Arial,Helvetica,sans-serif;
+      background:linear-gradient(180deg,#040a13 0%,#091426 100%);
+      color:var(--text);
+    }
+    .shell{max-width:1680px;margin:0 auto;padding:22px}
+    .hero,.card{
+      background:rgba(13,26,43,.96);
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
+    }
+    .hero{
+      padding:22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+    .title{margin:0 0 8px;font-size:30px;font-weight:800;letter-spacing:.02em}
+    .sub{max-width:920px;color:var(--muted);line-height:1.5}
+    .actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{
+      border:1px solid #3f6fff;
+      background:var(--accent);
+      color:#fff;
+      border-radius:10px;
+      padding:10px 14px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .btn.secondary{background:#11243c;border-color:var(--line)}
+    .kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;margin-bottom:16px}
+    .card{padding:16px}
+    .label{color:var(--muted);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+    .value{font-size:28px;font-weight:800}
+    .value.small{font-size:18px}
+    .good{color:var(--good)} .bad{color:var(--bad)} .warn{color:var(--warn)}
+    .grid{
+      display:grid;
+      grid-template-columns:1.45fr 1fr 1fr;
+      gap:14px;
+    }
+    .panel-title{margin:0 0 10px;font-size:18px;font-weight:800}
+    .muted{color:var(--muted)}
+    pre{
+      margin:0;
+      background:#07111f;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+      overflow:auto;
+      max-height:360px;
+      white-space:pre-wrap;
+      font-size:12px;
+      line-height:1.45;
+    }
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.06);font-size:14px;text-align:left}
+    th{color:var(--muted);font-weight:700}
+    .feed-item{
+      padding:10px 0;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      font-size:13px;
+    }
+    .chart-wrap{
+      background:#07111f;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+    }
+    canvas{width:100%;height:220px;display:block}
+    .status-pill{
+      display:inline-block;
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;
+      font-weight:700;
+      border:1px solid var(--line);
+      background:#11243c;
+      color:var(--muted);
+    }
+    @media (max-width:1280px){ .kpis{grid-template-columns:repeat(3,minmax(0,1fr))} .grid{grid-template-columns:1fr} }
+    @media (max-width:720px){ .kpis{grid-template-columns:1fr} .title{font-size:24px} }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="hero">
+      <div>
+        <h1 class="title">Quantora Institutional Command Center</h1>
+        <div class="sub">Institutional product layer for fund operations. This view compresses live fund status, NAV, PnL, risk posture, portfolio composition, execution activity, and cycle intelligence into one serious interface.</div>
+      </div>
+      <div class="actions">
+        <a class="btn secondary" href="index.html">Back to Core</a>
+        <button class="btn" onclick="startFund()">Start</button>
+        <button class="btn secondary" onclick="stopFund()">Stop</button>
+        <button class="btn secondary" onclick="refreshAll()">Refresh</button>
+      </div>
+    </div>
+
+    <div class="kpis">
+      <div class="card"><div class="label">NAV</div><div id="nav" class="value">-</div></div>
+      <div class="card"><div class="label">Total PnL</div><div id="pnl" class="value">-</div></div>
+      <div class="card"><div class="label">Drawdown</div><div id="drawdown" class="value small">-</div></div>
+      <div class="card"><div class="label">Win Rate</div><div id="winrate" class="value small">-</div></div>
+      <div class="card"><div class="label">Execution Health</div><div id="health" class="value small">-</div></div>
+      <div class="card"><div class="label">System Status</div><div id="status" class="value small">-</div></div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2 class="panel-title">NAV + PnL Curve</h2>
+        <div class="chart-wrap"><canvas id="navChart" width="900" height="220"></canvas></div>
+        <div style="height:12px"></div>
+        <h2 class="panel-title">Portfolio Exposure</h2>
+        <div id="positionsTableWrap"><div class="muted">Loading portfolio...</div></div>
+      </div>
+
+      <div class="card">
+        <h2 class="panel-title">Execution Activity</h2>
+        <div id="activityFeed" class="muted">Loading execution feed...</div>
+        <div style="height:12px"></div>
+        <h2 class="panel-title">Risk Intelligence</h2>
+        <pre id="riskBox">loading...</pre>
+      </div>
+
+      <div class="card">
+        <h2 class="panel-title">Fund State</h2>
+        <pre id="fundBox">loading...</pre>
+        <div style="height:12px"></div>
+        <h2 class="panel-title">Performance Summary</h2>
+        <pre id="perfBox">loading...</pre>
+        <div style="height:12px"></div>
+        <h2 class="panel-title">Closed Loop Cycles</h2>
+        <pre id="cyclesBox">loading...</pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function fetchJson(url, options){
+      try{
+        const r = await fetch(url, options || {});
+        const data = await r.json();
+        return {ok:r.ok, status:r.status, data};
+      }catch(e){
+        return {ok:false, status:0, data:{error:String(e)}};
+      }
+    }
+
+    function fmtNum(v){
+      if (typeof v !== 'number' || Number.isNaN(v)) return '-';
+      return v.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+    }
+
+    function setValue(id, value, klass){
+      const el = document.getElementById(id);
+      el.textContent = value;
+      if (klass) el.className = 'value' + (el.classList.contains('small') ? ' small ' : ' ') + klass;
+    }
+
+    function renderPositions(payload, perf){
+      const wrap = document.getElementById('positionsTableWrap');
+      const positions = (payload && payload.positions) || [];
+      const totalMV = Number(payload?.total_market_value || 0);
+      if (!positions.length){
+        wrap.innerHTML = '<div class="muted">No open positions yet.</div>';
+        return;
+      }
+      let html = '<table><thead><tr><th>Symbol</th><th>Qty</th><th>Market Value</th><th>Allocation %</th><th>Unrealized</th><th>Realized</th></tr></thead><tbody>';
+      for (const row of positions){
+        const mv = Number(row.market_value || 0);
+        const alloc = totalMV > 0 ? (mv / totalMV) * 100 : 0;
+        const upnl = Number(row.unrealized_pnl || 0);
+        const rpnl = Number(row.realized_pnl || 0);
+        html += `<tr>
+          <td>${row.symbol ?? ''}</td>
+          <td>${fmtNum(Number(row.qty ?? 0))}</td>
+          <td>${fmtNum(mv)}</td>
+          <td>${fmtNum(alloc)}%</td>
+          <td class="${upnl >= 0 ? 'good' : 'bad'}">${fmtNum(upnl)}</td>
+          <td class="${rpnl >= 0 ? 'good' : 'bad'}">${fmtNum(rpnl)}</td>
+        </tr>`;
+      }
+      html += '</tbody></table>';
+      wrap.innerHTML = html;
+    }
+
+    function renderActivity(execution){
+      const feed = document.getElementById('activityFeed');
+      const rows = Array.isArray(execution) ? execution : (execution?.orders ? [execution] : []);
+      if (!rows.length){
+        feed.innerHTML = '<div class="muted">No execution activity yet.</div>';
+        return;
+      }
+      let html = '';
+      const latest = rows.slice(-8).reverse();
+      for (const item of latest){
+        const ts = item.timestamp || '';
+        const orders = item.orders || item.submitted_orders || [];
+        html += `<div class="feed-item"><div><span class="status-pill">${orders.length} orders</span></div><div style="margin-top:6px">${ts}</div></div>`;
+      }
+      feed.innerHTML = html;
+    }
+
+    function drawNavChart(history){
+      const canvas = document.getElementById('navChart');
+      const ctx = canvas.getContext('2d');
+      const data = Array.isArray(history) ? history : [];
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = '#07111f';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+
+      if (!data.length){
+        ctx.fillStyle = '#9fb3d8';
+        ctx.font = '14px Arial';
+        ctx.fillText('No performance history yet.', 20, 30);
+        return;
+      }
+
+      const navs = data.map(x => Number(x.nav || 0));
+      const pnls = data.map(x => Number(x.total_pnl || x.cycle_total_pnl || 0));
+      const minY = Math.min(...navs, ...pnls);
+      const maxY = Math.max(...navs, ...pnls);
+      const pad = 20;
+      const w = canvas.width - pad * 2;
+      const h = canvas.height - pad * 2;
+
+      function xPos(i, n){ return pad + (n <= 1 ? 0 : (i/(n-1))*w); }
+      function yPos(v){
+        if (maxY === minY) return pad + h/2;
+        return pad + h - ((v - minY)/(maxY - minY))*h;
+      }
+
+      ctx.strokeStyle = '#203251';
+      ctx.lineWidth = 1;
+      for (let i=0;i<4;i++){
+        const y = pad + (i/3)*h;
+        ctx.beginPath(); ctx.moveTo(pad,y); ctx.lineTo(pad+w,y); ctx.stroke();
+      }
+
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = '#2455d6';
+      ctx.beginPath();
+      navs.forEach((v,i)=>{ const x=xPos(i,navs.length), y=yPos(v); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); });
+      ctx.stroke();
+
+      ctx.strokeStyle = '#10b981';
+      ctx.beginPath();
+      pnls.forEach((v,i)=>{ const x=xPos(i,pnls.length), y=yPos(v); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); });
+      ctx.stroke();
+
+      ctx.fillStyle = '#9fb3d8';
+      ctx.font = '12px Arial';
+      ctx.fillText('NAV', pad, pad-4 < 10 ? 10 : pad-4);
+      ctx.fillStyle = '#10b981';
+      ctx.fillText('PnL', pad+40, pad-4 < 10 ? 10 : pad-4);
+    }
+
+    async function refreshAll(){
+      const [perf, perfHist, fund, portfolio, risk, execution, cycles] = await Promise.all([
+        fetchJson('/api/performance-engine/summary'),
+        fetchJson('/api/performance-engine/history'),
+        fetchJson('/api/fund/state'),
+        fetchJson('/api/portfolio/state'),
+        fetchJson('/api/risk/state'),
+        fetchJson('/api/execution/history'),
+        fetchJson('/api/closed-loop/cycles'),
+      ]);
+
+      if (perf.ok){
+        document.getElementById('nav').textContent = fmtNum(Number(perf.data.nav || 0));
+        const totalPnl = Number(perf.data.total_pnl || 0);
+        document.getElementById('pnl').textContent = fmtNum(totalPnl);
+        document.getElementById('pnl').className = 'value ' + (totalPnl >= 0 ? 'good' : 'bad');
+        document.getElementById('drawdown').textContent = fmtNum(Number(perf.data.drawdown_pct || 0)) + '%';
+        document.getElementById('winrate').textContent = fmtNum(Number((perf.data.win_rate || 0) * 100)) + '%';
+      } else {
+        document.getElementById('nav').textContent = 'ERR';
+        document.getElementById('pnl').textContent = 'ERR';
+      }
+
+      if (fund.ok){
+        const running = !!fund.data.running;
+        const statusEl = document.getElementById('status');
+        statusEl.textContent = running ? 'LIVE' : 'PAUSED';
+        statusEl.className = 'value small ' + (running ? 'good' : 'warn');
+        document.getElementById('fundBox').textContent = JSON.stringify(fund.data, null, 2);
+      } else {
+        const statusEl = document.getElementById('status');
+        statusEl.textContent = 'ERROR';
+        statusEl.className = 'value small bad';
+        document.getElementById('fundBox').textContent = JSON.stringify(fund.data, null, 2);
+      }
+
+      const riskKilled = !!risk?.data?.killed;
+      document.getElementById('health').textContent = risk.ok ? (riskKilled ? 'BLOCKED' : 'HEALTHY') : 'ERROR';
+      document.getElementById('health').className = 'value small ' + (risk.ok ? (riskKilled ? 'warn' : 'good') : 'bad');
+
+      renderPositions(portfolio.data, perf.data);
+      renderActivity(execution.data);
+      document.getElementById('riskBox').textContent = JSON.stringify(risk.data, null, 2);
+      document.getElementById('perfBox').textContent = JSON.stringify(perf.data, null, 2);
+      document.getElementById('cyclesBox').textContent = JSON.stringify(cycles.data, null, 2);
+      drawNavChart(perfHist.data);
+    }
+
+    async function startFund(){
+      await fetchJson('/api/fund/start', {method:'POST'});
+      refreshAll();
+    }
+
+    async function stopFund(){
+      await fetchJson('/api/fund/stop', {method:'POST'});
+      refreshAll();
+    }
+
+    refreshAll();
+    setInterval(refreshAll, 5000);
+  </script>
+</body>
+</html>

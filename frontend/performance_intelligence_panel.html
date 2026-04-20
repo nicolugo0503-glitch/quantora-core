@@ -1,0 +1,93 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30357 Performance Intelligence + Meta-Allocator</title>
+  <style>
+    :root { --bg:#07111f; --panel:#0f1d31; --panel2:#132742; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#60a5fa; --good:#34d399; --warn:#f59e0b; --bad:#fb7185; }
+    * { box-sizing:border-box; } body { margin:0; font-family:Inter,Arial,sans-serif; background:linear-gradient(180deg,#040b15 0%,#0a1424 100%); color:var(--text); }
+    .shell { max-width:1400px; margin:0 auto; padding:24px; } .panel { background:rgba(15,29,49,.95); border:1px solid var(--line); border-radius:18px; padding:16px; margin-bottom:16px; }
+    .hero { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; } .sub { color:var(--muted); max-width:900px; line-height:1.5; }
+    .grid { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px; } .two { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .metric { background:#0a1526; border:1px solid #1e2d47; border-radius:14px; padding:14px; } .label { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; } .value { font-size:26px; font-weight:700; margin-top:8px; }
+    .row { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:10px; margin-bottom:10px; }
+    input, select, button { width:100%; border:1px solid var(--line); background:var(--panel2); color:var(--text); border-radius:10px; padding:11px 12px; }
+    button { background:var(--accent); font-weight:700; cursor:pointer; }
+    pre { background:#06101d; border:1px solid #1e2d47; border-radius:14px; min-height:220px; max-height:560px; overflow:auto; padding:14px; white-space:pre-wrap; }
+    .tiny { color:var(--muted); font-size:12px; }
+    @media (max-width:980px){ .grid,.row,.two{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="panel hero">
+      <div>
+        <h1 style="margin:0 0 8px 0;">Performance Intelligence + Meta-Allocator</h1>
+        <div class="sub">Learn from attribution, separate persistent edge from noise, decay weak capital pathways, and compound capital toward strategies with durable performance.</div>
+      </div>
+      <div style="min-width:220px;"><button onclick="window.location.href='index.html'">Back to Command Center</button></div>
+    </div>
+
+    <div class="panel">
+      <div class="grid">
+        <div class="metric"><div class="label">Tracked Strategies</div><div class="value" id="m_strategies">-</div></div>
+        <div class="metric"><div class="label">Avg Edge Score</div><div class="value" id="m_edge">-</div></div>
+        <div class="metric"><div class="label">Promotions</div><div class="value" id="m_promotions">-</div></div>
+        <div class="metric"><div class="label">Decays</div><div class="value" id="m_decays">-</div></div>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="panel">
+        <h2 style="margin-top:0;">Attribution Ingest</h2>
+        <div class="row">
+          <input id="strategy_id" value="strat_aapl" placeholder="Strategy ID">
+          <input id="strategy_name" value="AAPL Momentum" placeholder="Strategy Name">
+          <input id="pnl" type="number" value="320" placeholder="PnL">
+          <input id="capital_used" type="number" value="11000" placeholder="Capital Used">
+        </div>
+        <div class="row">
+          <input id="trades" type="number" value="5" placeholder="Trades">
+          <input id="win_rate" type="number" step="0.01" value="0.62" placeholder="Win Rate">
+          <input id="confidence" type="number" step="0.01" value="0.71" placeholder="Confidence">
+          <button onclick="ingest()">Ingest Attribution</button>
+        </div>
+        <div class="row">
+          <button onclick="seedDemo()">Seed Demo Sequence</button>
+          <button onclick="evaluateMeta()">Evaluate Meta-Allocator</button>
+          <button onclick="applyMeta()">Apply Capital Updates</button>
+          <button onclick="loadStatus()">Refresh Status</button>
+        </div>
+        <div class="tiny">Meta-allocation applies performance-aware capital multipliers on top of existing strategy budgets and capital limits.</div>
+      </div>
+
+      <div class="panel">
+        <h2 style="margin-top:0;">Output</h2>
+        <pre id="output">Loading...</pre>
+      </div>
+    </div>
+  </div>
+<script>
+const adminHeaders = {"Content-Type":"application/json","X-Quantora-Email":"nicolugo0503@gmail.com"};
+async function api(path, method="GET", body=null){ const res = await fetch(path,{method,headers:adminHeaders,body:body?JSON.stringify(body):null}); const data = await res.json(); if(!res.ok){ throw new Error(JSON.stringify(data)); } return data; }
+function fmt(v){ return typeof v === 'number' ? v.toLocaleString(undefined,{maximumFractionDigits:2}) : (v ?? '-'); }
+function show(data){ output.textContent = JSON.stringify(data, null, 2); }
+async function loadStatus(){ const data = await api('/performance-intelligence/status'); const s = data.summary || {}; m_strategies.textContent = fmt(s.tracked_strategies); m_edge.textContent = fmt(s.avg_edge_score); m_promotions.textContent = fmt(s.promotions); m_decays.textContent = fmt(s.decays); show(data); }
+async function ingest(){ show(await api('/performance-intelligence/attribution/ingest','POST',{strategy_id:strategy_id.value,strategy_name:strategy_name.value,pnl:Number(pnl.value),capital_used:Number(capital_used.value),trades:Number(trades.value),win_rate:Number(win_rate.value),confidence:Number(confidence.value),source:'panel'})); await loadStatus(); }
+async function evaluateMeta(){ show(await api('/meta-allocator/rebalance/evaluate','POST',{})); await loadStatus(); }
+async function applyMeta(){ show(await api('/meta-allocator/capital/apply','POST',{})); await loadStatus(); }
+async function seedDemo(){
+  const seq = [
+    {strategy_id:'strat_aapl',strategy_name:'AAPL Momentum',pnl:320,capital_used:11000,trades:5,win_rate:0.62,confidence:0.71,source:'demo'},
+    {strategy_id:'strat_btc',strategy_name:'BTC Breakout',pnl:250,capital_used:14500,trades:4,win_rate:0.58,confidence:0.67,source:'demo'},
+    {strategy_id:'strat_es',strategy_name:'ES Hedge',pnl:-180,capital_used:9000,trades:3,win_rate:0.41,confidence:0.54,source:'demo'}
+  ];
+  for(let i=0;i<4;i++){ for(const item of seq){ await api('/performance-intelligence/attribution/ingest','POST',item); } }
+  await loadStatus();
+}
+loadStatus().catch(err => output.textContent = String(err));
+</script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>QNT30387 Production Readiness and Control Plane</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background: #08101d; color: #edf2fb; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card { background: #121b2f; border: 1px solid #2c3959; border-radius: 12px; padding: 16px; }
+    input, select, button, textarea { padding: 10px; border-radius: 8px; }
+    input, select, textarea { width: 100%; margin-top: 6px; margin-bottom: 12px; border: 1px solid #44527a; background: #0f1530; color: #fff; }
+    button { border: 0; cursor: pointer; }
+    pre { white-space: pre-wrap; background: #0b1020; border: 1px solid #2a395a; padding: 12px; border-radius: 8px; min-height: 160px; }
+  </style>
+</head>
+<body>
+  <h1>QNT30387 — Production Readiness & Control Plane</h1>
+  <div class="grid">
+    <div class="card">
+      <h3>Readiness</h3>
+      <button onclick="loadReadiness()">Refresh Readiness</button>
+      <pre id="readiness"></pre>
+    </div>
+    <div class="card">
+      <h3>Controls</h3>
+      <label>Global Trading Enabled</label>
+      <select id="global_trading_enabled"><option value="false">false</option><option value="true">true</option></select>
+      <label>Maintenance Mode</label>
+      <select id="maintenance_mode"><option value="false">false</option><option value="true">true</option></select>
+      <label>Live Execution Mode</label>
+      <select id="live_execution_mode"><option value="false">false</option><option value="true">true</option></select>
+      <label>Paper Mode Only</label>
+      <select id="paper_mode_only"><option value="true">true</option><option value="false">false</option></select>
+      <button onclick="updateControls()">Apply Controls</button>
+      <pre id="controls_out"></pre>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h3>Register Deployment</h3>
+      <label>Actor</label>
+      <input id="actor" value="quantora-ops" />
+      <label>Release Version</label>
+      <input id="release_version" value="qnt30387-v1" />
+      <label>Environment</label>
+      <select id="environment"><option>staging</option><option>production</option></select>
+      <button onclick="registerDeployment()">Register Deployment</button>
+      <pre id="deployment_out"></pre>
+    </div>
+    <div class="card">
+      <h3>Create Incident</h3>
+      <label>Title</label>
+      <input id="incident_title" value="Broker adapter latency spike" />
+      <label>Severity</label>
+      <select id="incident_severity"><option>P1</option><option>P2</option><option>P3</option></select>
+      <label>Service Name</label>
+      <input id="incident_service" value="qnt30382_broker_integration" />
+      <button onclick="createIncident()">Create Incident</button>
+      <pre id="incident_out"></pre>
+    </div>
+  </div>
+<script>
+async function loadReadiness(){
+  const res = await fetch('/control-plane/readiness');
+  document.getElementById('readiness').textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function updateControls(){
+  const payload = {
+    global_trading_enabled: document.getElementById('global_trading_enabled').value === 'true',
+    maintenance_mode: document.getElementById('maintenance_mode').value === 'true',
+    live_execution_mode: document.getElementById('live_execution_mode').value === 'true',
+    paper_mode_only: document.getElementById('paper_mode_only').value === 'true'
+  };
+  const res = await fetch('/control-plane/controls/update', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(payload)
+  });
+  document.getElementById('controls_out').textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function registerDeployment(){
+  const payload = {
+    actor: document.getElementById('actor').value,
+    release_version: document.getElementById('release_version').value,
+    environment: document.getElementById('environment').value
+  };
+  const res = await fetch('/control-plane/deployment/register', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(payload)
+  });
+  document.getElementById('deployment_out').textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function createIncident(){
+  const payload = {
+    title: document.getElementById('incident_title').value,
+    severity: document.getElementById('incident_severity').value,
+    service_name: document.getElementById('incident_service').value
+  };
+  const res = await fetch('/control-plane/incident/create', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(payload)
+  });
+  document.getElementById('incident_out').textContent = JSON.stringify(await res.json(), null, 2);
+}
+loadReadiness();
+</script>
+</body>
+</html>

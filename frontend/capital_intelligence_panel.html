@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Quantora Capital Intelligence</title>
+  <style>
+    body { font-family: Inter, Arial, sans-serif; margin: 0; background: #07111f; color: #e5eefc; }
+    .shell { max-width: 1400px; margin: 0 auto; padding: 24px; }
+    .hero, .card { background: #0f1d31; border: 1px solid #22314e; border-radius: 18px; padding: 18px; }
+    .hero { margin-bottom: 18px; }
+    .grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; }
+    .card { margin-bottom: 16px; }
+    .metrics { display:grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 12px; margin-top: 16px; }
+    .metric { background:#0a1526; border:1px solid #1e2d47; border-radius:14px; padding:12px; }
+    .label { color:#9bb0d1; font-size:12px; text-transform:uppercase; letter-spacing:.08em; }
+    .value { font-size:24px; font-weight:700; margin-top:8px; }
+    table { width:100%; border-collapse: collapse; }
+    th, td { padding: 10px; border-bottom:1px solid #1e2d47; text-align:left; font-size:13px; }
+    th { color:#9bb0d1; font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+    .table-wrap, pre { background:#0a1526; border:1px solid #1e2d47; border-radius:14px; overflow:auto; }
+    pre { padding:14px; min-height:140px; white-space:pre-wrap; }
+    button { border:none; background:#60a5fa; color:white; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:700; }
+    button.secondary { background:#1d4ed8; }
+    button.warn { background:#f59e0b; color:#111827; }
+    .pill { display:inline-block; margin-right:8px; margin-top:6px; padding:6px 10px; border-radius:999px; background:#0b1a2c; border:1px solid #274168; font-size:12px; }
+    .low { color:#9ff0ce; border-color:#256b53; }
+    .medium { color:#fcd68f; border-color:#8a5a0a; }
+    .high { color:#fecdd3; border-color:#7c243d; }
+    .tiny { color:#9bb0d1; font-size:12px; }
+    input { width:100%; padding:10px 12px; background:#132742; color:#e5eefc; border:1px solid #22314e; border-radius:10px; }
+    @media (max-width: 1100px) { .grid, .metrics { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="shell">
+  <div class="hero">
+    <h1 style="margin:0 0 10px">QNT30442 — Capital Intelligence Engine</h1>
+    <div class="tiny">Manual approval mode. Quantora scores strategies, ranks them, and proposes rebalances without moving capital until you approve.</div>
+    <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+      <button onclick="refreshAll()">Refresh Capital Brain</button>
+      <button class="secondary" onclick="window.location.href='index.html#dashboard'">Unified Command Center</button>
+      <button class="secondary" onclick="window.open('/workspace/capital-intelligence/summary','_blank')">Summary JSON</button>
+      <button class="secondary" onclick="window.open('/workspace/capital-intelligence/recommendations','_blank')">Recommendations JSON</button>
+    </div>
+    <div class="metrics">
+      <div class="metric"><div class="label">Strategies</div><div class="value" id="m_count">-</div></div>
+      <div class="metric"><div class="label">Allocated Capital</div><div class="value" id="m_alloc">-</div></div>
+      <div class="metric"><div class="label">Reserve Capital</div><div class="value" id="m_reserve">-</div></div>
+      <div class="metric"><div class="label">Net PnL</div><div class="value" id="m_pnl">-</div></div>
+      <div class="metric"><div class="label">Average Score</div><div class="value" id="m_avg">-</div></div>
+      <div class="metric"><div class="label">Recommendations</div><div class="value" id="m_recs">-</div></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div>
+      <div class="card">
+        <h2 style="margin-top:0">Strategy Leaderboard</h2>
+        <div class="table-wrap"><table><thead><tr><th>Rank</th><th>Strategy</th><th>Score</th><th>Allocated</th><th>Net PnL</th><th>Efficiency</th><th>Risk</th></tr></thead><tbody id="strategy_rows"><tr><td colspan="7">Load data…</td></tr></tbody></table></div>
+      </div>
+      <div class="card">
+        <h2 style="margin-top:0">Recent Capital Actions</h2>
+        <pre id="actions_out">No actions yet.</pre>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <h2 style="margin-top:0">Rebalance Recommendations</h2>
+        <div id="recs_box">Load data…</div>
+      </div>
+      <div class="card">
+        <h2 style="margin-top:0">Approval Note</h2>
+        <input id="approval_note" placeholder="Optional note for approval or rejection" />
+        <div class="tiny" style="margin-top:8px;">These actions require an authenticated workspace admin session from the main command center.</div>
+      </div>
+      <div class="card">
+        <h2 style="margin-top:0">Summary</h2>
+        <pre id="summary_out">Ready.</pre>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v || 0).toLocaleString(undefined, {maximumFractionDigits:2}); }
+function pct(v){ return (Number(v || 0) * 100).toFixed(2) + '%'; }
+async function getJson(url){
+  const r = await fetch(url, {credentials:'same-origin'});
+  const j = await r.json();
+  if(!r.ok){ throw new Error(j.detail || j.error || ('HTTP ' + r.status)); }
+  return j;
+}
+async function postJson(url, payload){
+  const r = await fetch(url, {method:'POST', credentials:'same-origin', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
+  const j = await r.json();
+  if(!r.ok){ throw new Error(j.detail || j.error || ('HTTP ' + r.status)); }
+  return j;
+}
+function riskPill(level){ return `<span class="pill ${level}">${level}</span>`; }
+function renderSummary(summary){
+  document.getElementById('m_count').textContent = summary.strategy_count ?? 0;
+  document.getElementById('m_alloc').textContent = money(summary.total_allocated_capital);
+  document.getElementById('m_reserve').textContent = money(summary.total_reserve_capital);
+  document.getElementById('m_pnl').textContent = money(summary.total_net_pnl);
+  document.getElementById('m_avg').textContent = Number(summary.average_strategy_score || 0).toFixed(1);
+  document.getElementById('m_recs').textContent = summary.recommendation_count ?? 0;
+  document.getElementById('summary_out').textContent = JSON.stringify(summary, null, 2);
+}
+function renderStrategies(rows){
+  const body = document.getElementById('strategy_rows');
+  if(!rows.length){ body.innerHTML = '<tr><td colspan="7">No strategy data available yet.</td></tr>'; return; }
+  body.innerHTML = rows.map(row => `
+    <tr>
+      <td>#${row.rank}</td>
+      <td><strong>${row.display_name}</strong><div class="tiny">${row.strategy_key}</div></td>
+      <td>${Number(row.score).toFixed(2)}</td>
+      <td>${money(row.allocated_capital)}</td>
+      <td>${money(row.net_pnl)}</td>
+      <td>${pct(row.capital_efficiency)}</td>
+      <td>${riskPill(row.risk_level)}</td>
+    </tr>
+  `).join('');
+}
+function renderActions(actions){
+  document.getElementById('actions_out').textContent = actions.length ? JSON.stringify(actions, null, 2) : 'No actions yet.';
+}
+function recCard(rec){
+  return `<div style="background:#0a1526;border:1px solid #1e2d47;border-radius:14px;padding:14px;margin-bottom:12px;">
+    <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;">
+      <div>
+        <div><strong>${rec.from_display_name}</strong> → <strong>${rec.to_display_name}</strong></div>
+        <div class="tiny" style="margin-top:6px;">${rec.reason}</div>
+      </div>
+      <div style="text-align:right;">
+        <div><strong>${money(rec.amount)}</strong></div>
+        <div class="tiny">confidence ${Number(rec.confidence || 0).toFixed(2)}</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;">${riskPill(rec.from_risk_level)} ${riskPill(rec.to_risk_level)}</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
+      <button onclick="approveRec('${rec.recommendation_id}')">Approve</button>
+      <button class="warn" onclick="rejectRec('${rec.recommendation_id}')">Reject</button>
+    </div>
+  </div>`;
+}
+function renderRecommendations(recommendations){
+  const box = document.getElementById('recs_box');
+  if(!recommendations.length){ box.innerHTML = '<div class="tiny">No rebalance recommendations yet. Quantora needs more allocation and strategy data.</div>'; return; }
+  box.innerHTML = recommendations.map(recCard).join('');
+}
+async function approveRec(id){
+  try {
+    const note = document.getElementById('approval_note').value;
+    const j = await postJson('/workspace/capital-intelligence/recommendations/approve', {recommendation_id: id, note});
+    alert('Approved ' + id + ' for ' + money(j.amount));
+    refreshAll();
+  } catch (err) {
+    alert('Approve failed: ' + err.message);
+  }
+}
+async function rejectRec(id){
+  try {
+    const note = document.getElementById('approval_note').value;
+    await postJson('/workspace/capital-intelligence/recommendations/reject', {recommendation_id: id, note});
+    alert('Rejected ' + id);
+    refreshAll();
+  } catch (err) {
+    alert('Reject failed: ' + err.message);
+  }
+}
+async function refreshAll(){
+  try {
+    const [summary, strategies, recs] = await Promise.all([
+      getJson('/workspace/capital-intelligence/summary'),
+      getJson('/workspace/capital-intelligence/strategies'),
+      getJson('/workspace/capital-intelligence/recommendations'),
+    ]);
+    renderSummary(summary.summary || {});
+    renderStrategies(strategies.strategies || []);
+    renderRecommendations(recs.recommendations || []);
+    renderActions(recs.recent_actions || summary.recent_actions || []);
+  } catch (err) {
+    document.getElementById('summary_out').textContent = 'Load failed: ' + err.message + '
+
+Login from index.html first, then return here.';
+    document.getElementById('strategy_rows').innerHTML = '<tr><td colspan="7">Login required or no strategy data available.</td></tr>';
+    document.getElementById('recs_box').innerHTML = '<div class="tiny">Load failed: ' + err.message + '</div>';
+  }
+}
+refreshAll();
+</script>
+</body>
+</html>

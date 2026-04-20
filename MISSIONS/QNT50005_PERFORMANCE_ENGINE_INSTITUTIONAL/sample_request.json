@@ -1,0 +1,17 @@
+{
+  "nav_snapshot": {
+    "as_of_date": "2026-04-17",
+    "equity": 1042500,
+    "gross_exposure_pct": 0.41,
+    "net_exposure_pct": 0.24,
+    "strategy_attribution": [
+      {"strategy_id": "alpha_trend", "pnl": 9500, "return_contribution_pct": 0.0095, "gross_exposure_pct": 0.18},
+      {"strategy_id": "beta_mean_revert", "pnl": 2200, "return_contribution_pct": 0.0022, "gross_exposure_pct": 0.13},
+      {"strategy_id": "macro_defense", "pnl": -1200, "return_contribution_pct": -0.0012, "gross_exposure_pct": 0.10}
+    ]
+  },
+  "recompute": {
+    "sync_risk": true,
+    "benchmark_rate_annual": 0.02
+  }
+}

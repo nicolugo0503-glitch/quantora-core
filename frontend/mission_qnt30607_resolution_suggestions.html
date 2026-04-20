@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30607 Autonomous Break Resolution Suggestion Engine</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1440px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,textarea{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+textarea{background:#07111f;color:#fff;border:1px solid #203251;width:100%;min-height:90px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:420px}
+@media(max-width:1400px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30607 · Autonomous Break Resolution Suggestion Engine</h1>
+        <div style="color:#9fb3d8">Generates recommended remediation steps for open operational breaks using rule-based control playbooks.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30606_break_alerts.html">Break Alerts</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Runs</div><div id="runs" class="value">-</div></div>
+    <div class="card"><div class="label">Latest Suggestions</div><div id="latestCount" class="value">-</div></div>
+    <div class="card"><div class="label">Accepted</div><div id="accepted" class="value">-</div></div>
+    <div class="card"><div class="label">Latest Status</div><div id="status" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <textarea id="notes" placeholder="Run notes"></textarea>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="runSuggestions()">Generate Suggestions</button>
+      <button onclick="acceptLatest()">Accept Latest Suggestion</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Suggested Resolutions</div>
+    <table>
+      <thead><tr><th>Code</th><th>Severity</th><th>Suggestion</th><th>Recommended Action</th><th>Confidence</th><th>Status</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Suggestion Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/resolution-suggestions/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data,null,2); return; }
+  const d = res.data || {};
+  const latest = d.latest_run || {};
+  document.getElementById('runs').textContent = String(d.run_count || 0);
+  document.getElementById('latestCount').textContent = String(d.latest_suggestion_count || 0);
+  document.getElementById('accepted').textContent = String(d.accepted_suggestion_count || 0);
+  document.getElementById('status').textContent = String(latest.status || '-');
+  document.getElementById('rows').innerHTML = (latest.suggestions || []).map(s =>
+    `<tr><td>${s.code}</td><td>${s.severity}</td><td>${s.suggestion}</td><td>${s.recommended_action}</td><td>${s.confidence}</td><td>${s.status}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function runSuggestions(){
+  await j('/api/resolution-suggestions/run', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({notes: document.getElementById('notes').value})});
+  await load();
+}
+async function acceptLatest(){
+  const res = await j('/api/resolution-suggestions/summary');
+  const latest = (res.data.latest_run || {}).suggestions || [];
+  if(!latest.length) return;
+  await j('/api/resolution-suggestions/accept', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({alert_id: latest[0].alert_id})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

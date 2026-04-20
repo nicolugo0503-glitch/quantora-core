@@ -1,0 +1,511 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 365,
+    "minimum_score": 96.0,
+    "minimum_source_hierarchy_readiness": 0.97,
+    "minimum_stale_price_exception_readiness": 0.97,
+    "minimum_source_override_governance_readiness": 0.96,
+    "maximum_stale_price_age_hours": 24.0,
+    "maximum_open_source_exceptions": 0
+  },
+  "runs": [
+    {
+      "run_id": "qnt40019_1776223537",
+      "captured_at": "2026-04-15T03:25:37.935110+00:00",
+      "score": 86.0,
+      "band": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "valuation governance posture must be clear before pricing source overrides are approved",
+        "shadow nav control posture must be established before source overrides are governed"
+      ],
+      "alerts": [
+        "VALUATION_GOVERNANCE_NOT_CLEAR",
+        "SHADOW_NAV_CONTROL_NOT_ESTABLISHED"
+      ],
+      "source_hierarchy_readiness": 0.991,
+      "stale_price_exception_readiness": 0.989,
+      "source_override_governance_readiness": 0.987,
+      "stale_price_age_hours": 18.0,
+      "open_source_exceptions": 0,
+      "context": {
+        "captured_at": "2026-04-15T03:25:37.935012+00:00",
+        "valuation_governance_summary": {
+          "posture": "VALUATION_REMEDIATION_REQUIRED",
+          "score": 89.0,
+          "independent_price_verification_count": 12,
+          "fair_value_override_count": 12
+        },
+        "shadow_nav_summary": {
+          "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+          "score": 86.0,
+          "administrator_shadow_nav_count": 6,
+          "nav_break_escalation_count": 6
+        },
+        "nav_summary": {
+          "valuation_count": 1,
+          "official_count": 1,
+          "latest_valuation_id": "val_1776220060",
+          "latest_valuation_status": "official",
+          "latest_official_nav": 0.0,
+          "latest_valuation_date": "2026-04-15"
+        }
+      }
+    },
+    {
+      "run_id": "qnt40019_1776223529",
+      "captured_at": "2026-04-15T03:25:29.363334+00:00",
+      "score": 86.0,
+      "band": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "valuation governance posture must be clear before pricing source overrides are approved",
+        "shadow nav control posture must be established before source overrides are governed"
+      ],
+      "alerts": [
+        "VALUATION_GOVERNANCE_NOT_CLEAR",
+        "SHADOW_NAV_CONTROL_NOT_ESTABLISHED"
+      ],
+      "source_hierarchy_readiness": 0.991,
+      "stale_price_exception_readiness": 0.989,
+      "source_override_governance_readiness": 0.987,
+      "stale_price_age_hours": 18.0,
+      "open_source_exceptions": 0,
+      "context": {
+        "captured_at": "2026-04-15T03:25:29.363196+00:00",
+        "valuation_governance_summary": {
+          "posture": "VALUATION_REMEDIATION_REQUIRED",
+          "score": 89.0,
+          "independent_price_verification_count": 10,
+          "fair_value_override_count": 10
+        },
+        "shadow_nav_summary": {
+          "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+          "score": 86.0,
+          "administrator_shadow_nav_count": 5,
+          "nav_break_escalation_count": 5
+        },
+        "nav_summary": {
+          "valuation_count": 1,
+          "official_count": 1,
+          "latest_valuation_id": "val_1776220060",
+          "latest_valuation_status": "official",
+          "latest_official_nav": 0.0,
+          "latest_valuation_date": "2026-04-15"
+        }
+      }
+    },
+    {
+      "run_id": "qnt40019_1776223066",
+      "captured_at": "2026-04-15T03:17:46.087785+00:00",
+      "score": 86.0,
+      "band": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "valuation governance posture must be clear before pricing source overrides are approved",
+        "shadow nav control posture must be established before source overrides are governed"
+      ],
+      "alerts": [
+        "VALUATION_GOVERNANCE_NOT_CLEAR",
+        "SHADOW_NAV_CONTROL_NOT_ESTABLISHED"
+      ],
+      "source_hierarchy_readiness": 0.991,
+      "stale_price_exception_readiness": 0.989,
+      "source_override_governance_readiness": 0.987,
+      "stale_price_age_hours": 18.0,
+      "open_source_exceptions": 0,
+      "context": {
+        "captured_at": "2026-04-15T03:17:46.087757+00:00",
+        "valuation_governance_summary": {
+          "posture": "VALUATION_REMEDIATION_REQUIRED",
+          "score": 89.0,
+          "independent_price_verification_count": 8,
+          "fair_value_override_count": 8
+        },
+        "shadow_nav_summary": {
+          "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+          "score": 86.0,
+          "administrator_shadow_nav_count": 4,
+          "nav_break_escalation_count": 4
+        },
+        "nav_summary": {
+          "valuation_count": 1,
+          "official_count": 1,
+          "latest_valuation_id": "val_1776220060",
+          "latest_valuation_status": "official",
+          "latest_official_nav": 0.0,
+          "latest_valuation_date": "2026-04-15"
+        }
+      }
+    },
+    {
+      "run_id": "qnt40019_1776222078",
+      "captured_at": "2026-04-15T03:01:18.711379+00:00",
+      "score": 86.0,
+      "band": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "valuation governance posture must be clear before pricing source overrides are approved",
+        "shadow nav control posture must be established before source overrides are governed"
+      ],
+      "alerts": [
+        "VALUATION_GOVERNANCE_NOT_CLEAR",
+        "SHADOW_NAV_CONTROL_NOT_ESTABLISHED"
+      ],
+      "source_hierarchy_readiness": 0.991,
+      "stale_price_exception_readiness": 0.989,
+      "source_override_governance_readiness": 0.987,
+      "stale_price_age_hours": 18.0,
+      "open_source_exceptions": 0,
+      "context": {
+        "captured_at": "2026-04-15T03:01:18.711343+00:00",
+        "valuation_governance_summary": {
+          "posture": "VALUATION_REMEDIATION_REQUIRED",
+          "score": 89.0,
+          "independent_price_verification_count": 6,
+          "fair_value_override_count": 6
+        },
+        "shadow_nav_summary": {
+          "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+          "score": 86.0,
+          "administrator_shadow_nav_count": 3,
+          "nav_break_escalation_count": 3
+        },
+        "nav_summary": {
+          "valuation_count": 1,
+          "official_count": 1,
+          "latest_valuation_id": "val_1776220060",
+          "latest_valuation_status": "official",
+          "latest_official_nav": 0.0,
+          "latest_valuation_date": "2026-04-15"
+        }
+      }
+    },
+    {
+      "run_id": "qnt40019_1776222075",
+      "captured_at": "2026-04-15T03:01:15.171338+00:00",
+      "score": 86.0,
+      "band": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "valuation governance posture must be clear before pricing source overrides are approved",
+        "shadow nav control posture must be established before source overrides are governed"
+      ],
+      "alerts": [
+        "VALUATION_GOVERNANCE_NOT_CLEAR",
+        "SHADOW_NAV_CONTROL_NOT_ESTABLISHED"
+      ],
+      "source_hierarchy_readiness": 0.991,
+      "stale_price_exception_readiness": 0.989,
+      "source_override_governance_readiness": 0.987,
+      "stale_price_age_hours": 18.0,
+      "open_source_exceptions": 0,
+      "context": {
+        "captured_at": "2026-04-15T03:01:15.171300+00:00",
+        "valuation_governance_summary": {
+          "posture": "VALUATION_REMEDIATION_REQUIRED",
+          "score": 89.0,
+          "independent_price_verification_count": 4,
+          "fair_value_override_count": 4
+        },
+        "shadow_nav_summary": {
+          "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+          "score": 86.0,
+          "administrator_shadow_nav_count": 2,
+          "nav_break_escalation_count": 2
+        },
+        "nav_summary": {
+          "valuation_count": 1,
+          "official_count": 1,
+          "latest_valuation_id": "val_1776220060",
+          "latest_valuation_status": "official",
+          "latest_official_nav": 0.0,
+          "latest_valuation_date": "2026-04-15"
+        }
+      }
+    },
+    {
+      "run_id": "qnt40019_1776221681",
+      "captured_at": "2026-04-15T02:54:41.392373+00:00",
+      "score": 86.0,
+      "band": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+      "posture": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+      "operator_review_required": true,
+      "reasons": [
+        "valuation governance posture must be clear before pricing source overrides are approved",
+        "shadow nav control posture must be established before source overrides are governed"
+      ],
+      "alerts": [
+        "VALUATION_GOVERNANCE_NOT_CLEAR",
+        "SHADOW_NAV_CONTROL_NOT_ESTABLISHED"
+      ],
+      "source_hierarchy_readiness": 0.991,
+      "stale_price_exception_readiness": 0.989,
+      "source_override_governance_readiness": 0.987,
+      "stale_price_age_hours": 18.0,
+      "open_source_exceptions": 0,
+      "context": {
+        "captured_at": "2026-04-15T02:54:41.392328+00:00",
+        "valuation_governance_summary": {
+          "posture": "VALUATION_REMEDIATION_REQUIRED",
+          "score": 89.0,
+          "independent_price_verification_count": 4,
+          "fair_value_override_count": 4
+        },
+        "shadow_nav_summary": {
+          "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+          "score": 86.0,
+          "administrator_shadow_nav_count": 2,
+          "nav_break_escalation_count": 2
+        },
+        "nav_summary": {
+          "valuation_count": 1,
+          "official_count": 1,
+          "latest_valuation_id": "val_1776220060",
+          "latest_valuation_status": "official",
+          "latest_official_nav": 0.0,
+          "latest_valuation_date": "2026-04-15"
+        }
+      }
+    }
+  ],
+  "alerts": [
+    "VALUATION_GOVERNANCE_NOT_CLEAR",
+    "SHADOW_NAV_CONTROL_NOT_ESTABLISHED"
+  ],
+  "pricing_source_hierarchies": [
+    {
+      "recorded_at": "2026-04-15T03:25:37.923010+00:00",
+      "hierarchy_name": "official_nav_hierarchy",
+      "primary_source": "independent_pricing_service",
+      "secondary_source": "administrator_shadow_nav",
+      "fallback_source": "valuation_committee_override",
+      "coverage_ratio": 0.99,
+      "approved_by": "Quantora Audit Release Governor"
+    },
+    {
+      "recorded_at": "2026-04-15T03:25:29.356464+00:00",
+      "hierarchy_name": "official_nav_hierarchy",
+      "primary_source": "independent_pricing_service",
+      "secondary_source": "administrator_shadow_nav",
+      "fallback_source": "valuation_committee_override",
+      "coverage_ratio": 0.99,
+      "approved_by": "Quantora Auditor Delivery Governor"
+    },
+    {
+      "recorded_at": "2026-04-15T03:17:46.086117+00:00",
+      "hierarchy_name": "official_nav_hierarchy",
+      "primary_source": "independent_pricing_service",
+      "secondary_source": "administrator_shadow_nav",
+      "fallback_source": "valuation_committee_override",
+      "coverage_ratio": 0.99,
+      "approved_by": "Quantora Auditor Delivery Governor"
+    },
+    {
+      "recorded_at": "2026-04-15T03:01:18.709281+00:00",
+      "hierarchy_name": "official_nav_hierarchy",
+      "primary_source": "independent_pricing_service",
+      "secondary_source": "administrator_shadow_nav",
+      "fallback_source": "valuation_committee_override",
+      "coverage_ratio": 0.99,
+      "approved_by": "Quantora Final NAV Governor"
+    },
+    {
+      "recorded_at": "2026-04-15T03:01:15.169654+00:00",
+      "hierarchy_name": "official_nav_hierarchy",
+      "primary_source": "independent_pricing_service",
+      "secondary_source": "administrator_shadow_nav",
+      "fallback_source": "valuation_committee_override",
+      "coverage_ratio": 0.99,
+      "approved_by": "Quantora Valuation Source Admin"
+    },
+    {
+      "recorded_at": "2026-04-15T02:54:41.389881+00:00",
+      "hierarchy_name": "official_nav_hierarchy",
+      "primary_source": "independent_pricing_service",
+      "secondary_source": "administrator_shadow_nav",
+      "fallback_source": "valuation_committee_override",
+      "coverage_ratio": 0.99,
+      "approved_by": "Quantora Valuation Source Admin"
+    }
+  ],
+  "stale_price_exceptions": [
+    {
+      "recorded_at": "2026-04-15T03:25:37.924965+00:00",
+      "asset_id": "POSITION-ALPHA",
+      "source_name": "independent_pricing_service",
+      "stale_hours": 18.0,
+      "exception_reason": "overnight_vendor_hold_and_manual_review_required",
+      "escalation_status": "reviewed"
+    },
+    {
+      "recorded_at": "2026-04-15T03:25:29.357694+00:00",
+      "asset_id": "POSITION-ALPHA",
+      "source_name": "independent_pricing_service",
+      "stale_hours": 18.0,
+      "exception_reason": "overnight_vendor_hold_and_manual_review_required",
+      "escalation_status": "reviewed"
+    },
+    {
+      "recorded_at": "2026-04-15T03:17:46.086497+00:00",
+      "asset_id": "POSITION-ALPHA",
+      "source_name": "independent_pricing_service",
+      "stale_hours": 18.0,
+      "exception_reason": "overnight_vendor_hold_and_manual_review_required",
+      "escalation_status": "reviewed"
+    },
+    {
+      "recorded_at": "2026-04-15T03:01:18.709696+00:00",
+      "asset_id": "POSITION-ALPHA",
+      "source_name": "independent_pricing_service",
+      "stale_hours": 18.0,
+      "exception_reason": "overnight_vendor_hold_and_manual_review_required",
+      "escalation_status": "reviewed"
+    },
+    {
+      "recorded_at": "2026-04-15T03:01:15.170052+00:00",
+      "asset_id": "POSITION-ALPHA",
+      "source_name": "independent_pricing_service",
+      "stale_hours": 18.0,
+      "exception_reason": "overnight_vendor_hold_and_manual_review_required",
+      "escalation_status": "reviewed"
+    },
+    {
+      "recorded_at": "2026-04-15T02:54:41.390504+00:00",
+      "asset_id": "POSITION-ALPHA",
+      "source_name": "independent_pricing_service",
+      "stale_hours": 18.0,
+      "exception_reason": "overnight_vendor_hold_and_manual_review_required",
+      "escalation_status": "reviewed"
+    }
+  ],
+  "valuation_source_overrides": [
+    {
+      "recorded_at": "2026-04-15T03:25:37.927736+00:00",
+      "asset_id": "POSITION-ALPHA",
+      "from_source": "independent_pricing_service",
+      "to_source": "valuation_committee_override",
+      "override_reason": "approved after stale price review and shadow nav comparison",
+      "approved_by": "Quantora Audit Release Governor",
+      "governance_ticket": "VAL-SRC-OVERRIDE-DEMO"
+    },
+    {
+      "recorded_at": "2026-04-15T03:25:29.358901+00:00",
+      "asset_id": "POSITION-ALPHA",
+      "from_source": "independent_pricing_service",
+      "to_source": "valuation_committee_override",
+      "override_reason": "approved after stale price review and shadow nav comparison",
+      "approved_by": "Quantora Auditor Delivery Governor",
+      "governance_ticket": "VAL-SRC-OVERRIDE-DEMO"
+    },
+    {
+      "recorded_at": "2026-04-15T03:17:46.086843+00:00",
+      "asset_id": "POSITION-ALPHA",
+      "from_source": "independent_pricing_service",
+      "to_source": "valuation_committee_override",
+      "override_reason": "approved after stale price review and shadow nav comparison",
+      "approved_by": "Quantora Auditor Delivery Governor",
+      "governance_ticket": "VAL-SRC-OVERRIDE-DEMO"
+    },
+    {
+      "recorded_at": "2026-04-15T03:01:18.710174+00:00",
+      "asset_id": "POSITION-ALPHA",
+      "from_source": "independent_pricing_service",
+      "to_source": "valuation_committee_override",
+      "override_reason": "approved after stale price review and shadow nav comparison",
+      "approved_by": "Quantora Final NAV Governor",
+      "governance_ticket": "VAL-SRC-OVERRIDE-DEMO"
+    },
+    {
+      "recorded_at": "2026-04-15T03:01:15.170312+00:00",
+      "asset_id": "POSITION-ALPHA",
+      "from_source": "independent_pricing_service",
+      "to_source": "valuation_committee_override",
+      "override_reason": "approved after stale price review and shadow nav comparison",
+      "approved_by": "Quantora Valuation Source Admin",
+      "governance_ticket": "VAL-SRC-OVERRIDE-DEMO"
+    },
+    {
+      "recorded_at": "2026-04-15T02:54:41.390912+00:00",
+      "asset_id": "POSITION-ALPHA",
+      "from_source": "independent_pricing_service",
+      "to_source": "valuation_committee_override",
+      "override_reason": "approved after stale price review and shadow nav comparison",
+      "approved_by": "Quantora Valuation Source Admin",
+      "governance_ticket": "VAL-SRC-OVERRIDE-DEMO"
+    }
+  ],
+  "latest_run": {
+    "run_id": "qnt40019_1776223537",
+    "captured_at": "2026-04-15T03:25:37.935110+00:00",
+    "score": 86.0,
+    "band": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+    "posture": "SOURCE_GOVERNANCE_REMEDIATION_REQUIRED",
+    "operator_review_required": true,
+    "reasons": [
+      "valuation governance posture must be clear before pricing source overrides are approved",
+      "shadow nav control posture must be established before source overrides are governed"
+    ],
+    "alerts": [
+      "VALUATION_GOVERNANCE_NOT_CLEAR",
+      "SHADOW_NAV_CONTROL_NOT_ESTABLISHED"
+    ],
+    "source_hierarchy_readiness": 0.991,
+    "stale_price_exception_readiness": 0.989,
+    "source_override_governance_readiness": 0.987,
+    "stale_price_age_hours": 18.0,
+    "open_source_exceptions": 0,
+    "context": {
+      "captured_at": "2026-04-15T03:25:37.935012+00:00",
+      "valuation_governance_summary": {
+        "posture": "VALUATION_REMEDIATION_REQUIRED",
+        "score": 89.0,
+        "independent_price_verification_count": 12,
+        "fair_value_override_count": 12
+      },
+      "shadow_nav_summary": {
+        "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+        "score": 86.0,
+        "administrator_shadow_nav_count": 6,
+        "nav_break_escalation_count": 6
+      },
+      "nav_summary": {
+        "valuation_count": 1,
+        "official_count": 1,
+        "latest_valuation_id": "val_1776220060",
+        "latest_valuation_status": "official",
+        "latest_official_nav": 0.0,
+        "latest_valuation_date": "2026-04-15"
+      }
+    }
+  },
+  "last_context": {
+    "captured_at": "2026-04-15T03:25:37.935012+00:00",
+    "valuation_governance_summary": {
+      "posture": "VALUATION_REMEDIATION_REQUIRED",
+      "score": 89.0,
+      "independent_price_verification_count": 12,
+      "fair_value_override_count": 12
+    },
+    "shadow_nav_summary": {
+      "posture": "NAV_BREAK_REMEDIATION_REQUIRED",
+      "score": 86.0,
+      "administrator_shadow_nav_count": 6,
+      "nav_break_escalation_count": 6
+    },
+    "nav_summary": {
+      "valuation_count": 1,
+      "official_count": 1,
+      "latest_valuation_id": "val_1776220060",
+      "latest_valuation_status": "official",
+      "latest_official_nav": 0.0,
+      "latest_valuation_date": "2026-04-15"
+    }
+  }
+}

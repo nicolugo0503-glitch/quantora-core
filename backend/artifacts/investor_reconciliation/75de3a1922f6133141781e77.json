@@ -1,0 +1,49 @@
+{
+  "email": "nicolugo0503@gmail.com",
+  "runs": [
+    {
+      "run_id": "rec_1775662020",
+      "timestamp": 1775662020,
+      "status": "clean",
+      "issue_count": 0,
+      "checks": {
+        "nav_vs_allocations": {
+          "ok": true,
+          "official_nav": 0.0,
+          "allocated_nav": 0.0,
+          "difference": 0.0
+        },
+        "capital_flow": {
+          "ok": true,
+          "processed_net_flow": 0,
+          "confirmation_net_flow": 0.0,
+          "difference": 0.0
+        },
+        "equalization": {
+          "ok": true,
+          "total_series_nav": 0,
+          "expected_from_units": 0.0,
+          "difference": 0.0
+        },
+        "rollforward": {
+          "ok": true,
+          "opening_capital": 0.0,
+          "rollforward_change": 0.0,
+          "ending_nav": 0.0,
+          "expected_ending_nav": 0.0,
+          "difference": 0.0
+        },
+        "confirmations": {
+          "ok": true,
+          "processed_activity_count": 0,
+          "confirmation_count": 0,
+          "difference": 0
+        }
+      },
+      "issues": [],
+      "notes": "QNT30636 operational bootstrap"
+    }
+  ],
+  "created_at": 1775662020,
+  "updated_at": 1775662020
+}

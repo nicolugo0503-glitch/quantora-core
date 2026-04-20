@@ -1,0 +1,101 @@
+{
+  "generated_by": "QNT50009",
+  "status": "degraded",
+  "policy": {
+    "base_currency": "USD",
+    "require_bank_instruction_verified": true,
+    "require_statement_alignment": true,
+    "require_transfer_approved": true,
+    "require_treasury_capacity": true,
+    "require_dual_ack": true,
+    "release_authority_ttl_seconds": 86400,
+    "max_unresolved_exceptions": 0,
+    "auto_sync_treasury": true
+  },
+  "investors": {
+    "INVESTOR_001": {
+      "investor_id": "INVESTOR_001",
+      "investor_name": "Investor One",
+      "bank_instruction_verified": true,
+      "statement_alignment_status": "aligned",
+      "preferred_currency": "USD",
+      "cash_confirmation_contact": "",
+      "status": "active",
+      "last_updated_at": 1776414417
+    },
+    "INVESTOR_002": {
+      "investor_id": "INVESTOR_002",
+      "investor_name": "Investor Two",
+      "bank_instruction_verified": true,
+      "statement_alignment_status": "aligned",
+      "preferred_currency": "USD",
+      "cash_confirmation_contact": "",
+      "status": "active",
+      "last_updated_at": 1776414417
+    }
+  },
+  "pending_release_requests": [],
+  "authorized_releases": [],
+  "rejected_releases": [],
+  "acknowledgements": [],
+  "exceptions": [],
+  "last_sync": {
+    "synced_at": 1776414417,
+    "source": "reset",
+    "available_to_move": 255000.0,
+    "cash_balance": 300000.0,
+    "break_count": 0,
+    "settlement_status": "matched",
+    "pending_investor_transfer_count": 0,
+    "completed_investor_transfer_count": 0
+  },
+  "sync_history": [
+    {
+      "synced_at": 1776414417,
+      "source": "reset",
+      "available_to_move": 255000.0,
+      "cash_balance": 300000.0,
+      "break_count": 0,
+      "settlement_status": "matched",
+      "pending_investor_transfer_count": 0,
+      "completed_investor_transfer_count": 0
+    }
+  ],
+  "audit_log": [
+    {
+      "event_id": "investor_cash_confirmation_audit_1776414417337874156",
+      "event_type": "investor_registered",
+      "timestamp": 1776414417,
+      "investor_id": "INVESTOR_002",
+      "investor_name": "Investor Two"
+    },
+    {
+      "event_id": "investor_cash_confirmation_audit_1776414417336888863",
+      "event_type": "investor_registered",
+      "timestamp": 1776414417,
+      "investor_id": "INVESTOR_001",
+      "investor_name": "Investor One"
+    },
+    {
+      "event_id": "investor_cash_confirmation_audit_1776414417336210926",
+      "event_type": "treasury_context_synced",
+      "timestamp": 1776414417,
+      "synced_at": 1776414417,
+      "source": "reset",
+      "available_to_move": 255000.0,
+      "cash_balance": 300000.0,
+      "break_count": 0,
+      "settlement_status": "matched",
+      "pending_investor_transfer_count": 0,
+      "completed_investor_transfer_count": 0
+    },
+    {
+      "event_id": "investor_cash_confirmation_audit_1776414417335011599",
+      "event_type": "investor_cash_confirmation_reset",
+      "timestamp": 1776414417,
+      "operator": "smoke_test",
+      "reason": "qnt50011_smoke",
+      "clear_audit": true
+    }
+  ]
+}

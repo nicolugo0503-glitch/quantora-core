@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>QNT30389 Persistent Data Layer and State Durability</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background: #08101d; color: #edf2fb; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card { background: #121b2f; border: 1px solid #2c3959; border-radius: 12px; padding: 16px; }
+    input, select, button, textarea { padding: 10px; border-radius: 8px; }
+    input, select, textarea { width: 100%; margin-top: 6px; margin-bottom: 12px; border: 1px solid #44527a; background: #0f1530; color: #fff; }
+    button { border: 0; cursor: pointer; }
+    pre { white-space: pre-wrap; background: #0b1020; border: 1px solid #2a395a; padding: 12px; border-radius: 8px; min-height: 160px; }
+  </style>
+</head>
+<body>
+  <h1>QNT30389 — Persistent Data Layer and State Durability</h1>
+  <div class="grid">
+    <div class="card">
+      <h3>Status</h3>
+      <button onclick="loadStatus()">Refresh Status</button>
+      <button onclick="createBackup()">Create Backup</button>
+      <pre id="status_out"></pre>
+    </div>
+    <div class="card">
+      <h3>Seed Tenant + Strategy</h3>
+      <label>Tenant ID</label>
+      <input id="tenant_id" value="tenant-001" />
+      <label>Tenant Name</label>
+      <input id="tenant_name" value="Quantora Capital Client" />
+      <label>Strategy ID</label>
+      <input id="strategy_id" value="alpha-1" />
+      <button onclick="seedRecords()">Seed Records</button>
+      <pre id="seed_out"></pre>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Export State</h3>
+    <button onclick="exportState()">Export</button>
+    <pre id="export_out"></pre>
+  </div>
+<script>
+async function loadStatus(){
+  const res = await fetch('/data-layer/status');
+  document.getElementById('status_out').textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function createBackup(){
+  const res = await fetch('/data-layer/backup/create', { method: 'POST' });
+  document.getElementById('status_out').textContent = JSON.stringify(await res.json(), null, 2);
+}
+async function seedRecords(){
+  const tenant_id = document.getElementById('tenant_id').value;
+  const tenant_name = document.getElementById('tenant_name').value;
+  const strategy_id = document.getElementById('strategy_id').value;
+  const tenantRes = await fetch('/data-layer/tenant/upsert', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({tenant_id, tenant_name, plan: 'pro'})
+  });
+  const strategyRes = await fetch('/data-layer/strategy/upsert', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      strategy_id,
+      tenant_id,
+      realized_pnl: 12500,
+      sharpe: 1.8,
+      drawdown: 3200,
+      win_rate: 0.63,
+      active: true
+    })
+  });
+  document.getElementById('seed_out').textContent = JSON.stringify({
+    tenant: await tenantRes.json(),
+    strategy: await strategyRes.json()
+  }, null, 2);
+}
+async function exportState(){
+  const res = await fetch('/data-layer/export');
+  document.getElementById('export_out').textContent = JSON.stringify(await res.json(), null, 2);
+}
+loadStatus();
+</script>
+</body>
+</html>

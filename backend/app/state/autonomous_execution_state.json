@@ -1,0 +1,275 @@
+{
+  "generated_by": "QNT50006",
+  "status": "degraded",
+  "policy": {
+    "enabled": true,
+    "auto_execute_paper": true,
+    "auto_execute_live": true,
+    "require_committee_ticket_for_live": true,
+    "max_orders_per_cycle": 4,
+    "max_cycle_notional": 250000.0,
+    "minimum_sharpe_ratio": -1.0,
+    "maximum_drawdown_pct": 0.12,
+    "allow_regime_stress": false,
+    "default_order_type": "MARKET",
+    "participation_rate": 1.0
+  },
+  "price_map": {
+    "BTCUSDT": 65000.0,
+    "ETHUSDT": 3200.0,
+    "USDTUSD": 1.0
+  },
+  "release_queue_cache": [
+    {
+      "deployment_id": "deploy_plan_1158ad6c87",
+      "decision_id": "deploy_dec_bada5eeaed",
+      "tickets": [
+        {
+          "deployment_id": "deploy_plan_1158ad6c87",
+          "decision_id": "deploy_dec_bada5eeaed",
+          "source_allocation_id": "alloc_plan_37b859ebf9",
+          "source_decision_id": "alloc_dec_a8337da99c",
+          "strategy_id": "macro_defense",
+          "symbol": "USDTUSD",
+          "target_capital": 315000.0,
+          "target_weight": 0.35,
+          "routing_action": "activate",
+          "broker": "paper",
+          "regime": "neutral",
+          "risk_tag": "DEPLOY_NEUTRAL",
+          "staged_at": 1776402801
+        },
+        {
+          "deployment_id": "deploy_plan_1158ad6c87",
+          "decision_id": "deploy_dec_bada5eeaed",
+          "source_allocation_id": "alloc_plan_37b859ebf9",
+          "source_decision_id": "alloc_dec_a8337da99c",
+          "strategy_id": "alpha_trend",
+          "symbol": "BTCUSDT",
+          "target_capital": 315000.0,
+          "target_weight": 0.35,
+          "routing_action": "activate",
+          "broker": "paper",
+          "regime": "neutral",
+          "risk_tag": "DEPLOY_NEUTRAL",
+          "staged_at": 1776402801
+        },
+        {
+          "deployment_id": "deploy_plan_1158ad6c87",
+          "decision_id": "deploy_dec_bada5eeaed",
+          "source_allocation_id": "alloc_plan_37b859ebf9",
+          "source_decision_id": "alloc_dec_a8337da99c",
+          "strategy_id": "beta_mean_revert",
+          "symbol": "ETHUSDT",
+          "target_capital": 161262.0,
+          "target_weight": 0.17918,
+          "routing_action": "activate",
+          "broker": "paper",
+          "regime": "neutral",
+          "risk_tag": "DEPLOY_NEUTRAL",
+          "staged_at": 1776402801
+        }
+      ],
+      "approved_at": 1776402801
+    }
+  ],
+  "decision_queue": [
+    {
+      "queue_item_id": "autoq_c0cdf93047fb",
+      "deployment_id": "deploy_plan_1158ad6c87",
+      "decision_id": "deploy_dec_bada5eeaed",
+      "source_allocation_id": "alloc_plan_37b859ebf9",
+      "source_decision_id": "alloc_dec_a8337da99c",
+      "strategy_id": "macro_defense",
+      "symbol": "USDTUSD",
+      "target_capital": 315000.0,
+      "target_weight": 0.35,
+      "routing_action": "activate",
+      "broker": "paper",
+      "regime": "neutral",
+      "risk_tag": "DEPLOY_NEUTRAL",
+      "staged_at": 1776402801,
+      "status": "failed",
+      "queue_notes": "ingested from QNT50003 release queue",
+      "planned_at": 1776402801,
+      "failed_at": 1776402801,
+      "failure_reason": "single order notional breached"
+    },
+    {
+      "queue_item_id": "autoq_17e8720680f0",
+      "deployment_id": "deploy_plan_1158ad6c87",
+      "decision_id": "deploy_dec_bada5eeaed",
+      "source_allocation_id": "alloc_plan_37b859ebf9",
+      "source_decision_id": "alloc_dec_a8337da99c",
+      "strategy_id": "alpha_trend",
+      "symbol": "BTCUSDT",
+      "target_capital": 315000.0,
+      "target_weight": 0.35,
+      "routing_action": "activate",
+      "broker": "paper",
+      "regime": "neutral",
+      "risk_tag": "DEPLOY_NEUTRAL",
+      "staged_at": 1776402801,
+      "status": "manual_review",
+      "queue_notes": "ingested from QNT50003 release queue"
+    },
+    {
+      "queue_item_id": "autoq_ef38695d229a",
+      "deployment_id": "deploy_plan_1158ad6c87",
+      "decision_id": "deploy_dec_bada5eeaed",
+      "source_allocation_id": "alloc_plan_37b859ebf9",
+      "source_decision_id": "alloc_dec_a8337da99c",
+      "strategy_id": "beta_mean_revert",
+      "symbol": "ETHUSDT",
+      "target_capital": 161262.0,
+      "target_weight": 0.17918,
+      "routing_action": "activate",
+      "broker": "paper",
+      "regime": "neutral",
+      "risk_tag": "DEPLOY_NEUTRAL",
+      "staged_at": 1776402801,
+      "status": "manual_review",
+      "queue_notes": "ingested from QNT50003 release queue"
+    }
+  ],
+  "last_plan": {
+    "mission": "QNT50006",
+    "plan_id": "auto_plan_4c7209b121b8",
+    "generated_at": 1776402801,
+    "status": "ready",
+    "target_mode": "paper",
+    "gate": {
+      "enabled": true,
+      "target_mode": "paper",
+      "issues": [],
+      "ready": true
+    },
+    "planned_orders": [
+      {
+        "queue_item_id": "autoq_c0cdf93047fb",
+        "strategy_id": "macro_defense",
+        "symbol": "USDTUSD",
+        "routing_action": "activate",
+        "price": 1.0,
+        "planned_notional": 250000.0,
+        "planned_qty": 250000.0,
+        "broker_preference": "paper",
+        "envelope": {
+          "symbol": "USDTUSD",
+          "side": "BUY",
+          "qty": 250000.0,
+          "order_type": "MARKET",
+          "price": 1.0,
+          "strategy_id": "macro_defense",
+          "allocation_id": "alloc_plan_37b859ebf9",
+          "risk_tag": "DEPLOY_NEUTRAL",
+          "decision_id": "deploy_dec_bada5eeaed_auto_4154e8d8",
+          "venue_hint": "paper",
+          "notional_estimate": 250000.0,
+          "portfolio_value_snapshot": 1027000.0
+        }
+      }
+    ],
+    "blocked_items": [],
+    "queue_depth": 1,
+    "cycle_notional_limit": 250000.0,
+    "remaining_notional_capacity": 0.0
+  },
+  "last_cycle": {
+    "cycle_id": "auto_cycle_79d85f7876b2",
+    "executed_at": 1776402801,
+    "plan_id": "auto_plan_4c7209b121b8",
+    "approver": "smoke_auto",
+    "notes": "controlled autonomous execution cycle",
+    "target_mode": "paper",
+    "executions": [],
+    "blocked_items": [],
+    "escalations": [
+      {
+        "queue_item_id": "autoq_c0cdf93047fb",
+        "strategy_id": "macro_defense",
+        "symbol": "USDTUSD",
+        "reason": "single order notional breached",
+        "created_at": 1776402801,
+        "plan_id": "auto_plan_4c7209b121b8"
+      }
+    ],
+    "status": "escalated"
+  },
+  "cycle_history": [
+    {
+      "cycle_id": "auto_cycle_79d85f7876b2",
+      "executed_at": 1776402801,
+      "plan_id": "auto_plan_4c7209b121b8",
+      "approver": "smoke_auto",
+      "notes": "controlled autonomous execution cycle",
+      "target_mode": "paper",
+      "executions": [],
+      "blocked_items": [],
+      "escalations": [
+        {
+          "queue_item_id": "autoq_c0cdf93047fb",
+          "strategy_id": "macro_defense",
+          "symbol": "USDTUSD",
+          "reason": "single order notional breached",
+          "created_at": 1776402801,
+          "plan_id": "auto_plan_4c7209b121b8"
+        }
+      ],
+      "status": "escalated"
+    }
+  ],
+  "escalations": [
+    {
+      "queue_item_id": "autoq_c0cdf93047fb",
+      "strategy_id": "macro_defense",
+      "symbol": "USDTUSD",
+      "reason": "single order notional breached",
+      "created_at": 1776402801,
+      "plan_id": "auto_plan_4c7209b121b8"
+    }
+  ],
+  "audit_log": [
+    {
+      "event_id": "autonomous_exec_audit_1776402801631779214",
+      "event_type": "autonomous_cycle_executed",
+      "timestamp": 1776402801,
+      "cycle_id": "auto_cycle_79d85f7876b2",
+      "execution_count": 0,
+      "escalation_count": 1,
+      "status": "escalated"
+    },
+    {
+      "event_id": "autonomous_exec_audit_1776402801624135693",
+      "event_type": "autonomous_cycle_planned",
+      "timestamp": 1776402801,
+      "plan_id": "auto_plan_4c7209b121b8",
+      "planned_order_count": 1,
+      "blocked_count": 0,
+      "status": "ready"
+    },
+    {
+      "event_id": "autonomous_exec_audit_1776402801621595063",
+      "event_type": "autonomous_cycle_planned",
+      "timestamp": 1776402801,
+      "plan_id": "auto_plan_ae90ed8414ec",
+      "planned_order_count": 1,
+      "blocked_count": 2,
+      "status": "ready"
+    },
+    {
+      "event_id": "autonomous_exec_audit_1776402801617879496",
+      "event_type": "autonomous_policy_configured",
+      "timestamp": 1776402801,
+      "enabled": true
+    },
+    {
+      "event_id": "autonomous_exec_audit_1776402801616650981",
+      "event_type": "release_queue_ingested",
+      "timestamp": 1776402801,
+      "queue_index": 0,
+      "inserted_count": 3,
+      "deployment_id": "deploy_plan_1158ad6c87"
+    }
+  ]
+}

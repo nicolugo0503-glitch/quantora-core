@@ -1,0 +1,14 @@
+{
+  "series": [
+    {
+      "timestamp": 0,
+      "balance": 100000.0,
+      "available": 100000.0,
+      "allocated": 0.0,
+      "net_flow": 100000.0,
+      "net_invested_capital": 100000.0,
+      "pnl_value": 0.0,
+      "return_pct": 0.0
+    }
+  ]
+}

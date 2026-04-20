@@ -1,0 +1,18 @@
+<html><body><h1>QNT30520 Allocation Brain</h1>
+<button onclick="run()">Run Allocation</button>
+<pre id='out'></pre>
+<script>
+async function run(){
+  const res = await fetch('/api/allocation/run',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({
+      fund_id:'FUND1',
+      capital:100000,
+      signals:{crypto:0.8, equities:0.5, bonds:0.2}
+    })
+  });
+  const d = await res.json();
+  out.innerText = JSON.stringify(d,null,2);
+}
+</script></body></html>

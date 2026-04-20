@@ -1,0 +1,24 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 365,
+    "minimum_score": 95.0,
+    "minimum_fee_readiness": 0.95,
+    "minimum_hwm_readiness": 0.95,
+    "minimum_incentive_readiness": 0.95,
+    "maximum_uncrystallized_fee_exceptions": 0,
+    "maximum_hwm_breaks": 0,
+    "default_management_fee_pct": 2.0,
+    "default_performance_fee_pct": 20.0,
+    "default_hurdle_rate_pct": 5.0
+  },
+  "runs": [],
+  "alerts": [],
+  "fee_term_events": [],
+  "fee_snapshot_events": [],
+  "fee_crystallization_events": [],
+  "incentive_allocation_events": [],
+  "latest_run": null,
+  "last_context": {},
+  "high_water_mark": 0.0
+}

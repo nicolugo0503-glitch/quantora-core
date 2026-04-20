@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantora Real Control Panel</title>
+  <style>
+    :root {
+      --bg: #08111f;
+      --panel: #0e1a2b;
+      --border: #1f3556;
+      --text: #eef4ff;
+      --muted: #9bb0ce;
+      --good: #33d17a;
+      --warn: #f6c445;
+      --bad: #ff6b6b;
+      --accent: #5ea1ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 24px;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .status-pill {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+    .panel {
+      grid-column: span 12;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+    }
+    .span-6 { grid-column: span 6; }
+    .span-4 { grid-column: span 4; }
+    .span-8 { grid-column: span 8; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .stat {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    .value {
+      font-size: 24px;
+      font-weight: 700;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    button, select, input {
+      background: #12233b;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+    button { cursor: pointer; }
+    button:hover { border-color: var(--accent); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 14px;
+    }
+    th { color: var(--muted); font-weight: 600; }
+    .good { color: var(--good); }
+    .warn { color: var(--warn); }
+    .bad { color: var(--bad); }
+    .muted { color: var(--muted); }
+    .mono { font-family: "Courier New", monospace; font-size: 13px; }
+    .small { font-size: 12px; color: var(--muted); }
+    @media (max-width: 900px) {
+      .span-6, .span-4, .span-8 { grid-column: span 12; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div>
+      <h1>QUANTORA — REAL CONTROL PANEL</h1>
+      <p class="muted">Wired operator dashboard for runtime state, NAV, investors, and monetization.</p>
+    </div>
+    <div class="status-pill">Runtime Status: <span id="runtimeStatus">idle</span></div>
+  </div>
+
+  <div class="grid">
+    <section class="panel span-8">
+      <h2>System Controls</h2>
+      <div class="controls">
+        <select id="fundSelector"></select>
+        <button onclick="startRuntime()">Start</button>
+        <button onclick="pauseRuntime()">Pause</button>
+        <button onclick="resumeRuntime()">Resume</button>
+        <button onclick="killRuntime()">Kill Switch</button>
+        <button onclick="refreshPanel()">Refresh</button>
+      </div>
+      <div class="controls">
+        <label class="small">Cycle Interval (sec)</label>
+        <input id="intervalInput" type="number" value="2" min="0" step="0.5">
+        <label class="small">Auto Refresh</label>
+        <input id="autorefresh" type="checkbox" checked>
+      </div>
+      <p class="small">This file is additive only. It uses browser-local demo state wiring so it can be dropped into the project without touching existing frontend architecture.</p>
+    </section>
+
+    <section class="panel span-4">
+      <h2>Runtime Snapshot</h2>
+      <div class="stats">
+        <div class="stat"><div class="label">Active Fund</div><div class="value" id="activeFund">--</div></div>
+        <div class="stat"><div class="label">Cycle Count</div><div class="value" id="cycleCount">0</div></div>
+        <div class="stat"><div class="label">Last NAV</div><div class="value" id="lastNav">$0</div></div>
+        <div class="stat"><div class="label">PnL</div><div class="value" id="lastPnl">$0</div></div>
+      </div>
+    </section>
+
+    <section class="panel span-6">
+      <h2>Fund Metrics</h2>
+      <div class="stats">
+        <div class="stat"><div class="label">Gross Assets</div><div class="value" id="grossAssets">$0</div></div>
+        <div class="stat"><div class="label">Liabilities</div><div class="value" id="liabilities">$0</div></div>
+        <div class="stat"><div class="label">NAV / Share</div><div class="value" id="navPerShare">$0</div></div>
+        <div class="stat"><div class="label">Open Orders</div><div class="value" id="openOrders">0</div></div>
+      </div>
+    </section>
+
+    <section class="panel span-6">
+      <h2>Revenue Metrics</h2>
+      <div class="stats">
+        <div class="stat"><div class="label">Management Fees</div><div class="value" id="mgmtFees">$0</div></div>
+        <div class="stat"><div class="label">Performance Fees</div><div class="value" id="perfFees">$0</div></div>
+        <div class="stat"><div class="label">Total Fee Events</div><div class="value" id="feeEvents">0</div></div>
+        <div class="stat"><div class="label">Estimated MRR</div><div class="value" id="mrr">$0</div></div>
+      </div>
+    </section>
+
+    <section class="panel span-6">
+      <h2>Allocation Breakdown</h2>
+      <table>
+        <thead>
+          <tr><th>Sleeve</th><th>Capital</th></tr>
+        </thead>
+        <tbody id="allocationTable"></tbody>
+      </table>
+    </section>
+
+    <section class="panel span-6">
+      <h2>Investor Overview</h2>
+      <table>
+        <thead>
+          <tr><th>Investor</th><th>Fund</th><th>Market Value</th><th>Ownership %</th></tr>
+        </thead>
+        <tbody id="investorTable"></tbody>
+      </table>
+    </section>
+
+    <section class="panel span-12">
+      <h2>Event Log</h2>
+      <table>
+        <thead>
+          <tr><th>Time</th><th>Type</th><th>Payload</th></tr>
+        </thead>
+        <tbody id="eventLogTable"></tbody>
+      </table>
+    </section>
+  </div>
+
+  <script>
+    const DEMO_STATE = {
+      funds: ["FUND1", "FUND2"],
+      runtime: {
+        status: "idle",
+        activeFund: "FUND1",
+        cycleCount: 0,
+        navSnapshot: {
+          nav: 720000,
+          gross_assets: 730000,
+          liabilities: 10000,
+          nav_per_share: 7.2
+        },
+        totalPnl: 23000,
+        executionSnapshot: {
+          open_orders: [{id:"ORD001"}, {id:"ORD002"}]
+        },
+        sleeveAllocations: {
+          "Crypto Momentum": 500000,
+          "Low Risk Yield": 300000,
+          "AI Signals": 200000
+        },
+        dashboard: [
+          {investor_name:"Nicolas Capital", fund_id:"FUND1", market_value:432000, ownership_pct:60},
+          {investor_name:"Atlas Growth", fund_id:"FUND1", market_value:288000, ownership_pct:40}
+        ],
+        fees: [
+          {fee_type:"management_fee", amount:1200},
+          {fee_type:"management_fee", amount:800},
+          {fee_type:"performance_fee", amount:16000},
+          {fee_type:"performance_fee", amount:10666.67}
+        ],
+        mrr: 3098,
+        eventLog: []
+      }
+    };
+
+    function loadState() {
+      const raw = localStorage.getItem("quantora_qnt30493_state");
+      if (!raw) {
+        localStorage.setItem("quantora_qnt30493_state", JSON.stringify(DEMO_STATE));
+        return JSON.parse(JSON.stringify(DEMO_STATE));
+      }
+      return JSON.parse(raw);
+    }
+
+    function saveState(state) {
+      localStorage.setItem("quantora_qnt30493_state", JSON.stringify(state));
+    }
+
+    function money(v) {
+      return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 }).format(Number(v || 0));
+    }
+
+    function nowString() {
+      return new Date().toLocaleTimeString();
+    }
+
+    function addEvent(type, payload) {
+      const state = loadState();
+      state.runtime.eventLog.unshift({
+        time: nowString(),
+        type,
+        payload
+      });
+      state.runtime.eventLog = state.runtime.eventLog.slice(0, 20);
+      saveState(state);
+    }
+
+    function populateFunds() {
+      const state = loadState();
+      const sel = document.getElementById("fundSelector");
+      sel.innerHTML = "";
+      state.funds.forEach(fund => {
+        const opt = document.createElement("option");
+        opt.value = fund;
+        opt.textContent = fund;
+        if (fund === state.runtime.activeFund) opt.selected = true;
+        sel.appendChild(opt);
+      });
+      sel.onchange = () => {
+        const fresh = loadState();
+        fresh.runtime.activeFund = sel.value;
+        saveState(fresh);
+        addEvent("fund_switched", { activeFund: sel.value });
+        render();
+      };
+    }
+
+    function simulateCycle(state) {
+      state.runtime.cycleCount += 1;
+      state.runtime.status = "running";
+      state.runtime.navSnapshot.nav += 1250;
+      state.runtime.navSnapshot.gross_assets += 1300;
+      state.runtime.totalPnl += 450;
+      state.runtime.mrr = state.runtime.mrr;
+      state.runtime.dashboard = state.runtime.dashboard.map((row, idx) => ({
+        ...row,
+        market_value: row.market_value + (idx === 0 ? 700 : 550)
+      }));
+      state.runtime.fees.push({
+        fee_type: "management_fee",
+        amount: 50
+      });
+      state.runtime.eventLog.unshift({
+        time: nowString(),
+        type: "cycle_completed",
+        payload: { cycleCount: state.runtime.cycleCount, nav: state.runtime.navSnapshot.nav }
+      });
+      state.runtime.eventLog = state.runtime.eventLog.slice(0, 20);
+      return state;
+    }
+
+    function startRuntime() {
+      const state = loadState();
+      state.runtime.status = "running";
+      saveState(simulateCycle(state));
+      render();
+    }
+
+    function pauseRuntime() {
+      const state = loadState();
+      state.runtime.status = "paused";
+      saveState(state);
+      addEvent("runtime_paused", { activeFund: state.runtime.activeFund });
+      render();
+    }
+
+    function resumeRuntime() {
+      const state = loadState();
+      state.runtime.status = "running";
+      saveState(simulateCycle(state));
+      render();
+    }
+
+    function killRuntime() {
+      const state = loadState();
+      state.runtime.status = "killed";
+      saveState(state);
+      addEvent("kill_switch_activated", { activeFund: state.runtime.activeFund });
+      render();
+    }
+
+    function refreshPanel() {
+      const state = loadState();
+      if (document.getElementById("autorefresh").checked && state.runtime.status === "running") {
+        saveState(simulateCycle(state));
+      }
+      render();
+    }
+
+    function render() {
+      const state = loadState();
+      const rt = state.runtime;
+      const feeTotals = rt.fees.reduce((acc, row) => {
+        if (row.fee_type === "management_fee") acc.mgmt += Number(row.amount || 0);
+        if (row.fee_type === "performance_fee") acc.perf += Number(row.amount || 0);
+        return acc;
+      }, { mgmt: 0, perf: 0 });
+
+      document.getElementById("runtimeStatus").textContent = rt.status;
+      document.getElementById("activeFund").textContent = rt.activeFund;
+      document.getElementById("cycleCount").textContent = rt.cycleCount;
+      document.getElementById("lastNav").textContent = money(rt.navSnapshot.nav);
+      document.getElementById("lastPnl").textContent = money(rt.totalPnl);
+      document.getElementById("grossAssets").textContent = money(rt.navSnapshot.gross_assets);
+      document.getElementById("liabilities").textContent = money(rt.navSnapshot.liabilities);
+      document.getElementById("navPerShare").textContent = money(rt.navSnapshot.nav_per_share);
+      document.getElementById("openOrders").textContent = (rt.executionSnapshot.open_orders || []).length;
+      document.getElementById("mgmtFees").textContent = money(feeTotals.mgmt);
+      document.getElementById("perfFees").textContent = money(feeTotals.perf);
+      document.getElementById("feeEvents").textContent = rt.fees.length;
+      document.getElementById("mrr").textContent = money(rt.mrr);
+
+      const allocationTable = document.getElementById("allocationTable");
+      allocationTable.innerHTML = "";
+      Object.entries(rt.sleeveAllocations || {}).forEach(([name, capital]) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${name}</td><td>${money(capital)}</td>`;
+        allocationTable.appendChild(tr);
+      });
+
+      const investorTable = document.getElementById("investorTable");
+      investorTable.innerHTML = "";
+      (rt.dashboard || []).forEach(row => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${row.investor_name}</td><td>${row.fund_id}</td><td>${money(row.market_value)}</td><td>${Number(row.ownership_pct).toFixed(2)}%</td>`;
+        investorTable.appendChild(tr);
+      });
+
+      const eventLogTable = document.getElementById("eventLogTable");
+      eventLogTable.innerHTML = "";
+      (rt.eventLog || []).forEach(row => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${row.time}</td><td>${row.type}</td><td class="mono">${JSON.stringify(row.payload)}</td>`;
+        eventLogTable.appendChild(tr);
+      });
+    }
+
+    populateFunds();
+    render();
+
+    setInterval(() => {
+      if (document.getElementById("autorefresh").checked) {
+        refreshPanel();
+      }
+    }, 2000);
+  </script>
+</body>
+</html>

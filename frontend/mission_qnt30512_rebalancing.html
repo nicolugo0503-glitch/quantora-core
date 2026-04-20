@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30512 Rebalancing</title>
+  <style>
+    :root { --bg:#08111f; --panel:#0e1a2b; --border:#1f3556; --text:#eef4ff; --muted:#9bb0ce; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; background:var(--bg); color:var(--text); padding:24px; }
+    .btn { display:inline-block; color:#fff; background:#2455d6; border:1px solid #3f6fff; border-radius:10px; padding:10px 14px; text-decoration:none; font-weight:700; cursor:pointer; }
+    .btn.secondary { background:#12233b; border-color:var(--border); }
+    .panel { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:16px; }
+    .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+    .muted { color:var(--muted); }
+    textarea, pre { width:100%; min-height:220px; background:#07111f; border:1px solid var(--border); border-radius:10px; padding:14px; color:var(--text); overflow:auto; }
+    label { display:block; margin-bottom:8px; color:var(--muted); }
+    @media (max-width:900px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px">
+    <div>
+      <h1 style="margin:0 0 6px">QNT30512 — Autonomous Rebalancing Engine</h1>
+      <div class="muted">Build and execute rebalancing plans from target vs actual positions.</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn secondary" href="conversation_missions_hub.html">Back to Missions Hub</a>
+      <a class="btn" href="index.html">Back to Command Center</a>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn" href="#" onclick="buildPlan();return false;">Build Plan</a>
+      <a class="btn secondary" href="#" onclick="executePlan(true);return false;">Execute Dry Run</a>
+      <a class="btn secondary" href="#" onclick="refreshPlan();return false;">Refresh</a>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <label>Target Positions JSON</label>
+      <textarea id="targetBox">[
+  {"symbol":"AAPL","qty":100},
+  {"symbol":"MSFT","qty":50},
+  {"symbol":"BTCUSD","qty":2}
+]</textarea>
+    </div>
+    <div class="panel">
+      <label>Actual Positions JSON</label>
+      <textarea id="actualBox">[
+  {"symbol":"AAPL","qty":92},
+  {"symbol":"MSFT","qty":50},
+  {"symbol":"BTCUSD","qty":1.25}
+]</textarea>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2 style="margin-top:0">Current Rebalance Plan</h2>
+    <pre id="planBox">loading...</pre>
+  </div>
+
+  <div class="panel">
+    <h2 style="margin-top:0">Last Execution Result</h2>
+    <pre id="execBox">loading...</pre>
+  </div>
+
+  <script>
+    async function fetchJson(url, options) {
+      try {
+        const res = await fetch(url, options || {});
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return await res.json();
+      } catch (e) {
+        return null;
+      }
+    }
+
+    async function buildPlan() {
+      let target_positions = [], actual_positions = [];
+      try { target_positions = JSON.parse(document.getElementById('targetBox').value); } catch(e) { alert('Invalid target JSON'); return; }
+      try { actual_positions = JSON.parse(document.getElementById('actualBox').value); } catch(e) { alert('Invalid actual JSON'); return; }
+
+      await fetchJson('/api/rebalance/build', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ target_positions, actual_positions })
+      });
+      refreshPlan();
+    }
+
+    async function executePlan(dryRun) {
+      await fetchJson('/api/rebalance/execute', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ dry_run: dryRun })
+      });
+      refreshPlan();
+    }
+
+    async function refreshPlan() {
+      const plan = await fetchJson('/api/rebalance/plan');
+      const exec = await fetchJson('/api/rebalance/execution');
+      document.getElementById('planBox').textContent = JSON.stringify(plan || { error: 'plan endpoint not found yet' }, null, 2);
+      document.getElementById('execBox').textContent = JSON.stringify(exec || { error: 'execution endpoint not found yet' }, null, 2);
+    }
+
+    refreshPlan();
+  </script>
+</body>
+</html>

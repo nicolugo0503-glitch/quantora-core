@@ -1,0 +1,9 @@
+{
+  "base_zip": "QUANTORA_FULL_PROJECT_QNT30551_FUNDING_FLOW.zip",
+  "mission_added": "QNT30552_LIVE_SYNC_ENGINE",
+  "frontend_only": true,
+  "new_files": [
+    "frontend/quantora_sync.js",
+    "frontend/mission_qnt30552_live_sync_engine.html"
+  ]
+}

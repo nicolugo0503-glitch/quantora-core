@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30625 Investor Waterfall Engine + Distribution Notice Ledger</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1480px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:20px;font-weight:800;margin-top:6px}
+button,a,input{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left;vertical-align:top}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:380px}
+@media(max-width:1400px){.grid{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30625 · Investor Waterfall Engine + Distribution Notice Ledger</h1>
+        <div style="color:#9fb3d8">Calculates distributable proceeds, hurdle and carry, then drafts investor distribution notices.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30624_capital_ledger.html">Capital Ledger</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Runs</div><div id="runs" class="value">-</div></div>
+    <div class="card"><div class="label">Notices</div><div id="notices" class="value">-</div></div>
+    <div class="card"><div class="label">Published</div><div id="published" class="value">-</div></div>
+    <div class="card"><div class="label">Distributable</div><div id="distributable" class="value">-</div></div>
+    <div class="card"><div class="label">Hurdle</div><div id="hurdle" class="value">-</div></div>
+    <div class="card"><div class="label">GP Carry</div><div id="carry" class="value">-</div></div>
+    <div class="card"><div class="label">LP Pool</div><div id="pool" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <input id="profit" placeholder="Distributable profit">
+    <input id="hurdlePct" placeholder="Hurdle % (e.g. 8)" style="margin-top:12px">
+    <input id="carryPct" placeholder="GP carry % (e.g. 20)" style="margin-top:12px">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button onclick="runWaterfall()">Run Waterfall</button>
+      <button onclick="publishLatestNotice()">Publish Latest Notice</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">Distribution Notices</div>
+    <table>
+      <thead><tr><th>Investor</th><th>Amount</th><th>Status</th><th>Notice ID</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">Waterfall Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v || 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/waterfall/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data,null,2); return; }
+  const d = res.data || {};
+  const run = d.latest_run || {};
+  document.getElementById('runs').textContent = String(d.run_count || 0);
+  document.getElementById('notices').textContent = String(d.notice_count || 0);
+  document.getElementById('published').textContent = String(d.published_notice_count || 0);
+  document.getElementById('distributable').textContent = money(run.distributable_profit || 0);
+  document.getElementById('hurdle').textContent = money(run.hurdle_amount || 0);
+  document.getElementById('carry').textContent = money(run.gp_carry_amount || 0);
+  document.getElementById('pool').textContent = money(run.lp_distribution_pool || 0);
+  document.getElementById('rows').innerHTML = (d.distribution_notices || []).map(n =>
+    `<tr><td>${n.investor_name || n.investor_id}</td><td>${money(n.distribution_amount)}</td><td>${n.status}</td><td>${n.notice_id}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function runWaterfall(){
+  await j('/api/waterfall/run', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    distributable_profit: Number(document.getElementById('profit').value || 0),
+    hurdle_rate_pct: Number(document.getElementById('hurdlePct').value || 0),
+    gp_carry_pct: Number(document.getElementById('carryPct').value || 0)
+  })});
+  await load();
+}
+async function publishLatestNotice(){
+  const res = await j('/api/waterfall/summary');
+  const latest = res.data.latest_notice;
+  if(!latest) return;
+  await j('/api/waterfall/notice/publish', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({notice_id: latest.notice_id})});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

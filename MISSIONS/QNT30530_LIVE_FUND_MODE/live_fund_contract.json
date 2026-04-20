@@ -1,0 +1,25 @@
+{
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/fund/config"
+    },
+    {
+      "method": "POST",
+      "path": "/api/fund/start"
+    },
+    {
+      "method": "POST",
+      "path": "/api/fund/stop"
+    },
+    {
+      "method": "POST",
+      "path": "/api/fund/tick"
+    },
+    {
+      "method": "GET",
+      "path": "/api/fund/state"
+    }
+  ],
+  "notes": "Use external scheduler/worker for continuous operation in production."
+}

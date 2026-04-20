@@ -1,0 +1,25 @@
+{
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/auto-allocator/run"
+    },
+    {
+      "method": "GET",
+      "path": "/api/auto-allocator/last"
+    },
+    {
+      "method": "GET",
+      "path": "/api/auto-allocator/history"
+    }
+  ],
+  "inputs": [
+    "ranked_strategies",
+    "total_capital",
+    "top_n"
+  ],
+  "outputs": [
+    "allocated_capital by strategy",
+    "allocation history"
+  ]
+}

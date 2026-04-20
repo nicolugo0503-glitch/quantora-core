@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — Monetization Engine</title>
+  <style>
+    :root{
+      --bg:#07111f; --panel:#0f1d31; --panel2:#132742; --line:#22314e;
+      --text:#e5eefc; --muted:#9bb0d1; --accent:#60a5fa; --good:#34d399; --warn:#f59e0b;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .wrap{max-width:1440px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(15,29,49,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+    .hero{padding:22px;margin-bottom:18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+    .sub{color:var(--muted);max-width:960px;line-height:1.5}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    button,input,select{border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 12px}
+    button{background:var(--accent);border:none;cursor:pointer;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}
+    .label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+    .value{font-size:28px;font-weight:700;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}
+    .stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th,td{padding:9px 10px;border-bottom:1px solid #1e2d47;text-align:left}
+    th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #1e2d47;border-radius:14px;background:#0a1526}
+    .pills{display:flex;gap:8px;flex-wrap:wrap}
+    .pill{padding:6px 10px;border-radius:999px;border:1px solid #274168;background:#0b1a2c;font-size:12px}
+    .good{color:#9ff0ce;border-color:#256b53}.warn{color:#fcd68f;border-color:#8a5a0a}
+    pre{margin:0;background:#06101d;border:1px solid #1e2d47;border-radius:14px;padding:14px;min-height:180px;white-space:pre-wrap}
+    .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    @media (max-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:1fr}}
+    @media (max-width:700px){.grid,.form-grid{grid-template-columns:repeat(1,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT30445 — Monetization Engine</h1>
+      <div class="sub">Subscriptions, fees, licensing, and collections. This turns Quantora from infrastructure into revenue-producing operating machinery.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="loadAll()">Refresh</button>
+      <button onclick="seedSubscription()">Seed Subscription</button>
+      <button onclick="seedInvoice()">Seed Invoice</button>
+      <button onclick="seedLicense()">Seed License</button>
+    </div>
+  </div>
+
+  <div class="grid" id="summaryGrid"></div>
+
+  <div class="layout">
+    <div class="stack">
+      <div class="card">
+        <h2>Subscriptions</h2>
+        <div class="table-wrap"><table id="subscriptionTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Invoices</h2>
+        <div class="table-wrap"><table id="invoiceTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Licensing</h2>
+        <div class="table-wrap"><table id="licenseTable"></table></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card">
+        <h2>Revenue Mix</h2>
+        <div class="pills" id="mixPills"></div>
+      </div>
+      <div class="card">
+        <h2>Monetization Health</h2>
+        <div class="pills" id="healthPills"></div>
+      </div>
+      <div class="card">
+        <h2>Last Action</h2>
+        <pre id="actionOut">No action yet.</pre>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const api=(path, opts={})=>fetch(path,{credentials:'include',headers:{'Content-Type':'application/json'},...opts}).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok) throw new Error(d.detail||'request_failed'); return d;});
+const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(Number(v||0));
+function table(el, headers, rows){
+  const thead = `<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  const body = rows.length ? rows.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${headers.length}">No data</td></tr>`;
+  el.innerHTML = thead + body;
+}
+function renderSummary(summary){
+  const labels = [
+    ['MRR', money(summary.mrr)],
+    ['ARR', money(summary.arr)],
+    ['Realized Revenue', money(summary.realized_revenue)],
+    ['Projected Revenue', money(summary.projected_revenue)],
+    ['Open Invoices', summary.open_invoices],
+    ['Monetization Score', summary.monetization_score]
+  ];
+  document.getElementById('summaryGrid').innerHTML = labels.map(([label,val])=>`<div class="card"><div class="label">${label}</div><div class="value">${val}</div></div>`).join('');
+}
+function renderPills(target, items){
+  document.getElementById(target).innerHTML = items.map(([label,klass])=>`<span class="pill ${klass}">${label}</span>`).join('');
+}
+async function loadAll(){
+  const data = await api('/workspace/monetization/summary');
+  renderSummary(data.summary);
+  renderPills('mixPills', [
+    [`SaaS ${money(data.revenue_mix.saas_mrr)}`, 'good'],
+    [`Mgmt Fees ${money(data.revenue_mix.management_fee_total)}`, 'good'],
+    [`Perf Fees ${money(data.revenue_mix.performance_fee_total)}`, 'good'],
+    [`Licensing ${money(data.revenue_mix.license_fee_total)}`, 'good']
+  ]);
+  renderPills('healthPills', [
+    [`Subscriptions ${data.engine_health.subscriptions_ready?'Ready':'Missing'}`, data.engine_health.subscriptions_ready?'good':'warn'],
+    [`Fee Ledger ${data.engine_health.fee_ledger_ready?'Ready':'Missing'}`, data.engine_health.fee_ledger_ready?'good':'warn'],
+    [`Licensing ${data.engine_health.licensing_ready?'Ready':'Missing'}`, data.engine_health.licensing_ready?'good':'warn'],
+    [`Collections Backlog ${data.engine_health.collections_backlog}`, data.engine_health.collections_backlog===0?'good':'warn'],
+    [`Score ${data.engine_health.monetization_score}`, data.engine_health.monetization_score>=85?'good':'warn']
+  ]);
+  table(document.getElementById('subscriptionTable'),
+    ['Client','Plan','Monthly','Status','Created'],
+    (data.subscriptions||[]).map(r=>[
+      r.client_name||'-', r.plan_name||'-', money(r.monthly_amount), r.status||'-', r.created_at||'-'
+    ])
+  );
+  table(document.getElementById('invoiceTable'),
+    ['Client','Type','Amount','Status','Due'],
+    (data.invoices||[]).map(r=>[
+      r.client_name||'-', r.invoice_type||'-', money(r.amount), r.status||'-', r.due_at||'-'
+    ])
+  );
+  table(document.getElementById('licenseTable'),
+    ['Client','Plan','Monthly','Seats','Term','Status'],
+    (data.licenses||[]).map(r=>[
+      r.client_name, r.plan_name, money(r.monthly_amount), r.seat_count, `${r.term_months} mo`, r.status
+    ])
+  );
+}
+async function seedSubscription(){
+  const res = await api('/workspace/monetization/subscriptions/create', {method:'POST', body: JSON.stringify({
+    client_name:'Quantora Alpha Client',
+    plan_name:'pro',
+    monthly_amount:499,
+    status:'active'
+  })});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedInvoice(){
+  const res = await api('/workspace/monetization/invoices/create', {method:'POST', body: JSON.stringify({
+    client_name:'Quantora Alpha Client',
+    invoice_type:'management_fee',
+    amount:1250,
+    status:'open'
+  })});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+async function seedLicense(){
+  const res = await api('/workspace/monetization/licenses/create', {method:'POST', body: JSON.stringify({
+    client_name:'Institutional Desk One',
+    plan_name:'institutional',
+    monthly_amount:5000,
+    seat_count:8,
+    term_months:12,
+    status:'active'
+  })});
+  document.getElementById('actionOut').textContent = JSON.stringify(res, null, 2);
+  await loadAll();
+}
+loadAll().catch(err => {
+  document.getElementById('actionOut').textContent = String(err);
+});
+</script>
+</body>
+</html>

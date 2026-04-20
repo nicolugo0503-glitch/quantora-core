@@ -1,0 +1,22 @@
+{
+  "email": "operator@quantora.test",
+  "policy": {
+    "retain_cycles": 365,
+    "minimum_score": 95.0,
+    "minimum_nav_readiness": 0.95,
+    "minimum_allocation_readiness": 0.95,
+    "minimum_equalization_readiness": 0.95,
+    "maximum_open_series_breaks": 0,
+    "maximum_unallocated_nav_entries": 0,
+    "require_official_nav": true,
+    "require_funded_capital": true
+  },
+  "runs": [],
+  "alerts": [],
+  "series_events": [],
+  "nav_entry_events": [],
+  "performance_allocation_events": [],
+  "equalization_adjustment_events": [],
+  "latest_run": null,
+  "last_context": {}
+}

@@ -1,0 +1,63 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30351 Full Autonomy Control Plane</title>
+  <style>
+    body{margin:0;font-family:Inter,Arial,sans-serif;background:#08111f;color:#e5eefc}
+    .wrap{max-width:1200px;margin:0 auto;padding:24px}
+    .panel{background:#0f1d31;border:1px solid #22314e;border-radius:16px;padding:16px;margin-bottom:16px}
+    button{background:#2563eb;color:#fff;border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
+    button.secondary{background:#1e3a8a}
+    input,select{width:100%;padding:10px;border-radius:10px;border:1px solid #22314e;background:#132742;color:#e5eefc}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    pre{background:#06101d;border:1px solid #22314e;border-radius:12px;padding:12px;white-space:pre-wrap;min-height:200px}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .tiny{color:#9bb0d1;font-size:12px}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="panel">
+    <h1>Full Autonomy Control Plane</h1>
+    <div class="tiny">Governed autonomy promotion, delegation, and machine-enforced cycle gates.</div>
+    <div class="actions">
+      <button class="secondary" onclick="window.location.href='index.html'">Command Center</button>
+      <button class="secondary" onclick="loadStatus()">Load Status</button>
+    </div>
+  </div>
+  <div class="panel grid">
+    <div><label>Operator ID</label><input id="operatorId" value="operator_F5E2C5BA"></div>
+    <div><label>Execution Mode</label><select id="executionMode"><option>paper</option><option>live</option></select></div>
+    <div><label>Target Mode</label><select id="targetMode"><option>supervised</option><option>constrained_autonomy</option><option>delegated_autonomy</option></select></div>
+  </div>
+  <div class="panel">
+    <div class="actions">
+      <button onclick="evaluateAutonomy()">Evaluate</button>
+      <button onclick="transitionAutonomy()">Transition</button>
+      <button onclick="runCycle()">Run Cycle</button>
+    </div>
+    <div class="actions">
+      <button class="secondary" onclick="updateDelegation()">Update Delegation</button>
+    </div>
+  </div>
+  <div class="panel"><pre id="out">ready</pre></div>
+</div>
+<script>
+async function req(path, method='GET', body=null){
+  const res = await fetch('http://127.0.0.1:8010'+path,{method,headers:{'Content-Type':'application/json'},body:body?JSON.stringify(body):null});
+  const txt = await res.text();
+  try{return JSON.stringify(JSON.parse(txt),null,2)}catch(e){return txt}
+}
+function val(id){return document.getElementById(id).value}
+async function loadStatus(){document.getElementById('out').textContent = await req('/autonomy/status')}
+async function evaluateAutonomy(){document.getElementById('out').textContent = await req('/autonomy/evaluate','POST',{operator_id:val('operatorId'),execution_mode:val('executionMode')})}
+async function transitionAutonomy(){document.getElementById('out').textContent = await req('/autonomy/transition','POST',{operator_id:val('operatorId'),target_mode:val('targetMode')})}
+async function runCycle(){document.getElementById('out').textContent = await req('/autonomy/run-cycle','POST',{operator_id:val('operatorId'),execution_mode:val('executionMode'),force:true})}
+async function updateDelegation(){document.getElementById('out').textContent = await req('/autonomy/delegation/update','POST',{operator_id:val('operatorId'),tier:'manager',max_live_notional:5000,allow_live_orders:val('executionMode')==='live',allow_strategy_mutations:true})}
+loadStatus()
+</script>
+</body>
+</html>

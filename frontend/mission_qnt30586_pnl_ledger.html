@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QNT30586 Investor PnL Ledger</title>
+<style>
+body{margin:0;font-family:Inter,Arial;background:#06101d;color:#eaf1ff;padding:24px}
+.wrap{max-width:1360px;margin:auto}
+.card{background:#0d1a2b;border:1px solid #203251;border-radius:16px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.label{font-size:12px;color:#9fb3d8;text-transform:uppercase;letter-spacing:.08em}
+.value{font-size:22px;font-weight:800;margin-top:6px}
+button,a,input{padding:12px 16px;border-radius:10px;border:none;box-sizing:border-box}
+button,a{display:inline-block;background:#2455d6;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
+input{background:#07111f;color:#fff;border:1px solid #203251;width:100%}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr auto auto;gap:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid #203251;text-align:left}
+pre{background:#07111f;border:1px solid #203251;border-radius:12px;padding:12px;overflow:auto;max-height:360px}
+@media(max-width:1200px){.grid,.row{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <h1 style="margin:0 0 8px">QNT30586 · Investor PnL Ledger + Realized/Unrealized Attribution</h1>
+        <div style="color:#9fb3d8">Tracks position-level realized and unrealized PnL by investor sleeve. This turns trade attribution into an investor-level PnL accounting layer.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="investor_portal.html">Investor Portal</a>
+        <a href="mission_qnt30585_trade_attribution.html">Trade Attribution</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">Positions</div><div id="count" class="value">-</div></div>
+    <div class="card"><div class="label">Realized PnL</div><div id="realized" class="value">-</div></div>
+    <div class="card"><div class="label">Unrealized PnL</div><div id="unrealized" class="value">-</div></div>
+    <div class="card"><div class="label">Sleeves</div><div id="sleeves" class="value">-</div></div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <input id="adminEmail" placeholder="Investor email">
+      <input id="sleeveId" placeholder="Sleeve id">
+      <input id="symbol" placeholder="Symbol">
+      <input id="qty" placeholder="Qty">
+      <input id="avgPrice" placeholder="Avg price">
+      <input id="markPrice" placeholder="Mark price">
+      <button onclick="markPosition()">Mark Position</button>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <input id="realizedEmail" placeholder="Investor email">
+      <input id="realizedSleeveId" placeholder="Sleeve id">
+      <input id="realizedSymbol" placeholder="Symbol">
+      <input id="realizedPnl" placeholder="Realized PnL">
+      <div></div><div></div>
+      <button onclick="realizePnl()">Realize PnL</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">PnL by Sleeve</div>
+    <table>
+      <thead><tr><th>Sleeve</th><th>Positions</th><th>Realized</th><th>Unrealized</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="label">PnL Ledger Payload</div>
+    <pre id="raw">loading...</pre>
+  </div>
+</div>
+<script>
+function money(v){ return '$' + Number(v||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+async function j(url, opts){ const r = await fetch(url, opts || {}); const d = await r.json(); return {ok:r.ok,data:d}; }
+async function load(){
+  const res = await j('/api/pnl-ledger/summary');
+  if(!res.ok){ document.getElementById('raw').textContent = JSON.stringify(res.data, null, 2); return; }
+  const d = res.data || {};
+  document.getElementById('count').textContent = String(d.position_count || 0);
+  document.getElementById('realized').textContent = money(d.total_realized_pnl || 0);
+  document.getElementById('unrealized').textContent = money(d.total_unrealized_pnl || 0);
+  document.getElementById('sleeves').textContent = String((d.sleeves || []).length);
+  document.getElementById('rows').innerHTML = (d.sleeves || []).map(s =>
+    `<tr><td>${s.sleeve_id}</td><td>${s.positions}</td><td>${money(s.realized_pnl)}</td><td>${money(s.unrealized_pnl)}</td></tr>`
+  ).join('');
+  document.getElementById('raw').textContent = JSON.stringify(d, null, 2);
+}
+async function markPosition(){
+  const payload = {
+    email: document.getElementById('adminEmail').value,
+    sleeve_id: document.getElementById('sleeveId').value,
+    symbol: document.getElementById('symbol').value,
+    qty: Number(document.getElementById('qty').value || 0),
+    avg_price: Number(document.getElementById('avgPrice').value || 0),
+    mark_price: Number(document.getElementById('markPrice').value || 0)
+  };
+  await j('/api/pnl-ledger/mark', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+async function realizePnl(){
+  const payload = {
+    email: document.getElementById('realizedEmail').value,
+    sleeve_id: document.getElementById('realizedSleeveId').value,
+    symbol: document.getElementById('realizedSymbol').value,
+    realized_pnl: Number(document.getElementById('realizedPnl').value || 0)
+  };
+  await j('/api/pnl-ledger/realize', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+  await load();
+}
+load();
+</script>
+</body>
+</html>

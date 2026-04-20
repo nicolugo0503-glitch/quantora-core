@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora Broker Abstraction + Multi-Market Expansion</title>
+  <style>
+    :root { --bg:#07111f; --panel:#0f1d31; --panel2:#132742; --line:#22314e; --text:#e5eefc; --muted:#9bb0d1; --accent:#60a5fa; --good:#34d399; --warn:#f59e0b; }
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(180deg,#040b15 0%,#0a1424 100%);color:var(--text)}
+    .shell{max-width:1440px;margin:0 auto;padding:24px}.hero,.panel,.metric{background:rgba(15,29,49,.95);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.16)}
+    .hero{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px}.sub{color:var(--muted);max-width:900px;line-height:1.5}
+    .actions{display:flex;gap:10px;flex-wrap:wrap}.metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}.grid{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:16px}.stack{display:grid;gap:16px}
+    .label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:28px;font-weight:700;margin-top:8px}
+    button{border:none;background:var(--accent);color:white;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700} button.secondary{background:#1d4ed8}
+    input,select,textarea{width:100%;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;padding:11px 12px;outline:none} textarea{min-height:110px}
+    .two,.three{display:grid;gap:10px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    pre{margin:0;background:#06101d;color:#dbeafe;border:1px solid #1e2d47;border-radius:14px;min-height:160px;max-height:420px;overflow:auto;padding:14px;white-space:pre-wrap}
+    .tiny{color:var(--muted);font-size:12px}.section{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.pill{display:inline-block;padding:6px 10px;border:1px solid #274168;border-radius:999px;background:#0b1a2c;color:#cfe0ff;font-size:12px;margin:4px 6px 0 0}
+    @media (max-width:1200px){.metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.grid{grid-template-columns:1fr}} @media(max-width:720px){.metrics,.two,.three{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="hero">
+      <div>
+        <h1 style="margin:0 0 8px 0">Broker Abstraction + Multi-Market Expansion</h1>
+        <div class="sub">Institutional routing layer for Quantora. Abstract broker-specific execution from strategy logic, open multiple market lanes, and manage cross-market expansion as governed capital infrastructure.</div>
+      </div>
+      <div class="actions">
+        <button onclick="loadStatus()">Refresh</button>
+        <button class="secondary" onclick="window.location.href='index.html'">Command Center</button>
+      </div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric"><div class="label">Markets</div><div class="value" id="marketsCount">-</div></div>
+      <div class="metric"><div class="label">Brokers</div><div class="value" id="brokersCount">-</div></div>
+      <div class="metric"><div class="label">Routes Evaluated</div><div class="value" id="routesEvaluated">-</div></div>
+      <div class="metric"><div class="label">Routes Executed</div><div class="value" id="routesExecuted">-</div></div>
+      <div class="metric"><div class="label">Default Broker</div><div class="value" id="defaultBroker" style="font-size:22px">-</div></div>
+      <div class="metric"><div class="label">Default Market</div><div class="value" id="defaultMarket" style="font-size:22px">-</div></div>
+    </div>
+
+    <div class="grid">
+      <div class="stack">
+        <div class="panel">
+          <div class="section"><h2 style="margin:0">Route Evaluation</h2></div>
+          <div class="three">
+            <select id="routeMarket"><option>equities</option><option>crypto</option><option>futures</option><option>forex</option><option>options</option></select>
+            <input id="routeSymbol" value="BTCUSD" placeholder="Symbol">
+            <select id="routeSide"><option>buy</option><option>sell</option></select>
+          </div>
+          <div class="three" style="margin-top:10px">
+            <input id="routeQty" type="number" step="0.01" value="0.1" placeholder="Qty">
+            <select id="routeMode"><option>paper</option><option>live</option></select>
+            <select id="routeUrgency"><option>balanced</option><option>patient</option><option>aggressive</option></select>
+          </div>
+          <div style="margin-top:12px"><button onclick="evaluateRoute()">Evaluate Route</button></div>
+        </div>
+
+        <div class="panel">
+          <div class="section"><h2 style="margin:0">Portfolio Expansion</h2></div>
+          <textarea id="allocations">{"equities":55,"crypto":20,"futures":15,"forex":10}</textarea>
+          <input id="targetMarkets" value="equities,crypto,futures,forex" style="margin-top:10px">
+          <div style="margin-top:12px"><button onclick="expandPortfolio()">Apply Expansion</button></div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="panel">
+          <div class="section"><h2 style="margin:0">Market Upsert</h2></div>
+          <div class="two">
+            <input id="marketId" value="options" placeholder="market_id">
+            <input id="marketSymbols" value="SPY_CALL,QQQ_CALL" placeholder="symbols csv">
+          </div>
+          <div class="three" style="margin-top:10px">
+            <select id="marketOrderType"><option>limit</option><option>market</option></select>
+            <input id="marketSession" value="cash" placeholder="session profile">
+            <input id="marketRiskMultiplier" type="number" step="0.01" value="1.6">
+          </div>
+          <div style="margin-top:12px"><button onclick="upsertMarket()">Upsert Market</button></div>
+        </div>
+
+        <div class="panel">
+          <div class="section"><h2 style="margin:0">Broker Upsert</h2></div>
+          <div class="two">
+            <input id="brokerId" value="sim-options" placeholder="broker_id">
+            <input id="brokerMarkets" value="options" placeholder="markets csv">
+          </div>
+          <div class="three" style="margin-top:10px">
+            <input id="brokerFee" type="number" step="0.1" value="2.5">
+            <input id="brokerLatency" type="number" step="1" value="80">
+            <input id="brokerReliability" type="number" step="0.001" value="0.97">
+          </div>
+          <div style="margin-top:10px"><button onclick="upsertBroker()">Upsert Broker</button></div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="panel">
+          <div class="section"><h2 style="margin:0">Summary</h2></div>
+          <div id="summaryPills"></div>
+        </div>
+        <div class="panel">
+          <div class="section"><h2 style="margin:0">Output</h2></div>
+          <pre id="output">Loading...</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+const api = '';
+async function jget(path, options={}){ const r = await fetch(api + path, {headers:{'Content-Type':'application/json'}, ...options}); const t = await r.text(); try { return {ok:r.ok, data:JSON.parse(t)}; } catch { return {ok:r.ok, data:t}; } }
+function setText(id, val){ document.getElementById(id).textContent = val; }
+function show(obj){ document.getElementById('output').textContent = JSON.stringify(obj, null, 2); }
+function renderSummary(summary){
+  const el = document.getElementById('summaryPills');
+  el.innerHTML = '';
+  const items = [
+    ['Markets', summary.market_count], ['Brokers', summary.broker_count], ['Default Broker', summary.default_broker],
+    ['Default Market', summary.default_market], ['Routes Evaluated', summary.routes_evaluated], ['Routes Executed', summary.routes_executed],
+    ['Last Best Broker', summary.last_best_broker || 'n/a']
+  ];
+  items.forEach(([k,v])=>{ const s=document.createElement('span'); s.className='pill'; s.textContent=`${k}: ${v}`; el.appendChild(s); });
+  Object.entries(summary.cross_market_allocations || {}).forEach(([k,v])=>{ const s=document.createElement('span'); s.className='pill'; s.textContent=`${k}: ${v}%`; el.appendChild(s); });
+}
+async function loadStatus(){
+  const res = await jget('/broker-abstraction/status');
+  show(res.data);
+  const s = res.data.summary || {};
+  setText('marketsCount', s.market_count ?? '-'); setText('brokersCount', s.broker_count ?? '-'); setText('routesEvaluated', s.routes_evaluated ?? '-'); setText('routesExecuted', s.routes_executed ?? '-');
+  setText('defaultBroker', s.default_broker ?? '-'); setText('defaultMarket', s.default_market ?? '-'); renderSummary(s);
+}
+async function evaluateRoute(){
+  const payload = {market:routeMarket.value, symbol:routeSymbol.value, side:routeSide.value, qty:Number(routeQty.value||0), execution_mode:routeMode.value, urgency:routeUrgency.value};
+  const res = await jget('/broker-abstraction/router/evaluate', {method:'POST', body:JSON.stringify(payload)}); show(res.data); await loadStatus();
+}
+async function expandPortfolio(){
+  const payload = {allocations: JSON.parse(document.getElementById('allocations').value || '{}'), target_markets: document.getElementById('targetMarkets').value.split(',').map(x=>x.trim()).filter(Boolean)};
+  const res = await jget('/broker-abstraction/portfolio/expand', {method:'POST', body:JSON.stringify(payload)}); show(res.data); await loadStatus();
+}
+async function upsertMarket(){
+  const payload = {market_id:marketId.value, enabled:true, symbols:marketSymbols.value.split(',').map(x=>x.trim()).filter(Boolean), default_order_type:marketOrderType.value, session_profile:marketSession.value, risk_multiplier:Number(marketRiskMultiplier.value||1)};
+  const res = await jget('/broker-abstraction/markets/upsert', {method:'POST', body:JSON.stringify(payload)}); show(res.data); await loadStatus();
+}
+async function upsertBroker(){
+  const payload = {broker_id:brokerId.value, enabled:true, markets:brokerMarkets.value.split(',').map(x=>x.trim()).filter(Boolean), live_supported:false, paper_supported:true, base_fee_bps:Number(brokerFee.value||0), latency_ms:Number(brokerLatency.value||0), reliability_score:Number(brokerReliability.value||0), slippage_penalty_bps:2.0, notes:'panel upsert'};
+  const res = await jget('/broker-abstraction/brokers/upsert', {method:'POST', body:JSON.stringify(payload)}); show(res.data); await loadStatus();
+}
+loadStatus();
+</script>
+</body>
+</html>

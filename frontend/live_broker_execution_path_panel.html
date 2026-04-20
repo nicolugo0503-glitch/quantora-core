@@ -1,0 +1,39 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>QNT30421 Live Broker Execution Path</title>
+<style>
+body{font-family:Arial,sans-serif;background:#0b1020;color:#e8ecf3;margin:0;padding:24px}
+.card{background:#131a2e;border:1px solid #28324d;border-radius:16px;padding:18px;margin:0 0 16px 0}
+h1,h2{margin:0 0 12px 0}.muted{color:#9fb0d0}code,pre{background:#0f1530;color:#d8e4ff;border-radius:10px;padding:12px;display:block;overflow:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}.ok{color:#72e0a0}.bad{color:#ff7b7b}.warn{color:#ffd166}a{color:#9ed0ff}
+button{background:#276ef1;color:white;border:none;border-radius:10px;padding:10px 14px;cursor:pointer}
+</style></head>
+<body>
+<h1>QNT30421 — Canonical Live Broker Execution Path</h1>
+<p class="muted">One true operator flow for broker connectivity, readiness, guarded submission, and execution audit.</p>
+<div class="grid">
+  <div class="card"><h2>Status</h2><div id="status">Loading...</div></div>
+  <div class="card"><h2>How to use</h2><ol><li>Check readiness.</li><li>Connect broker.</li><li>Submit guarded live order.</li><li>Review audit trail.</li></ol></div>
+</div>
+<div class="card"><h2>Endpoints</h2><pre>/live-execution/status
+/live-execution/readiness
+/live-execution/connect
+/live-execution/submit
+/live-execution/orders
+/live-execution/audit</pre></div>
+<div class="card"><h2>Operator actions</h2><p><button onclick="loadStatus()">Refresh status</button></p><pre id="json"></pre></div>
+<div class="card"><h2>Navigation</h2><p><a href="/unified_dashboard_runtime.html">Unified Dashboard Runtime</a></p><p><a href="/deployment_hardening_panel.html">Deployment Hardening</a></p><p><a href="/performance_attribution_panel.html">Performance Attribution</a></p></div>
+<script>
+async function loadStatus(){
+  const r = await fetch('/live-execution/status');
+  const j = await r.json();
+  document.getElementById('json').textContent = JSON.stringify(j,null,2);
+  const ready = j.readiness && j.readiness.ready;
+  document.getElementById('status').innerHTML = '<p><strong>Readiness:</strong> <span class="'+(ready?'ok':'bad')+'">'+(ready?'READY':'BLOCKED')+'</span></p>'+
+    '<p><strong>Plan:</strong> '+((j.billing||{}).billing||{}).plan+'</p>'+
+    '<p><strong>Subscription:</strong> '+((j.billing||{}).billing||{}).subscription_status+'</p>'+
+    '<p><strong>Broker connected:</strong> '+((j.broker||{}).connected?'yes':'no')+'</p>'+
+    '<p><strong>Environment mode:</strong> '+((j.environment||{}).mode||'unknown')+'</p>';
+}
+loadStatus();
+</script>
+</body></html>

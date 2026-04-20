@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QNT30772 Regulatory Prime Broker Exposure, Counterparty Safeguarding, and Collateral Protection Layer</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background:#0b1020; color:#e8ecf3; }
+    .card { background:#121a30; border:1px solid #263252; border-radius:16px; padding:20px; max-width:960px; }
+    button { padding:10px 14px; border-radius:10px; border:0; background:#6ea8fe; cursor:pointer; }
+    pre { white-space:pre-wrap; background:#0a1326; padding:14px; border-radius:12px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>QNT30772 — Regulatory Prime Broker Exposure, Counterparty Safeguarding, and Collateral Protection Layer</h1>
+    <p>Institutionalize prime broker oversight, counterparty exposure governance, collateral protection control, and protection attestations.</p>
+    <button id="run">Run Bootstrap Demo</button>
+    <pre id="out">Waiting...</pre>
+  </div>
+  <script>
+    async function call(path, method='GET', body=null) {
+      const res = await fetch(path, { method, headers: {'Content-Type':'application/json'}, body: body ? JSON.stringify(body) : null });
+      return res.json();
+    }
+    document.getElementById('run').onclick = async () => {
+      const out = document.getElementById('out');
+      out.textContent = 'Running...';
+      try {
+        const data = await call('/api/regulatory-prime-broker-exposure-counterparty-safeguarding-collateral-protection-layer/bootstrap-demo','POST',{});
+        out.textContent = JSON.stringify(data, null, 2);
+      } catch (e) {
+        out.textContent = String(e);
+      }
+    };
+  </script>
+</body>
+</html>

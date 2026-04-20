@@ -1,0 +1,14 @@
+<html><body><h1>QNT30527 Marketplace</h1>
+<button onclick="run()">Register Strategy</button>
+<pre id='out'></pre>
+<script>
+async function run(){
+ const res = await fetch('/api/marketplace/strategy',{
+  method:'POST',
+  headers:{'Content-Type':'application/json'},
+  body: JSON.stringify({name:'AI Alpha',creator:'user'})
+ });
+ const d = await res.json();
+ out.innerText = JSON.stringify(d,null,2);
+}
+</script></body></html>

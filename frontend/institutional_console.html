@@ -1,0 +1,1356 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quantora QNT30378 Execution Drift Monitor + Market Regime Deviation Alerts</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: #0f1d31;
+      --panel-2: #132742;
+      --line: #22314e;
+      --text: #e5eefc;
+      --muted: #9bb0d1;
+      --accent: #60a5fa;
+      --good: #34d399;
+      --warn: #f59e0b;
+      --bad: #fb7185;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, Arial, sans-serif; background: linear-gradient(180deg, #040b15 0%, #0a1424 100%); color: var(--text); }
+    .shell { max-width: 1680px; margin: 0 auto; padding: 24px; }
+    .hero, .metric, .panel { background: rgba(15,29,49,.95); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,.16); }
+    .hero { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 18px; padding: 20px; }
+    .hero .sub { color: var(--muted); max-width: 980px; line-height: 1.5; }
+    .hero-actions, .stack-actions { display:flex; gap:10px; flex-wrap:wrap; }
+    button { border: none; background: var(--accent); color: white; padding: 10px 14px; border-radius: 10px; cursor: pointer; font-weight: 700; }
+    button.secondary { background: #1d4ed8; }
+    button.warn { background: var(--warn); color: #111827; }
+    button.danger { background: var(--bad); }
+    .metric-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+    .metric, .panel { padding: 16px; }
+    .metric .label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+    .metric .value { font-size: 28px; font-weight: 700; margin-top: 8px; }
+    .grid-main { display:grid; grid-template-columns: 1.1fr 1fr 1fr; gap:16px; align-items:start; }
+    .stack { display:grid; gap: 16px; }
+    .section-title { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px; }
+    .section-title h2 { margin:0; font-size: 18px; }
+    .two-col, .three-col, .four-col { display:grid; gap:10px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .four-col { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    input, select, textarea {
+      width: 100%; border: 1px solid var(--line); background: var(--panel-2); color: var(--text);
+      border-radius: 10px; padding: 11px 12px; outline: none;
+    }
+    textarea { min-height: 90px; }
+    .tiny { color: var(--muted); font-size: 12px; }
+    .pills { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .pill { padding: 6px 10px; border-radius: 999px; font-size: 12px; background:#0b1a2c; border:1px solid #274168; }
+    .pill.good { border-color:#256b53; color:#9ff0ce; }
+    .pill.warn { border-color:#8a5a0a; color:#fcd68f; }
+    .pill.bad { border-color:#7c243d; color:#fecdd3; }
+    pre {
+      margin: 0; background: #06101d; color: #dbeafe; border: 1px solid #1e2d47;
+      border-radius: 14px; min-height: 180px; max-height: 380px; overflow: auto; padding: 14px; white-space: pre-wrap;
+    }
+    .table-wrap { overflow:auto; border:1px solid #1e2d47; border-radius:14px; background:#0a1526; }
+    table { width:100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 9px 10px; border-bottom: 1px solid #1e2d47; text-align:left; }
+    th { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+    .card-list { display: grid; gap: 10px; }
+    .event { padding: 11px; border-radius: 12px; background: #0a1526; border: 1px solid #1e2d47; }
+    .event .meta { color: var(--muted); font-size: 12px; }
+    @media (max-width: 1280px) { .metric-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .grid-main { grid-template-columns: 1fr; } }
+    @media (max-width: 760px) { .metric-grid, .two-col, .three-col, .four-col { grid-template-columns: 1fr; } .hero { flex-direction: column; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="hero">
+      <div>
+        <h1 style="margin:0 0 10px">Quantora Unified Command Center · Execution Drift Monitor + Market Regime Deviation Alerts</h1>
+        <div class="sub">
+          QNT30378 monitors drift between baseline and live execution behavior, detects regime-driven deviations, and raises alerts before execution quality silently degrades.
+                <button class="secondary" onclick="window.location.href='portfolio_exposure_factor_risk_stress_testing_layer_panel.html'">Risk Refresh</button>
+        <button class="secondary" onclick="window.location.href='live_strategy_activation_capital_deployment_control_layer_panel.html'">Live Control</button>
+        <button class="secondary" onclick="window.location.href='signal_to_execution_automation_bridge_panel.html'">Signal Bridge</button>
+        <button class="secondary" onclick="window.location.href='order_orchestration_broker_dispatch_layer_panel.html'">Dispatch</button>
+              <button class="secondary" onclick="window.location.href='mission_directory_all_missions.html'">Mission Directory</button>
+      </div>
+      </div>
+      <div class="hero-actions">
+        <button onclick="refreshAll()">Refresh OS</button>
+        <button class="secondary" onclick="loadSnapshot()">Snapshot</button>
+        <button class="secondary" onclick="loadBroker()">Broker Refresh</button>
+        <button class="secondary" onclick="window.location.href='automation_loop_panel.html'">Automation Loop</button>
+        <button class="secondary" onclick="window.location.href='ai_decision_panel.html'">AI Decision Layer</button>
+        <button class="secondary" onclick="window.location.href='multi_strategy_panel.html'">Multi-Strategy</button>
+        <button class="secondary" onclick="window.location.href='execution_optimization_panel.html'">Execution Optimization</button>
+        <button class="secondary" onclick="window.location.href='governance_system_panel.html'">Governance System</button>
+        <button class="secondary" onclick="window.location.href='autonomy_control_plane_panel.html'">Autonomy Control Plane</button>
+        <button class="secondary" onclick="window.location.href='broker_abstraction_panel.html'">Broker Abstraction</button>
+        <button class="secondary" onclick="window.location.href='venue_adapter_framework_panel.html'">Venue Adapter Framework</button>
+        <button class="secondary" onclick="window.location.href='real_venue_connectors_panel.html'">Real Venue Connectors</button>
+        <button class="secondary" onclick="window.location.href='portfolio_risk_fabric_panel.html'">Portfolio Risk Fabric</button>
+        <button class="secondary" onclick="window.location.href='allocator_intelligence_panel.html'">Allocator Intelligence</button>
+        <button class="secondary" onclick="window.location.href='performance_intelligence_panel.html'">Performance Intelligence</button>
+        <button class="secondary" onclick="window.location.href='research_memory_panel.html'">Research Memory</button>
+        <button class="secondary" onclick="window.location.href='scenario_engine_panel.html'">Scenario Engine</button>
+        <button class="secondary" onclick="window.location.href='policy_simulator_panel.html'">Policy Simulator</button>
+        <button class="secondary" onclick="window.location.href='institutional_portfolio_brain_panel.html'">Portfolio Brain</button>
+        <button class="secondary" onclick="window.location.href='operator_command_mesh_panel.html'">Operator Command Mesh</button>
+        <button class="secondary" onclick="window.location.href='capital_committee_engine_panel.html'">Capital Committee</button>
+        <button class="secondary" onclick="window.location.href='strategy_factory_panel.html'">Strategy Factory</button>
+        <button class="secondary" onclick="window.location.href='release_audit_panel.html'">Release Audit</button>
+        <button class="secondary" onclick="window.location.href='validation_gatekeeper_panel.html'">Validation Gatekeeper</button>
+        <button class="secondary" onclick="window.location.href='capital_promotion_router_panel.html'">Capital Promotion Router</button>
+        <button class="secondary" onclick="window.location.href='capital_escalation_board_panel.html'">Capital Escalation Board</button>
+        <button class="secondary" onclick="window.location.href='strategy_retirement_board_panel.html'">Strategy Retirement Board</button>
+        <button class="secondary" onclick="window.location.href='reallocation_board_panel.html'">Reallocation Board</button>
+        <button class="secondary" onclick="window.location.href='opportunity_auction_panel.html'">Opportunity Auction</button>
+        <button class="secondary" onclick="window.location.href='execution_fairness_panel.html'">Execution Fairness</button>
+        <button class="secondary" onclick="window.location.href='execution_quality_panel.html'">Execution Quality</button>
+        <button class="secondary" onclick="window.location.href='venue_governor_panel.html'">Venue Governor</button>
+        <button class="secondary" onclick="window.location.href='smart_order_router_panel.html'">Smart Order Router</button>
+        <button class="secondary" onclick="window.location.href='execution_replay_panel.html'">Execution Replay</button>
+        <button class="secondary" onclick="window.location.href='execution_drift_panel.html'">Execution Drift</button>
+        <button class="secondary" onclick="window.location.href='unified_dashboard_runtime.html'">Unified Dashboard Runtime</button>
+        <button class="secondary" onclick="window.location.href='workspace_institutional_layer.html'">Workspace Layer</button>
+        <button class="secondary" onclick="window.location.href='org_execution_capital_engine.html'">Org Execution + Capital</button>
+        <button class="secondary" onclick="window.location.href='billing.html'">Billing Command</button>
+        <button class="secondary" onclick="window.location.href='performance_attribution_panel.html'">Performance Attribution</button>
+        <button class="secondary" onclick="window.open('/workspace/execution/fills','_blank')">Execution Fills JSON</button>
+        <button class="secondary" onclick="window.open('/workspace/positions','_blank')">Positions JSON</button>
+        <button class="secondary" onclick="window.open('/workspace/execution/lifecycle','_blank')">Lifecycle JSON</button>
+        <button class="secondary" onclick="window.location.href='deployment_hardening_panel.html'">Deployment Hardening</button>
+        <button class="secondary" onclick="window.location.href='quantora_added_missions_hub.html'">Added Missions Hub</button>
+
+<button class="secondary" onclick="window.location.href='conversation_missions_hub.html'" data-mission-code="conversation-missions">Conversation Missions</button>
+<button class="secondary" onclick="window.location.href='mission_qnt30492_control_panel.html'" data-mission-code="QNT30492">QNT30492 Control Panel</button>
+<button class="secondary" onclick="window.location.href='mission_qnt30493_real_control.html'" data-mission-code="QNT30493">QNT30493 Real Control</button>
+<button class="secondary" onclick="window.location.href='mission_qnt30495_fund_viz.html'" data-mission-code="QNT30495">QNT30495 Fund Viz</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30505_live_diagnostics.html'" data-mission-code="QNT30505">QNT30505 Diagnostics</button>
+
+        <button class="secondary" onclick="window.location.href='launch_panel_qnt30391.html'">Launch Panel</button>
+        <button class="secondary" onclick="window.location.href='ui_control_surface_panel.html'">UI Control Surface</button>
+        <button class="secondary" onclick="window.location.href='capital_intelligence_panel.html'">Capital Intelligence</button>
+        <button class="secondary" onclick="window.location.href='real_fund_mode_panel.html'">Real Fund Mode</button>
+        <button class="secondary" onclick="window.location.href='investor_operating_layer_panel.html'">Investor Ops</button>
+        <button class="secondary" onclick="window.location.href='monetization_engine_panel.html'">Monetization</button>
+        <button class="secondary" onclick="window.location.href='distribution_engine_panel.html'">Distribution</button>
+        <button class="secondary" onclick="window.location.href='autonomous_capital_layer_panel.html'">Autonomy</button>
+        <button class="secondary" onclick="window.location.href='execution_governance_audit_panel.html'">Governance</button>
+        <button class="secondary" onclick="window.location.href='institutional_reporting_lp_statements_panel.html'">Reporting</button>
+        <button class="secondary" onclick="window.location.href='multi_broker_execution_fabric_panel.html'">Brokers</button>
+        <button class="secondary" onclick="window.location.href='portfolio_risk_nerve_center_panel.html'">Risk</button>
+        <button class="secondary" onclick="window.location.href='treasury_cash_liquidity_control_tower_panel.html'">Treasury</button>
+        <button class="secondary" onclick="window.location.href='investor_crm_capital_raise_pipeline_panel.html'">Investor CRM</button>
+        <button class="secondary" onclick="window.location.href='revenue_intelligence_unit_economics_panel.html'">Economics</button>
+        <button class="secondary" onclick="window.location.href='operator_command_ai_layer_panel.html'">Operator AI</button>
+        <button class="secondary" onclick="window.location.href='institutional_compliance_diligence_vault_panel.html'">Compliance</button>
+        <button class="secondary" onclick="window.location.href='fund_admin_nav_reconciliation_engine_panel.html'">Fund Admin</button>
+        <button class="secondary" onclick="window.location.href='institutional_data_room_allocator_access_layer_panel.html'">Data Room</button>
+        <button class="secondary" onclick="window.location.href='qnt30459_panel.html'">Sales</button>
+        <button class="secondary" onclick="window.location.href='qnt30460_panel.html'">Mission Control</button>
+        <button class="secondary" onclick="window.location.href='qnt30463_panel.html'">Full Fund Mode</button>
+        <button class="secondary" onclick="window.location.href='qnt30464_panel.html'">Global Network</button>
+        <button class="secondary" onclick="window.location.href='qnt30465_panel.html'">Fund Structure</button>
+        <button class="secondary" onclick="window.location.href='qnt30466_panel.html'">Investor Portal</button>
+        <button class="secondary" onclick="window.location.href='qnt30467_panel.html'">Growth</button>
+        <button class="secondary" onclick="window.location.href='qnt30468_panel.html'">Brand Media</button>
+        <button class="secondary" onclick="window.location.href='qnt30469_panel.html'">Platform API</button>
+        <button class="secondary" onclick="window.location.href='qnt30470_panel.html'">Connectivity Mesh</button>
+        <button class="secondary" onclick="window.location.href='qnt30471_panel.html'">Multi-Asset</button>
+        <button class="secondary" onclick="window.location.href='qnt30472_panel.html'">Treasury</button>
+        <button class="secondary" onclick="window.location.href='qnt30473_panel.html'">Revenue Ops</button>
+        <button class="secondary" onclick="window.location.href='qnt30474_panel.html'">Investor CRM</button>
+        <button class="secondary" onclick="window.location.href='qnt30475_panel.html'">Fundraising</button>
+        <button class="secondary" onclick="window.location.href='qnt30476_panel.html'">Governance</button>
+        <button class="secondary" onclick="window.location.href='qnt30462_panel.html'">Autonomy V2</button>
+        <button class="secondary" onclick="window.location.href='qnt30461_panel.html'">Research Lab</button>
+        <button class="warn" onclick="loadRisk()">Risk Refresh</button>
+      
+        <button class="secondary" onclick="window.location.href='mission_qnt30553_real_capital_engine.html'">Real Capital</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30555_performance_visualization_engine.html'">QNT30555 Performance</button>
+        <button class="secondary" onclick="window.location.href='landing.html'">Investor Entry</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30556_onboarding_center.html'">QNT30556 Onboarding</button>
+        <button class="secondary" onclick="window.location.href='investor_portal.html'">Investor Portal</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30557_multi_user_center.html'">QNT30557 Multi-User</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30563_reconciliation_center.html'">QNT30563 Reconciliation</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30564_reporting_center.html'">QNT30564 Statements</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30565_funding_center.html'">QNT30565 Funding Rails</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30566_payment_provider_center.html'">QNT30566 External Rails</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30567_live_provider_activation_center.html'">QNT30567 Provider Activation</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30568_live_external_funding_center.html'">QNT30568 Live Funding Deploy</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30569_investor_ops_console.html'">QNT30569 Investor Ops</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30570_admin_console.html'">QNT30570 Admin Console</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30571_data_room.html'">QNT30571 Data Room</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30572_fundraising_crm.html'">QNT30572 Fundraising CRM</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30573_lp_update_engine.html'">QNT30573 LP Updates</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30574_secure_inbox.html'">QNT30574 Secure Inbox</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30575_onboarding_checklist.html'">QNT30575 Checklist</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30576_identity_vault.html'">QNT30576 Identity Vault</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30577_compliance_queue.html'">QNT30577 Compliance Queue</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30578_subscription_esign.html'">QNT30578 Subscription Docs</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30579_capital_call_engine.html'">QNT30579 Capital Calls</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30580_allocation_closing.html'">QNT30580 Closing Workflow</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30581_fund_close_ledger.html'">QNT30581 Fund Close</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30558_hardening_audit_center.html'">Hardening Audit</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30559_production_security_center.html'">Production Security</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30560_router_decomposition_center.html'">Router Decomposition</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30561_broker_execution_decomposition_center.html'">Broker Decomposition</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30562_capital_governance_decomposition_center.html'">Capital Governance Decomposition</button></div>
+    </div>
+
+    
+<div class="panel" style="margin-bottom:18px">
+  <div class="section-title">
+    <h2>Conversation Mission Access</h2>
+  </div>
+  <div class="tiny">
+    Buttons for QNT30484–QNT30495 were added directly into the top command-center button cluster.
+    Open <strong>Conversation Missions</strong> for the full mission list.
+  </div>
+</div>
+
+    <div class="metric-grid">
+      <div class="metric"><div class="label">Operator</div><div class="value" id="m_operator">-</div></div>
+      <div class="metric"><div class="label" id="label_allocated">Allocated Capital</div><div class="value" id="m_allocated">-</div></div>
+      <div class="metric"><div class="label" id="label_used">Used Capital</div><div class="value" id="m_used">-</div></div>
+      <div class="metric"><div class="label" id="label_remaining">Remaining Capital</div><div class="value" id="m_remaining">-</div></div>
+      <div class="metric"><div class="label">Running Strategies</div><div class="value" id="m_running">-</div></div>
+      <div class="metric"><div class="label">Realized PnL</div><div class="value" id="m_realized">-</div></div>
+      <div class="metric"><div class="label">Risk State</div><div class="value" id="m_risk">-</div></div>
+      <div class="metric"><div class="label" id="label_capital_source">Capital Source</div><div class="value" id="m_capital_source">-</div></div>
+      <div class="metric"><div class="label">Layer</div><div class="value" id="m_layer">QNT30419</div></div>
+    </div>
+
+    <div class="grid-main">
+      <div class="stack">
+        <div class="panel">
+          <div class="section-title"><h2>Auth + Session</h2><span class="tiny" id="session_hint">No session loaded</span></div>
+          <div class="two-col">
+            <div>
+              <input id="reg_name" placeholder="Display name">
+              <input id="reg_email" placeholder="Email">
+              <input id="reg_password" type="password" placeholder="Password">
+              <button onclick="registerUser()">Register</button>
+            </div>
+            <div>
+              <input id="login_email" placeholder="Email">
+              <input id="login_password" type="password" placeholder="Password">
+              <div class="hero-actions">
+                <button onclick="loginUser()">Login</button>
+                <button class="secondary" onclick="logoutUser()">Logout</button>
+              </div>
+            </div>
+          </div>
+          <pre id="auth_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Strategy Registry + Lifecycle</h2><button class="secondary" onclick="loadStrategyPerformance()">Load Engine</button></div>
+          <div class="four-col">
+            <input id="strategy_name" placeholder="Strategy name">
+            <input id="strategy_symbol" placeholder="Symbol" value="AAPL">
+            <select id="strategy_side"><option value="buy">buy</option><option value="sell">sell</option></select>
+            <input id="strategy_qty" type="number" placeholder="Default qty" value="1">
+          </div>
+          <div class="three-col" style="margin-top:10px">
+            <input id="strategy_capital_limit" type="number" placeholder="Strategy capital limit (optional)">
+            <select id="strategy_mode"><option value="inherit">inherit command center mode</option><option value="internal">force internal</option><option value="alpaca">force alpaca</option></select>
+            <button onclick="registerStrategy()">Register Strategy</button>
+          </div>
+          <div class="four-col" style="margin-top:10px">
+            <input id="manage_strategy_id" placeholder="Strategy ID">
+            <button class="secondary" onclick="strategyLifecycle('start')">Start</button>
+            <button class="warn" onclick="strategyLifecycle('stop')">Stop</button>
+            <button class="danger" onclick="deleteStrategy()">Delete</button>
+          </div>
+          <div id="workspace_summary" class="tiny" style="margin-top:10px">Strategy engine not loaded.</div>
+          <pre id="workspace_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Operator Capital + Run Control</h2><button class="secondary" onclick="loadWorkspace()">Load Workspace</button></div>
+          <div class="four-col">
+            <div>
+              <input id="operator_capital" type="number" placeholder="Allocated capital">
+              <button onclick="setCapital()">Set My Capital</button>
+            </div>
+            <div>
+              <select id="run_mode"><option value="internal">execution: internal</option><option value="alpaca">execution: alpaca</option></select>
+              <button class="secondary" onclick="runOnce()">Run All Running Strategies Once</button>
+            </div>
+            <div>
+              <select id="capital_source_mode"><option value="internal">capital source: internal allocation</option><option value="broker">capital source: alpaca broker</option></select>
+              <button class="secondary" onclick="updateCapitalSource()">Set Capital Source</button>
+            </div>
+            <div>
+              <input id="toggle_strategy_id" placeholder="Strategy ID to toggle">
+              <select id="toggle_strategy_enabled"><option value="true">enabled</option><option value="false">disabled</option></select>
+              <button class="secondary" onclick="toggleStrategy()">Toggle Enable</button>
+            </div>
+          </div>
+          <div class="muted" style="margin-top:8px">Use <b>execution</b> to choose where orders go. Use <b>capital source</b> to choose whether Quantora uses internal allocated capital or Alpaca broker buying power.</div>
+          <div id="capital_source_pills" class="pills" style="margin-top:10px"></div>
+          <div id="capital_pills" class="pills"></div>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Execution Feed</h2><button class="secondary" onclick="loadOrders()">Load Orders</button></div>
+          <div id="orders_table"></div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="panel">
+          <div class="section-title"><h2>Strategy Performance Grid</h2><button class="secondary" onclick="loadStrategyPerformance()">Refresh</button></div>
+          <div id="strategy_table"></div>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Strategy Execution Logs</h2><button class="secondary" onclick="loadStrategyLogs()">Refresh Logs</button></div>
+          <div id="strategy_logs" class="card-list"></div>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Alpaca Broker Layer</h2><button class="secondary" onclick="loadBroker()">Refresh Broker</button></div>
+          <div class="tiny">Use env vars on Railway or connect from the panel below for local testing.</div>
+          <div class="three-col" style="margin-top:10px">
+            <div>
+              <input id="alpaca_key" placeholder="APCA API Key ID">
+              <input id="alpaca_base" placeholder="Base URL" value="https://paper-api.alpaca.markets">
+            </div>
+            <div>
+              <input id="alpaca_secret" type="password" placeholder="APCA Secret Key">
+              <select id="alpaca_paper"><option value="true">paper</option><option value="false">live</option></select>
+            </div>
+            <div>
+              <button onclick="connectAlpaca()">Connect Alpaca</button>
+              <button class="secondary" onclick="useRailwayEnvBroker()">Use Railway Env</button>
+              <button class="secondary" onclick="loadBroker()">Reload Status</button>
+              <button class="danger" onclick="disconnectAlpaca()">Disconnect</button>
+            </div>
+          </div>
+          <div id="broker_pills" class="pills"></div>
+          <pre id="broker_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Manual Broker Order</h2><button class="secondary" onclick="submitManualOrder()">Submit Order</button></div>
+          <div class="three-col">
+            <div>
+              <input id="manual_symbol" placeholder="Symbol" value="AAPL">
+              <select id="manual_side"><option value="buy">buy</option><option value="sell">sell</option></select>
+            </div>
+            <div>
+              <input id="manual_qty" type="number" placeholder="Qty" value="1">
+              <select id="manual_mode"><option value="alpaca">alpaca</option><option value="internal">internal</option></select>
+            </div>
+            <div>
+              <button onclick="submitManualOrder()">Submit Manual Order</button>
+            </div>
+          </div>
+          <pre id="manual_order_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Positions + Open Orders</h2><button class="secondary" onclick="loadBroker()">Refresh</button></div>
+          <div id="broker_positions_table"></div>
+          <div id="broker_orders_table"></div>
+        </div>
+      </div>
+
+      <div class="stack">
+
+        <div class="panel">
+          <div class="section-title"><h2>Risk Engine</h2><button class="secondary" onclick="loadRisk()">Load Risk</button></div>
+          <div class="four-col">
+            <select id="risk_enabled"><option value="true">risk enabled</option><option value="false">risk disabled</option></select>
+            <input id="risk_max_position" type="number" placeholder="Max position notional">
+            <input id="risk_max_total" type="number" placeholder="Max total exposure">
+            <input id="risk_max_dd" type="number" placeholder="Max drawdown %">
+          </div>
+          <div class="four-col" style="margin-top:10px">
+            <input id="risk_max_daily_loss" type="number" placeholder="Max daily loss">
+            <input id="risk_max_orders" type="number" placeholder="Max orders per run">
+            <select id="risk_require_broker"><option value="true">alpaca broker required</option><option value="false">alpaca broker optional</option></select>
+            <select id="risk_auto_shutdown"><option value="true">auto shutdown on breach</option><option value="false">manual shutdown only</option></select>
+          </div>
+          <div class="hero-actions" style="margin-top:10px">
+            <button onclick="updateRiskConfig()">Update Risk</button>
+            <button class="danger" onclick="toggleKillSwitch(true)">Kill Switch</button>
+            <button class="secondary" onclick="toggleKillSwitch(false)">Release Kill Switch</button>
+          </div>
+          <div id="risk_pills" class="pills"></div>
+          <pre id="risk_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Governance + Policy Engine</h2><button class="secondary" onclick="loadGovernance()">Load Governance</button></div>
+          <div class="two-col">
+            <div>
+              <input id="policy_id" placeholder="Policy ID">
+              <input id="policy_threshold" type="number" placeholder="Threshold">
+              <select id="policy_enabled"><option value="true">enabled</option><option value="false">disabled</option></select>
+              <button onclick="updatePolicy()">Update Policy</button>
+            </div>
+            <div>
+              <input id="approval_request_id" placeholder="Approval Request ID">
+              <select id="approval_decision"><option value="APPROVED">APPROVED</option><option value="REJECTED">REJECTED</option></select>
+              <input id="approval_notes" placeholder="Approval notes">
+              <button class="warn" onclick="decideApproval()">Decide Approval</button>
+            </div>
+          </div>
+          <div id="policy_pills" class="pills"></div>
+          <pre id="gov_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Multi-Operator Platform</h2><button class="secondary" onclick="loadMultiOperator()">Load Platform</button></div>
+          <div class="three-col">
+            <div>
+              <input id="select_operator_id" placeholder="Operator ID for admin selection">
+              <button onclick="selectOperatorContext()">Select Operator Context</button>
+              <button class="secondary" onclick="switchOperatorContext()">Switch Active Operator</button>
+            </div>
+            <div>
+              <input id="allocate_total_capital" type="number" placeholder="Total capital to allocate">
+              <button class="warn" onclick="allocateCapital()">Allocate Capital</button>
+            </div>
+            <div>
+              <input id="compare_operator_a" placeholder="Compare operator A">
+              <input id="compare_operator_b" placeholder="Compare operator B">
+              <button class="secondary" onclick="compareOperators()">Compare Operators</button>
+            </div>
+          </div>
+          <div id="multi_operator_pills" class="pills"></div>
+          <div id="leaderboard_table" style="margin-top:10px"></div>
+          <div id="compare_table" style="margin-top:10px"></div>
+          <pre id="multi_operator_out">Ready.</pre>
+        </div>
+
+        
+        
+<div class="panel">
+  <div class="section-title"><h2>Strategy Intelligence Engine</h2><button class="secondary" onclick="loadStrategySignals()">Load Signals</button></div>
+  <div class="three-col">
+    <div>
+      <select id="signal_market_bias"><option value="neutral">neutral</option><option value="bullish">bullish</option><option value="range">range</option><option value="bearish">bearish</option></select>
+      <button onclick="loadStrategySignals()">Refresh Signals</button>
+    </div>
+    <div>
+      <select id="signal_execution_mode"><option value="internal">internal</option><option value="alpaca">alpaca</option></select>
+      <button class="warn" onclick="runStrategyIntelligenceCycle()">Run Intelligent Cycle</button>
+    </div>
+    <div id="signal_pills" class="pills"></div>
+  </div>
+  <div id="strategy_signal_table" style="margin-top:10px"></div>
+  <pre id="strategy_signal_out">Ready.</pre>
+</div>
+
+        
+        
+        <div class="panel">
+          <div class="section-title"><h2>Broker Order Routing</h2><button class="secondary" onclick="loadBrokerRouting()">Load Broker Routing</button></div>
+          <div class="three-col">
+            <div>
+              <input id="broker_symbol" placeholder="symbol" value="AAPL" />
+              <select id="broker_side">
+                <option value="buy">buy</option>
+                <option value="sell">sell</option>
+              </select>
+              <input id="broker_qty" type="number" step="0.01" value="1" />
+            </div>
+            <div>
+              <select id="broker_mode">
+                <option value="paper">paper</option>
+                <option value="live">live</option>
+              </select>
+              <label><input type="checkbox" id="broker_governance" /> governance approved</label>
+              <button onclick="submitBrokerRoute()">Submit Broker Order</button>
+            </div>
+            <div id="broker_routing_pills" class="pills"></div>
+          </div>
+          <div id="broker_routing_table" style="margin-top:10px"></div>
+          <pre id="broker_routing_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Execution Engine</h2><button class="secondary" onclick="loadExecutionStatus()">Load Execution</button></div>
+          <div class="three-col">
+            <div>
+              <select id="exec_market_bias">
+                <option value="neutral">neutral</option>
+                <option value="bullish">bullish</option>
+                <option value="range">range</option>
+                <option value="bearish">bearish</option>
+              </select>
+              <button onclick="loadExecutionStatus()">Refresh Execution</button>
+            </div>
+            <div>
+              <select id="exec_mode">
+                <option value="internal">internal</option>
+                <option value="alpaca">alpaca</option>
+              </select>
+              <button onclick="startExecution()">Start Execution</button>
+              <button class="warn" onclick="runExecutionCycle()">Run Execution Once</button>
+              <button class="danger" onclick="stopExecution()">Stop Execution</button>
+            </div>
+            <div id="execution_pills" class="pills"></div>
+          </div>
+          <div id="execution_order_table" style="margin-top:10px"></div>
+          <div id="execution_position_table" style="margin-top:10px"></div>
+          <pre id="execution_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>AI Activation Layer</h2><button class="secondary" onclick="loadAIActivation()">Load AI</button></div>
+          <div class="three-col">
+            <div>
+              <select id="ai_market_bias"><option value="neutral">neutral</option><option value="bullish">bullish</option><option value="range">range</option><option value="bearish">bearish</option></select>
+              <button onclick="loadAIActivation()">Refresh Suggestions</button>
+            </div>
+            <div id="ai_status_pills" class="pills"></div>
+            <div id="ai_risk_pills" class="pills"></div>
+          </div>
+          <div id="ai_strategy_table" style="margin-top:10px"></div>
+          <div id="ai_capital_table" style="margin-top:10px"></div>
+          <div id="ai_insight_table" style="margin-top:10px"></div>
+          <pre id="ai_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Admin Control Tower</h2><button class="secondary" onclick="loadControlTower()">Load Tower</button></div>
+          <input id="admin_operator_id" placeholder="Target operator ID">
+          <input id="admin_operator_capital" type="number" placeholder="Allocated capital">
+          <button onclick="adminSetCapital()">Admin Set Operator Capital</button>
+          <select id="admin_loop_mode"><option value="internal">internal</option><option value="alpaca">alpaca</option></select>
+          <input id="admin_loop_interval" type="number" value="60" placeholder="Interval seconds">
+          <button class="secondary" onclick="adminStartLoop()">Admin Start Loop</button>
+          <button class="warn" onclick="adminRunAll()">Admin Run All Once</button>
+          <div id="tower_table"></div>
+          <pre id="admin_out">Ready.</pre>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Performance Engine</h2><button class="secondary" onclick="loadPerformance()">Refresh Performance</button></div>
+          <div id="performance_pills" class="pills"></div>
+          <div id="performance_scorecard" class="pills"></div>
+          <div id="performance_table"></div>
+          <div id="performance_curve"></div>
+          <div id="performance_journal"></div>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Recent Governance Events</h2><button class="secondary" onclick="loadLedger()">Ledger</button></div>
+          <div id="events_list" class="card-list"></div>
+        </div>
+
+        <div class="panel">
+          <div class="section-title"><h2>Command Center Console</h2><button class="secondary" onclick="loadSnapshot()">Reload Snapshot</button></div>
+          <pre id="snapshot_out">Ready.</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+const el = (id) => document.getElementById(id);
+const val = (id) => el(id)?.value ?? '';
+const fmt = (v) => (v === null || v === undefined || Number.isNaN(Number(v))) ? '-' : Number(v).toFixed(2);
+const truthy = (v) => v === true || v === 'true' || v === 1 || v === '1';
+
+async function api(path, method='GET', body=null){
+  const opts = { method, headers: {'Content-Type':'application/json'} };
+  if (body !== null) opts.body = JSON.stringify(body);
+  const res = await fetch(path, opts);
+  const text = await res.text();
+  let data;
+  try { data = text ? JSON.parse(text) : {}; } catch { data = { raw: text }; }
+  if (!res.ok) {
+    if (typeof data !== 'object' || data === null) data = { error: 'HTTP_ERROR', reason: String(text || res.statusText) };
+    data.__http_status = res.status;
+    data.error = data.error || data.detail || 'HTTP_ERROR';
+    data.reason = data.reason || data.detail || res.statusText;
+  }
+  return data;
+}
+
+function setText(id, value){ const node = el(id); if (node) node.textContent = typeof value === 'string' ? value : JSON.stringify(value, null, 2); }
+function setHTML(id, html){ const node = el(id); if (node) node.innerHTML = html; }
+function pill(label, className=''){ return `<span class="pill ${className}">${label}</span>`; }
+function pills(items){ return (items||[]).map(i => pill(i.label, i.className || '')).join(''); }
+function esc(v){ return String(v ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+function tableFromRows(rows, keys){
+  if (!rows || !rows.length) return '<div class="tiny">No data.</div>';
+  const cols = keys.map(k => typeof k === 'string' ? {key:k, label:k} : k);
+  const head = '<tr>' + cols.map(c => `<th>${esc(c.label || c.key)}</th>`).join('') + '</tr>';
+  const body = rows.map(row => '<tr>' + cols.map(c => {
+    const value = c.render ? c.render(row[c.key], row) : row[c.key];
+    return `<td>${esc(value ?? '')}</td>`;
+  }).join('') + '</tr>').join('');
+  return `<div class="table-wrap"><table><thead>${head}</thead><tbody>${body}</tbody></table></div>`;
+}
+function renderEvents(items){
+  if (!items || !items.length) return '<div class="tiny">No events.</div>';
+  return items.map(item => `<div class="event"><div><strong>${esc(item.action || item.event_type || item.policy_id || item.request_id || 'event')}</strong></div><div>${esc(item.reason || item.message || item.target || '')}</div><div class="meta">${esc(item.timestamp || item.updated_at || item.created_at || '')}</div></div>`).join('');
+}
+function updateNorthStar(workspace){
+  if (!workspace) return;
+  const capital = workspace.capital || {};
+  const execution = workspace.execution_summary || {};
+  const risk = workspace.risk_engine || {};
+  const mode = capital.mode || workspace.capital_source?.mode || 'internal';
+  const brokerMode = mode === 'broker';
+  setText('m_operator', workspace.display_name || workspace.operator_id || '-');
+  setText('m_allocated', fmt(brokerMode ? capital.current_equity : capital.allocated_capital));
+  setText('m_used', fmt(capital.used_capital));
+  setText('m_remaining', fmt(brokerMode ? capital.buying_power : capital.remaining_capital));
+  setText('m_running', String(execution.running_strategies ?? workspace.strategies?.running_strategies ?? 0));
+  setText('m_realized', fmt(execution.realized_pnl ?? workspace.strategies?.portfolio_realized_pnl ?? 0));
+  setText('m_risk', risk.status || 'SAFE');
+  setText('m_capital_source', `${mode}${capital.label ? ' / ' + capital.label : ''}`);
+  const a = el('label_allocated'); const r = el('label_remaining');
+  if (a) a.textContent = brokerMode ? 'Current Equity' : 'Allocated Capital';
+  if (r) r.textContent = brokerMode ? 'Buying Power' : 'Remaining Capital';
+}
+function showResponse(id, data){ setText(id, data); return data; }
+
+async function loadAuthMe(){
+  const data = await api('/auth/me');
+  const hint = el('session_hint');
+  if (hint) hint.textContent = data.logged_in ? `${data.display_name || 'Operator'} · ${data.email || '-'}` : 'No session loaded';
+  return data;
+}
+
+async function registerUser(){
+  const data = await api('/auth/register', 'POST', { display_name: val('reg_name'), email: val('reg_email'), password: val('reg_password') });
+  showResponse('auth_out', data);
+  await loadAuthMe();
+  await loadControlTower();
+}
+
+async function loginUser(){
+  const data = await api('/auth/login', 'POST', { email: val('login_email'), password: val('login_password') });
+  showResponse('auth_out', data);
+  await refreshAll();
+}
+
+async function logoutUser(){
+  const data = await api('/auth/logout', 'POST', {});
+  showResponse('auth_out', data);
+  await refreshAll();
+}
+
+async function loadWorkspace(){
+  const data = await api('/operator/workspace');
+  showResponse('workspace_out', data);
+  updateNorthStar(data);
+  const capital = data.capital || {};
+  const mode = data.capital_source?.mode || capital.mode || 'internal';
+  if (el('capital_source_mode')) el('capital_source_mode').value = mode;
+  if (el('run_mode') && (data.capital_source?.provider === 'alpaca' || data.capital?.provider === 'alpaca')) {
+    // leave execution route unchanged, but preserve a valid option in the control
+    el('run_mode').value = el('run_mode').value || 'alpaca';
+  }
+  const summary = `${data.execution_summary?.running_strategies || 0} running / ${data.execution_summary?.enabled_strategies || 0} enabled · realized ${fmt(data.execution_summary?.realized_pnl || 0)} · unrealized ${fmt(data.execution_summary?.unrealized_pnl || 0)}`;
+  if (el('workspace_summary')) el('workspace_summary').textContent = summary;
+  setHTML('capital_source_pills', pills([
+    {label:`source ${mode}`, className: mode === 'broker' ? 'good' : 'warn'},
+    {label:`label ${capital.label || '-'}`},
+    {label:`provider ${data.capital_source?.provider || 'internal'}`},
+    {label:`valid ${capital.valid === false ? 'no' : 'yes'}`, className: capital.valid === false ? 'warn' : 'good'},
+    {label:`connected ${capital.connected === false ? 'no' : 'yes'}`, className: capital.connected === false ? 'warn' : 'good'}
+  ]));
+  const capitalItems = mode === 'broker'
+    ? [
+        {label:`equity ${fmt(capital.current_equity)}`},
+        {label:`buying power ${fmt(capital.buying_power)}`},
+        {label:`cash ${fmt(capital.cash)}`},
+        {label:`used ${fmt(capital.used_capital)}`},
+        {label:`utilization ${fmt(capital.utilization_pct)}%`, className:Number(capital.utilization_pct||0) >= 80 ? 'warn':'good'}
+      ]
+    : [
+        {label:`allocated ${fmt(capital.allocated_capital)}`},
+        {label:`used ${fmt(capital.used_capital)}`},
+        {label:`remaining ${fmt(capital.remaining_capital)}`},
+        {label:`utilization ${fmt(capital.utilization_pct)}%`, className:Number(capital.utilization_pct||0) >= 80 ? 'warn':'good'}
+      ];
+  setHTML('capital_pills', pills(capitalItems));
+  return data;
+}
+
+async function registerStrategy(){
+  const body = {
+    name: val('strategy_name'),
+    symbol: (val('strategy_symbol') || 'AAPL').toUpperCase(),
+    side: val('strategy_side') || 'buy',
+    default_qty: Number(val('strategy_qty') || 1),
+    capital_limit: Number(val('strategy_capital_limit') || 0),
+    execution_mode: val('strategy_mode') || 'inherit',
+    enabled: true,
+  };
+  const data = await api('/strategies/register', 'POST', body);
+  showResponse('workspace_out', data);
+  if (data.strategy?.strategy_id && el('manage_strategy_id')) el('manage_strategy_id').value = data.strategy.strategy_id;
+  await loadStrategyPerformance();
+  await loadWorkspace();
+}
+
+async function strategyLifecycle(action){
+  const data = await api('/strategies/lifecycle', 'POST', { strategy_id: val('manage_strategy_id'), action });
+  showResponse('workspace_out', data);
+  await loadStrategyPerformance();
+  await loadWorkspace();
+}
+
+async function deleteStrategy(){
+  const data = await api('/strategies/delete', 'POST', { strategy_id: val('manage_strategy_id') || val('toggle_strategy_id') });
+  showResponse('workspace_out', data);
+  await loadStrategyPerformance();
+  await loadWorkspace();
+}
+
+async function toggleStrategy(){
+  const data = await api('/strategies/toggle', 'POST', { strategy_id: val('toggle_strategy_id'), enabled: truthy(val('toggle_strategy_enabled')) });
+  showResponse('workspace_out', data);
+  await loadStrategyPerformance();
+  await loadWorkspace();
+}
+
+async function loadStrategyPerformance(){
+  const data = await api('/strategies/performance');
+  const rows = (data.strategies || []).map(s => ({
+    name: s.name,
+    strategy_id: s.strategy_id,
+    status: s.status,
+    enabled: s.enabled,
+    symbol: s.symbol,
+    side: s.side,
+    qty: s.default_qty,
+    mode: s.execution_mode,
+    cap_limit: fmt(s.capital_limit),
+    cap_used: fmt(s.metrics?.capital_in_use),
+    realized: fmt(s.metrics?.realized_pnl),
+    unrealized: fmt(s.metrics?.unrealized_pnl),
+    orders: s.metrics?.orders_count ?? 0,
+    win_rate: fmt(s.metrics?.win_rate)
+  }));
+  setHTML('strategy_table', tableFromRows(rows, [
+    {key:'name',label:'Strategy'},{key:'strategy_id',label:'ID'},{key:'status',label:'Status'},{key:'enabled',label:'Enabled'},{key:'symbol',label:'Symbol'},{key:'side',label:'Side'},{key:'qty',label:'Qty'},{key:'mode',label:'Mode'},{key:'cap_limit',label:'Cap Limit'},{key:'cap_used',label:'Cap Used'},{key:'realized',label:'Realized'},{key:'unrealized',label:'Unrealized'},{key:'orders',label:'Orders'},{key:'win_rate',label:'Win Rate %'}
+  ]));
+  return data;
+}
+
+async function loadStrategyLogs(){
+  const data = await api('/strategies/logs');
+  setHTML('strategy_logs', renderEvents(data.logs || []));
+  return data;
+}
+
+async function setCapital(){
+  const data = await api('/allocator/operator-capital/set', 'POST', { allocated_capital: Number(val('operator_capital') || 0) });
+  showResponse('workspace_out', data);
+  await loadWorkspace();
+  await loadRisk();
+}
+
+async function runOnce(){
+  const data = await api('/operator/run-once', 'POST', { execution_mode: val('run_mode') || 'internal' });
+  showResponse('workspace_out', data);
+  await loadWorkspace();
+  await loadOrders();
+  await loadPerformance();
+}
+
+async function updateCapitalSource(){
+  const rawMode = (val('capital_source_mode') || 'internal').toLowerCase();
+  const mode = rawMode === 'alpaca' ? 'broker' : rawMode;
+  const data = await api('/capital-source/update', 'POST', { mode });
+  showResponse('workspace_out', data);
+  await loadWorkspace();
+  await loadBroker();
+  await loadRisk();
+}
+
+async function loadOrders(){
+  const data = await api('/orders/list');
+  const rows = data.orders || [];
+  setHTML('orders_table', tableFromRows(rows.slice(0, 25), [
+    {key:'timestamp',label:'Timestamp'},{key:'strategy_name',label:'Strategy'},{key:'symbol',label:'Symbol'},{key:'side',label:'Side'},{key:'qty',label:'Qty'},{key:'notional',label:'Notional',render:v=>fmt(v)},{key:'mode',label:'Mode'},{key:'status',label:'Status'}
+  ]));
+  return data;
+}
+
+async function connectAlpaca(){
+  const apiKey = val('alpaca_key');
+  const secretKey = val('alpaca_secret');
+  const baseUrl = val('alpaca_base') || 'https://paper-api.alpaca.markets';
+  const paper = truthy(val('alpaca_paper'));
+  const route = (apiKey || secretKey) ? '/broker/alpaca/connect' : '/broker/alpaca/use-env';
+  const payload = (apiKey || secretKey) ? {
+    api_key: apiKey,
+    secret_key: secretKey,
+    base_url: baseUrl,
+    paper,
+  } : {};
+  const data = await api(route, 'POST', payload);
+  showResponse('broker_out', data);
+  if (el('capital_source_mode')) el('capital_source_mode').value = 'broker';
+  await loadBroker();
+  await loadWorkspace();
+  await loadRisk();
+}
+
+async function useRailwayEnvBroker(){
+  const data = await api('/broker/alpaca/use-env', 'POST', {});
+  showResponse('broker_out', data);
+  if (el('capital_source_mode')) el('capital_source_mode').value = 'broker';
+  await loadBroker();
+  await loadWorkspace();
+  await loadRisk();
+}
+
+async function disconnectAlpaca(){
+  const data = await api('/broker/alpaca/disconnect', 'POST', {});
+  showResponse('broker_out', data);
+  await loadBroker();
+  await loadWorkspace();
+  await loadRisk();
+}
+
+async function loadBroker(){
+  const data = await api('/broker/alpaca/status');
+  const env = await api('/broker/alpaca/env-status');
+  showResponse('broker_out', data);
+  if (el('alpaca_base')) el('alpaca_base').value = data.base_url || env.base_url || 'https://paper-api.alpaca.markets';
+  if (el('alpaca_paper')) el('alpaca_paper').value = String((data.paper !== false) && (env.paper !== false));
+  setHTML('broker_pills', pills([
+    {label:data.connected ? 'connected' : 'disconnected', className:data.connected ? 'good' : 'warn'},
+    {label:`status ${data.last_status || (data.connected ? 'connected' : 'disconnected')}`, className:data.last_status === 'connected' ? 'good' : (data.last_status === 'error' ? 'bad' : 'warn')},
+    {label:`source ${data.source || 'config'}`},
+    {label:`mode ${data.connection_mode || 'auto'}`},
+    {label:env.env_ready ? 'railway env ready' : 'railway env missing', className:env.env_ready ? 'good' : 'warn'},
+    {label:data.paper ? 'paper' : 'live', className:data.paper ? 'warn' : 'bad'},
+    {label:`equity ${fmt(data.account?.equity)}`},
+    {label:`cash ${fmt(data.account?.cash)}`},
+    {label:`buying power ${fmt(data.account?.buying_power)}`},
+    ...(data.last_error ? [{label:'broker error present', className:'bad'}] : [])
+  ]));
+  setHTML('broker_positions_table', tableFromRows(data.positions || [], ['symbol','qty','market_value','current_price']));
+  setHTML('broker_orders_table', tableFromRows(data.orders || [], ['id','symbol','side','qty','status','filled_avg_price']));
+  return data;
+}
+
+async function submitManualOrder(){
+  const data = await api('/orders/submit', 'POST', {
+    symbol: (val('manual_symbol') || 'AAPL').toUpperCase(),
+    side: val('manual_side') || 'buy',
+    qty: Number(val('manual_qty') || 1),
+    execution_mode: val('manual_mode') || 'internal',
+  });
+  showResponse('manual_order_out', data);
+  if (data?.detail || data?.error) console.log('manual order response', data);
+  await loadBroker();
+  await loadOrders();
+  await loadWorkspace();
+  await loadPerformance();
+  await loadRisk();
+}
+
+async function loadRisk(){
+  const data = await api('/risk-engine/status');
+  showResponse('risk_out', data);
+  const cfg = data.config || {};
+  if (el('risk_enabled')) el('risk_enabled').value = String(cfg.enabled !== false);
+  if (el('risk_max_position')) el('risk_max_position').value = cfg.max_position_notional ?? 5000;
+  if (el('risk_max_total')) el('risk_max_total').value = cfg.max_total_exposure ?? 20000;
+  if (el('risk_max_dd')) el('risk_max_dd').value = cfg.max_drawdown_pct ?? 12;
+  if (el('risk_max_daily_loss')) el('risk_max_daily_loss').value = cfg.max_daily_loss ?? 1500;
+  if (el('risk_max_orders')) el('risk_max_orders').value = cfg.max_orders_per_run ?? 3;
+  if (el('risk_require_broker')) el('risk_require_broker').value = String(cfg.require_broker_for_alpaca !== false);
+  if (el('risk_auto_shutdown')) el('risk_auto_shutdown').value = String(cfg.auto_shutdown_on_breach !== false);
+  setHTML('risk_pills', pills([
+    {label:`risk ${String(cfg.enabled !== false) ? 'enabled' : 'disabled'}`, className:String(cfg.enabled !== false) ? 'good':'warn'},
+    {label:`kill switch ${cfg.kill_switch_active ? 'active' : 'released'}`, className:cfg.kill_switch_active ? 'bad':'good'},
+    {label:`capital ${data.capital_source?.mode || '-'}/${data.capital_source?.label || '-'}`},
+    {label:`drawdown ${fmt(data.totals?.current_drawdown_pct)}%`, className:Number(data.totals?.current_drawdown_pct || 0) > Number(cfg.max_drawdown_pct || 0) ? 'bad':'good'},
+    {label:`daily pnl ${fmt(data.totals?.current_daily_realized_pnl)}`}
+  ]));
+  return data;
+}
+
+async function updateRiskConfig(){
+  const data = await api('/risk-engine/config/update', 'POST', {
+    enabled: truthy(val('risk_enabled')),
+    max_position_notional: Number(val('risk_max_position') || 5000),
+    max_total_exposure: Number(val('risk_max_total') || 20000),
+    max_drawdown_pct: Number(val('risk_max_dd') || 12),
+    max_daily_loss: Number(val('risk_max_daily_loss') || 1500),
+    max_orders_per_run: Number(val('risk_max_orders') || 3),
+    require_broker_for_alpaca: truthy(val('risk_require_broker')),
+    auto_shutdown_on_breach: truthy(val('risk_auto_shutdown')),
+  });
+  showResponse('risk_out', data);
+  await loadRisk();
+  await loadWorkspace();
+}
+
+async function toggleKillSwitch(active){
+  const data = await api('/risk-engine/kill-switch', 'POST', { active: !!active, note: active ? 'Activated from UI' : 'Released from UI' });
+  showResponse('risk_out', data);
+  await loadRisk();
+  await loadExecutionStatus();
+  await loadWorkspace();
+}
+
+async function loadGovernance(){
+  const [policies, approvals] = await Promise.all([api('/policy-engine/policies'), api('/approvals/queue')]);
+  showResponse('gov_out', { policies, approvals });
+  setHTML('policy_pills', pills((policies.policies || []).map(p => ({ label:`${p.policy_id} · threshold ${p.threshold} · ${p.enabled ? 'enabled':'disabled'}`, className:p.enabled ? 'good':'warn' }))));
+  if (!val('policy_id') && policies.policies?.length) {
+    el('policy_id').value = policies.policies[0].policy_id;
+    el('policy_threshold').value = policies.policies[0].threshold;
+    el('policy_enabled').value = String(!!policies.policies[0].enabled);
+  }
+  setHTML('events_list', renderEvents((approvals.requests || []).slice(0, 12)));
+  return { policies, approvals };
+}
+
+async function updatePolicy(){
+  const data = await api('/policy-engine/policies/update', 'POST', {
+    policy_id: val('policy_id'),
+    threshold: Number(val('policy_threshold') || 0),
+    enabled: truthy(val('policy_enabled')),
+  });
+  showResponse('gov_out', data);
+  await loadGovernance();
+}
+
+async function decideApproval(){
+  const data = await api('/approvals/decision', 'POST', {
+    request_id: val('approval_request_id'),
+    decision: (val('approval_decision') || 'APPROVED').toLowerCase(),
+    notes: val('approval_notes') || '',
+  });
+  showResponse('gov_out', data);
+  await loadGovernance();
+  await loadControlTower();
+}
+
+async function loadControlTower(){
+  const data = await api('/admin/control-tower');
+  showResponse('admin_out', data);
+  const rows = (data.operators || []).map(op => ({
+    operator_id: op.operator_id,
+    display_name: op.display_name,
+    capital_mode: op.capital?.mode || op.capital_source?.mode || '-',
+    allocated: fmt(op.capital?.allocated_capital),
+    remaining: fmt(op.capital?.remaining_capital),
+    running: op.execution_summary?.running_strategies ?? 0,
+    realized: fmt(op.execution_summary?.realized_pnl),
+    risk: op.risk_engine?.status || '-'
+  }));
+  setHTML('tower_table', tableFromRows(rows, ['operator_id','display_name','capital_mode','allocated','remaining','running','realized','risk']));
+  return data;
+}
+
+async function adminSetCapital(){
+  const data = await api('/admin/operator-capital/set', 'POST', { operator_id: val('admin_operator_id'), allocated_capital: Number(val('admin_operator_capital') || 0) });
+  showResponse('admin_out', data);
+  await loadControlTower();
+}
+
+async function adminStartLoop(){
+  const data = await api('/admin/operator-loop/start', 'POST', { operator_id: val('admin_operator_id'), execution_mode: val('admin_loop_mode') || 'internal', interval_seconds: Number(val('admin_loop_interval') || 60) });
+  showResponse('admin_out', data);
+  await loadControlTower();
+}
+
+async function adminRunAll(){
+  const data = await api('/admin/run-all-once', 'POST', {});
+  showResponse('admin_out', data);
+  await loadControlTower();
+  await loadOrders();
+}
+
+async function loadMultiOperator(){
+  const [overview, leaderboard] = await Promise.all([api('/multi-operator/overview'), api('/multi-operator/leaderboard')]);
+  showResponse('multi_operator_out', { overview, leaderboard });
+  setHTML('multi_operator_pills', pills([
+    {label:`operators ${overview.totals?.operators || 0}`},
+    {label:`active strategies ${overview.totals?.active_strategies || 0}`},
+    {label:`total realized ${fmt(overview.totals?.total_realized_pnl)}`},
+    {label:`avg score ${fmt(overview.totals?.average_score)}`}
+  ]));
+  setHTML('leaderboard_table', tableFromRows((leaderboard.leaderboard || []).map(r => ({
+    operator_id:r.operator_id,
+    display_name:r.display_name,
+    score:fmt(r.score),
+    realized:fmt(r.realized_pnl),
+    unrealized:fmt(r.unrealized_pnl),
+    capital:fmt(r.allocated_capital)
+  })), ['operator_id','display_name','score','realized','unrealized','capital']));
+  return { overview, leaderboard };
+}
+
+async function selectOperatorContext(){
+  const data = await api('/admin/operator-context/select', 'POST', { operator_id: val('select_operator_id') });
+  showResponse('multi_operator_out', data);
+  await refreshAll();
+}
+
+async function switchOperatorContext(){
+  const data = await api('/multi-operator/switch', 'POST', { operator_id: val('select_operator_id') });
+  showResponse('multi_operator_out', data);
+  await refreshAll();
+}
+
+async function allocateCapital(){
+  const data = await api('/multi-operator/allocate', 'POST', { total_capital: Number(val('allocate_total_capital') || 0) });
+  showResponse('multi_operator_out', data);
+  await loadMultiOperator();
+  await loadControlTower();
+}
+
+async function compareOperators(){
+  const data = await api('/multi-operator/compare', 'POST', { operator_a_id: val('compare_operator_a'), operator_b_id: val('compare_operator_b') });
+  showResponse('multi_operator_out', data);
+  const rows = [];
+  const a = data.operator_a || {}; const b = data.operator_b || {};
+  for (const key of ['display_name','operator_id','capital_mode','allocated_capital','remaining_capital','realized_pnl','unrealized_pnl','score']) {
+    rows.push({ metric:key, operator_a:a[key], operator_b:b[key] });
+  }
+  setHTML('compare_table', tableFromRows(rows, ['metric','operator_a','operator_b']));
+}
+
+async function loadAIActivation(){
+  const [status, strategies, capital, risk, insights] = await Promise.all([
+    api('/ai-platform/status'),
+    api('/ai-platform/strategy-suggestions', 'POST', { market_bias: val('ai_market_bias') || 'neutral' }),
+    api('/ai-platform/capital-recommendations'),
+    api('/ai-platform/risk-adjustments'),
+    api('/ai-platform/operator-insights')
+  ]);
+  showResponse('ai_out', { status, strategies, capital, risk, insights });
+  setHTML('ai_status_pills', pills([
+    {label:`mission ${status.mission || '-'}`},
+    {label:`layer ${status.layer || '-'}`},
+    {label:`ai ${status.ai_enabled ? 'enabled' : 'disabled'}`, className: status.ai_enabled ? 'good':'warn'},
+    {label:`mode ${status.mode || '-'}`}
+  ]));
+  setHTML('ai_risk_pills', pills((risk.items || []).slice(0, 6).map(item => ({ label:`${item.title || item.name || 'risk'} ${item.value || item.recommendation || ''}` }))));
+  setHTML('ai_strategy_table', tableFromRows((strategies.items || strategies.signals || []).map(item => ({
+    name:item.name || item.strategy_name || item.symbol,
+    symbol:item.symbol,
+    action:item.action || item.suggestion || item.side,
+    confidence:item.confidence ?? item.conviction,
+    note:item.note || item.reason || item.summary
+  })), ['name','symbol','action','confidence','note']));
+  setHTML('ai_capital_table', tableFromRows((capital.items || []).map(item => ({ bucket:item.bucket || item.name || item.operator_id, target:item.target || item.weight || item.allocation, reason:item.reason || item.summary || '' })), ['bucket','target','reason']));
+  setHTML('ai_insight_table', tableFromRows((insights.items || []).map(item => ({ title:item.title || item.name, detail:item.detail || item.summary || item.message || '' })), ['title','detail']));
+  return { status, strategies, capital, risk, insights };
+}
+
+async function loadStrategySignals(){
+  const data = await api(`/strategy-engine/signals?market_bias=${encodeURIComponent(val('signal_market_bias') || 'neutral')}`);
+  showResponse('strategy_signal_out', data);
+  if (el('signal_execution_mode')) el('signal_execution_mode').value = val('signal_execution_mode') || 'internal';
+  setHTML('signal_pills', pills([
+    {label:`bias ${data.market_bias || 'neutral'}`},
+    {label:`actionable ${data.actionable || 0}`},
+    {label:`running ${data.running_strategies || 0}`},
+    {label:`total ${data.total_strategies || 0}`}
+  ]));
+  setHTML('strategy_signal_table', tableFromRows((data.signals || []).map(s => ({
+    strategy_id:s.strategy_id,
+    symbol:s.symbol,
+    action:s.action,
+    order_side:s.order_side,
+    order_qty:s.order_qty,
+    conviction:s.conviction,
+    reason:s.reason
+  })), ['strategy_id','symbol','action','order_side','order_qty','conviction','reason']));
+  return data;
+}
+
+async function runStrategyIntelligenceCycle(){
+  const data = await api('/strategy-engine/run-cycle', 'POST', { execution_mode: val('signal_execution_mode') || 'internal', market_bias: val('signal_market_bias') || 'neutral' });
+  showResponse('strategy_signal_out', data);
+  await loadStrategySignals();
+  await loadOrders();
+  await loadWorkspace();
+  await loadPerformance();
+}
+
+async function loadLedger(){
+  const data = await api('/governance/ledger');
+  setHTML('events_list', renderEvents((data.events || []).slice(0, 20)));
+  return data;
+}
+
+async function loadSnapshot(){
+  const data = await api('/command-center/snapshot');
+  showResponse('snapshot_out', data);
+  return data;
+}
+
+async function loadPerformance(){
+  const data = await api('/performance/metrics');
+  setHTML('performance_pills', pills([
+    {label:`realized ${fmt(data.summary?.realized_pnl)}`},
+    {label:`unrealized ${fmt(data.summary?.unrealized_pnl)}`},
+    {label:`closed trades ${data.summary?.closed_trades || 0}`},
+    {label:`win rate ${fmt(data.summary?.win_rate)}%`}
+  ]));
+  setHTML('performance_scorecard', pills(Object.entries(data.scorecard || {}).slice(0, 8).map(([k,v]) => ({ label:`${k} ${typeof v === 'number' ? fmt(v) : v}` }))));
+  setHTML('performance_table', tableFromRows((data.strategies || []).map(s => ({
+    strategy_id:s.strategy_id,
+    orders:s.orders_count,
+    realized:fmt(s.realized_pnl),
+    unrealized:fmt(s.unrealized_pnl),
+    capital:fmt(s.capital_in_use),
+    win_rate:fmt(s.win_rate)
+  })), ['strategy_id','orders','realized','unrealized','capital','win_rate']));
+  setHTML('performance_curve', tableFromRows((data.equity_curve || []).slice(-20).map(p => ({ timestamp:p.timestamp, equity:fmt(p.equity) })), ['timestamp','equity']));
+  setHTML('performance_journal', tableFromRows((data.trade_journal || []).slice(0, 20).map(j => ({
+    closed_at:j.closed_at || j.timestamp,
+    symbol:j.symbol,
+    side:j.side,
+    qty:j.qty,
+    pnl:fmt(j.realized_pnl || j.pnl),
+    status:j.status
+  })), ['closed_at','symbol','side','qty','pnl','status']));
+  return data;
+}
+
+async function loadBrokerRouting(){
+  const data = await api('/broker-routing/status');
+  showResponse('broker_routing_out', data);
+  const router = data.router || {};
+  setHTML('broker_routing_pills', pills([
+    {label:`paper ${router.paper_count || 0}`},
+    {label:`live ${router.live_count || 0}`},
+    {label:`status ${router.last_route_status || 'idle'}`},
+    {label:`mode ${router.routing_mode || 'paper-first'}`}
+  ]));
+  setHTML('broker_routing_table', tableFromRows((data.recent_broker_orders || []).slice(0, 20), ['id','symbol','side','qty','status','broker_mode','governance_approved']));
+  return data;
+}
+
+async function submitBrokerRoute(){
+  const data = await api('/broker-routing/submit', 'POST', {
+    symbol: (val('broker_symbol') || 'AAPL').toUpperCase(),
+    side: val('broker_side') || 'buy',
+    qty: Number(val('broker_qty') || 1),
+    execution_mode: val('broker_mode') || 'paper',
+    governance_approved: !!el('broker_governance')?.checked,
+  });
+  showResponse('broker_routing_out', data);
+  await loadBrokerRouting();
+  await loadOrders();
+}
+
+async function loadExecutionStatus(){
+  const data = await api('/execution/status');
+  showResponse('execution_out', data);
+  const engine = data.engine || {};
+  setHTML('execution_pills', pills([
+    {label:`running ${engine.running ? 1 : 0}`},
+    {label:`last count ${engine.last_executed_count || 0}`},
+    {label:`mode ${engine.last_execution_mode || 'internal'}`},
+    {label:`bias ${engine.last_market_bias || 'neutral'}`}
+  ]));
+  setHTML('execution_order_table', tableFromRows((data.active_orders || []).slice(0, 20), ['id','symbol','side','qty','status','mode','strategy_name']));
+  setHTML('execution_position_table', tableFromRows((data.positions || []).slice(0, 20), ['symbol','qty','market_value','avg_entry','unrealized_pnl']));
+  return data;
+}
+
+async function startExecution(){
+  const data = await api('/execution/start', 'POST', { market_bias: val('exec_market_bias') || 'neutral', execution_mode: val('exec_mode') || 'internal' });
+  showResponse('execution_out', data);
+  await loadExecutionStatus();
+}
+
+async function stopExecution(){
+  const data = await api('/execution/stop', 'POST', {});
+  showResponse('execution_out', data);
+  await loadExecutionStatus();
+}
+
+async function runExecutionCycle(){
+  const data = await api('/execution/run-once', 'POST', { market_bias: val('exec_market_bias') || 'neutral', execution_mode: val('exec_mode') || 'internal' });
+  showResponse('execution_out', data);
+  await loadExecutionStatus();
+  await loadOrders();
+  await loadWorkspace();
+}
+
+async function refreshAll(){
+  await Promise.allSettled([
+    loadAuthMe(),
+    loadWorkspace(),
+    loadStrategyPerformance(),
+    loadStrategyLogs(),
+    loadBroker(),
+    loadRisk(),
+    loadPerformance(),
+    loadGovernance(),
+    loadControlTower(),
+    loadMultiOperator(),
+    loadAIActivation(),
+    loadLedger(),
+    loadOrders(),
+    loadSnapshot(),
+    loadBrokerRouting(),
+    loadExecutionStatus(),
+    loadStrategySignals(),
+  ]);
+}
+
+document.addEventListener('DOMContentLoaded', () => { refreshAll(); });
+</script>
+
+  <script src="qnt30519_dynamic_mission_loader.js"></script>
+  <script>
+    window.addEventListener("DOMContentLoaded", function () {
+      window.QNT30519MissionRegistry.mountButtons();
+    });
+</script>
+
+<div id="mission-button-strip" class="bottom-nav"></div>
+<script>
+(function () {
+  async function loadMissionRegistry() {
+    const candidatePaths = [
+      'mission_registry.json',
+      './mission_registry.json',
+      'frontend/mission_registry.json',
+      './frontend/mission_registry.json'
+    ];
+    let registry = null;
+    for (const path of candidatePaths) {
+      try {
+        const response = await fetch(path, { cache: 'no-store' });
+        if (response.ok) {
+          registry = await response.json();
+          break;
+        }
+      } catch (err) {}
+    }
+    if (!registry || !Array.isArray(registry.missions)) return;
+
+    const containerSelectors = [
+      '#mission-button-strip',
+      '#mission-nav',
+      '.mission-nav',
+      '.bottom-nav',
+      '.quick-nav',
+      '.button-row',
+      '.footer-nav'
+    ];
+
+    let container = null;
+    for (const sel of containerSelectors) {
+      const found = document.querySelector(sel);
+      if (found) {
+        container = found;
+        break;
+      }
+    }
+
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'mission-button-strip';
+      container.style.display = 'flex';
+      container.style.flexWrap = 'wrap';
+      container.style.gap = '8px';
+      container.style.padding = '8px';
+      container.style.marginTop = '12px';
+      document.body.appendChild(container);
+    }
+
+    container.innerHTML = '';
+    registry.missions.sort((a, b) => String(a.code).localeCompare(String(b.code)));
+    registry.missions.forEach((mission) => {
+      const btn = document.createElement('button');
+      btn.className = 'secondary qnt-dynamic-mission';
+      btn.textContent = mission.label;
+      btn.style.whiteSpace = 'nowrap';
+      btn.onclick = function () {
+        window.location.href = mission.path;
+      };
+      container.appendChild(btn);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadMissionRegistry);
+  } else {
+    loadMissionRegistry();
+  }
+})();
+</script>
+</body>
+</html>
+
+<!-- QNT30360 panel added: policy_simulator_panel.html -->
+        <button class="secondary" onclick="window.location.href='fill_capture_position_lifecycle_reconciliation_layer_panel.html'">Lifecycle</button>
+        <button class="secondary" onclick="window.location.href='real_time_pnl_nav_attribution_engine_panel.html'">Performance</button>
+        <button class="secondary" onclick="window.location.href='autonomous_portfolio_rebalancing_allocation_adjustment_layer_panel.html'">Rebalance</button>
+
+<a href="landing.html">Enter Quantora</a>
+
+<button class="secondary" onclick="window.location.href='mission_qnt30583_portfolio_allocation_engine.html'">QNT30583 Allocation Engine</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30584_strategy_sleeve_execution.html'">QNT30584 Sleeve Execution</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30585_trade_attribution.html'">QNT30585 Trade Attribution</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30586_pnl_ledger.html'">QNT30586 PnL Ledger</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30587_performance_waterfall.html'">QNT30587 Waterfall</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30588_statement_pack.html'">QNT30588 Statement Pack</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30589_report_delivery_log.html'">QNT30589 Delivery Log</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30590_reporting_calendar.html'">QNT30590 Reporting Calendar</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30591_cash_ledger.html'">QNT30591 Cash Ledger</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30593_equalization.html'">QNT30593 Equalization</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30594_rollforward.html'">QNT30594 Rollforward</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30595_capital_activity.html'">QNT30595 Capital Activity</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30596_dealing_day.html'">QNT30596 Dealing Day</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30597_nav_strike.html'">QNT30597 NAV Strike</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30598_allocation_confirmation.html'">QNT30598 Allocation Confirmation</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30600_reconciliation.html'">QNT30600 Reconciliation</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30601_exception_resolution.html'">QNT30601 Exception Resolution</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30602_audit_trail.html'">QNT30602 Audit Trail</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30603_broker_reconciliation.html'">QNT30603 Broker Reconciliation</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30604_threeway_reconciliation.html'">QNT30604 Three-Way Recon</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30605_alpaca_live_sync.html'">QNT30605 Alpaca Live Sync</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30606_break_alerts.html'">QNT30606 Break Alerts</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30607_resolution_suggestions.html'">QNT30607 Resolution Suggestions</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30608_correction_execution.html'">QNT30608 Correction Execution</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30609_supervisory_control.html'">QNT30609 Supervisory Control</button>
+
+<button class="secondary" onclick="window.location.href='mission_qnt30615_distribution_console.html'">QNT30615 Distribution Console</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30616_access_control.html'">QNT30616 Access Control</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30617_identity_registry.html'">QNT30617 Identity Registry</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30618_notice_routing.html'">QNT30618 Preference Center</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30619_notification_campaigns.html'">QNT30619 Notification Campaigns</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30620_crm.html'">QNT30620 Investor CRM</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30621_pipeline.html'">QNT30621 Opportunity Pipeline</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30622_meeting_tracker.html'">QNT30622 Meeting Tracker</button>
+
+<button class="secondary" onclick="window.location.href='mission_qnt30624_capital_ledger.html'">QNT30624 Capital Ledger</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30625_waterfall.html'">QNT30625 Waterfall Engine</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30626_equalization.html'">QNT30626 Equalization Engine</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30627_statement_batch.html'">QNT30627 Statement Batch Engine</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30628_performance_engine.html'">QNT30628 Performance Engine</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30629_strategy_execution_engine.html'">QNT30629 Strategy Execution Engine</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30630_allocation_engine.html'">QNT30630 Autonomous Allocation Engine</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30631_broker_integration.html'">QNT30631 Broker Integration Layer</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30632_autonomous_fund_mode.html'">QNT30632 Fully Autonomous Fund Mode</button>
+        <button class="secondary" onclick="window.location.href='mission_qnt30633_governance_compliance.html'">QNT30633 Compliance Audit Governance</button>
+
+<!-- QNT30640 -->
+<!-- Added mission reference: QNT30640 Global Capital Intake System -->

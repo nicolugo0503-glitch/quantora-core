@@ -1,0 +1,6 @@
+QNT30711 integrated on clean deploy root.
+- backend/app/qnt30711_capital_rotation_command_system_router.py
+- frontend/mission_qnt30711_capital_rotation_command_system.html
+- backend/test_qnt30711_smoke.py
+- backend/app/main.py wiring updated
+- frontend/mission_registry.json updated
