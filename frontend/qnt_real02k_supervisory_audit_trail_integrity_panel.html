@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora — QNT-REAL02K Supervisory Audit Trail Integrity</title>
+  <style>
+    :root{--bg:#07111f;--panel:#10203a;--panel2:#0b1728;--line:#223454;--text:#e8f0ff;--muted:#9db1d3;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;--bad:#f87171}
+    *{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#040a14,#0a1424);color:var(--text);font-family:Inter,Arial,sans-serif}
+    .wrap{max-width:1480px;margin:0 auto;padding:24px}.hero,.card{background:rgba(16,32,58,.97);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 28px rgba(0,0,0,.22)}
+    .hero{padding:22px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px}.sub{max-width:980px;color:var(--muted);line-height:1.55}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap} button{border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;background:var(--accent);color:#fff}
+    button.alt{background:#173152;border:1px solid #28446d} button.warn{background:#9a3412}
+    .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:18px}.card{padding:16px}.label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.value{font-size:28px;font-weight:800;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.stack{display:grid;gap:16px}.pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #29476e;background:#0b182c;font-size:12px}.good{color:#a7f3d0;border-color:#1f7a57}.warnp{color:#fde68a;border-color:#8b5e11}.bad{color:#fecaca;border-color:#7f1d1d}
+    .table-wrap{overflow:auto;border:1px solid #213453;border-radius:14px;background:#081424} table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:10px;border-bottom:1px solid #1d2f4e;text-align:left;vertical-align:top} th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    pre{margin:0;white-space:pre-wrap;background:#06101d;border:1px solid #203451;border-radius:14px;padding:14px;min-height:160px}
+    @media (max-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:1fr}} @media (max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT-REAL02K — Supervisory Audit Trail Integrity Verification</h1>
+      <div class="sub">Institutional chain-of-custody verification across fill, order, incident, hold, release, closure, and archive ledgers. This panel surfaces integrity gaps, orphan records, sequence breaks, attestation state, and evidence export readiness.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="verifyNow()">Verify</button>
+      <button class="alt" onclick="attestNow()">Attest + Seal</button>
+      <button class="alt" onclick="exportNow()">Export Evidence</button>
+      <button class="warn" onclick="resetNow()">Reset State</button>
+    </div>
+  </div>
+
+  <div class="grid" id="summaryGrid"></div>
+
+  <div class="layout">
+    <div class="stack">
+      <div class="card">
+        <h2>Integrity Findings</h2>
+        <div class="table-wrap"><table id="issuesTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Ledger Coverage</h2>
+        <div class="table-wrap"><table id="countsTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Chain Tail</h2>
+        <div class="table-wrap"><table id="chainTable"></table></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card"><h2>Integrity Status</h2><div class="pills" id="pillBar"></div></div>
+      <div class="card"><h2>Seal + Attestation</h2><pre id="sealBox">No attestation yet.</pre></div>
+      <div class="card"><h2>Action Output</h2><pre id="actionBox">No action yet.</pre></div>
+    </div>
+  </div>
+</div>
+<script>
+const tryJson = async (url, opts={}) => {
+  const res = await fetch(url, {headers:{'Content-Type':'application/json','Accept':'application/json'}, ...opts});
+  const data = await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error((data.detail || data.message || ('HTTP '+res.status)) + ' @ ' + url);
+  return data;
+};
+function bases(){
+  const host = window.location.hostname || '127.0.0.1';
+  const local = host === 'localhost' || host === '127.0.0.1';
+  const out = [];
+  if(local){ out.push('http://127.0.0.1:8010','http://localhost:8010','http://127.0.0.1:8000','http://localhost:8000'); }
+  out.push('', window.location.origin.replace(/\/$/,''), window.location.origin.replace(/\/$/,'') + '/api');
+  return [...new Set(out.filter(Boolean))];
+}
+let BASE='';
+async function detect(){
+  for(const b of bases()){
+    try{ await tryJson((b||'') + '/health'); await tryJson((b||'') + '/supervisory-audit-integrity/health'); BASE=b||''; return; }catch(e){}
+  }
+  throw new Error('No working API base found for QNT-REAL02K');
+}
+async function apiGet(path){ return tryJson((BASE||'') + path); }
+async function apiPost(path, payload){ return tryJson((BASE||'') + path, {method:'POST', body: JSON.stringify(payload || {})}); }
+function table(el, headers, rows){ const head=`<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`; const body=rows.length?rows.map(r=>`<tr>${r.map(v=>`<td>${v ?? '-'}</td>`).join('')}</tr>`).join(''):`<tr><td colspan="${headers.length}">No data</td></tr>`; el.innerHTML=head+body; }
+function renderPills(summary){
+  const counts = summary.issue_counts || {};
+  const pills = [
+    [`Integrity ${summary.integrity_ok ? 'PASS' : 'BLOCKED'}`, summary.integrity_ok ? 'good' : 'bad'],
+    [`Sealed ${summary.integrity_sealed ? 'YES' : 'NO'}`, summary.integrity_sealed ? 'good' : 'warnp'],
+    [`Gaps ${counts.gaps || 0}`, counts.gaps ? 'bad' : 'good'],
+    [`Orphans ${counts.orphans || 0}`, counts.orphans ? 'bad' : 'good'],
+    [`Sequence ${counts.sequence_breaks || 0}`, counts.sequence_breaks ? 'bad' : 'good'],
+    [`Hash ${counts.hash_breaks || 0}`, counts.hash_breaks ? 'bad' : 'good'],
+  ];
+  document.getElementById('pillBar').innerHTML = pills.map(([t,c])=>`<span class="pill ${c}">${t}</span>`).join('');
+}
+function renderSummary(summary){
+  const c = summary.ledger_counts || {};
+  const cards = [
+    ['Verification', summary.verification_status],
+    ['Chain Events', summary.chain_event_count || 0],
+    ['Fills', c.fills || 0],
+    ['Orders', c.orders || 0],
+    ['Incidents', c.incidents || 0],
+    ['Archives', c.archives || 0],
+  ];
+  document.getElementById('summaryGrid').innerHTML = cards.map(([l,v])=>`<div class="card"><div class="label">${l}</div><div class="value">${v}</div></div>`).join('');
+  renderPills(summary);
+  const seal = {
+    seal_id: summary.seal_id,
+    seal_hash: summary.seal_hash,
+    seal_reason: summary.seal_reason,
+    last_attestation_id: summary.last_attestation_id,
+    last_attested_at: summary.last_attested_at,
+    last_attested_by: summary.last_attested_by,
+    last_export_id: summary.last_export_id,
+    last_exported_at: summary.last_exported_at,
+    chain_head: summary.chain_head,
+  };
+  document.getElementById('sealBox').textContent = JSON.stringify(seal, null, 2);
+  table(document.getElementById('countsTable'), ['Ledger','Count'], Object.entries(c).map(([k,v])=>[k,v]));
+  table(document.getElementById('issuesTable'), ['Type','Severity','Message','Reference'], (summary.issues || []).map(i=>[i.type, i.severity, i.message, i.order_id || i.record_ref || i.event_ref || i.packet_id || '-']));
+  const tail = ((summary.latest_snapshot || {}).chain_tail || []).map(e=>[e.stage, e.event_ref, e.order_id || '-', e.record_ref || '-', String(e.hash || '').slice(0,18)]);
+  table(document.getElementById('chainTable'), ['Stage','Event Ref','Order ID','Record Ref','Hash'], tail);
+}
+async function refreshAll(){ const s = await apiGet('/supervisory-audit-integrity/summary'); renderSummary(s); }
+async function verifyNow(){ const r = await apiPost('/supervisory-audit-integrity/verify', {actor:'operator-ui'}); document.getElementById('actionBox').textContent = JSON.stringify(r, null, 2); await refreshAll(); }
+async function attestNow(){ const r = await apiPost('/supervisory-audit-integrity/attest', {actor:'operator-ui', reason:'operator surface supervisory attestation'}); document.getElementById('actionBox').textContent = JSON.stringify(r, null, 2); await refreshAll(); }
+async function exportNow(){ const r = await apiPost('/supervisory-audit-integrity/export', {actor:'operator-ui', target:'audit'}); document.getElementById('actionBox').textContent = JSON.stringify(r, null, 2); await refreshAll(); }
+async function resetNow(){ const r = await apiPost('/supervisory-audit-integrity/reset', {}); document.getElementById('actionBox').textContent = JSON.stringify(r, null, 2); await refreshAll(); }
+(async()=>{ try{ await detect(); await refreshAll(); } catch(err){ document.getElementById('actionBox').textContent = String(err); } })();
+</script>
+</body>
+</html>
