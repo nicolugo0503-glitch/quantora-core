@@ -1,0 +1,12 @@
+{
+  "mission": "QNT-REAL02K",
+  "registry_status": "active",
+  "components": [
+    "ledger-traversal",
+    "hash-chain",
+    "gap-orphan-sequence-engine",
+    "attestation-seal",
+    "evidence-export",
+    "operator-surface"
+  ]
+}
