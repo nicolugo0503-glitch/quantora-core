@@ -17061,3 +17061,6 @@ app.include_router(qntreal01g_router)
 app.include_router(qntreal01i_router)
 app.include_router(qntreal01j_router)
 app.include_router(qntreal02k_router)
+
+from backend.app.qntreal02l_regulatory_inquiry_response_pack_composer_router import router as qntreal02l_router
+app.include_router(qntreal02l_router)
