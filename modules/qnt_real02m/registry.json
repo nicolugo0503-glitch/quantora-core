@@ -1,0 +1,19 @@
+{
+  "mission": "QNT-REAL02M",
+  "name": "External Auditor Evidence Map",
+  "version": "1.0.0",
+  "description": "Structured evidence mapping and packaging for external audit engagements. Aggregates evidence from the full Quantora audit chain, maps it to auditor requests, packages deliverables, and tracks acknowledgment.",
+  "components": [
+    {"id": "engagement-controller", "description": "Initialize and manage external audit engagement lifecycle"},
+    {"id": "evidence-mapper", "description": "Map available evidence artifacts to auditor information requests"},
+    {"id": "package-builder", "description": "Build structured evidence packages for auditor delivery"},
+    {"id": "acknowledgment-tracker", "description": "Record and verify auditor receipt acknowledgments"},
+    {"id": "audit-closure-engine", "description": "Close audit engagements and seal the final record"},
+    {"id": "operator-surface", "description": "Frontend operator panel for engagement management"}
+  ],
+  "state_file": "external_auditor_evidence_map_state.json",
+  "depends_on": [
+    "QNT-REAL02K",
+    "QNT-REAL02L"
+  ]
+}
