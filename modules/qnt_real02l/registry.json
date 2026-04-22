@@ -1,0 +1,12 @@
+{
+  "mission": "QNT-REAL02L",
+  "registry_status": "active",
+  "components": [
+    "inquiry-registration",
+    "evidence-gatherer",
+    "response-pack-composer",
+    "certification-engine",
+    "dispatch-controller",
+    "operator-surface"
+  ]
+}
