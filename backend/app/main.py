@@ -184,6 +184,7 @@ from .qntreal01f_live_broker_credential_vault_execution_authorization_gate_route
 from .qntreal01g_broker_session_handshake_live_connectivity_verification_layer_router import router as qntreal01g_router
 from .qntreal01i_live_position_reconciliation_post_trade_state_lock_layer_router import router as qntreal01i_router
 from .qntreal01j_real_broker_cash_buying_power_margin_truth_layer_router import router as qntreal01j_router
+from .qntreal02k_supervisory_audit_trail_integrity_verification_router import router as qntreal02k_router
 from fastapi import Body, Depends, FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
@@ -16735,7 +16736,7 @@ def workspace_rebalancing_adjustment_create(payload: dict, session=Depends(requi
 
 
 
-# QNT30531 / QNT30535C — production integration import final fix
+# QNT30531 / QNT30535C â production integration import final fix
 try:
     from .qnt30531_integration import integrate_qnt30531
 except Exception:
@@ -16743,7 +16744,7 @@ except Exception:
 
 integrate_qnt30531(app)
 
-# QNT30532 — legacy compatibility routes
+# QNT30532 â legacy compatibility routes
 @app.get("/api/v1/reports/nav")
 def qnt30532_legacy_nav_report():
     try:
@@ -17059,3 +17060,4 @@ app.include_router(qntreal01f_router)
 app.include_router(qntreal01g_router)
 app.include_router(qntreal01i_router)
 app.include_router(qntreal01j_router)
+app.include_router(qntreal02k_router)
