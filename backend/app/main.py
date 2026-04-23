@@ -17064,3 +17064,6 @@ app.include_router(qntreal02k_router)
 
 from backend.app.qntreal02l_regulatory_inquiry_response_pack_composer_router import router as qntreal02l_router
 app.include_router(qntreal02l_router)
+
+from backend.app.qntreal02m_external_auditor_evidence_map_router import router as qntreal02m_router
+app.include_router(qntreal02m_router)
