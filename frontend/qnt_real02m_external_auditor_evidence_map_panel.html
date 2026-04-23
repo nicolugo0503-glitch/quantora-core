@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quantora &#8212; QNT-REAL02M External Auditor Evidence Map</title>
+  <style>
+    :root{--bg:#07111f;--panel:#10203a;--panel2:#0b1728;--line:#223454;--text:#e8f0ff;--muted:#9db1d3;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;--bad:#f87171}
+    *{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#040a14,#0a1424);color:var(--text);font-family:Inter,Arial,sans-serif}
+    .wrap{max-width:1480px;margin:0 auto;padding:24px}.hero,.card{background:rgba(16,32,58,.97);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 28px rgba(0,0,0,.22)}
+    .hero{padding:22px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px}.sub{max-width:980px;color:var(--muted);line-height:1.55}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap} button{border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;background:var(--accent);color:#fff}
+    button.alt{background:#173152;border:1px solid #28446d} button.warn{background:#9a3412}
+    .grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:18px}.card{padding:16px}.label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.value{font-size:26px;font-weight:800;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.3fr .7fr;gap:16px}.stack{display:grid;gap:16px}.pills{display:flex;gap:8px;flex-wrap:wrap}.pill{padding:6px 10px;border-radius:999px;border:1px solid #29476e;background:#0b182c;font-size:12px}.good{color:#a7f3d0;border-color:#1f7a57}.warnp{color:#fde68a;border-color:#8b5e11}.bad{color:#fecaca;border-color:#7f1d1d}
+    .table-wrap{overflow:auto;border:1px solid #213453;border-radius:14px;background:#081424} table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:10px;border-bottom:1px solid #1d2f4e;text-align:left;vertical-align:top} th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .form-row{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}.form-row label{font-size:12px;color:var(--muted);width:120px;flex-shrink:0}
+    input,select{background:#0b182c;border:1px solid #28446d;border-radius:8px;color:var(--text);padding:6px 10px;font-size:13px;flex:1;min-width:0}
+    pre{margin:0;white-space:pre-wrap;background:#06101d;border:1px solid #203451;border-radius:14px;padding:14px;min-height:120px;font-size:12px}
+    @media(max-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:1fr}} @media(max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT-REAL02M &#8212; External Auditor Evidence Map</h1>
+      <div class="sub">Structured evidence mapping for external audit engagements. Aggregate artifacts from the full Quantora supervisory chain, map to auditor requests, package deliverables, record acknowledgment, and close engagements under supervisory authority.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="refreshAll()">Refresh</button>
+      <button class="alt" onclick="showInitModal()">Initiate Engagement</button>
+      <button class="alt" onclick="mapEvidence()">Map Evidence</button>
+      <button class="alt" onclick="packageNow()">Package</button>
+      <button class="alt" onclick="showAckModal()">Acknowledge</button>
+      <button class="alt" onclick="closeEngagement()">Close</button>
+      <button class="warn" onclick="resetNow()">Reset</button>
+    </div>
+  </div>
+
+  <div class="grid" id="summaryGrid"></div>
+
+  <div class="layout">
+    <div class="stack">
+      <div class="card">
+        <h2>Engagement Details</h2>
+        <div id="engagementDetails"><div class="pills" id="statusPills"></div></div>
+      </div>
+      <div class="card">
+        <h2>Evidence Index</h2>
+        <div class="table-wrap"><table id="evidenceTable"></table></div>
+      </div>
+      <div class="card">
+        <h2>Blockers</h2>
+        <div class="table-wrap"><table id="blockersTable"></table></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card"><h2>Evidence Readiness</h2><div class="pills" id="evidencePills"></div></div>
+      <div class="card" id="initCard" style="display:none">
+        <h2>Initiate Engagement</h2>
+        <div class="form-row"><label>Auditor Firm</label><input id="fFirm" value="Deloitte" /></div>
+        <div class="form-row"><label>Auditor Ref</label><input id="fRef" placeholder="e.g. DEL-2024-Q3" /></div>
+        <div class="form-row"><label>Scope</label><input id="fScope" value="full_supervisory_chain" /></div>
+        <button onclick="initiateNow()" style="margin-top:8px">Submit Initiation</button>
+      </div>
+      <div class="card" id="ackCard" style="display:none">
+        <h2>Record Acknowledgment</h2>
+        <div class="form-row"><label>Auditor Ack Ref</label><input id="fAckRef" placeholder="e.g. DEL-ACK-001" /></div>
+        <button onclick="acknowledgeNow()" style="margin-top:8px">Submit Acknowledgment</button>
+      </div>
+      <div class="card"><h2>Action Output</h2><pre id="actionBox">No action yet.</pre></div>
+    </div>
+  </div>
+</div>
+<script>
+const tryJson = async (url, opts={}) => {
+  const res = await fetch(url, {headers:{'Content-Type':'application/json','Accept':'application/json'}, ...opts});
+  const data = await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error((data.detail || data.message || ('HTTP '+res.status)) + ' @ ' + url);
+  return data;
+};
+function bases(){
+  const host = window.location.hostname || '127.0.0.1';
+  const local = host === 'localhost' || host === '127.0.0.1';
+  const out = [];
+  if(local){ out.push('http://127.0.0.1:8010','http://localhost:8010','http://127.0.0.1:8000','http://localhost:8000'); }
+  out.push('', window.location.origin.replace(/\/$/,''), window.location.origin.replace(/\/$/,'') + '/api');
+  return [...new Set(out.filter(Boolean))];
+}
+let BASE='';
+async function detect(){
+  for(const b of bases()){
+    try{ await tryJson((b||'') + '/health'); await tryJson((b||'') + '/external-auditor-evidence/health'); BASE=b||''; return; }catch(e){}
+  }
+  throw new Error('No working API base found for QNT-REAL02M');
+}
+async function apiGet(path){ return tryJson((BASE||'') + path); }
+async function apiPost(path, payload){ return tryJson((BASE||'') + path, {method:'POST', body: JSON.stringify(payload || {})}); }
+function table(el, headers, rows){ const head=`<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`; const body=rows.length?rows.map(r=>`<tr>${r.map(v=>`<td>${v ?? '-'}</td>`).join('')}</tr>`).join(''):`<tr><td colspan="${headers.length}">No data</td></tr>`; el.innerHTML=head+body; }
+function pill(text, cls){ return `<span class="pill ${cls}">${text}</span>`; }
+function renderSummary(s){
+  const cards = [
+    ['Audit Status', s.audit_status || 'idle'],
+    ['Engagement ID', s.engagement_id || '-'],
+    ['Auditor Firm', s.auditor_firm || '-'],
+    ['Package ID', s.package_id || '-'],
+    ['Closure Ref', s.closure_ref || '-'],
+  ];
+  document.getElementById('summaryGrid').innerHTML = cards.map(([l,v])=>`<div class="card"><div class="label">${l}</div><div class="value" style="font-size:16px">${v}</div></div>`).join('');
+
+  const pills = [
+    [s.hard_blocked ? 'BLOCKED' : 'CLEAR', s.hard_blocked ? 'bad' : 'good'],
+    [`Status ${s.audit_status || 'idle'}`, s.audit_status === 'closed' ? 'good' : s.audit_status === 'idle' ? 'bad' : 'warnp'],
+    [`Package ${s.package_id ? 'Ready' : 'Pending'}`, s.package_id ? 'good' : 'warnp'],
+    [`Ack ${s.auditor_ack_ref ? 'Received' : 'Pending'}`, s.auditor_ack_ref ? 'good' : 'warnp'],
+  ];
+  document.getElementById('statusPills').innerHTML = pills.map(([t,c])=>pill(t,c)).join('');
+
+  const ev = s.evidence_summary || {};
+  const epills = [
+    [`Integrity ${ev.integrity_ok ? 'OK' : 'FAIL'}`, ev.integrity_ok ? 'good' : 'bad'],
+    [`Sealed ${ev.integrity_sealed ? 'YES' : 'NO'}`, ev.integrity_sealed ? 'good' : 'warnp'],
+    [`Incident ${ev.incident_closed ? 'Closed' : 'Open'}`, ev.incident_closed ? 'good' : 'bad'],
+    [`Archive ${ev.archive_retrieval_ready ? 'Ready' : 'Not Ready'}`, ev.archive_retrieval_ready ? 'good' : 'bad'],
+    [`Packet ${ev.packet_built ? 'Built' : 'Pending'}`, ev.packet_built ? 'good' : 'warnp'],
+    [`Inquiry ${ev.inquiry_responded ? 'Responded' : 'Pending'}`, ev.inquiry_responded ? 'good' : 'warnp'],
+    [`Open Breaks ${ev.open_breaks || 0}`, (ev.open_breaks || 0) ? 'bad' : 'good'],
+  ];
+  document.getElementById('evidencePills').innerHTML = epills.map(([t,c])=>pill(t,c)).join('');
+
+  const engHtml = [
+    ['Engagement ID', s.engagement_id || '-'],
+    ['Auditor Firm', s.auditor_firm || '-'],
+    ['Auditor Ref', s.auditor_ref || '-'],
+    ['Scope', s.audit_scope || '-'],
+    ['Initiated At', s.initiated_at || '-'],
+    ['Packaged At', s.packaged_at || '-'],
+    ['Ack Ref', s.auditor_ack_ref || '-'],
+    ['Closed At', s.closed_at || '-'],
+    ['Closure Ref', s.closure_ref || '-'],
+  ].map(([k,v])=>`<div style="display:flex;gap:8px;padding:4px 0;border-bottom:1px solid #1d2f4e;font-size:13px"><span style="color:var(--muted);width:130px;flex-shrink:0">${k}</span><span>${v}</span></div>`).join('');
+  document.getElementById('engagementDetails').innerHTML = `<div class="pills" id="statusPills">${pills.map(([t,c])=>pill(t,c)).join('')}</div><div style="margin-top:12px">${engHtml}</div>`;
+
+  const blockers = s.blockers || [];
+  table(document.getElementById('blockersTable'), ['#', 'Blocker'], blockers.map((b,i)=>[i+1, b]));
+}
+function renderEvidence(index){
+  table(document.getElementById('evidenceTable'), ['Artifact ID', 'Type', 'Description', 'Status'],
+    (index||[]).map(a=>[a.artifact_id, a.artifact_type, a.description, a.status]));
+}
+async function refreshAll(){
+  const s = await apiGet('/external-auditor-evidence/summary');
+  renderSummary(s);
+  renderEvidence(s.evidence_index || []);
+}
+function showInitModal(){ const c=document.getElementById('initCard'); c.style.display=c.style.display==='none'?'block':'none'; }
+function showAckModal(){ const c=document.getElementById('ackCard'); c.style.display=c.style.display==='none'?'block':'none'; }
+async function initiateNow(){
+  const r = await apiPost('/external-auditor-evidence/initiate', {
+    auditor_firm: document.getElementById('fFirm').value,
+    auditor_ref: document.getElementById('fRef').value,
+    audit_scope: document.getElementById('fScope').value,
+    actor: 'operator-ui',
+  });
+  document.getElementById('actionBox').textContent = JSON.stringify(r, null, 2);
+  document.getElementById('initCard').style.display = 'none';
+  await refreshAll();
+}
+async function mapEvidence(){
+  const s = await apiGet('/external-auditor-evidence/summary');
+  const r = await apiPost('/external-auditor-evidence/map-evidence', {engagement_id: s.engagement_id, actor: 'operator-ui'});
+  document.getElementById('actionBox').textContent = JSON.stringify(r, null, 2);
+  await refreshAll();
+}
+async function packageNow(){
+  const s = await apiGet('/external-auditor-evidence/summary');
+  const r = await apiPost('/external-auditor-evidence/package', {engagement_id: s.engagement_id, actor: 'operator-ui'});
+  document.getElementById('actionBox').textContent = JSON.stringify(r, null, 2);
+  await refreshAll();
+}
+async function acknowledgeNow(){
+  const s = await apiGet('/external-auditor-evidence/summary');
+  const r = await apiPost('/external-auditor-evidence/acknowledge', {
+    engagement_id: s.engagement_id,
+    auditor_ack_ref: document.getElementById('fAckRef').value,
+    actor: 'operator-ui',
+  });
+  document.getElementById('actionBox').textContent = JSON.stringify(r, null, 2);
+  document.getElementById('ackCard').style.display = 'none';
+  await refreshAll();
+}
+async function closeEngagement(){
+  const s = await apiGet('/external-auditor-evidence/summary');
+  const r = await apiPost('/external-auditor-evidence/close', {engagement_id: s.engagement_id, actor: 'operator-ui'});
+  document.getElementById('actionBox').textContent = JSON.stringify(r, null, 2);
+  await refreshAll();
+}
+async function resetNow(){ const r = await apiPost('/external-auditor-evidence/reset', {}); document.getElementById('actionBox').textContent = JSON.stringify(r, null, 2); await refreshAll(); }
+(async()=>{ try{ await detect(); await refreshAll(); } catch(err){ document.getElementById('actionBox').textContent = String(err); } })();
+</script>
+</body>
+</html>
