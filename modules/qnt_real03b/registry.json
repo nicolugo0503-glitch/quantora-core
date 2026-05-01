@@ -1,0 +1,32 @@
+{
+  "mission_id": "QNT-REAL03B",
+  "name": "Liquidity Coverage Ratio Monitor",
+  "version": "1.0.0",
+  "phase": "REAL03",
+  "status": "active",
+  "description": "Tracks intraday and end-of-day LCR across all fund entities. Computes HQLA vs net cash outflows, flags LCR breaches, generates Basel III compliance snapshots, and alerts treasury operations.",
+  "components": [
+    "hqla-tracker",
+    "outflow-calculator",
+    "lcr-engine",
+    "breach-detector",
+    "treasury-alerter",
+    "snapshot-generator"
+  ],
+  "depends_on": [
+    "QNT-REAL03A",
+    "QNT-REAL02A"
+  ],
+  "state_file": "lcr_monitor_state.json",
+  "endpoints": [
+    "GET /lcr-monitor/health",
+    "GET /lcr-monitor/summary",
+    "POST /lcr-monitor/compute",
+    "POST /lcr-monitor/reset"
+  ],
+  "tags": [
+    "liquidity-coverage-ratio",
+    "quantora",
+    "risk"
+  ]
+}
