@@ -1,6 +1,5 @@
 """
 Quantora Production Entry Point — run.py
-Wraps the existing app with CORS, live data routes, static files, and startup.
 Railway start command: uvicorn run:app --host 0.0.0.0 --port $PORT --workers 1
 """
 from __future__ import annotations
@@ -11,7 +10,7 @@ import os
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# ── Import main app (with safe fallback) ──────────────────────────────────────
+# ── Import main app ───────────────────────────────────────────────────────────
 try:
     from backend.app.main import app
     logger.info("Main app imported successfully")
@@ -36,6 +35,59 @@ try:
     logger.info("CORS middleware added")
 except Exception as e:
     logger.warning(f"CORS middleware warning: {e}")
+
+# ── API URL shim middleware (fixes localhost:8010 in all frontend panels) ──────
+try:
+    from starlette.middleware.base import BaseHTTPMiddleware
+    from starlette.requests import Request as StarletteRequest
+    from starlette.responses import Response as StarletteResponse
+
+    _SHIM = (
+        b"<script>"
+        b"(function(){"
+        b"var _f=window.fetch;"
+        b"window.fetch=function(u,o){"
+        b"if(typeof u==='string')u=u.replace(/https?:\/\/localhost:\d+/g,window.location.origin);"
+        b"return _f.call(this,u,o);};"
+        b"var _x=XMLHttpRequest.prototype.open;"
+        b"XMLHttpRequest.prototype.open=function(m,u){"
+        b"if(typeof u==='string')u=u.replace(/https?:\/\/localhost:\d+/g,window.location.origin);"
+        b"return _x.apply(this,arguments);};"
+        b"})();"
+        b"</script>"
+    )
+
+    class ApiShimMiddleware(BaseHTTPMiddleware):
+        async def dispatch(self, request: StarletteRequest, call_next):
+            response = await call_next(request)
+            ct = response.headers.get("content-type", "")
+            if "text/html" in ct:
+                body = b""
+                async for chunk in response.body_iterator:
+                    body += chunk
+                if b"</head>" in body:
+                    body = body.replace(b"</head>", _SHIM + b"</head>", 1)
+                elif b"<body" in body:
+                    idx = body.index(b"<body")
+                    end = body.index(b">", idx)
+                    body = body[: end + 1] + _SHIM + body[end + 1 :]
+                else:
+                    body = _SHIM + body
+                headers = dict(response.headers)
+                headers["content-length"] = str(len(body))
+                return StarletteResponse(
+                    content=body,
+                    status_code=response.status_code,
+                    headers=headers,
+                    media_type="text/html",
+                )
+            return response
+
+    app.middleware_stack = None
+    app.add_middleware(ApiShimMiddleware)
+    logger.info("API URL shim middleware added (localhost → dynamic origin)")
+except Exception as e:
+    logger.warning(f"Shim middleware not loaded: {e}")
 
 # ── Live market data router ───────────────────────────────────────────────────
 try:
@@ -85,12 +137,14 @@ h1{font-size:2.5rem;background:linear-gradient(90deg,#00d4ff,#7b2fff);-webkit-ba
 .badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;margin-bottom:20px}
 .open{background:#052e16;color:#10b981;border:1px solid #10b981}
 .closed{background:#1a0000;color:#ef4444;border:1px solid #ef4444}
+.after{background:#0c1a2e;color:#3b82f6;border:1px solid #1e3a5f}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:30px}
 .card{background:#111827;border:1px solid #1e2d3d;border-radius:12px;padding:24px;transition:border-color .2s}
 .card:hover{border-color:#00d4ff}
 .card h3{color:#00d4ff;margin-bottom:8px}
 .card p{color:#94a3b8;font-size:.9rem}
 .card a{display:inline-block;margin-top:12px;color:#7b2fff;text-decoration:none;font-weight:600}
+.card a:hover{color:#00d4ff}
 </style>
 </head>
 <body>
@@ -114,12 +168,12 @@ h1{font-size:2.5rem;background:linear-gradient(90deg,#00d4ff,#7b2fff);-webkit-ba
 const BASE=window.location.origin;
 async function loadTicker(){
   try{
-    const r=await fetch(BASE+'/api/live/quotes?symbols=SPY,QQQ,AAPL,MSFT,NVDA');
+    const r=await fetch(BASE+'/api/live/quotes?symbols=SPY,QQQ,AAPL,MSFT,NVDA,BTC');
     const data=await r.json();
     if(!Array.isArray(data))return;
     document.getElementById('ticker').innerHTML=data.map(q=>{
       const up=q.change_pct>=0;
-      return '<span class="'+(up?'up':'dn')+'">'+q.symbol+' $'+Number(q.price||0).toFixed(2)+' '+(up?'&#9650;':'&#9660;')+Math.abs(q.change_pct||0).toFixed(2)+'%</span>&nbsp;&nbsp;&nbsp;';
+      return '<span class="'+(up?'up':'dn')+'">'+q.symbol+' $'+Number(q.price||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' '+(up?'&#9650;':'&#9660;')+Math.abs(q.change_pct||0).toFixed(2)+'%</span>&nbsp;&nbsp;&nbsp;';
     }).join('');
   }catch(e){document.getElementById('ticker').textContent='Market data loading…';}
 }
@@ -127,11 +181,12 @@ async function loadStatus(){
   try{
     const r=await fetch(BASE+'/api/live/status');
     const d=await r.json();
-    const isOpen=d.status&&d.status.includes('OPEN');
-    document.getElementById('st').innerHTML='<span class="badge '+(isOpen?'open':'closed')+'">'+(d.status||'UNKNOWN')+'</span>';
+    const s=d.status||'UNKNOWN';
+    const cls=s.includes('OPEN')?'open':s.includes('AFTER')?'after':'closed';
+    document.getElementById('st').innerHTML='<span class="badge '+cls+'">'+s+'</span>';
   }catch(e){}
 }
-loadTicker();loadStatus();setInterval(loadTicker,30000);
+loadTicker();loadStatus();setInterval(loadTicker,30000);setInterval(loadStatus,60000);
 </script>
 </body>
 </html>"""
