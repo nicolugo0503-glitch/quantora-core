@@ -1,0 +1,9 @@
+{
+  "mission": "QNT-04A",
+  "title": "Multi-Broker Portfolio Orchestration",
+  "description": "Orchestrates portfolio positions and order routing across multiple broker connections. Consolidates exposure, routes orders to optimal venue, and enforces cross-broker risk limits.",
+  "version": "1.0.0",
+  "governance": "institutional",
+  "capital_safety": "enforced",
+  "status": "active"
+}
