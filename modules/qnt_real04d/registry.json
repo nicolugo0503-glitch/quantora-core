@@ -1,0 +1,9 @@
+{
+  "mission": "QNT-04D",
+  "title": "Investor Portal Governance Surface",
+  "description": "Governs investor-facing portal access, statement delivery, capital account views, and investor communications under institutional access control policies.",
+  "version": "1.0.0",
+  "governance": "institutional",
+  "capital_safety": "enforced",
+  "status": "active"
+}
