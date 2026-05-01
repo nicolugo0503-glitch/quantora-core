@@ -1,0 +1,32 @@
+{
+  "mission_id": "QNT-REAL03D",
+  "name": "Trade Reconciliation Engine",
+  "version": "1.0.0",
+  "phase": "REAL03",
+  "status": "active",
+  "description": "Reconciles executed trades against custodian and prime broker records. Detects breaks, classifies root causes, triggers automated resolution workflows, and produces daily settlement integrity reports.",
+  "components": [
+    "trade-matcher",
+    "break-detector",
+    "root-cause-classifier",
+    "resolution-workflow",
+    "settlement-reporter",
+    "custodian-linker"
+  ],
+  "depends_on": [
+    "QNT-REAL02A",
+    "QNT-REAL02B"
+  ],
+  "state_file": "trade_reconciliation_state.json",
+  "endpoints": [
+    "GET /trade-reconciliation/health",
+    "GET /trade-reconciliation/summary",
+    "POST /trade-reconciliation/run",
+    "POST /trade-reconciliation/reset"
+  ],
+  "tags": [
+    "trade-reconciliation",
+    "quantora",
+    "risk"
+  ]
+}
