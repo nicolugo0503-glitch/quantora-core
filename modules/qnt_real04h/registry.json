@@ -1,0 +1,9 @@
+{
+  "mission": "QNT-04H",
+  "title": "Autonomous Policy-Bounded Execution Supervisor",
+  "description": "Policy-bounded autonomous execution supervisor. Monitors, validates, and controls AI-driven execution under strict governance with escalation protocols and kill-switch authority.",
+  "version": "1.0.0",
+  "governance": "institutional",
+  "capital_safety": "enforced",
+  "status": "active"
+}
