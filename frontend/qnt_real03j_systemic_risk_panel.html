@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Quantora &#8212; QNT-REAL03J Systemic Risk Sentinel</title>
+  <style>
+    :root{--bg:#07111f;--panel:#10203a;--line:#223454;--text:#e8f0ff;--muted:#9db1d3;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;--bad:#f87171}
+    *{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#040a14,#0a1424);color:var(--text);font-family:Inter,Arial,sans-serif}
+    .wrap{max-width:1400px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(16,32,58,.97);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 28px rgba(0,0,0,.22)}
+    .hero{padding:22px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px}
+    .sub{max-width:900px;color:var(--muted);line-height:1.55}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap} button{border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;background:var(--accent);color:#fff}
+    button.alt{background:#173152;border:1px solid #28446d} button.warn{background:#9a3412}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.value{font-size:22px;font-weight:800;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.4fr .6fr;gap:16px}.stack{display:grid;gap:16px}
+    pre{margin:0;white-space:pre-wrap;background:#06101d;border:1px solid #203451;border-radius:14px;padding:14px;min-height:180px;font-size:12px}
+    .pill{padding:5px 10px;border-radius:999px;border:1px solid #29476e;background:#0b182c;font-size:12px;display:inline-block;margin:2px}
+    .good{color:#a7f3d0;border-color:#1f7a57}.bad{color:#fecaca;border-color:#7f1d1d}
+    @media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT-REAL03J &#8212; Systemic Risk Sentinel</h1>
+      <div class="sub">Monitors systemic risk indicators: contagion vectors, network centrality, fire-sale risk, and macro-prudential triggers for FSOC/FSB reporting.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="refreshAll()">Refresh</button>
+      <button class="alt" onclick="runNow()">Run Assessment</button>
+      <button class="warn" onclick="resetNow()">Reset</button>
+    </div>
+  </div>
+  <div class="grid" id="summaryGrid"></div>
+  <div class="layout">
+    <div class="card"><h2>State Details</h2><pre id="stateBox">Loading...</pre></div>
+    <div class="stack">
+      <div class="card"><h2>Status Indicators</h2><div id="pillBox"></div></div>
+      <div class="card"><h2>Action Output</h2><pre id="actionBox">No action yet.</pre></div>
+    </div>
+  </div>
+</div>
+<script>
+const tryJson=async(url,opts={})=>{const res=await fetch(url,{headers:{'Content-Type':'application/json','Accept':'application/json'},...opts});const data=await res.json().catch(()=>({}));if(!res.ok)throw new Error((data.detail||data.message||('HTTP '+res.status))+' @ '+url);return data;};
+function bases(){const host=window.location.hostname||'127.0.0.1';const local=host==='localhost'||host==='127.0.0.1';const out=[];if(local){out.push('http://127.0.0.1:8010','http://localhost:8010','http://127.0.0.1:8000','http://localhost:8000');}out.push('',window.location.origin.replace(/\/$/,''));return[...new Set(out.filter(Boolean))];}
+let BASE='';
+async function detect(){for(const b of bases()){try{await tryJson((b||'')+'/health');await tryJson((b||'')+'/systemic-risk/health');BASE=b||'';return;}catch(e){}}throw new Error('No working API base found for QNT-REAL03J');}
+async function apiGet(path){return tryJson((BASE||'')+path);}
+async function apiPost(path,payload){return tryJson((BASE||'')+path,{method:'POST',body:JSON.stringify(payload||{})});}
+async function refreshAll(){
+  const s=await apiGet('/systemic-risk/summary');
+  const cards=[['Mission',s.mission||'QNT-REAL03J'],['Status',s.status||'idle'],['Run ID',s.run_id||'-'],['Blocked',s.hard_blocked?'YES':'NO']];
+  document.getElementById('summaryGrid').innerHTML=cards.map(([l,v])=>`<div class="card"><div class="label">${l}</div><div class="value" style="font-size:16px">${v}</div></div>`).join('');
+  document.getElementById('stateBox').textContent=JSON.stringify(s,null,2);
+  const pills=(s.blockers||[]).map(b=>`<span class="pill bad">${b}</span>`).join('')||(s.hard_blocked?'<span class="pill bad">BLOCKED</span>':'<span class="pill good">CLEAR</span>');
+  document.getElementById('pillBox').innerHTML=pills;
+}
+async function runNow(){const r=await apiPost('/systemic-risk/run',{actor:'operator-ui'});document.getElementById('actionBox').textContent=JSON.stringify(r,null,2);await refreshAll();}
+async function resetNow(){const r=await apiPost('/systemic-risk/reset',{});document.getElementById('actionBox').textContent=JSON.stringify(r,null,2);await refreshAll();}
+(async()=>{try{await detect();await refreshAll();}catch(err){document.getElementById('actionBox').textContent=String(err);}} )();
+</script>
+</body>
+</html>
