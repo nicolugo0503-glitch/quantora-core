@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Quantora &#8212; QNT-REAL03A Portfolio Stress Test</title>
+  <style>
+    :root{--bg:#07111f;--panel:#10203a;--line:#223454;--text:#e8f0ff;--muted:#9db1d3;--accent:#60a5fa;--good:#34d399;--warn:#f59e0b;--bad:#f87171}
+    *{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#040a14,#0a1424);color:var(--text);font-family:Inter,Arial,sans-serif}
+    .wrap{max-width:1400px;margin:0 auto;padding:24px}
+    .hero,.card{background:rgba(16,32,58,.97);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 28px rgba(0,0,0,.22)}
+    .hero{padding:22px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px}
+    .sub{max-width:900px;color:var(--muted);line-height:1.55}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap} button{border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;background:var(--accent);color:#fff}
+    button.alt{background:#173152;border:1px solid #28446d} button.warn{background:#9a3412}
+    .grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:18px}
+    .card{padding:16px}.label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.value{font-size:22px;font-weight:800;margin-top:8px}
+    .layout{display:grid;grid-template-columns:1.4fr .6fr;gap:16px}.stack{display:grid;gap:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:10px;border-bottom:1px solid #1d2f4e;text-align:left;vertical-align:top}
+    th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .table-wrap{overflow:auto;border:1px solid #213453;border-radius:14px;background:#081424}
+    .pill{padding:5px 10px;border-radius:999px;border:1px solid #29476e;background:#0b182c;font-size:12px;display:inline-block;margin:2px}
+    .good{color:#a7f3d0;border-color:#1f7a57}.warn{color:#fde68a;border-color:#8b5e11}.bad{color:#fecaca;border-color:#7f1d1d}
+    pre{margin:0;white-space:pre-wrap;background:#06101d;border:1px solid #203451;border-radius:14px;padding:14px;min-height:120px;font-size:12px}
+    .form-row{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}.form-row label{font-size:12px;color:var(--muted);width:130px;flex-shrink:0}
+    input,select{background:#0b182c;border:1px solid #28446d;border-radius:8px;color:var(--text);padding:6px 10px;font-size:13px;flex:1;min-width:0}
+    @media(max-width:1100px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>QNT-REAL03A &#8212; Portfolio Stress Test Engine</h1>
+      <div class="sub">Execute multi-scenario stress tests across macro shocks and liquidity crises. Compute 99% VaR, assess regulatory capital adequacy, and generate Basel-aligned risk reports.</div>
+    </div>
+    <div class="toolbar">
+      <button onclick="refreshAll()">Refresh</button>
+      <button class="alt" onclick="runQuick()">Quick Run</button>
+      <button class="alt" onclick="showCustom()">Custom Scenarios</button>
+      <button class="warn" onclick="resetNow()">Reset</button>
+    </div>
+  </div>
+
+  <div class="grid" id="summaryGrid"></div>
+
+  <div class="layout">
+    <div class="stack">
+      <div class="card">
+        <h2>Scenario Results</h2>
+        <div class="table-wrap"><table id="scenarioTable"></table></div>
+      </div>
+      <div class="card" id="customCard" style="display:none">
+        <h2>Custom Stress Run</h2>
+        <div class="form-row"><label>Scenario Name</label><input id="fName" value="Custom Shock" /></div>
+        <div class="form-row"><label>Equity Shock %</label><input id="fEquity" type="number" value="-30" step="1" /></div>
+        <div class="form-row"><label>Credit Spread bps</label><input id="fCredit" type="number" value="150" step="10" /></div>
+        <div class="form-row"><label>Confidence Level</label><input id="fConf" type="number" value="99" step="1" /></div>
+        <button onclick="runCustom()" style="margin-top:8px">Run Custom Stress Test</button>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card"><h2>Capital Assessment</h2><div id="capitalBox"><div class="pill">No assessment yet</div></div></div>
+      <div class="card"><h2>Action Output</h2><pre id="actionBox">No action yet.</pre></div>
+    </div>
+  </div>
+</div>
+<script>
+const tryJson = async (url, opts={}) => {
+  const res = await fetch(url, {headers:{'Content-Type':'application/json','Accept':'application/json'}, ...opts});
+  const data = await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error((data.detail||data.message||('HTTP '+res.status))+' @ '+url);
+  return data;
+};
+function bases(){
+  const host=window.location.hostname||'127.0.0.1';
+  const local=host==='localhost'||host==='127.0.0.1';
+  const out=[];
+  if(local){out.push('http://127.0.0.1:8010','http://localhost:8010','http://127.0.0.1:8000','http://localhost:8000');}
+  out.push('',window.location.origin.replace(/\/$/,''),window.location.origin.replace(/\/$/,'')+'/api');
+  return [...new Set(out.filter(Boolean))];
+}
+let BASE='';
+async function detect(){
+  for(const b of bases()){
+    try{ await tryJson((b||'')+'/health'); await tryJson((b||'')+'/portfolio-stress-test/health'); BASE=b||''; return; }catch(e){}
+  }
+  throw new Error('No working API base found for QNT-REAL03A');
+}
+async function apiGet(path){ return tryJson((BASE||'')+path); }
+async function apiPost(path,payload){ return tryJson((BASE||'')+path,{method:'POST',body:JSON.stringify(payload||{})}); }
+function table(el,headers,rows){
+  const head=`<tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  const body=rows.length?rows.map(r=>`<tr>${r.map(v=>`<td>${v??'-'}</td>`).join('')}</tr>`).join(''):`<tr><td colspan="${headers.length}">No data</td></tr>`;
+  el.innerHTML=head+body;
+}
+function renderSummary(s){
+  const cards=[
+    ['Status',s.stress_test_status||'idle'],
+    ['Run ID',s.run_id||'-'],
+    ['Scenarios',s.scenario_count||0],
+    ['VaR 99%',s.var_99!=null?'$'+s.var_99.toLocaleString():'-'],
+    ['Capital OK',s.capital_assessment?.capital_adequate!=null?(s.capital_assessment.capital_adequate?'YES':'BREACH'):'-'],
+  ];
+  document.getElementById('summaryGrid').innerHTML=cards.map(([l,v])=>`<div class="card"><div class="label">${l}</div><div class="value" style="font-size:18px">${v}</div></div>`).join('');
+  const ca=s.capital_assessment;
+  if(ca){
+    document.getElementById('capitalBox').innerHTML=`
+      <div class="pill ${ca.capital_adequate?'good':'bad'}">${ca.capital_adequate?'ADEQUATE':'BREACH'}</div>
+      <div style="margin-top:12px;font-size:13px">
+        <div style="display:flex;gap:8px;padding:4px 0;border-bottom:1px solid #1d2f4e"><span style="color:var(--muted);width:170px">Required Capital</span><span>$${ca.required_capital_usd?.toLocaleString()}</span></div>
+        <div style="display:flex;gap:8px;padding:4px 0;border-bottom:1px solid #1d2f4e"><span style="color:var(--muted);width:170px">VaR 99%</span><span>$${ca.var_99?.toLocaleString()}</span></div>
+        <div style="display:flex;gap:8px;padding:4px 0;border-bottom:1px solid #1d2f4e"><span style="color:var(--muted);width:170px">Buffer</span><span>${(ca.capital_buffer_pct*100).toFixed(0)}%</span></div>
+        <div style="display:flex;gap:8px;padding:4px 0"><span style="color:var(--muted);width:170px">Regulatory Breach</span><span class="${ca.regulatory_breach?'bad':'good'}">${ca.regulatory_breach?'YES':'NO'}</span></div>
+      </div>`;
+  }
+}
+function renderScenarios(results){
+  table(document.getElementById('scenarioTable'),['Scenario','Equity Shock','Credit Spread','Est. P&L','Worst Case'],
+    (results||[]).map(r=>[r.scenario_name,`${(r.equity_shock_pct*100).toFixed(1)}%`,`${r.credit_spread_shock_bps}bps`,'$'+r.estimated_pnl_usd?.toLocaleString(),r.worst_case?'<span class="pill bad">YES</span>':'<span class="pill good">NO</span>']));
+}
+async function refreshAll(){
+  const s=await apiGet('/portfolio-stress-test/summary');
+  renderSummary(s);
+  renderScenarios(s.shocked_results||[]);
+}
+function showCustom(){ const c=document.getElementById('customCard'); c.style.display=c.style.display==='none'?'block':'none'; }
+async function runQuick(){
+  const r=await apiPost('/portfolio-stress-test/run',{
+    scenarios:[
+      {scenario_id:'GFC',name:'2008 GFC Replay',equity_shock:-0.45,credit_spread_shock:0.03},
+      {scenario_id:'COVID',name:'COVID-19 Crash',equity_shock:-0.35,credit_spread_shock:0.015},
+      {scenario_id:'FLASH',name:'Flash Crash',equity_shock:-0.12,credit_spread_shock:0.005},
+      {scenario_id:'RATES',name:'Rate Shock +300bps',equity_shock:-0.18,credit_spread_shock:0.025},
+    ],
+    confidence:0.99,capital_buffer_pct:0.08,actor:'operator-ui'
+  });
+  document.getElementById('actionBox').textContent=JSON.stringify(r,null,2);
+  await refreshAll();
+}
+async function runCustom(){
+  const equity=parseFloat(document.getElementById('fEquity').value)/100;
+  const credit=parseFloat(document.getElementById('fCredit').value)/10000;
+  const conf=parseFloat(document.getElementById('fConf').value)/100;
+  const name=document.getElementById('fName').value;
+  const r=await apiPost('/portfolio-stress-test/run',{
+    scenarios:[{scenario_id:'CUSTOM',name,equity_shock:equity,credit_spread_shock:credit}],
+    confidence:conf,capital_buffer_pct:0.08,actor:'operator-ui'
+  });
+  document.getElementById('actionBox').textContent=JSON.stringify(r,null,2);
+  document.getElementById('customCard').style.display='none';
+  await refreshAll();
+}
+async function resetNow(){ const r=await apiPost('/portfolio-stress-test/reset',{}); document.getElementById('actionBox').textContent=JSON.stringify(r,null,2); await refreshAll(); }
+(async()=>{ try{ await detect(); await refreshAll(); }catch(err){ document.getElementById('actionBox').textContent=String(err); } })();
+</script>
+</body>
+</html>
