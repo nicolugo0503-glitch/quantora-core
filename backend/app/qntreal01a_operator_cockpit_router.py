@@ -87,6 +87,41 @@ def _load_credential_vault() -> Dict[str, Any]:
     return _read_json(CREDENTIAL_VAULT_FILE, {'execution_authorized': False, 'selected_broker': 'paper', 'providers': {}})
 
 
+
+def _load_order_entry() -> Dict[str, Any]:
+    return _read_json(ORDER_ENTRY_FILE, {
+        'surface_status': 'idle',
+        'submission_count': 0,
+        'blocked_count': 0,
+        'last_submission': None,
+    })
+
+def _load_broker_session() -> Dict[str, Any]:
+    return _read_json(BROKER_SESSION_FILE, {
+        'session_status': 'idle',
+        'connectivity_status': 'unknown',
+        'handshake_valid': False,
+        'connectivity_verified': False,
+        'selected_broker': 'paper',
+    })
+
+def _load_post_trade_lock() -> Dict[str, Any]:
+    return _read_json(POST_TRADE_LOCK_FILE, {
+        'reconciliation_status': 'idle',
+        'lock_status': 'unlocked',
+        'drift_detected': False,
+        'latest_fill_reference': None,
+    })
+
+def _load_cash_truth() -> Dict[str, Any]:
+    return _read_json(CASH_TRUTH_FILE, {
+        'truth_status': 'idle',
+        'cash_balance': 0.0,
+        'buying_power': 0.0,
+        'available_buying_power': 0.0,
+        'margin_excess': 0.0,
+    })
+
 def _save_execution(data: Dict[str, Any]) -> Dict[str, Any]:
     return _write_json(EXECUTION_FILE, data)
 
