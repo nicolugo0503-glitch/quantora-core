@@ -1,0 +1,9 @@
+{
+  "mission": "QNT-04E",
+  "title": "Settlement and Treasury Netting Engine",
+  "description": "Nets settlement obligations across counterparties, currencies, and settlement dates. Optimizes cash flows and reduces settlement risk through controlled netting logic.",
+  "version": "1.0.0",
+  "governance": "institutional",
+  "capital_safety": "enforced",
+  "status": "active"
+}
