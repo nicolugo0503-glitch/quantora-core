@@ -1,0 +1,9 @@
+{
+  "mission": "QNT-04F",
+  "title": "Global Compliance / Disclosure Binder",
+  "description": "Maintains comprehensive compliance and disclosure records. Generates regulatory filing binders, disclosure packets, and compliance attestation archives.",
+  "version": "1.0.0",
+  "governance": "institutional",
+  "capital_safety": "enforced",
+  "status": "active"
+}
