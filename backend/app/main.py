@@ -16736,7 +16736,7 @@ def workspace_rebalancing_adjustment_create(payload: dict, session=Depends(requi
 
 
 
-# QNT30531 / QNT30535C Ã¢ÂÂ production integration import final fix
+# QNT30531 / QNT30535C ÃÂ¢ÃÂÃÂ production integration import final fix
 try:
     from .qnt30531_integration import integrate_qnt30531
 except Exception:
@@ -16744,7 +16744,7 @@ except Exception:
 
 integrate_qnt30531(app)
 
-# QNT30532 Ã¢ÂÂ legacy compatibility routes
+# QNT30532 ÃÂ¢ÃÂÃÂ legacy compatibility routes
 @app.get("/api/v1/reports/nav")
 def qnt30532_legacy_nav_report():
     try:
@@ -17097,3 +17097,27 @@ app.include_router(qntreal03i_router)
 
 from backend.app.qntreal03j_systemic_risk_router import router as qntreal03j_router
 app.include_router(qntreal03j_router)
+
+from backend.app.qntreal04a_multi_broker_orchestration_router import router as qntreal04a_router
+app.include_router(qntreal04a_router)
+
+from backend.app.qntreal04b_multi_account_capital_routing_router import router as qntreal04b_router
+app.include_router(qntreal04b_router)
+
+from backend.app.qntreal04c_multi_fund_policy_router import router as qntreal04c_router
+app.include_router(qntreal04c_router)
+
+from backend.app.qntreal04d_investor_portal_router import router as qntreal04d_router
+app.include_router(qntreal04d_router)
+
+from backend.app.qntreal04e_settlement_netting_router import router as qntreal04e_router
+app.include_router(qntreal04e_router)
+
+from backend.app.qntreal04f_compliance_binder_router import router as qntreal04f_router
+app.include_router(qntreal04f_router)
+
+from backend.app.qntreal04g_ai_capital_committee_router import router as qntreal04g_router
+app.include_router(qntreal04g_router)
+
+from backend.app.qntreal04h_autonomous_supervisor_router import router as qntreal04h_router
+app.include_router(qntreal04h_router)
