@@ -1,0 +1,9 @@
+{
+  "mission": "QNT-04G",
+  "title": "AI Capital Committee Recommendation Layer",
+  "description": "AI-assisted capital allocation recommendations under strict policy constraints. Produces committee-ready memos with rationale, risk analysis, and governance sign-off requirements.",
+  "version": "1.0.0",
+  "governance": "institutional",
+  "capital_safety": "enforced",
+  "status": "active"
+}
