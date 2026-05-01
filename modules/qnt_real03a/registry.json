@@ -1,0 +1,29 @@
+{
+  "mission_id": "QNT-REAL03A",
+  "name": "Portfolio Stress Test Engine",
+  "version": "1.0.0",
+  "phase": "REAL03",
+  "status": "active",
+  "description": "Executes multi-scenario portfolio stress tests across macro shocks, liquidity crises, and correlated drawdown events. Produces risk-adjusted loss estimates, VaR breach reports, and regulatory capital adequacy assessments.",
+  "components": [
+    "scenario-loader",
+    "shock-applicator",
+    "portfolio-pricer",
+    "var-calculator",
+    "capital-assessor",
+    "report-generator"
+  ],
+  "depends_on": ["QNT-REAL02A", "QNT-REAL02B", "QNT-REAL02M"],
+  "state_file": "real03a_portfolio_stress_test_state.json",
+  "endpoints": [
+    "GET /portfolio-stress-test/health",
+    "GET /portfolio-stress-test/summary",
+    "POST /portfolio-stress-test/run",
+    "POST /portfolio-stress-test/load-scenarios",
+    "POST /portfolio-stress-test/apply-shocks",
+    "POST /portfolio-stress-test/compute-var",
+    "POST /portfolio-stress-test/assess-capital",
+    "POST /portfolio-stress-test/reset"
+  ],
+  "tags": ["stress-test", "portfolio", "risk", "var", "capital-adequacy"]
+}
