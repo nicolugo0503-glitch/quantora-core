@@ -1,0 +1,9 @@
+{
+  "mission": "QNT-04B",
+  "title": "Multi-Account Capital Routing Engine",
+  "description": "Routes capital allocations across multiple accounts under unified policy. Enforces account-level limits, concentration rules, and cross-account exposure governance.",
+  "version": "1.0.0",
+  "governance": "institutional",
+  "capital_safety": "enforced",
+  "status": "active"
+}
