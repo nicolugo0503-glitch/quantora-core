@@ -16736,7 +16736,7 @@ def workspace_rebalancing_adjustment_create(payload: dict, session=Depends(requi
 
 
 
-# QNT30531 / QNT30535C â production integration import final fix
+# QNT30531 / QNT30535C Ã¢ÂÂ production integration import final fix
 try:
     from .qnt30531_integration import integrate_qnt30531
 except Exception:
@@ -16744,7 +16744,7 @@ except Exception:
 
 integrate_qnt30531(app)
 
-# QNT30532 â legacy compatibility routes
+# QNT30532 Ã¢ÂÂ legacy compatibility routes
 @app.get("/api/v1/reports/nav")
 def qnt30532_legacy_nav_report():
     try:
@@ -17067,3 +17067,33 @@ app.include_router(qntreal02l_router)
 
 from backend.app.qntreal02m_external_auditor_evidence_map_router import router as qntreal02m_router
 app.include_router(qntreal02m_router)
+
+from backend.app.qntreal03a_portfolio_stress_test_router import router as qntreal03a_router
+app.include_router(qntreal03a_router)
+
+from backend.app.qntreal03b_lcr_monitor_router import router as qntreal03b_router
+app.include_router(qntreal03b_router)
+
+from backend.app.qntreal03c_counterparty_exposure_router import router as qntreal03c_router
+app.include_router(qntreal03c_router)
+
+from backend.app.qntreal03d_trade_reconciliation_router import router as qntreal03d_router
+app.include_router(qntreal03d_router)
+
+from backend.app.qntreal03e_regulatory_capital_router import router as qntreal03e_router
+app.include_router(qntreal03e_router)
+
+from backend.app.qntreal03f_position_limits_router import router as qntreal03f_router
+app.include_router(qntreal03f_router)
+
+from backend.app.qntreal03g_pnl_attribution_router import router as qntreal03g_router
+app.include_router(qntreal03g_router)
+
+from backend.app.qntreal03h_investor_reporting_router import router as qntreal03h_router
+app.include_router(qntreal03h_router)
+
+from backend.app.qntreal03i_model_risk_governance_router import router as qntreal03i_router
+app.include_router(qntreal03i_router)
+
+from backend.app.qntreal03j_systemic_risk_router import router as qntreal03j_router
+app.include_router(qntreal03j_router)
