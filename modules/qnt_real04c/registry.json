@@ -1,0 +1,9 @@
+{
+  "mission": "QNT-04C",
+  "title": "Multi-Fund / Multi-Vehicle Policy Layer",
+  "description": "Enforces fund-level and vehicle-level policies across multiple investment structures. Governs fund mandates, investment restrictions, and cross-fund exposure controls.",
+  "version": "1.0.0",
+  "governance": "institutional",
+  "capital_safety": "enforced",
+  "status": "active"
+}
