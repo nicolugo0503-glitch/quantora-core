@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account — Quantora</title>
+<style>
+  :root {
+    --bg: #0a0f1e; --bg2: #0d1426; --bg3: #0f1a2e;
+    --card: #111827; --border: #1e2d45; --border2: #2a3f5f;
+    --text: #e8edf5; --dim: #8899aa; --muted: #4a6080;
+    --cyan: #00d4ff; --purple: #7c3aed; --green: #00e676;
+    --red: #ff4444; --gold: #ffd700;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    background: var(--bg); color: var(--text); min-height: 100vh;
+    display: flex; flex-direction: column;
+  }
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 40px; border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+  .nav-logo {
+    font-size: 1.2rem; font-weight: 900; letter-spacing: 2px;
+    background: linear-gradient(90deg, #fff, var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-decoration: none;
+  }
+  .nav-link { color: var(--dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
+  .nav-link:hover { color: var(--cyan); }
+
+  main {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    padding: 60px 20px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.06) 0%, transparent 60%);
+  }
+  .auth-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 48px;
+    width: 100%; max-width: 480px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  }
+  .auth-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 20px;
+    background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.3);
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px;
+    color: #a78bfa; text-transform: uppercase; margin-bottom: 24px;
+  }
+  .auth-title {
+    font-size: 1.9rem; font-weight: 900; letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #fff 0%, #a78bfa 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .auth-sub { color: var(--dim); font-size: 0.9rem; margin-bottom: 32px; line-height: 1.5; }
+
+  .form-group { margin-bottom: 18px; }
+  .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px; }
+  label {
+    display: block; font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 8px;
+  }
+  input[type="email"], input[type="password"], input[type="text"] {
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 16px;
+    color: var(--text); font-size: 0.95rem; font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s; outline: none;
+  }
+  input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,212,255,0.1); }
+  input::placeholder { color: var(--muted); }
+  input.error { border-color: var(--red); }
+
+  /* ── PLAN SELECTOR ── */
+  .plan-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .plan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 24px; }
+  .plan-card {
+    border: 1px solid var(--border); border-radius: 10px; padding: 14px 10px;
+    cursor: pointer; transition: all 0.2s; text-align: center; position: relative;
+    background: var(--bg);
+  }
+  .plan-card:hover { border-color: var(--border2); }
+  .plan-card.selected { border-color: var(--cyan); background: rgba(0,212,255,0.05); }
+  .plan-card.selected .plan-name { color: var(--cyan); }
+  .plan-name { font-size: 0.78rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .plan-price { font-size: 1.1rem; font-weight: 900; color: var(--dim); font-family: 'SF Mono', monospace; }
+  .plan-price span { font-size: 0.65rem; font-weight: 500; }
+  .plan-card.selected .plan-price { color: var(--cyan); }
+  .plan-popular {
+    position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    color: #fff; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.5px;
+    padding: 2px 8px; border-radius: 10px; white-space: nowrap;
+  }
+  input[name="plan"] { display: none; }
+
+  /* ── TERMS ── */
+  .terms-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 24px; }
+  .terms-row input[type="checkbox"] { accent-color: var(--cyan); margin-top: 2px; cursor: pointer; flex-shrink: 0; }
+  .terms-row span { font-size: 0.82rem; color: var(--dim); line-height: 1.4; }
+  .terms-row a { color: var(--cyan); text-decoration: none; }
+  .terms-row a:hover { opacity: 0.8; }
+
+  .btn-primary {
+    width: 100%; padding: 14px;
+    background: linear-gradient(135deg, var(--purple), var(--cyan));
+    border: none; border-radius: 10px;
+    color: #fff; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; font-family: inherit;
+  }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 8px 30px rgba(124,58,237,0.3); }
+  .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .divider { display: flex; align-items: center; gap: 16px; margin: 24px 0; color: var(--muted); font-size: 0.8rem; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .login-link { text-align: center; font-size: 0.88rem; color: var(--dim); }
+  .login-link a { color: var(--cyan); text-decoration: none; font-weight: 600; }
+  .login-link a:hover { opacity: 0.8; }
+
+  .alert { padding: 12px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 500; margin-bottom: 20px; display: none; }
+  .alert-error { background: rgba(255,68,68,0.1); border: 1px solid rgba(255,68,68,0.3); color: #ff6b6b; }
+  .alert-success { background: rgba(0,230,118,0.1); border: 1px solid rgba(0,230,118,0.3); color: var(--green); }
+  .alert.show { display: block; }
+
+  .spinner { display: none; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 8px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .strength-bar { height: 3px; background: var(--border); border-radius: 2px; margin-top: 8px; overflow: hidden; }
+  .strength-fill { height: 100%; width: 0%; transition: all 0.3s; border-radius: 2px; }
+
+  footer { text-align: center; padding: 20px; font-size: 0.75rem; color: var(--muted); border-top: 1px solid var(--border); }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--cyan); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">⚡ QUANTORA</a>
+  <a href="/login" class="nav-link">Already have an account? <strong style="color:var(--cyan)">Sign in →</strong></a>
+</nav>
+
+<main>
+  <div class="auth-card">
+    <div class="auth-badge">✦ Free to Start</div>
+    <div class="auth-title">Create your account</div>
+    <div class="auth-sub">Join Quantora and get instant access to real-time market intelligence, AI signals, and paper trading.</div>
+
+    <div class="alert alert-error" id="errorMsg"></div>
+    <div class="alert alert-success" id="successMsg"></div>
+
+    <form id="signupForm" onsubmit="handleSignup(event)">
+      <div class="form-row-2">
+        <div class="form-group" style="margin-bottom:0">
+          <label for="fname">First Name</label>
+          <input type="text" id="fname" name="fname" placeholder="Alex" required autocomplete="given-name">
+        </div>
+        <div class="form-group" style="margin-bottom:0">
+          <label for="lname">Last Name</label>
+          <input type="text" id="lname" name="lname" placeholder="Chen" autocomplete="family-name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Min. 8 characters" required autocomplete="new-password" oninput="checkStrength(this.value)">
+        <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirm">Confirm Password</label>
+        <input type="password" id="confirm" name="confirm" placeholder="Repeat password" required autocomplete="new-password">
+      </div>
+
+      <!-- Plan selector -->
+      <div class="plan-label">Choose Your Plan</div>
+      <div class="plan-grid">
+        <div class="plan-card selected" onclick="selectPlan('starter', this)">
+          <div class="plan-name">Starter</div>
+          <div class="plan-price">$0<span>/mo</span></div>
+        </div>
+        <div class="plan-card" onclick="selectPlan('pro', this)" style="position:relative">
+          <div class="plan-popular">POPULAR</div>
+          <div class="plan-name">Pro Trader</div>
+          <div class="plan-price">$49<span>/mo</span></div>
+        </div>
+        <div class="plan-card" onclick="selectPlan('institutional', this)">
+          <div class="plan-name">Institutional</div>
+          <div class="plan-price">$299<span>/mo</span></div>
+        </div>
+      </div>
+      <input type="hidden" name="plan" id="selectedPlan" value="starter">
+
+      <div class="terms-row">
+        <input type="checkbox" id="terms" required>
+        <span>I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>. I understand Quantora is not financial advice.</span>
+      </div>
+
+      <button type="submit" class="btn-primary" id="submitBtn">
+        <span class="spinner" id="spinner"></span>
+        <span id="btnText">Create Free Account →</span>
+      </button>
+    </form>
+
+    <div class="divider">or</div>
+    <div class="login-link">Already have an account? <a href="/login">Sign in</a></div>
+  </div>
+</main>
+
+<footer>
+  <a href="/">Home</a> · <a href="/pricing">Pricing</a> · <a href="/docs">API Docs</a> · <a href="/ui/">Panels</a>
+  &nbsp;|&nbsp; Paper trading only. Not financial advice.
+</footer>
+
+<script>
+const B = window.location.origin;
+
+function selectPlan(plan, el) {
+  document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('selectedPlan').value = plan;
+  const btnText = document.getElementById('btnText');
+  if (plan === 'starter') btnText.textContent = 'Create Free Account →+;
+  else if (plan === 'pro') btnText.textContent = 'Start Pro Trial →+;
+  else btnText.textContent = 'Contact Sales →';
+}
+
+function checkStrength(pw) {
+  const fill = document.getElementById('strengthFill');
+  let score = 0;
+  if (pw.length >= 8) score++;
+  if (/[A-Z]/.test(pw)) score++;
+  if (/[0-9]/.test(pw)) score++;
+  if (/[^A-Za-z0-9]/.test(pw)) score++;
+  const colors = ['#ff4444','#ff9900','#ffd700','#00e676'];
+  const widths = ['25%','50%','75%','100%'];
+  fill.style.width = score ? widths[score-1] : '0%';
+  fill.style.background = score ? colors[score-1] : '';
+}
+
+function showError(msg) {
+  const el = document.getElementById('errorMsg');
+  el.textContent = msg; el.classList.add('show');
+  document.getElementById('successMsg').classList.remove('show');
+}
+function showSuccess(msg) {
+  const el = document.getElementById('successMsg');
+  el.textContent = msg; el.classList.add('show');
+  document.getElementById('errorMsg').classList.remove('show');
+}
+function setLoading(loading) {
+  const btn = document.getElementById('submitBtn');
+  const spinner = document.getElementById('spinner');
+  btn.disabled = loading;
+  spinner.style.display = loading ? 'inline-block' : 'none';
+  if (!loading) document.getElementById('btnText').textContent = document.getElementById('selectedPlan').value === 'starter' ? 'Create Free Account →' : 'Continue →';
+  if (loading) document.getElementById('btnText').textContent = 'Creating account…';
+}
+
+async function handleSignup(e) {
+  e.preventDefault();
+  const fname = document.getElementById('fname').value.trim();
+  const lname = document.getElementById('lname').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const confirm = document.getElementById('confirm').value;
+  const plan = document.getElementById('selectedPlan').value;
+
+  if (!fname) { showError('Please enter your first name.'); return; }
+  if (!email) { showError('Please enter your email address.'); return; }
+  if (password.length < 8) { showError('Password must be at least 8 characters.'); return; }
+  if (password !== confirm) { showError('Passwords do not match.'); return; }
+
+  const name = lname ? `${fname} ${lname}` : fname;
+
+  setLoading(true);
+  try {
+    const r = await fetch(`${B}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password, plan })
+    });
+    const data = await r.json();
+    if (!r.ok) { showError(data.error || 'Registration failed. Please try again.'); return; }
+
+    localStorage.setItem('q_token', data.token);
+    localStorage.setItem('q_user', JSON.stringify({ email: data.email, name: data.name, plan: data.plan }));
+
+    showSuccess(`Account created! Welcome to Quantora, ${fname}! Redirecting…`);
+    setTimeout(() => { window.location.href = '/'; }, 1200);
+  } catch (err) {
+    showError('Connection error. Please try again.');
+  } finally {
+    setLoading(false);
+  }
+}
+</script>
+</body>
+</html>
