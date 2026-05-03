@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Quantora</title>
+<style>
+  :root {
+    --bg:#050a14;--bg2:#080f1e;--bg3:#0d1528;
+    --card:#0f1a2e;--card2:#111f35;
+    --border:#1a2d4a;--border2:#253f62;
+    --text:#e2e8f0;--dim:#94a3b8;--muted:#4a6080;
+    --cyan:#00d4ff;--purple:#7b2fff;--green:#10b981;
+    --gold:#f59e0b;--red:#ef4444;--exec:#ff6b2b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+  /* NAV */
+  nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
+  .nav-logo{font-size:1.2rem;font-weight:900;letter-spacing:2px;background:linear-gradient(90deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;}
+  .nav-right{display:flex;align-items:center;gap:12px;}
+  .nav-user{font-size:0.85rem;color:var(--dim);}
+  .nav-link{color:var(--dim);text-decoration:none;font-size:0.83rem;font-weight:500;transition:color 0.2s;padding:7px 14px;border-radius:6px;border:1px solid transparent;}
+  .nav-link:hover{color:var(--cyan);border-color:var(--border);}
+  .nav-link-danger{color:var(--muted);cursor:pointer;font-size:0.8rem;background:none;border:none;font-family:inherit;}
+  .nav-link-danger:hover{color:var(--red);}
+
+  /* LAYOUT */
+  .layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 64px);}
+  @media(max-width:768px){.layout{grid-template-columns:1fr;}}
+
+  /* SIDEBAR */
+  .sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:24px 0;}
+  .sidebar-section{margin-bottom:8px;}
+  .sidebar-label{font-size:0.62rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:0 20px;margin-bottom:6px;}
+  .sidebar-link{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:0.85rem;color:var(--dim);text-decoration:none;transition:all 0.15s;border-left:2px solid transparent;}
+  .sidebar-link:hover{color:var(--text);background:rgba(255,255,255,0.03);}
+  .sidebar-link.active{color:var(--cyan);background:rgba(0,212,255,0.06);border-left-color:var(--cyan);}
+  .sidebar-link .icon{font-size:1rem;width:18px;text-align:center;}
+  .sidebar-plan{margin:16px 12px 0;padding:14px;background:var(--card);border:1px solid var(--border);border-radius:10px;}
+  .sidebar-plan-label{font-size:0.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+  .sidebar-plan-name{font-size:0.9rem;font-weight:700;margin-bottom:10px;}
+  .sidebar-plan-btn{display:block;text-align:center;padding:8px;border-radius:7px;font-size:0.78rem;font-weight:600;text-decoration:none;background:linear-gradient(135deg,var(--cyan),var(--purple));color:#fff;transition:opacity 0.2s;}
+  .sidebar-plan-btn:hover{opacity:0.85;}
+
+  /* MAIN */
+  .main{padding:32px 40px;overflow-y:auto;}
+  @media(max-width:768px){.main{padding:20px;}}
+
+  /* WELCOME BANNER */
+  .welcome-banner{
+    background:linear-gradient(135deg,rgba(0,212,255,0.08) 0%,rgba(123,47,255,0.06) 100%);
+    border:1px solid rgba(0,212,255,0.2);border-radius:14px;
+    padding:28px 32px;margin-bottom:28px;
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+  }
+  .welcome-left h1{font-size:1.5rem;font-weight:800;margin-bottom:4px;}
+  .welcome-left p{font-size:0.88rem;color:var(--dim);line-height:1.5;}
+  .welcome-right{display:flex;gap:10px;flex-wrap:wrap;}
+  .btn{padding:10px 20px;border-radius:8px;font-size:0.85rem;font-weight:600;text-decoration:none;border:none;cursor:pointer;font-family:inherit;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px;}
+  .btn-primary{background:linear-gradient(135deg,var(--cyan),var(--purple));color:#fff;}
+  .btn-primary:hover{opacity:0.88;}
+  .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border2);}
+  .btn-outline:hover{border-color:var(--cyan);color:var(--cyan);}
+
+  /* UPGRADED BANNER */
+  .upgrade-success{
+    background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.3);
+    border-radius:12px;padding:16px 20px;margin-bottom:24px;
+    display:flex;align-items:center;gap:12px;color:var(--green);font-weight:600;
+    display:none;
+  }
+  .upgrade-success.show{display:flex;}
+
+  /* STATS ROW */
+  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+  @media(max-width:900px){.stats-row{grid-template-columns:repeat(2,1fr);}}
+  .stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 22px;}
+  .stat-label{font-size:0.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+  .stat-value{font-size:1.6rem;font-weight:900;font-family:'SF Mono','Fira Code',monospace;margin-bottom:2px;}
+  .stat-sub{font-size:0.75rem;color:var(--muted);}
+
+  /* SECTION */
+  .section-title{font-size:0.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+  .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  /* PLAN CARD */
+  .plan-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;margin-bottom:28px;}
+  .plan-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+  .plan-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;font-size:0.75rem;font-weight:700;letter-spacing:0.5px;}
+  .badge-core{background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);color:var(--cyan);}
+  .badge-pro{background:rgba(123,47,255,0.1);border:1px solid rgba(123,47,255,0.3);color:#a78bfa;}
+  .badge-execution{background:rgba(255,107,43,0.1);border:1px solid rgba(255,107,43,0.3);color:var(--exec);}
+  .badge-firm{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:var(--gold);}
+  .badge-institutional{background:rgba(123,47,255,0.1);border:1px solid rgba(123,47,255,0.3);color:var(--purple);}
+  .badge-starter{background:rgba(148,163,184,0.1);border:1px solid rgba(148,163,184,0.2);color:var(--dim);}
+
+  .plan-features{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:20px;}
+  .plan-feat{display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--dim);}
+  .plan-feat .chk{color:var(--green);font-size:0.85rem;}
+  .plan-upgrade{background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.15);border-radius:10px;padding:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+  .plan-upgrade-text h3{font-size:0.95rem;font-weight:700;margin-bottom:4px;}
+  .plan-upgrade-text p{font-size:0.8rem;color:var(--dim);}
+  .btn-upgrade{padding:11px 22px;border-radius:8px;font-size:0.88rem;font-weight:700;background:linear-gradient(135deg,var(--cyan),var(--purple));color:#fff;border:none;cursor:pointer;font-family:inherit;text-decoration:none;transition:opacity 0.2s;}
+  .btn-upgrade:hover{opacity:0.88;}
+
+  /* QUICK ACCESS */
+  .quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:28px;}
+  .quick-card{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:20px;text-decoration:none;color:inherit;transition:all 0.2s;display:flex;flex-direction:column;gap:8px;}
+  .quick-card:hover{border-color:var(--cyan);transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,0.3);}
+  .quick-icon{font-size:1.6rem;}
+  .quick-title{font-size:0.88rem;font-weight:700;color:#fff;}
+  .quick-desc{font-size:0.75rem;color:var(--dim);line-height:1.4;}
+  .quick-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:700;letter-spacing:0.5px;margin-top:4px;}
+  .tag-live{background:rgba(16,185,129,0.15);color:var(--green);border:1px solid rgba(16,185,129,0.3);}
+  .tag-pro{background:rgba(245,158,11,0.12);color:var(--gold);border:1px solid rgba(245,158,11,0.3);}
+  .tag-locked{background:rgba(74,96,128,0.2);color:var(--muted);border:1px solid rgba(74,96,128,0.3);}
+
+  /* ACCOUNT */
+  .account-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:28px;}
+  .account-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(26,45,74,0.6);}
+  .account-row:last-child{border-bottom:none;padding-bottom:0;}
+  .account-key{font-size:0.8rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;}
+  .account-val{font-size:0.88rem;color:var(--text);}
+
+  /* LOADING */
+  .loading{text-align:center;padding:60px;color:var(--muted);}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .spinner{display:inline-block;width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">⚡ QUANTORA</a>
+  <div class="nav-right">
+    <span class="nav-user" id="navUserName">Loading…</span>
+    <a href="/ui/" class="nav-link">Platform</a>
+    <a href="/pricing" class="nav-link">Upgrade</a>
+    <button class="nav-link-danger" onclick="logout()">Sign Out</button>
+  </div>
+</nav>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Operator</div>
+      <a href="/dashboard" class="sidebar-link active"><span class="icon">🏠</span> Dashboard</a>
+      <a href="/ui/" class="sidebar-link"><span class="icon">🖥️</span> Intelligence</a>
+      <a href="/api/live/overview" class="sidebar-link"><span class="icon">📡</span> Market Data</a>
+      <a href="/api/live/crypto" class="sidebar-link"><span class="icon">₿</span> Crypto</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Platform</div>
+      <a href="/api/live/portfolio/demo" class="sidebar-link"><span class="icon">💼</span> Paper Portfolio</a>
+      <a href="/api/live/gainers" class="sidebar-link"><span class="icon">🚀</span> Movers</a>
+      <a href="/api/live/sectors" class="sidebar-link"><span class="icon">🏛️</span> Sectors</a>
+      <a href="/docs" class="sidebar-link"><span class="icon">📖</span> API Docs</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Account</div>
+      <a href="/pricing" class="sidebar-link"><span class="icon">💎</span> Plans & Pricing</a>
+    </div>
+    <div class="sidebar-plan" id="sidebarPlan">
+      <div class="sidebar-plan-label">Your Plan</div>
+      <div class="sidebar-plan-name" id="sidebarPlanName">—</div>
+      <a href="/pricing" class="sidebar-plan-btn" id="sidebarUpgradeBtn">Upgrade →</a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- Loading state -->
+    <div class="loading" id="loadingState">
+      <div class="spinner"></div>
+      <div>Loading your dashboard…</div>
+    </div>
+
+    <!-- Dashboard content (hidden until auth verified) -->
+    <div id="dashContent" style="display:none;">
+
+      <!-- Upgrade success banner -->
+      <div class="upgrade-success" id="upgradeBanner">
+        ✅ Plan upgraded successfully! Your new features are now active.
+      </div>
+
+      <!-- Welcome -->
+      <div class="welcome-banner">
+        <div class="welcome-left">
+          <h1>Welcome back, <span id="userName">Operator</span></h1>
+          <p id="welcomeSub">Your financial intelligence platform is live and ready.</p>
+        </div>
+        <div class="welcome-right">
+          <a href="/ui/" class="btn btn-primary">⚡ Launch Platform</a>
+          <a href="/api/live/overview" class="btn btn-outline">📊 Market Data</a>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Your Plan</div>
+          <div class="stat-value" id="statPlan" style="font-size:1.1rem;color:var(--cyan)">—</div>
+          <div class="stat-sub" id="statPlanSince">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">API Calls / Day</div>
+          <div class="stat-value" id="statApiCalls" style="color:var(--green)">—</div>
+          <div class="stat-sub">Daily limit</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Intelligence Panels</div>
+          <div class="stat-value" id="statPanels" style="color:var(--purple)">—</div>
+          <div class="stat-sub">Available to you</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Market Status</div>
+          <div class="stat-value" id="statMarket" style="font-size:1rem;color:var(--green)">—</div>
+          <div class="stat-sub" id="statMarketTime">—</div>
+        </div>
+      </div>
+
+      <!-- Plan details -->
+      <div class="section-title">Your Plan</div>
+      <div class="plan-card" id="planCard">
+        <div class="plan-header">
+          <div>
+            <div style="font-size:1.1rem;font-weight:800;margin-bottom:6px;" id="planTitle">—</div>
+            <span class="plan-badge badge-starter" id="planBadge">—</span>
+          </div>
+          <div id="manageSubBtn" style="display:none;">
+            <button class="btn btn-outline" onclick="manageSubscription()" style="font-size:0.8rem;">Manage Subscription</button>
+          </div>
+        </div>
+        <div class="plan-features" id="planFeatures"></div>
+        <div class="plan-upgrade" id="planUpgrade" style="display:none;">
+          <div class="plan-upgrade-text">
+            <h3 id="upgradeTitle">Unlock the full operator stack</h3>
+            <p id="upgradeDesc">Upgrade to access all intelligence panels, execution tools, and advanced analytics.</p>
+          </div>
+          <a href="/pricing" class="btn-upgrade">View All Plans →</a>
+        </div>
+      </div>
+
+      <!-- Quick Access -->
+      <div class="section-title">Quick Access</div>
+      <div class="quick-grid" id="quickGrid">
+        <!-- Filled by JS based on plan -->
+      </div>
+
+      <!-- Account Details -->
+      <div class="section-title">Account</div>
+      <div class="account-card">
+        <div class="account-row">
+          <span class="account-key">Name</span>
+          <span class="account-val" id="acctName">—</span>
+        </div>
+        <div class="account-row">
+          <span class="account-key">Email</span>
+          <span class="account-val" id="acctEmail">—</span>
+        </div>
+        <div class="account-row">
+          <span class="account-key">Plan</span>
+          <span class="account-val" id="acctPlan">—</span>
+        </div>
+        <div class="account-row">
+          <span class="account-key">Member Since</span>
+          <span class="account-val" id="acctSince">—</span>
+        </div>
+      </div>
+
+    </div><!-- /dashContent -->
+  </main>
+</div>
+
+<script>
+const B = window.location.origin;
+
+const PLAN_DATA = {
+  starter: {
+    label: 'Starter',
+    badgeClass: 'badge-starter',
+    apiCalls: '50',
+    panels: 'Limited',
+    color: 'var(--dim)',
+    features: ['Basic market quotes', 'Paper trading posture', 'Limited API access', 'Core platform access'],
+    upgradeTitle: 'Start your operator journey',
+    upgradeDesc: 'Upgrade to Quantora Core to unlock intelligence summaries, strategy education, and structured operator workflows.',
+  },
+  core: {
+    label: 'Quantora Core',
+    badgeClass: 'badge-core',
+    apiCalls: '50',
+    panels: 'Limited',
+    color: 'var(--cyan)',
+    features: ['Operator dashboard (light)', 'Market intelligence summaries', 'Strategy education + guidance', 'Performance journaling', 'Risk planning tools', 'Daily execution checklists', 'Paper trading posture'],
+    upgradeTitle: 'Ready to go professional?',
+    upgradeDesc: 'Upgrade to Quantora Pro for the full operator cockpit, 537 intelligence panels, and advanced analytics.',
+  },
+  pro: {
+    label: 'Quantora Pro',
+    badgeClass: 'badge-pro',
+    apiCalls: '5,000',
+    panels: '537',
+    color: '#a78bfa',
+    features: ['Full operator cockpit', '537 intelligence panels', 'Advanced journaling + attribution', 'Strategy tracking + scoring', 'Deeper analytics', 'Structured execution plans', '5,000 API calls/day'],
+    upgradeTitle: 'Take your capital to the next level',
+    upgradeDesc: 'Upgrade to Quantora Execution for live broker connectivity, pre-trade checks, and governed capital deployment.',
+  },
+  execution: {
+    label: 'Quantora Execution',
+    badgeClass: 'badge-execution',
+    apiCalls: 'Unlimited',
+    panels: '537',
+    color: 'var(--exec)',
+    features: ['Everything in Pro', 'Live broker connectivity', 'Readiness certification', 'Pre-trade notional checks', 'Order-risk enforcement', 'Fill tracking + P&L truth', 'Post-trade reconciliation', 'Execution guardrails'],
+    upgradeTitle: 'Scale to team operations',
+    upgradeDesc: 'Upgrade to Quantora Firm for multi-user workflows, supervisory queues, and audit trail governance.',
+  },
+  firm: {
+    label: 'Quantora Firm',
+    badgeClass: 'badge-firm',
+    apiCalls: 'Unlimited',
+    panels: '537',
+    color: 'var(--gold)',
+    features: ['Everything in Execution', 'Multi-user team workflows', 'Supervisory queue', 'Exception handling + holds', 'Evidence packets + audit trail', 'Role separation', 'Governance surfaces', 'Advanced reporting exports'],
+    upgradeTitle: null,
+  },
+  institutional: {
+    label: 'Quantora Institutional',
+    badgeClass: 'badge-institutional',
+    apiCalls: 'Unlimited',
+    panels: 'Custom',
+    color: 'var(--purple)',
+    features: ['Custom deployment', 'Multi-entity support', 'Audit/regulatory retrieval', 'Supervisory evidence mapping', 'Private environment option', 'Dedicated implementation team', 'Institutional integrations'],
+    upgradeTitle: null,
+  },
+};
+
+const QUICK_MODULES = {
+  starter: [
+    {icon:'🖥️', title:'Intelligence Panels', desc:'Access the platform intelligence suite', href:'/ui/', tag:'live', tagLabel:'LIVE'},
+    {icon:'📊', title:'Market Overview', desc:'Real-time indices and market breadth', href:'/api/live/overview', tag:'live', tagLabel:'LIVE'},
+    {icon:'₿', title:'Crypto Intelligence', desc:'Top crypto prices and 24h data', href:'/api/live/crypto', tag:'live', tagLabel:'LIVE'},
+    {icon:'💼', title:'Paper Portfolio', desc:'$100K simulated trading portfolio', href:'/api/live/portfolio/demo', tag:'live', tagLabel:'LIVE'},
+    {icon:'💎', title:'Upgrade Plan', desc:'Unlock the full operator stack', href:'/pricing', tag:'pro', tagLabel:'UPGRADE'},
+    {icon:'📖', title:'API Docs', desc:'Explore all endpoints', href:'/docs', tag:'live', tagLabel:'DOCS'},
+  ],
+  core: [
+    {icon:'🖥️', title:'Intelligence Panels', desc:'537 live market analysis panels', href:'/ui/', tag:'live', tagLabel:'LIVE'},
+    {icon:'📡', title:'Market Data', desc:'Real-time overview and breadth', href:'/api/live/overview', tag:'live', tagLabel:'LIVE'},
+    {icon:'🏛️', title:'Sector ETFs', desc:'Capital flow across all sectors', href:'/api/live/sectors', tag:'live', tagLabel:'LIVE'},
+    {icon:'💼', title:'Paper Portfolio', desc:'Simulated $100K trading', href:'/api/live/portfolio/demo', tag:'live', tagLabel:'LIVE'},
+    {icon:'🚀', title:'Movers & Gainers', desc:"Today's momentum plays", href:'/api/live/gainers', tag:'live', tagLabel:'LIVE'},
+    {icon:'💎', title:'Upgrade to Pro', desc:'Full cockpit + advanced analytics', href:'/pricing', tag:'pro', tagLabel:'UPGRADE'},
+  ],
+  pro: [
+    {icon:'🖥️', title:'Full Operator Cockpit', desc:'537 intelligence panels live', href:'/ui/', tag:'live', tagLabel:'LIVE'},
+    {icon:'📡', title:'Live Market Data', desc:'Full real-time market suite', href:'/api/live/overview', tag:'live', tagLabel:'LIVE'},
+    {icon:'🏛️', title:'Sector Flow Analysis', desc:'ETF capital rotation tracker', href:'/api/live/sectors', tag:'live', tagLabel:'LIVE'},
+    {icon:'🚀', title:'Movers Scanner', desc:'Top gainers, losers, active', href:'/api/live/gainers', tag:'live', tagLabel:'LIVE'},
+    {icon:'💼', title:'Paper Portfolio', desc:'Full simulated P&L tracking', href:'/api/live/portfolio/demo', tag:'live', tagLabel:'LIVE'},
+    {icon:'⚡', title:'Upgrade to Execution', desc:'Go live with governed capital ops', href:'/pricing', tag:'pro', tagLabel:'UPGRADE'},
+  ],
+  execution: [
+    {icon:'🖥️', title:'Full Operator Cockpit', desc:'537 intelligence panels', href:'/ui/', tag:'live', tagLabel:'LIVE'},
+    {icon:'🎯', title:'Operator Console', desc:'Execution cockpit + risk engine', href:'/operator/summary', tag:'live', tagLabel:'LIVE'},
+    {icon:'📡', title:'Live Market Data', desc:'Full real-time suite', href:'/api/live/overview', tag:'live', tagLabel:'LIVE'},
+    {icon:'🏛️', title:'Sector Flow', desc:'Capital rotation tracker', href:'/api/live/sectors', tag:'live', tagLabel:'LIVE'},
+    {icon:'🚀', title:'Movers Scanner', desc:'Top gainers, losers, active', href:'/api/live/gainers', tag:'live', tagLabel:'LIVE'},
+    {icon:'📖', title:'Full API Access', desc:'Unlimited API calls', href:'/docs', tag:'live', tagLabel:'LIVE'},
+  ],
+};
+QUICK_MODULES.firm        = QUICK_MODULES.execution;
+QUICK_MODULES.institutional = QUICK_MODULES.execution;
+
+async function init() {
+  // Check for upgrade success param
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('upgraded') === '1') {
+    document.getElementById('upgradeBanner').classList.add('show');
+    window.history.replaceState({}, '', '/dashboard');
+  }
+
+  const token = localStorage.getItem('q_token');
+  if (!token) { window.location.href = '/login'; return; }
+
+  try {
+    const r = await fetch(`${B}/auth/me`, { headers: { Authorization: 'Bearer ' + token } });
+    if (!r.ok) { localStorage.clear(); window.location.href = '/login'; return; }
+    const user = await r.json();
+    renderDashboard(user, token);
+  } catch(e) {
+    document.getElementById('loadingState').innerHTML = '<div style="color:var(--red)">Connection error. <a href="/" style="color:var(--cyan)">Return home</a></div>';
+  }
+}
+
+function renderDashboard(user, token) {
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('dashContent').style.display  = 'block';
+
+  const plan = user.plan || 'starter';
+  const pd   = PLAN_DATA[plan] || PLAN_DATA.starter;
+
+  // Nav
+  document.getElementById('navUserName').textContent = user.name ? user.name.split(' ')[0] : user.email;
+
+  // Welcome
+  document.getElementById('userName').textContent = user.name ? user.name.split(' ')[0] : 'Operator';
+  document.getElementById('welcomeSub').textContent = `${pd.label} · ${pd.apiCalls} API calls/day · ${pd.panels} intelligence panels`;
+
+  // Stats
+  document.getElementById('statPlan').textContent   = pd.label;
+  document.getElementById('statPlan').style.color   = pd.color;
+  document.getElementById('statApiCalls').textContent = pd.apiCalls;
+  document.getElementById('statPanels').textContent = pd.panels;
+
+  const since = user.created_at ? new Date(user.created_at * 1000).toLocaleDateString('en-US', {month:'short', year:'numeric'}) : '—';
+  document.getElementById('statPlanSince').textContent = 'Since ' + since;
+
+  // Plan card
+  document.getElementById('planTitle').textContent = pd.label;
+  const badge = document.getElementById('planBadge');
+  badge.textContent  = pd.label;
+  badge.className    = 'plan-badge ' + pd.badgeClass;
+
+  const featEl = document.getElementById('planFeatures');
+  featEl.innerHTML = pd.features.map(f =>
+    `<div class="plan-feat"><span class="chk">✓</span>${f}</div>`
+  ).join('');
+
+  // Upgrade section
+  const upgradeEl = document.getElementById('planUpgrade');
+  if (pd.upgradeTitle) {
+    upgradeEl.style.display = 'flex';
+    document.getElementById('upgradeTitle').textContent = pd.upgradeTitle;
+    document.getElementById('upgradeDesc').textContent  = pd.upgradeDesc;
+  }
+
+  // Manage subscription button
+  if (!['starter'].includes(plan)) {
+    document.getElementById('manageSubBtn').style.display = 'block';
+  }
+
+  // Sidebar plan
+  document.getElementById('sidebarPlanName').textContent = pd.label;
+  document.getElementById('sidebarPlanName').style.color = pd.color;
+  if (['firm','institutional'].includes(plan)) {
+    document.getElementById('sidebarUpgradeBtn').style.display = 'none';
+  }
+
+  // Quick grid
+  const modules = QUICK_MODULES[plan] || QUICK_MODULES.starter;
+  document.getElementById('quickGrid').innerHTML = modules.map(m => {
+    const tagColor = m.tag === 'live' ? 'tag-live' : 'tag-pro';
+    return `<a href="${m.href}" class="quick-card">
+      <div class="quick-icon">${m.icon}</div>
+      <div class="quick-title">${m.title}</div>
+      <div class="quick-desc">${m.desc}</div>
+      <span class="quick-tag ${tagColor}">${m.tagLabel}</span>
+    </a>`;
+  }).join('');
+
+  // Account details
+  document.getElementById('acctName').textContent  = user.name || '—';
+  document.getElementById('acctEmail').textContent = user.email;
+  document.getElementById('acctPlan').textContent  = pd.label;
+  document.getElementById('acctSince').textContent = user.created_at
+    ? new Date(user.created_at * 1000).toLocaleDateString('en-US', {day:'numeric', month:'long', year:'numeric'})
+    : '—';
+
+  // Market status
+  loadMarketStatus();
+}
+
+async function loadMarketStatus() {
+  try {
+    const r = await fetch(`${B}/api/live/status`);
+    const d = await r.json();
+    const s = d.status || 'UNKNOWN';
+    const isOpen = s.includes('OPEN');
+    const el = document.getElementById('statMarket');
+    el.textContent = s;
+    el.style.color = isOpen ? 'var(--green)' : 'var(--muted)';
+    document.getElementById('statMarketTime').textContent =
+      new Date().toLocaleTimeString('en-US', {timeZone:'America/New_York'}) + ' ET';
+  } catch(e) {
+    document.getElementById('statMarket').textContent = 'CLOSED';
+  }
+}
+
+async function manageSubscription() {
+  const token = localStorage.getItem('q_token');
+  try {
+    const r = await fetch(`${B}/billing/portal`, {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + token }
+    });
+    const d = await r.json();
+    if (d.url) { window.location.href = d.url; }
+    else { alert(d.error || 'Could not open billing portal.'); }
+  } catch(e) {
+    alert('Connection error. Please try again.');
+  }
+}
+
+function logout() {
+  localStorage.removeItem('q_token');
+  localStorage.removeItem('q_user');
+  window.location.href = '/';
+}
+
+init();
+</script>
+</body>
+</html>
