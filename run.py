@@ -18,6 +18,12 @@ try:
     from backend.app.main import app
     logger.info("Main app imported successfully")
     _main_imported = True
+    # Fix: prevent RecursionError in FastAPI merged_lifespan (too many router lifespans)
+    from contextlib import asynccontextmanager
+    @asynccontextmanager
+    async def _noop_lifespan(application):
+        yield {}
+    app.router.lifespan_context = _noop_lifespan
 except Exception as e:
     logger.warning(f"Main app import failed ({e}) — using minimal fallback app")
     from fastapi import FastAPI
