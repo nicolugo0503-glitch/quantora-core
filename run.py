@@ -11,6 +11,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # ── Import main app ──────────────────────────────────────────────────────────
+import sys
+sys.setrecursionlimit(50000)  # Many routers/lifespans need higher recursion depth
+
 try:
     from backend.app.main import app
     logger.info("Main app imported successfully")
