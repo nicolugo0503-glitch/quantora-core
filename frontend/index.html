@@ -1,400 +1,1276 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Quantora Operator Mode</title>
-  <style>
-    :root { --bg:#08111f; --panel:#0f1b2d; --muted:#8fa3bf; --text:#ecf4ff; --accent:#4cc9f0; --ok:#22c55e; --warn:#f59e0b; --bad:#ef4444; }
-    * { box-sizing:border-box; }
-    body { margin:0; font-family: Inter, Arial, sans-serif; background:linear-gradient(180deg,#07111d,#0b1423 45%,#0d1727); color:var(--text); }
-    .wrap { max-width:1280px; margin:0 auto; padding:24px; }
-    .hero, .panel { background:rgba(15,27,45,.92); border:1px solid rgba(143,163,191,.18); border-radius:20px; box-shadow:0 20px 50px rgba(0,0,0,.25); }
-    .hero { padding:24px; margin-bottom:20px; }
-    .title { display:flex; justify-content:space-between; gap:18px; align-items:flex-start; flex-wrap:wrap; }
-    h1 { margin:0 0 6px; font-size:34px; }
-    .sub { color:var(--muted); max-width:860px; line-height:1.5; }
-    .toolbar { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
-    button, .linkbtn { border:none; border-radius:12px; padding:12px 14px; font-weight:700; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; }
-    .primary { background:var(--accent); color:#07111d; }
-    .secondary { background:#14243a; color:var(--text); border:1px solid rgba(143,163,191,.18); }
-    .danger { background:var(--bad); color:white; }
-    .ghost { background:transparent; color:var(--muted); border:1px solid rgba(143,163,191,.18); }
-    .grid { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:16px; }
-    .panel { padding:18px; }
-    .kpi { font-size:28px; font-weight:800; margin-top:8px; }
-    .label { color:var(--muted); font-size:13px; text-transform:uppercase; letter-spacing:.08em; }
-    .status { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; font-weight:700; font-size:13px; }
-    .ok { background:rgba(34,197,94,.15); color:#8af0ad; }
-    .warn { background:rgba(245,158,11,.15); color:#ffd37a; }
-    .bad { background:rgba(239,68,68,.15); color:#ffabab; }
-    .section { margin-top:18px; }
-    .section h2 { margin:0 0 12px; font-size:18px; }
-    .twocol { display:grid; grid-template-columns:1.3fr .7fr; gap:16px; margin-top:16px; }
-    .list { display:grid; gap:10px; }
-    .row { display:flex; justify-content:space-between; gap:12px; padding:10px 0; border-bottom:1px solid rgba(143,163,191,.12); }
-    .row:last-child { border-bottom:none; }
-    .small { color:var(--muted); font-size:13px; }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
-    .pill { padding:4px 8px; border-radius:999px; background:#14243a; color:var(--text); font-size:12px; }
-    input, select { background:#08111f; color:var(--text); border:1px solid rgba(143,163,191,.18); border-radius:10px; padding:8px 10px; min-width:140px; }
-    .actions { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px; }
-    @media (max-width: 980px) { .grid, .twocol, .actions { grid-template-columns:1fr; } }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantora — AI-Governed Capital Intelligence</title>
+<meta name="description" content="The financial intelligence operating system for disciplined capital deployment. Execution, risk, governance, and performance — unified.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050911;
+  --bg2:#070d1a;
+  --bg3:#0a1220;
+  --card:#0c1526;
+  --card2:#0f1c30;
+  --border:#1a2d4a;
+  --border2:#243d5e;
+  --cyan:#00d4ff;
+  --cyan2:#00a8cc;
+  --cyan-dim:rgba(0,212,255,0.12);
+  --cyan-glow:rgba(0,212,255,0.06);
+  --green:#10b981;
+  --green-dim:rgba(16,185,129,0.12);
+  --gold:#f59e0b;
+  --gold-dim:rgba(245,158,11,0.12);
+  --purple:#7b2fff;
+  --purple-dim:rgba(123,47,255,0.12);
+  --exec:#ff6b2b;
+  --exec-dim:rgba(255,107,43,0.12);
+  --red:#ef4444;
+  --text:#f0f4f8;
+  --text2:#8fa3bc;
+  --text3:#4d6480;
+  --muted:#2d4a6b;
+  --radius:8px;
+  --radius-lg:14px;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;height:68px;
+  background:rgba(5,9,17,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s,background .3s;
+}
+nav.scrolled{border-bottom-color:var(--border);background:rgba(5,9,17,0.97)}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  font-size:1.1rem;font-weight:800;letter-spacing:.06em;
+  color:var(--text);text-decoration:none;
+}
+.nav-logo-hex{
+  width:28px;height:28px;
+  background:var(--cyan);
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.55rem;font-weight:900;color:var(--bg);
+}
+.nav-links{display:flex;align-items:center;gap:36px}
+.nav-links a{
+  font-size:.82rem;font-weight:500;letter-spacing:.04em;
+  color:var(--text2);text-decoration:none;
+  transition:color .2s;
+  text-transform:uppercase;
+}
+.nav-links a:hover{color:var(--text)}
+.nav-actions{display:flex;align-items:center;gap:12px}
+.nav-actions a{
+  font-size:.82rem;font-weight:600;letter-spacing:.04em;
+  text-decoration:none;transition:all .2s;
+}
+.btn-ghost{color:var(--text2);padding:8px 16px}
+.btn-ghost:hover{color:var(--text)}
+.btn-nav-cta{
+  background:var(--cyan);color:var(--bg);
+  padding:9px 20px;border-radius:6px;
+}
+.btn-nav-cta:hover{background:#1de3ff;transform:translateY(-1px)}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:120px 80px 80px;
+  position:relative;overflow:hidden;
+}
+.hero-grid-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(0,212,255,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,212,255,0.04) 1px,transparent 1px);
+  background-size:72px 72px;
+  mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,black 0%,transparent 100%);
+}
+.hero-glow{
+  position:absolute;top:-200px;left:50%;transform:translateX(-50%);
+  width:900px;height:700px;
+  background:radial-gradient(ellipse,rgba(0,212,255,0.07) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-inner{
+  max-width:1280px;margin:0 auto;width:100%;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+  position:relative;z-index:1;
+}
+.hero-left{}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--cyan-dim);border:1px solid rgba(0,212,255,0.2);
+  padding:6px 14px;border-radius:4px;
+  font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:28px;
+}
+.hero-eyebrow-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--cyan);animation:pulse-dot 2s infinite;
+}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero-h1{
+  font-size:clamp(2.6rem,4.5vw,4.2rem);
+  font-weight:900;line-height:1.08;letter-spacing:-.02em;
+  color:var(--text);margin-bottom:10px;
+}
+.hero-h1 em{
+  font-style:normal;
+  background:linear-gradient(135deg,var(--cyan),#7b9fff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-sub-headline{
+  font-size:clamp(1.1rem,1.8vw,1.4rem);
+  font-weight:400;color:var(--text2);
+  margin-bottom:20px;line-height:1.5;
+}
+.hero-desc{
+  font-size:.95rem;color:var(--text3);
+  max-width:480px;line-height:1.7;margin-bottom:40px;
+}
+.hero-ctas{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--cyan);color:var(--bg);
+  padding:14px 28px;border-radius:8px;
+  font-size:.9rem;font-weight:700;letter-spacing:.02em;
+  text-decoration:none;transition:all .25s;
+}
+.btn-primary:hover{background:#1de3ff;transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,212,255,.25)}
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:transparent;color:var(--text2);
+  padding:14px 28px;border-radius:8px;border:1px solid var(--border2);
+  font-size:.9rem;font-weight:600;
+  text-decoration:none;transition:all .25s;
+}
+.btn-secondary:hover{color:var(--text);border-color:var(--text3)}
+.hero-trust{
+  display:flex;align-items:center;gap:24px;
+  margin-top:40px;padding-top:32px;
+  border-top:1px solid var(--border);
+}
+.hero-trust-item{
+  display:flex;align-items:center;gap:8px;
+  font-size:.78rem;color:var(--text3);font-weight:500;
+}
+.hero-trust-item svg{width:14px;height:14px;color:var(--green)}
+
+/* ── COCKPIT PREVIEW ── */
+.hero-right{position:relative}
+.cockpit{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 0 1px rgba(0,212,255,.06);
+}
+.cockpit-bar{
+  background:var(--bg3);
+  padding:12px 18px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+.cockpit-dots{display:flex;gap:6px}
+.cockpit-dots span{
+  width:10px;height:10px;border-radius:50%;
+}
+.dot-r{background:#ef4444}.dot-y{background:#f59e0b}.dot-g{background:#10b981}
+.cockpit-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;color:var(--text3);letter-spacing:.08em;
+}
+.cockpit-status{
+  display:flex;align-items:center;gap:6px;
+  font-size:.65rem;font-weight:600;color:var(--green);
+  font-family:'JetBrains Mono',monospace;
+}
+.status-live-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--green);animation:pulse-dot 1.5s infinite;
+}
+.cockpit-body{padding:18px}
+.cockpit-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:10px;margin-bottom:14px;
+}
+.c-stat{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:6px;padding:12px;
+}
+.c-stat-label{font-size:.6rem;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.c-stat-val{font-size:1.05rem;font-weight:700;font-family:'JetBrains Mono',monospace}
+.c-stat-val.green{color:var(--green)}
+.c-stat-val.cyan{color:var(--cyan)}
+.c-stat-val.gold{color:var(--gold)}
+.cockpit-chart{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:6px;padding:14px;margin-bottom:14px;
+}
+.chart-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:12px;
+}
+.chart-title{font-size:.7rem;color:var(--text2);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.chart-badge{
+  font-size:.6rem;font-family:'JetBrains Mono',monospace;
+  color:var(--green);background:var(--green-dim);
+  padding:2px 8px;border-radius:3px;
+}
+.chart-svg{width:100%;height:80px}
+.cockpit-panels{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+}
+.c-panel{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:6px;padding:12px;
+}
+.c-panel-row{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:6px;
+}
+.c-panel-row:last-child{margin-bottom:0}
+.c-panel-key{font-size:.62rem;color:var(--text3)}
+.c-panel-val{font-size:.7rem;font-weight:600;font-family:'JetBrains Mono',monospace}
+.c-panel-val.green{color:var(--green)}
+.c-panel-val.cyan{color:var(--cyan)}
+.c-panel-val.gold{color:var(--gold)}
+.cockpit-certified{
+  margin-top:10px;
+  background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);
+  border-radius:6px;padding:10px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.cert-left{display:flex;align-items:center;gap:8px}
+.cert-icon{font-size:.9rem}
+.cert-text{font-size:.68rem;font-weight:600;color:var(--green);letter-spacing:.04em}
+.cert-sub{font-size:.6rem;color:var(--text3)}
+.cert-score{
+  font-family:'JetBrains Mono',monospace;font-size:1rem;
+  font-weight:700;color:var(--green);
+}
+
+/* ── SECTION WRAPPER ── */
+.section{padding:100px 80px}
+.section-inner{max-width:1280px;margin:0 auto}
+.section-eyebrow{
+  font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;
+}
+.section-eyebrow::before{
+  content:'';display:block;width:28px;height:1px;background:var(--cyan);
+}
+.section-title{
+  font-size:clamp(1.9rem,3vw,2.8rem);
+  font-weight:800;line-height:1.15;letter-spacing:-.02em;
+  color:var(--text);margin-bottom:16px;
+}
+.section-desc{
+  font-size:1rem;color:var(--text2);max-width:560px;line-height:1.75;
+}
+
+/* ── IDENTITY ── */
+.identity{background:var(--bg2)}
+.identity-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+  margin-top:60px;
+}
+.identity-left .big-statement{
+  font-size:clamp(1.6rem,2.5vw,2.2rem);
+  font-weight:800;line-height:1.3;
+  letter-spacing:-.02em;color:var(--text);
+  margin-bottom:32px;
+}
+.identity-left .big-statement span{color:var(--cyan)}
+.identity-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.identity-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:22px;
+  transition:border-color .25s,transform .25s;
+}
+.identity-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.identity-card-icon{
+  width:36px;height:36px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;margin-bottom:14px;
+}
+.identity-card-title{font-size:.85rem;font-weight:700;margin-bottom:6px;color:var(--text)}
+.identity-card-desc{font-size:.78rem;color:var(--text2);line-height:1.6}
+
+/* ── PILLARS ── */
+.pillars-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:20px;margin-top:60px;
+}
+.pillar-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:32px 28px;
+  position:relative;overflow:hidden;
+  transition:border-color .3s,transform .3s;
+}
+.pillar-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  transition:opacity .3s;opacity:0;
+}
+.pillar-card:hover{transform:translateY(-4px);border-color:var(--border2)}
+.pillar-card:hover::before{opacity:1}
+.pillar-card.cyan-accent::before{background:linear-gradient(90deg,var(--cyan),transparent)}
+.pillar-card.green-accent::before{background:linear-gradient(90deg,var(--green),transparent)}
+.pillar-card.gold-accent::before{background:linear-gradient(90deg,var(--gold),transparent)}
+.pillar-card.purple-accent::before{background:linear-gradient(90deg,var(--purple),transparent)}
+.pillar-card.exec-accent::before{background:linear-gradient(90deg,var(--exec),transparent)}
+.pillar-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;color:var(--text3);letter-spacing:.1em;
+  margin-bottom:16px;
+}
+.pillar-icon{font-size:1.8rem;margin-bottom:14px;display:block}
+.pillar-title{
+  font-size:1rem;font-weight:700;margin-bottom:8px;
+  color:var(--text);letter-spacing:-.01em;
+}
+.pillar-desc{font-size:.82rem;color:var(--text2);line-height:1.65}
+
+/* ── HOW IT WORKS ── */
+.how{background:var(--bg2)}
+.how-steps{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:0;margin-top:64px;position:relative;
+}
+.how-steps::before{
+  content:'';position:absolute;
+  top:32px;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border2),var(--border2),var(--border2),transparent);
+  z-index:0;
+}
+.how-step{
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;padding:0 16px;
+  position:relative;z-index:1;
+}
+.how-step-num{
+  width:64px;height:64px;border-radius:50%;
+  background:var(--card);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.8rem;font-weight:700;color:var(--cyan);
+  margin-bottom:20px;
+  transition:all .3s;
+}
+.how-step:hover .how-step-num{
+  background:var(--cyan-dim);border-color:var(--cyan);
+  box-shadow:0 0 24px var(--cyan-dim);
+}
+.how-step-title{
+  font-size:.88rem;font-weight:700;color:var(--text);
+  margin-bottom:8px;letter-spacing:.02em;
+}
+.how-step-desc{font-size:.75rem;color:var(--text2);line-height:1.6}
+
+/* ── WHO IT'S FOR ── */
+.audience-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:20px;margin-top:60px;
+}
+.audience-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:36px 30px;
+  position:relative;overflow:hidden;
+  transition:border-color .3s,transform .3s;
+}
+.audience-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.audience-tag{
+  display:inline-block;
+  font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 10px;border-radius:4px;margin-bottom:20px;
+}
+.audience-tag.individual{background:var(--cyan-dim);color:var(--cyan)}
+.audience-tag.professional{background:var(--purple-dim);color:var(--purple)}
+.audience-tag.institutional{background:var(--gold-dim);color:var(--gold)}
+.audience-title{
+  font-size:1.2rem;font-weight:800;color:var(--text);
+  margin-bottom:12px;letter-spacing:-.01em;
+}
+.audience-desc{
+  font-size:.85rem;color:var(--text2);line-height:1.7;
+  margin-bottom:24px;
+}
+.audience-list{list-style:none}
+.audience-list li{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:.8rem;color:var(--text2);margin-bottom:8px;line-height:1.5;
+}
+.audience-list li::before{
+  content:'→';color:var(--cyan);font-weight:700;flex-shrink:0;margin-top:1px;
+}
+
+/* ── PRICING ── */
+.pricing{background:var(--bg2)}
+.pricing-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:14px;margin-top:60px;align-items:start;
+}
+.price-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:28px 22px;
+  transition:border-color .3s,transform .3s;
+  position:relative;
+}
+.price-card:hover{transform:translateY(-4px);border-color:var(--border2)}
+.price-card.featured{
+  border-color:var(--cyan);background:var(--card2);
+  transform:scale(1.03);
+  box-shadow:0 20px 60px rgba(0,212,255,.1);
+}
+.price-card.featured:hover{transform:scale(1.03) translateY(-4px)}
+.featured-badge{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:var(--cyan);color:var(--bg);
+  font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 14px;border-radius:20px;white-space:nowrap;
+}
+.price-tier{
+  font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text3);margin-bottom:8px;
+}
+.price-name{
+  font-size:1rem;font-weight:800;color:var(--text);
+  margin-bottom:4px;
+}
+.price-amount{
+  display:flex;align-items:baseline;gap:4px;margin-bottom:6px;
+}
+.price-dollar{font-size:1rem;font-weight:700;color:var(--text2)}
+.price-num{font-size:2rem;font-weight:900;color:var(--text);line-height:1}
+.price-period{font-size:.75rem;color:var(--text3)}
+.price-custom{font-size:1.2rem;font-weight:800;color:var(--gold)}
+.price-tagline{
+  font-size:.75rem;color:var(--text2);margin-bottom:20px;
+  padding-bottom:20px;border-bottom:1px solid var(--border);
+  line-height:1.5;
+}
+.price-features{list-style:none;margin-bottom:24px}
+.price-features li{
+  display:flex;align-items:flex-start;gap:8px;
+  font-size:.76rem;color:var(--text2);margin-bottom:8px;line-height:1.5;
+}
+.price-features li::before{
+  content:'✓';color:var(--green);font-weight:700;flex-shrink:0;
+}
+.price-cta{
+  display:block;text-align:center;text-decoration:none;
+  padding:11px 16px;border-radius:6px;
+  font-size:.8rem;font-weight:700;letter-spacing:.03em;
+  transition:all .2s;
+}
+.price-cta.outline{
+  border:1px solid var(--border2);color:var(--text2);
+}
+.price-cta.outline:hover{border-color:var(--text3);color:var(--text)}
+.price-cta.solid{
+  background:var(--cyan);color:var(--bg);
+}
+.price-cta.solid:hover{background:#1de3ff;box-shadow:0 8px 24px rgba(0,212,255,.2)}
+.price-cta.custom{
+  border:1px solid var(--gold);color:var(--gold);
+}
+.price-cta.custom:hover{background:var(--gold-dim)}
+
+/* ── TRUST ── */
+.trust-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:16px;margin-top:60px margin-bottom:40px;
+}
+.trust-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:28px 24px;
+  transition:border-color .3s;
+}
+.trust-card:hover{border-color:var(--border2)}
+.trust-icon{
+  width:44px;height:44px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;margin-bottom:16px;
+  background:var(--bg3);border:1px solid var(--border);
+}
+.trust-title{font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:8px}
+.trust-desc{font-size:.78rem;color:var(--text2);line-height:1.65}
+.trust-cta-band{
+  margin-top:40px;
+  background:linear-gradient(135deg,rgba(0,212,255,0.06),rgba(123,47,255,0.06));
+  border:1px solid var(--border2);border-radius:var(--radius-lg);
+  padding:40px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:40px;
+}
+.trust-cta-text h3{
+  font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:8px;
+}
+.trust-cta-text p{font-size:.88rem;color:var(--text2)}
+
+/* ── VISION ── */
+.vision{
+  background:var(--bg);
+  position:relative;overflow:hidden;
+}
+.vision-glow{
+  position:absolute;bottom:-200px;right:-200px;
+  width:700px;height:700px;
+  background:radial-gradient(ellipse,rgba(123,47,255,0.07) 0%,transparent 65%);
+}
+.vision-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+  position:relative;z-index:1;
+}
+.vision-stats{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:16px;margin-top:40px;
+}
+.vision-stat{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:24px;
+}
+.vision-stat-num{
+  font-size:2.2rem;font-weight:900;
+  font-family:'JetBrains Mono',monospace;
+  margin-bottom:4px;
+}
+.vision-stat-label{font-size:.78rem;color:var(--text2)}
+.vision-right{}
+.vision-quote{
+  font-size:1.3rem;font-weight:700;line-height:1.5;
+  color:var(--text);margin-bottom:24px;
+  padding-left:24px;
+  border-left:3px solid var(--cyan);
+}
+.vision-right p{font-size:.9rem;color:var(--text2);line-height:1.8;margin-bottom:16px}
+
+/* ── FINAL CTA ── */
+.final-cta{
+  background:var(--bg2);
+  text-align:center;padding:120px 80px;
+  position:relative;overflow:hidden;
+}
+.final-cta-glow{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:800px;height:400px;
+  background:radial-gradient(ellipse,rgba(0,212,255,0.06) 0%,transparent 70%);
+}
+.final-cta-inner{max-width:680px;margin:0 auto;position:relative;z-index:1}
+.final-cta-label{
+  font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:20px;
+}
+.final-cta h2{
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:900;line-height:1.1;letter-spacing:-.025em;
+  color:var(--text);margin-bottom:20px;
+}
+.final-cta p{
+  font-size:1rem;color:var(--text2);margin-bottom:44px;line-height:1.7;
+}
+.final-cta-btns{
+  display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;
+}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--bg);
+  border-top:1px solid var(--border);
+  padding:60px 80px 40px;
+}
+.footer-inner{max-width:1280px;margin:0 auto}
+.footer-top{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:48px;margin-bottom:48px;
+}
+.footer-brand{}
+.footer-brand .nav-logo{margin-bottom:16px;display:inline-flex}
+.footer-brand p{font-size:.82rem;color:var(--text3);line-height:1.7;max-width:280px}
+.footer-col h4{
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text2);margin-bottom:16px;
+}
+.footer-col a{
+  display:block;font-size:.82rem;color:var(--text3);
+  text-decoration:none;margin-bottom:10px;transition:color .2s;
+}
+.footer-col a:hover{color:var(--text2)}
+.footer-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:32px;border-top:1px solid var(--border);
+  flex-wrap:wrap;gap:16px;
+}
+.footer-bottom p{font-size:.76rem;color:var(--text3)}
+.footer-bottom-links{display:flex;gap:20px}
+.footer-bottom-links a{font-size:.76rem;color:var(--text3);text-decoration:none;transition:color .2s}
+.footer-bottom-links a:hover{color:var(--text2)}
+
+/* ── MONO LABELS ── */
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* ── FADE IN ── */
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  nav{padding:0 32px}
+  .hero{padding:100px 40px 60px}
+  .hero-inner{gap:48px}
+  .section{padding:80px 40px}
+  .pillars-grid{grid-template-columns:repeat(2,1fr)}
+  .pricing-grid{grid-template-columns:1fr 1fr;gap:16px}
+  .price-card.featured{transform:none}
+  .trust-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-top{grid-template-columns:1fr 1fr;gap:32px}
+}
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .hero{padding:90px 24px 50px}
+  .hero-inner{grid-template-columns:1fr;gap:48px}
+  .hero-right{order:-1}
+  .section{padding:60px 24px}
+  .identity-grid{grid-template-columns:1fr;gap:40px}
+  .identity-cards{grid-template-columns:1fr}
+  .pillars-grid{grid-template-columns:1fr}
+  .how-steps{grid-template-columns:1fr 1fr;gap:24px}
+  .how-steps::before{display:none}
+  .audience-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .trust-grid{grid-template-columns:1fr}
+  .trust-cta-band{flex-direction:column;text-align:center;padding:32px 24px}
+  .vision-inner{grid-template-columns:1fr}
+  .vision-stats{grid-template-columns:1fr 1fr}
+  .final-cta{padding:80px 24px}
+  .footer-top{grid-template-columns:1fr;gap:32px}
+  footer{padding:48px 24px 32px}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+}
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="hero">
-      <div class="title">
-        <div>
-          <div class="label">QNT-REAL01A</div>
-          <h1>Operator Mode</h1>
-          <div class="sub">The institutional backbone stays intact. This cockpit surfaces only the controls that matter for daily operation: trade, performance, strategy, and risk.</div>
-        </div>
-        <div id="heroStatus" class="status warn">Loading operator status</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-hex"></div>
+    QUANTORA
+  </a>
+  <div class="nav-links">
+    <a href="#platform">Platform</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#trust">Trust &amp; Governance</a>
+  </div>
+  <div class="nav-actions">
+    <a href="/login" class="btn-ghost">Sign In</a>
+    <a href="/register" class="btn-nav-cta">Get Access →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-left fade-up">
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-dot"></span>
+        Now Live — Intelligence Platform v2
       </div>
-      <div class="toolbar">
-        <button class="primary" onclick="refreshAll()">Refresh</button>
-        <button class="secondary" onclick="setExecutionMode('paper')">Set Paper Mode</button>
-        <button class="secondary" onclick="setExecutionMode('live')">Set Live Mode</button>
-        <button class="secondary" onclick="setSafeMode(true)">Enable Safe Mode</button>
-        <button class="secondary" onclick="setSafeMode(false)">Disable Safe Mode</button>
-        <button class="secondary" onclick="validateBrokerTruth()">Validate Broker Path</button>
-        <button class="secondary" onclick="armLivePath(true)">Arm Live Path</button>
-        <button class="danger" onclick="triggerKillSwitch()">Trigger Kill Switch</button>
-        <button class="ghost" onclick="resetKillSwitch()">Reset Kill Switch</button>
-        <a class="linkbtn secondary" href="institutional_console.html">Open Institutional Console</a>
+      <h1 class="hero-h1">
+        <em>AI-Governed</em><br>Capital Intelligence.
+      </h1>
+      <p class="hero-sub-headline">Operate markets with institutional discipline.</p>
+      <p class="hero-desc">
+        Quantora is the financial intelligence operating system for disciplined capital deployment — unifying execution, risk governance, performance attribution, and readiness certification in one command layer.
+      </p>
+      <div class="hero-ctas">
+        <a href="/register" class="btn-primary">Start Operating →</a>
+        <a href="#platform" class="btn-secondary">Explore Platform</a>
+      </div>
+      <div class="hero-trust">
+        <div class="hero-trust-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--green)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+          Execution-governed
+        </div>
+        <div class="hero-trust-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--green)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+          Risk-controlled
+        </div>
+        <div class="hero-trust-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--green)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+          Audit-grade posture
+        </div>
       </div>
     </div>
 
-    <div class="grid">
-      <div class="panel">
-        <div class="label">Trade</div>
-        <div class="kpi" id="tradeMode">-</div>
-        <div class="small" id="tradeBroker">Broker: -</div>
-        <div class="small" id="tradeBrokerTruth">Broker truth: -</div>
-        <div class="small" id="tradeFills">Fills: -</div>
-      </div>
-      <div class="panel">
-        <div class="label">Performance</div>
-        <div class="kpi" id="pnlValue">-</div>
-        <div class="small" id="capitalValue">Capital: -</div>
-        <div class="small" id="drawdownValue">Drawdown: -</div>
-      </div>
-      <div class="panel">
-        <div class="label">Strategy</div>
-        <div class="kpi" id="strategyCount">-</div>
-        <div class="small" id="strategyRegime">Regime: -</div>
-        <div class="small" id="strategyDeployments">Deployments: -</div>
-      </div>
-      <div class="panel">
-        <div class="label">Risk</div>
-        <div class="kpi" id="riskState">-</div>
-        <div class="small" id="riskReason">Reason: -</div>
-        <div class="small" id="readinessValue">Live readiness: -</div>
-      </div>
-    </div>
-
-    <div class="twocol section">
-      <div class="panel">
-        <h2>Operator Focus</h2>
-        <div class="list" id="focusList"></div>
-      </div>
-      <div class="panel">
-        <h2>Critical Actions</h2>
-        <div class="actions">
-          <button class="secondary" onclick="setExecutionMode('paper')">Paper</button>
-          <button class="secondary" onclick="setExecutionMode('live')">Live</button>
-          <button class="secondary" onclick="setSafeMode(true)">Safe On</button>
-          <button class="secondary" onclick="setSafeMode(false)">Safe Off</button>
-          <button class="secondary" onclick="validateBrokerTruth()">Validate</button>
-          <button class="danger" onclick="triggerKillSwitch()">Kill Switch</button>
-          <button class="ghost" onclick="window.location.href='institutional_console.html'">Advanced</button>
+    <!-- COCKPIT PREVIEW -->
+    <div class="hero-right fade-up" style="transition-delay:.15s">
+      <div class="cockpit">
+        <div class="cockpit-bar">
+          <div class="cockpit-dots">
+            <span class="dot-r"></span>
+            <span class="dot-y"></span>
+            <span class="dot-g"></span>
+          </div>
+          <span class="cockpit-label">QUANTORA / OPERATOR COCKPIT</span>
+          <div class="cockpit-status">
+            <span class="status-live-dot"></span>
+            LIVE
+          </div>
         </div>
-        <div class="section small" id="actionFeedback">No action yet.</div>
-      </div>
-    </div>
-
-
-    <div class="twocol section">
-      <div class="panel">
-        <h2>Manual Order Entry</h2>
-        <div class="list">
-          <div class="row"><div><strong>Symbol</strong></div><div><input id="oeSymbol" value="BTCUSDT" /></div></div>
-          <div class="row"><div><strong>Side</strong></div><div><select id="oeSide"><option>BUY</option><option>SELL</option></select></div></div>
-          <div class="row"><div><strong>Qty</strong></div><div><input id="oeQty" type="number" step="0.0001" value="0.01" /></div></div>
-          <div class="row"><div><strong>Order Type</strong></div><div><select id="oeType"><option>MARKET</option><option>LIMIT</option></select></div></div>
-          <div class="row"><div><strong>Limit Price</strong></div><div><input id="oePrice" type="number" step="0.0001" placeholder="optional" /></div></div>
+        <div class="cockpit-body">
+          <div class="cockpit-stats">
+            <div class="c-stat">
+              <div class="c-stat-label">Daily P&amp;L</div>
+              <div class="c-stat-val green">+$2,847</div>
+            </div>
+            <div class="c-stat">
+              <div class="c-stat-label">Buying Power</div>
+              <div class="c-stat-val cyan">$94,320</div>
+            </div>
+            <div class="c-stat">
+              <div class="c-stat-label">Risk Budget</div>
+              <div class="c-stat-val gold">68%</div>
+            </div>
+          </div>
+          <div class="cockpit-chart">
+            <div class="chart-header">
+              <span class="chart-title">Portfolio Performance</span>
+              <span class="chart-badge">+3.2% MTD</span>
+            </div>
+            <svg class="chart-svg" viewBox="0 0 320 80" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#10b981" stop-opacity=".25"/>
+                  <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M0,60 C20,55 30,50 50,45 C70,40 80,48 100,42 C120,36 130,30 150,28 C170,26 180,35 200,30 C220,25 230,18 250,15 C270,12 285,20 300,14 L300,80 L0,80 Z" fill="url(#chartGrad)"/>
+              <path d="M0,60 C20,55 30,50 50,45 C70,40 80,48 100,42 C120,36 130,30 150,28 C170,26 180,35 200,30 C220,25 230,18 250,15 C270,12 285,20 300,14" fill="none" stroke="#10b981" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="cockpit-panels">
+            <div class="c-panel">
+              <div class="c-panel-row">
+                <span class="c-panel-key">Strategy</span>
+                <span class="c-panel-val cyan">MOMENTUM</span>
+              </div>
+              <div class="c-panel-row">
+                <span class="c-panel-key">Fills Today</span>
+                <span class="c-panel-val green">7 / 7</span>
+              </div>
+              <div class="c-panel-row">
+                <span class="c-panel-key">Open Orders</span>
+                <span class="c-panel-val">2</span>
+              </div>
+            </div>
+            <div class="c-panel">
+              <div class="c-panel-row">
+                <span class="c-panel-key">Broker</span>
+                <span class="c-panel-val green">CONNECTED</span>
+              </div>
+              <div class="c-panel-row">
+                <span class="c-panel-key">Notional Cap</span>
+                <span class="c-panel-val gold">$50K</span>
+              </div>
+              <div class="c-panel-row">
+                <span class="c-panel-key">Exceptions</span>
+                <span class="c-panel-val green">0</span>
+              </div>
+            </div>
+          </div>
+          <div class="cockpit-certified">
+            <div class="cert-left">
+              <span class="cert-icon">🛡</span>
+              <div>
+                <div class="cert-text">EXECUTION CERTIFIED</div>
+                <div class="cert-sub">All pre-trade checks passed · Readiness confirmed</div>
+              </div>
+            </div>
+            <span class="cert-score">98</span>
+          </div>
         </div>
-        <div class="actions section">
-          <button class="secondary" onclick="previewOrderEntry()">Preview</button>
-          <button class="danger" onclick="submitOrderEntry()">Submit Order</button>
-          <button class="ghost" onclick="resetOrderEntry()">Reset Surface</button>
-        </div>
-      </div>
-      <div class="panel">
-        <h2>Order Entry Status</h2>
-        <div id="orderEntryStatus" class="small">No order preview yet.</div>
-      </div>
-    </div>
-
-    <div class="twocol section">
-      <div class="panel">
-        <h2>Top Strategies</h2>
-        <div id="strategyList" class="list"></div>
-      </div>
-      <div class="panel">
-        <h2>Latest Fill</h2>
-        <div id="latestFill" class="small">No fills recorded.</div>
       </div>
     </div>
   </div>
+</section>
 
-  <script>
-    function normalizeBase(base) {
-      if (!base || base === '/') return '';
-      return String(base).replace(/\/$/, '');
+<!-- IDENTITY -->
+<section class="section identity" id="platform">
+  <div class="section-inner">
+    <div class="section-eyebrow">What Quantora Is</div>
+    <div class="identity-grid">
+      <div class="identity-left fade-up">
+        <div class="big-statement">
+          Not a dashboard.<br>
+          Not a charting tool.<br>
+          <span>An operating system<br>for disciplined capital.</span>
+        </div>
+        <p style="font-size:.92rem;color:var(--text2);line-height:1.8;max-width:440px">
+          Quantora unifies every layer of serious capital operations — from pre-trade readiness and execution governance to performance attribution and supervisory audit trails — into a single command interface built for operators who treat capital with discipline.
+        </p>
+      </div>
+      <div class="identity-cards fade-up" style="transition-delay:.1s">
+        <div class="identity-card">
+          <div class="identity-card-icon" style="background:var(--cyan-dim)">⚡</div>
+          <div class="identity-card-title">Execution Layer</div>
+          <div class="identity-card-desc">Governed order entry with pre-trade checks, notional limits, and fill tracking — never a raw click-and-hope interface.</div>
+        </div>
+        <div class="identity-card">
+          <div class="identity-card-icon" style="background:var(--green-dim)">🛡</div>
+          <div class="identity-card-title">Risk Governance</div>
+          <div class="identity-card-desc">Real-time risk posture across position, strategy, and portfolio layers. Blocks enforce before damage occurs.</div>
+        </div>
+        <div class="identity-card">
+          <div class="identity-card-icon" style="background:var(--purple-dim)">🧠</div>
+          <div class="identity-card-title">Intelligence Suite</div>
+          <div class="identity-card-desc">537 live market intelligence panels. Breadth, flow, sentiment, and structural analysis available instantly.</div>
+        </div>
+        <div class="identity-card">
+          <div class="identity-card-icon" style="background:var(--gold-dim)">📊</div>
+          <div class="identity-card-title">Readiness Certification</div>
+          <div class="identity-card-desc">Systematic readiness scoring ensures every operator is prepared, authorized, and operationally cleared before capital is deployed.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="section" style="background:var(--bg)">
+  <div class="section-inner">
+    <div class="section-eyebrow fade-up">Core Pillars</div>
+    <h2 class="section-title fade-up">Six domains.<br>One operating system.</h2>
+    <p class="section-desc fade-up">Every pillar of institutional capital operation — unified, governed, and intelligence-driven.</p>
+    <div class="pillars-grid">
+      <div class="pillar-card cyan-accent fade-up">
+        <div class="pillar-num">01 / EXECUTION</div>
+        <span class="pillar-icon">⚡</span>
+        <div class="pillar-title">Governed Execution</div>
+        <div class="pillar-desc">Pre-trade validation, notional controls, order lifecycle tracking, fill reconciliation, and post-trade evidence — every trade governed end-to-end.</div>
+      </div>
+      <div class="pillar-card green-accent fade-up" style="transition-delay:.06s">
+        <div class="pillar-num">02 / RISK</div>
+        <span class="pillar-icon">🛡</span>
+        <div class="pillar-title">Risk Intelligence</div>
+        <div class="pillar-desc">Dynamic risk posture monitoring across position, strategy, and portfolio levels. Automated blocks prevent overexposure before it occurs.</div>
+      </div>
+      <div class="pillar-card purple-accent fade-up" style="transition-delay:.12s">
+        <div class="pillar-num">03 / INTELLIGENCE</div>
+        <span class="pillar-icon">🧠</span>
+        <div class="pillar-title">Market Intelligence</div>
+        <div class="pillar-desc">537 live panels covering market breadth, sector flows, movers, crypto, macro indicators, and structural market analysis updated in real time.</div>
+      </div>
+      <div class="pillar-card gold-accent fade-up" style="transition-delay:.18s">
+        <div class="pillar-num">04 / GOVERNANCE</div>
+        <span class="pillar-icon">⚖</span>
+        <div class="pillar-title">Capital Governance</div>
+        <div class="pillar-desc">Supervisory queues, exception handling, evidence packets, audit trails, and role-based controls built for operators who take accountability seriously.</div>
+      </div>
+      <div class="pillar-card exec-accent fade-up" style="transition-delay:.24s">
+        <div class="pillar-num">05 / PERFORMANCE</div>
+        <span class="pillar-icon">📈</span>
+        <div class="pillar-title">Performance Attribution</div>
+        <div class="pillar-desc">Daily and realized P&amp;L truth, strategy-level attribution, trade review metrics, and performance journaling — structured accountability over time.</div>
+      </div>
+      <div class="pillar-card cyan-accent fade-up" style="transition-delay:.30s">
+        <div class="pillar-num">06 / READINESS</div>
+        <span class="pillar-icon">🎯</span>
+        <div class="pillar-title">Readiness Certification</div>
+        <div class="pillar-desc">A systematic launch-control layer that scores operator readiness across broker connectivity, risk posture, authorization, and reconciliation state.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how" id="how-it-works">
+  <div class="section-inner">
+    <div class="section-eyebrow fade-up">The Operator Workflow</div>
+    <h2 class="section-title fade-up">Five steps.<br>One disciplined process.</h2>
+    <div class="how-steps">
+      <div class="how-step fade-up">
+        <div class="how-step-num">01</div>
+        <div class="how-step-title">Plan</div>
+        <div class="how-step-desc">Define strategy, set risk parameters, and configure operator posture before market open.</div>
+      </div>
+      <div class="how-step fade-up" style="transition-delay:.08s">
+        <div class="how-step-num">02</div>
+        <div class="how-step-title">Certify</div>
+        <div class="how-step-desc">Pass systematic readiness checks. Broker connected, risk cleared, authorization confirmed.</div>
+      </div>
+      <div class="how-step fade-up" style="transition-delay:.16s">
+        <div class="how-step-num">03</div>
+        <div class="how-step-title">Execute</div>
+        <div class="how-step-desc">Deploy capital through the governed execution layer with full pre-trade validation and lifecycle tracking.</div>
+      </div>
+      <div class="how-step fade-up" style="transition-delay:.24s">
+        <div class="how-step-num">04</div>
+        <div class="how-step-title">Reconcile</div>
+        <div class="how-step-desc">Post-trade reconciliation confirms fills, resolves exceptions, and maintains ledger integrity.</div>
+      </div>
+      <div class="how-step fade-up" style="transition-delay:.32s">
+        <div class="how-step-num">05</div>
+        <div class="how-step-title">Scale</div>
+        <div class="how-step-desc">Review performance, build audit evidence, and expand operations to team, firm, or institutional scale.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section class="section" style="background:var(--bg)">
+  <div class="section-inner">
+    <div class="section-eyebrow fade-up">Who It's For</div>
+    <h2 class="section-title fade-up">Built for operators who<br>take capital seriously.</h2>
+    <div class="audience-grid">
+      <div class="audience-card fade-up">
+        <span class="audience-tag individual">Individual Operator</span>
+        <div class="audience-title">The Serious Trader</div>
+        <div class="audience-desc">You're not gambling. You operate with structure, track performance rigorously, and want the same intelligence infrastructure serious capital uses.</div>
+        <ul class="audience-list">
+          <li>Market intelligence suite with 537 live panels</li>
+          <li>Readiness certification before every session</li>
+          <li>Performance journaling and attribution</li>
+          <li>Paper trading with real execution workflow</li>
+        </ul>
+      </div>
+      <div class="audience-card fade-up" style="transition-delay:.1s">
+        <span class="audience-tag professional">Professional Operator</span>
+        <div class="audience-title">The Advanced Practitioner</div>
+        <div class="audience-desc">You need live broker connectivity, governed execution, and risk controls that prevent the costly mistakes that end careers.</div>
+        <ul class="audience-list">
+          <li>Live broker connectivity and order management</li>
+          <li>Pre-trade notional checks and position controls</li>
+          <li>Full P&amp;L truth with fill-level reconciliation</li>
+          <li>Execution guardrails and exception handling</li>
+        </ul>
+      </div>
+      <div class="audience-card fade-up" style="transition-delay:.2s">
+        <span class="audience-tag institutional">Firm / Institution</span>
+        <div class="audience-title">The Operating Desk</div>
+        <div class="audience-desc">Multi-operator workflows, supervisory controls, audit trails, and regulatory evidence posture — infrastructure for teams that operate at scale.</div>
+        <ul class="audience-list">
+          <li>Multi-user team workflows with role separation</li>
+          <li>Supervisory queues and exception governance</li>
+          <li>Evidence packets and audit trail integrity</li>
+          <li>Custom institutional deployment options</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section pricing" id="pricing">
+  <div class="section-inner">
+    <div class="section-eyebrow fade-up">Pricing</div>
+    <h2 class="section-title fade-up">One platform.<br>Every level of operator.</h2>
+    <p class="section-desc fade-up">From structured intelligence for serious individuals to full institutional deployment — choose the tier that matches your operational ambition.</p>
+    <div class="pricing-grid">
+      <!-- CORE -->
+      <div class="price-card fade-up">
+        <div class="price-tier">Entry</div>
+        <div class="price-name">Core</div>
+        <div class="price-amount">
+          <span class="price-dollar">$</span>
+          <span class="price-num">79</span>
+          <span class="price-period">/mo</span>
+        </div>
+        <div class="price-tagline">Structured intelligence for disciplined traders building their operator foundation.</div>
+        <ul class="price-features">
+          <li>Operator dashboard (intelligence mode)</li>
+          <li>Market intelligence summaries</li>
+          <li>Strategy education &amp; guidance</li>
+          <li>Performance journaling</li>
+          <li>Risk planning tools</li>
+          <li>Daily execution checklists</li>
+          <li>Paper trading posture</li>
+        </ul>
+        <a href="/register?plan=core" class="price-cta outline">Get Started</a>
+      </div>
+      <!-- PRO -->
+      <div class="price-card fade-up" style="transition-delay:.08s">
+        <div class="price-tier">Professional</div>
+        <div class="price-name">Pro</div>
+        <div class="price-amount">
+          <span class="price-dollar">$</span>
+          <span class="price-num">199</span>
+          <span class="price-period">/mo</span>
+        </div>
+        <div class="price-tagline">Full operator cockpit with 537 intelligence panels and advanced analytics.</div>
+        <ul class="price-features">
+          <li>Full operator cockpit</li>
+          <li>537 live intelligence panels</li>
+          <li>Advanced journaling + attribution</li>
+          <li>Strategy tracking + scoring</li>
+          <li>Deeper analytics suite</li>
+          <li>Structured execution plans</li>
+          <li>5,000 API calls/day</li>
+        </ul>
+        <a href="/register?plan=pro" class="price-cta outline">Get Started</a>
+      </div>
+      <!-- EXECUTION (FEATURED) -->
+      <div class="price-card featured fade-up" style="transition-delay:.16s">
+        <div class="featured-badge">Most Popular</div>
+        <div class="price-tier">Live Operator</div>
+        <div class="price-name">Execution</div>
+        <div class="price-amount">
+          <span class="price-dollar">$</span>
+          <span class="price-num">499</span>
+          <span class="price-period">/mo</span>
+        </div>
+        <div class="price-tagline">Governed live trading stack with broker connectivity and full execution infrastructure.</div>
+        <ul class="price-features">
+          <li>Everything in Pro</li>
+          <li>Live broker connectivity</li>
+          <li>Readiness certification system</li>
+          <li>Pre-trade notional checks</li>
+          <li>Order-risk enforcement</li>
+          <li>Fill tracking + P&amp;L truth</li>
+          <li>Post-trade reconciliation</li>
+          <li>Execution guardrails</li>
+        </ul>
+        <a href="/register?plan=execution" class="price-cta solid">Start Executing →</a>
+      </div>
+      <!-- FIRM -->
+      <div class="price-card fade-up" style="transition-delay:.24s">
+        <div class="price-tier">Team</div>
+        <div class="price-name">Firm</div>
+        <div class="price-amount">
+          <span class="price-dollar">$</span>
+          <span class="price-num">2,500</span>
+          <span class="price-period">/mo</span>
+        </div>
+        <div class="price-tagline">Supervised team operating system with multi-user workflows and audit governance.</div>
+        <ul class="price-features">
+          <li>Everything in Execution</li>
+          <li>Multi-user team workflows</li>
+          <li>Supervisory queue</li>
+          <li>Exception handling + holds</li>
+          <li>Evidence packets + audit trail</li>
+          <li>Role separation</li>
+          <li>Governance surfaces</li>
+          <li>Advanced reporting exports</li>
+        </ul>
+        <a href="/contact?plan=firm" class="price-cta outline">Contact Sales</a>
+      </div>
+      <!-- INSTITUTIONAL -->
+      <div class="price-card fade-up" style="transition-delay:.32s">
+        <div class="price-tier">Enterprise</div>
+        <div class="price-name">Institutional</div>
+        <div class="price-amount">
+          <span class="price-custom">Custom</span>
+        </div>
+        <div class="price-tagline">Custom deployment for multi-entity institutions with regulatory and compliance requirements.</div>
+        <ul class="price-features">
+          <li>Custom deployment</li>
+          <li>Multi-entity support</li>
+          <li>Audit/regulatory retrieval</li>
+          <li>Supervisory evidence mapping</li>
+          <li>Private environment option</li>
+          <li>Dedicated implementation team</li>
+          <li>Institutional integrations</li>
+        </ul>
+        <a href="/contact?plan=institutional" class="price-cta custom">Apply for Access</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="section" style="background:var(--bg)" id="trust">
+  <div class="section-inner">
+    <div class="section-eyebrow fade-up">Trust &amp; Governance</div>
+    <h2 class="section-title fade-up">Control is not a feature.<br>It's the foundation.</h2>
+    <p class="section-desc fade-up">Every layer of Quantora is designed around governance, accountability, and operational integrity — because capital without control is just risk.</p>
+    <div class="trust-grid" style="margin-bottom:40px">
+      <div class="trust-card fade-up">
+        <div class="trust-icon">🔒</div>
+        <div class="trust-title">Controlled Execution</div>
+        <div class="trust-desc">No raw order entry. Every trade passes pre-trade validation, notional checks, and readiness confirmation before reaching the market.</div>
+      </div>
+      <div class="trust-card fade-up" style="transition-delay:.08s">
+        <div class="trust-icon">🎯</div>
+        <div class="trust-title">Readiness Certification</div>
+        <div class="trust-desc">Systematic readiness scoring ensures operators are broker-connected, risk-cleared, and operationally authorized before capital is deployed.</div>
+      </div>
+      <div class="trust-card fade-up" style="transition-delay:.16s">
+        <div class="trust-icon">📋</div>
+        <div class="trust-title">Audit Trail Integrity</div>
+        <div class="trust-desc">Complete event consistency, exception triage, evidence packets, and archive-grade retrieval designed for regulatory and auditor review.</div>
+      </div>
+      <div class="trust-card fade-up" style="transition-delay:.24s">
+        <div class="trust-icon">⚖</div>
+        <div class="trust-title">Role-Based Governance</div>
+        <div class="trust-desc">Supervisory queues, role separation, hold release workflows, and incident management — operational maturity built into every tier.</div>
+      </div>
+    </div>
+    <div class="trust-cta-band fade-up">
+      <div class="trust-cta-text">
+        <h3>Built for operators who answer for their capital.</h3>
+        <p>Governance isn't a compliance checkbox at Quantora — it's the architecture everything else is built on.</p>
+      </div>
+      <a href="/register" class="btn-primary" style="white-space:nowrap">Enter the Platform →</a>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="section vision">
+  <div class="vision-glow"></div>
+  <div class="section-inner">
+    <div class="vision-inner">
+      <div class="fade-up">
+        <div class="section-eyebrow">The Vision</div>
+        <h2 class="section-title">The future of capital<br>intelligence is here.</h2>
+        <div class="vision-stats">
+          <div class="vision-stat">
+            <div class="vision-stat-num" style="color:var(--cyan)">537</div>
+            <div class="vision-stat-label">Live intelligence panels</div>
+          </div>
+          <div class="vision-stat">
+            <div class="vision-stat-num" style="color:var(--green)">5</div>
+            <div class="vision-stat-label">Operator tiers</div>
+          </div>
+          <div class="vision-stat">
+            <div class="vision-stat-num" style="color:var(--gold)">∞</div>
+            <div class="vision-stat-label">Scale path</div>
+          </div>
+          <div class="vision-stat">
+            <div class="vision-stat-num" style="color:var(--purple)">$0</div>
+            <div class="vision-stat-label">Undisciplined capital deployed</div>
+          </div>
+        </div>
+      </div>
+      <div class="vision-right fade-up" style="transition-delay:.15s">
+        <div class="vision-quote">
+          "Every serious operator deserves the infrastructure that was once reserved for the largest institutions."
+        </div>
+        <p>Quantora was built to close the gap between how institutional capital operates and how individual operators access that same discipline — systematically, intelligently, and at scale.</p>
+        <p>From individual operator to family office to institutional desk — one platform, one standard, one operating system for disciplined capital.</p>
+        <div style="margin-top:32px">
+          <a href="/register" class="btn-primary">Join the Platform →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-cta-glow"></div>
+  <div class="final-cta-inner">
+    <div class="final-cta-label">Ready to Operate</div>
+    <h2>Capital intelligence.<br>Institutional discipline.<br>Your edge.</h2>
+    <p>Start with Core, scale to Execution, expand to Firm. Quantora grows with your operational ambition — from first structured trade to multi-desk capital deployment.</p>
+    <div class="final-cta-btns">
+      <a href="/register" class="btn-primary">Start Operating →</a>
+      <a href="/pricing" class="btn-secondary">View All Plans</a>
+      <a href="/login" class="btn-secondary">Sign In</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" class="nav-logo">
+          <div class="nav-logo-hex"></div>
+          QUANTORA
+        </a>
+        <p>The financial intelligence operating system for disciplined capital deployment. Built for operators who treat capital with the seriousness it demands.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="/ui/">Operator Cockpit</a>
+        <a href="/api/live/overview">Market Data</a>
+        <a href="/api/live/sectors">Sector Flow</a>
+        <a href="/api/live/gainers">Movers</a>
+        <a href="/docs">API Docs</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#platform">Product</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#trust">Trust &amp; Governance</a>
+        <a href="#pricing">Pricing</a>
+      </div>
+      <div class="footer-col">
+        <h4>Account</h4>
+        <a href="/login">Sign In</a>
+        <a href="/register">Get Access</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/pricing">Upgrade Plan</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Quantora. All rights reserved. Not financial advice. Capital markets involve risk.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Risk Disclosure</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+// Fade-up on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
     }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-    function dirnamePath(pathname) {
-      const path = pathname || '/';
-      if (path.endsWith('/')) return path.slice(0, -1) || '';
-      const idx = path.lastIndexOf('/');
-      return idx > 0 ? path.slice(0, idx) : '';
-    }
-
-    function isLocalOrigin() {
-      const host = window.location.hostname || '';
-      return host === 'localhost' || host === '127.0.0.1';
-    }
-
-    function resolveApiBases() {
-      const url = new URL(window.location.href);
-      const origin = window.location.origin;
-      const queryBase = url.searchParams.get('api_base');
-      const storedBase = window.localStorage.getItem('quantora_api_base');
-      const explicitBase = window.QUANTORA_API_BASE;
-      const pathBase = dirnamePath(window.location.pathname);
-      const bases = [];
-
-      [queryBase, explicitBase, storedBase].filter(Boolean).forEach(v => bases.push(normalizeBase(v)));
-
-      if (origin && origin !== 'null') {
-        bases.push('');
-        bases.push(normalizeBase(origin));
-        if (pathBase) {
-          bases.push(normalizeBase(origin + pathBase));
-        }
-        bases.push(normalizeBase(origin + '/api'));
-      }
-
-      if (isLocalOrigin()) {
-        bases.push('http://127.0.0.1:8000');
-        bases.push('http://localhost:8000');
-      }
-
-      return [...new Set(bases.filter(v => v !== null && v !== undefined))];
-    }
-
-    const API_BASES = resolveApiBases();
-    let ACTIVE_API_BASE = API_BASES[0] || '';
-    const PRODUCTION_API_LOCK = !isLocalOrigin();
-    let LAST_API_ERROR = 'not probed yet';
-
-    async function fetchJson(path, options) {
-      let lastError = null;
-      for (const base of API_BASES) {
-        const url = `${base}${path}`;
-        try {
-          const res = await fetch(url, {
-            headers: { 'Content-Type': 'application/json' },
-            ...options,
-          });
-          const data = await res.json().catch(() => ({}));
-          if (!res.ok) {
-            lastError = new Error(`${data.detail || data.message || `request failed (${res.status})`} @ ${url}`);
-            continue;
-          }
-          ACTIVE_API_BASE = base;
-          LAST_API_ERROR = '';
-          return data;
-        } catch (err) {
-          lastError = new Error(`${err.message} @ ${url}`);
-        }
-      }
-      LAST_API_ERROR = lastError ? lastError.message : 'request failed';
-      throw lastError || new Error('request failed');
-    }
-
-    async function probeApi() {
-      let lastError = null;
-      for (const base of API_BASES) {
-        const healthUrl = `${base}/health`;
-        const operatorUrl = `${base}/operator/health`;
-        try {
-          const healthRes = await fetch(healthUrl, { headers: { 'Accept': 'application/json' } });
-          if (!healthRes.ok) throw new Error(`health ${healthRes.status} @ ${healthUrl}`);
-          const operatorRes = await fetch(operatorUrl, { headers: { 'Accept': 'application/json' } });
-          if (!operatorRes.ok) throw new Error(`operator ${operatorRes.status} @ ${operatorUrl}`);
-          ACTIVE_API_BASE = base;
-          LAST_API_ERROR = '';
-          try { window.localStorage.setItem('quantora_api_base', base); } catch (e) {}
-          return { ok: true, base, healthUrl, operatorUrl };
-        } catch (err) {
-          lastError = new Error(err.message || `probe failed @ ${operatorUrl}`);
-        }
-      }
-      LAST_API_ERROR = lastError ? lastError.message : 'probe failed';
-      throw lastError || new Error('probe failed');
-    }
-
-    function money(v) {
-      return new Intl.NumberFormat('en-US', { style:'currency', currency:'USD', maximumFractionDigits:2 }).format(Number(v || 0));
-    }
-
-    function pct(v) { return `${Number(v || 0).toFixed(2)}%`; }
-
-    function setHero(status, tone='warn') {
-      const el = document.getElementById('heroStatus');
-      el.className = `status ${tone}`;
-      el.textContent = status;
-    }
-
-    function renderSummary(data) {
-      const exec = data.execution || {};
-      const perf = data.performance || {};
-      const strat = data.strategy || {};
-      const risk = data.risk || {};
-      const cap = data.capital || {};
-      const readiness = data.live_readiness || {};
-
-      document.getElementById('tradeMode').textContent = `${String(exec.mode || '-').toUpperCase()}${exec.safe_mode ? ' / SAFE' : ''}`;
-      document.getElementById('tradeBroker').textContent = `Broker: ${exec.active_broker || '-'}`;
-      document.getElementById('tradeBrokerTruth').textContent = `Broker truth: ${(data.broker_truth || {}).selected_broker || exec.active_broker || '-'} • armed ${((data.broker_truth || {}).live_path_armed ? 'yes' : 'no')}`;
-      document.getElementById('tradeFills').textContent = `Orders ${exec.orders_count || 0} • Fills ${exec.fills_count || 0}`;
-      document.getElementById('pnlValue').textContent = pct(perf.net_return || 0);
-      document.getElementById('capitalValue').textContent = `Equity ${money(perf.current_equity || cap.balance)} • Available ${money(cap.available)}`;
-      document.getElementById('drawdownValue').textContent = `Drawdown ${pct(perf.drawdown_pct || 0)} • PnL ${money(perf.daily_pnl_value || 0)} • UPL ${money(perf.unrealized_pnl || 0)}`;
-      document.getElementById('strategyCount').textContent = `${strat.active_profile_count || 0} active`;
-      document.getElementById('strategyRegime').textContent = `Regime: ${strat.current_regime || '-'}`;
-      document.getElementById('strategyDeployments').textContent = `Deployments: ${strat.deployment_count || 0}`;
-      document.getElementById('riskState').textContent = risk.kill_switch_triggered ? 'TRIGGERED' : (risk.armed ? 'ARMED' : 'NORMAL');
-      document.getElementById('riskReason').textContent = `Reason: ${risk.trigger_reason || 'none'}`;
-      document.getElementById('readinessValue').textContent = `Live readiness: ${readiness.ready ? 'READY' : 'BLOCKED'}`;
-
-      const tone = readiness.ready ? 'ok' : (risk.kill_switch_triggered ? 'bad' : 'warn');
-      const blockers = (readiness.blockers || []).length ? ` • ${readiness.blockers.join(' | ')}` : '';
-      const apiLabel = ACTIVE_API_BASE || 'same-origin';
-      setHero(`Mode ${String(exec.mode || 'paper').toUpperCase()} • ${readiness.ready ? 'LIVE READY' : 'NOT LIVE READY'} • API ${apiLabel}${blockers}`, tone);
-
-      const focusList = document.getElementById('focusList');
-      focusList.innerHTML = '';
-      [
-        ['Capital', `${money(cap.balance)} balance / ${money(cap.available)} available / ${money(cap.allocated)} allocated`],
-        ['Execution', `${exec.active_broker || '-'} broker • ${exec.fills_count || 0} fills`],
-        ['Risk', risk.kill_switch_triggered ? `Kill switch ${risk.kill_switch_level || 'triggered'}` : `Kill switch clear • ${pct(perf.drawdown_pct || 0)} drawdown`],
-        ['Autonomy', data.autonomy?.enabled ? `Enabled • Queue ${data.autonomy.queue_count || 0}` : 'Disabled'],
-      ].forEach(([k,v]) => {
-        const row = document.createElement('div');
-        row.className = 'row';
-        row.innerHTML = `<div><strong>${k}</strong><div class="small">${v}</div></div>`;
-        focusList.appendChild(row);
-      });
-
-      const strategyList = document.getElementById('strategyList');
-      strategyList.innerHTML = '';
-      (strat.profiles || []).slice(0,4).forEach(item => {
-        const row = document.createElement('div');
-        row.className = 'row';
-        row.innerHTML = `<div><strong>${item.name || item.strategy_id}</strong><div class="small">${item.symbol || '-'} • readiness ${(Number(item.deployment_readiness || 0) * 100).toFixed(0)}%</div></div><div class="pill">${item.status || 'unknown'}</div>`;
-        strategyList.appendChild(row);
-      });
-      if (!strategyList.children.length) strategyList.innerHTML = '<div class="small">No strategies found.</div>';
-
-      const orderEntry = data.order_entry || {};
-      document.getElementById('orderEntryStatus').innerHTML = `Surface ${orderEntry.surface_status || '-'} • submissions ${orderEntry.submission_count || 0} • blocked ${orderEntry.blocked_count || 0}`;
-      const latest = exec.latest_fill;
-      document.getElementById('latestFill').innerHTML = latest
-        ? `<div class="mono">${latest.symbol || '-'} ${latest.side || '-'} ${latest.filled_qty || '-'} @ ${latest.fill_price || '-'}</div><div class="small">Strategy ${latest.strategy_id || '-'} • Broker ${latest.broker || '-'} • ${latest.status || '-'}</div>`
-        : 'No fills recorded.';
-    }
-
-
-    function getOrderEntryPayload() {
-      const priceValue = document.getElementById('oePrice').value;
-      return {
-        symbol: document.getElementById('oeSymbol').value.trim().toUpperCase(),
-        side: document.getElementById('oeSide').value,
-        qty: Number(document.getElementById('oeQty').value || 0),
-        order_type: document.getElementById('oeType').value,
-        price: priceValue ? Number(priceValue) : null
-      };
-    }
-
-    async function previewOrderEntry() {
-      try {
-        const result = await fetchJson('/order-entry/preview', { method: 'POST', body: JSON.stringify(getOrderEntryPayload()) });
-        document.getElementById('orderEntryStatus').textContent = `Preview ${result.preview.symbol} ${result.preview.side} ${result.preview.qty} • blockers: ${(result.preview.blockers || []).join(' | ') || 'none'}`;
-        document.getElementById('actionFeedback').textContent = 'Order preview ready.';
-        await refreshAll();
-      } catch (err) {
-        document.getElementById('actionFeedback').textContent = `Preview failed via ${ACTIVE_API_BASE || 'same-origin'}: ${err.message}`;
-      }
-    }
-
-    async function submitOrderEntry() {
-      try {
-        const result = await fetchJson('/order-entry/submit', { method: 'POST', body: JSON.stringify(getOrderEntryPayload()) });
-        document.getElementById('orderEntryStatus').textContent = `Submitted ${result.execution.symbol || result.envelope.symbol} ${result.execution.side || result.envelope.side} ${result.execution.filled_qty || result.envelope.qty}`;
-        document.getElementById('actionFeedback').textContent = 'Order submitted.';
-        await refreshAll();
-      } catch (err) {
-        document.getElementById('actionFeedback').textContent = `Submit failed via ${ACTIVE_API_BASE || 'same-origin'}: ${err.message}`;
-      }
-    }
-
-    async function resetOrderEntry() {
-      try {
-        await fetchJson('/order-entry/reset', { method: 'POST', body: JSON.stringify({}) });
-        document.getElementById('orderEntryStatus').textContent = 'Order entry surface reset.';
-        await refreshAll();
-      } catch (err) {
-        document.getElementById('actionFeedback').textContent = `Reset failed via ${ACTIVE_API_BASE || 'same-origin'}: ${err.message}`;
-      }
-    }
-
-    async function refreshAll() {
-      try {
-        await probeApi();
-        const summary = await fetchJson('/operator/summary');
-        renderSummary(summary);
-        document.getElementById('actionFeedback').textContent = 'State refreshed.';
-      } catch (err) {
-        const lockLabel = PRODUCTION_API_LOCK ? ' [production api lock active]' : '';
-        setHero(`Operator API unavailable via ${ACTIVE_API_BASE || 'same-origin'}: ${LAST_API_ERROR || err.message}${lockLabel}`, 'bad');
-        document.getElementById('actionFeedback').textContent = LAST_API_ERROR || err.message;
-      }
-    }
-
-    async function postAction(path, payload) {
-      try {
-        const result = await fetchJson(path, { method: 'POST', body: JSON.stringify(payload) });
-        document.getElementById('actionFeedback').textContent = `Action ok: ${JSON.stringify(result)}`;
-        await refreshAll();
-      } catch (err) {
-        document.getElementById('actionFeedback').textContent = `Action failed via ${ACTIVE_API_BASE || 'same-origin'}: ${err.message}`;
-      }
-    }
-
-    function setExecutionMode(mode) { return postAction('/operator/mode', { mode }); }
-    function setSafeMode(enabled) { return postAction('/operator/safe-mode', { enabled }); }
-    function triggerKillSwitch() { return postAction('/operator/kill-switch', { action:'trigger', reason:'manual operator trigger from cockpit' }); }
-    function resetKillSwitch() { return postAction('/operator/kill-switch', { action:'reset' }); }
-    function validateBrokerTruth() { return postAction('/broker-truth/validate', {}); }
-    function armLivePath(enabled) { return postAction('/broker-truth/arm-live-path', { enabled }); }
-
-    refreshAll();
-    setInterval(refreshAll, 15000);
-  </script>
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
