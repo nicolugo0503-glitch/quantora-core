@@ -1,5 +1,5 @@
 """
-Quantora Production Entry Point — run.py
+Quantora Production Entry Point â€” run.py
 Railway start command: uvicorn run:app --host 0.0.0.0 --port $PORT --workers 1
 """
 from __future__ import annotations
@@ -10,18 +10,18 @@ import os
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# ── Import main app ──────────────────────────────────────────────────────────
+# â”€â”€ Import main app â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 try:
     from backend.app.main import app
     logger.info("Main app imported successfully")
     _main_imported = True
 except Exception as e:
-    logger.warning(f"Main app import failed ({e}) — using minimal fallback app")
+    logger.warning(f"Main app import failed ({e}) â€” using minimal fallback app")
     from fastapi import FastAPI
     app = FastAPI(title="Quantora Financial Intelligence OS", version="1.0.0")
     _main_imported = False
 
-# ── CORS ─────────────────────────────────────────────────────────────────────
+# â”€â”€ CORS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 try:
     from starlette.middleware.cors import CORSMiddleware
     app.middleware_stack = None
@@ -36,7 +36,7 @@ try:
 except Exception as e:
     logger.warning(f"CORS middleware warning: {e}")
 
-# ── API URL shim middleware (fixes localhost:8010 in all frontend panels) ─────
+# â”€â”€ API URL shim middleware (fixes localhost:8010 in all frontend panels) â”€â”€â”€â”€â”€
 try:
     from starlette.middleware.base import BaseHTTPMiddleware
     from starlette.requests import Request as StarletteRequest
@@ -85,11 +85,11 @@ try:
 
     app.middleware_stack = None
     app.add_middleware(ApiShimMiddleware)
-    logger.info("API URL shim middleware added (localhost → dynamic origin)")
+    logger.info("API URL shim middleware added (localhost â†’ dynamic origin)")
 except Exception as e:
     logger.warning(f"Shim middleware not loaded: {e}")
 
-# ── Live market data router ───────────────────────────────────────────────────
+# â”€â”€ Live market data router â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 try:
     from backend.app.real_dashboard_router import router as live_router
     app.include_router(live_router)
@@ -97,7 +97,7 @@ try:
 except Exception as e:
     logger.warning(f"Live router not loaded: {e}")
 
-# ── Static files ──────────────────────────────────────────────────────────────
+# â”€â”€ Static files â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 try:
     from fastapi.staticfiles import StaticFiles
     if os.path.isdir("frontend"):
@@ -106,12 +106,12 @@ try:
 except Exception as e:
     logger.warning(f"Static files not mounted: {e}")
 
-# ── Health check ─────────────────────────────────────────────────────────────────
+# â”€â”€ Health check â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 from fastapi.responses import JSONResponse, HTMLResponse
 
 @app.get("/health")
 def health():
-    return JSONResponse({(��]\Ȏ���ȋ�XZ[��\���XZ[��[\ܝY��\��[ۈ�������JB���8� 8� ]]�\�[H8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �[\ܝ��\�����[]L�\���K\�X�\���Xܙ]�\���X�[YH\��KXX�\��K��ۈ\�ڛ��[\ܝ�\�M�\�؍�����H�\�\H[\ܝ�\]Y\�\�ԙ\B����H�\�ses import JSONResponse as _JR
+    return JSONResponse({(ÜÝ]\ÈŽˆ›ÚÈ‹›XZ[—Ø\ŽˆÛXZ[—Ú[\ÜY™\œÚ[ÛˆŽˆŒ‹ŒŒŸJB‚ˆÈ8¥ 8¥ ]]Þ\Ý[H8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ š[\ÜÜÈ\ÈÛÜËÜ[]LÈ\ÈÜÜK\ÚXˆ\ÈÚÙXÜ™]È\ÈÜÙXË[YH\ÈÝKXXÈ\ÈÚKœÛÛˆ\ÈÚ›‚š[\Ü˜\ÙM\ÈØ™œ›ÛH˜\Ý\H[\Ü™\]Y\Ý\ÈÔ™\B™œ›ÛH˜\Ýses import JSONResponse as _JR
 from pydantic import BaseModel as _BM
 
 _DB_PATH = _os.path.join(_os.path.dirname(__file__), "quantora_users.db")
@@ -245,7 +245,7 @@ def signup_page():
         from fastapi.responses import RedirectResponse
         return RedirectResponse(url="/")
 
-# ── Pricing page ───────────────────────────────────────────────────────────────
+# â”€â”€ Pricing page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 @app.get("/pricing")
 def pricing():
     pricing_path = _os.path.join(_os.path.dirname(__file__), "frontend", "pricing.html")
@@ -257,9 +257,12 @@ def pricing():
         from fastapi.responses import RedirectResponse
         return RedirectResponse(url="/ui/")
 
-# ── Landing page ──────────────────────────────────────────────────────────────
+# â”€â”€ Landing page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 @app.get("/")
 def root():
+    index_path = BASE_DIR / "frontend" / "index.html"
+    if index_path.exists():
+        return HTMLResponse(content=index_path.read_text(encoding="utf-8"), status_code=200)
     return HTMLResponse(content=_landing_html())
 
 def _landing_html() -> str:
@@ -268,7 +271,7 @@ def _landing_html() -> str:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quantora — Financial Intelligence OS</title>
+<title>Quantora â€” Financial Intelligence OS</title>
 <style>
   :root {
     --bg: #050a14;
@@ -296,7 +299,7 @@ def _landing_html() -> str:
     overflow-x: hidden;
   }
 
-  /* ── HEADER ── */
+  /* â”€â”€ HEADER â”€â”€ */
   .header {
     background: linear-gradient(180deg, #0a0f1e 0%, var(--bg) 100%);
     border-bottom: 1px solid var(--border2);
@@ -373,7 +376,7 @@ def _landing_html() -> str:
   }
   .nav-btn-primary:hover { opacity: 0.85; }
 
-  /* ── TICKER ── */
+  /* â”€â”€ TICKER â”€â”€ */
   .ticker-bar {
     background: var(--bg2);
     border-bottom: 1px solid var(--border);
@@ -416,7 +419,7 @@ def _landing_html() -> str:
   .up { color: var(--green); }
   .dn { color: var(--red); }
 
-  /* ── HERO ── */
+  /* â”€â”€ HERO â”€â”€ */
   .hero {
     background: linear-gradient(135deg, var(--bg3) 0%, var(--bg) 100%);
     padding: 60px 40px 40px;
@@ -496,7 +499,7 @@ def _landing_html() -> str:
   }
   .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
 
-  /* ── MARKET STATUS BAR ── */
+  /* â”€â”€ MARKET STATUS BAR â”€â”€ */
   .market-bar {
     background: var(--bg2);
     border-top: 1px solid var(--border);
@@ -520,10 +523,10 @@ def _landing_html() -> str:
   .mstat-value { font-size: 1.3rem; font-weight: 800; font-family: 'SF Mono', monospace; }
   .mstat-sub { font-size: 0.72rem; margin-top: 3px; }
 
-  /* ── MAIN CONTENT ── */
+  /* â”€â”€ MAIN CONTENT â”€â”€ */
   .main { padding: 40px; max-width: 1400px; margin: 0 auto; }
 
-  /* ── SECTION TITLE ── */
+  /* â”€â”€ SECTION TITLE â”€â”€ */
   .section-title {
     font-size: 0.7rem;
     font-weight: 700;
@@ -537,7 +540,7 @@ def _landing_html() -> str:
   }
   .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-  /* ── LIVE MARKET GRID ── */
+  /* â”€â”€ LIVE MARKET GRID â”€â”€ */
   .market-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -559,7 +562,7 @@ def _landing_html() -> str:
   .mcard-chg { font-size: 0.82rem; font-weight: 700; margin-top: 4px; }
   .mcard-vol { font-size: 0.7rem; color: var(--muted); margin-top: 6px; }
 
-  /* ── FEATURES GRID ── */
+  /* â”€â”€ FEATURES GRID â”€â”€ */
   .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -607,7 +610,7 @@ def _landing_html() -> str:
   .tag-new { background: rgba(0,212,255,0.1); color: var(--cyan); border: 1px solid rgba(0,212,255,0.3); }
   .tag-pro { background: rgba(245,158,11,0.1); color: var(--gold); border: 1px solid rgba(245,158,11,0.3); }
 
-  /* ── PORTFOLIO PANEL ── */
+  /* â”€â”€ PORTFOLIO PANEL â”€â”€ */
   .portfolio-panel {
     background: var(--card);
     border: 1px solid var(--border);
@@ -641,7 +644,7 @@ def _landing_html() -> str:
   .pstat-value { font-size: 1.8rem; font-weight: 900; font-family: 'SF Mono', monospace; margin-top: 6px; }
   .pstat-sub { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
 
-  /* ── API STATUS ── */
+  /* â”€â”€ API STATUS â”€â”€ */
   .api-status {
     display: flex;
     gap: 12px;
@@ -664,7 +667,7 @@ def _landing_html() -> str:
   .chip-err .api-chip-dot { background: var(--red); }
   .api-chip-name { color: var(--dim); font-weight: 600; }
 
-  /* ── FOOTER ── */
+  /* â”€â”€ FOOTER â”€â”€ */
   .footer {
     background: var(--bg2);
     border-top: 1px solid var(--border);
@@ -683,7 +686,7 @@ def _landing_html() -> str:
     margin-bottom: 12px;
   }
 
-  /* ── SPINNER ── */
+  /* â”€â”€ SPINNER â”€â”€ */
   .spin { display: inline-block; animation: spin 1s linear infinite; }
   @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
   .skeleton { background: linear-gradient(90deg, var(--border) 25%, var(--border2) 50%, var(--border) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; }
@@ -695,7 +698,7 @@ def _landing_html() -> str:
 <!-- HEADER -->
 <header class="header">
   <div class="logo">
-    <div class="logo-icon">⚡</div>
+    <div class="logo-icon">âš¡</div>
     <div>
       <div class="logo-text">QUANTORA</div>
       <div class="logo-version">FINANCIAL INTELLIGENCE OS v2.0</div>
@@ -708,7 +711,7 @@ def _landing_html() -> str:
     <a href="/docs" class="nav-btn nav-btn-ghost">API Docs</a>
     <a href="/ui/" class="nav-btn nav-btn-ghost">Panels</a>
     <a href="/login" class="nav-btn nav-btn-ghost" id="navSignIn">Sign In</a>
-    <a href="/signup" class="nav-btn nav-btn-primary" id="navGetStarted">Get Started →</a>
+    <a href="/signup" class="nav-btn nav-btn-primary" id="navGetStarted">Get Started â†’</a>
   </div>
 </header>
 
@@ -716,20 +719,20 @@ def _landing_html() -> str:
 <div class="ticker-bar">
   <div class="ticker-label">LIVE</div>
   <div class="ticker-scroll" id="tickerScroll">
-    <span class="tick-item"><span class="tick-sym">SPY</span><span class="tick-price">$—</span><span class="up">▲ —%</span></span>
-    <span class="tick-item"><span class="tick-sym">QQQ</span><span class="tick-price">$—</span><span class="up">▲ —%</span></span>
-    <span class="tick-item"><span class="tick-sym">AAPL</span><span class="tick-price">$—</span><span class="up">▲ —%</span></span>
-    <span class="tick-item"><span class="tick-sym">MSFT</span><span class="tick-price">$—</span><span class="up">▲ —%</span></span>
-    <span class="tick-item"><span class="tick-sym">NVDA</span><span class="tick-price">$—</span><span class="up">▲ —%</span></span>
-    <span class="tick-item"><span class="tick-sym">TSLA</span><span class="tick-price">$—</span><span class="up">▲ —%</span></span>
-    <span class="tick-item"><span class="tick-sym">BTC</span><span class="tick-price">$—</span><span class="up">▲ —%</span></span>
-    <span class="tick-item"><span class="tick-sym">ETH</span><span class="tick-price">$—</span><span class="up">▲ —%</span></span>
-    <span class="tick-item"><span class="tick-sym">SPY</span><span class="tick-price">$—</span><span class="up">▲ —%</span></span>
-    <span class="tick-item"><span class="tick-sym">QQQ</span><span class="tick-price">$—</span><span class="up">▲ —%</span></span>
-    <span class="tick-item"><span class="tick-sym">AAPL</span><span class="tick-price">$—</span><span class="up">▲ —%</span></span>
-    <span class="tick-item"><span class="tick-sym">NVDA</span><span class="tick-price">$—</span><span class="up">▲ —%</span></span>
-    <span class="tick-item"><span class="tick-sym">BTC</span><span class="tick-price">$—</span><span class="up">▲ —%</span></span>
-    <span class="tick-item"><span class="tick-sym">ETH</span><span class="tick-price">$—</span><span class="up">▲ —%</span></span>
+    <span class="tick-item"><span class="tick-sym">SPY</span><span class="tick-price">$â€”</span><span class="up">â–² â€”%</span></span>
+    <span class="tick-item"><span class="tick-sym">QQQ</span><span class="tick-price">$â€”</span><span class="up">â–² â€”%</span></span>
+    <span class="tick-item"><span class="tick-sym">AAPL</span><span class="tick-price">$â€”</span><span class="up">â–² â€”%</span></span>
+    <span class="tick-item"><span class="tick-sym">MSFT</span><span class="tick-price">$â€”</span><span class="up">â–² â€”%</span></span>
+    <span class="tick-item"><span class="tick-sym">NVDA</span><span class="tick-price">$â€”</span><span class="up">â–² â€”%</span></span>
+    <span class="tick-item"><span class="tick-sym">TSLA</span><span class="tick-price">$â€”</span><span class="up">â–² â€”%</span></span>
+    <span class="tick-item"><span class="tick-sym">BTC</span><span class="tick-price">$â€”</span><span class="up">â–² â€”%</span></span>
+    <span class="tick-item"><span class="tick-sym">ETH</span><span class="tick-price">$â€”</span><span class="up">â–² â€”%</span></span>
+    <span class="tick-item"><span class="tick-sym">SPY</span><span class="tick-price">$â€”</span><span class="up">â–² â€”%</span></span>
+    <span class="tick-item"><span class="tick-sym">QQQ</span><span class="tick-price">$â€”</span><span class="up">â–² â€”%</span></span>
+    <span class="tick-item"><span class="tick-sym">AAPL</span><span class="tick-price">$â€”</span><span class="up">â–² â€”%</span></span>
+    <span class="tick-item"><span class="tick-sym">NVDA</span><span class="tick-price">$â€”</span><span class="up">â–² â€”%</span></span>
+    <span class="tick-item"><span class="tick-sym">BTC</span><span class="tick-price">$â€”</span><span class="up">â–² â€”%</span></span>
+    <span class="tick-item"><span class="tick-sym">ETH</span><span class="tick-price">$â€”</span><span class="up">â–² â€”%</span></span>
   </div>
 </div>
 
@@ -740,10 +743,10 @@ def _landing_html() -> str:
     INSTITUTIONAL-GRADE INTELLIGENCE PLATFORM
   </div>
   <h1>Your Edge in Every<br>Market Condition</h1>
-  <p>Real-time stock &amp; crypto intelligence, AI-powered signals, paper trading, risk management — all in one platform. Built for serious traders.</p>
+  <p>Real-time stock &amp; crypto intelligence, AI-powered signals, paper trading, risk management â€” all in one platform. Built for serious traders.</p>
   <div class="hero-btns">
-    <a href="/ui/" class="btn-lg btn-primary">⚡ Launch Platform</a>
-    <a href="/api/live/overview" class="btn-lg btn-outline">📊 Live Market Data</a>
+    <a href="/ui/" class="btn-lg btn-primary">âš¡ Launch Platform</a>
+    <a href="/api/live/overview" class="btn-lg btn-outline">ðŸ“Š Live Market Data</a>
   </div>
 </section>
 
@@ -752,31 +755,31 @@ def _landing_html() -> str:
   <div class="mstat">
     <div class="mstat-label">Market Status</div>
     <div class="mstat-value" id="mktStatus"><span class="skeleton" style="width:80px;height:20px;display:inline-block"></span></div>
-    <div class="mstat-sub" id="mktTime" style="color:var(--muted)">—</div>
+    <div class="mstat-sub" id="mktTime" style="color:var(--muted)">â€”</div>
   </div>
   <div class="mstat">
     <div class="mstat-label">S&amp;P 500 ETF</div>
-    <div class="mstat-value up" id="spyVal">$—</div>
-    <div class="mstat-sub" id="spyChg">—</div>
+    <div class="mstat-value up" id="spyVal">$â€”</div>
+    <div class="mstat-sub" id="spyChg">â€”</div>
   </div>
   <div class="mstat">
     <div class="mstat-label">Nasdaq ETF</div>
-    <div class="mstat-value up" id="qqqVal">$—</div>
-    <div class="mstat-sub" id="qqqChg">—</div>
+    <div class="mstat-value up" id="qqqVal">$â€”</div>
+    <div class="mstat-sub" id="qqqChg">â€”</div>
   </div>
   <div class="mstat">
     <div class="mstat-label">Bitcoin</div>
-    <div class="mstat-value up" id="btcVal">$—</div>
-    <div class="mstat-sub" id="btcChg">—</div>
+    <div class="mstat-value up" id="btcVal">$â€”</div>
+    <div class="mstat-sub" id="btcChg">â€”</div>
   </div>
   <div class="mstat">
     <div class="mstat-label">Portfolio</div>
-    <div class="mstat-value" id="portVal" style="color:var(--cyan)">$—</div>
+    <div class="mstat-value" id="portVal" style="color:var(--cyan)">$â€”</div>
     <div class="mstat-sub" style="color:var(--green)">Paper Trading</div>
   </div>
   <div class="mstat">
     <div class="mstat-label">24h Crypto Vol</div>
-    <div class="mstat-value" id="cryptoVol" style="color:var(--purple)">$—</div>
+    <div class="mstat-value" id="cryptoVol" style="color:var(--purple)">$â€”</div>
     <div class="mstat-sub" style="color:var(--muted)">Global</div>
   </div>
 </div>
@@ -799,8 +802,8 @@ def _landing_html() -> str:
   <!-- PORTFOLIO OVERVIEW -->
   <div class="portfolio-panel">
     <div class="portfolio-header">
-      <div class="portfolio-title">📋 Paper Trading Portfolio</div>
-      <div class="portfolio-badge">✓ ACTIVE — PAPER MODE</div>
+      <div class="portfolio-title">ðŸ“‹ Paper Trading Portfolio</div>
+      <div class="portfolio-badge">âœ“ ACTIVE â€” PAPER MODE</div>
     </div>
     <div class="portfolio-stats">
       <div class="pstat">
@@ -810,22 +813,22 @@ def _landing_html() -> str:
       </div>
       <div class="pstat">
         <div class="pstat-label">Available</div>
-        <div class="pstat-value" id="availCap" style="color:var(--green)">$—</div>
+        <div class="pstat-value" id="availCap" style="color:var(--green)">$â€”</div>
         <div class="pstat-sub">Cash reserve</div>
       </div>
       <div class="pstat">
         <div class="pstat-label">Deployed</div>
-        <div class="pstat-value" id="allocCap" style="color:var(--purple)">$—</div>
+        <div class="pstat-value" id="allocCap" style="color:var(--purple)">$â€”</div>
         <div class="pstat-sub">In positions</div>
       </div>
       <div class="pstat">
         <div class="pstat-label">Total P&amp;L</div>
-        <div class="pstat-value" id="totalPnl" style="color:var(--gold)">$—</div>
+        <div class="pstat-value" id="totalPnl" style="color:var(--gold)">$â€”</div>
         <div class="pstat-sub">Unrealized</div>
       </div>
       <div class="pstat">
         <div class="pstat-label">Risk Mode</div>
-        <div class="pstat-value" style="font-size:1.1rem;color:var(--green)">✓ SAFE</div>
+        <div class="pstat-value" style="font-size:1.1rem;color:var(--green)">âœ“ SAFE</div>
         <div class="pstat-sub">Kill switch: OFF</div>
       </div>
     </div>
@@ -847,70 +850,70 @@ def _landing_html() -> str:
   <div class="features-grid">
 
     <a class="fcard" href="/ui/">
-      <div class="fcard-icon">🖥️</div>
+      <div class="fcard-icon">ðŸ–¥ï¸</div>
       <div class="fcard-title">Intelligence Panels</div>
-      <div class="fcard-desc">537 live panels covering every dimension of market analysis — from macro to micro, fundamental to technical.</div>
+      <div class="fcard-desc">537 live panels covering every dimension of market analysis â€” from macro to micro, fundamental to technical.</div>
       <span class="fcard-tag tag-live">537 PANELS</span>
     </a>
 
     <a class="fcard" href="/api/live/overview">
-      <div class="fcard-icon">📡</div>
+      <div class="fcard-icon">ðŸ“¡</div>
       <div class="fcard-title">Market Overview API</div>
       <div class="fcard-desc">Real-time market breadth, indices, sector performance, and macro conditions. Updated every 30 seconds.</div>
       <span class="fcard-tag tag-live">LIVE DATA</span>
     </a>
 
     <a class="fcard" href="/api/live/crypto">
-      <div class="fcard-icon">₿</div>
+      <div class="fcard-icon">â‚¿</div>
       <div class="fcard-title">Crypto Intelligence</div>
       <div class="fcard-desc">BTC, ETH, SOL, BNB, ADA, XRP live prices with 24h change, volume, and market cap from CoinGecko.</div>
       <span class="fcard-tag tag-live">LIVE PRICES</span>
     </a>
 
     <a class="fcard" href="/api/live/quotes?symbols=AAPL,MSFT,NVDA,TSLA,AMZN,GOOGL">
-      <div class="fcard-icon">📊</div>
+      <div class="fcard-icon">ðŸ“Š</div>
       <div class="fcard-title">Equity Quotes</div>
       <div class="fcard-desc">Real-time stock quotes for any ticker via Yahoo Finance. Batch queries supported. No API key required.</div>
       <span class="fcard-tag tag-live">REAL-TIME</span>
     </a>
 
     <a class="fcard" href="/api/live/sectors">
-      <div class="fcard-icon">🏛️</div>
+      <div class="fcard-icon">ðŸ›ï¸</div>
       <div class="fcard-title">Sector ETF Tracker</div>
       <div class="fcard-desc">All 10 SPDR sector ETFs tracked in real-time. Identify rotating capital flows and sector momentum.</div>
       <span class="fcard-tag tag-ai">FLOW ANALYSIS</span>
     </a>
 
     <a class="fcard" href="/api/live/portfolio/demo">
-      <div class="fcard-icon">💼</div>
+      <div class="fcard-icon">ðŸ’¼</div>
       <div class="fcard-title">Paper Portfolio</div>
       <div class="fcard-desc">$100,000 simulated portfolio with live mark-to-market pricing. Track P&amp;L, exposure, and risk metrics.</div>
       <span class="fcard-tag tag-new">PAPER TRADING</span>
     </a>
 
     <a class="fcard" href="/operator/summary">
-      <div class="fcard-icon">🎯</div>
+      <div class="fcard-icon">ðŸŽ¯</div>
       <div class="fcard-title">Operator Console</div>
       <div class="fcard-desc">Institutional-grade operator cockpit with full execution state, risk controls, and broker management.</div>
       <span class="fcard-tag tag-pro">OPERATOR ONLY</span>
     </a>
 
     <a class="fcard" href="/docs">
-      <div class="fcard-icon">📖</div>
+      <div class="fcard-icon">ðŸ“–</div>
       <div class="fcard-title">Full API Documentation</div>
       <div class="fcard-desc">Interactive Swagger UI for all 50+ endpoints. Test live, view schemas, integrate with your stack.</div>
       <span class="fcard-tag tag-new">SWAGGER UI</span>
     </a>
 
     <a class="fcard" href="/api/live/gainers">
-      <div class="fcard-icon">🚀</div>
+      <div class="fcard-icon">ðŸš€</div>
       <div class="fcard-title">Movers &amp; Gainers</div>
       <div class="fcard-desc">Today's top gainers, losers, and most active stocks. Spot momentum before the crowd.</div>
       <span class="fcard-tag tag-live">LIVE MOVERS</span>
     </a>
 
     <a class="fcard" href="/pricing">
-      <div class="fcard-icon">💎</div>
+      <div class="fcard-icon">ðŸ’Ž</div>
       <div class="fcard-title">Plans &amp; Pricing</div>
       <div class="fcard-desc">Starter free forever. Pro Trader $49/mo. Institutional $299/mo. All plans include real-time data and API access.</div>
       <span class="fcard-tag" style="background:rgba(245,158,11,0.15);color:#f59e0b;border-color:rgba(245,158,11,0.3)">VIEW PLANS</span>
@@ -939,7 +942,7 @@ def _landing_html() -> str:
 <script>
 const B = window.location.origin;
 
-// ── Auth nav update ──────────────────────────────────────────────────────────
+// â”€â”€ Auth nav update â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 (function() {
   const token = localStorage.getItem('q_token');
   const user = (() => { try { return JSON.parse(localStorage.getItem('q_user')||'null'); } catch(e){return null;} })();
@@ -948,29 +951,29 @@ const B = window.location.origin;
   if (token && user && signInBtn && getStartedBtn) {
     signInBtn.textContent = user.name ? user.name.split(' ')[0] : 'Account';
     signInBtn.href = '/auth/me';
-    getStartedBtn.textContent = '⚡ Dashboard →';
+    getStartedBtn.textContent = 'âš¡ Dashboard â†’';
     getStartedBtn.href = '/ui/';
   }
 })();
 
 function fmt(n, decimals=2) {
-  if (n == null || isNaN(n)) return '—';
+  if (n == null || isNaN(n)) return 'â€”';
   return Number(n).toLocaleString('en-US', {minimumFractionDigits: decimals, maximumFractionDigits: decimals});
 }
 function fmtBig(n) {
-  if (!n) return '—';
+  if (!n) return 'â€”';
   if (n >= 1e12) return '$' + (n/1e12).toFixed(2) + 'T';
   if (n >= 1e9) return '$' + (n/1e9).toFixed(2) + 'B';
   if (n >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M';
   return '$' + fmt(n);
 }
 function chgHtml(pct) {
-  if (pct == null) return '<span style="color:var(--muted)">—</span>';
+  if (pct == null) return '<span style="color:var(--muted)">â€”</span>';
   const up = pct >= 0;
-  return `<span class="${up?'up':'dn'}">${up?'▲':'▼'} ${Math.abs(pct).toFixed(2)}%</span>`;
+  return `<span class="${up?'up':'dn'}">${up?'â–²':'â–¼'} ${Math.abs(pct).toFixed(2)}%</span>`;
 }
 
-// ── Ticker ─────────────────────────────────────────────────────────────────
+// â”€â”€ Ticker â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function loadTicker() {
   try {
     const syms = ['SPY','QQQ','AAPL','MSFT','NVDA','TSLA','AMZN','GOOGL'];
@@ -995,13 +998,13 @@ async function loadTicker() {
     const all = [...data, ...cryptoExtra];
     const html = [...all,...all].map(q => {
       const up = (q.change_pct||0) >= 0;
-      return `<span class="tick-item"><span class="tick-sym">${q.symbol}</span><span class="tick-price">$${fmt(q.price)}</span><span class="${up?'up':'dn'}">${up?'▲':'▼'}${Math.abs(q.change_pct||0).toFixed(2)}%</span></span>`;
+      return `<span class="tick-item"><span class="tick-sym">${q.symbol}</span><span class="tick-price">$${fmt(q.price)}</span><span class="${up?'up':'dn'}">${up?'â–²':'â–¼'}${Math.abs(q.change_pct||0).toFixed(2)}%</span></span>`;
     }).join('');
     document.getElementById('tickerScroll').innerHTML = html;
   } catch(e) {}
 }
 
-// ── Market Status ───────────────────────────────────────────────────────────
+// â”€â”€ Market Status â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function loadStatus() {
   try {
     const r = await fetch(`${B}/api/live/status`);
@@ -1017,7 +1020,7 @@ async function loadStatus() {
   }
 }
 
-// ── Market Quotes ────────────────────────────────────────────────────────────
+// â”€â”€ Market Quotes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const STOCK_META = {
   SPY:  {name:'S&P 500 ETF'},   QQQ:  {name:'Nasdaq 100 ETF'},
   AAPL: {name:'Apple Inc.'},    MSFT: {name:'Microsoft'},
@@ -1054,8 +1057,8 @@ async function loadMarket() {
         <div class="mcard-sym">${q.symbol}</div>
         <div class="mcard-name">${meta.name||q.name||''}</div>
         <div class="mcard-price" style="color:${up?'var(--green)':'var(--red)'}">$${fmt(q.price)}</div>
-        <div class="mcard-chg ${up?'up':'dn'}">${up?'▲':'▼'} ${Math.abs(q.change_pct||0).toFixed(2)}%</div>
-        <div class="mcard-vol">Vol: ${q.volume ? fmtBig(q.volume).replace('$','') : '—'}</div>
+        <div class="mcard-chg ${up?'up':'dn'}">${up?'â–²':'â–¼'} ${Math.abs(q.change_pct||0).toFixed(2)}%</div>
+        <div class="mcard-vol">Vol: ${q.volume ? fmtBig(q.volume).replace('$','') : 'â€”'}</div>
       </div>`;
     }).join('');
     document.getElementById('chipMarket').className = 'api-chip chip-ok';
@@ -1065,7 +1068,7 @@ async function loadMarket() {
   }
 }
 
-// ── Crypto ─────────────────────────────────────────────────────────────────
+// â”€â”€ Crypto â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function loadCrypto() {
   try {
     const r = await fetch(`${B}/api/live/crypto`);
@@ -1087,7 +1090,7 @@ async function loadCrypto() {
   }
 }
 
-// ── Portfolio / Operator ────────────────────────────────────────────────────
+// â”€â”€ Portfolio / Operator â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function loadPortfolio() {
   try {
     const r = await fetch(`${B}/operator/summary`);
@@ -1115,7 +1118,7 @@ async function loadPortfolio() {
   }
 }
 
-// ── Init ───────────────────────────────────────────────────────────────────
+// â”€â”€ Init â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function init() {
   await Promise.all([loadTicker(), loadStatus(), loadMarket(), loadCrypto(), loadPortfolio()]);
 }
@@ -1130,7 +1133,7 @@ setInterval(loadPortfolio, 60000);
 </body>
 </html>"""
 
-# ── Startup hook ───────────────────────────────────────────────────────────────
+# â”€â”€ Startup hook â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 @app.on_event("startup")
 async def on_startup():
     try:
@@ -1143,10 +1146,10 @@ async def on_startup():
 
 
 # ==============================================================================
-# BILLING, RATE-LIMITING & DASHBOARD — appended to run.py
+# BILLING, RATE-LIMITING & DASHBOARD â€” appended to run.py
 # ==============================================================================
 
-# ── DB migration: add billing columns ─────────────────────────────────────────
+# â”€â”€ DB migration: add billing columns â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 def _billing_migrate():
     c = _db()
     for col, tdef in [("stripe_customer_id", "TEXT"), ("stripe_subscription_id", "TEXT")]:
@@ -1159,7 +1162,7 @@ def _billing_migrate():
 
 _billing_migrate()
 
-# ── Stripe API helpers (pure stdlib — no stripe package needed) ───────────────
+# â”€â”€ Stripe API helpers (pure stdlib â€” no stripe package needed) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 import urllib.request as _urr
 import urllib.parse   as _urp
 
@@ -1224,7 +1227,7 @@ def _get_or_create_stripe_customer(email: str, name: str) -> str | None:
     c.commit(); c.close()
     return cid
 
-# ── Rate limiting (in-memory, per-IP) ─────────────────────────────────────────
+# â”€â”€ Rate limiting (in-memory, per-IP) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 import time as _rltime
 _rl_buckets: dict = {}
 
@@ -1256,7 +1259,7 @@ try:
 except Exception as _e:
     logger.warning(f"Rate limit middleware skipped: {_e}")
 
-# ── Billing endpoints ─────────────────────────────────────────────────────────
+# â”€â”€ Billing endpoints â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _CheckoutBody(_BM):
     plan: str
@@ -1333,7 +1336,7 @@ async def billing_webhook(request: _Req):
             c.execute("UPDATE users SET plan=?, stripe_subscription_id=? WHERE email=?",
                       (plan, sub, email))
             c.commit(); c.close()
-            logger.info(f"Webhook upgrade: {email} → {plan}")
+            logger.info(f"Webhook upgrade: {email} â†’ {plan}")
 
     elif etype in ("customer.subscription.deleted", "customer.subscription.updated"):
         status = obj.get("status", "")
@@ -1345,7 +1348,7 @@ async def billing_webhook(request: _Req):
                 (cid,)
             )
             c.commit(); c.close()
-            logger.info(f"Webhook downgrade: customer {cid} → starter")
+            logger.info(f"Webhook downgrade: customer {cid} â†’ starter")
 
     return {"received": True}
 
@@ -1381,7 +1384,7 @@ class _ContactBody(_BM):
 
 @app.post("/billing/contact")
 async def billing_contact(body: _ContactBody):
-    logger.info(f"Sales inquiry: {body.tier} from {body.email} ({body.org}) — {body.message[:100]}")
+    logger.info(f"Sales inquiry: {body.tier} from {body.email} ({body.org}) â€” {body.message[:100]}")
     return {"received": True, "message": "Thank you. We will be in touch within 24 hours."}
 
 @app.get("/billing/plans")
@@ -1399,7 +1402,7 @@ async def billing_config():
     """Return public Stripe key for frontend use."""
     return {"publishable_key": _STRIPE_PK, "configured": bool(_STRIPE_SK)}
 
-# ── Dashboard page ─────────────────────────────────────────────────────────────
+# â”€â”€ Dashboard page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 @app.get("/dashboard")
 def dashboard_page():
     p = _os.path.join(_os.path.dirname(__file__), "frontend", "dashboard.html")
