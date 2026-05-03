@@ -65,7 +65,7 @@ try:
                 body = b""
                 async for chunk in response.body_iterator:
                     body += chunk
-      2         if b"</head>" in body:
+                if b"</head>" in body:
                     body = body.replace(b"</head>", _SHIM + b"</head>", 1)
                 elif b"<body" in body:
                     idx = body.index(b"<body")
@@ -101,23 +101,17 @@ except Exception as e:
 try:
     from fastapi.staticfiles import StaticFiles
     if os.path.isdir("frontend"):
-        app.mount("/ui", StaticFiles(directory="frontend", html=True), name="ui")
+        app.mount("/ui", StaticFiles(directory="frontend", html= True), name="ui")
         logger.info("Frontend mounted at /ui/")
 except Exception as e:
     logger.warning(f"Static files not mounted: {e}")
 
-# ── Health check ──────────────────────────────────────────────────────────────
+# ── Health check ─────────────────────────────────────────────────────────────────
 from fastapi.responses import JSONResponse, HTMLResponse
 
 @app.get("/health")
 def health():
-    return JSONResponse({"status": "ok", "main_app": _main_imported, "version": "2.0.0"})
-
-# ── Auth system ───────────────────────────────────────────────────────────────
-import os as _os, sqlite3 as _sq, hashlib as _hl, secrets as _sec, time as _tm, hmac as _hm, json as _jn
-import base64 as _b64
-from fastapi import Request as _Req
-from fastapi.responses import JSONResponse as _JR
+    return JSONResponse({(��]\Ȏ���ȋ�XZ[��\���XZ[��[\ܝY��\��[ۈ�������JB���8� 8� ]]�\�[H8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �[\ܝ��\�����[]L�\���K\�X�\���Xܙ]�\���X�[YH\��KXX�\��K��ۈ\�ڛ��[\ܝ�\�M�\�؍�����H�\�\H[\ܝ�\]Y\�\�ԙ\B����H�\�ses import JSONResponse as _JR
 from pydantic import BaseModel as _BM
 
 _DB_PATH = _os.path.join(_os.path.dirname(__file__), "quantora_users.db")
@@ -146,7 +140,7 @@ def _hash_pw(pw: str) -> str:
     h = _hl.pbkdf2_hmac("sha256", pw.encode(), salt.encode(), 200000)
     return salt + ":" + h.hex()
 
-def _verify_pw(pz: str, stored: str) -> bool:
+def _verify_pw(pw: str, stored: str) -> bool:
     try:
         salt, h = stored.split(":")
         return _hl.pbkdf2_hmac("sha256", pw.encode(), salt.encode(), 200000).hex() == h
@@ -173,7 +167,7 @@ def _decode_token(token: str):
         payload = _jn.loads(_b64.urlsafe_b64decode(b + "=="))
         if payload.get("exp", 0) < _tm.time(): return None
         return payload.get("sub")
-     except Exception:
+    except Exception:
         return None
 
 class _RegReq(_BM):
@@ -185,7 +179,8 @@ class _RegReq(_BM):
 class _LoginReq(_BM):
     email: str
     password: str
-)app.post("/auth/register")
+
+@app.post("/auth/register")
 async def auth_register(req: _RegReq):
     if not req.email or not req.password or not req.name:
         return _JR({"error": "All fields are required."}, status_code=400)
@@ -238,7 +233,7 @@ def login_page():
             return HTMLResponse(content=f.read())
     except FileNotFoundError:
         from fastapi.responses import RedirectResponse
-        return RedirectResponse(url="/signup")
+      2 return RedirectResponse(url="/signup")
 
 @app.get("/signup")
 def signup_page():
@@ -423,7 +418,7 @@ def _landing_html() -> str:
 
   /* ── HERO ── */
   .hero {
-    background: linear-gradient(135deg, var --bg3) 0%, var(--bg) 100%);
+    background: linear-gradient(135deg, var(--bg3) 0%, var(--bg) 100%);
     padding: 60px 40px 40px;
     text-align: center;
     position: relative;
@@ -1145,3 +1140,272 @@ async def on_startup():
         logger.info("State initialization complete")
     except Exception as e:
         logger.warning(f"State init skipped: {e}")
+
+
+# ==============================================================================
+# BILLING, RATE-LIMITING & DASHBOARD — appended to run.py
+# ==============================================================================
+
+# ── DB migration: add billing columns ─────────────────────────────────────────
+def _billing_migrate():
+    c = _db()
+    for col, tdef in [("stripe_customer_id", "TEXT"), ("stripe_subscription_id", "TEXT")]:
+        try:
+            c.execute(f"ALTER TABLE users ADD COLUMN {col} {tdef}")
+            c.commit()
+        except Exception:
+            pass
+    c.close()
+
+_billing_migrate()
+
+# ── Stripe API helpers (pure stdlib — no stripe package needed) ───────────────
+import urllib.request as _urr
+import urllib.parse   as _urp
+
+_STRIPE_SK        = _os.environ.get("STRIPE_SECRET_KEY",       "")
+_STRIPE_WHS       = _os.environ.get("STRIPE_WEBHOOK_SECRET",   "")
+_STRIPE_CORE_PRICE = _os.environ.get("STRIPE_CORE_PRICE_ID",   "")
+_STRIPE_PRO_PRICE  = _os.environ.get("STRIPE_PRO_PRICE_ID",    "")
+_STRIPE_EXEC_PRICE = _os.environ.get("STRIPE_EXEC_PRICE_ID",   "")
+_STRIPE_PK        = _os.environ.get("STRIPE_PUBLISHABLE_KEY",  "")
+_APP_URL          = _os.environ.get("APP_URL", "https://web-production-fe9f5.up.railway.app")
+
+PLAN_ORDER = {"starter": 0, "core": 1, "pro": 2, "execution": 3, "firm": 4, "institutional": 5}
+PLAN_PRICES = {
+    "core":      _STRIPE_CORE_PRICE,
+    "pro":       _STRIPE_PRO_PRICE,
+    "execution": _STRIPE_EXEC_PRICE,
+}
+
+def _stripe_req(method: str, path: str, data: dict | None = None) -> dict:
+    url  = f"https://api.stripe.com/v1{path}"
+    body = _urp.urlencode(data or {}).encode() if data else None
+    req  = _urr.Request(url, data=body, method=method)
+    req.add_header("Authorization", f"Bearer {_STRIPE_SK}")
+    if body:
+        req.add_header("Content-Type", "application/x-www-form-urlencoded")
+    try:
+        with _urr.urlopen(req, timeout=10) as resp:
+            return _jn.loads(resp.read())
+    except _urr.HTTPError as exc:
+        try:
+            return {"error": _jn.loads(exc.read()).get("error", {"message": str(exc)})}
+        except Exception:
+            return {"error": {"message": str(exc)}}
+    except Exception as exc:
+        return {"error": {"message": str(exc)}}
+
+def _stripe_verify_sig(payload: bytes, sig_header: str, secret: str) -> bool:
+    try:
+        t = ""; sigs: list[str] = []
+        for part in sig_header.split(","):
+            k, _, v = part.partition("=")
+            if k == "t": t = v
+            elif k == "v1": sigs.append(v)
+        if not t: return False
+        signed   = f"{t}.{payload.decode()}".encode()
+        expected = _hm.new(secret.encode(), signed, _hl.sha256).hexdigest()
+        return expected in sigs
+    except Exception:
+        return False
+
+def _get_or_create_stripe_customer(email: str, name: str) -> str | None:
+    c   = _db()
+    row = c.execute("SELECT stripe_customer_id FROM users WHERE email=?", (email,)).fetchone()
+    c.close()
+    if row and row["stripe_customer_id"]:
+        return row["stripe_customer_id"]
+    result = _stripe_req("POST", "/customers", {"email": email, "name": name})
+    if "error" in result: return None
+    cid = result["id"]
+    c   = _db()
+    c.execute("UPDATE users SET stripe_customer_id=? WHERE email=?", (cid, email))
+    c.commit(); c.close()
+    return cid
+
+# ── Rate limiting (in-memory, per-IP) ─────────────────────────────────────────
+import time as _rltime
+_rl_buckets: dict = {}
+
+def _rate_ok(key: str, limit: int = 10, window: int = 60) -> bool:
+    now    = _rltime.time()
+    bucket = [t for t in _rl_buckets.get(key, []) if now - t < window]
+    if len(bucket) >= limit:
+        _rl_buckets[key] = bucket
+        return False
+    bucket.append(now)
+    _rl_buckets[key] = bucket
+    return True
+
+from starlette.middleware.base import BaseHTTPMiddleware as _BMH2
+from starlette.responses import JSONResponse as _JR2
+
+class _RateLimitMW(_BMH2):
+    async def dispatch(self, request, call_next):
+        if request.url.path in ("/auth/login", "/auth/register"):
+            ip = (request.client.host if request.client else "unknown") or "unknown"
+            if not _rate_ok(f"auth:{ip}", limit=10, window=60):
+                return _JR2({"error": "Too many requests. Please wait a minute."}, status_code=429)
+        return await call_next(request)
+
+try:
+    app.middleware_stack = None
+    app.add_middleware(_RateLimitMW)
+    logger.info("Rate limiting middleware active (10 auth req/min/IP)")
+except Exception as _e:
+    logger.warning(f"Rate limit middleware skipped: {_e}")
+
+# ── Billing endpoints ─────────────────────────────────────────────────────────
+
+class _CheckoutBody(_BM):
+    plan: str
+    annual: bool = False
+
+@app.post("/billing/checkout")
+async def billing_checkout(body: _CheckoutBody, request: _Req):
+    if not _STRIPE_SK:
+        return _JR({"error": "Billing not yet configured. Contact support."}, status_code=503)
+    auth  = request.headers.get("Authorization", "")
+    token = auth[7:] if auth.startswith("Bearer ") else ""
+    email = _decode_token(token)
+    if not email:
+        return _JR({"error": "Unauthorized"}, status_code=401)
+
+    plan     = body.plan.lower().strip()
+    price_id = PLAN_PRICES.get(plan)
+    if not price_id:
+        return _JR({"error": f"Plan '{plan}' is not available via checkout. Contact sales."}, status_code=400)
+
+    c    = _db()
+    user = c.execute("SELECT name, plan FROM users WHERE email=?", (email,)).fetchone()
+    c.close()
+    if not user:
+        return _JR({"error": "User not found."}, status_code=404)
+    if PLAN_ORDER.get(user["plan"], 0) >= PLAN_ORDER.get(plan, 0):
+        return _JR({"error": f"Already on {user['plan']} or higher."}, status_code=400)
+
+    cid = _get_or_create_stripe_customer(email, user["name"])
+    if not cid:
+        return _JR({"error": "Failed to create billing account."}, status_code=500)
+
+    session = _stripe_req("POST", "/checkout/sessions", {
+        "customer":                cid,
+        "mode":                    "subscription",
+        "line_items[0][price]":    price_id,
+        "line_items[0][quantity]": "1",
+        "success_url":             f"{_APP_URL}/billing/success?session_id={{CHECKOUT_SESSION_ID}}",
+        "cancel_url":              f"{_APP_URL}/pricing",
+        "metadata[plan]":          plan,
+        "metadata[email]":         email,
+        "allow_promotion_codes":   "true",
+    })
+    if "error" in session:
+        return _JR({"error": session["error"]["message"]}, status_code=500)
+    return {"url": session["url"]}
+
+@app.get("/billing/success")
+async def billing_success(session_id: str = ""):
+    from fastapi.responses import RedirectResponse
+    return RedirectResponse(url="/dashboard?upgraded=1")
+
+@app.post("/billing/webhook")
+async def billing_webhook(request: _Req):
+    payload = await request.body()
+    sig     = request.headers.get("stripe-signature", "")
+    if _STRIPE_WHS and not _stripe_verify_sig(payload, sig, _STRIPE_WHS):
+        return _JR({"error": "Invalid signature"}, status_code=400)
+    try:
+        event = _jn.loads(payload)
+    except Exception:
+        return _JR({"error": "Bad payload"}, status_code=400)
+
+    etype = event.get("type", "")
+    obj   = event.get("data", {}).get("object", {})
+
+    if etype == "checkout.session.completed":
+        meta  = obj.get("metadata", {})
+        email = meta.get("email", "").lower()
+        plan  = meta.get("plan", "")
+        sub   = obj.get("subscription", "")
+        if email and plan:
+            c = _db()
+            c.execute("UPDATE users SET plan=?, stripe_subscription_id=? WHERE email=?",
+                      (plan, sub, email))
+            c.commit(); c.close()
+            logger.info(f"Webhook upgrade: {email} → {plan}")
+
+    elif etype in ("customer.subscription.deleted", "customer.subscription.updated"):
+        status = obj.get("status", "")
+        cid    = obj.get("customer", "")
+        if etype == "customer.subscription.deleted" or status in ("canceled", "unpaid", "past_due"):
+            c = _db()
+            c.execute(
+                "UPDATE users SET plan='starter', stripe_subscription_id=NULL WHERE stripe_customer_id=?",
+                (cid,)
+            )
+            c.commit(); c.close()
+            logger.info(f"Webhook downgrade: customer {cid} → starter")
+
+    return {"received": True}
+
+@app.post("/billing/portal")
+async def billing_portal(request: _Req):
+    if not _STRIPE_SK:
+        return _JR({"error": "Billing not configured."}, status_code=503)
+    auth  = request.headers.get("Authorization", "")
+    token = auth[7:] if auth.startswith("Bearer ") else ""
+    email = _decode_token(token)
+    if not email:
+        return _JR({"error": "Unauthorized"}, status_code=401)
+    c   = _db()
+    row = c.execute("SELECT stripe_customer_id FROM users WHERE email=?", (email,)).fetchone()
+    c.close()
+    cid = row["stripe_customer_id"] if row else None
+    if not cid:
+        return _JR({"error": "No active subscription found."}, status_code=404)
+    portal = _stripe_req("POST", "/billing_portal/sessions", {
+        "customer":   cid,
+        "return_url": f"{_APP_URL}/dashboard",
+    })
+    if "error" in portal:
+        return _JR({"error": portal["error"]["message"]}, status_code=500)
+    return {"url": portal["url"]}
+
+class _ContactBody(_BM):
+    name: str
+    email: str
+    org: str = ""
+    tier: str = "firm"
+    message: str = ""
+
+@app.post("/billing/contact")
+async def billing_contact(body: _ContactBody):
+    logger.info(f"Sales inquiry: {body.tier} from {body.email} ({body.org}) — {body.message[:100]}")
+    return {"received": True, "message": "Thank you. We will be in touch within 24 hours."}
+
+@app.get("/billing/plans")
+async def billing_plans():
+    return {"plans": [
+        {"id":"core",      "name":"Quantora Core",        "price":79,    "price_display":"$79/mo",    "highlighted":False, "cta":"Start with Core"},
+        {"id":"pro",       "name":"Quantora Pro",         "price":199,   "price_display":"$199/mo",   "highlighted":False, "cta":"Upgrade to Pro"},
+        {"id":"execution", "name":"Quantora Execution",   "price":499,   "price_display":"$499/mo",   "highlighted":True,  "cta":"Start Execution"},
+        {"id":"firm",      "name":"Quantora Firm",        "price":2500,  "price_display":"$2,500/mo", "highlighted":False, "cta":"Contact Sales"},
+        {"id":"institutional","name":"Quantora Institutional","price":None,"price_display":"Custom",  "highlighted":False, "cta":"Request Proposal"},
+    ]}
+
+@app.get("/billing/config")
+async def billing_config():
+    """Return public Stripe key for frontend use."""
+    return {"publishable_key": _STRIPE_PK, "configured": bool(_STRIPE_SK)}
+
+# ── Dashboard page ─────────────────────────────────────────────────────────────
+@app.get("/dashboard")
+def dashboard_page():
+    p = _os.path.join(_os.path.dirname(__file__), "frontend", "dashboard.html")
+    try:
+        with open(p, "r", encoding="utf-8") as f:
+            return HTMLResponse(content=f.read())
+    except FileNotFoundError:
+        from fastapi.responses import RedirectResponse
+        return RedirectResponse(url="/ui/")
