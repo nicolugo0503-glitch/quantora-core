@@ -65,7 +65,7 @@ try:
                 body = b""
                 async for chunk in response.body_iterator:
                     body += chunk
-                if b"</head>" in body:
+      2         if b"</head>" in body:
                     body = body.replace(b"</head>", _SHIM + b"</head>", 1)
                 elif b"<body" in body:
                     idx = body.index(b"<body")
@@ -113,8 +113,144 @@ from fastapi.responses import JSONResponse, HTMLResponse
 def health():
     return JSONResponse({"status": "ok", "main_app": _main_imported, "version": "2.0.0"})
 
-# ── Pricing page ──────────────────────────────────────────────────────────────
-import os as _os
+# ── Auth system ───────────────────────────────────────────────────────────────
+import os as _os, sqlite3 as _sq, hashlib as _hl, secrets as _sec, time as _tm, hmac as _hm, json as _jn
+import base64 as _b64
+from fastapi import Request as _Req
+from fastapi.responses import JSONResponse as _JR
+from pydantic import BaseModel as _BM
+
+_DB_PATH = _os.path.join(_os.path.dirname(__file__), "quantora_users.db")
+_JWT_SECRET = _os.environ.get("JWT_SECRET", "quantora-intelligence-os-secret-key-2024")
+_JWT_ALG = b'{"alg":"HS256","typ":"JWT"}'
+
+def _db():
+    c = _sq.connect(_DB_PATH); c.row_factory = _sq.Row; return c
+
+def _init_db():
+    c = _db()
+    c.execute("""CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        email TEXT UNIQUE NOT NULL,
+        name TEXT NOT NULL,
+        password_hash TEXT NOT NULL,
+        plan TEXT DEFAULT 'starter',
+        created_at INTEGER DEFAULT (CAST(strftime('%s','now') AS INTEGER))
+    )""")
+    c.commit(); c.close()
+
+_init_db()
+
+def _hash_pw(pw: str) -> str:
+    salt = _sec.token_hex(16)
+    h = _hl.pbkdf2_hmac("sha256", pw.encode(), salt.encode(), 200000)
+    return salt + ":" + h.hex()
+
+def _verify_pw(pz: str, stored: str) -> bool:
+    try:
+        salt, h = stored.split(":")
+        return _hl.pbkdf2_hmac("sha256", pw.encode(), salt.encode(), 200000).hex() == h
+    except Exception:
+        return False
+
+def _make_token(email: str) -> str:
+    header = _b64.urlsafe_b64encode(_JWT_ALG).rstrip(b"=").decode()
+    payload = _jn.dumps({"sub": email, "exp": int(_tm.time()) + 86400 * 30})
+    body = _b64.urlsafe_b64encode(payload.encode()).rstrip(b"=").decode()
+    sig_input = f"{header}.{body}".encode()
+    sig = _b64.urlsafe_b64encode(
+        _hm.new(_JWT_SECRET.encode(), sig_input, _hl.sha256).digest()
+    ).rstrip(b"=").decode()
+    return f"{header}.{body}.{sig}"
+
+def _decode_token(token: str):
+    try:
+        h, b, s = token.split(".")
+        expected = _b64.urlsafe_b64encode(
+            _hm.new(_JWT_SECRET.encode(), f"{h}.{b}".encode(), _hl.sha256).digest()
+        ).rstrip(b"=").decode()
+        if s != expected: return None
+        payload = _jn.loads(_b64.urlsafe_b64decode(b + "=="))
+        if payload.get("exp", 0) < _tm.time(): return None
+        return payload.get("sub")
+     except Exception:
+        return None
+
+class _RegReq(_BM):
+    name: str
+    email: str
+    password: str
+    plan: str = "starter"
+
+class _LoginReq(_BM):
+    email: str
+    password: str
+)app.post("/auth/register")
+async def auth_register(req: _RegReq):
+    if not req.email or not req.password or not req.name:
+        return _JR({"error": "All fields are required."}, status_code=400)
+    if len(req.password) < 8:
+        return _JR({"error": "Password must be at least 8 characters."}, status_code=400)
+    try:
+        c = _db()
+        if c.execute("SELECT id FROM users WHERE email=?", (req.email.lower(),)).fetchone():
+            c.close(); return _JR({"error": "Email already registered. Please sign in."}, status_code=400)
+        c.execute("INSERT INTO users (email, name, password_hash, plan) VALUES (?,?,?,?)",
+                  (req.email.lower(), req.name.strip(), _hash_pw(req.password), req.plan))
+        c.commit(); c.close()
+        token = _make_token(req.email.lower())
+        return {"token": token, "email": req.email.lower(), "name": req.name.strip(), "plan": req.plan}
+    except Exception as e:
+        return _JR({"error": str(e)}, status_code=500)
+
+@app.post("/auth/login")
+async def auth_login(req: _LoginReq):
+    try:
+        c = _db()
+        user = c.execute("SELECT * FROM users WHERE email=?", (req.email.lower(),)).fetchone()
+        c.close()
+        if not user or not _verify_pw(req.password, user["password_hash"]):
+            return _JR({"error": "Invalid email or password."}, status_code=401)
+        token = _make_token(req.email.lower())
+        return {"token": token, "email": user["email"], "name": user["name"], "plan": user["plan"]}
+    except Exception as e:
+        return _JR({"error": str(e)}, status_code=500)
+
+@app.get("/auth/me")
+async def auth_me(request: _Req):
+    auth = request.headers.get("Authorization", "")
+    token = auth[7:] if auth.startswith("Bearer ") else ""
+    email = _decode_token(token)
+    if not email:
+        return _JR({"error": "Unauthorized"}, status_code=401)
+    c = _db()
+    user = c.execute("SELECT email, name, plan, created_at FROM users WHERE email=?", (email,)).fetchone()
+    c.close()
+    if not user:
+        return _JR({"error": "User not found"}, status_code=404)
+    return {"email": user["email"], "name": user["name"], "plan": user["plan"], "created_at": user["created_at"]}
+
+@app.get("/login")
+def login_page():
+    p = _os.path.join(_os.path.dirname(__file__), "frontend", "login.html")
+    try:
+        with open(p, "r", encoding="utf-8") as f:
+            return HTMLResponse(content=f.read())
+    except FileNotFoundError:
+        from fastapi.responses import RedirectResponse
+        return RedirectResponse(url="/signup")
+
+@app.get("/signup")
+def signup_page():
+    p = _os.path.join(_os.path.dirname(__file__), "frontend", "signup.html")
+    try:
+        with open(p, "r", encoding="utf-8") as f:
+            return HTMLResponse(content=f.read())
+    except FileNotFoundError:
+        from fastapi.responses import RedirectResponse
+        return RedirectResponse(url="/")
+
+# ── Pricing page ───────────────────────────────────────────────────────────────
 @app.get("/pricing")
 def pricing():
     pricing_path = _os.path.join(_os.path.dirname(__file__), "frontend", "pricing.html")
@@ -287,7 +423,7 @@ def _landing_html() -> str:
 
   /* ── HERO ── */
   .hero {
-    background: linear-gradient(135deg, var(--bg3) 0%, var(--bg) 100%);
+    background: linear-gradient(135deg, var --bg3) 0%, var(--bg) 100%);
     padding: 60px 40px 40px;
     text-align: center;
     position: relative;
@@ -576,7 +712,8 @@ def _landing_html() -> str:
     <a href="/pricing" class="nav-btn nav-btn-ghost">Pricing</a>
     <a href="/docs" class="nav-btn nav-btn-ghost">API Docs</a>
     <a href="/ui/" class="nav-btn nav-btn-ghost">Panels</a>
-    <a href="/operator/health" class="nav-btn nav-btn-primary">Operator Console →</a>
+    <a href="/login" class="nav-btn nav-btn-ghost" id="navSignIn">Sign In</a>
+    <a href="/signup" class="nav-btn nav-btn-primary" id="navGetStarted">Get Started →</a>
   </div>
 </header>
 
@@ -794,6 +931,8 @@ def _landing_html() -> str:
   <p>Financial Intelligence OS &mdash; Built for Institutions. Used by Traders.</p>
   <p style="margin-top:8px">
     <a href="/pricing">Pricing</a> &middot;
+    <a href="/signup">Sign Up</a> &middot;
+    <a href="/login">Sign In</a> &middot;
     <a href="/docs">API Docs</a> &middot;
     <a href="/health">Health</a> &middot;
     <a href="/operator/health">Operator</a> &middot;
@@ -804,6 +943,20 @@ def _landing_html() -> str:
 
 <script>
 const B = window.location.origin;
+
+// ── Auth nav update ──────────────────────────────────────────────────────────
+(function() {
+  const token = localStorage.getItem('q_token');
+  const user = (() => { try { return JSON.parse(localStorage.getItem('q_user')||'null'); } catch(e){return null;} })();
+  const signInBtn = document.getElementById('navSignIn');
+  const getStartedBtn = document.getElementById('navGetStarted');
+  if (token && user && signInBtn && getStartedBtn) {
+    signInBtn.textContent = user.name ? user.name.split(' ')[0] : 'Account';
+    signInBtn.href = '/auth/me';
+    getStartedBtn.textContent = '⚡ Dashboard →';
+    getStartedBtn.href = '/ui/';
+  }
+})();
 
 function fmt(n, decimals=2) {
   if (n == null || isNaN(n)) return '—';
