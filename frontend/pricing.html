@@ -1,11 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantora — Pricing & Plans</title>
+<style>
+  :root {
+    --bg: #050a14; --bg2: #0a1020; --bg3: #0d1528; --card: #0f1a2e;
+    --border: #1a2d4a; --border2: #1e3a5f; --cyan: #00d4ff; --purple: #7b2fff;
+    --green: #10b981; --red: #ef4444; --gold: #f59e0b; --text: #e2e8f0;
+    --muted: #64748b; --dim: #94a3b8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif; }
 
-<html>
+  /* HEADER */
+  .header { background: linear-gradient(180deg, #0a0f1e 0%, var(--bg) 100%); border-bottom: 1px solid var(--border2); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
+  .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--cyan), var(--purple)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .logo-text { font-size: 1.3rem; font-weight: 800; background: linear-gradient(90deg, var(--cyan), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px; }
+  .header-right { display: flex; align-items: center; gap: 16px; }
+  .btn-sm { padding: 7px 16px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; text-decoration: none; transition: all 0.2s; border: 1px solid transparent; cursor: pointer; }
+  .btn-ghost { color: var(--dim); border-color: var(--border); background: transparent; }
+  .btn-ghost:hover { color: var(--cyan); border-color: var(--cyan); }
+  .btn-primary { background: linear-gradient(135deg, var(--cyan), var(--purple)); color: #fff; border: none; }
+  .btn-primary:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero { text-align: center; padding: 80px 40px 60px; background: linear-gradient(135deg, var(--bg3) 0%, var(--bg) 100%); position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 800px; height: 400px; background: radial-gradient(ellipse, rgba(0,212,255,0.06) 0%, transparent 70%); pointer-events: none; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border: 1px solid var(--border2); border-radius: 20px; font-size: 0.75rem; color: var(--cyan); font-weight: 600; letter-spacing: 1px; margin-bottom: 24px; background: rgba(0,212,255,0.05); }
+  .hero h1 { font-size: 3rem; font-weight: 900; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px; background: linear-gradient(90deg, #fff 0%, var(--cyan) 50%, var(--purple) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { font-size: 1.1rem; color: var(--dim); max-width: 580px; margin: 0 auto 40px; line-height: 1.6; }
+
+  /* TOGGLE */
+  .billing-toggle { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 60px; }
+  .toggle-label { font-size: 0.9rem; color: var(--dim); font-weight: 600; }
+  .toggle-switch { position: relative; width: 52px; height: 28px; }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: var(--border2); border-radius: 28px; transition: 0.3s; }
+  .toggle-slider:before { content: ''; position: absolute; width: 20px; height: 20px; left: 4px; bottom: 4px; background: white; border-radius: 50%; transition: 0.3s; }
+  input:checked + .toggle-slider { background: linear-gradient(135deg, var(--cyan), var(--purple)); }
+  input:checked + .toggle-slider:before { transform: translateX(24px); }
+  .save-badge { background: rgba(16,185,129,0.15); color: var(--green); border: 1px solid rgba(16,185,129,0.3); padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; }
+
+  /* PRICING GRID */
+  .pricing-section { max-width: 1200px; margin: 0 auto; padding: 0 40px 80px; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .plan-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; position: relative; transition: all 0.3s; }
+  .plan-card:hover { border-color: var(--border2); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+  .plan-card.featured { border-color: var(--cyan); background: linear-gradient(135deg, #0f1a2e 0%, #0d1a30 100%); box-shadow: 0 0 40px rgba(0,212,255,0.1); }
+  .featured-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--cyan), var(--purple)); color: #fff; padding: 4px 16px; border-radius: 20px; font-size: 0.72rem; font-weight: 800; letter-spacing: 1px; white-space: nowrap; }
+  .plan-name { font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .plan-price { display: flex; align-items: baseline; gap: 4px; margin-bottom: 8px; }
+  .price-dollar { font-size: 1.2rem; font-weight: 700; color: var(--dim); margin-top: 8px; }
+  .price-amount { font-size: 3.2rem; font-weight: 900; font-family: 'SF Mono', monospace; color: #fff; }
+  .price-period { font-size: 0.85rem; color: var(--muted); }
+  .plan-desc { font-size: 0.85rem; color: var(--dim); margin-bottom: 28px; line-height: 1.5; min-height: 40px; }
+  .plan-cta { width: 100%; padding: 14px; border-radius: 10px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.2s; border: none; margin-bottom: 28px; display: block; text-align: center; text-decoration: none; }
+  .cta-primary { background: linear-gradient(135deg, var(--cyan), var(--purple)); color: #fff; box-shadow: 0 0 24px rgba(0,212,255,0.2); }
+  .cta-primary:hover { box-shadow: 0 8px 30px rgba(0,212,255,0.35); transform: translateY(-1px); }
+  .cta-outline { background: transparent; color: var(--text); border: 1px solid var(--border2) !important; border: none; }
+  .cta-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+  .cta-gold { background: linear-gradient(135deg, var(--gold), #d97706); color: #fff; }
+  .cta-gold:hover { opacity: 0.9; }
+  .divider { height: 1px; background: var(--border); margin-bottom: 24px; }
+  .features-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+  .feature-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 0.85rem; color: var(--dim); line-height: 1.4; }
+  .feature-check { color: var(--green); font-size: 0.9rem; flex-shrink: 0; margin-top: 1px; }
+  .feature-x { color: var(--muted); font-size: 0.9rem; flex-shrink: 0; margin-top: 1px; }
+  .feature-highlight { color: var(--text); font-weight: 600; }
+
+  /* COMPARISON TABLE */
+  .compare-section { max-width: 1000px; margin: 0 auto; padding: 0 40px 80px; }
+  .compare-title { text-align: center; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; }
+  .compare-table { width: 100%; border-collapse: collapse; }
+  .compare-table th { padding: 16px; text-align: center; font-size: 0.8rem; font-weight: 700; color: var(--muted); border-bottom: 1px solid var(--border); }
+  .compare-table th:first-child { text-align: left; }
+  .compare-table th.highlight { color: var(--cyan); }
+  .compare-table td { padding: 14px 16px; font-size: 0.85rem; color: var(--dim); border-bottom: 1px solid var(--border); }
+  .compare-table td:first-child { color: var(--text); font-weight: 500; }
+  .compare-table td:not(:first-child) { text-align: center; }
+  .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .check-yes { color: var(--green); font-size: 1rem; }
+  .check-no { color: var(--border2); }
+  .check-val { color: var(--cyan); font-weight: 700; font-size: 0.85rem; }
+
+  /* FAQ */
+  .faq-section { max-width: 700px; margin: 0 auto; padding: 0 40px 80px; }
+  .faq-title { text-align: center; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; }
+  .faq-item { border: 1px solid var(--border); border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+  .faq-q { padding: 18px 20px; font-size: 0.9rem; font-weight: 600; color: var(--text); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+  .faq-q:hover { background: rgba(255,255,255,0.02); }
+  .faq-a { padding: 0 20px 18px; font-size: 0.85rem; color: var(--dim); line-height: 1.6; display: none; }
+  .faq-item.open .faq-a { display: block; }
+  .faq-arrow { transition: transform 0.2s; }
+  .faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+  /* CTA BOTTOM */
+  .cta-section { background: linear-gradient(135deg, var(--bg3), var(--bg)); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 40px; text-align: center; }
+  .cta-section h2 { font-size: 2.4rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 16px; background: linear-gradient(90deg, #fff 0%, var(--cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .cta-section p { color: var(--dim); font-size: 1rem; margin-bottom: 32px; }
+  .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-lg { padding: 16px 36px; border-radius: 10px; font-size: 1rem; font-weight: 700; text-decoration: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; border: none; }
+
+  /* FOOTER */
+  .footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 40px; text-align: center; color: var(--muted); font-size: 0.82rem; }
+  .footer a { color: var(--cyan); text-decoration: none; }
+  .footer-logo { font-size: 1.4rem; font-weight: 900; background: linear-gradient(90deg, var(--cyan), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px; }
+
+  @media (max-width: 768px) {
+    .pricing-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 2rem; }
+    .header { padding: 0 20px; }
+    .pricing-section, .compare-section, .faq-section { padding-left: 20px; padding-right: 20px; }
+  }
+</style>
+</head>
 <body>
-<h2>Pricing</h2>
-<ul>
-<li>Free</li>
-<li>Pro</li>
-<li>Institutional</li>
-</ul>
+
+<header class="header">
+  <a class="logo" href="/">
+    <div class="logo-icon">⚡</div>
+    <div class="logo-text">QUANTORA</div>
+  </a>
+  <div class="header-right">
+    <a href="/ui/" class="btn-sm btn-ghost">Panels</a>
+    <a href="/docs" class="btn-sm btn-ghost">API Docs</a>
+    <a href="/ui/auth_panel.html" class="btn-sm btn-ghost">Sign In</a>
+    <a href="#plans" class="btn-sm btn-primary">Get Started →</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);display:inline-block"></span> INSTITUTIONAL-GRADE PLATFORM</div>
+  <h1>Simple, Transparent<br>Pricing</h1>
+  <p>Start free. Scale as you grow. Every plan includes real-time market data, live API access, and our full intelligence stack.</p>
+
+  <div class="billing-toggle">
+    <span class="toggle-label">Monthly</span>
+    <label class="toggle-switch">
+      <input type="checkbox" id="billingToggle" onchange="toggleBilling()">
+      <span class="toggle-slider"></span>
+    </label>
+    <span class="toggle-label">Annual <span class="save-badge">SAVE 30%</span></span>
+  </div>
+</section>
+
+<!-- PRICING CARDS -->
+<section class="pricing-section" id="plans">
+  <div class="pricing-grid">
+
+    <!-- STARTER -->
+    <div class="plan-card">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price">
+        <span class="price-dollar">$</span>
+        <span class="price-amount" id="price-starter">0</span>
+        <span class="price-period">/mo</span>
+      </div>
+      <div class="plan-desc">Everything you need to start analyzing markets and building your edge.</div>
+      <a href="/ui/auth_panel.html" class="plan-cta cta-outline" style="border:1px solid var(--border2);color:var(--text);">Start Free — No Card Required</a>
+      <div class="divider"></div>
+      <div class="features-title">Included</div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Real-time market quotes (SPY, QQQ, top 50 stocks)</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Crypto prices via CoinGecko (BTC, ETH, top 10)</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span><span class="feature-highlight">50 intelligence panels</span> — market overview, sector ETFs, crypto</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Paper trading with $10,000 simulated capital</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Public API access (100 req/hour)</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Health dashboard & system status</span></div>
+      <div class="feature-item"><span class="feature-x">✗</span> <span style="color:var(--muted)">Full panel suite (537 panels)</span></div>
+      <div class="feature-item"><span class="feature-x">✗</span> <span style="color:var(--muted)">Live broker execution</span></div>
+      <div class="feature-item"><span class="feature-x">✗</span> <span style="color:var(--muted)">AI signals & regime detection</span></div>
+    </div>
+
+    <!-- PRO -->
+    <div class="plan-card featured">
+      <div class="featured-badge">✦ MOST POPULAR</div>
+      <div class="plan-name" style="color:var(--cyan)">Pro Trader</div>
+      <div class="plan-price">
+        <span class="price-dollar" style="color:var(--cyan)">$</span>
+        <span class="price-amount" id="price-pro" style="color:var(--cyan)">49</span>
+        <span class="price-period">/mo</span>
+      </div>
+      <div class="plan-desc">The full intelligence stack for serious traders who want every edge.</div>
+      <a href="/ui/auth_panel.html?plan=pro" class="plan-cta cta-primary">Start 14-Day Free Trial →</a>
+      <div class="divider"></div>
+      <div class="features-title">Everything in Starter, plus:</div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span><span class="feature-highlight">All 537 intelligence panels</span> — full suite</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span><span class="feature-highlight">$100,000 paper portfolio</span> with live mark-to-market</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>AI regime detection + strategy signals</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Sector rotation analysis & flow tracking</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Gainers, losers & momentum scanner</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Full API access (10,000 req/hour)</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Autonomous portfolio intelligence</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Risk engine + kill switch dashboard</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Email alerts & notifications</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Priority support</span></div>
+    </div>
+
+    <!-- INSTITUTIONAL -->
+    <div class="plan-card">
+      <div class="plan-name" style="color:var(--gold)">Institutional</div>
+      <div class="plan-price">
+        <span class="price-dollar" style="color:var(--gold)">$</span>
+        <span class="price-amount" id="price-inst" style="color:var(--gold)">299</span>
+        <span class="price-period">/mo</span>
+      </div>
+      <div class="plan-desc">Live execution, multi-broker integration, and enterprise-grade infrastructure for professional desks.</div>
+      <a href="mailto:institutional@quantora.ai?subject=Institutional Plan Inquiry" class="plan-cta cta-gold">Contact Sales →</a>
+      <div class="divider"></div>
+      <div class="features-title">Everything in Pro, plus:</div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span><span class="feature-highlight">Live trading execution</span> — Binance, IBKR, Alpaca</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Multi-account & sub-account management</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Operator console + institutional cockpit</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Autonomous execution engine (armed mode)</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Capital allocation & drawdown defense system</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Full reconciliation & reporting suite</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Unlimited API access + webhooks</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>Dedicated onboarding & support SLA</span></div>
+      <div class="feature-item"><span class="feature-check">✓</span> <span>White-label licensing available</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="compare-section">
+  <div class="compare-title">Full Feature Comparison</div>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Starter</th>
+        <th class="highlight">Pro Trader</th>
+        <th>Institutional</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Intelligence Panels</td><td class="check-val">50</td><td class="check-val">537</td><td class="check-val">537+</td></tr>
+      <tr><td>Paper Trading Capital</td><td class="check-val">$10K</td><td class="check-val">$100K</td><td class="check-val">Unlimited</td></tr>
+      <tr><td>Live Execution</td><td><span class="check-no">—</span></td><td><span class="check-no">—</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>API Requests / Hour</td><td class="check-val">100</td><td class="check-val">10,000</td><td class="check-val">Unlimited</td></tr>
+      <tr><td>Real-Time Market Data</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>Crypto Intelligence</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>AI Regime Detection</td><td><span class="check-no">—</span></td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>Sector Flow Analysis</td><td><span class="check-no">—</span></td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>Risk Engine + Kill Switch</td><td><span class="check-no">—</span></td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>Operator Console</td><td><span class="check-no">—</span></td><td><span class="check-no">—</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>Multi-Broker Integration</td><td><span class="check-no">—</span></td><td><span class="check-no">—</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>White-Label License</td><td><span class="check-no">—</span></td><td><span class="check-no">—</span></td><td><span class="check-yes">✓</span></td></tr>
+      <tr><td>Support</td><td class="check-val">Community</td><td class="check-val">Priority Email</td><td class="check-val">Dedicated SLA</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-title">Frequently Asked Questions</div>
+
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Is there really a free plan? <span class="faq-arrow">▼</span></div>
+    <div class="faq-a">Yes. The Starter plan is permanently free with no credit card required. You get real-time quotes, 50 intelligence panels, and $10K paper trading capital right away.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Can I cancel anytime? <span class="faq-arrow">▼</span></div>
+    <div class="faq-a">Yes. Cancel anytime from your account settings. No cancellation fees, no lock-ins. If you cancel a paid plan, you keep access until the end of your billing period.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">What brokers does Institutional support? <span class="faq-arrow">▼</span></div>
+    <div class="faq-a">We support Binance (crypto), Interactive Brokers (IBKR) for equities/futures/options, and Alpaca for commission-free US equities. More brokers are being added continuously.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Is the paper trading connected to real market prices? <span class="faq-arrow">▼</span></div>
+    <div class="faq-a">Yes. Paper trading uses live mark-to-market pricing from real-time Yahoo Finance and CoinGecko feeds. Your P&L, risk metrics, and portfolio values reflect actual current prices.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Can I use the API to build my own tools? <span class="faq-arrow">▼</span></div>
+    <div class="faq-a">Absolutely. All plans include API access. The Pro and Institutional plans include interactive Swagger UI documentation at /docs with 50+ endpoints covering market data, portfolio, execution, and analytics.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Is Quantora financial advice? <span class="faq-arrow">▼</span></div>
+    <div class="faq-a">No. Quantora is a data and intelligence platform. Nothing on Quantora constitutes financial, investment, or trading advice. All trading involves risk. Paper trading is for educational and research purposes only.</div>
+  </div>
+</section>
+
+<!-- CTA BOTTOM -->
+<section class="cta-section">
+  <h2>Start Trading Smarter Today</h2>
+  <p>Join traders who use Quantora's intelligence stack to gain an edge in every market condition.</p>
+  <div class="cta-btns">
+    <a href="/ui/auth_panel.html" class="btn-lg btn-primary">⚡ Get Started Free</a>
+    <a href="/ui/" class="btn-lg" style="background:transparent;color:var(--text);border:1px solid var(--border2);">Browse Panels →</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-logo">QUANTORA</div>
+  <p>Financial Intelligence OS — Built for Institutions. Used by Traders.</p>
+  <p style="margin-top:8px"><a href="/docs">API Docs</a> &middot; <a href="/health">Health</a> &middot; <a href="/ui/">Panels</a> &middot; <a href="/">Home</a></p>
+  <p style="margin-top:16px;color:#2d3f55">Paper trading only. Not financial advice. For informational purposes.</p>
+</footer>
+
+<script>
+let isAnnual = false;
+const prices = { starter: [0, 0], pro: [49, 34], inst: [299, 209] };
+
+function toggleBilling() {
+  isAnnual = document.getElementById('billingToggle').checked;
+  document.getElementById('price-starter').textContent = prices.starter[isAnnual?1:0];
+  document.getElementById('price-pro').textContent = prices.pro[isAnnual?1:0];
+  document.getElementById('price-inst').textContent = prices.inst[isAnnual?1:0];
+}
+
+function toggleFaq(el) {
+  el.classList.toggle('open');
+}
+</script>
 </body>
 </html>
