@@ -1,4 +1,76 @@
-nd + 1 :]
+"""
+Quantora Production Entry Point — run.py
+Railway start command: uvicorn run:app --host 0.0.0.0 --port $PORT --workers 1
+"""
+from __future__ import annotations
+import asyncio
+import logging
+import os
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# ── Import main app ──────────────────────────────────────────────────────────
+try:
+    from backend.app.main import app
+    logger.info("Main app imported successfully")
+    _main_imported = True
+except Exception as e:
+    logger.warning(f"Main app import failed ({e}) — using minimal fallback app")
+    from fastapi import FastAPI
+    app = FastAPI(title="Quantora Financial Intelligence OS", version="1.0.0")
+    _main_imported = False
+
+# ── CORS ─────────────────────────────────────────────────────────────────────
+try:
+    from starlette.middleware.cors import CORSMiddleware
+    app.middleware_stack = None
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+    logger.info("CORS middleware added")
+except Exception as e:
+    logger.warning(f"CORS middleware warning: {e}")
+
+# ── API URL shim middleware (fixes localhost:8010 in all frontend panels) ─────
+try:
+    from starlette.middleware.base import BaseHTTPMiddleware
+    from starlette.requests import Request as StarletteRequest
+    from starlette.responses import Response as StarletteResponse
+
+    _SHIM = (
+        b"<script>"
+        b"(function(){"
+        b"var _f=window.fetch;"
+        b"window.fetch=function(u,o){"
+        b"if(typeof u==='string')u=u.replace(/https?:\\/\\/localhost:\\d+/g,window.location.origin);"
+        b"return _f.call(this,u,o);};"
+        b"var _x=XMLHttpRequest.prototype.open;"
+        b"XMLHttpRequest.prototype.open=function(m,u){"
+        b"if(typeof u==='string')u=u.replace(/https?:\\/\\/localhost:\\d+/g,window.location.origin);"
+        b"return _x.apply(this,arguments);};"
+        b"})();"
+        b"</script>"
+    )
+
+    class ApiShimMiddleware(BaseHTTPMiddleware):
+        async def dispatch(self, request: StarletteRequest, call_next):
+            response = await call_next(request)
+            ct = response.headers.get("content-type", "")
+            if "text/html" in ct:
+                body = b""
+                async for chunk in response.body_iterator:
+                    body += chunk
+                if b"</head>" in body:
+                    body = body.replace(b"</head>", _SHIM + b"</head>", 1)
+                elif b"<body" in body:
+                    idx = body.index(b"<body")
+                    end = body.index(b">", idx)
+                    body = body[: end + 1] + _SHIM + body[end + 1 :]
                 else:
                     body = _SHIM + body
                 headers = dict(response.headers)
@@ -41,82 +113,18 @@ from fastapi.responses import JSONResponse, HTMLResponse
 def health():
     return JSONResponse({"status": "ok", "main_app": _main_imported, "version": "2.0.0"})
 
-# ── Landing page ──────────────────────────────────────────────────────────────
-@app.get("/")
-def root():
-    return HTMLResponse(content=_landing_html())
-
-def _landing_html() -> str:
-    return r"""<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quantora — Financial Intelligence OS</title>
-<style>
-  :root {
-    --bg: #050a14;
-    --bg2: #0a1020;
-    --bg3: #0d1528;
-    --card: #0f1a2e;
-    --border: #1a2d4a;
-    --border2: #1e3a5f;
-    --cyan: #00d4ff;
-    --purple: #7b2fff;
-    --green: #10b981;
-    --red: #ef4444;
-    --gold: #f59e0b;
-    --text: #e2e8f0;
-    --muted: #64748b;
-    --dim: #94a3b8;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    fonnd + 1 :]
-                else:
-                    body = _SHIM + body
-                headers = dict(response.headers)
-                headers["content-length"] = str(len(body))
-                return StarletteResponse(
-                    content=body,
-                    status_code=response.status_code,
-                    headers=headers,
-                    media_type="text/html",
-                )
-            return response
-
-    app.middleware_stack = None
-    app.add_middleware(ApiShimMiddleware)
-    logger.info("API URL shim middleware added (localhost → dynamic origin)")
-except Exception as e:
-    logger.warning(f"Shim middleware not loaded: {e}")
-
-# ── Live market data router ───────────────────────────────────────────────────
-try:
-    from backend.app.real_dashboard_router import router as live_router
-    app.include_router(live_router)
-    logger.info("Live market data router mounted at /api/live/*")
-except Exception as e:
-    logger.warning(f"Live router not loaded: {e}")
-
-# ── Static files ──────────────────────────────────────────────────────────────
-try:
-    from fastapi.staticfiles import StaticFiles
-    if os.path.isdir("frontend"):
-        app.mount("/ui", StaticFiles(directory="frontend", html=True), name="ui")
-        logger.info("Frontend mounted at /ui/")
-except Exception as e:
-    logger.warning(f"Static files not mounted: {e}")
-
-# ── Health check ──────────────────────────────────────────────────────────────
-from fastapi.responses import JSONResponse, HTMLResponse
-
-@app.get("/health")
-def health():
-    return JSONResponse({"status": "ok", "main_app": _main_imported, "version": "2.0.0"})
+# ── Pricing page ──────────────────────────────────────────────────────────────
+import os as _os
+@app.get("/pricing")
+def pricing():
+    pricing_path = _os.path.join(_os.path.dirname(__file__), "frontend", "pricing.html")
+    try:
+        with open(pricing_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        return HTMLResponse(content=content)
+    except FileNotFoundError:
+        from fastapi.responses import RedirectResponse
+        return RedirectResponse(url="/ui/")
 
 # ── Landing page ──────────────────────────────────────────────────────────────
 @app.get("/")
@@ -565,6 +573,7 @@ def _landing_html() -> str:
   <div class="header-right">
     <div class="status-dot"></div>
     <span class="status-label">LIVE</span>
+    <a href="/pricing" class="nav-btn nav-btn-ghost">Pricing</a>
     <a href="/docs" class="nav-btn nav-btn-ghost">API Docs</a>
     <a href="/ui/" class="nav-btn nav-btn-ghost">Panels</a>
     <a href="/operator/health" class="nav-btn nav-btn-primary">Operator Console →</a>
@@ -768,6 +777,13 @@ def _landing_html() -> str:
       <span class="fcard-tag tag-live">LIVE MOVERS</span>
     </a>
 
+    <a class="fcard" href="/pricing">
+      <div class="fcard-icon">💎</div>
+      <div class="fcard-title">Plans &amp; Pricing</div>
+      <div class="fcard-desc">Starter free forever. Pro Trader $49/mo. Institutional $299/mo. All plans include real-time data and API access.</div>
+      <span class="fcard-tag" style="background:rgba(245,158,11,0.15);color:#f59e0b;border-color:rgba(245,158,11,0.3)">VIEW PLANS</span>
+    </a>
+
   </div>
 
 </div>
@@ -777,6 +793,7 @@ def _landing_html() -> str:
   <div class="footer-logo">QUANTORA</div>
   <p>Financial Intelligence OS &mdash; Built for Institutions. Used by Traders.</p>
   <p style="margin-top:8px">
+    <a href="/pricing">Pricing</a> &middot;
     <a href="/docs">API Docs</a> &middot;
     <a href="/health">Health</a> &middot;
     <a href="/operator/health">Operator</a> &middot;
