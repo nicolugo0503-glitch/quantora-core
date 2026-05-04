@@ -407,12 +407,15 @@ async def get_prices():
     try:
         import yfinance as yf
         syms=["AAPL","NVDA","TSLA","MSFT","GOOGL","META","SPY","QQQ","GC=F","CL=F","BTC-USD","ETH-USD","EURUSD=X","GBPUSD=X","^VIX"]
-        tickers=yf.Tickers(" ".join(syms))
         out={}
         for s in syms:
             try:
-                fi=tickers.tickers[s].fast_info
-                out[s]={"price":round(float(fi.last_price or 0),4),"change":round(float(getattr(fi,"regular_market_price_change_percent",0) or 0),4)}
+                t=yf.Ticker(s)
+                fi=t.fast_info
+                price=float(fi.last_price or fi.previous_close or 0)
+                prev=float(fi.previous_close or price or 1)
+                change=round(((price-prev)/prev*100) if prev else 0,4)
+                out[s]={"price":round(price,4),"change":change}
             except Exception:
                 out[s]={"price":0,"change":0}
         return out
