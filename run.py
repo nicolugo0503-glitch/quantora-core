@@ -397,7 +397,17 @@ from fastapi.staticfiles import StaticFiles
 frontend_dir = BASE_DIR / "frontend"
 if frontend_dir.exists():
     try:
-        app.mount("/ui", StaticFiles(directory=str(frontend_dir), html=True), name="ui")
+        
+# Serve homepage with reveal/counter JS injected server-side
+_RFJS = ('<script>(function(){function sR(){var vh=window.innerHeight+500;document.querySelectorAll(".reveal").forEach(function(el){if(el.getBoundingClientRect().top<vh)el.classList.add("visible");});}if("IntersectionObserver"in window){var ro=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add("visible");});},{threshold:0,rootMargin:"400px 0px 0px 0px"});document.querySelectorAll(".reveal").forEach(function(el){ro.observe(el);});}setTimeout(sR,100);window.addEventListener("scroll",sR,{passive:true});function rC(el){if(el._d)return;el._d=1;var t=parseInt(el.dataset.val||0),d=1800,t0=null;(function s(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/d,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(t*e);if(p<1)requestAnimationFrame(s);else el.textContent=t;})(performance.now());}function cC(){var vh=window.innerHeight+200;document.querySelectorAll(".js-counter").forEach(function(el){var r=el.getBoundingClientRect();if(r.top<vh&&r.top>-500)rC(el);});}setTimeout(cC,150);window.addEventListener("scroll",cC,{passive:true});})();<\/script>')
+
+@app.get("/", response_class=HTMLResponse)
+async def serve_index():
+    with open("frontend/index.html", "r", encoding="utf-8") as f:
+        html = f.read()
+    return html.replace("</body>", _RFJS + "\n</body>")
+
+app.mount("/ui", StaticFiles(directory=str(frontend_dir), html=True), name="ui")
         logger.info(f"✅ Frontend served at /ui/ ({len(list(frontend_dir.glob('*.html')))} panels)")
     except Exception as e:
         logger.warning(f"Could not mount static files: {e}")
