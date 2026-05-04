@@ -397,7 +397,9 @@ from fastapi.staticfiles import StaticFiles
 frontend_dir = BASE_DIR / "frontend"
 if frontend_dir.exists():
     try:
-        
+        pass
+    except Exception:
+        pass
 import urllib.request as _ur
 import json as _jn
 _REVEAL='<script>(function(){function sR(){var v=window.innerHeight+500;document.querySelectorAll(".reveal").forEach(function(e){if(e.getBoundingClientRect().top<v)e.classList.add("visible");});}if("IntersectionObserver"in window){var ro=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add("visible");});},{threshold:0,rootMargin:"400px 0px 0px 0px"});document.querySelectorAll(".reveal").forEach(function(e){ro.observe(e);});}setTimeout(sR,100);window.addEventListener("scroll",sR,{passive:true});function rC(el){if(el._d)return;el._d=1;var t=parseInt(el.dataset.val||0),d=1800,t0=null;(function s(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/d,1),e2=1-Math.pow(1-p,3);el.textContent=Math.round(t*e2);if(p<1)requestAnimationFrame(s);else el.textContent=t;})(performance.now());}function cC(){var v=window.innerHeight+200;document.querySelectorAll(".js-counter").forEach(function(el){var r=el.getBoundingClientRect();if(r.top<v&&r.top>-500)rC(el);});}setTimeout(cC,150);window.addEventListener("scroll",cC,{passive:true});})();</script>'
