@@ -398,15 +398,27 @@ frontend_dir = BASE_DIR / "frontend"
 if frontend_dir.exists():
     try:
         
-# Serve homepage with reveal/counter JS injected server-side
-_RFJS = ('<script>(function(){function sR(){var vh=window.innerHeight+500;document.querySelectorAll(".reveal").forEach(function(el){if(el.getBoundingClientRect().top<vh)el.classList.add("visible");});}if("IntersectionObserver"in window){var ro=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add("visible");});},{threshold:0,rootMargin:"400px 0px 0px 0px"});document.querySelectorAll(".reveal").forEach(function(el){ro.observe(el);});}setTimeout(sR,100);window.addEventListener("scroll",sR,{passive:true});function rC(el){if(el._d)return;el._d=1;var t=parseInt(el.dataset.val||0),d=1800,t0=null;(function s(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/d,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(t*e);if(p<1)requestAnimationFrame(s);else el.textContent=t;})(performance.now());}function cC(){var vh=window.innerHeight+200;document.querySelectorAll(".js-counter").forEach(function(el){var r=el.getBoundingClientRect();if(r.top<vh&&r.top>-500)rC(el);});}setTimeout(cC,150);window.addEventListener("scroll",cC,{passive:true});})();<\/script>')
-
-@app.get("/", response_class=HTMLResponse)
+import urllib.request as _ur
+import json as _jn
+_REVEAL='<script>(function(){function sR(){var v=window.innerHeight+500;document.querySelectorAll(".reveal").forEach(function(e){if(e.getBoundingClientRect().top<v)e.classList.add("visible");});}if("IntersectionObserver"in window){var ro=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add("visible");});},{threshold:0,rootMargin:"400px 0px 0px 0px"});document.querySelectorAll(".reveal").forEach(function(e){ro.observe(e);});}setTimeout(sR,100);window.addEventListener("scroll",sR,{passive:true});function rC(el){if(el._d)return;el._d=1;var t=parseInt(el.dataset.val||0),d=1800,t0=null;(function s(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/d,1),e2=1-Math.pow(1-p,3);el.textContent=Math.round(t*e2);if(p<1)requestAnimationFrame(s);else el.textContent=t;})(performance.now());}function cC(){var v=window.innerHeight+200;document.querySelectorAll(".js-counter").forEach(function(el){var r=el.getBoundingClientRect();if(r.top<v&&r.top>-500)rC(el);});}setTimeout(cC,150);window.addEventListener("scroll",cC,{passive:true});})();<\/script>'
+_TICKER='<script>(function(){var M={"BTC/USD":"BTC-USD","ETH/USD":"ETH-USD","GOLD":"GC=F","WTI":"CL=F","EURUSD":"EURUSD=X","GBPUSD":"GBPUSD=X","VIX":"^VIX"};function fmt(p){return p>=1000?"$"+p.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):p>=1?"$"+p.toFixed(2):"$"+p.toFixed(4);}function upd(data){document.querySelectorAll(".ticker-item").forEach(function(item){var s=item.querySelector(".ti-sym");if(!s)return;var sym=s.textContent.trim();var k=M[sym]||sym;var d=data[k];if(!d||!d.price)return;var pp=item.querySelector(".ti-price");var cc=item.querySelector(".ti-chg");if(pp)pp.textContent=fmt(d.price);if(cc){cc.textContent=(d.change>=0?"+":"")+d.change.toFixed(2)+"%";cc.className="ti-chg "+(d.change>=0?"pos":"neg");}});}function go(){fetch("/api/prices").then(function(r){return r.json();}).then(upd).catch(function(){});}setTimeout(go,800);setInterval(go,30000);})();<\/script>'
+@app.get("/",response_class=HTMLResponse)
 async def serve_index():
-    with open("frontend/index.html", "r", encoding="utf-8") as f:
-        html = f.read()
-    return html.replace("</body>", _RFJS + "\n</body>")
-
+    with open("frontend/index.html","r",encoding="utf-8") as f:
+        html=f.read()
+    return html.replace("</body>",_REVEAL+_TICKER+"\n</body>")
+_SYMS="AAPL,NVDA,TSLA,MSFT,GOOGL,META,SPY,QQQ,GC=F,CL=F,BTC-USD,ETH-USD,EURUSD=X,GBPUSD=X,^VIX"
+@app.get("/api/prices")
+async def get_prices():
+    url="https://query1.finance.yahoo.com/v7/finance/quote?symbols="+_SYMS+"&fields=regularMarketPrice,regularMarketChangePercent"
+    try:
+        req=_ur.Request(url,headers={"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"})
+        with _ur.urlopen(req,timeout=8) as r:
+            d=_jn.loads(r.read())
+        qs=d.get("quoteResponse",{}).get("result",[])
+        return {q["symbol"]:{"price":q.get("regularMarketPrice",0),"change":q.get("regularMarketChangePercent",0)} for q in qs}
+    except Exception as ex:
+        return {"error":str(ex)}
 app.mount("/ui", StaticFiles(directory=str(frontend_dir), html=True), name="ui")
         logger.info(f"✅ Frontend served at /ui/ ({len(list(frontend_dir.glob('*.html')))} panels)")
     except Exception as e:
