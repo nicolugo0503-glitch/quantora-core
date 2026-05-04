@@ -2004,5 +2004,14 @@ footer {
 
 })();
 </script>
+
+<script>
+(function(){
+  var ro=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:0.08,rootMargin:'0px 0px -20px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
+  function runCtr(el){var tgt=parseInt(el.dataset.val||'0',10),dur=2000,t0=null;(function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(tgt*e);if(p<1)requestAnimationFrame(step);else el.textContent=tgt;})(performance.now());}
+  var co=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){runCtr(e.target);co.unobserve(e.target);}});},{threshold:0.3});document.querySelectorAll('.js-counter').forEach(function(el){co.observe(el);});
+})();
+</script>
 </body>
 </html>
