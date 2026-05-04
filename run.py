@@ -384,12 +384,6 @@ logger.info("â Stripe billing endpoints registered (/api/billing/*)")
 #  EXISTING ROUTERS
 # âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
-try:
-    from backend.app.real_dashboard_router import router as live_router
-    app.include_router(live_router)
-    logger.info("â Live market-data router registered at /api/live/*")
-except Exception as e:
-    logger.warning(f"Could not load live dashboard router: {e}")
 
 # ââ Static file serving âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 from fastapi.staticfiles import StaticFiles
