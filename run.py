@@ -45,14 +45,13 @@ APP_URL                 = os.getenv("APP_URL", "https://web-production-fe9f5.up.
 API_MASTER_KEY          = os.getenv("API_MASTER_KEY", secrets.token_urlsafe(32))
 
 # ââ Import the main FastAPI app âââââââââââââââââââââââââââââââââââââââââââââââ
-logger.info("Loading Quantora backendâ¦")
-try:
-    from backend.app.main import app
-    logger.info("â Main app loaded")
-except Exception as e:
-    logger.error(f"Failed to import main app: {e}")
-    from fastapi import FastAPI
-    app = FastAPI(title="Quantora â degraded mode")
+from fastapi import FastAPI
+app = FastAPI(
+    title="Quantora Financial Intelligence OS",
+    description="Real-time financial intelligence platform",
+    version="4.0.0",
+)
+logger.info("✅ FastAPI app initialized (clean instance, no backend lifespan)")
 
 # ââ FastAPI / Starlette imports âââââââââââââââââââââââââââââââââââââââââââââââ
 from fastapi import Request, HTTPException, Header, Depends
@@ -61,7 +60,6 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.middleware.cors import CORSMiddleware
 
 # ââ CORS ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-app.middleware_stack = None
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
