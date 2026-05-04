@@ -1,5 +1,5 @@
 """
-Quantora Financial Intelligence OS — Production Entry Point
+Quantora Financial Intelligence OS â Production Entry Point
 ===========================================================
 This file is the single entry-point used by Railway (and any other host).
 It imports the existing FastAPI app from backend/app/main.py, then:
@@ -26,7 +26,7 @@ from pathlib import Path
 from typing import Optional
 from collections import defaultdict
 
-# ── Path setup ────────────────────────────────────────────────────────────────
+# ââ Path setup ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 BASE_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(BASE_DIR))
 
@@ -36,7 +36,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger("quantora.run")
 
-# ── Environment ───────────────────────────────────────────────────────────────
+# ââ Environment âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 STRIPE_SECRET_KEY       = os.getenv("STRIPE_SECRET_KEY", "")
 STRIPE_WEBHOOK_SECRET   = os.getenv("STRIPE_WEBHOOK_SECRET", "")
 STRIPE_PRO_PRICE_ID     = os.getenv("STRIPE_PRO_PRICE_ID", "")
@@ -44,23 +44,23 @@ STRIPE_ENT_PRICE_ID     = os.getenv("STRIPE_ENT_PRICE_ID", "")
 APP_URL                 = os.getenv("APP_URL", "https://web-production-fe9f5.up.railway.app")
 API_MASTER_KEY          = os.getenv("API_MASTER_KEY", secrets.token_urlsafe(32))
 
-# ── Import the main FastAPI app ───────────────────────────────────────────────
-logger.info("Loading Quantora backend…")
+# ââ Import the main FastAPI app âââââââââââââââââââââââââââââââââââââââââââââââ
+logger.info("Loading Quantora backendâ¦")
 try:
     from backend.app.main import app
-    logger.info("✅ Main app loaded")
+    logger.info("â Main app loaded")
 except Exception as e:
     logger.error(f"Failed to import main app: {e}")
     from fastapi import FastAPI
-    app = FastAPI(title="Quantora — degraded mode")
+    app = FastAPI(title="Quantora â degraded mode")
 
-# ── FastAPI / Starlette imports ───────────────────────────────────────────────
+# ââ FastAPI / Starlette imports âââââââââââââââââââââââââââââââââââââââââââââââ
 from fastapi import Request, HTTPException, Header, Depends
 from fastapi.responses import JSONResponse, HTMLResponse, RedirectResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.middleware.cors import CORSMiddleware
 
-# ── CORS ──────────────────────────────────────────────────────────────────────
+# ââ CORS ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 app.middleware_stack = None
 app.add_middleware(
     CORSMiddleware,
@@ -69,20 +69,20 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-logger.info("✅ CORS configured (allow *)")
+logger.info("â CORS configured (allow *)")
 
-# ═══════════════════════════════════════════════════════════════════════════════
+# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 #  RATE LIMITING
 #  In-process token-bucket per (api_key OR IP), no Redis required.
 #  Tier limits (requests / 60 s window):
-#    free       →   60
-#    pro        →  600
-#    enterprise → 6000
-# ═══════════════════════════════════════════════════════════════════════════════
+#    free       â   60
+#    pro        â  600
+#    enterprise â 6000
+# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
 TIER_LIMITS = {"free": 60, "pro": 600, "enterprise": 6000}
 
-# In-memory store: key → {"tokens": float, "last_refill": float, "tier": str}
+# In-memory store: key â {"tokens": float, "last_refill": float, "tier": str}
 _rate_store: dict = defaultdict(lambda: None)
 
 def _get_bucket(client_id: str, tier: str) -> dict:
@@ -122,7 +122,7 @@ def _check_rate(client_id: str, tier: str) -> tuple[bool, dict]:
         "Retry-After": str(reset_in),
     }
 
-# ── API-key → tier lookup (in-memory, upgraded by Stripe webhook) ─────────────
+# ââ API-key â tier lookup (in-memory, upgraded by Stripe webhook) âââââââââââââ
 # Structure: { api_key: {"tier": str, "customer_id": str, "email": str} }
 _api_keys: dict = {}
 
@@ -181,11 +181,11 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         return response
 
 app.add_middleware(RateLimitMiddleware)
-logger.info("✅ Rate limiting middleware registered (free/pro/enterprise)")
+logger.info("â Rate limiting middleware registered (free/pro/enterprise)")
 
-# ═══════════════════════════════════════════════════════════════════════════════
+# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 #  STRIPE BILLING
-# ═══════════════════════════════════════════════════════════════════════════════
+# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
 def _stripe_available() -> bool:
     try:
@@ -194,7 +194,7 @@ def _stripe_available() -> bool:
     except ImportError:
         return False
 
-# ── /api/billing/create-checkout ─────────────────────────────────────────────
+# ââ /api/billing/create-checkout âââââââââââââââââââââââââââââââââââââââââââââ
 @app.post("/api/billing/create-checkout", tags=["billing"])
 async def create_checkout(request: Request):
     """
@@ -230,7 +230,7 @@ async def create_checkout(request: Request):
         logger.error(f"Stripe checkout error: {e}")
         raise HTTPException(500, str(e))
 
-# ── /api/billing/portal ───────────────────────────────────────────────────────
+# ââ /api/billing/portal âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 @app.post("/api/billing/portal", tags=["billing"])
 async def billing_portal(request: Request):
     """
@@ -257,7 +257,7 @@ async def billing_portal(request: Request):
     except stripe.error.StripeError as e:
         raise HTTPException(500, str(e))
 
-# ── /api/billing/webhook ──────────────────────────────────────────────────────
+# ââ /api/billing/webhook ââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 @app.post("/api/billing/webhook", tags=["billing"])
 async def stripe_webhook(request: Request):
     """
@@ -302,7 +302,7 @@ def _handle_checkout_complete(session: dict):
     plan = session.get("metadata", {}).get("plan", "pro")
     tier = "enterprise" if plan == "enterprise" else "pro"
     api_key = _provision_api_key(customer_id, customer_email, tier)
-    logger.info(f"✅ New subscription: {customer_email} → {tier} (key: {api_key[:8]}…)")
+    logger.info(f"â New subscription: {customer_email} â {tier} (key: {api_key[:8]}â¦)")
 
 def _handle_subscription_update(sub: dict):
     customer_id = sub.get("customer", "")
@@ -314,7 +314,7 @@ def _handle_subscription_update(sub: dict):
         for key, info in _api_keys.items():
             if info.get("customer_id") == customer_id:
                 info["tier"] = tier
-                logger.info(f"Updated key tier → {tier} for customer {customer_id}")
+                logger.info(f"Updated key tier â {tier} for customer {customer_id}")
                 return
         _provision_api_key(customer_id, "", tier)
     elif status in ("canceled", "unpaid", "past_due"):
@@ -341,10 +341,10 @@ def _downgrade_to_free(customer_id: str):
     for key, info in _api_keys.items():
         if info.get("customer_id") == customer_id:
             info["tier"] = "free"
-            logger.info(f"Downgraded customer {customer_id} → free")
+            logger.info(f"Downgraded customer {customer_id} â free")
             return
 
-# ── /api/billing/status ───────────────────────────────────────────────────────
+# ââ /api/billing/status âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 @app.get("/api/billing/status", tags=["billing"])
 async def billing_status(request: Request):
     """Return current subscription tier for the calling API key."""
@@ -361,7 +361,7 @@ async def billing_status(request: Request):
         "upgrade_url": f"{APP_URL}/pricing" if tier == "free" else None,
     })
 
-# ── /api/billing/issue-key (admin) ───────────────────────────────────────────
+# ââ /api/billing/issue-key (admin) âââââââââââââââââââââââââââââââââââââââââââ
 @app.post("/api/billing/issue-key", tags=["billing"])
 async def issue_api_key(request: Request, x_master_key: Optional[str] = Header(None)):
     """
@@ -378,20 +378,20 @@ async def issue_api_key(request: Request, x_master_key: Optional[str] = Header(N
     new_key = _provision_api_key(customer_id, email, tier)
     return JSONResponse({"api_key": new_key, "tier": tier, "email": email})
 
-logger.info("✅ Stripe billing endpoints registered (/api/billing/*)")
+logger.info("â Stripe billing endpoints registered (/api/billing/*)")
 
-# ═══════════════════════════════════════════════════════════════════════════════
+# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 #  EXISTING ROUTERS
-# ═══════════════════════════════════════════════════════════════════════════════
+# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
 try:
     from backend.app.real_dashboard_router import router as live_router
     app.include_router(live_router)
-    logger.info("✅ Live market-data router registered at /api/live/*")
+    logger.info("â Live market-data router registered at /api/live/*")
 except Exception as e:
     logger.warning(f"Could not load live dashboard router: {e}")
 
-# ── Static file serving ───────────────────────────────────────────────────────
+# ââ Static file serving âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 from fastapi.staticfiles import StaticFiles
 
 frontend_dir = BASE_DIR / "frontend"
@@ -400,8 +400,8 @@ if frontend_dir.exists():
         
 import urllib.request as _ur
 import json as _jn
-_REVEAL='<script>(function(){function sR(){var v=window.innerHeight+500;document.querySelectorAll(".reveal").forEach(function(e){if(e.getBoundingClientRect().top<v)e.classList.add("visible");});}if("IntersectionObserver"in window){var ro=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add("visible");});},{threshold:0,rootMargin:"400px 0px 0px 0px"});document.querySelectorAll(".reveal").forEach(function(e){ro.observe(e);});}setTimeout(sR,100);window.addEventListener("scroll",sR,{passive:true});function rC(el){if(el._d)return;el._d=1;var t=parseInt(el.dataset.val||0),d=1800,t0=null;(function s(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/d,1),e2=1-Math.pow(1-p,3);el.textContent=Math.round(t*e2);if(p<1)requestAnimationFrame(s);else el.textContent=t;})(performance.now());}function cC(){var v=window.innerHeight+200;document.querySelectorAll(".js-counter").forEach(function(el){var r=el.getBoundingClientRect();if(r.top<v&&r.top>-500)rC(el);});}setTimeout(cC,150);window.addEventListener("scroll",cC,{passive:true});})();<\/script>'
-_TICKER='<script>(function(){var M={"BTC/USD":"BTC-USD","ETH/USD":"ETH-USD","GOLD":"GC=F","WTI":"CL=F","EURUSD":"EURUSD=X","GBPUSD":"GBPUSD=X","VIX":"^VIX"};function fmt(p){return p>=1000?"$"+p.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):p>=1?"$"+p.toFixed(2):"$"+p.toFixed(4);}function upd(data){document.querySelectorAll(".ticker-item").forEach(function(item){var s=item.querySelector(".ti-sym");if(!s)return;var sym=s.textContent.trim();var k=M[sym]||sym;var d=data[k];if(!d||!d.price)return;var pp=item.querySelector(".ti-price");var cc=item.querySelector(".ti-chg");if(pp)pp.textContent=fmt(d.price);if(cc){cc.textContent=(d.change>=0?"+":"")+d.change.toFixed(2)+"%";cc.className="ti-chg "+(d.change>=0?"pos":"neg");}});}function go(){fetch("/api/prices").then(function(r){return r.json();}).then(upd).catch(function(){});}setTimeout(go,800);setInterval(go,30000);})();<\/script>'
+_REVEAL='<script>(function(){function sR(){var v=window.innerHeight+500;document.querySelectorAll(".reveal").forEach(function(e){if(e.getBoundingClientRect().top<v)e.classList.add("visible");});}if("IntersectionObserver"in window){var ro=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add("visible");});},{threshold:0,rootMargin:"400px 0px 0px 0px"});document.querySelectorAll(".reveal").forEach(function(e){ro.observe(e);});}setTimeout(sR,100);window.addEventListener("scroll",sR,{passive:true});function rC(el){if(el._d)return;el._d=1;var t=parseInt(el.dataset.val||0),d=1800,t0=null;(function s(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/d,1),e2=1-Math.pow(1-p,3);el.textContent=Math.round(t*e2);if(p<1)requestAnimationFrame(s);else el.textContent=t;})(performance.now());}function cC(){var v=window.innerHeight+200;document.querySelectorAll(".js-counter").forEach(function(el){var r=el.getBoundingClientRect();if(r.top<v&&r.top>-500)rC(el);});}setTimeout(cC,150);window.addEventListener("scroll",cC,{passive:true});})();</script>'
+_TICKER='<script>(function(){var M={"BTC/USD":"BTC-USD","ETH/USD":"ETH-USD","GOLD":"GC=F","WTI":"CL=F","EURUSD":"EURUSD=X","GBPUSD":"GBPUSD=X","VIX":"^VIX"};function fmt(p){return p>=1000?"$"+p.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):p>=1?"$"+p.toFixed(2):"$"+p.toFixed(4);}function upd(data){document.querySelectorAll(".ticker-item").forEach(function(item){var s=item.querySelector(".ti-sym");if(!s)return;var sym=s.textContent.trim();var k=M[sym]||sym;var d=data[k];if(!d||!d.price)return;var pp=item.querySelector(".ti-price");var cc=item.querySelector(".ti-chg");if(pp)pp.textContent=fmt(d.price);if(cc){cc.textContent=(d.change>=0?"+":"")+d.change.toFixed(2)+"%";cc.className="ti-chg "+(d.change>=0?"pos":"neg");}});}function go(){fetch("/api/prices").then(function(r){return r.json();}).then(upd).catch(function(){});}setTimeout(go,800);setInterval(go,30000);})();</script>'
 @app.get("/",response_class=HTMLResponse)
 async def serve_index():
     with open("frontend/index.html","r",encoding="utf-8") as f:
@@ -420,13 +420,13 @@ async def get_prices():
     except Exception as ex:
         return {"error":str(ex)}
 app.mount("/ui", StaticFiles(directory=str(frontend_dir), html=True), name="ui")
-        logger.info(f"✅ Frontend served at /ui/ ({len(list(frontend_dir.glob('*.html')))} panels)")
+        logger.info(f"â Frontend served at /ui/ ({len(list(frontend_dir.glob('*.html')))} panels)")
     except Exception as e:
         logger.warning(f"Could not mount static files: {e}")
 else:
-    logger.warning("frontend/ directory not found — UI panels unavailable")
+    logger.warning("frontend/ directory not found â UI panels unavailable")
 
-# ── Pricing page ──────────────────────────────────────────────────────────────
+# ââ Pricing page ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 @app.get("/pricing", response_class=HTMLResponse, tags=["pages"])
 def pricing_page():
     p = frontend_dir / "pricing.html"
@@ -434,7 +434,7 @@ def pricing_page():
         return HTMLResponse(content=p.read_text(encoding="utf-8"))
     return RedirectResponse("/ui/pricing.html")
 
-# ── Dashboard page ────────────────────────────────────────────────────────────
+# ââ Dashboard page ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 @app.get("/dashboard", response_class=HTMLResponse, tags=["pages"])
 def dashboard_page():
     p = frontend_dir / "dashboard.html"
@@ -442,7 +442,7 @@ def dashboard_page():
         return HTMLResponse(content=p.read_text(encoding="utf-8"))
     return RedirectResponse("/ui/dashboard.html")
 
-# ── Health endpoint ───────────────────────────────────────────────────────────
+# ââ Health endpoint âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 @app.get("/health", tags=["system"])
 def health():
     return JSONResponse({
@@ -453,7 +453,7 @@ def health():
         "active_api_keys": len(_api_keys),
     })
 
-# ── Landing page ──────────────────────────────────────────────────────────────
+# ââ Landing page ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 @app.get("/", response_class=HTMLResponse, tags=["system"])
 def root():
     index_path = frontend_dir / "index.html"
@@ -461,26 +461,26 @@ def root():
         return HTMLResponse(content=index_path.read_text(encoding="utf-8"), status_code=200)
     return HTMLResponse(content=_landing_html(), status_code=200)
 
-# ── Startup hook ──────────────────────────────────────────────────────────────
+# ââ Startup hook ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 @app.on_event("startup")
 async def on_startup():
-    logger.info("Running Quantora startup initialization…")
+    logger.info("Running Quantora startup initializationâ¦")
     try:
         from backend.app.startup import initialize_state
         await asyncio.get_event_loop().run_in_executor(None, initialize_state)
-        logger.info("✅ State initialization complete")
+        logger.info("â State initialization complete")
     except Exception as e:
         logger.warning(f"State init warning (non-fatal): {e}")
 
     if STRIPE_SECRET_KEY:
-        logger.info("✅ Stripe billing ACTIVE")
+        logger.info("â Stripe billing ACTIVE")
     else:
-        logger.warning("⚠️  STRIPE_SECRET_KEY not set — billing endpoints in stub mode")
+        logger.warning("â ï¸  STRIPE_SECRET_KEY not set â billing endpoints in stub mode")
 
-    logger.info(f"✅ Rate limits → free:{TIER_LIMITS['free']}/min  pro:{TIER_LIMITS['pro']}/min  enterprise:{TIER_LIMITS['enterprise']}/min")
+    logger.info(f"â Rate limits â free:{TIER_LIMITS['free']}/min  pro:{TIER_LIMITS['pro']}/min  enterprise:{TIER_LIMITS['enterprise']}/min")
 
 
-# ─────────────────────────────────────────────────────────────────────────────
+# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 def _landing_html() -> str:
     return """<!DOCTYPE html>
 <html lang="en">
@@ -515,19 +515,19 @@ def _landing_html() -> str:
   <div class="badge" style="color:#10b981;border-color:#10b98140;background:#10b98110;">DEPLOYED</div>
 </div>
 <div class="status-bar">
-  <span class="live" id="mktstatus">⬤ Loading market status…</span>
-  <span id="mkttime">—</span>
+  <span class="live" id="mktstatus">â¬¤ Loading market statusâ¦</span>
+  <span id="mkttime">â</span>
   <span>Real data: Yahoo Finance + CoinGecko</span>
 </div>
 <div class="main">
-  <h2>⚡ Quantora Financial Intelligence OS</h2>
+  <h2>â¡ Quantora Financial Intelligence OS</h2>
   <p style="color:var(--muted);font-size:0.9rem;margin-bottom:2rem;">
     Visit <a href="/pricing" style="color:var(--accent);">/pricing</a> to get an API key,
     or <a href="/dashboard" style="color:var(--accent);">/dashboard</a> to access your workspace.
     Full API docs at <a href="/docs" style="color:var(--accent);">/docs</a>.
   </p>
 </div>
-<footer>Quantora Financial Intelligence OS &nbsp;·&nbsp; Real market data via Yahoo Finance &amp; CoinGecko</footer>
+<footer>Quantora Financial Intelligence OS &nbsp;Â·&nbsp; Real market data via Yahoo Finance &amp; CoinGecko</footer>
 <script>
 const BASE = window.location.origin;
 async function loadStatus() {
@@ -536,7 +536,7 @@ async function loadStatus() {
     const d = await r.json();
     const el = document.getElementById('mktstatus');
     const isOpen = d.status === 'OPEN';
-    el.textContent = (isOpen ? '⬤ US Market OPEN' : '◯ US Market ' + d.status);
+    el.textContent = (isOpen ? 'â¬¤ US Market OPEN' : 'â¯ US Market ' + d.status);
     el.style.color = isOpen ? 'var(--green)' : 'var(--muted)';
   } catch(e) {}
   document.getElementById('mkttime').textContent = new Date().toUTCString();
