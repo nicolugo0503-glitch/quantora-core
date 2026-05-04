@@ -3,1274 +3,2006 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quantora — AI-Governed Capital Intelligence</title>
-<meta name="description" content="The financial intelligence operating system for disciplined capital deployment. Execution, risk, governance, and performance — unified.">
+<title>Quantora — The Institutional Capital Intelligence OS</title>
+<meta name="description" content="Quantora monitors $2.4T in assets across 180 exchanges. 847 proprietary alpha signals. Sub-millisecond execution. The OS that institutional capital runs on.">
+<meta property="og:title" content="Quantora — Institutional Capital Intelligence">
+<meta property="og:description" content="The operating system that institutional capital runs on.">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#050911;
-  --bg2:#070d1a;
-  --bg3:#0a1220;
-  --card:#0c1526;
-  --card2:#0f1c30;
-  --border:#1a2d4a;
-  --border2:#243d5e;
-  --cyan:#00d4ff;
-  --cyan2:#00a8cc;
-  --cyan-dim:rgba(0,212,255,0.12);
-  --cyan-glow:rgba(0,212,255,0.06);
-  --green:#10b981;
-  --green-dim:rgba(16,185,129,0.12);
-  --gold:#f59e0b;
-  --gold-dim:rgba(245,158,11,0.12);
-  --purple:#7b2fff;
-  --purple-dim:rgba(123,47,255,0.12);
-  --exec:#ff6b2b;
-  --exec-dim:rgba(255,107,43,0.12);
-  --red:#ef4444;
-  --text:#f0f4f8;
-  --text2:#8fa3bc;
-  --text3:#4d6480;
-  --muted:#2d4a6b;
-  --radius:8px;
-  --radius-lg:14px;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-0: #05050A;
+  --bg-1: #080810;
+  --bg-2: #0D0D18;
+  --bg-3: #121220;
+  --bg-4: #181828;
+  --gold-0: #8B5E20;
+  --gold-1: #C9963B;
+  --gold-2: #E8B865;
+  --gold-3: #FFD27F;
+  --gold-4: #FFF0C0;
+  --blue-0: #1E3A8A;
+  --blue-1: #2563EB;
+  --blue-2: #3B82F6;
+  --blue-3: #60A5FA;
+  --cyan: #06B6D4;
+  --green: #10B981;
+  --red: #EF4444;
+  --white: #F8FAFC;
+  --gray-1: #E2E8F0;
+  --gray-2: #94A3B8;
+  --gray-3: #64748B;
+  --gray-4: #334155;
+  --gray-5: #1E293B;
+  --border: rgba(255,255,255,0.07);
+  --border-gold: rgba(201,150,59,0.25);
+  --glow-gold: rgba(201,150,59,0.15);
+  --glow-blue: rgba(59,130,246,0.15);
+  --radius: 12px;
+  --radius-lg: 20px;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --nav-h: 72px;
 }
-html{scroll-behavior:smooth;font-size:16px}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Inter',sans-serif;
-  line-height:1.6;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-0);
+  color: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ── SCROLLBAR ── */
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-0); }
+::-webkit-scrollbar-thumb { background: var(--gold-1); border-radius: 2px; }
 
-/* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:999;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 48px;height:68px;
-  background:rgba(5,9,17,0.85);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid transparent;
-  transition:border-color .3s,background .3s;
+/* ── SELECTION ── */
+::selection { background: rgba(201,150,59,0.3); color: var(--white); }
+
+/* ── UTILITY ── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--gold-2) 0%, var(--gold-3) 50%, var(--gold-2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
-nav.scrolled{border-bottom-color:var(--border);background:rgba(5,9,17,0.97)}
-.nav-logo{
-  display:flex;align-items:center;gap:10px;
-  font-size:1.1rem;font-weight:800;letter-spacing:.06em;
-  color:var(--text);text-decoration:none;
+.gradient-text-blue {
+  background: linear-gradient(135deg, var(--blue-3) 0%, var(--cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
-.nav-logo-hex{
-  width:28px;height:28px;
-  background:var(--cyan);
-  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.55rem;font-weight:900;color:var(--bg);
+.tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px; border-radius: 100px;
+  border: 1px solid var(--border-gold);
+  background: rgba(201,150,59,0.08);
+  color: var(--gold-2); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
 }
-.nav-links{display:flex;align-items:center;gap:36px}
-.nav-links a{
-  font-size:.82rem;font-weight:500;letter-spacing:.04em;
-  color:var(--text2);text-decoration:none;
-  transition:color .2s;
-  text-transform:uppercase;
+.tag::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold-2);
+  box-shadow: 0 0 8px var(--gold-2);
+  animation: pulse-dot 2s ease-in-out infinite;
 }
-.nav-links a:hover{color:var(--text)}
-.nav-actions{display:flex;align-items:center;gap:12px}
-.nav-actions a{
-  font-size:.82rem;font-weight:600;letter-spacing:.04em;
-  text-decoration:none;transition:all .2s;
+@keyframes pulse-dot {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:0.5; transform:scale(0.7); }
 }
-.btn-ghost{color:var(--text2);padding:8px 16px}
-.btn-ghost:hover{color:var(--text)}
-.btn-nav-cta{
-  background:var(--cyan);color:var(--bg);
-  padding:9px 20px;border-radius:6px;
+
+.tag-blue {
+  border-color: rgba(59,130,246,0.25);
+  background: rgba(59,130,246,0.08);
+  color: var(--blue-3);
 }
-.btn-nav-cta:hover{background:#1de3ff;transform:translateY(-1px)}
+.tag-blue::before { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+
+.section-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold-1);
+}
+
+.divider {
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+/* ── NAVIGATION ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--nav-h); z-index: 1000;
+  display: flex; align-items: center;
+  padding: 0 48px;
+  background: rgba(5,5,10,0.8);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
+nav.scrolled {
+  background: rgba(5,5,10,0.95);
+  border-bottom-color: rgba(201,150,59,0.15);
+}
+
+.nav-logo {
+  font-family: var(--font-body); font-weight: 800; font-size: 22px;
+  letter-spacing: -0.02em; color: var(--white);
+  text-decoration: none; flex-shrink: 0;
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-logo-mark {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--gold-1), var(--gold-3));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 900; color: var(--bg-0);
+  flex-shrink: 0;
+}
+.nav-logo span { color: var(--gold-2); }
+
+.nav-links {
+  display: flex; align-items: center; gap: 2px;
+  margin-left: 48px; flex: 1;
+}
+.nav-links a {
+  color: var(--gray-2); text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  padding: 8px 16px; border-radius: 8px;
+  transition: all 0.2s;
+}
+.nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+
+.nav-right {
+  display: flex; align-items: center; gap: 12px;
+}
+.btn-ghost {
+  color: var(--gray-2); background: none; border: none;
+  font-family: var(--font-body); font-size: 14px; font-weight: 500;
+  cursor: pointer; padding: 8px 16px; border-radius: 8px;
+  transition: all 0.2s; text-decoration: none; display: inline-block;
+}
+.btn-ghost:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, var(--gold-1) 0%, var(--gold-2) 100%);
+  color: var(--bg-0); font-family: var(--font-body);
+  font-size: 13px; font-weight: 700; letter-spacing: 0.02em;
+  padding: 10px 22px; border-radius: 8px; border: none;
+  cursor: pointer; text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(201,150,59,0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 30px rgba(201,150,59,0.4);
+  filter: brightness(1.05);
+}
+
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.04);
+  color: var(--white); font-family: var(--font-body);
+  font-size: 14px; font-weight: 600;
+  padding: 12px 28px; border-radius: 10px;
+  border: 1px solid var(--border);
+  cursor: pointer; text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.15);
+  transform: translateY(-1px);
+}
 
 /* ── HERO ── */
-.hero{
-  min-height:100vh;
-  display:flex;flex-direction:column;justify-content:center;
-  padding:120px 80px 80px;
-  position:relative;overflow:hidden;
-}
-.hero-grid-bg{
-  position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(0,212,255,0.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,212,255,0.04) 1px,transparent 1px);
-  background-size:72px 72px;
-  mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,black 0%,transparent 100%);
-}
-.hero-glow{
-  position:absolute;top:-200px;left:50%;transform:translateX(-50%);
-  width:900px;height:700px;
-  background:radial-gradient(ellipse,rgba(0,212,255,0.07) 0%,transparent 70%);
-  pointer-events:none;
-}
-.hero-inner{
-  max-width:1280px;margin:0 auto;width:100%;
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:80px;align-items:center;
-  position:relative;z-index:1;
-}
-.hero-left{}
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--cyan-dim);border:1px solid rgba(0,212,255,0.2);
-  padding:6px 14px;border-radius:4px;
-  font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--cyan);margin-bottom:28px;
-}
-.hero-eyebrow-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--cyan);animation:pulse-dot 2s infinite;
-}
-@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
-.hero-h1{
-  font-size:clamp(2.6rem,4.5vw,4.2rem);
-  font-weight:900;line-height:1.08;letter-spacing:-.02em;
-  color:var(--text);margin-bottom:10px;
-}
-.hero-h1 em{
-  font-style:normal;
-  background:linear-gradient(135deg,var(--cyan),#7b9fff);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-.hero-sub-headline{
-  font-size:clamp(1.1rem,1.8vw,1.4rem);
-  font-weight:400;color:var(--text2);
-  margin-bottom:20px;line-height:1.5;
-}
-.hero-desc{
-  font-size:.95rem;color:var(--text3);
-  max-width:480px;line-height:1.7;margin-bottom:40px;
-}
-.hero-ctas{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.btn-primary{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--cyan);color:var(--bg);
-  padding:14px 28px;border-radius:8px;
-  font-size:.9rem;font-weight:700;letter-spacing:.02em;
-  text-decoration:none;transition:all .25s;
-}
-.btn-primary:hover{background:#1de3ff;transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,212,255,.25)}
-.btn-secondary{
-  display:inline-flex;align-items:center;gap:8px;
-  background:transparent;color:var(--text2);
-  padding:14px 28px;border-radius:8px;border:1px solid var(--border2);
-  font-size:.9rem;font-weight:600;
-  text-decoration:none;transition:all .25s;
-}
-.btn-secondary:hover{color:var(--text);border-color:var(--text3)}
-.hero-trust{
-  display:flex;align-items:center;gap:24px;
-  margin-top:40px;padding-top:32px;
-  border-top:1px solid var(--border);
-}
-.hero-trust-item{
-  display:flex;align-items:center;gap:8px;
-  font-size:.78rem;color:var(--text3);font-weight:500;
-}
-.hero-trust-item svg{width:14px;height:14px;color:var(--green)}
-
-/* ── COCKPIT PREVIEW ── */
-.hero-right{position:relative}
-.cockpit{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:var(--radius-lg);
-  overflow:hidden;
-  box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 0 1px rgba(0,212,255,.06);
-}
-.cockpit-bar{
-  background:var(--bg3);
-  padding:12px 18px;
-  display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid var(--border);
-}
-.cockpit-dots{display:flex;gap:6px}
-.cockpit-dots span{
-  width:10px;height:10px;border-radius:50%;
-}
-.dot-r{background:#ef4444}.dot-y{background:#f59e0b}.dot-g{background:#10b981}
-.cockpit-label{
-  font-family:'JetBrains Mono',monospace;
-  font-size:.65rem;color:var(--text3);letter-spacing:.08em;
-}
-.cockpit-status{
-  display:flex;align-items:center;gap:6px;
-  font-size:.65rem;font-weight:600;color:var(--green);
-  font-family:'JetBrains Mono',monospace;
-}
-.status-live-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--green);animation:pulse-dot 1.5s infinite;
-}
-.cockpit-body{padding:18px}
-.cockpit-stats{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:10px;margin-bottom:14px;
-}
-.c-stat{
-  background:var(--bg3);border:1px solid var(--border);
-  border-radius:6px;padding:12px;
-}
-.c-stat-label{font-size:.6rem;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
-.c-stat-val{font-size:1.05rem;font-weight:700;font-family:'JetBrains Mono',monospace}
-.c-stat-val.green{color:var(--green)}
-.c-stat-val.cyan{color:var(--cyan)}
-.c-stat-val.gold{color:var(--gold)}
-.cockpit-chart{
-  background:var(--bg3);border:1px solid var(--border);
-  border-radius:6px;padding:14px;margin-bottom:14px;
-}
-.chart-header{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:12px;
-}
-.chart-title{font-size:.7rem;color:var(--text2);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
-.chart-badge{
-  font-size:.6rem;font-family:'JetBrains Mono',monospace;
-  color:var(--green);background:var(--green-dim);
-  padding:2px 8px;border-radius:3px;
-}
-.chart-svg{width:100%;height:80px}
-.cockpit-panels{
-  display:grid;grid-template-columns:1fr 1fr;gap:10px;
-}
-.c-panel{
-  background:var(--bg3);border:1px solid var(--border);
-  border-radius:6px;padding:12px;
-}
-.c-panel-row{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:6px;
-}
-.c-panel-row:last-child{margin-bottom:0}
-.c-panel-key{font-size:.62rem;color:var(--text3)}
-.c-panel-val{font-size:.7rem;font-weight:600;font-family:'JetBrains Mono',monospace}
-.c-panel-val.green{color:var(--green)}
-.c-panel-val.cyan{color:var(--cyan)}
-.c-panel-val.gold{color:var(--gold)}
-.cockpit-certified{
-  margin-top:10px;
-  background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);
-  border-radius:6px;padding:10px 14px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.cert-left{display:flex;align-items:center;gap:8px}
-.cert-icon{font-size:.9rem}
-.cert-text{font-size:.68rem;font-weight:600;color:var(--green);letter-spacing:.04em}
-.cert-sub{font-size:.6rem;color:var(--text3)}
-.cert-score{
-  font-family:'JetBrains Mono',monospace;font-size:1rem;
-  font-weight:700;color:var(--green);
+#hero {
+  position: relative; min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: calc(var(--nav-h) + 60px) 48px 0;
+  overflow: hidden;
+  text-align: center;
 }
 
-/* ── SECTION WRAPPER ── */
-.section{padding:100px 80px}
-.section-inner{max-width:1280px;margin:0 auto}
-.section-eyebrow{
-  font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--cyan);margin-bottom:16px;
-  display:flex;align-items:center;gap:10px;
-}
-.section-eyebrow::before{
-  content:'';display:block;width:28px;height:1px;background:var(--cyan);
-}
-.section-title{
-  font-size:clamp(1.9rem,3vw,2.8rem);
-  font-weight:800;line-height:1.15;letter-spacing:-.02em;
-  color:var(--text);margin-bottom:16px;
-}
-.section-desc{
-  font-size:1rem;color:var(--text2);max-width:560px;line-height:1.75;
+#hero-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
 }
 
-/* ── IDENTITY ── */
-.identity{background:var(--bg2)}
-.identity-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:80px;align-items:center;
-  margin-top:60px;
+.hero-glow-1 {
+  position: absolute; width: 800px; height: 800px;
+  border-radius: 50%; top: -200px; left: 50%; transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(201,150,59,0.06) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
 }
-.identity-left .big-statement{
-  font-size:clamp(1.6rem,2.5vw,2.2rem);
-  font-weight:800;line-height:1.3;
-  letter-spacing:-.02em;color:var(--text);
-  margin-bottom:32px;
+.hero-glow-2 {
+  position: absolute; width: 600px; height: 600px;
+  border-radius: 50%; bottom: 10%; left: 10%;
+  background: radial-gradient(circle, rgba(59,130,246,0.05) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
 }
-.identity-left .big-statement span{color:var(--cyan)}
-.identity-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.identity-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:var(--radius);padding:22px;
-  transition:border-color .25s,transform .25s;
+.hero-glow-3 {
+  position: absolute; width: 400px; height: 400px;
+  border-radius: 50%; bottom: 20%; right: 10%;
+  background: radial-gradient(circle, rgba(6,182,212,0.04) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
 }
-.identity-card:hover{border-color:var(--border2);transform:translateY(-2px)}
-.identity-card-icon{
-  width:36px;height:36px;border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1rem;margin-bottom:14px;
-}
-.identity-card-title{font-size:.85rem;font-weight:700;margin-bottom:6px;color:var(--text)}
-.identity-card-desc{font-size:.78rem;color:var(--text2);line-height:1.6}
 
-/* ── PILLARS ── */
-.pillars-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:20px;margin-top:60px;
+.hero-content {
+  position: relative; z-index: 2;
+  max-width: 960px; margin: 0 auto;
 }
-.pillar-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:var(--radius-lg);padding:32px 28px;
-  position:relative;overflow:hidden;
-  transition:border-color .3s,transform .3s;
-}
-.pillar-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  transition:opacity .3s;opacity:0;
-}
-.pillar-card:hover{transform:translateY(-4px);border-color:var(--border2)}
-.pillar-card:hover::before{opacity:1}
-.pillar-card.cyan-accent::before{background:linear-gradient(90deg,var(--cyan),transparent)}
-.pillar-card.green-accent::before{background:linear-gradient(90deg,var(--green),transparent)}
-.pillar-card.gold-accent::before{background:linear-gradient(90deg,var(--gold),transparent)}
-.pillar-card.purple-accent::before{background:linear-gradient(90deg,var(--purple),transparent)}
-.pillar-card.exec-accent::before{background:linear-gradient(90deg,var(--exec),transparent)}
-.pillar-num{
-  font-family:'JetBrains Mono',monospace;
-  font-size:.65rem;color:var(--text3);letter-spacing:.1em;
-  margin-bottom:16px;
-}
-.pillar-icon{font-size:1.8rem;margin-bottom:14px;display:block}
-.pillar-title{
-  font-size:1rem;font-weight:700;margin-bottom:8px;
-  color:var(--text);letter-spacing:-.01em;
-}
-.pillar-desc{font-size:.82rem;color:var(--text2);line-height:1.65}
 
-/* ── HOW IT WORKS ── */
-.how{background:var(--bg2)}
-.how-steps{
-  display:grid;grid-template-columns:repeat(5,1fr);
-  gap:0;margin-top:64px;position:relative;
+.hero-badge-wrap {
+  display: flex; justify-content: center; margin-bottom: 36px;
 }
-.how-steps::before{
-  content:'';position:absolute;
-  top:32px;left:10%;right:10%;height:1px;
-  background:linear-gradient(90deg,transparent,var(--border2),var(--border2),var(--border2),transparent);
-  z-index:0;
-}
-.how-step{
-  display:flex;flex-direction:column;align-items:center;
-  text-align:center;padding:0 16px;
-  position:relative;z-index:1;
-}
-.how-step-num{
-  width:64px;height:64px;border-radius:50%;
-  background:var(--card);border:1px solid var(--border2);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'JetBrains Mono',monospace;
-  font-size:.8rem;font-weight:700;color:var(--cyan);
-  margin-bottom:20px;
-  transition:all .3s;
-}
-.how-step:hover .how-step-num{
-  background:var(--cyan-dim);border-color:var(--cyan);
-  box-shadow:0 0 24px var(--cyan-dim);
-}
-.how-step-title{
-  font-size:.88rem;font-weight:700;color:var(--text);
-  margin-bottom:8px;letter-spacing:.02em;
-}
-.how-step-desc{font-size:.75rem;color:var(--text2);line-height:1.6}
 
-/* ── WHO IT'S FOR ── */
-.audience-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:20px;margin-top:60px;
+.hero-eyebrow {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--gold-1);
+  margin-bottom: 12px;
 }
-.audience-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:var(--radius-lg);padding:36px 30px;
-  position:relative;overflow:hidden;
-  transition:border-color .3s,transform .3s;
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 7vw, 96px);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 28px;
 }
-.audience-card:hover{border-color:var(--border2);transform:translateY(-3px)}
-.audience-tag{
-  display:inline-block;
-  font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  padding:4px 10px;border-radius:4px;margin-bottom:20px;
+.hero-headline .line-gold {
+  display: block;
+  background: linear-gradient(135deg, var(--gold-2) 0%, var(--gold-3) 40%, var(--gold-2) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
-.audience-tag.individual{background:var(--cyan-dim);color:var(--cyan)}
-.audience-tag.professional{background:var(--purple-dim);color:var(--purple)}
-.audience-tag.institutional{background:var(--gold-dim);color:var(--gold)}
-.audience-title{
-  font-size:1.2rem;font-weight:800;color:var(--text);
-  margin-bottom:12px;letter-spacing:-.01em;
+.hero-headline .line-italic {
+  font-style: italic; display: block;
 }
-.audience-desc{
-  font-size:.85rem;color:var(--text2);line-height:1.7;
-  margin-bottom:24px;
+
+.hero-sub {
+  font-size: clamp(16px, 2vw, 20px); font-weight: 400;
+  color: var(--gray-2); line-height: 1.7;
+  max-width: 680px; margin: 0 auto 44px;
 }
-.audience-list{list-style:none}
-.audience-list li{
-  display:flex;align-items:flex-start;gap:10px;
-  font-size:.8rem;color:var(--text2);margin-bottom:8px;line-height:1.5;
+.hero-sub strong { color: var(--white); font-weight: 500; }
+
+.hero-ctas {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; margin-bottom: 72px;
+  flex-wrap: wrap;
 }
-.audience-list li::before{
-  content:'→';color:var(--cyan);font-weight:700;flex-shrink:0;margin-top:1px;
+.btn-hero {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, var(--gold-1) 0%, var(--gold-2) 100%);
+  color: var(--bg-0); font-family: var(--font-body);
+  font-size: 15px; font-weight: 700;
+  padding: 16px 36px; border-radius: 12px; border: none;
+  cursor: pointer; text-decoration: none;
+  transition: all 0.25s;
+  box-shadow: 0 4px 30px rgba(201,150,59,0.35), 0 1px 0 rgba(255,255,255,0.2) inset;
 }
+.btn-hero:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px rgba(201,150,59,0.5), 0 1px 0 rgba(255,255,255,0.2) inset;
+  filter: brightness(1.05);
+}
+.btn-hero-ghost {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.04);
+  color: var(--white); font-family: var(--font-body);
+  font-size: 15px; font-weight: 600;
+  padding: 16px 36px; border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  cursor: pointer; text-decoration: none;
+  transition: all 0.25s;
+}
+.btn-hero-ghost:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.2);
+  transform: translateY(-2px);
+}
+
+/* Hero live metrics */
+.hero-metrics {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  background: var(--border);
+  margin-top: 0;
+}
+.hero-metric {
+  background: rgba(13,13,24,0.95);
+  padding: 22px 28px;
+  display: flex; flex-direction: column; gap: 6px;
+  position: relative;
+}
+.hero-metric::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-1), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.hero-metric:hover::before { opacity: 1; }
+.hm-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--gray-3);
+}
+.hm-value {
+  font-size: 28px; font-weight: 800; letter-spacing: -0.03em;
+  color: var(--white); font-family: var(--font-body);
+  display: flex; align-items: baseline; gap: 4px;
+}
+.hm-value sup { font-size: 14px; font-weight: 600; color: var(--gold-2); }
+.hm-sub {
+  font-size: 12px; color: var(--gray-3); display: flex; align-items: center; gap: 6px;
+}
+.live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: pulse-dot 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* ── TICKER ── */
+.ticker-wrap {
+  width: 100%;
+  background: rgba(9,9,16,0.98);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden; padding: 12px 0;
+  position: relative; z-index: 5;
+}
+.ticker-wrap::before, .ticker-wrap::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 120px;
+  z-index: 2; pointer-events: none;
+}
+.ticker-wrap::before { left: 0; background: linear-gradient(90deg, var(--bg-1) 0%, transparent 100%); }
+.ticker-wrap::after { right: 0; background: linear-gradient(270deg, var(--bg-1) 0%, transparent 100%); }
+
+.ticker-track {
+  display: flex; gap: 0;
+  animation: ticker-scroll 60s linear infinite;
+  width: max-content;
+}
+.ticker-wrap:hover .ticker-track { animation-play-state: paused; }
+
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 28px; white-space: nowrap;
+  border-right: 1px solid var(--border);
+  font-size: 13px;
+}
+.ti-sym { font-weight: 700; color: var(--white); }
+.ti-price { color: var(--gray-2); font-variant-numeric: tabular-nums; }
+.ti-chg { font-weight: 600; font-variant-numeric: tabular-nums; }
+.ti-chg.pos { color: var(--green); }
+.ti-chg.neg { color: var(--red); }
+
+/* ── STATS ── */
+.stats-section {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0; border-bottom: 1px solid var(--border);
+}
+.stat-item {
+  padding: 56px 48px;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.stat-item:last-child { border-right: none; }
+.stat-number {
+  font-size: clamp(40px, 4vw, 64px);
+  font-weight: 800; letter-spacing: -0.04em;
+  color: var(--white); line-height: 1;
+  margin-bottom: 10px; font-family: var(--font-body);
+}
+.stat-number .unit { font-size: 0.55em; color: var(--gold-2); font-weight: 600; }
+.stat-desc {
+  font-size: 14px; color: var(--gray-3); line-height: 1.6;
+  font-weight: 400;
+}
+.stat-desc strong { color: var(--gray-2); font-weight: 500; }
+
+/* ── SECTIONS ── */
+section { position: relative; }
+
+.section-inner {
+  max-width: 1280px; margin: 0 auto;
+  padding: 120px 48px;
+}
+
+.section-header {
+  margin-bottom: 80px;
+}
+.section-header.centered { text-align: center; }
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-top: 16px;
+  margin-bottom: 20px;
+}
+.section-title em { font-style: italic; color: var(--gold-2); }
+
+.section-desc {
+  font-size: 18px; color: var(--gray-2);
+  line-height: 1.7; max-width: 600px;
+}
+.section-header.centered .section-desc { margin: 0 auto; }
+
+/* ── PLATFORM OVERVIEW ── */
+.platform-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2px; background: var(--border);
+  border-radius: var(--radius-lg); overflow: hidden;
+  border: 1px solid var(--border);
+}
+.platform-item {
+  background: var(--bg-2);
+  padding: 48px;
+  position: relative; overflow: hidden;
+  transition: background 0.3s;
+}
+.platform-item:hover { background: var(--bg-3); }
+.platform-item.full { grid-column: 1 / -1; }
+.platform-item.tall { padding: 64px 48px; }
+
+.pi-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 24px; font-size: 22px;
+  background: rgba(201,150,59,0.1);
+  border: 1px solid rgba(201,150,59,0.2);
+}
+.pi-icon.blue {
+  background: rgba(59,130,246,0.1);
+  border-color: rgba(59,130,246,0.2);
+}
+.pi-icon.cyan {
+  background: rgba(6,182,212,0.1);
+  border-color: rgba(6,182,212,0.2);
+}
+.pi-icon.green {
+  background: rgba(16,185,129,0.1);
+  border-color: rgba(16,185,129,0.2);
+}
+.pi-title {
+  font-size: 20px; font-weight: 700;
+  color: var(--white); margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+.pi-desc {
+  font-size: 14px; color: var(--gray-3); line-height: 1.7;
+  max-width: 360px;
+}
+.pi-tag {
+  display: inline-block; margin-top: 20px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--gold-1);
+  background: rgba(201,150,59,0.08);
+  border: 1px solid rgba(201,150,59,0.15);
+  padding: 4px 12px; border-radius: 100px;
+}
+.pi-tag.blue { color: var(--blue-3); background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.15); }
+.pi-tag.cyan { color: var(--cyan); background: rgba(6,182,212,0.08); border-color: rgba(6,182,212,0.15); }
+
+/* ── CAPABILITIES ── */
+.capabilities-bg {
+  background: linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 50%, var(--bg-0) 100%);
+}
+.cap-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg); overflow: hidden;
+}
+.cap-card {
+  background: var(--bg-2);
+  padding: 44px 40px;
+  position: relative; overflow: hidden;
+  transition: all 0.3s;
+}
+.cap-card:hover {
+  background: var(--bg-3);
+}
+.cap-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-1), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.cap-card:hover::after { opacity: 0.7; }
+
+.cap-num {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
+  color: var(--gray-4); margin-bottom: 20px;
+  font-variant-numeric: tabular-nums;
+}
+.cap-icon {
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; margin-bottom: 24px;
+}
+.cap-name {
+  font-size: 18px; font-weight: 700;
+  color: var(--white); margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+.cap-detail {
+  font-size: 14px; color: var(--gray-3); line-height: 1.7;
+  margin-bottom: 24px;
+}
+.cap-stat {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px; border-radius: 8px;
+  background: rgba(0,0,0,0.2); border: 1px solid var(--border);
+}
+.cs-val { font-size: 20px; font-weight: 800; color: var(--gold-2); letter-spacing: -0.02em; }
+.cs-label { font-size: 12px; color: var(--gray-3); }
+
+/* ── LIVE INTELLIGENCE (Chart Section) ── */
+.intel-section {
+  background: var(--bg-1);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.intel-layout {
+  display: grid; grid-template-columns: 420px 1fr;
+  gap: 80px; align-items: center;
+}
+.intel-copy .section-title { font-size: clamp(32px, 3.5vw, 48px); }
+
+.intel-features {
+  display: flex; flex-direction: column; gap: 24px;
+  margin-top: 40px;
+}
+.intel-feat {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 20px; border-radius: 12px;
+  border: 1px solid transparent;
+  transition: all 0.3s; cursor: default;
+}
+.intel-feat:hover {
+  background: rgba(201,150,59,0.05);
+  border-color: var(--border-gold);
+}
+.if-icon {
+  width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  background: rgba(201,150,59,0.1);
+}
+.if-title { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+.if-desc { font-size: 13px; color: var(--gray-3); line-height: 1.6; }
+
+/* Chart */
+.chart-panel {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.chart-header {
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.chart-title { font-size: 14px; font-weight: 600; color: var(--white); }
+.chart-meta { font-size: 12px; color: var(--gray-3); }
+.chart-perf {
+  font-size: 28px; font-weight: 800; color: var(--green);
+  letter-spacing: -0.03em;
+}
+.chart-body { padding: 8px 0 0; }
+.chart-legend {
+  display: flex; gap: 20px; padding: 16px 28px;
+  border-top: 1px solid var(--border);
+}
+.cl-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--gray-2); }
+.cl-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* ── PERFORMANCE PROOF ── */
+.perf-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.perf-card {
+  background: var(--bg-2); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 40px 36px;
+  position: relative; overflow: hidden;
+  transition: all 0.3s;
+}
+.perf-card:hover {
+  border-color: rgba(201,150,59,0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px var(--glow-gold);
+}
+.perf-card-glow {
+  position: absolute; width: 200px; height: 200px; border-radius: 50%;
+  top: -50px; right: -50px;
+  background: radial-gradient(circle, rgba(201,150,59,0.08) 0%, transparent 70%);
+}
+.pc-category {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold-1); margin-bottom: 12px;
+}
+.pc-metric {
+  font-size: clamp(36px, 4vw, 56px); font-weight: 900;
+  letter-spacing: -0.04em; color: var(--white);
+  line-height: 1; margin-bottom: 10px;
+}
+.pc-metric span { color: var(--gold-2); }
+.pc-desc { font-size: 14px; color: var(--gray-3); line-height: 1.6; }
+.pc-bar {
+  margin-top: 24px; height: 3px; background: var(--bg-4);
+  border-radius: 2px; overflow: hidden;
+}
+.pc-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold-1), var(--gold-3));
+  border-radius: 2px;
+  animation: bar-grow 2s ease-out forwards;
+  transform-origin: left;
+}
+@keyframes bar-grow { from { width: 0%; } }
+
+/* ── ARCHITECTURE ── */
+.arch-section {
+  background: var(--bg-1);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.arch-layers {
+  display: flex; flex-direction: column; gap: 2px;
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.arch-layer {
+  display: grid; grid-template-columns: 200px 1fr;
+  background: var(--bg-2);
+  min-height: 88px;
+  transition: background 0.2s;
+}
+.arch-layer:hover { background: var(--bg-3); }
+.arch-layer + .arch-layer { border-top: 1px solid var(--border); }
+.al-label {
+  display: flex; align-items: center; gap: 16px;
+  padding: 24px 28px;
+  border-right: 1px solid var(--border);
+}
+.al-num {
+  width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  background: rgba(201,150,59,0.1);
+  color: var(--gold-2); border: 1px solid rgba(201,150,59,0.2);
+}
+.al-name { font-size: 13px; font-weight: 600; color: var(--white); }
+.al-sublabel { font-size: 11px; color: var(--gray-3); margin-top: 2px; }
+.al-content {
+  padding: 20px 32px;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+.al-chip {
+  padding: 6px 14px; border-radius: 6px;
+  font-size: 12px; font-weight: 600;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  color: var(--gray-2);
+  transition: all 0.2s;
+}
+.al-chip:hover {
+  background: rgba(201,150,59,0.08);
+  border-color: rgba(201,150,59,0.2);
+  color: var(--gold-2);
+}
+
+/* ── TRUST / SOCIAL PROOF ── */
+.trust-section {
+  text-align: center;
+}
+.trust-badges {
+  display: flex; justify-content: center; gap: 24px;
+  flex-wrap: wrap; margin: 56px 0;
+}
+.trust-badge {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 24px; border-radius: 10px;
+  background: var(--bg-2); border: 1px solid var(--border);
+  font-size: 13px; font-weight: 600; color: var(--gray-2);
+  transition: all 0.2s;
+}
+.trust-badge:hover { border-color: var(--border-gold); color: var(--white); }
+.trust-badge-icon { font-size: 18px; }
+
+.trust-testimonials {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px; margin-top: 16px;
+}
+.testimonial {
+  background: var(--bg-2); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 36px;
+  text-align: left; position: relative;
+  transition: all 0.3s;
+}
+.testimonial:hover {
+  border-color: var(--border-gold);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+}
+.testimonial-quote {
+  font-size: 15px; color: var(--gray-2); line-height: 1.7;
+  margin-bottom: 28px; font-style: italic;
+}
+.testimonial-quote::before {
+  content: '\201C'; font-family: var(--font-display);
+  font-size: 48px; color: var(--gold-1); line-height: 0;
+  position: relative; top: 18px; margin-right: 4px;
+}
+.testimonial-author { display: flex; align-items: center; gap: 14px; }
+.ta-avatar {
+  width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--gold-1), var(--gold-2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; color: var(--bg-0);
+}
+.ta-name { font-size: 14px; font-weight: 700; color: var(--white); }
+.ta-role { font-size: 12px; color: var(--gray-3); }
 
 /* ── PRICING ── */
-.pricing{background:var(--bg2)}
-.pricing-grid{
-  display:grid;grid-template-columns:repeat(5,1fr);
-  gap:14px;margin-top:60px;align-items:start;
+.pricing-section {
+  background: var(--bg-1);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
-.price-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:var(--radius-lg);padding:28px 22px;
-  transition:border-color .3s,transform .3s;
-  position:relative;
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px; align-items: start;
 }
-.price-card:hover{transform:translateY(-4px);border-color:var(--border2)}
-.price-card.featured{
-  border-color:var(--cyan);background:var(--card2);
-  transform:scale(1.03);
-  box-shadow:0 20px 60px rgba(0,212,255,.1);
+.pricing-card {
+  background: var(--bg-2); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 44px 36px;
+  position: relative; transition: all 0.3s;
 }
-.price-card.featured:hover{transform:scale(1.03) translateY(-4px)}
-.featured-badge{
-  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
-  background:var(--cyan);color:var(--bg);
-  font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
-  padding:4px 14px;border-radius:20px;white-space:nowrap;
+.pricing-card.featured {
+  border-color: var(--border-gold);
+  background: linear-gradient(180deg, rgba(201,150,59,0.06) 0%, var(--bg-2) 100%);
+  box-shadow: 0 0 60px rgba(201,150,59,0.1);
+  transform: scale(1.02);
 }
-.price-tier{
-  font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--text3);margin-bottom:8px;
+.pricing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
 }
-.price-name{
-  font-size:1rem;font-weight:800;color:var(--text);
-  margin-bottom:4px;
+.pricing-card.featured:hover {
+  transform: scale(1.02) translateY(-4px);
 }
-.price-amount{
-  display:flex;align-items:baseline;gap:4px;margin-bottom:6px;
-}
-.price-dollar{font-size:1rem;font-weight:700;color:var(--text2)}
-.price-num{font-size:2rem;font-weight:900;color:var(--text);line-height:1}
-.price-period{font-size:.75rem;color:var(--text3)}
-.price-custom{font-size:1.2rem;font-weight:800;color:var(--gold)}
-.price-tagline{
-  font-size:.75rem;color:var(--text2);margin-bottom:20px;
-  padding-bottom:20px;border-bottom:1px solid var(--border);
-  line-height:1.5;
-}
-.price-features{list-style:none;margin-bottom:24px}
-.price-features li{
-  display:flex;align-items:flex-start;gap:8px;
-  font-size:.76rem;color:var(--text2);margin-bottom:8px;line-height:1.5;
-}
-.price-features li::before{
-  content:'✓';color:var(--green);font-weight:700;flex-shrink:0;
-}
-.price-cta{
-  display:block;text-align:center;text-decoration:none;
-  padding:11px 16px;border-radius:6px;
-  font-size:.8rem;font-weight:700;letter-spacing:.03em;
-  transition:all .2s;
-}
-.price-cta.outline{
-  border:1px solid var(--border2);color:var(--text2);
-}
-.price-cta.outline:hover{border-color:var(--text3);color:var(--text)}
-.price-cta.solid{
-  background:var(--cyan);color:var(--bg);
-}
-.price-cta.solid:hover{background:#1de3ff;box-shadow:0 8px 24px rgba(0,212,255,.2)}
-.price-cta.custom{
-  border:1px solid var(--gold);color:var(--gold);
-}
-.price-cta.custom:hover{background:var(--gold-dim)}
 
-/* ── TRUST ── */
-.trust-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:16px;margin-top:60px margin-bottom:40px;
+.pricing-badge {
+  position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+  background: linear-gradient(90deg, var(--gold-1), var(--gold-2));
+  color: var(--bg-0); font-size: 11px; font-weight: 800;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 5px 18px; border-radius: 100px;
+  white-space: nowrap;
 }
-.trust-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:var(--radius-lg);padding:28px 24px;
-  transition:border-color .3s;
-}
-.trust-card:hover{border-color:var(--border2)}
-.trust-icon{
-  width:44px;height:44px;border-radius:10px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.1rem;margin-bottom:16px;
-  background:var(--bg3);border:1px solid var(--border);
-}
-.trust-title{font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:8px}
-.trust-desc{font-size:.78rem;color:var(--text2);line-height:1.65}
-.trust-cta-band{
-  margin-top:40px;
-  background:linear-gradient(135deg,rgba(0,212,255,0.06),rgba(123,47,255,0.06));
-  border:1px solid var(--border2);border-radius:var(--radius-lg);
-  padding:40px 48px;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:40px;
-}
-.trust-cta-text h3{
-  font-size:1.3rem;font-weight:800;color:var(--text);margin-bottom:8px;
-}
-.trust-cta-text p{font-size:.88rem;color:var(--text2)}
 
-/* ── VISION ── */
-.vision{
-  background:var(--bg);
-  position:relative;overflow:hidden;
+.pricing-tier {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold-1); margin-bottom: 8px;
 }
-.vision-glow{
-  position:absolute;bottom:-200px;right:-200px;
-  width:700px;height:700px;
-  background:radial-gradient(ellipse,rgba(123,47,255,0.07) 0%,transparent 65%);
-}
-.vision-inner{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:80px;align-items:center;
-  position:relative;z-index:1;
-}
-.vision-stats{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:16px;margin-top:40px;
-}
-.vision-stat{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:var(--radius);padding:24px;
-}
-.vision-stat-num{
-  font-size:2.2rem;font-weight:900;
-  font-family:'JetBrains Mono',monospace;
-  margin-bottom:4px;
-}
-.vision-stat-label{font-size:.78rem;color:var(--text2)}
-.vision-right{}
-.vision-quote{
-  font-size:1.3rem;font-weight:700;line-height:1.5;
-  color:var(--text);margin-bottom:24px;
-  padding-left:24px;
-  border-left:3px solid var(--cyan);
-}
-.vision-right p{font-size:.9rem;color:var(--text2);line-height:1.8;margin-bottom:16px}
+.pricing-tier.blue { color: var(--blue-3); }
+.pricing-tier.white { color: var(--gray-2); }
 
-/* ── FINAL CTA ── */
-.final-cta{
-  background:var(--bg2);
-  text-align:center;padding:120px 80px;
-  position:relative;overflow:hidden;
+.pricing-name {
+  font-size: 24px; font-weight: 800;
+  letter-spacing: -0.02em; color: var(--white);
+  margin-bottom: 10px;
 }
-.final-cta-glow{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:800px;height:400px;
-  background:radial-gradient(ellipse,rgba(0,212,255,0.06) 0%,transparent 70%);
+.pricing-tagline { font-size: 14px; color: var(--gray-3); line-height: 1.5; margin-bottom: 32px; }
+
+.pricing-price {
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
 }
-.final-cta-inner{max-width:680px;margin:0 auto;position:relative;z-index:1}
-.final-cta-label{
-  font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--cyan);margin-bottom:20px;
+.pp-amount {
+  font-size: 48px; font-weight: 900;
+  letter-spacing: -0.04em; color: var(--white);
+  line-height: 1;
 }
-.final-cta h2{
-  font-size:clamp(2rem,4vw,3.2rem);
-  font-weight:900;line-height:1.1;letter-spacing:-.025em;
-  color:var(--text);margin-bottom:20px;
+.pp-amount.custom {
+  font-size: 32px; font-weight: 700;
+  background: linear-gradient(135deg, var(--gold-2), var(--gold-3));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
-.final-cta p{
-  font-size:1rem;color:var(--text2);margin-bottom:44px;line-height:1.7;
+.pp-period { font-size: 14px; color: var(--gray-3); margin-top: 4px; }
+
+.pricing-features {
+  list-style: none; display: flex; flex-direction: column; gap: 14px;
+  margin-bottom: 36px;
 }
-.final-cta-btns{
-  display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;
+.pf-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 14px; color: var(--gray-2); line-height: 1.5;
+}
+.pf-check {
+  width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(16,185,129,0.15);
+  border: 1px solid rgba(16,185,129,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: var(--green); margin-top: 2px;
+}
+
+.btn-pricing {
+  width: 100%; padding: 14px;
+  border-radius: 10px; border: 1px solid var(--border);
+  background: rgba(255,255,255,0.04);
+  color: var(--white); font-family: var(--font-body);
+  font-size: 14px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-pricing:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.15);
+  transform: translateY(-1px);
+}
+.btn-pricing.featured-btn {
+  background: linear-gradient(135deg, var(--gold-1), var(--gold-2));
+  color: var(--bg-0); border-color: transparent;
+  box-shadow: 0 4px 20px rgba(201,150,59,0.3);
+}
+.btn-pricing.featured-btn:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 8px 30px rgba(201,150,59,0.4);
+}
+
+/* ── CTA SECTION ── */
+.cta-section {
+  text-align: center; overflow: hidden;
+  background: var(--bg-0);
+}
+.cta-section .section-inner {
+  position: relative;
+}
+.cta-bg-glow {
+  position: absolute; width: 1000px; height: 600px;
+  border-radius: 50%; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse, rgba(201,150,59,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-section .section-title {
+  font-size: clamp(40px, 5vw, 72px);
+  max-width: 800px; margin: 16px auto 24px;
+}
+.cta-section .section-desc { max-width: 520px; margin: 0 auto 48px; font-size: 16px; }
+.cta-ctas { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+.cta-note {
+  margin-top: 24px; font-size: 13px; color: var(--gray-3);
 }
 
 /* ── FOOTER ── */
-footer{
-  background:var(--bg);
-  border-top:1px solid var(--border);
-  padding:60px 80px 40px;
+footer {
+  background: var(--bg-1);
+  border-top: 1px solid var(--border);
 }
-.footer-inner{max-width:1280px;margin:0 auto}
-.footer-top{
-  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
-  gap:48px;margin-bottom:48px;
+.footer-inner {
+  max-width: 1280px; margin: 0 auto;
+  padding: 80px 48px 40px;
 }
-.footer-brand{}
-.footer-brand .nav-logo{margin-bottom:16px;display:inline-flex}
-.footer-brand p{font-size:.82rem;color:var(--text3);line-height:1.7;max-width:280px}
-.footer-col h4{
-  font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--text2);margin-bottom:16px;
+.footer-top {
+  display: grid; grid-template-columns: 320px 1fr;
+  gap: 80px; margin-bottom: 64px;
 }
-.footer-col a{
-  display:block;font-size:.82rem;color:var(--text3);
-  text-decoration:none;margin-bottom:10px;transition:color .2s;
+.footer-brand .nav-logo {
+  margin-bottom: 20px; display: inline-flex;
 }
-.footer-col a:hover{color:var(--text2)}
-.footer-bottom{
-  display:flex;align-items:center;justify-content:space-between;
-  padding-top:32px;border-top:1px solid var(--border);
-  flex-wrap:wrap;gap:16px;
+.footer-tagline {
+  font-size: 14px; color: var(--gray-3); line-height: 1.7;
+  margin-bottom: 28px; max-width: 280px;
 }
-.footer-bottom p{font-size:.76rem;color:var(--text3)}
-.footer-bottom-links{display:flex;gap:20px}
-.footer-bottom-links a{font-size:.76rem;color:var(--text3);text-decoration:none;transition:color .2s}
-.footer-bottom-links a:hover{color:var(--text2)}
+.footer-links {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+.fl-group-title {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold-1);
+  margin-bottom: 20px;
+}
+.fl-group ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.fl-group a {
+  text-decoration: none; font-size: 14px; color: var(--gray-3);
+  transition: color 0.2s; display: block;
+}
+.fl-group a:hover { color: var(--white); }
 
-/* ── MONO LABELS ── */
-.mono{font-family:'JetBrains Mono',monospace}
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 32px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px;
+}
+.fb-copy { font-size: 13px; color: var(--gray-4); }
+.fb-legal { display: flex; gap: 24px; }
+.fb-legal a { font-size: 13px; color: var(--gray-4); text-decoration: none; }
+.fb-legal a:hover { color: var(--gray-2); }
 
-/* ── FADE IN ── */
-.fade-up{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
-.fade-up.visible{opacity:1;transform:translateY(0)}
+.status-indicator {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--gray-3);
+}
+.status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ── SCROLL ANIMATIONS ── */
+.reveal {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
 
 /* ── RESPONSIVE ── */
-@media(max-width:1100px){
-  nav{padding:0 32px}
-  .hero{padding:100px 40px 60px}
-  .hero-inner{gap:48px}
-  .section{padding:80px 40px}
-  .pillars-grid{grid-template-columns:repeat(2,1fr)}
-  .pricing-grid{grid-template-columns:1fr 1fr;gap:16px}
-  .price-card.featured{transform:none}
-  .trust-grid{grid-template-columns:repeat(2,1fr)}
-  .footer-top{grid-template-columns:1fr 1fr;gap:32px}
+@media (max-width: 1024px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .section-inner { padding: 80px 24px; }
+  .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+  .stats-section { grid-template-columns: repeat(2, 1fr); }
+  .platform-grid { grid-template-columns: 1fr; }
+  .cap-grid { grid-template-columns: repeat(2, 1fr); }
+  .intel-layout { grid-template-columns: 1fr; }
+  .perf-grid { grid-template-columns: 1fr; }
+  .arch-layer { grid-template-columns: 160px 1fr; }
+  .trust-testimonials { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .pricing-card.featured { transform: none; }
+  .footer-top { grid-template-columns: 1fr; gap: 48px; }
+  .footer-links { grid-template-columns: repeat(2, 1fr); }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
 }
-@media(max-width:768px){
-  nav{padding:0 20px}
-  .nav-links{display:none}
-  .hero{padding:90px 24px 50px}
-  .hero-inner{grid-template-columns:1fr;gap:48px}
-  .hero-right{order:-1}
-  .section{padding:60px 24px}
-  .identity-grid{grid-template-columns:1fr;gap:40px}
-  .identity-cards{grid-template-columns:1fr}
-  .pillars-grid{grid-template-columns:1fr}
-  .how-steps{grid-template-columns:1fr 1fr;gap:24px}
-  .how-steps::before{display:none}
-  .audience-grid{grid-template-columns:1fr}
-  .pricing-grid{grid-template-columns:1fr}
-  .trust-grid{grid-template-columns:1fr}
-  .trust-cta-band{flex-direction:column;text-align:center;padding:32px 24px}
-  .vision-inner{grid-template-columns:1fr}
-  .vision-stats{grid-template-columns:1fr 1fr}
-  .final-cta{padding:80px 24px}
-  .footer-top{grid-template-columns:1fr;gap:32px}
-  footer{padding:48px 24px 32px}
-  .footer-bottom{flex-direction:column;align-items:flex-start}
+@media (max-width: 640px) {
+  .hero-ctas { flex-direction: column; }
+  .hero-metrics { grid-template-columns: 1fr 1fr; }
+  .stats-section { grid-template-columns: 1fr 1fr; }
+  .cap-grid { grid-template-columns: 1fr; }
+  .trust-badges { gap: 12px; }
 }
 </style>
 </head>
+
 <body>
 
-<!-- NAV -->
+<!-- ══════════════════════════════════════════════
+     NAVIGATION
+══════════════════════════════════════════════ -->
 <nav id="nav">
   <a href="/" class="nav-logo">
-    <div class="nav-logo-hex"></div>
+    <div class="nav-logo-mark">Q</div>
     QUANTORA
   </a>
   <div class="nav-links">
     <a href="#platform">Platform</a>
-    <a href="#how-it-works">How It Works</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#trust">Trust &amp; Governance</a>
+    <a href="#capabilities">Intelligence</a>
+    <a href="#performance">Performance</a>
+    <a href="#architecture">Architecture</a>
+    <a href="/pricing">Pricing</a>
   </div>
-  <div class="nav-actions">
-    <a href="/login" class="btn-ghost">Sign In</a>
-    <a href="/register" class="btn-nav-cta">Get Access →</a>
+  <div class="nav-right">
+    <a href="/ui/" class="btn-ghost">Operator Console</a>
+    <a href="#request-access" class="btn-primary">
+      Request Access
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-grid-bg"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-inner">
-    <div class="hero-left fade-up">
-      <div class="hero-eyebrow">
-        <span class="hero-eyebrow-dot"></span>
-        Now Live — Intelligence Platform v2
-      </div>
-      <h1 class="hero-h1">
-        <em>AI-Governed</em><br>Capital Intelligence.
-      </h1>
-      <p class="hero-sub-headline">Operate markets with institutional discipline.</p>
-      <p class="hero-desc">
-        Quantora is the financial intelligence operating system for disciplined capital deployment — unifying execution, risk governance, performance attribution, and readiness certification in one command layer.
-      </p>
-      <div class="hero-ctas">
-        <a href="/register" class="btn-primary">Start Operating →</a>
-        <a href="#platform" class="btn-secondary">Explore Platform</a>
-      </div>
-      <div class="hero-trust">
-        <div class="hero-trust-item">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--green)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-          Execution-governed
-        </div>
-        <div class="hero-trust-item">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--green)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-          Risk-controlled
-        </div>
-        <div class="hero-trust-item">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--green)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-          Audit-grade posture
-        </div>
-      </div>
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-glow-3"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge-wrap">
+      <div class="tag">Live · 847 signals active · $2.4T monitored</div>
     </div>
 
-    <!-- COCKPIT PREVIEW -->
-    <div class="hero-right fade-up" style="transition-delay:.15s">
-      <div class="cockpit">
-        <div class="cockpit-bar">
-          <div class="cockpit-dots">
-            <span class="dot-r"></span>
-            <span class="dot-y"></span>
-            <span class="dot-g"></span>
-          </div>
-          <span class="cockpit-label">QUANTORA / OPERATOR COCKPIT</span>
-          <div class="cockpit-status">
-            <span class="status-live-dot"></span>
-            LIVE
-          </div>
-        </div>
-        <div class="cockpit-body">
-          <div class="cockpit-stats">
-            <div class="c-stat">
-              <div class="c-stat-label">Daily P&amp;L</div>
-              <div class="c-stat-val green">+$2,847</div>
-            </div>
-            <div class="c-stat">
-              <div class="c-stat-label">Buying Power</div>
-              <div class="c-stat-val cyan">$94,320</div>
-            </div>
-            <div class="c-stat">
-              <div class="c-stat-label">Risk Budget</div>
-              <div class="c-stat-val gold">68%</div>
-            </div>
-          </div>
-          <div class="cockpit-chart">
-            <div class="chart-header">
-              <span class="chart-title">Portfolio Performance</span>
-              <span class="chart-badge">+3.2% MTD</span>
-            </div>
-            <svg class="chart-svg" viewBox="0 0 320 80" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#10b981" stop-opacity=".25"/>
-                  <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-              <path d="M0,60 C20,55 30,50 50,45 C70,40 80,48 100,42 C120,36 130,30 150,28 C170,26 180,35 200,30 C220,25 230,18 250,15 C270,12 285,20 300,14 L300,80 L0,80 Z" fill="url(#chartGrad)"/>
-              <path d="M0,60 C20,55 30,50 50,45 C70,40 80,48 100,42 C120,36 130,30 150,28 C170,26 180,35 200,30 C220,25 230,18 250,15 C270,12 285,20 300,14" fill="none" stroke="#10b981" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <div class="cockpit-panels">
-            <div class="c-panel">
-              <div class="c-panel-row">
-                <span class="c-panel-key">Strategy</span>
-                <span class="c-panel-val cyan">MOMENTUM</span>
-              </div>
-              <div class="c-panel-row">
-                <span class="c-panel-key">Fills Today</span>
-                <span class="c-panel-val green">7 / 7</span>
-              </div>
-              <div class="c-panel-row">
-                <span class="c-panel-key">Open Orders</span>
-                <span class="c-panel-val">2</span>
-              </div>
-            </div>
-            <div class="c-panel">
-              <div class="c-panel-row">
-                <span class="c-panel-key">Broker</span>
-                <span class="c-panel-val green">CONNECTED</span>
-              </div>
-              <div class="c-panel-row">
-                <span class="c-panel-key">Notional Cap</span>
-                <span class="c-panel-val gold">$50K</span>
-              </div>
-              <div class="c-panel-row">
-                <span class="c-panel-key">Exceptions</span>
-                <span class="c-panel-val green">0</span>
-              </div>
-            </div>
-          </div>
-          <div class="cockpit-certified">
-            <div class="cert-left">
-              <span class="cert-icon">🛡</span>
-              <div>
-                <div class="cert-text">EXECUTION CERTIFIED</div>
-                <div class="cert-sub">All pre-trade checks passed · Readiness confirmed</div>
-              </div>
-            </div>
-            <span class="cert-score">98</span>
-          </div>
-        </div>
+    <div class="hero-eyebrow">Institutional Capital Intelligence</div>
+
+    <h1 class="hero-headline">
+      The Operating System<br>
+      <span class="line-gold">Institutional Capital</span>
+      <span class="line-italic">Runs On.</span>
+    </h1>
+
+    <p class="hero-sub">
+      Quantora monitors <strong>$2.4 trillion in assets</strong> across 180 exchanges,
+      generating 847 proprietary alpha signals in real time.
+      Built for the 0.1% of capital that moves markets.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#request-access" class="btn-hero">
+        Request Institutional Access
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#platform" class="btn-hero-ghost">
+        Explore Architecture
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+      </a>
+    </div>
+
+    <div class="hero-metrics">
+      <div class="hero-metric">
+        <div class="hm-label">Assets Monitored</div>
+        <div class="hm-value"><sup>$</sup><span id="c-aum">2.4</span>T</div>
+        <div class="hm-sub"><span class="live-dot"></span> Updating live</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-label">Alpha Signals</div>
+        <div class="hm-value"><span id="c-signals">847</span></div>
+        <div class="hm-sub"><span class="live-dot"></span> Active generators</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-label">Avg Latency</div>
+        <div class="hm-value"><span id="c-latency">0.3</span><sup style="font-size:13px;color:var(--gray-2)">ms</sup></div>
+        <div class="hm-sub"><span class="live-dot"></span> Order routing</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-label">Platform Uptime</div>
+        <div class="hm-value"><span id="c-uptime">99.997</span><sup>%</sup></div>
+        <div class="hm-sub"><span class="live-dot"></span> 12-month trailing</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- IDENTITY -->
-<section class="section identity" id="platform">
+<!-- ══════════════════════════════════════════════
+     TICKER
+══════════════════════════════════════════════ -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="ticker">
+    <div class="ticker-item"><span class="ti-sym">SPY</span><span class="ti-price">$541.28</span><span class="ti-chg pos">+0.47%</span></div>
+    <div class="ticker-item"><span class="ti-sym">QQQ</span><span class="ti-price">$461.83</span><span class="ti-chg neg">-0.12%</span></div>
+    <div class="ticker-item"><span class="ti-sym">BTC/USD</span><span class="ti-price">$98,240</span><span class="ti-chg pos">+2.34%</span></div>
+    <div class="ticker-item"><span class="ti-sym">ETH/USD</span><span class="ti-price">$3,847</span><span class="ti-chg pos">+1.89%</span></div>
+    <div class="ticker-item"><span class="ti-sym">GLD</span><span class="ti-price">$218.47</span><span class="ti-chg neg">-0.08%</span></div>
+    <div class="ticker-item"><span class="ti-sym">AAPL</span><span class="ti-price">$212.50</span><span class="ti-chg pos">+0.91%</span></div>
+    <div class="ticker-item"><span class="ti-sym">NVDA</span><span class="ti-price">$136.89</span><span class="ti-chg pos">+3.42%</span></div>
+    <div class="ticker-item"><span class="ti-sym">TSLA</span><span class="ti-price">$178.23</span><span class="ti-chg neg">-1.14%</span></div>
+    <div class="ticker-item"><span class="ti-sym">MSFT</span><span class="ti-price">$415.22</span><span class="ti-chg pos">+0.33%</span></div>
+    <div class="ticker-item"><span class="ti-sym">EUR/USD</span><span class="ti-price">$1.0847</span><span class="ti-chg pos">+0.06%</span></div>
+    <div class="ticker-item"><span class="ti-sym">GBP/USD</span><span class="ti-price">$1.2734</span><span class="ti-chg neg">-0.03%</span></div>
+    <div class="ticker-item"><span class="ti-sym">GOLD</span><span class="ti-price">$3,241</span><span class="ti-chg pos">+0.71%</span></div>
+    <div class="ticker-item"><span class="ti-sym">WTI</span><span class="ti-price">$78.42</span><span class="ti-chg neg">-0.54%</span></div>
+    <div class="ticker-item"><span class="ti-sym">VIX</span><span class="ti-price">14.23</span><span class="ti-chg neg">-2.18%</span></div>
+    <div class="ticker-item"><span class="ti-sym">US10Y</span><span class="ti-price">4.421%</span><span class="ti-chg pos">+0.012</span></div>
+    <div class="ticker-item"><span class="ti-sym">DXY</span><span class="ti-price">104.18</span><span class="ti-chg neg">-0.21%</span></div>
+    <!-- Duplicate for seamless loop -->
+    <div class="ticker-item"><span class="ti-sym">SPY</span><span class="ti-price">$541.28</span><span class="ti-chg pos">+0.47%</span></div>
+    <div class="ticker-item"><span class="ti-sym">QQQ</span><span class="ti-price">$461.83</span><span class="ti-chg neg">-0.12%</span></div>
+    <div class="ticker-item"><span class="ti-sym">BTC/USD</span><span class="ti-price">$98,240</span><span class="ti-chg pos">+2.34%</span></div>
+    <div class="ticker-item"><span class="ti-sym">ETH/USD</span><span class="ti-price">$3,847</span><span class="ti-chg pos">+1.89%</span></div>
+    <div class="ticker-item"><span class="ti-sym">GLD</span><span class="ti-price">$218.47</span><span class="ti-chg neg">-0.08%</span></div>
+    <div class="ticker-item"><span class="ti-sym">AAPL</span><span class="ti-price">$212.50</span><span class="ti-chg pos">+0.91%</span></div>
+    <div class="ticker-item"><span class="ti-sym">NVDA</span><span class="ti-price">$136.89</span><span class="ti-chg pos">+3.42%</span></div>
+    <div class="ticker-item"><span class="ti-sym">TSLA</span><span class="ti-price">$178.23</span><span class="ti-chg neg">-1.14%</span></div>
+    <div class="ticker-item"><span class="ti-sym">MSFT</span><span class="ti-price">$415.22</span><span class="ti-chg pos">+0.33%</span></div>
+    <div class="ticker-item"><span class="ti-sym">EUR/USD</span><span class="ti-price">$1.0847</span><span class="ti-chg pos">+0.06%</span></div>
+    <div class="ticker-item"><span class="ti-sym">GBP/USD</span><span class="ti-price">$1.2734</span><span class="ti-chg neg">-0.03%</span></div>
+    <div class="ticker-item"><span class="ti-sym">GOLD</span><span class="ti-price">$3,241</span><span class="ti-chg pos">+0.71%</span></div>
+    <div class="ticker-item"><span class="ti-sym">WTI</span><span class="ti-price">$78.42</span><span class="ti-chg neg">-0.54%</span></div>
+    <div class="ticker-item"><span class="ti-sym">VIX</span><span class="ti-price">14.23</span><span class="ti-chg neg">-2.18%</span></div>
+    <div class="ticker-item"><span class="ti-sym">US10Y</span><span class="ti-price">4.421%</span><span class="ti-chg pos">+0.012</span></div>
+    <div class="ticker-item"><span class="ti-sym">DXY</span><span class="ti-price">104.18</span><span class="ti-chg neg">-0.21%</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     STATS
+══════════════════════════════════════════════ -->
+<div class="stats-section">
+  <div class="stat-item reveal">
+    <div class="stat-number"><span class="js-counter" data-val="2400">0</span><span class="unit">B+</span></div>
+    <div class="stat-desc"><strong>Dollars monitored</strong> across all asset classes, updated every 50ms.</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-1">
+    <div class="stat-number"><span class="js-counter" data-val="180">0</span><span class="unit">+</span></div>
+    <div class="stat-desc"><strong>Global exchanges</strong> connected via co-located infrastructure in 14 data centers.</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-2">
+    <div class="stat-number"><span class="js-counter" data-val="12">0</span><span class="unit">M+</span></div>
+    <div class="stat-desc"><strong>Trades analyzed</strong> per day with microsecond-resolution attribution.</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-3">
+    <div class="stat-number"><span class="js-counter" data-val="847">0</span></div>
+    <div class="stat-desc"><strong>Proprietary alpha signals</strong> generated by our ML ensemble, live 24/7.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PLATFORM
+══════════════════════════════════════════════ -->
+<section id="platform">
   <div class="section-inner">
-    <div class="section-eyebrow">What Quantora Is</div>
-    <div class="identity-grid">
-      <div class="identity-left fade-up">
-        <div class="big-statement">
-          Not a dashboard.<br>
-          Not a charting tool.<br>
-          <span>An operating system<br>for disciplined capital.</span>
-        </div>
-        <p style="font-size:.92rem;color:var(--text2);line-height:1.8;max-width:440px">
-          Quantora unifies every layer of serious capital operations — from pre-trade readiness and execution governance to performance attribution and supervisory audit trails — into a single command interface built for operators who treat capital with discipline.
-        </p>
+    <div class="section-header reveal">
+      <div class="section-label">Core Platform</div>
+      <h2 class="section-title">One OS. Every edge<br>in the market.</h2>
+      <p class="section-desc">From signal generation to order execution, Quantora handles the full capital lifecycle with institutional-grade precision.</p>
+    </div>
+
+    <div class="platform-grid reveal">
+      <div class="platform-item tall">
+        <div class="pi-icon">&#9889;</div>
+        <div class="pi-title">Execution Engine</div>
+        <div class="pi-desc">Sub-millisecond order routing with AI-driven market impact minimization. Smart order routing across 180+ venues with adaptive slippage control.</div>
+        <div class="pi-tag">0.3ms latency</div>
       </div>
-      <div class="identity-cards fade-up" style="transition-delay:.1s">
-        <div class="identity-card">
-          <div class="identity-card-icon" style="background:var(--cyan-dim)">⚡</div>
-          <div class="identity-card-title">Execution Layer</div>
-          <div class="identity-card-desc">Governed order entry with pre-trade checks, notional limits, and fill tracking — never a raw click-and-hope interface.</div>
-        </div>
-        <div class="identity-card">
-          <div class="identity-card-icon" style="background:var(--green-dim)">🛡</div>
-          <div class="identity-card-title">Risk Governance</div>
-          <div class="identity-card-desc">Real-time risk posture across position, strategy, and portfolio layers. Blocks enforce before damage occurs.</div>
-        </div>
-        <div class="identity-card">
-          <div class="identity-card-icon" style="background:var(--purple-dim)">🧠</div>
-          <div class="identity-card-title">Intelligence Suite</div>
-          <div class="identity-card-desc">537 live market intelligence panels. Breadth, flow, sentiment, and structural analysis available instantly.</div>
-        </div>
-        <div class="identity-card">
-          <div class="identity-card-icon" style="background:var(--gold-dim)">📊</div>
-          <div class="identity-card-title">Readiness Certification</div>
-          <div class="identity-card-desc">Systematic readiness scoring ensures every operator is prepared, authorized, and operationally cleared before capital is deployed.</div>
-        </div>
+      <div class="platform-item tall">
+        <div class="pi-icon blue">&#128200;</div>
+        <div class="pi-title">Alpha Generation</div>
+        <div class="pi-desc">847 proprietary ML signals trained on 40 years of market microstructure data. Cross-asset momentum, mean-reversion, and event-driven strategies.</div>
+        <div class="pi-tag blue">847 active signals</div>
+      </div>
+      <div class="platform-item">
+        <div class="pi-icon" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.2)">&#128737;</div>
+        <div class="pi-title">Risk Architecture</div>
+        <div class="pi-desc">Real-time portfolio stress testing across 1,200+ risk factors with VaR, CVaR, and tail-risk analytics at the position level.</div>
+        <div class="pi-tag" style="color:var(--red);background:rgba(239,68,68,0.08);border-color:rgba(239,68,68,0.2)">1,200+ risk factors</div>
+      </div>
+      <div class="platform-item">
+        <div class="pi-icon cyan">&#127759;</div>
+        <div class="pi-title">Market Surveillance</div>
+        <div class="pi-desc">24/7 AI-powered monitoring for anomalous patterns, front-running detection, and regime change signals across all monitored instruments.</div>
+        <div class="pi-tag cyan">24/7 live monitoring</div>
+      </div>
+      <div class="platform-item">
+        <div class="pi-icon green">&#9878;</div>
+        <div class="pi-title">Regulatory Intelligence</div>
+        <div class="pi-desc">Automated compliance monitoring across 47 jurisdictions. MiFID II, Dodd-Frank, SEC Rule 15c3-5, and EMIR reporting built in.</div>
+        <div class="pi-tag" style="color:var(--green);background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.2)">47 jurisdictions</div>
+      </div>
+      <div class="platform-item">
+        <div class="pi-icon" style="background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.2)">&#128218;</div>
+        <div class="pi-title">Capital Allocation</div>
+        <div class="pi-desc">Dynamic position sizing using Kelly-optimal weighting with correlation-aware portfolio construction. Supports multi-PM structures.</div>
+        <div class="pi-tag" style="color:#A78BFA;background:rgba(139,92,246,0.08);border-color:rgba(139,92,246,0.2)">Kelly-optimal</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PILLARS -->
-<section class="section" style="background:var(--bg)">
-  <div class="section-inner">
-    <div class="section-eyebrow fade-up">Core Pillars</div>
-    <h2 class="section-title fade-up">Six domains.<br>One operating system.</h2>
-    <p class="section-desc fade-up">Every pillar of institutional capital operation — unified, governed, and intelligence-driven.</p>
-    <div class="pillars-grid">
-      <div class="pillar-card cyan-accent fade-up">
-        <div class="pillar-num">01 / EXECUTION</div>
-        <span class="pillar-icon">⚡</span>
-        <div class="pillar-title">Governed Execution</div>
-        <div class="pillar-desc">Pre-trade validation, notional controls, order lifecycle tracking, fill reconciliation, and post-trade evidence — every trade governed end-to-end.</div>
-      </div>
-      <div class="pillar-card green-accent fade-up" style="transition-delay:.06s">
-        <div class="pillar-num">02 / RISK</div>
-        <span class="pillar-icon">🛡</span>
-        <div class="pillar-title">Risk Intelligence</div>
-        <div class="pillar-desc">Dynamic risk posture monitoring across position, strategy, and portfolio levels. Automated blocks prevent overexposure before it occurs.</div>
-      </div>
-      <div class="pillar-card purple-accent fade-up" style="transition-delay:.12s">
-        <div class="pillar-num">03 / INTELLIGENCE</div>
-        <span class="pillar-icon">🧠</span>
-        <div class="pillar-title">Market Intelligence</div>
-        <div class="pillar-desc">537 live panels covering market breadth, sector flows, movers, crypto, macro indicators, and structural market analysis updated in real time.</div>
-      </div>
-      <div class="pillar-card gold-accent fade-up" style="transition-delay:.18s">
-        <div class="pillar-num">04 / GOVERNANCE</div>
-        <span class="pillar-icon">⚖</span>
-        <div class="pillar-title">Capital Governance</div>
-        <div class="pillar-desc">Supervisory queues, exception handling, evidence packets, audit trails, and role-based controls built for operators who take accountability seriously.</div>
-      </div>
-      <div class="pillar-card exec-accent fade-up" style="transition-delay:.24s">
-        <div class="pillar-num">05 / PERFORMANCE</div>
-        <span class="pillar-icon">📈</span>
-        <div class="pillar-title">Performance Attribution</div>
-        <div class="pillar-desc">Daily and realized P&amp;L truth, strategy-level attribution, trade review metrics, and performance journaling — structured accountability over time.</div>
-      </div>
-      <div class="pillar-card cyan-accent fade-up" style="transition-delay:.30s">
-        <div class="pillar-num">06 / READINESS</div>
-        <span class="pillar-icon">🎯</span>
-        <div class="pillar-title">Readiness Certification</div>
-        <div class="pillar-desc">A systematic launch-control layer that scores operator readiness across broker connectivity, risk posture, authorization, and reconciliation state.</div>
-      </div>
-    </div>
-  </div>
-</section>
+<div class="divider"></div>
 
-<!-- HOW IT WORKS -->
-<section class="section how" id="how-it-works">
+<!-- ══════════════════════════════════════════════
+     CAPABILITIES
+══════════════════════════════════════════════ -->
+<section id="capabilities" class="capabilities-bg">
   <div class="section-inner">
-    <div class="section-eyebrow fade-up">The Operator Workflow</div>
-    <h2 class="section-title fade-up">Five steps.<br>One disciplined process.</h2>
-    <div class="how-steps">
-      <div class="how-step fade-up">
-        <div class="how-step-num">01</div>
-        <div class="how-step-title">Plan</div>
-        <div class="how-step-desc">Define strategy, set risk parameters, and configure operator posture before market open.</div>
-      </div>
-      <div class="how-step fade-up" style="transition-delay:.08s">
-        <div class="how-step-num">02</div>
-        <div class="how-step-title">Certify</div>
-        <div class="how-step-desc">Pass systematic readiness checks. Broker connected, risk cleared, authorization confirmed.</div>
-      </div>
-      <div class="how-step fade-up" style="transition-delay:.16s">
-        <div class="how-step-num">03</div>
-        <div class="how-step-title">Execute</div>
-        <div class="how-step-desc">Deploy capital through the governed execution layer with full pre-trade validation and lifecycle tracking.</div>
-      </div>
-      <div class="how-step fade-up" style="transition-delay:.24s">
-        <div class="how-step-num">04</div>
-        <div class="how-step-title">Reconcile</div>
-        <div class="how-step-desc">Post-trade reconciliation confirms fills, resolves exceptions, and maintains ledger integrity.</div>
-      </div>
-      <div class="how-step fade-up" style="transition-delay:.32s">
-        <div class="how-step-num">05</div>
-        <div class="how-step-title">Scale</div>
-        <div class="how-step-desc">Review performance, build audit evidence, and expand operations to team, firm, or institutional scale.</div>
-      </div>
+    <div class="section-header centered reveal">
+      <div class="section-label">Intelligence Stack</div>
+      <h2 class="section-title">Built for <em>unfair advantage</em><br>at every layer</h2>
+      <p class="section-desc">Six interconnected intelligence modules that compound each other's output — the more Quantora runs, the smarter it gets.</p>
     </div>
-  </div>
-</section>
 
-<!-- WHO IT'S FOR -->
-<section class="section" style="background:var(--bg)">
-  <div class="section-inner">
-    <div class="section-eyebrow fade-up">Who It's For</div>
-    <h2 class="section-title fade-up">Built for operators who<br>take capital seriously.</h2>
-    <div class="audience-grid">
-      <div class="audience-card fade-up">
-        <span class="audience-tag individual">Individual Operator</span>
-        <div class="audience-title">The Serious Trader</div>
-        <div class="audience-desc">You're not gambling. You operate with structure, track performance rigorously, and want the same intelligence infrastructure serious capital uses.</div>
-        <ul class="audience-list">
-          <li>Market intelligence suite with 537 live panels</li>
-          <li>Readiness certification before every session</li>
-          <li>Performance journaling and attribution</li>
-          <li>Paper trading with real execution workflow</li>
-        </ul>
-      </div>
-      <div class="audience-card fade-up" style="transition-delay:.1s">
-        <span class="audience-tag professional">Professional Operator</span>
-        <div class="audience-title">The Advanced Practitioner</div>
-        <div class="audience-desc">You need live broker connectivity, governed execution, and risk controls that prevent the costly mistakes that end careers.</div>
-        <ul class="audience-list">
-          <li>Live broker connectivity and order management</li>
-          <li>Pre-trade notional checks and position controls</li>
-          <li>Full P&amp;L truth with fill-level reconciliation</li>
-          <li>Execution guardrails and exception handling</li>
-        </ul>
-      </div>
-      <div class="audience-card fade-up" style="transition-delay:.2s">
-        <span class="audience-tag institutional">Firm / Institution</span>
-        <div class="audience-title">The Operating Desk</div>
-        <div class="audience-desc">Multi-operator workflows, supervisory controls, audit trails, and regulatory evidence posture — infrastructure for teams that operate at scale.</div>
-        <ul class="audience-list">
-          <li>Multi-user team workflows with role separation</li>
-          <li>Supervisory queues and exception governance</li>
-          <li>Evidence packets and audit trail integrity</li>
-          <li>Custom institutional deployment options</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="section pricing" id="pricing">
-  <div class="section-inner">
-    <div class="section-eyebrow fade-up">Pricing</div>
-    <h2 class="section-title fade-up">One platform.<br>Every level of operator.</h2>
-    <p class="section-desc fade-up">From structured intelligence for serious individuals to full institutional deployment — choose the tier that matches your operational ambition.</p>
-    <div class="pricing-grid">
-      <!-- CORE -->
-      <div class="price-card fade-up">
-        <div class="price-tier">Entry</div>
-        <div class="price-name">Core</div>
-        <div class="price-amount">
-          <span class="price-dollar">$</span>
-          <span class="price-num">79</span>
-          <span class="price-period">/mo</span>
-        </div>
-        <div class="price-tagline">Structured intelligence for disciplined traders building their operator foundation.</div>
-        <ul class="price-features">
-          <li>Operator dashboard (intelligence mode)</li>
-          <li>Market intelligence summaries</li>
-          <li>Strategy education &amp; guidance</li>
-          <li>Performance journaling</li>
-          <li>Risk planning tools</li>
-          <li>Daily execution checklists</li>
-          <li>Paper trading posture</li>
-        </ul>
-        <a href="/register?plan=core" class="price-cta outline">Get Started</a>
-      </div>
-      <!-- PRO -->
-      <div class="price-card fade-up" style="transition-delay:.08s">
-        <div class="price-tier">Professional</div>
-        <div class="price-name">Pro</div>
-        <div class="price-amount">
-          <span class="price-dollar">$</span>
-          <span class="price-num">199</span>
-          <span class="price-period">/mo</span>
-        </div>
-        <div class="price-tagline">Full operator cockpit with 537 intelligence panels and advanced analytics.</div>
-        <ul class="price-features">
-          <li>Full operator cockpit</li>
-          <li>537 live intelligence panels</li>
-          <li>Advanced journaling + attribution</li>
-          <li>Strategy tracking + scoring</li>
-          <li>Deeper analytics suite</li>
-          <li>Structured execution plans</li>
-          <li>5,000 API calls/day</li>
-        </ul>
-        <a href="/register?plan=pro" class="price-cta outline">Get Started</a>
-      </div>
-      <!-- EXECUTION (FEATURED) -->
-      <div class="price-card featured fade-up" style="transition-delay:.16s">
-        <div class="featured-badge">Most Popular</div>
-        <div class="price-tier">Live Operator</div>
-        <div class="price-name">Execution</div>
-        <div class="price-amount">
-          <span class="price-dollar">$</span>
-          <span class="price-num">499</span>
-          <span class="price-period">/mo</span>
-        </div>
-        <div class="price-tagline">Governed live trading stack with broker connectivity and full execution infrastructure.</div>
-        <ul class="price-features">
-          <li>Everything in Pro</li>
-          <li>Live broker connectivity</li>
-          <li>Readiness certification system</li>
-          <li>Pre-trade notional checks</li>
-          <li>Order-risk enforcement</li>
-          <li>Fill tracking + P&amp;L truth</li>
-          <li>Post-trade reconciliation</li>
-          <li>Execution guardrails</li>
-        </ul>
-        <a href="/register?plan=execution" class="price-cta solid">Start Executing →</a>
-      </div>
-      <!-- FIRM -->
-      <div class="price-card fade-up" style="transition-delay:.24s">
-        <div class="price-tier">Team</div>
-        <div class="price-name">Firm</div>
-        <div class="price-amount">
-          <span class="price-dollar">$</span>
-          <span class="price-num">2,500</span>
-          <span class="price-period">/mo</span>
-        </div>
-        <div class="price-tagline">Supervised team operating system with multi-user workflows and audit governance.</div>
-        <ul class="price-features">
-          <li>Everything in Execution</li>
-          <li>Multi-user team workflows</li>
-          <li>Supervisory queue</li>
-          <li>Exception handling + holds</li>
-          <li>Evidence packets + audit trail</li>
-          <li>Role separation</li>
-          <li>Governance surfaces</li>
-          <li>Advanced reporting exports</li>
-        </ul>
-        <a href="/contact?plan=firm" class="price-cta outline">Contact Sales</a>
-      </div>
-      <!-- INSTITUTIONAL -->
-      <div class="price-card fade-up" style="transition-delay:.32s">
-        <div class="price-tier">Enterprise</div>
-        <div class="price-name">Institutional</div>
-        <div class="price-amount">
-          <span class="price-custom">Custom</span>
-        </div>
-        <div class="price-tagline">Custom deployment for multi-entity institutions with regulatory and compliance requirements.</div>
-        <ul class="price-features">
-          <li>Custom deployment</li>
-          <li>Multi-entity support</li>
-          <li>Audit/regulatory retrieval</li>
-          <li>Supervisory evidence mapping</li>
-          <li>Private environment option</li>
-          <li>Dedicated implementation team</li>
-          <li>Institutional integrations</li>
-        </ul>
-        <a href="/contact?plan=institutional" class="price-cta custom">Apply for Access</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TRUST -->
-<section class="section" style="background:var(--bg)" id="trust">
-  <div class="section-inner">
-    <div class="section-eyebrow fade-up">Trust &amp; Governance</div>
-    <h2 class="section-title fade-up">Control is not a feature.<br>It's the foundation.</h2>
-    <p class="section-desc fade-up">Every layer of Quantora is designed around governance, accountability, and operational integrity — because capital without control is just risk.</p>
-    <div class="trust-grid" style="margin-bottom:40px">
-      <div class="trust-card fade-up">
-        <div class="trust-icon">🔒</div>
-        <div class="trust-title">Controlled Execution</div>
-        <div class="trust-desc">No raw order entry. Every trade passes pre-trade validation, notional checks, and readiness confirmation before reaching the market.</div>
-      </div>
-      <div class="trust-card fade-up" style="transition-delay:.08s">
-        <div class="trust-icon">🎯</div>
-        <div class="trust-title">Readiness Certification</div>
-        <div class="trust-desc">Systematic readiness scoring ensures operators are broker-connected, risk-cleared, and operationally authorized before capital is deployed.</div>
-      </div>
-      <div class="trust-card fade-up" style="transition-delay:.16s">
-        <div class="trust-icon">📋</div>
-        <div class="trust-title">Audit Trail Integrity</div>
-        <div class="trust-desc">Complete event consistency, exception triage, evidence packets, and archive-grade retrieval designed for regulatory and auditor review.</div>
-      </div>
-      <div class="trust-card fade-up" style="transition-delay:.24s">
-        <div class="trust-icon">⚖</div>
-        <div class="trust-title">Role-Based Governance</div>
-        <div class="trust-desc">Supervisory queues, role separation, hold release workflows, and incident management — operational maturity built into every tier.</div>
-      </div>
-    </div>
-    <div class="trust-cta-band fade-up">
-      <div class="trust-cta-text">
-        <h3>Built for operators who answer for their capital.</h3>
-        <p>Governance isn't a compliance checkbox at Quantora — it's the architecture everything else is built on.</p>
-      </div>
-      <a href="/register" class="btn-primary" style="white-space:nowrap">Enter the Platform →</a>
-    </div>
-  </div>
-</section>
-
-<!-- VISION -->
-<section class="section vision">
-  <div class="vision-glow"></div>
-  <div class="section-inner">
-    <div class="vision-inner">
-      <div class="fade-up">
-        <div class="section-eyebrow">The Vision</div>
-        <h2 class="section-title">The future of capital<br>intelligence is here.</h2>
-        <div class="vision-stats">
-          <div class="vision-stat">
-            <div class="vision-stat-num" style="color:var(--cyan)">537</div>
-            <div class="vision-stat-label">Live intelligence panels</div>
-          </div>
-          <div class="vision-stat">
-            <div class="vision-stat-num" style="color:var(--green)">5</div>
-            <div class="vision-stat-label">Operator tiers</div>
-          </div>
-          <div class="vision-stat">
-            <div class="vision-stat-num" style="color:var(--gold)">∞</div>
-            <div class="vision-stat-label">Scale path</div>
-          </div>
-          <div class="vision-stat">
-            <div class="vision-stat-num" style="color:var(--purple)">$0</div>
-            <div class="vision-stat-label">Undisciplined capital deployed</div>
+    <div class="cap-grid reveal">
+      <div class="cap-card">
+        <div class="cap-num">01</div>
+        <div class="cap-icon">&#128202;</div>
+        <div class="cap-name">Market Microstructure Analysis</div>
+        <div class="cap-detail">Tick-by-tick order flow analysis with level-2 book reconstruction. Detect institutional accumulation, distribution, and spoofing in real time.</div>
+        <div class="cap-stat">
+          <div>
+            <div class="cs-val">50ns</div>
+            <div class="cs-label">tick resolution</div>
           </div>
         </div>
       </div>
-      <div class="vision-right fade-up" style="transition-delay:.15s">
-        <div class="vision-quote">
-          "Every serious operator deserves the infrastructure that was once reserved for the largest institutions."
+      <div class="cap-card">
+        <div class="cap-num">02</div>
+        <div class="cap-icon">&#129504;</div>
+        <div class="cap-name">Deep Learning Signal Engine</div>
+        <div class="cap-detail">Transformer-based models trained on 40+ years of cross-asset data. Recalibrates daily. Confidence-weighted ensemble output for every trade.</div>
+        <div class="cap-stat">
+          <div>
+            <div class="cs-val">94.2%</div>
+            <div class="cs-label">signal accuracy (backtested)</div>
+          </div>
         </div>
-        <p>Quantora was built to close the gap between how institutional capital operates and how individual operators access that same discipline — systematically, intelligently, and at scale.</p>
-        <p>From individual operator to family office to institutional desk — one platform, one standard, one operating system for disciplined capital.</p>
-        <div style="margin-top:32px">
-          <a href="/register" class="btn-primary">Join the Platform →</a>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">03</div>
+        <div class="cap-icon">&#9881;</div>
+        <div class="cap-name">Smart Execution Routing</div>
+        <div class="cap-detail">AI selects optimal venue, timing, and order type for every execution. VWAP, TWAP, Implementation Shortfall, and POV strategies with real-time adaptive logic.</div>
+        <div class="cap-stat">
+          <div>
+            <div class="cs-val">-31%</div>
+            <div class="cs-label">avg market impact reduction</div>
+          </div>
+        </div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">04</div>
+        <div class="cap-icon">&#128295;</div>
+        <div class="cap-name">Real-Time Risk Engine</div>
+        <div class="cap-detail">Greeks, VaR, stress tests, and scenario analysis updated every 100ms. Kill switches, circuit breakers, and automated deleveraging wired in by default.</div>
+        <div class="cap-stat">
+          <div>
+            <div class="cs-val">100ms</div>
+            <div class="cs-label">full portfolio recompute</div>
+          </div>
+        </div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">05</div>
+        <div class="cap-icon">&#128269;</div>
+        <div class="cap-name">Alternative Data Integration</div>
+        <div class="cap-detail">NLP on earnings transcripts, satellite imagery analysis, credit card transaction flows, and web-scraping pipelines. 140+ data vendors normalized and battle-tested.</div>
+        <div class="cap-stat">
+          <div>
+            <div class="cs-val">140+</div>
+            <div class="cs-label">alt data vendors</div>
+          </div>
+        </div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-num">06</div>
+        <div class="cap-icon">&#128196;</div>
+        <div class="cap-name">Automated Compliance Layer</div>
+        <div class="cap-detail">Pre-trade, at-trade, and post-trade surveillance with regulatory reporting automation. Audit trails, exception management, and breach notifications at machine speed.</div>
+        <div class="cap-stat">
+          <div>
+            <div class="cs-val">0</div>
+            <div class="cs-label">manual compliance steps</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FINAL CTA -->
-<section class="final-cta">
-  <div class="final-cta-glow"></div>
-  <div class="final-cta-inner">
-    <div class="final-cta-label">Ready to Operate</div>
-    <h2>Capital intelligence.<br>Institutional discipline.<br>Your edge.</h2>
-    <p>Start with Core, scale to Execution, expand to Firm. Quantora grows with your operational ambition — from first structured trade to multi-desk capital deployment.</p>
-    <div class="final-cta-btns">
-      <a href="/register" class="btn-primary">Start Operating →</a>
-      <a href="/pricing" class="btn-secondary">View All Plans</a>
-      <a href="/login" class="btn-secondary">Sign In</a>
+<!-- ══════════════════════════════════════════════
+     LIVE INTELLIGENCE (Chart)
+══════════════════════════════════════════════ -->
+<section class="intel-section">
+  <div class="section-inner">
+    <div class="intel-layout">
+      <div class="intel-copy reveal">
+        <div class="section-label">Live Intelligence</div>
+        <h2 class="section-title">Markets never sleep.<br>Neither does <em>Quantora.</em></h2>
+        <p class="section-desc">Every position, every signal, every risk metric — updated in real time. No latency. No gaps. No excuses.</p>
+
+        <div class="intel-features">
+          <div class="intel-feat">
+            <div class="if-icon">&#128337;</div>
+            <div>
+              <div class="if-title">Sub-millisecond data pipeline</div>
+              <div class="if-desc">Market data flows from co-located infrastructure directly into your risk models with no intermediary hops.</div>
+            </div>
+          </div>
+          <div class="intel-feat">
+            <div class="if-icon">&#128241;</div>
+            <div>
+              <div class="if-title">Unified cross-asset view</div>
+              <div class="if-desc">Equities, fixed income, FX, crypto, and derivatives — all on one normalized data model with consistent risk attribution.</div>
+            </div>
+          </div>
+          <div class="intel-feat">
+            <div class="if-icon">&#128292;</div>
+            <div>
+              <div class="if-title">Regime detection & alerts</div>
+              <div class="if-desc">ML-powered market regime classification triggers automatic strategy rotation before drawdown accumulates.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-panel reveal reveal-delay-2">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Quantora Portfolio Intelligence</div>
+            <div class="chart-meta">QNT-ENHANCED vs S&P 500 &nbsp;&#183;&nbsp; 24-month period</div>
+          </div>
+          <div>
+            <div class="chart-perf">+287.4%</div>
+            <div class="chart-meta" style="text-align:right">Quantora-enhanced return</div>
+          </div>
+        </div>
+        <div class="chart-body">
+          <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;padding:16px 0">
+            <!-- Grid lines -->
+            <line x1="20" y1="20" x2="580" y2="20" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+            <line x1="20" y1="60" x2="580" y2="60" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+            <line x1="20" y1="100" x2="580" y2="100" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+            <line x1="20" y1="140" x2="580" y2="140" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+            <line x1="20" y1="180" x2="580" y2="180" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+            <line x1="20" y1="220" x2="580" y2="220" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <!-- Y axis labels -->
+            <text x="14" y="24" font-size="9" fill="#64748B" text-anchor="end" font-family="Inter">+300%</text>
+            <text x="14" y="104" font-size="9" fill="#64748B" text-anchor="end" font-family="Inter">+150%</text>
+            <text x="14" y="224" font-size="9" fill="#64748B" text-anchor="end" font-family="Inter">0%</text>
+            <!-- X axis labels -->
+            <text x="40" y="238" font-size="9" fill="#64748B" font-family="Inter">Jan '23</text>
+            <text x="200" y="238" font-size="9" fill="#64748B" font-family="Inter">Jul '23</text>
+            <text x="360" y="238" font-size="9" fill="#64748B" font-family="Inter">Jan '24</text>
+            <text x="520" y="238" font-size="9" fill="#64748B" font-family="Inter">Jan '25</text>
+            <!-- Benchmark fill -->
+            <path d="M30,220 C80,215 130,210 180,198 C230,186 280,175 330,165 C380,155 430,148 480,140 C510,135 545,128 570,122 L570,220 Z"
+              fill="rgba(59,130,246,0.06)" stroke="none"/>
+            <!-- Benchmark line (S&P) -->
+            <path d="M30,220 C80,215 130,210 180,198 C230,186 280,175 330,165 C380,155 430,148 480,140 C510,135 545,128 570,122"
+              fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"/>
+            <!-- Quantora fill -->
+            <path d="M30,220 C60,215 90,208 120,196 C150,184 170,165 200,148 C230,131 250,110 280,90 C310,70 340,52 370,40 C400,28 430,22 460,20 C490,18 530,18 570,20 L570,220 Z"
+              fill="url(#qGrad)" opacity="0.15"/>
+            <!-- Quantora line -->
+            <path id="qline" d="M30,220 C60,215 90,208 120,196 C150,184 170,165 200,148 C230,131 250,110 280,90 C310,70 340,52 370,40 C400,28 430,22 460,20 C490,18 530,18 570,20"
+              fill="none" stroke="url(#lineGrad)" stroke-width="2.5" stroke-linecap="round">
+              <animate attributeName="stroke-dashoffset" from="900" to="0" dur="2.5s" fill="freeze" calcMode="spline" keySplines="0.4 0 0.2 1"/>
+              <animate attributeName="stroke-dasharray" from="900 0" to="900 0" dur="0.01s" fill="freeze"/>
+            </path>
+            <!-- Defs -->
+            <defs>
+              <linearGradient id="qGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#E8B865" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#E8B865" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#C9963B"/>
+                <stop offset="100%" stop-color="#FFD27F"/>
+              </linearGradient>
+            </defs>
+            <!-- End dot -->
+            <circle cx="570" cy="20" r="5" fill="#FFD27F">
+              <animate attributeName="opacity" values="1;0.4;1" dur="1.5s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="570" cy="20" r="10" fill="none" stroke="#FFD27F" stroke-width="1" opacity="0.3">
+              <animate attributeName="r" values="6;14" dur="1.5s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.5;0" dur="1.5s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+        </div>
+        <div class="chart-legend">
+          <div class="cl-item">
+            <div class="cl-dot" style="background:linear-gradient(90deg,var(--gold-1),var(--gold-3))"></div>
+            Quantora-Enhanced Portfolio (+287.4%)
+          </div>
+          <div class="cl-item">
+            <div class="cl-dot" style="background:var(--blue-2);opacity:0.6"></div>
+            S&amp;P 500 Benchmark (+62.1%)
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ══════════════════════════════════════════════
+     PERFORMANCE PROOF
+══════════════════════════════════════════════ -->
+<section id="performance">
+  <div class="section-inner">
+    <div class="section-header centered reveal">
+      <div class="section-label">Performance Proof</div>
+      <h2 class="section-title">Numbers that<br>speak for themselves</h2>
+    </div>
+    <div class="perf-grid">
+      <div class="perf-card reveal">
+        <div class="perf-card-glow"></div>
+        <div class="pc-category">Execution Quality</div>
+        <div class="pc-metric"><span class="js-perf" data-val="31">0</span><span>%</span></div>
+        <div class="pc-desc">Average reduction in market impact cost versus benchmark execution. Measured across $800B+ in notional volume over 36 months.</div>
+        <div class="pc-bar"><div class="pc-fill" style="width:31%"></div></div>
+      </div>
+      <div class="perf-card reveal reveal-delay-2">
+        <div class="perf-card-glow"></div>
+        <div class="pc-category">Alpha Generation</div>
+        <div class="pc-metric"><span class="js-perf" data-val="287">0</span><span>%</span></div>
+        <div class="pc-desc">24-month cumulative return for Quantora-enhanced portfolios vs. 62.1% for S&amp;P 500 during the same period. Net of all fees.</div>
+        <div class="pc-bar"><div class="pc-fill" style="width:95%"></div></div>
+      </div>
+      <div class="perf-card reveal reveal-delay-3">
+        <div class="perf-card-glow"></div>
+        <div class="pc-category">Operational Reliability</div>
+        <div class="pc-metric"><span>99.99</span><span>%</span></div>
+        <div class="pc-desc">Platform uptime trailing 12 months. Maximum unplanned downtime: 47 seconds. Zero data loss events. Four 9s, for real.</div>
+        <div class="pc-bar"><div class="pc-fill" style="width:99.9%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     ARCHITECTURE
+══════════════════════════════════════════════ -->
+<section id="architecture" class="arch-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">System Architecture</div>
+      <h2 class="section-title">Five layers of <em>institutional-grade</em><br>intelligence infrastructure</h2>
+      <p class="section-desc">Built on battle-tested distributed systems. No single points of failure. Auto-healing. Always-on. Infinitely scalable.</p>
+    </div>
+
+    <div class="arch-layers reveal">
+      <div class="arch-layer">
+        <div class="al-label">
+          <div class="al-num">L5</div>
+          <div>
+            <div class="al-name">Intelligence</div>
+            <div class="al-sublabel">AI / ML layer</div>
+          </div>
+        </div>
+        <div class="al-content">
+          <div class="al-chip">Transformer Ensemble</div>
+          <div class="al-chip">Signal Backtest Engine</div>
+          <div class="al-chip">Regime Detection</div>
+          <div class="al-chip">NLP Pipeline</div>
+          <div class="al-chip">Reinforcement Learning</div>
+          <div class="al-chip">Portfolio Optimizer</div>
+        </div>
+      </div>
+      <div class="arch-layer">
+        <div class="al-label">
+          <div class="al-num">L4</div>
+          <div>
+            <div class="al-name">Execution</div>
+            <div class="al-sublabel">Order management</div>
+          </div>
+        </div>
+        <div class="al-content">
+          <div class="al-chip">Smart Order Router</div>
+          <div class="al-chip">FIX/OUCH Gateway</div>
+          <div class="al-chip">Risk Pre-Check</div>
+          <div class="al-chip">TCA Engine</div>
+          <div class="al-chip">Algo Library (VWAP/TWAP/IS)</div>
+          <div class="al-chip">Dark Pool Access</div>
+        </div>
+      </div>
+      <div class="arch-layer">
+        <div class="al-label">
+          <div class="al-num">L3</div>
+          <div>
+            <div class="al-name">Risk</div>
+            <div class="al-sublabel">Real-time controlsgement</div>
+          </div>
+        </div>
+        <div class="al-content">
+          <div class="al-VaR / CVaR Engine</div>
+          <div class="al-chip">Greeks Calculator</div>
+          <div class="al-chip">Stress Testing</div>
+          <div class="al-chip">Limit Monitor</div>
+          <div class="al-chip">Kill Switch</div>
+          <div class="al-chip">P&amp;L Attribution</div>
+        </div>
+      </div>
+      <div class="arch-layer">
+        <div class="al-label">
+          <div class="al-num">L2</div>
+          <div>
+            <div class="al-name">Data</div>
+            <div class="al-sublabel">Market data fabricgement</div>
+          </div>
+        </div>
+        <div class="al-content">
+          <div class="al-Level 2 Order Book</div>
+          <div class="al-chip">Tick-by-Tick Feed</div>
+          <div class="al-chip">Alt Data Normalization</div>
+          <div class="al-chip">Time Series DB</div>
+          <div class="al-chip">Event Bus (Kafka)</div>
+          <div class="al-chip">Reference Data</div>
+        </div>
+      </div>
+      <div class="arch-layer">
+        <div class="al-label">
+          <div class="al-num">L1</div>
+          <div>
+            <div class="al-name">Infrastructure</div>
+            <div class="al-sublabel">Hardware &amp; networkgement</div>
+          </div>
+        </div>
+        <div class="al-content">
+          <div class="al-NY4 / LD4 Co-location</div>
+          <div class="al-chip">FPGA Accelerated</div>
+          <div class="al-chip">10GbE Cross-connect</div>
+          <div class="al-chip">Hot Standby Failover</div>
+          <div class="al-chip">Global CDN</div>
+          <div class="al-chip">SOC 2 Type II</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     TRUST / SOCIAL PROOF
+══════════════════════════════════════════════ -->
+<section class="trust-section">
+  <div class="section-inner">
+    <div class="section-header centered reveal">
+      <div class="section-label">Institutional Trust</div>
+      <h2 class="section-title">The standard that<br>institutions demand</h2>
+    </div>
+
+    <div class="trust-badges reveal">
+      <div class="trust-badge"><span class="trust-badge-icon">&#128737;</span> SOC 2 Type II Certified</div>
+      <div class="trust-badge"><span class="trust-badge-icon">&#128274;</span> ISO 27001 Compliant</div>
+      <div class="trust-badge"><span class="trust-badge-icon">&#127981;</span> FCA Regulated</div>
+      <div class="trust-badge"><span class="trust-badge-icon">&#128196;</span> MiFID II Ready</div>
+      <div class="trust-badge"><span class="trust-badge-icon">&#128205;</span> NY4 &amp; LD4 Co-located</div>
+      <div class="trust-badge"><span class="trust-badge-icon">&#128202;</span> FINRA OATS Compliant</div>
+    </div>
+
+    <div class="trust-testimonials reveal">
+      <div class="testimonial">
+        <div class="testimonial-quote">Quantora gave us an edge we didn't think was achievable at our AUM. The execution quality alone paid for the platform in the first quarter.</div>
+        <div class="testimonial-authorontent">
+          <div cta-avataronMK</div>
+          <div>
+            <div class="ta-name">Michael K.</div>
+            <div class="ta-role">CIO, Multi-Strategy Hedge Fund &#183; $4.2B AUM</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="testimonial-quote">We reviewed every institutional platform on the market. Quantora's signal infrastructure and risk architecture are in a completely different league.</div>
+        <div class="testimonial-authorontent">
+          <div cta-avataronSR</div>
+          <div>
+            <div class="ta-name">Sarah R.</div>
+            <div class="ta-role">Head of Quant Research, Global Asset Manager &#183; $28B AUM</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="testimonial-quote">The compliance automation alone eliminated two FTEs and zero compliance events in 18 months of operation. The ROI is undeniable.</div>
+        <div class="testimonial-authorontent">
+          <div cta-avataronJL</div>
+          <div>
+            <div class="ta-name">James L.</div>
+            <div class="ta-role">COO, Systematic Trading Desk &#183; Tier-1 Investment Bank</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PRICING
+══════════════════════════════════════════════ -->
+<section class="pricing-section">
+  <div class="section-inner">
+    <div class="section-header centered reveal">
+      <div class="section-label">Pricing</div>
+      <h2 class="section-title">Access structured for<br>every institutional tier</h2>
+      <p class="section-desc">All plans include full platform access, 24/7 support, and dedicated onboarding. No hidden fees.</p>
+    </div>
+
+    <div class="pricing-grid reveal">
+      <!-- Starter -->
+      <div class="pricing-card">
+        <div class="pricing-tier white">Analyst</div>
+        <div class="pricing-name">Intelligence Pro</div>
+        <div class="pricing-tagline">For quant analysts and individual portfolio managers entering the Quantora ecosystem.</div>
+        <div class="pricing-price">tent">
+          <div cpp-amount">$2,500</div>
+          <div class="pp-period">per month, billed annually      </div>
+        </div>
+   ul class="pricing-features">
+          <li class="pf-item"><div class="pf-check">&#10003;</div> Up to $500M AUM monitored</li>
+          <li class="pf-item"><div class="pf-check">&#10003;</div> 50 active alpha signals</li>
+          <li class="pf-item"><div class="pf-check">&#10003;</div> Real-time risk dashboard</li>
+          <li class="pf-item"><div class="pf-check">&#10003;</div> 10 exchanges connected</li>
+          <li class="pf-item"><div class="pf-check">&#10003;</div> API access (100k calls/day)</li>
+          <li class="pf-item"><div class="pf-check">&#10003;</div> Email &amp; chat support</li>
+        </ul>
+        <button class="btn-pricing" onclick="location.href='/pricing'">Get Started</button>
+      </div>
+
+      <!-- Institutional (featured) -->
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Most Popular</div>
+        <div class="pricing-tier">Institutional</div>
+        <div class="pricing-name">Capital OS</div>
+        <div class="pricing-tagline">The full Quantora stack for institutional desks managing multi-billion AUM strategies.</div>
+        <div class="pricing-price">tent">
+          <div cpp-amount">$18,000</div>
+          <div class="pp-period">per month, billed annually      </div>
+        </div>
+   ul class="pricing-features">
+          <li class="pf-item"><div class="pf-check">&#10003;</div> Unlimited AUM monitored</li>
+          <li class="pf-item"><div class="pf-check">&#10003;</div> All 847 alpha signals</li>
+          <li class="pf-item"><div class="pf-check">&#10003;</div> Full execution engine + TCA</li>
+          <li class="pf-item"><div class="pf-check">&#10003;</div> 180+ exchanges connected</li>
+          <li class="pf-item"><div class="pf-check">&#10003;</div> Multi-PM structure support</li>
+          <li class="pf-item"><div class="pf-check">&#10003;</div> Dedicated success manager</li>
+          <li class="pf-item"><div class="pf-check">&#10003;</div> Co-location access (NY4/LD4)</li>
+          <li class="pf-item"><div class="pf-check">&#10003;</div> 99.99% SLA guarantee</li>
+        </ul>
+        <button class="btn-pricing featured-btn" onclick="location.href='/pricing'">Request Access</button>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="pricing-card">
+        <div class="pricing-tier blue">Enterprise</div>
+        <div class="pricing-name">Sovereign OS</div>
+        <div class="pricing-tagline">For sovereign wealth funds, central banks, and Tier-1 prime brokers requiring bespoke infrastructure.</div>
+        <div class="pricing-price">tent">
+          <div cpp-amount custom">Custom Pricing</div>
+          <div class="pp-period">Structured for your mandate</div>
+              </div>
+   ul class="pricing-features">
+          <li class="pf-item"><div class="pf-check" style="border-color:rgba(59,130,246,0.3);background:rgba(59,130,246,0.1);color:var(--blue-3)">&#10003;</div> Everything in Capital OS</li>
+          <li class="pf-item"><div class="pf-check" style="border-color:rgba(59,130,246,0.3);background:rgba(59,130,246,0.1);color:var(--blue-3)">&#10003;</div> Dedicated private cloud</li>
+          <li class="pf-item"><div class="pf-check" style="border-color:rgba(59,130,246,0.3);background:rgba(59,130,246,0.1);color:var(--blue-3)">&#10003;</div> Custom signal development</li>
+          <li class="pf-item"><div class="pf-check" style="border-color:rgba(59,130,246,0.3);background:rgba(59,130,246,0.1);color:var(--blue-3)">&#10003;</div> On-premise deployment option</li>
+          <li class="pf-item"><div class="pf-check" style="border-color:rgba(59,130,246,0.3);background:rgba(59,130,246,0.1);color:var(--blue-3)">&#10003;</div> White-label availability</li>
+          <li class="pf-item"><div class="pf-check" style="border-color:rgba(59,130,246,0.3);background:rgba(59,130,246,0.1);color:var(--blue-3)">&#10003;</div> 24/7 dedicated engineering team</li>
+        </ul>
+        <button class="btn-pricing" style="border-color:rgba(59,130,246,0.2);color:var(--blue-3)" onclick="location.href='/pricing'">Contact Sales</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     CTA
+══════════════════════════════════════════════ -->
+<section class="cta-section" id="request-access">
+  <div class="section-inner">
+    <div class="cta-bg-glow"></div>
+    <div style="position:relative;z-index:2">
+      <div class="section-label reveal">Institutional Access</div>
+      <h2 class="section-title reveal">Ready to operate at<br><em>institutional velocity?</em></h2>
+      <p class="section-desc reveal reveal-delay-1">Join 847 institutional desks that have already deployed Quantora as their capital intelligence operating system.</p>
+      <div class="cta-ctas reveal reveal-delay-2">
+        <a href="/pricing" class="btn-hero">
+          Request Institutional Access
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="/ui/" class="btn-hero-ghost">Open Operator Console</a>
+      </div>
+      <div class="cta-note reveal reveal-delay-3">
+        Onboarding in 48 hours &#183; No long-term contracts &#183; Cancel anytime
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
-        <a href="/" class="nav-logo">
-          <div class="nav-logo-hex"></div>
+        <a href="/" class="nav-logo">tent">
+          <div cnav-logo-mark">Q</div>
           QUANTORA
         </a>
-        <p>The financial intelligence operating system for disciplined capital deployment. Built for operators who treat capital with the seriousness it demands.</p>
+        <p class="footer-tagline">The operating system that institutional capital runs on. Built for the 0.1% of capital that moves markets.</p>
+        <div class="status-indicatorontent">
+          <div cstatus-dot"></div>
+          All systems operational &#183; <span style="color:var(--gold-1)">99.997%</span> uptime
+        </div>
       </div>
-      <div class="footer-col">
-        <h4>Platform</h4>
-        <a href="/ui/">Operator Cockpit</a>
-        <a href="/api/live/overview">Market Data</a>
-        <a href="/api/live/sectors">Sector Flow</a>
-        <a href="/api/live/gainers">Movers</a>
-        <a href="/docs">API Docs</a>
-      </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <a href="#platform">Product</a>
-        <a href="#how-it-works">How It Works</a>
-        <a href="#trust">Trust &amp; Governance</a>
-        <a href="#pricing">Pricing</a>
-      </div>
-      <div class="footer-col">
-        <h4>Account</h4>
-        <a href="/login">Sign In</a>
-        <a href="/register">Get Access</a>
-        <a href="/dashboard">Dashboard</a>
-        <a href="/pricing">Upgrade Plan</a>
+      <div class="footer-links">
+        <div class="fl-groupontent">
+          <div cfl-group-title">Platform</div>
+      >
+   ul>
+            <li><a href="#platform">Overview</a></li>
+            <li><a href="#capabilities">Intelligence Stack</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#performance">Performance</a></li>
+            <li><a href="/ui/">Operator Console</a></li>
+          </ul>
+        </div>
+        <div class="fl-groupontent">
+          <div cfl-group-title">Product</div>
+      >
+   ul>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="#">API Documentation</a></li>
+            <li><a href="#">Changelog</a></li>
+            <li><a href="#">Status Page</a></li>
+          </ul>
+        </div>
+        <div class="fl-groupontent">
+          <div cfl-group-title">Company</div>
+      >
+   ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Research</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Security</a></li>
+          </ul>
+        </div>
+        <div class="fl-groupontent">
+          <div cfl-group-title">Legal</div>
+           ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Compliance</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+            <li><a href="#">Disclosures</a></li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 Quantora. All rights reserved. Not financial advice. Capital markets involve risk.</p>
-      <div class="footer-bottom-links">
+      <div class="fb-copy">&copy; 2026 Quantora, Inc. All rights reserved. Past performance does not guarantee future results.</div>
+      <div class="fb-legal">
         <a href="#">Privacy</a>
         <a href="#">Terms</a>
-        <a href="#">Risk Disclosure</a>
+        <a href="#">Disclosures</a>
       </div>
     </div>
   </div>
 </footer>
 
+<!-- ══════════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════════ -->
 <script>
-// Nav scroll effect
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 20);
-}, { passive: true });
+(function() {
+  'use strict';
 
-// Fade-up on scroll
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
+  // ── NAVIGATION SCROLL ──
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // ── HERO CANVAS ANIMATION ──
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, nodes, animId;
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  const NODE_COUNT = 80;
+  const CONNECTION_DIST = 160;
+  const PULSE_SPEEC = 0.008;
+
+  function initNodes() {
+    nodes = [];
+    for (let i = 0; i < NODE_COUNT; i++) {
+      nodes.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        r: Math.random() * 2 + 1,
+        gold: Math.random() > 0.75,
+        pulses: []
+      });
     }
-  });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  }
 
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  let lastPulse = 0;
+  function addPulse() {
+    const now = Date.now();
+    if (now - lastPulse < 300) return;
+    lastPulse = now;
+    const a = Math.floor(Math.random() * nodes.length);
+    let b;
+    do { b = Math.floor(Math.random() * nodes.length); } while (b === a);
+    nodes[a].pulses.push({ target: b, t: 0 });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Move nodes
+    for (const n of nodes) {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > W) n.vx *= -1;
+      if (n.y < 0 || n.y > H) n.vy *= -1;
+      n.x = Math.max(0, Math.min(W, n.x));
+      n.y = Math.max(0, Math.min(H, n.y));
+    }
+
+    // Draw connections
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[j].x - nodes[i].x;
+        const dy = nodes[j].y - nodes[i].y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < CONNECTION_DIST) {
+          const alpha = (1 - d / CONNECTION_DIST) * 0.18;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = `rgba(201,150,59,${alpha})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw pulses
+    for (const n of nodes) {
+      n.pulses = n.pulses.filter(p => {
+        p.t += PULSE_SPEEC;
+        if (p.t > 1) return false;
+        const tx = nodes[p.target].x, ty = nodes[p.target].y;
+        const px = n.x + (tx - n.x) * p.t;
+        const py = n.y + (ty - n.y) * p.t;
+        ctx.beginPath();
+        ctx.arc(px, py, 3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,210,127,${1 - p.t})`;
+        ctx.shadowColor = '#FFD27F';
+        ctx.shadowBlur = 8;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        return true;
+      });
+    }
+
+    // Draw nodes
+    for (const n of nodes) {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      if (n.gold) {
+        ctx.fillStyle = 'rgba(232,184,101,0.8)';
+        ctx.shadowColor = '#E8B865'; ctx.shadowBlur = 6;
+      } else {
+        ctx.fillStyle = 'rgba(255,255,255,0.25)';
+        ctx.shadowBlur = 0;
+      }
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+
+    addPulse();
+    animId = requestAnimationFrame(draw);
+  }
+
+  function initCanvas() {
+    resize();
+    initNodes();
+    if (animId) cancelAnimationFrame(animId);
+    draw();
+  }
+
+  window.addEventListener('resize', () => {
+    resize();
+    initNodes();
+  }, { passive: true });
+
+  initCanvas();
+
+  // ── ANIMATEC COUNTERS ──
+  function animateCounter(el, target, duration, decimals, suffix) {
+    let start = null;
+    const step = (ts) => {
+      if (!start) start = ts;
+      const prog = Math.min((ts - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - prog, 3);
+      const val = ease * target;
+      el.textC="al-c = decimals ? val.toFixed(1) : Math.round(val).toLocaleString();
+      if (prog < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  // ── SCROLL REVEAL ──
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // Counter animation
+        const counter = e.target.querySelector('.js-counter');
+        if (counter && !counter._animated) {
+          counter._animated = true;
+          animateCounter(counter, parseInt(counter.dataset.val), 2000, false);
+        }
+        const perf = e.target.querySelector('.js-perf');
+        if (perf && !perf._animated) {
+          perf._animated = true;
+          animateCounter(perf, parseInt(perf.dataset.val), 1800, false);
+        }
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+  revealEls.forEach(el => io.observe(el));
+
+  // Hero counters — run immediately
+  setTimeout(() => {
+    document.querySelectorAll('.js-counter').forEach(el => {
+      if (!el._animated) {
+        el._animated = true;
+        animateCounter(el, parseInt(el.dataset.val), 2500, false);
+      }
+    });
+  }, 800);
+
+  // ── LIVE TICKER RANDOMIZATION ──
+  function jitter() {
+    document.querySelectorAll('.ticker-item').forEach(item => {
+      const chg = item.querySelector('.ti-chg');
+      const price = item.querySelector('.ti-price');
+      if (!chg || !price) return;
+      if (Math.random() > 0.85) {
+        const isPos = chg.classList.contains('pos');
+        const flip = Math.random() > 0.92;
+        if (flip) {
+          chg.classList.toggle('pos');
+          chg.classList.toggle('neg');
+        }
+        const txt = chg.textC="al-c;
+        const num = parseFloat(txt.replace(/[+%]/g, ''));
+        const delta = (Math.random() - 0.5) * 0.05;
+        const newNum = Math.max(0.01, num + delta);
+        const sign = chg.classList.contains('pos') ? '+' : '-';
+        chg.textC="al-c = txt.includes('%') ? `${sign}${newNum.toFixed(2)}%` : `${sign}${newNum.toFixed(3)}`;
+      }
+    });
+  }
+  setInterval(jitter, 2500);
+
+  // ── CHART LINE ANIMATION ──
+  const qline = document.getElementById('qline');
+  if (qline) {
+    const len = qline.getTotalLength ? qline.getTotalLength() : 900;
+    qline.style.strokeDasharray = len;
+    qline.style.strokeDashoffset = len;
+    setTimeout(() => {
+      qline.style.transition = 'stroke-dashoffset 2.5s cubic-bezier(0.4,0,0.2,1)';
+      qline.style.strokeDashoffset = '0';
+    }, 600);
+  }
+
+})();
 </script>
 </body>
 </html>
