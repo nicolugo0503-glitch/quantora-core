@@ -453,34 +453,6 @@ def health():
         "active_api_keys": len(_api_keys),
     })
 
-# ââ Landing page ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-@app.get("/", response_class=HTMLResponse, tags=["system"])
-def root():
-    index_path = frontend_dir / "index.html"
-    if index_path.exists():
-        return HTMLResponse(content=index_path.read_text(encoding="utf-8"), status_code=200)
-    return HTMLResponse(content=_landing_html(), status_code=200)
-
-# ââ Startup hook ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-@app.on_event("startup")
-async def on_startup():
-    logger.info("Running Quantora startup initializationâ¦")
-    try:
-        from backend.app.startup import initialize_state
-        await asyncio.get_event_loop().run_in_executor(None, initialize_state)
-        logger.info("â State initialization complete")
-    except Exception as e:
-        logger.warning(f"State init warning (non-fatal): {e}")
-
-    if STRIPE_SECRET_KEY:
-        logger.info("â Stripe billing ACTIVE")
-    else:
-        logger.warning("â ï¸  STRIPE_SECRET_KEY not set â billing endpoints in stub mode")
-
-    logger.info(f"â Rate limits â free:{TIER_LIMITS['free']}/min  pro:{TIER_LIMITS['pro']}/min  enterprise:{TIER_LIMITS['enterprise']}/min")
-
-
-# âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 def _landing_html() -> str:
     return """<!DOCTYPE html>
 <html lang="en">
