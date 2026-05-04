@@ -412,23 +412,21 @@ async def serve_index():
 _SYMS="AAPL,NVDA,TSLA,MSFT,GOOGL,META,SPY,QQQ,GC=F,CL=F,BTC-USD,ETH-USD,EURUSD=X,GBPUSD=X,^VIX"
 @app.get("/api/prices")
 async def get_prices():
-    url="https://query1.finance.yahoo.com/v7/finance/quote?symbols="+_SYMS+"&fields=regularMarketPrice,regularMarketChangePercent"
     try:
-        req=_ur.Request(url,headers={"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"})
-        with _ur.urlopen(req,timeout=8) as r:
-            d=_jn.loads(r.read())
-        qs=d.get("quoteResponse",{}).get("result",[])
-        return {q["symbol"]:{"price":q.get("regularMarketPrice",0),"change":q.get("regularMarketChangePercent",0)} for q in qs}
+        import yfinance as yf
+        syms=["AAPL","NVDA","TSLA","MSFT","GOOGL","META","SPY","QQQ","GC=F","CL=F","BTC-USD","ETH-USD","EURUSD=X","GBPUSD=X","^VIX"]
+        tickers=yf.Tickers(" ".join(syms))
+        out={}
+        for s in syms:
+            try:
+                fi=tickers.tickers[s].fast_info
+                out[s]={"price":round(float(fi.last_price or 0),4),"change":round(float(getattr(fi,"regular_market_price_change_percent",0) or 0),4)}
+            except Exception:
+                out[s]={"price":0,"change":0}
+        return out
     except Exception as ex:
         return {"error":str(ex)}
-app.mount("/ui", StaticFiles(directory=str(frontend_dir), html=True), name="ui")
-        logger.info(f"â Frontend served at /ui/ ({len(list(frontend_dir.glob('*.html')))} panels)")
-    except Exception as e:
-        logger.warning(f"Could not mount static files: {e}")
-else:
-    logger.warning("frontend/ directory not found â UI panels unavailable")
 
-# ââ Pricing page ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 @app.get("/pricing", response_class=HTMLResponse, tags=["pages"])
 def pricing_page():
     p = frontend_dir / "pricing.html"
