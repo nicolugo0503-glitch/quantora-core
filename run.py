@@ -404,23 +404,35 @@ async def serve_index():
 _SYMS="AAPL,NVDA,TSLA,MSFT,GOOGL,META,SPY,QQQ,GC=F,CL=F,BTC-USD,ETH-USD,EURUSD=X,GBPUSD=X,^VIX"
 @app.get("/api/prices")
 async def get_prices():
-    try:
-        import yfinance as yf
-        syms=["AAPL","NVDA","TSLA","MSFT","GOOGL","META","SPY","QQQ","GC=F","CL=F","BTC-USD","ETH-USD","EURUSD=X","GBPUSD=X","^VIX"]
-        out={}
-        for s in syms:
+    """Fetch live prices via yfinance — fast_info with history() fallback."""
+    import yfinance as yf
+    syms = ["AAPL","NVDA","TSLA","MSFT","GOOGL","META","SPY","QQQ",
+            "GC=F","CL=F","BTC-USD","ETH-USD","EURUSD=X","GBPUSD=X","^VIX"]
+    out = {}
+    for s in syms:
+        try:
+            ticker = yf.Ticker(s)
+            price, prev = None, None
+            # Try fast_info first (fastest path)
             try:
-                t=yf.Ticker(s)
-                fi=t.fast_info
-                price=float(fi.last_price or fi.previous_close or 0)
-                prev=float(fi.previous_close or price or 1)
-                change=round(((price-prev)/prev*100) if prev else 0,4)
-                out[s]={"price":round(price,4),"change":change}
+                fi = ticker.fast_info
+                price = fi.last_price
+                prev  = fi.previous_close
             except Exception:
-                out[s]={"price":0,"change":0}
-        return out
-    except Exception as ex:
-        return {"error":str(ex)}
+                pass
+            # Fall back to 5-day history (works on weekends & for all assets)
+            if not price:
+                hist = ticker.history(period="5d")
+                if not hist.empty:
+                    price = float(hist["Close"].iloc[-1])
+                    prev  = float(hist["Close"].iloc[-2]) if len(hist) > 1 else price
+            price = float(price or 0)
+            prev  = float(prev  or price or 1)
+            chg   = round((price - prev) / prev * 100, 4) if prev else 0
+            out[s] = {"price": round(price, 4), "change": chg}
+        except Exception as ex:
+            out[s] = {"price": 0, "change": 0, "err": str(ex)[:80]}
+    return out
 
 @app.get("/pricing", response_class=HTMLResponse, tags=["pages"])
 def pricing_page():
