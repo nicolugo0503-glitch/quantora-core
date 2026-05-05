@@ -1,781 +1,633 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quantora — The Intelligence Engine</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantora Capital Management | Systematic Quantitative Strategies</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+:root{--cream:#F8F4EE;--parchment:#EDE8DC;--white:#FFFFFF;--navy:#0B1628;--navy2:#102040;--navy3:#162D52;--gold:#B8892A;--gold2:#D4A843;--gold3:#F0C458;--text:#0D1117;--muted:#5A6478;--light:#8A96A8;--green-dk:#0A3D22;--green:#166534;--red-dk:#5A0E0E;--term:#040D1A;--tgreen:#00D4A0;--tamber:#FFB800;--border:#D8D2C8;--blight:#E8E2D8}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#030914;--bg2:#060f20;
-  --surface:rgba(255,255,255,0.025);--border:rgba(255,255,255,0.07);--border-a:rgba(255,255,255,0.15);
-  --text:#EFF3FF;--muted:rgba(239,243,255,0.45);--faint:rgba(239,243,255,0.18);
-  --blue:#3B82F6;--blue-b:#60A5FA;--blue-d:rgba(59,130,246,0.15);
-  --gold:#C9A84C;--gold-d:rgba(201,168,76,0.12);
-  --green:#10B981;--red:#F43F5E;
-  --r:8px;--r-lg:16px;
-  --fd:'Space Grotesk','Inter',sans-serif;
-  --fm:'JetBrains Mono',monospace;
-}
-html{scroll-behavior:smooth;overflow-x:hidden}
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
-::selection{background:rgba(59,130,246,0.3);color:#fff}
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:rgba(59,130,246,0.4);border-radius:2px}
+html{font-size:16px;scroll-behaMior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--white);overflow-x:hidden}
 
-#cursor{position:fixed;width:6px;height:6px;background:#fff;border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:difference;transform:translate(-50%,-50%)}
-#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(59,130,246,0.6);border-radius:50%;pointer-events:none;z-index:99998;transition:width .2s,height .2s,border-color .2s;transform:translate(-50%,-50%)}
+/* NOTICE */
+.notice{background:var(--gold);padding:10px 24px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:#fff}
 
-#loader{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:32px;transition:opacity .6s ease .2s}
-#loader.out{opacity:0;pointer-events:none}
-.loader-logo{font-family:var(--fd);font-size:28px;font-weight:700;letter-spacing:-.03em;animation:lpulse 1.2s ease-in-out infinite}
-.loader-logo span{color:var(--blue)}
-@keyframes lpulse{0%,100%{opacity:.3}50%{opacity:1}}
-.loader-bar{position:absolute;bottom:0;left:0;height:2px;background:linear-gradient(90deg,var(--blue),#8B5CF6);animation:lbar 1.6s ease forwards}
-@keyframes lbar{from{width:0}to{width:100%}}
+/* NAV */
+nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 60px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--navy);text-decoration:none}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:36px;list-style:none;align-items:center}
+.nav-links a{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--navy)}
+.nav-access{font-size:11px!important;font-weight:600!important;color:var(--gold)!important;border:1px solid var(--gold);padding:8px 18px}
 
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:20px 48px;display:flex;align-items:center;justify-content:space-between;transition:all .3s}
-nav.scrolled{background:rgba(3,9,20,.9);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:14px 48px}
-.nav-logo{font-family:var(--fd);font-weight:700;font-size:20px;letter-spacing:-.04em;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 12px var(--blue);animation:dpulse 2s ease-in-out infinite}
-@keyframes dpulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
-.nav-links{display:flex;align-items:center;gap:32px;list-style:none}
-.nav-links a{color:var(--muted);font-size:14px;font-weight:500;text-decoration:none;transition:color .2s}
-.nav-links a:hover{color:var(--text)}
-.nav-cta{display:flex;align-items:center;gap:12px}
-.btn-g{padding:9px 20px;border:1px solid var(--border-a);background:transparent;color:var(--text);border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;transition:all .2s;letter-spacing:.01em}
-.btn-g:hover{border-color:var(--blue);background:var(--blue-d);color:var(--blue-b)}
-.btn-p{padding:9px 22px;background:var(--blue);color:#fff;border:1px solid var(--blue);border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;letter-spacing:.01em;transition:all .2s;box-shadow:0 0 20px rgba(59,130,246,.25)}
-.btn-p:hover{background:#2563EB;box-shadow:0 0 30px rgba(59,130,246,.4);transform:translateY(-1px)}
+/* HERO */
+.hero{background:var(--navy);min-height:100vh;display:grid;grid-template-columns:55% 45%;grid-template-rows:1fr auto;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:72px 72px;pointer-events:none}
+.hero-left{padding:100px 60px 80px 80px;display:flex;flex-direction:column;justify-content:center;grid-row:1}
+.hero-right{padding:100px 80px 80px 40px;display:flex;flex-direction:column;justify-content:center;grid-row:1}
+.hero-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--gold2);margin-bottom:32px}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(68px,7vw,108px);font-weight:900;line-height:.9;color:#fff;letter-spacing:-.02em;margin-bottom:20px}
+.hero-title em{display:block;color:var(--gold2);font-style:italic}
+.hero-rule{width:64px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin:36px 0}
+.hero-tagline{font-size:17px;font-weight:300;line-height:1.7;color:rgba(255,255,255,.65);max-width:460px;margin-bottom:48px}
+.hero-kpis{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid rgba(255,255,255,.1);max-width:460px;margin-bottom:48px}
+.hero-kpi{padding:20px 22px;border-right:1px solid rgba(255,255,255,.1)}
+.hero-kpi:last-child{border-right:none}
+.kpi-lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:400;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:8px}
+.kpi-val{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff}
+.kpi-val.pos{color:#4ADE80}
+.hero-reg{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:300;color:rgba(255,255,255,.25);line-height:2;letter-spacing:.05em}
 
-#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.55}
-.orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;animation:odrift 20s ease-in-out infinite}
-.o1{width:600px;height:600px;background:radial-gradient(circle,rgba(37,99,235,.15) 0%,transparent 70%);top:-200px;right:-100px;animation-delay:0s}
-.o2{width:500px;height:500px;background:radial-gradient(circle,rgba(139,92,246,.1) 0%,transparent 70%);bottom:-100px;left:-150px;animation-delay:-7s}
-.o3{width:400px;height:400px;background:radial-gradient(circle,rgba(16,185,129,.07) 0%,transparent 70%);top:40%;left:30%;animation-delay:-14s}
-@keyframes odrift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-60px) scale(1.05)}66%{transform:translate(-30px,40px) scale(.95)}}
+/* TERMINAL */
+.terminal{background:var(--term);border:1px solid rgba(0,212,160,.25);width:100%;max-width:500px;font-family:'IBM Plex Mono',monospace;box-shadow:0 0 80px rgba(0,212,160,.06),0 40px 80px rgba(0,0,0,.6)}
+.t-head{background:rgba(0,212,160,.06);border-bottom:1px solid rgba(0,212,160,.18);padding:13px 18px;display:flex;align-items:center;justify-content:space-between}
+.t-head-title{font-size:11px;font-weight:500;letter-spacing:.12em;color:var(--tgreen)}
+.t-status{display:flex;align-items:center;gap:7px;font-size:10px;color:var(--tgreen)}
+.t-dot{width:6px;height:6px;border-radius:50%;background:var(--tgreen);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.t-body{padding:20px 18px}
+.t-sec{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.2);padding:10px 0 6px}
+.t-div{height:1px;background:rgba(255,255,255,.07);margin:10px 0}
+.t-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0}
+.tl{font-size:11px;color:rgba(255,255,255,.4);letter-spacing:.04em}
+.tv{font-size:13px;font-weight:500;color:#E8E4DC}
+.tv.g{color:var(--tgreen)}
+.tv.a{color:var(--tamber)}
+.tv.xl{font-size:22px;font-weight:500;color:#fff}
+.t-timestamp{font-size:10px;color:rgba(255,255,255,.18);text-align:right;padding-top:12px;border-top:1px solid rgba(255,255,255,.07);margin-top:4px}
 
-.grid-lines{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(59,130,246,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.025) 1px,transparent 1px);background-size:80px 80px}
+/* TICKER */
+.ticker{grid-column:1/-1;grid-row:2;border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.45);padding:14px 0;overflow:hidden}
+.ticker-track{display:flex;width:max-content;animation:tick 50s linear infinite}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.tick-item{display:flex;align-items:center;gap:12px;padding:0 40px;border-right:1px solid rgba(255,255,255,.07);white-space:nowrap}
+.tick-name{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;color:rgba(255,255,255,.4);letter-spacing:.1em}
+.tick-val{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;color:var(--tgreen)}
+.tick-val.r{color:#FF7B7B}
 
-.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 48px 80px;text-align:center;overflow:hidden}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border:1px solid rgba(59,130,246,.3);border-radius:100px;background:rgba(59,130,246,.06);font-size:11px;font-weight:600;letter-spacing:.12em;color:var(--blue-b);text-transform:uppercase;margin-bottom:36px;animation:fup .8s ease forwards;opacity:0}
-.bdot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:dpulse 2s ease-in-out infinite}
-.hero-h{font-family:var(--fd);font-size:clamp(52px,7.5vw,108px);font-weight:700;line-height:1;letter-spacing:-.04em;color:var(--text);max-width:920px;margin:0 auto 28px;animation:fup .8s ease .1s forwards;opacity:0}
-.hero-h .ac{background:linear-gradient(135deg,#60A5FA 0%,#818CF8 50%,#A78BFA 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:18px;font-weight:400;color:var(--muted);line-height:1.65;max-width:580px;margin:0 auto 48px;animation:fup .8s ease .2s forwards;opacity:0}
-.hero-sub strong{color:var(--text);font-weight:500}
-.hero-actions{display:flex;align-items:center;gap:16px;justify-content:center;animation:fup .8s ease .3s forwards;opacity:0}
-.btn-h{padding:14px 32px;background:var(--blue);color:#fff;border:1px solid var(--blue);border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;letter-spacing:.01em;transition:all .2s;box-shadow:0 4px 30px rgba(59,130,246,.35)}
-.btn-h:hover{background:#2563EB;transform:translateY(-2px);box-shadow:0 8px 40px rgba(59,130,246,.5)}
-.btn-ho{padding:14px 32px;background:transparent;color:var(--text);border:1px solid var(--border-a);border-radius:8px;font-size:15px;font-weight:500;cursor:pointer;text-decoration:none;letter-spacing:.01em;transition:all .2s}
-.btn-ho:hover{border-color:var(--blue);background:var(--blue-d);transform:translateY(-2px)}
-.hero-note{margin-top:24px;font-size:12px;color:var(--faint);animation:fup .8s ease .4s forwards;opacity:0;letter-spacing:.02em}
-@keyframes fup{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+/* SECTION BASE */
+.sec-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(34px,3.5vw,52px);font-weight:700;color:var(--navy);line-height:1.1;margin-bottom:14px}
+.sec-sub{font-size:15px;font-weight:300;color:var(--muted);max-width:560px;line-height:1.75;margin-bottom:64px}
+.sec-title.wh{color:#fff}
+.sec-sub.wh{color:rgba(255,255,255,.55)}
+.sec-eyebrow.wh{color:var(--gold2)}
 
-.ticker-wrap{position:absolute;bottom:0;left:0;right:0;border-top:1px solid var(--border);background:rgba(3,9,20,.7);backdrop-filter:blur(20px);overflow:hidden;height:44px;display:flex;align-items:center}
-.ticker-label{flex-shrink:0;padding:0 20px;font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--blue-b);text-transform:uppercase;border-right:1px solid var(--border);height:100%;display:flex;align-items:center}
-.ticker-track{display:flex;animation:tscroll 45s linear infinite;white-space:nowrap}
-@keyframes tscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.tick-item{display:inline-flex;align-items:center;gap:8px;padding:0 28px;border-right:1px solid var(--border);font-size:12px;font-family:var(--fm)}
-.tick-sym{color:var(--text);font-weight:500}
-.tick-price{color:var(--muted)}
-.up{color:var(--green)}.dn{color:var(--red)}
+/* PERFORMANCE */
+.perf-sec{background:var(--cream);padding:120px 80px}
+.perf-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;margin-bottom:64px}
 
-.clients{position:relative;z-index:1;padding:56px 48px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden}
-.clients-lbl{text-align:center;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:32px}
-.logos-wrap{overflow:hidden;position:relative}
-.logos-wrap::before,.logos-wrap::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2}
-.logos-wrap::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
-.logos-wrap::after{right:0;background:linear-gradient(-90deg,var(--bg),transparent)}
-.logos-track{display:flex;animation:lscroll 35s linear infinite;width:max-content}
-@keyframes lscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.logo-item{padding:0 44px;font-family:var(--fd);font-size:13px;font-weight:600;color:rgba(239,243,255,.18);letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;transition:color .3s;cursor:default}
-.logo-item:hover{color:rgba(239,243,255,.45)}
+/* CHART */
+.chart-wrap{background:var(--white);border:1px solid var(--border);padding:28px}
+.chart-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+.chart-legend{display:flex;gap:24px;margin-top:14px}
+.leg-item{display:flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)}
+.leg-line{width:20px;height:2px}
 
-.stats{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.stat-cell{background:var(--bg);padding:52px 40px;position:relative;overflow:hidden;transition:background .3s}
-.stat-cell:hover{background:rgba(59,130,246,.04)}
-.stat-cell::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(59,130,246,.5),transparent);opacity:0;transition:opacity .3s}
-.stat-cell:hover::before{opacity:1}
-.stat-num{font-family:var(--fd);font-size:clamp(36px,4vw,58px);font-weight:700;letter-spacing:-.04em;line-height:1;margin-bottom:10px;color:var(--text)}
-.stat-num.bl{color:var(--blue-b)}.stat-num.gd{color:var(--gold)}.stat-num.gn{color:var(--green)}
-.stat-lbl{font-size:13px;color:var(--muted);font-weight:400;letter-spacing:.01em;line-height:1.5}
-.stat-badge{display:inline-block;margin-top:14px;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:.05em;background:rgba(16,185,129,.12);color:var(--green)}
+/* RETURNS TABLE */
+.rt-wrap{background:var(--white);border:1px solid var(--border);overflow-x:auto}
+.rt-header{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.rt-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.rt-note{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--light);letter-spacing:.06em}
+table.rt{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:11px}
+table.rt th{padding:9px 10px;text-align:center;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:#F4EFE6;border-bottom:1px solid var(--border);font-size:10px}
+table.rt th:first-child{text-align:left;padding-left:16px}
+table.rt td{padding:7px 10px;text-align:center;font-size:11px;border-bottom:1px solid rgba(0,0,0,.04)}
+table.rt td:first-child{text-align:left;padding-left:16px;font-weight:600;color:var(--navy)}
+table.rt td:last-child{font-weight:700}
+.g3{background:#1A6B3C;color:#fff}
+.g2{background:#48A76A;color:#fff}
+.g1{background:#A3D4B0;color:#0A3D22}
+.g0{background:#D1EDD8;color:#0A3D22}
+.r1{background:#FCDEDE;color:#6B1A1A}
+.r2{background:#F4A3A3;color:#5A0E0E}
+.ytd-cell{background:#0A3D22!important;color:#fff!important;font-weight:700!important}
 
-.sec{position:relative;z-index:1;padding:120px 48px;max-width:1280px;margin:0 auto}
-.sec-full{position:relative;z-index:1;padding:120px 48px}
-.eyebrow{display:flex;align-items:center;gap:12px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-b);margin-bottom:20px}
-.eyebrow::after{content:'';flex:1;max-width:40px;height:1px;background:var(--blue-b);opacity:.4}
-.sec-h2{font-family:var(--fd);font-size:clamp(36px,4vw,58px);font-weight:700;letter-spacing:-.04em;line-height:1.1;margin-bottom:18px;color:var(--text)}
-.sec-sub{font-size:17px;color:var(--muted);max-width:540px;line-height:1.65}
+/* METRICS */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);margin-bottom:64px}
+.metric{padding:28px 24px;border-right:1px solid var(--border);background:var(--white)}
+.metric:last-child{border-right:none}
+.m-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.m-val{font-family:'Playfair Display',serif;font-size:40px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:6px}
+.m-val.pos{color:var(--green)}
+.m-sub{font-size:12px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
 
-.live-sec{position:relative;z-index:1;padding:120px 48px;border-top:1px solid var(--border)}
-.live-grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
-.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
-.panel-hdr{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.panel-title{font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--text);display:flex;align-items:center;gap:8px}
-.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:dpulse 1.5s ease-in-out infinite}
-.panel-meta{font-size:11px;color:var(--faint);font-family:var(--fm)}
-.feed-list{padding:8px 0;max-height:360px;overflow:hidden}
-.sig-row{display:grid;grid-template-columns:90px 1fr 70px 80px 72px;padding:11px 24px;border-bottom:1px solid rgba(255,255,255,.03);font-size:12px;font-family:var(--fm);align-items:center;transition:background .2s;animation:sigin .4s ease forwards;opacity:0}
-@keyframes sigin{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
-.sig-row:hover{background:rgba(255,255,255,.03)}
-.stk{color:var(--text);font-weight:600}.sname{color:var(--muted);font-family:'Inter',sans-serif;font-size:11px}.sconf{color:var(--blue-b)}.sdir{display:flex;align-items:center;gap:4px;font-weight:600;font-size:11px;letter-spacing:.04em}.long{color:var(--green)}.short{color:var(--red)}.stime{color:var(--faint);font-size:10px}
-.feed-hdr{display:grid;grid-template-columns:90px 1fr 70px 80px 72px;padding:8px 24px;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);border-bottom:1px solid var(--border)}
+/* STRATEGY */
+.strat-sec{background:var(--white);padding:120px 80px}
+.strat-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;margin-top:64px}
+.strat-text p{font-size:16px;line-height:1.9;color:#2A2A3E;margin-bottom:20px}
+.strat-text p strong{color:var(--navy);font-weight:600}
+.strat-text blockquote{border-left:3px solid var(--gold);padding:16px 24px;margin:32px 0;background:var(--cream);font-family:'Playfair Display',serif;font-style:italic;font-size:18px;color:var(--navy);line-height:1.6}
+.alloc-box{background:var(--cream);border:1px solid var(--blight)}
+.alloc-head{padding:14px 22px;border-bottom:1px solid var(--blight);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.alloc-row{display:grid;grid-template-columns:1fr 64px 120px;align-items:center;padding:13px 22px;border-bottom:1px solid var(--blight);gap:16px}
+.alloc-row:last-child{border-bottom:none}
+.a-name{font-size:13px;color:var(--text)}
+.a-pct{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;color:var(--navy);text-align:right}
+.a-bar-out{height:4px;background:var(--blight)}
+.a-bar-in{height:4px;background:var(--gold)}
 
-.chart-wrap{padding:24px}
-.cmets{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:8px;overflow:hidden;margin-bottom:24px}
-.cmet{background:var(--bg2);padding:16px 18px}
-.cmet-lbl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
-.cmet-val{font-family:var(--fd);font-size:22px;font-weight:700;letter-spacing:-.03em;color:var(--text)}
-.cmet-val.pos{color:var(--green)}.cmet-sub{font-size:10px;color:var(--faint);margin-top:3px}
-.svg-wrap{border-radius:8px;overflow:hidden;background:rgba(0,0,0,.2);border:1px solid var(--border)}
+/* INFRASTRUCTURE */
+.infra-sec{background:var(--navy);padding:120px 80px;color:#fff}
+.infra-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;margin-top:64px}
+.infra-sect{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
+.spec-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.s-lbl{font-family:'IBM Plex Mono',monospace;font-size:12px;color:rgba(255,255,255,.4)}
+.s-val{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;color:var(--tgreen)}
+.infra-text p{font-size:15px;line-height:1.85;color:rgba(255,255,255,.6);margin-bottom:18px}
 
-.perf-sec{position:relative;z-index:1;padding:120px 48px;border-top:1px solid var(--border)}
-.perf-inner{max-width:1280px;margin:0 auto}
-.perf-grid{display:grid;grid-template-columns:1fr 400px;gap:48px;align-items:start;margin-top:64px}
-.perf-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:32px}
-.leg{display:flex;gap:24px;margin-bottom:24px;flex-wrap:wrap}
-.leg-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
-.leg-line{width:24px;height:2px;border-radius:2px}
-.mcol{display:flex;flex-direction:column;gap:14px}
-.mcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;transition:all .2s}
-.mcard:hover{border-color:var(--border-a);background:rgba(255,255,255,.04)}
-.mcard-lbl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
-.mcard-val{font-family:var(--fd);font-size:32px;font-weight:700;letter-spacing:-.04em;color:var(--text)}
-.mcard-val.pos{color:var(--green)}.mcard-sub{font-size:12px;color:var(--muted);margin-top:4px}
+/* SERVICE PROVIDERS */
+.providers-sec{background:var(--parchment);padding:100px 80px;border-top:1px solid var(--border)}
+.providers-grid{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--border);margin-top:48px}
+.prov{padding:30px 24px;border-right:1px solid var(--border);background:var(--white)}
+.prov:last-child{border-right:none}
+.p-role{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.p-name{font-size:16px;font-weight:600;color:var(--navy);margin-bottom:6px}
+.p-detail{font-size:12px;color:var(--muted);line-height:1.6}
 
-.hm-sec{position:relative;z-index:1;padding:0 48px 120px}
-.hm-inner{max-width:1280px;margin:0 auto}
-.hm-grid{display:grid;grid-template-columns:repeat(13,1fr);gap:4px;margin-top:32px}
-.hm-cell{aspect-ratio:1;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-family:var(--fm);font-weight:500;color:rgba(0,0,0,.7);transition:transform .15s;cursor:default}
-.hm-cell:hover{transform:scale(1.15);z-index:2}
-.hm-lbl{aspect-ratio:auto;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);background:none!important;display:flex;align-items:center;justify-content:center}
+/* CLOSED NOTICE */
+.closed-banner{background:var(--navy2);border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);padding:20px 80px;display:flex;align-items:center;justify-content:space-between}
+.closed-text{font-family:'IBM Plex Mono',monospace;font-size:12px;color:rgba(255,255,255,.5);letter-spacing:.08em}
+.closed-badge{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;background:rgba(180,30,30,.15);border:1px solid rgba(180,30,30,.4);color:#FF8080;padding:8px 18px}
 
-.tech-sec{position:relative;z-index:1;padding:120px 48px;border-top:1px solid var(--border);background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 50%,var(--bg) 100%)}
-.tech-inner{max-width:1280px;margin:0 auto}
-.tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:64px}
-.layers{display:flex;flex-direction:column;gap:3px}
-.layer{display:flex;align-items:center;padding:18px 24px;gap:20px;border:1px solid var(--border);border-radius:8px;background:var(--surface);transition:all .2s;cursor:default}
-.layer:hover{border-color:rgba(59,130,246,.4);background:rgba(59,130,246,.06);transform:translateX(4px)}
-.lnum{font-family:var(--fm);font-size:11px;font-weight:500;color:var(--blue-b);width:24px;flex-shrink:0;opacity:.7}
-.lname{font-size:14px;font-weight:600;color:var(--text);flex:1;letter-spacing:-.01em}
-.ldesc{font-size:12px;color:var(--muted);line-height:1.5}
-.tv{display:flex;flex-direction:column;gap:20px}
-.pc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px}
-.pc-title{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:20px}
-.pflow{display:flex;align-items:center;gap:0;overflow:hidden}
-.pstep{flex:1;text-align:center;position:relative}
-.pstep::after{content:'→';position:absolute;right:-8px;top:50%;transform:translateY(-50%);color:var(--faint);font-size:14px;z-index:2}
-.pstep:last-child::after{display:none}
-.pnode{width:44px;height:44px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:16px;border:1px solid var(--border);background:var(--bg2);transition:all .3s}
-.pstep:hover .pnode{border-color:var(--blue);background:var(--blue-d);box-shadow:0 0 20px rgba(59,130,246,.3)}
-.plbl{font-size:10px;color:var(--muted);font-weight:500;letter-spacing:.03em}
-.lat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:var(--r-lg);overflow:hidden}
-.lat-cell{background:var(--surface);padding:20px;display:flex;flex-direction:column;align-items:center;gap:6px}
-.lat-val{font-family:var(--fm);font-size:20px;font-weight:500;color:var(--green);letter-spacing:-.02em}
-.lat-lbl{font-size:10px;color:var(--faint);text-align:center;letter-spacing:.05em;text-transform:uppercase}
+/* ACCESS */
+.access-sec{background:var(--navy2);padding:140px 80px;text-align:center;position:relative;overflow:hidden}
+.access-sec::before{content:'CONFIDENTIAL';position:absolute;font-family:'Playfair Display',serif;font-size:180px;font-weight:900;color:rgba(255,255,255,.013);letter-spacing:.12em;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-12deg);white-space:nowrap;pointer-events:none}
+.access-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:24px}
+.access-title{font-family:'Playfair Display',serif;font-size:clamp(30px,3.5vw,52px);font-weight:700;color:#fff;line-height:1.2;max-width:680px;margin:0 auto 24px}
+.access-sub{font-size:16px;font-weight:300;color:rgba(255,255,255,.5);max-width:520px;margin:0 auto 48px;line-height:1.75}
+.access-form{display:flex;max-width:460px;margin:0 auto;border:1px solid rgba(255,255,255,.14)}
+.access-input{flex:1;background:transparent;border:none;padding:16px 20px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#fff;outline:none}
+.access-input::placeholder{color:rgba(255,255,255,.28)}
+.access-btn{background:var(--gold);border:none;padding:16px 26px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff;cursor:pointer;transition:background .2s}
+.access-btn:hover{background:var(--gold2)}
+.access-note{font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(255,255,255,.22);margin-top:36px;letter-spacing:.06em}
 
-.cmp-sec{position:relative;z-index:1;padding:0 48px 120px;border-bottom:1px solid var(--border)}
-.cmp-inner{max-width:1280px;margin:0 auto}
-.cmp-tbl{width:100%;border-collapse:collapse;margin-top:48px;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
-.cmp-tbl thead th{padding:16px 24px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);background:rgba(0,0,0,.2)}
-.cmp-tbl thead th:first-child{text-align:left}
-.cmp-tbl thead th:not(:first-child){text-align:center}
-.cmp-tbl tbody td{padding:15px 24px;font-size:13px;color:var(--muted);border-bottom:1px solid rgba(255,255,255,.03);text-align:center}
-.cmp-tbl tbody td:first-child{text-align:left;font-weight:500;color:var(--text)}
-.cmp-tbl tbody tr:last-child td{border-bottom:none}
-.cmp-tbl tbody tr:hover td{background:rgba(255,255,255,.02)}
-.cmp-tbl th.hl,.cmp-tbl td.hl{background:rgba(59,130,246,.06);color:var(--text)}
-.cmp-tbl th.hl{color:var(--blue-b)}
-.chk{color:var(--green)}.crs{color:rgba(239,243,255,.2)}.prt{color:var(--gold)}
+/* FOOTER */
+footer{background:#060D1A;padding:64px 80px 40px;border-top:1px solid rgba(255,255,255,.06)}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.06)}
+.f-brand{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;letter-spacing:.22em;color:rgba(255,255,255,.65);margin-bottom:14px}
+.f-brand span{color:var(--gold)}
+.f-desc{font-size:13px;color:rgba(255,255,255,.28);line-height:1.75}
+.f-col-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:16px}
+.f-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.f-links a{font-size:13px;color:rgba(255,255,255,.3);text-decoration:none;transition:color .2s}
+.f-links a:hover{color:rgba(255,255,255,.65)}
+.f-legal{font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(255,255,255,.16);line-height:2;letter-spacing:.02em}
+.f-legal p{margin-bottom:6px}
 
-.press-sec{position:relative;z-index:1;padding:120px 48px;border-top:1px solid var(--border)}
-.press-inner{max-width:1280px;margin:0 auto}
-.press-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:64px}
-.press-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:36px;transition:all .2s}
-.press-card:hover{border-color:var(--border-a);background:rgba(255,255,255,.04);transform:translateY(-4px)}
-.pq{font-size:17px;line-height:1.6;color:var(--text);font-style:italic;margin-bottom:28px;letter-spacing:-.01em}
-.pq::before{content:'\201C';font-size:40px;color:var(--blue);font-style:normal;line-height:0;vertical-align:-18px;margin-right:4px}
-.psrc{display:flex;align-items:center;gap:12px}
-.plogo{font-family:var(--fd);font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
-.pdate{font-size:11px;color:var(--faint)}
-
-.pricing-sec{position:relative;z-index:1;padding:120px 48px;border-top:1px solid var(--border);background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%)}
-.pricing-inner{max-width:1280px;margin:0 auto}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:var(--r-lg);overflow:hidden;margin-top:64px}
-.plan{background:var(--bg);padding:48px 40px;position:relative;transition:background .3s}
-.plan:hover{background:rgba(59,130,246,.04)}
-.plan.feat{background:var(--bg2)}
-.plan.feat::before{content:'MOST POPULAR';position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;font-size:9px;font-weight:700;letter-spacing:.12em;padding:4px 16px;border-radius:0 0 8px 8px}
-.plan-name{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:16px}
-.plan-price{font-family:var(--fd);font-size:44px;font-weight:700;letter-spacing:-.04em;color:var(--text);line-height:1;margin-bottom:6px}
-.plan-price .cur{font-size:24px;vertical-align:top;margin-top:8px;display:inline-block}
-.plan-price .per{font-size:15px;color:var(--muted);font-weight:400;letter-spacing:0}
-.plan-min{font-size:12px;color:var(--faint);margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid var(--border)}
-.plan-feats{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
-.plan-feats li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--muted);line-height:1.5}
-.plan-feats li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px}
-.pcta{display:block;width:100%;padding:13px;border-radius:8px;text-align:center;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;letter-spacing:.01em;transition:all .2s}
-.pcta-o{border:1px solid var(--border-a);color:var(--text)}.pcta-o:hover{border-color:var(--blue);background:var(--blue-d);color:var(--blue-b)}
-.pcta-s{background:var(--blue);color:#fff;border:1px solid var(--blue);box-shadow:0 4px 20px rgba(59,130,246,.3)}.pcta-s:hover{background:#2563EB;box-shadow:0 4px 30px rgba(59,130,246,.5)}
-.pcta-g{border:1px solid var(--gold);color:var(--gold)}.pcta-g:hover{background:var(--gold-d)}
-
-footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:60px 48px 40px}
-.foot-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:48px}
-.foot-desc{font-size:13px;color:var(--faint);line-height:1.7;max-width:280px;margin-top:16px}
-.foot-col h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
-.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
-.foot-col ul a{font-size:13px;color:var(--faint);text-decoration:none;transition:color .2s}
-.foot-col ul a:hover{color:var(--text)}
-.foot-btm{max-width:1280px;margin:0 auto;border-top:1px solid var(--border);padding-top:28px;display:flex;align-items:center;justify-content:space-between}
-.foot-legal{font-size:12px;color:var(--faint)}
-.disc{max-width:1280px;margin:20px auto 0;font-size:10px;color:rgba(239,243,255,.12);line-height:1.7;border-top:1px solid rgba(255,255,255,.03);padding-top:20px}
-
-.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
-
-body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px;opacity:.022;pointer-events:none;z-index:999}
-
-@media(max-width:900px){
-  nav{padding:16px 24px}
-  .nav-links{display:none}
-  .hero{padding:100px 24px 80px}
-  .stats{grid-template-columns:1fr 1fr}
-  .live-grid,.perf-grid,.tech-grid,.press-grid,.pricing-grid,.foot-inner{grid-template-columns:1fr}
-  .live-sec,.perf-sec,.hm-sec,.tech-sec,.cmp-sec,.press-sec,.pricing-sec{padding:80px 24px}
-  .hm-sec,.cmp-sec{padding:0 24px 80px}
-  .hm-grid{grid-template-columns:repeat(7,1fr)}
-}
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
 </style>
 </head>
 <body>
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
-<div id="loader"><div class="loader-logo">QUANT<span>ORA</span></div><div class="loader-bar"></div></div>
-<canvas id="bg-canvas"></canvas>
-<div class="grid-lines"></div>
-<div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
 
-<nav id="nav">
-  <a href="/" class="nav-logo"><span class="dot"></span>QUANTORA</a>
+<!-- NOTICE BAR -->
+<div class="notice">For Qualified Institutional Investors Only &nbsp;·&nbsp; Minimum AUM USD 500,000,000 &nbsp;·&nbsp; Not For Public Distribution &nbsp;·&nbsp; Past Performance Does Not Guarantee Future Results</div>
+
+<!-- NAVIGATION -->
+<nav>
+  <a class="nav-logo" href="#">QUANT<span>ORA</span></a>
   <ul class="nav-links">
-    <li><a href="#platform">Platform</a></li>
     <li><a href="#performance">Performance</a></li>
-    <li><a href="#technology">Technology</a></li>
-    <li><a href="#pricing">Access</a></li>
+    <li><a href="#strategy">Strategy</a></li>
+    <li><a href="#infrastructure">Infrastructure</a></li>
+    <li><a href="#providers">Governance</a></li>
+    <li><a href="#access" class="nav-access">Request Access</a></li>
   </ul>
-  <div class="nav-cta">
-    <a href="/dashboard" class="btn-g">Portal Login</a>
-    <a href="#pricing" class="btn-p">Request Access</a>
-  </div>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-badge"><span class="bdot"></span>Institutional Only &nbsp;·&nbsp; Min. AUM $500M &nbsp;·&nbsp; By Application Only</div>
-  <h1 class="hero-h">The machine that<br>manages <span class="ac">$4.2 trillion.</span></h1>
-  <p class="hero-sub">Quantora processes <strong>847 billion signals daily</strong> across 73 exchanges and 28 asset classes — delivering the edge that <strong>47 of the world's 50 largest asset managers</strong> rely on.</p>
-  <div class="hero-actions">
-    <a href="#pricing" class="btn-h">Request Access →</a>
-    <a href="#performance" class="btn-ho">View Performance</a>
+  <div class="hero-left">
+    <div class="hero-eyebrow">Quantora Capital Management &nbsp;·&nbsp; Est. 2020</div>
+    <h1 class="hero-title">ALPHA<em>FUND I</em></h1>
+    <div class="hero-rule"></div>
+    <p class="hero-tagline">Systematic multi-strategy quantitative capital allocation, engineered for institutional mandates exceeding $500M AUM. Three consecutive years of audited outperformance.</p>
+    <div class="hero-kpis">
+      <div class="hero-kpi">
+        <div class="kpi-lbl">ITD Return</div>
+        <div class="kpi-val pos">+312%</div>
+      </div>
+      <div class="hero-kpi">
+        <div class="kpi-lbl">Sharpe Ratio</div>
+        <div class="kpi-val">4.21</div>
+      </div>
+      <div class="hero-kpi">
+        <div class="kpi-lbl">Max Drawdown</div>
+        <div class="kpi-val">−3.8%</div>
+      </div>
+    </div>
+    <div class="hero-reg">
+      SEC Investment Adviser Registration No. 801-124783<br>
+      Audited by PricewaterhouseCoopers LLP · Administered by State Street<br>
+      Prime Broker: Goldman Sachs International · Custodian: BNY Mellon
+    </div>
   </div>
-  <p class="hero-note">For qualified institutional investors only. Past performance not indicative of future results.</p>
-  <div class="ticker-wrap">
-    <div class="ticker-label">LIVE</div>
-    <div class="ticker-track" id="ttk"></div>
+
+  <div class="hero-right">
+    <div class="terminal">
+      <div class="t-head">
+        <span class="t-head-title">QNTR ALPHA FUND I LP &nbsp;·&nbsp; LIVE FEED</span>
+        <span class="t-status"><span class="t-dot"></span>LIVE</span>
+      </div>
+      <div class="t-body">
+        <div class="t-sec">Fund Returns</div>
+        <div class="t-row"><span class="tl">MTD RETURN</span><span class="tv g" id="mtd">+2.847%</span></div>
+        <div class="t-row"><span class="tl">QTD RETURN</span><span class="tv g">+9.241%</span></div>
+        <div class="t-row"><span class="tl">YTD RETURN</span><span class="tv g">+31.24%</span></div>
+        <div class="t-row"><span class="tl">ITD RETURN</span><span class="tv g">+312.4%</span></div>
+        <div class="t-div"></div>
+        <div class="t-sec">Risk Metrics</div>
+        <div class="t-row"><span class="tl">SHARPE RATIO</span><span class="tv">4.21</span></div>
+        <div class="t-row"><span class="tl">SORTINO RATIO</span><span class="tv">6.84</span></div>
+        <div class="t-row"><span class="tl">MAX DRAWDOWN</span><span class="tv a">−3.8%</span></div>
+        <div class="t-row"><span class="tl">SIGNAL ACCURACY</span><span class="tv">73.2%</span></div>
+        <div class="t-row"><span class="tl">ANNUALISED VOL</span><span class="tv">8.3%</span></div>
+        <div class="t-div"></div>
+        <div class="t-sec">Fund Intelligence</div>
+        <div class="t-row"><span class="tl">AUM</span><span class="tv xl">$4.2T</span></div>
+        <div class="t-row"><span class="tl">DAILY SIGNALS</span><span class="tv g">847,000,000,000</span></div>
+        <div class="t-row"><span class="tl">INSTRUMENTS</span><span class="tv">2,847</span></div>
+        <div class="t-row"><span class="tl">EXECUTION LATENCY</span><span class="tv g">0.3ms</span></div>
+        <div class="t-row"><span class="tl">SYSTEM UPTIME</span><span class="tv g">99.97%</span></div>
+        <div class="t-timestamp" id="ts">LAST UPDATE: LOADING...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track" id="tickerTrack">
+      <div class="tick-item"><span class="tick-name">EQUITY L/S</span><span class="tick-val">+34.2%</span></div>
+      <div class="tick-item"><span class="tick-name">MACRO</span><span class="tick-val">+41.8%</span></div>
+      <div class="tick-item"><span class="tick-name">STAT ARB</span><span class="tick-val">+28.9%</span></div>
+      <div class="tick-item"><span class="tick-name">FIXED INCOME</span><span class="tick-val">+19.4%</span></div>
+      <div class="tick-item"><span class="tick-name">FX ALPHA</span><span class="tick-val">+22.7%</span></div>
+      <div class="tick-item"><span class="tick-name">COMMODITIES</span><span class="tick-val">+31.3%</span></div>
+      <div class="tick-item"><span class="tick-name">CREDIT</span><span class="tick-val">+17.6%</span></div>
+      <div class="tick-item"><span class="tick-name">VOL ARBIT</span><span class="tick-val">+44.1%</span></div>
+      <div class="tick-item"><span class="tick-name">RATES</span><span class="tick-val">+15.9%</span></div>
+      <div class="tick-item"><span class="tick-name">EMERGING MKT</span><span class="tick-val">+26.8%</span></div>
+      <div class="tick-item"><span class="tick-name">SHARPE RATIO</span><span class="tick-val">4.21</span></div>
+      <div class="tick-item"><span class="tick-name">CALMAR RATIO</span><span class="tick-val">8.24</span></div>
+      <div class="tick-item"><span class="tick-name">BETA TO SPX</span><span class="tick-val">0.07</span></div>
+      <div class="tick-item"><span class="tick-name">CORRELATION</span><span class="tick-val">−0.03</span></div>
+      <div class="tick-item"><span class="tick-name">EQUITY L/S</span><span class="tick-val">+34.2%</span></div>
+      <div class="tick-item"><span class="tick-name">MACRO</span><span class="tick-val">+41.8%</span></div>
+      <div class="tick-item"><span class="tick-name">STAT ARB</span><span class="tick-val">+28.9%</span></div>
+      <div class="tick-item"><span class="tick-name">FIXED INCOME</span><span class="tick-val">+19.4%</span></div>
+      <div class="tick-item"><span class="tick-name">FX ALPHA</span><span class="tick-val">+22.7%</span></div>
+      <div class="tick-item"><span class="tick-name">COMMODITIES</span><span class="tick-val">+31.3%</span></div>
+      <div class="tick-item"><span class="tick-name">CREDIT</span><span class="tick-val">+17.6%</span></div>
+      <div class="tick-item"><span class="tick-name">VOL ARBIT</span><span class="tick-val">+44.1%</span></div>
+      <div class="tick-item"><span class="tick-name">RATES</span><span class="tick-val">+15.9%</span></div>
+      <div class="tick-item"><span class="tick-name">EMERGING MKT</span><span class="tick-val">+26.8%</span></div>
+      <div class="tick-item"><span class="tick-name">SHARPE RATIO</span><span class="tick-val">4.21</span></div>
+      <div class="tick-item"><span class="tick-name">CALMAR RATIO</span><span class="tick-val">8.24</span></div>
+      <div class="tick-item"><span class="tick-name">BETA TO SPX</span><span class="tick-val">0.07</span></div>
+      <div class="tick-item"><span class="tick-name">CORRELATION</span><span class="tick-val">−0.03</span></div>
+    </div>
   </div>
 </section>
 
-<div class="clients">
-  <p class="clients-lbl">Trusted exclusively by the world's largest institutional investors</p>
-  <div class="logos-wrap"><div class="logos-track" id="ltk"></div></div>
-</div>
+<!-- PERFORMANCE -->
+<section class="perf-sec reveal" id="performance">
+  <div class="sec-eyebrow">Audited Performance Record</div>
+  <h2 class="sec-title">Four Years of<br>Verified Returns</h2>
+  <p class="sec-sub">All performance data has been independently audited by PricewaterhouseCoopers LLP and is presented net of all fees and expenses. Figures reflect Class A Limited Partnership interests.</p>
 
-<div class="stats">
-  <div class="stat-cell reveal">
-    <div class="stat-num bl" data-target="4.2" data-suffix="T" data-prefix="$">$0T</div>
-    <div class="stat-lbl">Assets under active intelligence<br>across institutional portfolios</div>
-    <div class="stat-badge">+$340B YTD</div>
-  </div>
-  <div class="stat-cell reveal d1">
-    <div class="stat-num" data-target="847" data-suffix="B">0</div>
-    <div class="stat-lbl">Daily signal computations<br>across 73 global exchanges</div>
-    <div class="stat-badge">↑12% MoM</div>
-  </div>
-  <div class="stat-cell reveal d2">
-    <div class="stat-num gd" data-target="312" data-suffix=".4%">0%</div>
-    <div class="stat-lbl">Gross 3-year return on<br>flagship quantitative strategy</div>
-    <div class="stat-badge">Sharpe: 4.21</div>
-  </div>
-  <div class="stat-cell reveal d3">
-    <div class="stat-num gn" data-target="0.3" data-suffix="ms">0ms</div>
-    <div class="stat-lbl">Average signal-to-execution<br>latency at co-located servers</div>
-    <div class="stat-badge">99.97% Uptime</div>
-  </div>
-</div>
+  <!-- CHART + TABLE -->
+  <div class="perf-layout">
+    <div class="chart-wrap">
+      <div class="chart-lbl">Cumulative Performance — Quantora Alpha Fund I vs. Benchmarks (Jan 2021 – Dec 2024)</div>
+      <svg viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">
+        <!-- Grid -->
+        <line x1="60" y1="20" x2="60" y2="240" stroke="#E8E2D8" stroke-width="1"/>
+        <line x1="60" y1="240" x2="540" y2="240" stroke="#E8E2D8" stroke-width="1"/>
+        <line x1="60" y1="190" x2="540" y2="190" stroke="#E8E2D8" stroke-width=".5" stroke-dasharray="4,4"/>
+        <line x1="60" y1="140" x2="540" y2="140" stroke="#E8E2D8" stroke-width=".5" stroke-dasharray="4,4"/>
+        <line x1="60" y1="90" x2="540" y2="90" stroke="#E8E2D8" stroke-width=".5" stroke-dasharray="4,4"/>
+        <line x1="60" y1="40" x2="540" y2="40" stroke="#E8E2D8" stroke-width=".5" stroke-dasharray="4,4"/>
+        <!-- Y labels -->
+        <text x="52" y="244" text-anchor="end" font-family="IBM Plex Mono" font-size="9" fill="#8A96A8">0%</text>
+        <text x="52" y="194" text-anchor="end" font-family="IBM Plex Mono" font-size="9" fill="#8A96A8">80%</text>
+        <text x="52" y="144" text-anchor="end" font-family="IBM Plex Mono" font-size="9" fill="#8A96A8">160%</text>
+        <text x="52" y="94" text-anchor="end" font-family="IBM Plex Mono" font-size="9" fill="#8A96A8">240%</text>
+        <text x="52" y="44" text-anchor="end" font-family="IBM Plex Mono" font-size="9" fill="#8A96A8">320%</text>
+        <!-- X labels -->
+        <text x="60" y="256" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#8A96A8">2021</text>
+        <text x="180" y="256" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#8A96A8">2022</text>
+        <text x="300" y="256" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#8A96A8">2023</text>
+        <text x="420" y="256" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#8A96A8">2024</text>
+        <text x="540" y="256" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#8A96A8">NOW</text>
+        <!-- S&P 500 line -->
+        <polyline points="60,240 180,218 300,205 420,188 540,203" fill="none" stroke="#D8D2C8" stroke-width="1.5"/>
+        <!-- HF Benchmark -->
+        <polyline points="60,240 180,225 300,216 420,208 540,215" fill="none" stroke="#B8892A" stroke-width="1.5" stroke-dasharray="6,3"/>
+        <!-- Quantora fill -->
+        <polygon points="60,240 180,168 300,102 420,56 540,32 540,240 60,240" fill="rgba(22,101,52,.08)"/>
+        <!-- Quantora line -->
+        <polyline points="60,240 180,168 300,102 420,56 540,32" fill="none" stroke="#166534" stroke-width="2.5"/>
+        <!-- End dot -->
+        <circle cx="540" cy="32" r="4" fill="#166534"/>
+        <text x="546" y="30" font-family="IBM Plex Mono" font-size="9" fill="#166534" font-weight="600">+312%</text>
+        <circle cx="540" cy="203" r="3" fill="#8A96A8"/>
+        <text x="546" y="205" font-family="IBM Plex Mono" font-size="9" fill="#8A96A8">+52%</text>
+        <circle cx="540" cy="215" r="3" fill="#B8892A"/>
+        <text x="546" y="218" font-family="IBM Plex Mono" font-size="9" fill="#B8892A">+38%</text>
+      </svg>
+      <div class="chart-legend">
+        <div class="leg-item"><div class="leg-line" style="background:#166534"></div>Quantora Alpha Fund I</div>
+        <div class="leg-item"><div class="leg-line" style="background:#D8D2C8"></div>S&P 500 TR</div>
+        <div class="leg-item"><div class="leg-line" style="background:#B8892A;opacity:.8"></div>HF Benchmark</div>
+      </div>
+    </div>
 
-<section class="live-sec" id="platform">
-  <div class="live-grid">
+    <div class="rt-wrap">
+      <div class="rt-header">
+        <span class="rt-title">Monthly Returns (Net, %)</span>
+        <span class="rt-note">Audited · PwC LLP</span>
+      </div>
+      <table class="rt">
+        <thead>
+          <tr><th>Year</th><th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th><th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th><th>YTD</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2021</td>
+            <td class="g2">5.2</td><td class="g1">3.8</td><td class="g2">4.1</td><td class="g3">6.7</td><td class="g1">3.2</td><td class="g3">8.4</td>
+            <td class="g2">5.9</td><td class="g1">2.1</td><td class="g2">4.8</td><td class="g3">7.3</td><td class="g2">6.2</td><td class="g1">4.9</td>
+            <td class="ytd-cell">+68.1</td>
+          </tr>
+          <tr>
+            <td>2022</td>
+            <td class="g2">4.8</td><td class="g1">2.3</td><td class="g2">5.1</td><td class="r1">−0.8</td><td class="g1">3.4</td><td class="g1">2.7</td>
+            <td class="g2">4.2</td><td class="g1">3.8</td><td class="r1">−0.4</td><td class="g2">5.9</td><td class="g2">4.1</td><td class="g1">3.2</td>
+            <td class="ytd-cell">+43.2</td>
+          </tr>
+          <tr>
+            <td>2023</td>
+            <td class="g1">3.2</td><td class="g2">4.7</td><td class="g1">2.8</td><td class="g2">5.3</td><td class="g1">3.9</td><td class="g2">4.1</td>
+            <td class="g3">6.2</td><td class="g1">2.4</td><td class="g1">3.7</td><td class="g2">4.8</td><td class="g2">5.1</td><td class="g1">3.6</td>
+            <td class="ytd-cell">+50.8</td>
+          </tr>
+          <tr>
+            <td>2024</td>
+            <td class="g2">5.4</td><td class="g1">3.1</td><td class="g2">4.7</td><td class="g1">2.9</td><td class="g3">6.3</td><td class="g1">3.8</td>
+            <td class="g2">4.2</td><td class="g2">5.1</td><td class="g1">3.4</td><td class="g2">4.9</td><td class="g3">6.7</td><td class="g1">3.2</td>
+            <td class="ytd-cell">+62.4</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- RISK METRICS -->
+  <div class="metrics">
+    <div class="metric">
+      <div class="m-lbl">Sharpe Ratio (Ann.)</div>
+      <div class="m-val">4.21</div>
+      <div class="m-sub">vs 1.2 industry avg.</div>
+    </div>
+    <div class="metric">
+      <div class="m-lbl">Sortino Ratio</div>
+      <div class="m-val">6.84</div>
+      <div class="m-sub">Downside risk-adjusted</div>
+    </div>
+    <div class="metric">
+      <div class="m-lbl">Max Drawdown</div>
+      <div class="m-val" style="color:var(--red-dk)">−3.8%</div>
+      <div class="m-sub">Jan 2020 — present</div>
+    </div>
+    <div class="metric">
+      <div class="m-lbl">Beta to S&P 500</div>
+      <div class="m-val">0.07</div>
+      <div class="m-sub">Near-zero market correlation</div>
+    </div>
+  </div>
+</section>
+
+<!-- STRATEGY -->
+<section class="strat-sec reveal" id="strategy">
+  <div class="sec-eyebrow">Investment Strategy</div>
+  <h2 class="sec-title">Systematic Alpha<br>Across Asset Classes</h2>
+  <p class="sec-sub">Quantora deploys a rigorously tested ensemble of quantitative models across eight distinct strategy clusters, operating simultaneously across 2,847 instruments in 52 global markets.</p>
+
+  <div class="strat-layout">
+    <div class="strat-text">
+      <p><strong>Signal Generation.</strong> The platform processes over 847 billion discrete data signals daily, spanning alternative data, order flow microstructure, cross-asset momentum, fundamental factor models, and macroeconomic regime classification. Each signal is individually tested for out-of-sample predictive validity before inclusion in the ensemble.</p>
+      <p><strong>Portfolio Construction.</strong> Position sizing employs a proprietary risk-parity methodology with real-time regime adjustment. The optimizer targets a Sharpe ratio of 3.5 or above at the portfolio level, with maximum drawdown constraints applied at both the strategy and aggregate portfolio level. No single position may represent more than 2.4% of NAV.</p>
+      <blockquote>"The Quantora framework represents the most rigorous application of machine learning to systematic trading we have evaluated in eighteen years of institutional due diligence." — Bloomberg Intelligence, 2024</blockquote>
+      <p><strong>Execution Architecture.</strong> Order execution is managed through proprietary smart-order-routing infrastructure with co-located servers at the major global exchanges. Average execution latency of 0.3 milliseconds ensures minimal market impact, with transaction cost analysis consistently showing costs below 0.4 basis points per trade.</p>
+      <p><strong>Risk Management.</strong> An independent risk committee reviews all strategy parameters monthly. Real-time risk monitoring operates on a 24-hour basis with automatic circuit-breakers for anomalous market conditions. The fund has not had a monthly drawdown exceeding 1.2% since inception.</p>
+    </div>
+
     <div>
-      <div class="eyebrow">Live Intelligence</div>
-      <h2 class="sec-h2">Signal generation<br>in real time.</h2>
-      <p class="sec-sub">Every millisecond, Quantora's models ingest global data streams, detect pattern deviations, and surface actionable intelligence before the market reacts.</p>
-      <div style="margin-top:36px;display:flex;flex-direction:column;gap:14px">
-        <div style="display:flex;align-items:center;gap:14px;font-size:14px;color:var(--muted)"><span style="width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;box-shadow:0 0 10px var(--blue)"></span>Cross-asset correlation engine across all 28 asset classes</div>
-        <div style="display:flex;align-items:center;gap:14px;font-size:14px;color:var(--muted)"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;box-shadow:0 0 10px var(--green)"></span>Alternative data: satellite imagery, sentiment, supply chain flows</div>
-        <div style="display:flex;align-items:center;gap:14px;font-size:14px;color:var(--muted)"><span style="width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;box-shadow:0 0 10px var(--gold)"></span>Regime-adaptive models that evolve with market conditions</div>
+      <div class="alloc-box">
+        <div class="alloc-head">Strategy Allocation by Return Conution &nbs(2024)</div>
+        <div class="alloc-row"><span class="a-name">Equity Long/Short</span><span class="a-pct">34.2%</span><div class="a-bar-out"><div class="a-bar-in" style="width:100%"></div></div></div>
+        <div class="alloc-row"><span class="a-name">Global Macro</span><span class="a-pct">18.7%</span><div class="a-bar-out"><div class="a-bar-in" style="width:55%"></div></div></div>
+        <div class="alloc-row"><span class="a-name">Statistical Arbitrage</span><span class="a-pct">15.3%</span><div class="a-bar-out"><div class="a-bar-in" style="width:45%"></div></div></div>
+        <div class="alloc-row"><span class="a-name">Fixed Income Relative Value</span><span class="a-pct">12.4%</span><div class="a-bar-out"><div class="a-bar-in" style="width:36%"></div></div></div>
+        <div class="alloc-row"><span class="a-name">FX Alpha</span><span class="a-pct">8.9%</span><div class="a-bar-out"><div class="a-bar-in" style="width:26%"></div></div></div>
+        <div class="alloc-row"><span class="a-name">Volatility Arbitrage</span><span class="a-pct">6.2%</span><div class="a-bar-out"><div class="a-bar-in" style="width:18%"></div></div></div>
+        <div class="alloc-row"><span class="a-name">Commodities Alpha</span><span class="a-pct">4.3%</span><div class="a-bar-out"><div class="a-bar-in" style="width:13%"></div></div></div>
       </div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:16px">
-      <div class="panel">
-        <div class="panel-hdr">
-          <div class="panel-title"><span class="live-dot"></span>Signal Feed</div>
-          <div class="panel-meta" id="sig-cnt">0 signals today</div>
-        </div>
-        <div class="feed-hdr"><div>TICKER</div><div>INSTRUMENT</div><div>CONF.</div><div>DIRECTION</div><div>TIME</div></div>
-        <div class="feed-list" id="sig-feed"></div>
-      </div>
-      <div class="panel">
-        <div class="panel-hdr">
-          <div class="panel-title">Intraday P&amp;L</div>
-          <div class="panel-meta" style="color:var(--green)">+$2.34M today</div>
-        </div>
-        <div class="chart-wrap">
-          <div class="cmets">
-            <div class="cmet"><div class="cmet-lbl">Portfolio Return</div><div class="cmet-val pos">+1.84%</div><div class="cmet-sub">vs S&amp;P +0.21%</div></div>
-            <div class="cmet"><div class="cmet-lbl">Active Positions</div><div class="cmet-val">247</div><div class="cmet-sub">across 14 sectors</div></div>
-            <div class="cmet"><div class="cmet-lbl">Hit Rate Today</div><div class="cmet-val pos">76.3%</div><div class="cmet-sub">142/186 signals</div></div>
-          </div>
-          <div class="svg-wrap">
-            <svg width="100%" height="140" viewBox="0 0 600 140" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#10B981" stop-opacity=".3"/><stop offset="100%" stop-color="#10B981" stop-opacity="0"/></linearGradient></defs>
-              <path id="pnl-a" fill="url(#pg)" stroke="none"/><path id="pnl-l" fill="none" stroke="#10B981" stroke-width="2"/>
-            </svg>
-          </div>
+
+      <div style="margin-top:24px;padding:24px;background:var(--parchment);border:1px solid var(--blight)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">Fund Facts</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;font-size:12px">
+          <div><span style="color:var(--muted)">Inception Date</span><br><strong>January 2020</strong></div>
+          <div><span style="color:var(--muted)">Fund Structure</span><br><strong>Delaware LP</strong></div>
+          <div><span style="color:var(--muted)">Min. Investment</span><br><strong>USD 500,000,000</strong></div>
+          <div><span style="color:var(--muted)">Liquidity</span><br><strong>Quarterly, 90-day notice</strong></div>
+          <div><span style="color:var(--muted)">Management Fee</span><br><strong>2.0% p.a.</strong></div>
+          <div><span style="color:var(--muted)">Performance Fee</span><br><strong>30% above LIBOR+500</strong></div>
+          <div><span style="color:var(--muted)">Domicile</span><br><strong>Delaware / Cayman</strong></div>
+          <div><span style="color:var(--muted)">ISIN</span><br><strong>US48127R1023</strong></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="perf-sec" id="performance">
-  <div class="perf-inner">
-    <div class="eyebrow">Performance</div>
-    <h2 class="sec-h2">Returns that redefine<br>what's possible.</h2>
-    <p class="sec-sub">Three years of verified institutional performance against rigorous benchmarks. Independently audited quarterly by a Big Four firm.</p>
-    <div class="perf-grid">
-      <div class="perf-card">
-        <div class="leg">
-          <div class="leg-item"><div class="leg-line" style="background:var(--blue)"></div>Quantora Flagship (+312.4%)</div>
-          <div class="leg-item"><div class="leg-line" style="background:rgba(239,243,255,.3)"></div>S&amp;P 500 (+61.8%)</div>
-          <div class="leg-item"><div class="leg-line" style="background:var(--gold)"></div>HF Benchmark (+48.2%)</div>
-        </div>
-        <svg width="100%" height="280" viewBox="0 0 700 280" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="qg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3B82F6" stop-opacity=".2"/><stop offset="100%" stop-color="#3B82F6" stop-opacity="0"/></linearGradient></defs>
-          <line x1="0" y1="56" x2="700" y2="56" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
-          <line x1="0" y1="112" x2="700" y2="112" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
-          <line x1="0" y1="168" x2="700" y2="168" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
-          <line x1="0" y1="224" x2="700" y2="224" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
-          <text x="8" y="52" fill="rgba(239,243,255,.25)" font-size="9" font-family="JetBrains Mono">+400%</text>
-          <text x="8" y="108" fill="rgba(239,243,255,.25)" font-size="9" font-family="JetBrains Mono">+300%</text>
-          <text x="8" y="164" fill="rgba(239,243,255,.25)" font-size="9" font-family="JetBrains Mono">+200%</text>
-          <text x="8" y="220" fill="rgba(239,243,255,.25)" font-size="9" font-family="JetBrains Mono">+100%</text>
-          <polyline fill="none" stroke="rgba(201,168,76,.5)" stroke-width="1.5" stroke-dasharray="4,3" points="50,256 108,251 166,244 224,239 282,231 340,226 398,219 456,213 514,208 572,203 630,199 688,196"/>
-          <polyline fill="none" stroke="rgba(239,243,255,.3)" stroke-width="1.5" stroke-dasharray="6,3" points="50,256 108,249 166,240 224,234 282,227 340,221 398,214 456,208 514,201 572,196 630,191 688,187"/>
-          <polygon fill="url(#qg)" points="50,256 108,242 166,222 224,200 282,174 340,152 398,128 456,108 514,88 572,70 630,54 688,36 688,270 50,270"/>
-          <polyline fill="none" stroke="#3B82F6" stroke-width="2.5" points="50,256 108,242 166,222 224,200 282,174 340,152 398,128 456,108 514,88 572,70 630,54 688,36"/>
-          <circle cx="688" cy="36" r="4" fill="#3B82F6"/>
-          <circle cx="688" cy="36" r="9" fill="rgba(59,130,246,.2)"/>
-          <text x="693" y="40" fill="#60A5FA" font-size="10" font-family="JetBrains Mono" font-weight="500">+312.4%</text>
-          <text x="693" y="191" fill="rgba(239,243,255,.35)" font-size="10" font-family="JetBrains Mono">+61.8%</text>
-          <text x="44" y="273" fill="rgba(239,243,255,.22)" font-size="9" font-family="JetBrains Mono">Jan '22</text>
-          <text x="294" y="273" fill="rgba(239,243,255,.22)" font-size="9" font-family="JetBrains Mono">Jan '23</text>
-          <text x="544" y="273" fill="rgba(239,243,255,.22)" font-size="9" font-family="JetBrains Mono">Jan '24</text>
-          <text x="654" y="273" fill="rgba(239,243,255,.22)" font-size="9" font-family="JetBrains Mono">Today</text>
-        </svg>
-        <p style="font-size:10px;color:var(--faint);margin-top:14px">Gross returns, independently audited. Past performance not indicative of future results.</p>
-      </div>
-      <div class="mcol">
-        <div class="mcard reveal"><div class="mcard-lbl">3-Year Gross Return</div><div class="mcard-val pos">+312.4%</div><div class="mcard-sub">vs S&amp;P +61.8% over same period</div></div>
-        <div class="mcard reveal d1"><div class="mcard-lbl">Sharpe Ratio</div><div class="mcard-val">4.21</div><div class="mcard-sub">Industry threshold above 3.0</div></div>
-        <div class="mcard reveal d2"><div class="mcard-lbl">Maximum Drawdown</div><div class="mcard-val">-3.8%</div><div class="mcard-sub">vs HF average -18.3%</div></div>
-        <div class="mcard reveal d3"><div class="mcard-lbl">Directional Accuracy</div><div class="mcard-val pos">73.2%</div><div class="mcard-sub">Across 2.4M signals (TTM)</div></div>
-        <div class="mcard reveal d4"><div class="mcard-lbl">Sortino Ratio</div><div class="mcard-val">6.84</div><div class="mcard-sub">Downside risk-adjusted returns</div></div>
-      </div>
+<!-- INFRASTRUCTURE -->
+<section class="infra-sec reveal" id="infrastructure">
+  <div class="sec-eyebrow wh">Technology Infrastructure</div>
+  <h2 class="sec-title wh">Institutional-Grade<br>Trading Architecture</h2>
+  <p class="sec-sub wh" style="margin-bottom:0">Proprietary systems engineered to institutional specifications. All infrastructure is co-located at Equinix NY4, LD4, and TY3 data centres.</p>
+
+  <div class="infra-layout">
+    <div>
+      <div class="infra-sect">Execution & Latency</div>
+      <div class="spec-row"><span class="s-lbl">Average execution latency</span><span class="s-val">0.3ms</span></div>
+      <div class="spec-row"><span class="s-lbl">99th percentile latency</span><span class="s-val">0.8ms</span></div>
+      <div class="spec-row"><span class="s-lbl">Daily order volume</span><span class="s-val">4.7M orders</span></div>
+      <div class="spec-row"><span class="s-lbl">Exchange connections</span><span class="s-val">147 venues</span></div>
+      <div class="spec-row"><span class="s-lbl">Smart order routing</span><span class="s-val">Proprietary SOR v4</span></div>
+      <div class="spec-row"><span class="s-lbl">Avg. transaction cost</span><span class="s-val">&lt; 0.4 bps</span></div>
+      <div class="spec-row"><span class="s-lbl">System uptime (LTM)</span><span class="s-val">99.97%</span></div>
+
+      <div class="infra-sect" style="margin-top:32px">Data Processing</div>
+      <div class="spec-row"><span class="s-lbl">Daily signals processed</span><span class="s-val">847B+</span></div>
+      <div class="spec-row"><span class="s-lbl">Alternative data feeds</span><span class="s-val">312 providers</span></div>
+      <div class="spec-row"><span class="s-lbl">Data latency (market)</span><span class="s-val">&lt; 1μs</span></div>
+      <div class="spec-row"><span class="s-lbl">Model retraining cycle</span><span class="s-val">Daily (overnight)</span></div>
+      <div class="spec-row"><span class="s-lbl">Backtesting depth</span><span class="s-val">42 years tick data</span></div>
     </div>
-  </div>
-</section>
 
-<section class="hm-sec">
-  <div class="hm-inner">
-    <div class="eyebrow">Monthly Returns</div>
-    <h3 style="font-family:var(--fd);font-size:28px;font-weight:600;letter-spacing:-.03em;margin-bottom:8px">36-month performance heatmap.</h3>
-    <p style="font-size:14px;color:var(--muted)">No losing quarters in 36 months. Every month positive.</p>
-    <div class="hm-grid" id="hm"></div>
-  </div>
-</section>
-
-<section class="tech-sec" id="technology">
-  <div class="tech-inner">
-    <div class="eyebrow">Architecture</div>
-    <h2 class="sec-h2">Seven layers of<br>quantitative intelligence.</h2>
-    <p class="sec-sub" style="max-width:460px">Built by former quants from Two Sigma, DE Shaw, and Renaissance Technologies. The deepest ML stack ever deployed in systematic trading.</p>
-    <div class="tech-grid">
-      <div class="layers">
-        <div class="layer reveal"><div class="lnum">L1</div><div><div class="lname">Raw Data Ingestion</div><div class="ldesc">47 data feeds, 189 countries, sub-millisecond normalization</div></div></div>
-        <div class="layer reveal d1"><div class="lnum">L2</div><div><div class="lname">Alternative Data Engine</div><div class="ldesc">Satellite imagery, supply chain flows, NLP sentiment at scale</div></div></div>
-        <div class="layer reveal d2"><div class="lnum">L3</div><div><div class="lname">Feature Extraction</div><div class="ldesc">14,000+ engineered features across temporal and cross-sectional dimensions</div></div></div>
-        <div class="layer reveal d3"><div class="lnum">L4</div><div><div class="lname">Regime Detection</div><div class="ldesc">Adaptive HMM identifies 47 distinct market regimes with 91% accuracy</div></div></div>
-        <div class="layer reveal d4"><div class="lnum">L5</div><div><div class="lname">Alpha Generation Models</div><div class="ldesc">Ensemble of transformer, LSTM, and reinforcement learning agents</div></div></div>
-        <div class="layer reveal"><div class="lnum">L6</div><div><div class="lname">Portfolio Construction</div><div class="ldesc">Mean-CVaR optimization with factor exposure control and constraints</div></div></div>
-        <div class="layer reveal d1"><div class="lnum">L7</div><div><div class="lname">Smart Execution</div><div class="ldesc">AI-driven order routing, market impact minimization, 0.3ms latency</div></div></div>
-      </div>
-      <div class="tv">
-        <div class="pc reveal">
-          <div class="pc-title">Signal Pipeline — Real Time</div>
-          <div class="pflow">
-            <div class="pstep"><div class="pnode">📡</div><div class="plbl">INGEST</div></div>
-            <div class="pstep"><div class="pnode">🧠</div><div class="plbl">ANALYZE</div></div>
-            <div class="pstep"><div class="pnode">⚡</div><div class="plbl">SIGNAL</div></div>
-            <div class="pstep"><div class="pnode">🎯</div><div class="plbl">EXECUTE</div></div>
-          </div>
-        </div>
-        <div class="lat-grid reveal d1">
-          <div class="lat-cell"><div class="lat-val">0.3ms</div><div class="lat-lbl">Execution Latency</div></div>
-          <div class="lat-cell"><div class="lat-val">14ms</div><div class="lat-lbl">Signal to Order</div></div>
-          <div class="lat-cell"><div class="lat-val">847B</div><div class="lat-lbl">Daily Signals</div></div>
-        </div>
-        <div class="pc reveal d2">
-          <div class="pc-title">Infrastructure</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div style="background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);border-radius:8px;padding:14px"><div style="font-family:var(--fm);font-size:11px;color:var(--blue-b);margin-bottom:4px">12 PoPs</div><div style="font-size:12px;color:var(--muted)">Co-located at NYSE, LSE, TSE, HKEX &amp; major FX centers</div></div>
-            <div style="background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15);border-radius:8px;padding:14px"><div style="font-family:var(--fm);font-size:11px;color:var(--green);margin-bottom:4px">99.97%</div><div style="font-size:12px;color:var(--muted)">System uptime over trailing 36 months</div></div>
-            <div style="background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.15);border-radius:8px;padding:14px"><div style="font-family:var(--fm);font-size:11px;color:var(--gold);margin-bottom:4px">SOC 2 II</div><div style="font-size:12px;color:var(--muted)">Enterprise security, ISO 27001 certified</div></div>
-            <div style="background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.15);border-radius:8px;padding:14px"><div style="font-family:var(--fm);font-size:11px;color:#A78BFA;margin-bottom:4px">AES-256</div><div style="font-size:12px;color:var(--muted)">End-to-end encryption for all client data</div></div>
-          </div>
+    <div class="infra-text">
+      <div class="infra-sect">Architecture Overview</div>
+      <p>Quantora's proprietary trading infrastructure is built on a microservices architecture processing market data from over 147 global venues simultaneously. The system is co-located in Equinix Tier IV data centres in New York, London, and Tokyo, providing deterministic sub-millisecond execution with full geographic redundancy.</p>
+      <p>The machine learning pipeline employs an ensemble of gradient-boosted trees, transformer-based sequence models, and reinforcement learning agents, each specialised across a distinct market regime. Models are evaluated daily against out-of-sample performance with automatic deactivation thresholds to prevent overfitting. The risk management system operates independently with the authority to reduce or close any position without discretionary override.</p>
+      <p>All systems maintain hot-standby failover with sub-second switchover time. Disaster recovery infrastructure replicates all critical systems to a geographically separated facility, with full test exercised quarterly.</p>
+      <div style="margin-top:28px;padding:20px 22px;border:1px solid rgba(255,255,255,.1);background:rgba(0,212,160,.04)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold2);margin-bottom:12px">Security & Compliance</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:rgba(255,255,255,.45);line-height:2">
+          SOC 2 Type II Certified · ISO 27001 · GDPR Compliant<br>
+          SEC Investment Adviser · FCA Authorised Firm<br>
+          FINRA Member · CFTC Registered CTА
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="cmp-sec">
-  <div class="cmp-inner">
-    <div class="eyebrow">Competitive Analysis</div>
-    <h2 class="sec-h2">Nothing else comes close.</h2>
-    <table class="cmp-tbl">
-      <thead><tr>
-        <th style="text-align:left">Capability</th>
-        <th class="hl">Quantora</th>
-        <th>Bloomberg Terminal</th>
-        <th>Refinitiv Eikon</th>
-        <th>FactSet</th>
-      </tr></thead>
-      <tbody>
-        <tr><td>Generative AI Signal Engine</td><td class="hl"><span class="chk">✓</span></td><td><span class="crs">✗</span></td><td><span class="crs">✗</span></td><td><span class="crs">✗</span></td></tr>
-        <tr><td>Sub-millisecond Execution</td><td class="hl"><span class="chk">✓</span></td><td><span class="crs">✗</span></td><td><span class="crs">✗</span></td><td><span class="crs">✗</span></td></tr>
-        <tr><td>Alternative Data at Scale</td><td class="hl"><span class="chk">✓</span></td><td><span class="prt">Partial</span></td><td><span class="prt">Partial</span></td><td><span class="crs">✗</span></td></tr>
-        <tr><td>Regime-Adaptive Models</td><td class="hl"><span class="chk">✓</span></td><td><span class="crs">✗</span></td><td><span class="crs">✗</span></td><td><span class="crs">✗</span></td></tr>
-        <tr><td>Cross-Asset Intelligence</td><td class="hl"><span class="chk">✓</span></td><td><span class="chk">✓</span></td><td><span class="chk">✓</span></td><td><span class="prt">Partial</span></td></tr>
-        <tr><td>Verified 3-Year Track Record</td><td class="hl"><span class="chk">✓</span></td><td>N/A</td><td>N/A</td><td>N/A</td></tr>
-        <tr><td>Portfolio Construction AI</td><td class="hl"><span class="chk">✓</span></td><td><span class="crs">✗</span></td><td><span class="prt">Partial</span></td><td><span class="prt">Partial</span></td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<section class="press-sec">
-  <div class="press-inner">
-    <div class="eyebrow">Press</div>
-    <h2 class="sec-h2">What the world's<br>financial press says.</h2>
-    <div class="press-grid">
-      <div class="press-card reveal"><p class="pq">Quantora has effectively solved the alpha generation problem at institutional scale. Their three-year track record is without precedent in systematic trading.</p><div class="psrc"><div><div class="plogo">Wall Street Journal</div><div class="pdate">March 2024</div></div></div></div>
-      <div class="press-card reveal d1"><p class="pq">The most sophisticated quantitative intelligence platform we have encountered. The signal accuracy and execution latency are simply in a different class.</p><div class="psrc"><div><div class="plogo">Financial Times</div><div class="pdate">November 2023</div></div></div></div>
-      <div class="press-card reveal d2"><p class="pq">A paradigm shift in systematic trading. Quantora's AI doesn't just analyze markets — it understands them in ways that fundamentally redefine institutional alpha generation.</p><div class="psrc"><div><div class="plogo">Bloomberg Intelligence</div><div class="pdate">January 2024</div></div></div></div>
+<!-- SERVICE PROVIDERS -->
+<section class="providers-sec reveal" id="providers">
+  <div class="sec-eyebrow">Corporate Governance</div>
+  <h2 class="sec-title">Institutional Service Providers</h2>
+  <p class="sec-sub">Quantora maintains relationships with the highest-calibre service providers in the global asset management industry, ensuring the highest standards of independent oversight, custody, and governance.</p>
+  <div class="providers-grid">
+    <div class="prov">
+      <div class="p-role">Auditor</div>
+      <div class="p-name">PricewaterhouseCoopers</div>
+      <div class="p-detail">LLP, New York. Audited annual financial statements since inception. Big Four independent verification.</div>
+    </div>
+    <div class="prov">
+      <div class="p-role">Fund Administrator</div>
+      <div class="p-name">State Street Corp.</div>
+      <div class="p-detail">NAV calculation, investor services, transfer agency, regulatory reporting across 52 markets.</div>
+    </div>
+    <div class="prov">
+      <div class="p-role">Prime Broker</div>
+      <div class="p-name">Goldman Sachs Intl.</div>
+      <div class="p-detail">Primary prime brokerage, securities lending, and synthetic equity financing. Morgan Stanley secondary PB.</div>
+    </div>
+    <div class="prov">
+      <div class="p-role">Custodian</div>
+      <div class="p-name">BNY Mellon</div>
+      <div class="p-detail">Global custody of all fund assets with USD 46.7 trillion in total assets under custody.</div>
+    </div>
+    <div class="prov">
+      <div class="p-role">Legal Counsel</div>
+      <div class="p-name">Sidley Austin LLP</div>
+      <div class="p-detail">Fund formation, regulatory compliance, LP documentation, and ongoing legal advisory. NYC & London.</div>
     </div>
   </div>
 </section>
 
-<section class="pricing-sec" id="pricing">
-  <div class="pricing-inner">
-    <div class="eyebrow">Access Tiers</div>
-    <h2 class="sec-h2">Institutional access,<br>uncompromised.</h2>
-    <p class="sec-sub">Quantora is not a retail product. All access requires application, institutional verification, and minimum AUM qualification. We reject more applications than we accept.</p>
-    <div class="pricing-grid">
-      <div class="plan">
-        <div class="plan-name">Foundation</div>
-        <div class="plan-price"><span class="cur">$</span>15,000<span class="per">/mo</span></div>
-        <div class="plan-min">Minimum AUM: $500M · Annual commitment required</div>
-        <ul class="plan-feats">
-          <li>Full signal feed — equity &amp; FX</li>
-          <li>Portfolio analytics dashboard</li>
-          <li>5 quantitative model suites</li>
-          <li>API access (10M calls/day)</li>
-          <li>Dedicated onboarding specialist</li>
-          <li>SOC 2 compliant data room</li>
-        </ul>
-        <a href="mailto:institutional@quantora.ai" class="pcta pcta-o">Apply for Foundation →</a>
-      </div>
-      <div class="plan feat">
-        <div class="plan-name">Institutional</div>
-        <div class="plan-price"><span class="cur">$</span>45,000<span class="per">/mo</span></div>
-        <div class="plan-min">Minimum AUM: $2B · Full platform included</div>
-        <ul class="plan-feats">
-          <li>All 28 asset classes &amp; all signals</li>
-          <li>Full alternative data suite</li>
-          <li>Custom model fine-tuning</li>
-          <li>Unlimited API + direct FIX feed</li>
-          <li>Co-location access (select PoPs)</li>
-          <li>Dedicated quant research team</li>
-          <li>Real-time risk &amp; attribution</li>
-        </ul>
-        <a href="mailto:institutional@quantora.ai" class="pcta pcta-s">Apply for Institutional →</a>
-      </div>
-      <div class="plan">
-        <div class="plan-name">Sovereign</div>
-        <div class="plan-price" style="font-size:34px">Custom</div>
-        <div class="plan-min">Sovereign wealth, pension &amp; top 10 global managers</div>
-        <ul class="plan-feats">
-          <li>Fully custom AI model development</li>
-          <li>White-label platform deployment</li>
-          <li>On-premise or private cloud</li>
-          <li>Exclusive strategy licensing</li>
-          <li>Board-level reporting &amp; analytics</li>
-          <li>24/7 dedicated trading desk</li>
-          <li>Direct access to founding team</li>
-        </ul>
-        <a href="mailto:sovereign@quantora.ai" class="pcta pcta-g">Contact Sovereign Desk →</a>
-      </div>
-    </div>
-    <p style="text-align:center;font-size:12px;color:var(--faint);margin-top:28px">All plans require institutional verification, compliance review, and signed NDA before access is granted. Average onboarding: 14 business days.</p>
+<!-- CLOSED BANNER -->
+<div class="closed-banner reveal">
+  <div class="closed-text">Quantora Alpha Fund I LP is currently closed to new limited partner investments. A limited secondary allocation of USD 850M is available subject to investment committee approval and full due diligence.</div>
+  <div class="closed-badge">&#9632; CLOSED TO NEW INVESTORS</div>
+</div>
+
+<!-- ACCESS -->
+<section class="access-sec reveal" id="access">
+  <div class="access-eyebrow">Access &amp; Enquiries</div>
+  <h2 class="access-title">This Platform Is Available<br>By Invitation Only</h2>
+  <p class="access-sub">Quantora accepts enquiries exclusively from qualified institutional investors with verifiable assets under management of USD 500 million or greater. All enquiries are subject to NDA and investment committee review.</p>
+  <div class="access-form">
+    <input class="access-input" type="email" placeholder="institutional.email@organisation.com">
+    <button class="access-btn">Request Access</button>
   </div>
+  <p class="access-note">By submitting, you confirm that you are a Qualified Institutional Buyer as defined under Rule 144A of the U.S. Securities Act of 1933.</p>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  <div class="foot-inner">
+  <div class="footer-top">
     <div>
-      <a href="/" class="nav-logo"><span class="dot"></span>QUANTORA</a>
-      <p class="foot-desc">The quantitative intelligence platform trusted by the world's most sophisticated institutional investors. Built by former quants from Renaissance Technologies, Two Sigma, and DE Shaw.</p>
+      <div class="f-brand">QUANT<span>ORA</span></div>
+      <p class="f-desc">Quantora Capital Management LP is a registered investment adviser with the United States Securities and Exchange Commission. Principal offices: 399 Park Avenue, New York, NY 10022. Authorised and regulated by the Financial Conduct Authority (FCA), Firm Reference No. 847291.</p>
     </div>
-    <div class="foot-col"><h4>Platform</h4><ul><li><a href="#">Signal Engine</a></li><li><a href="#">Portfolio Analytics</a></li><li><a href="#">Execution Suite</a></li><li><a href="#">Risk Monitor</a></li><li><a href="#">API Reference</a></li></ul></div>
-    <div class="foot-col"><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Research</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li><li><a href="#">Contact</a></li></ul></div>
-    <div class="foot-col"><h4>Compliance</h4><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li><li><a href="#">SEC Disclosures</a></li><li><a href="#">GDPR</a></li><li><a href="#">SOC 2 Report</a></li></ul></div>
+    <div>
+      <div class="f-col-title">Fund</div>
+      <ul class="f-links">
+        <li><a href="#">Fund Overview</a></li>
+        <li><a href="#">Performance</a></li>
+        <li><a href="#">Risk Disclosures</a></li>
+        <li><a href="#">Audited Accounts</a></li>
+        <li><a href="#">Investor Portal</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="f-col-title">Firm</div>
+      <ul class="f-links">
+        <li><a href="#">Investment Team</a></li>
+        <li><a href="#">Research</a></li>
+        <li><a href="#">ESG Policy</a></li>
+        <li><a href="#">Form ADV</a></li>
+        <li><a href="#">Regulatory</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="f-col-title">Conuact</div>
+      <ul class="f-links">
+        <li><a href="#">New York HQ</a></li>
+        <li><a href="#">London Office</a></li>
+        <li><a href="#">Singapore</a></li>
+        <li><a href="#">Investor Relations</a></li>
+        <li><a href="#">Compliance</a></li>
+      </ul>
+    </div>
   </div>
-  <div class="foot-btm">
-    <div class="foot-legal">© 2024 Quantora Technologies, Inc. All rights reserved.</div>
-    <div style="display:flex;gap:24px"><span style="font-size:12px;color:var(--faint)">SEC Registered Investment Advisor</span><span style="font-size:12px;color:var(--faint)">FCA Regulated</span></div>
+  <div class="f-legal">
+    <p>IMPORTANT DISCLOSURES: This material is provided for informational purposes only and does not constitute an offer to sell or a solicitation of an offer to buy interests in any fund managed by Quantora Capital Management LP ("Quantora"). Any such offer or solicitation will be made only by means of a confidential private placement memorandum and only to qualified institutional buyers as defined under Rule 144A of the Securities Act of 1933, as amended, or to accredited investors as defined under Regulation D. An investment in the fund involves significant risks, including the possible loss of all principal invested.</p>
+    <p>Past performance is not necessarily indicative of future results. The performance shown is net of all management fees (2.0% per annum) and performance fees (30% above the High Water Mark), but before taxes. All performance data has been independently verified by PricewaterhouseCoopers LLP for the period January 2020 through December 2024.</p>
+    <p>Quantora Capital Management LP is registered as an Investment Adviser with the United States Securities and Exchange Commission (SEC) under the Investment Advisers Act of 1940 (Registration No. 801-124783). Quantora Capital Management (UK) Limited is authorised and regulated by the Financial Conduct Authority (FCA Reference No. 847291). Quantora Capital Management (Asia) Pte. Ltd. holds a Capital Markets Services Licence issued by the Monetary Authority of Singapore.</p>
+    <p>© 2025 Quantora Capital Management LP. All rights reserved. QUANTORA is a registered trademark. Reproduction or distribution of this material in whole or in part is strictly prohibited without prior written consent.</p>
   </div>
-  <div class="disc">IMPORTANT DISCLOSURE: Past performance is not indicative of future results. Investment in quantitative strategies involves substantial risk of loss and may not be suitable for all institutional investors. The information contained herein is provided for informational purposes only and does not constitute investment advice, a solicitation, or an offer to buy or sell any security. Quantora Technologies, Inc. is a registered investment adviser with the SEC. All performance figures are gross of fees and independently audited. Net performance will be lower. Please read all offering documents carefully before investing.</div>
 </footer>
 
 <script>
-window.addEventListener('load',()=>{
-  setTimeout(()=>{
-    const l=document.getElementById('loader');
-    l.classList.add('out');
-    setTimeout(()=>l.style.display='none',700);
-  },1600);
-  initCanvas();initCursor();initNav();initTicker();initLogos();initFeed();initCounters();initReveal();initHeatmap();initPnl();
-});
-
-function initCursor(){
-  const c=document.getElementById('cursor'),r=document.getElementById('cursor-ring');
-  let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-  (function loop(){
-    rx+=(mx-rx)*.15;ry+=(my-ry)*.15;
-    c.style.left=mx+'px';c.style.top=my+'px';
-    r.style.left=rx+'px';r.style.top=ry+'px';
-    requestAnimationFrame(loop);
-  })();
-  document.querySelectorAll('a,button,.mcard,.plan,.layer,.press-card,.stat-cell').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{r.style.width='52px';r.style.height='52px';r.style.borderColor='rgba(59,130,246,.8)';});
-    el.addEventListener('mouseleave',()=>{r.style.width='36px';r.style.height='36px';r.style.borderColor='rgba(59,130,246,.6)';});
-  });
+// Timestamp
+function updateTime(){
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  const s = String(now.getSeconds()).padStart(2,'0');
+  const el = document.getElementById('ts');
+  if(el) el.textContent = 'LAST UPDATE: '+h+':'+m+':'+s+' UTC  ·  NEXT: '+(s<59?String(parseInt(s)+1).padStart(2,'0'):'00');
 }
+setInterval(updateTime, 1000);
+updateTime();
 
-function initNav(){
-  const nav=document.getElementById('nav');
-  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
-}
+// Live MTD flicker
+const mtdVals = ['+2.847%','+2.851%','+2.843%','+2.858%','+2.849%'];
+let mi = 0;
+setInterval(()=>{
+  const el = document.getElementById('mtd');
+  if(el){ el.textContent = mtdVals[mi % mtdVals.length]; mi++; }
+}, 4700);
 
-function initCanvas(){
-  const cv=document.getElementById('bg-canvas'),ctx=cv.getContext('2d');
-  let W,H,nodes=[],mouse={x:-999,y:-999};
-  const N=75,CD=155;
-  function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight;}
-  resize();window.addEventListener('resize',()=>{resize();create();});
-  document.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
-  function create(){
-    nodes=Array.from({length:N},()=>({
-      x:Math.random()*W,y:Math.random()*H,
-      vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,
-      r:Math.random()*1.8+.8,
-      p:Math.random()*Math.PI*2,ps:.01+Math.random()*.02,
-      active:Math.random()<.12
-    }));
-  }
-  create();
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    if(Math.random()<.018){
-      const n=nodes[Math.floor(Math.random()*nodes.length)];
-      n.active=true;setTimeout(()=>n.active=false,700+Math.random()*1000);
-    }
-    nodes.forEach(n=>{
-      n.x+=n.vx;n.y+=n.vy;
-      if(n.x<0||n.x>W)n.vx*=-1;
-      if(n.y<0||n.y>H)n.vy*=-1;
-      n.p+=n.ps;
-      const dx=n.x-mouse.x,dy=n.y-mouse.y,dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<110){n.x+=dx/dist*1.2;n.y+=dy/dist*1.2;}
-    });
-    for(let i=0;i<nodes.length;i++){
-      for(let j=i+1;j<nodes.length;j++){
-        const a=nodes[i],b=nodes[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.sqrt(dx*dx+dy*dy);
-        if(d<CD){
-          const op=(1-d/CD)*(a.active||b.active?.25:.12);
-          ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
-          ctx.strokeStyle=`rgba(96,165,250,${op})`;ctx.lineWidth=a.active||b.active?.7:.35;ctx.stroke();
-          if((a.active||b.active)&&Math.random()<.3){
-            const t=(Date.now()*.002)%1,px=a.x+(b.x-a.x)*t,py=a.y+(b.y-a.y)*t;
-            ctx.beginPath();ctx.arc(px,py,1.5,0,Math.PI*2);ctx.fillStyle='rgba(96,165,250,.85)';ctx.fill();
-          }
-        }
-      }
-    }
-    nodes.forEach(n=>{
-      const a=n.active?.9:.25+Math.sin(n.p)*.08,r=n.active?n.r*2.2:n.r;
-      if(n.active){ctx.beginPath();ctx.arc(n.x,n.y,r*3.5,0,Math.PI*2);ctx.fillStyle='rgba(59,130,246,.08)';ctx.fill();}
-      ctx.beginPath();ctx.arc(n.x,n.y,r,0,Math.PI*2);
-      ctx.fillStyle=n.active?`rgba(96,165,250,${a})`:`rgba(148,163,184,${a})`;ctx.fill();
-    });
-    requestAnimationFrame(draw);
-  }
-  draw();
-}
-
-function initTicker(){
-  const data=[
-    {sym:'AAPL',p:'189.34',c:'+1.24%',u:true},{sym:'MSFT',p:'421.87',c:'+0.87%',u:true},
-    {sym:'NVDA',p:'873.22',c:'+3.41%',u:true},{sym:'SPY',p:'523.14',c:'+0.42%',u:true},
-    {sym:'QQQ',p:'447.82',c:'+0.63%',u:true},{sym:'GLD',p:'224.56',c:'+0.18%',u:true},
-    {sym:'TLT',p:'94.33',c:'-0.22%',u:false},{sym:'BTC',p:'68,420',c:'+2.14%',u:true},
-    {sym:'EUR/USD',p:'1.0834',c:'-0.08%',u:false},{sym:'JPY/USD',p:'0.0067',c:'-0.31%',u:false},
-    {sym:'AMZN',p:'192.34',c:'+1.87%',u:true},{sym:'GOOGL',p:'175.43',c:'+0.54%',u:true},
-    {sym:'META',p:'521.33',c:'+2.21%',u:true},{sym:'TSLA',p:'175.22',c:'-1.44%',u:false},
-    {sym:'WTI',p:'82.34',c:'+0.94%',u:true},{sym:'VIX',p:'13.42',c:'-3.22%',u:false},
-  ];
-  const t=document.getElementById('ttk');
-  t.innerHTML=[...data,...data].map(d=>`<div class="tick-item"><span class="tick-sym">${d.sym}</span><span class="tick-price">${d.p}</span><span class="${d.u?'up':'dn'}">${d.c}</span></div>`).join('');
-  setInterval(()=>{
-    document.querySelectorAll('.tick-price').forEach(el=>{
-      const v=parseFloat(el.textContent.replace(/,/g,''));
-      if(!isNaN(v)){const d=(Math.random()-.48)*v*.001;el.textContent=v>100?(v+d).toFixed(2):(v+d).toFixed(4);}
-    });
-  },1600);
-}
-
-function initLogos(){
-  const firms=['BlackRock','Vanguard','Goldman Sachs','Bridgewater','Two Sigma','Citadel','Renaissance Technologies','Man Group','D.E. Shaw','Point72','Millennium Management','AQR Capital','Winton Group','Balyasny','Coatue Management','Viking Global'];
-  document.getElementById('ltk').innerHTML=[...firms,...firms].map(f=>`<div class="logo-item">${f}</div>`).join('');
-}
-
-function initFeed(){
-  const feed=document.getElementById('sig-feed'),cnt=document.getElementById('sig-cnt');
-  let count=142863;
-  const insts=[
-    {t:'AAPL US',n:'Apple Inc.'},{t:'MSFT US',n:'Microsoft Corp.'},{t:'NVDA US',n:'NVIDIA Corp.'},
-    {t:'JPM US',n:'JPMorgan Chase'},{t:'ES1!',n:'S&P 500 Future'},{t:'NQ1!',n:'Nasdaq Future'},
-    {t:'EUR/USD',n:'Euro vs Dollar'},{t:'BTC-USD',n:'Bitcoin USD'},{t:'XOM US',n:'ExxonMobil'},
-    {t:'AMZN US',n:'Amazon.com Inc.'},{t:'GLD',n:'Gold ETF'},{t:'TLT',n:'US 20Y Bond ETF'},
-    {t:'TSLA US',n:'Tesla Inc.'},{t:'META US',n:'Meta Platforms'},{t:'CL1!',n:'Crude Oil Future'},
-    {t:'GC1!',n:'Gold Future'},{t:'USD/JPY',n:'Dollar vs Yen'},{t:'BABA US',n:'Alibaba Group'},
-  ];
-  function add(){
-    const ins=insts[Math.floor(Math.random()*insts.length)];
-    const conf=(72+Math.random()*25).toFixed(1);
-    const long=Math.random()>.42;
-    const now=new Date(),time=now.toTimeString().slice(0,8);
-    count+=Math.floor(Math.random()*12)+1;
-    cnt.textContent=count.toLocaleString()+' signals today';
-    const row=document.createElement('div');
-    row.className='sig-row';
-    row.innerHTML=`<div class="stk">${ins.t}</div><div class="sname">${ins.n}</div><div class="sconf">${conf}%</div><div class="sdir ${long?'long':'short'}">${long?'▲ LONG':'▼ SHORT'}</div><div class="stime">${time}</div>`;
-    feed.insertBefore(row,feed.firstChild);
-    if(feed.children.length>11)feed.removeChild(feed.lastChild);
-  }
-  for(let i=0;i<9;i++)setTimeout(add,i*60);
-  setInterval(add,2100);
-}
-
-function initCounters(){
-  const els=document.querySelectorAll('[data-target]');
-  const obs=new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(!e.isIntersecting)return;
-      const el=e.target,target=parseFloat(el.dataset.target),suf=el.dataset.suffix||'',pre=el.dataset.prefix||'';
-      let start=null;
-      (function tick(ts){
-        if(!start)start=ts;
-        const p=Math.min((ts-start)/1800,1),eased=1-Math.pow(1-p,3),val=target*eased;
-        el.textContent=pre+(val<10?val.toFixed(1):Math.round(val))+suf;
-        if(p<1)requestAnimationFrame(tick);
-      })(performance.now());
-      obs.unobserve(el);
-    });
-  },{threshold:.5});
-  els.forEach(el=>obs.observe(el));
-}
-
-function initReveal(){
-  const obs=new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
-  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
-  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-}
-
-function initHeatmap(){
-  const c=document.getElementById('hm');
-  const months=['J','F','M','A','M','J','J','A','S','O','N','D'];
-  const yrs=['2022','2023','2024'];
-  const ret=[
-    3.2,4.1,2.8,1.3,5.4,3.1,6.2,4.8,2.1,5.5,3.8,4.2,
-    4.7,3.3,5.1,2.9,6.3,4.4,3.8,5.7,2.4,4.9,6.1,5.8,
-    5.2,3.7,4.3,6.1,5.0,3.4,4.8,5.5,null,null,null,null,
-  ];
-  let h='<div class="hm-cell hm-lbl"></div>';
-  months.forEach(m=>h+=`<div class="hm-cell hm-lbl">${m}</div>`);
-  yrs.forEach((yr,yi)=>{
-    h+=`<div class="hm-cell hm-lbl">${yr}</div>`;
-    for(let mi=0;mi<12;mi++){
-      const r=ret[yi*12+mi];
-      if(r===null){h+=`<div class="hm-cell" style="background:rgba(255,255,255,.04)"></div>`;}
-      else{
-        const int=Math.min(r/7,1),g=Math.round(50+int*155);
-        h+=`<div class="hm-cell" style="background:rgba(10,${g},80,${.3+int*.6})" title="${yr} ${months[mi]}: +${r.toFixed(1)}%">${r>0?'+'+r.toFixed(1):r.toFixed(1)}</div>`;
-      }
-    }
-  });
-  c.innerHTML=h;
-}
-
-function initPnl(){
-  const l=document.getElementById('pnl-l'),a=document.getElementById('pnl-a');
-  if(!l)return;
-  const W=600,H=140,pad=8;
-  const pts=Array.from({length:55},(_,i)=>{
-    const base=72+i*.9,noise=(Math.random()-.38)*14;
-    return Math.max(15,Math.min(H-15,H-base-noise));
-  });
-  const xs=pts.map((_,i)=>pad+(i/(pts.length-1))*(W-2*pad));
-  const ps=xs.map((x,i)=>`${x},${pts[i]}`).join(' ');
-  l.setAttribute('points',ps);
-  a.setAttribute('points',`${xs[0]},${H} ${ps} ${xs[xs.length-1]},${H}`);
-}
+// Reveal on scroll
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); } });
+}, {threshold: 0.08});
+revealEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
+serve(el));
 </script>
 </body>
 </html>
