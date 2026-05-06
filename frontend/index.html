@@ -361,7 +361,7 @@ void main() {
 
   vec4 pos = vec4(x * 0.85, y, z * 0.85, 1.0);
   gl_Position = uMVP * pos;
-  gl_PointSize = aSize * (2.0 + mForce * 2.0) * (800.0 / gl_Position.w);
+  gl_PointSize = aSize * (1.5 + mForce * 2.0) * (500.0 / (gl_Position.w * uAspect));
 
   // Color: returns data drives hue
   float heat = aPos.x * 0.5 + 0.5;
@@ -396,6 +396,9 @@ function createShader(type, src) {
   const s = gl.createShader(type);
   gl.shaderSource(s, src);
   gl.compileShader(s);
+  if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+    console.error('Shader error:', gl.getShaderInfoLog(s));
+  }
   return s;
 }
 
@@ -481,6 +484,7 @@ function mat4Trans(x,y,z) {
 }
 
 function bindBuf(b, size) {
+  if(b.loc < 0) return;
   gl.bindBuffer(gl.ARRAY_BUFFER, b.buf);
   gl.enableVertexAttribArray(b.loc);
   gl.vertexAttribPointer(b.loc, size, gl.FLOAT, false, 0, 0);
@@ -732,7 +736,5 @@ document.querySelectorAll('button, a, input').forEach(el => {
   });
 });
 </script>
-</body>
-</html>
 </body>
 </html>
