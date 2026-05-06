@@ -53,22 +53,22 @@
 
   /* SCROLL INDICATOR */
   #scroll-hint { position: fixed; bottom: 60px; left: 50%; transform: translateX(-50%); z-index: 100; opacity: 0; transition: opacity 1s; text-align: center; }
-  #scroll-hint span { font-family: 'Courier New', monospace; font-size: 8px; letter-spacing: 0.5em; color: rgba(255,255,255,0.2isplay: flexblock; }
-  #scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(255,255,255,0.2i, transparent); margin: 12px auto 0; animation: pulse-line 2s ease-in-out infinite; }
-  @keyframes pulse-line { 0%,100%{opacity:0.2;transform:scaleY(1)} 50%{opacity:0.8;transform:scaleY(1.2i} }
+  #scroll-hint span { font-family: 'Courier New', monospace; font-size: 8px; letter-spacing: 0.5em; color: rgba(255,255,255,0.2); display: block; }
+  #scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent); margin: 12px auto 0; animation: pulse-line 2s ease-in-out infinite; }
+  @keyframes pulse-line { 0%,100%{opacity:0.2;transform:scaleY(1)} 50%{opacity:0.8;transform:scaleY(1.2)} }
 
   /* INTRO SEQUENCE */
-  #intro { position: fixed; top:0;left:0;right:0;bottom:0; z-index:200; background:#000; lay: fleflex; align-items:center; justify-content:center; }
+  #intro { position: fixed; top:0;left:0;right:0;bottom:0; z-index:200; background:#000; display:flex; align-items:center; justify-content:center; }
   #intro-text { font-family:'Courier New',monospace; font-size:10px; letter-spacing:0.6em; color:rgba(255,255,255,0); text-transform:uppercase; transition: color 1s; }
 
   /* SECTIONS */
   #sections { position: fixed; top:0;left:0;right:0;bottom:0; z-index:60; overflow-y:scroll; scroll-snap-type:y mandatory; opacity:0; pointer-events:none; scrollbar-width:none; }
   #sections::-webkit-scrollbar { display:none; }
-  .section { height:100vh; scroll-snap-align:start; lay: fleflex; align-items:center; justify-content:center; position:relative; }
+  .section { height:100vh; scroll-snap-align:start; display:flex; align-items:center; justify-content:center; position:relative; }
 
   /* PERFORMANCE SECTION */
   .perf-section { flex-direction:column; }
-  .perf-title { font-size:9px; letter-spacing:0.6em; color:rgba(255,255,255,0.2ispfont-family:'Courier New',monospace; margin-bottom:48px; }
+  .perf-title { font-size:9px; letter-spacing:0.6em; color:rgba(255,255,255,0.2); font-family:'Courier New',monospace; margin-bottom:48px; }
   .perf-chart { width:min(700px,90vw); height:200px; position:relative; }
   .chart-line { position:absolute; bottom:0; left:0; right:0; }
   .perf-metrics { display:grid; grid-template-columns:repeat(4,1fr); gap:32px; margin-top:48px; width:min(700px,90vw); }
@@ -85,13 +85,13 @@
 
   /* ACCESS SECTION */
   .access-section { flex-direction:column; }
-  .access-label { font-family:'Courier New',monospace; font-size:9px; letter-spacing:0.6em; color:rgba(255,255,255,0.2ispmargin-bottom:32px; }
+  .access-label { font-family:'Courier New',monospace; font-size:9px; letter-spacing:0.6em; color:rgba(255,255,255,0.2); margin-bottom:32px; }
   .access-box { border:1px solid rgba(255,255,255,0.1); padding:48px; width:min(500px,90vw); text-align:center; position:relative; }
-  .access-box::before { content:'CONFIDENTIAL'; position:absolute; top:50%;left:50%;transform:translate(-50%,-50%) rotate(-15deg); font-size:80px; font-family:'Times New Roman',serif; color:rgba(255,255,255,0.02ispwhite-space:nowrap; font-weight:700; letter-spacing:0.1em; pointer-events:none; }
+  .access-box::before { content:'CONFIDENTIAL'; position:absolute; top:50%;left:50%;transform:translate(-50%,-50%) rotate(-15deg); font-size:80px; font-family:'Times New Roman',serif; color:rgba(255,255,255,0.02); white-space:nowrap; font-weight:700; letter-spacing:0.1em; pointer-events:none; }
   .access-box h3 { font-size:28px; font-weight:400; color:#fff; margin-bottom:8px; }
   .access-box p { font-family:'Courier New',monospace; font-size:9px; letter-spacing:0.3em; color:rgba(255,255,255,0.25); margin-bottom:32px; }
   .access-input { width:100%; background:transparent; border:none; border-bottom:1px solid rgba(255,255,255,0.15); padding:12px 0; font-family:'Courier New',monospace; font-size:12px; color:#fff; outline:none; margin-bottom:20px; letter-spacing:0.1em; }
-  .access-input::placeholder { color:rgba(255,255,255,0.2isp}
+  .access-input::placeholder { color:rgba(255,255,255,0.2); }
   .access-btn { background:transparent; border:1px solid rgba(255,255,255,0.3); color:rgba(255,255,255,0.8); font-family:'Courier New',monospace; font-size:9px; letter-spacing:0.5em; padding:14px 32px; cursor:pointer; transition:all 0.3s; margin-top:8px; }
   .access-btn:hover { background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.6); color:#fff; }
 
@@ -99,7 +99,7 @@
   #loading { position:fixed; bottom:0;left:0; height:1px; background:rgba(255,255,255,0.6); z-index:9999; width:0; transition:width 0.1s; }
 
   /* GLITCH */
-  @keyframes glitch { 0%{clip-path:inset(40% 0 61% 0i} 20%{clip-path:inset(92% 0 1% 0i} 40%{clip-path:inset(43% 0 1% 0i} 60%{clip-path:inset(25% 0 58% 0i} 80%{clip-path:inset(54% 0 7% 0i} 100%{clip-path:inset(58% 0 43% 0i} }
+  @keyframes glitch { 0%{clip-path:inset(40% 0 61% 0)} 20%{clip-path:inset(92% 0 1% 0)} 40%{clip-path:inset(43% 0 1% 0)} 60%{clip-path:inset(25% 0 58% 0)} 80%{clip-path:inset(54% 0 7% 0)} 100%{clip-path:inset(58% 0 43% 0)} }
 
   /* SECTION TRANSITIONS */
   .section { opacity:0; transition: opacity 1s; }
@@ -246,11 +246,11 @@
         <animate attributeName="opacity" from="0" to="1" dur="2s" begin="1s" fill="freeze"/>
       </path>
       <!-- Labels -->
-      <text x="8" y="195" fill="rgba(255,255,255,0.2i" font-family="Courier New" font-size="8" letter-spacing="2">2019</text>
-      <text x="168" y="195" fill="rgba(255,255,255,0.2i" font-family="Courier New" font-size="8" letter-spacing="2">2020</text>
-      <text x="342" y="195" fill="rgba(255,255,255,0.2i" font-family="Courier New" font-size="8" letter-spacing="2">2021</text>
-      <text x="510" y="195" fill="rgba(255,255,255,0.2i" font-family="Courier New" font-size="8" letter-spacing="2">2022</text>
-      <text x="656" y="195" fill="rgba(255,255,255,0.2i" font-family="Courier New" font-size="8" letter-spacing="2">NOW</text>
+      <text x="8" y="195" fill="rgba(255,255,255,0.2)" font-family="Courier New" font-size="8" letter-spacing="2">2019</text>
+      <text x="168" y="195" fill="rgba(255,255,255,0.2)" font-family="Courier New" font-size="8" letter-spacing="2">2020</text>
+      <text x="342" y="195" fill="rgba(255,255,255,0.2)" font-family="Courier New" font-size="8" letter-spacing="2">2021</text>
+      <text x="510" y="195" fill="rgba(255,255,255,0.2)" font-family="Courier New" font-size="8" letter-spacing="2">2022</text>
+      <text x="656" y="195" fill="rgba(255,255,255,0.2)" font-family="Courier New" font-size="8" letter-spacing="2">NOW</text>
       <text x="640" y="20" fill="#00ff88" font-family="Courier New" font-size="9">+312%</text>
       <text x="640" y="105" fill="rgba(255,255,255,0.3)" font-family="Courier New" font-size="9">+52%</text>
     </svg>
@@ -630,17 +630,17 @@ function runIntro() {
         document.getElementById('stats').style.opacity = '1';
         document.getElementById('left-panel').style.opacity = '1';
         document.getElementById('ticker').style.opacity = '1';
-        document.getElementById('heroav').style.opacity = '1';
-        document.getElementById(croll-hintav').style.opacity = '1';
-        document.getElementById(ections')').style.opacity = '1';
-        document.getElementById(ections')').stylpointerEvents = 'all';
+        document.getElementById('hero').style.opacity = '1';
+        document.getElementById('scroll-hint').style.opacity = '1';
+        document.getElementById('sections').style.opacity = '1';
+        document.getElementById('sections').style.pointerEvents = 'all';
         initAudio();
       }, 1500);
       return;
     }
     introText.textContent = messages[i];
-    introText.).stylcolor = i === messages.length - 1 ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.4)';
-    loadBar.).stylwidth = ((i+1) / messages.length * 100) + '%';
+    introText.style.color = i === messages.length - 1 ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.4)';
+    loadBar.style.width = ((i+1) / messages.length * 100) + '%';
     i++;
     setTimeout(next, i === messages.length ? 800 : 600);
   }
@@ -650,25 +650,25 @@ function runIntro() {
 
 // ---- HERO TEXT ANIMATION ----
 function animateHero() {
-  const hero = document.getElementById('heroav;
+  const hero = document.getElementById('hero');
   hero.style.transition = 'opacity 2s';
   // Title split animation via CSS
-  const spans = hero.querySelectorAllId(pan');
+  const spans = hero.querySelectorAll('span');
   spans.forEach((s, i) => {
     s.style.transform = 'translateY(40px)';
     s.style.opacity = '0';
     s.style.transition = `transform 1.2s ${i*0.15}s cubic-bezier(0.16,1,0.3,1), opacity 1.2s ${i*0.15}s`;
     setTimeout(() => {
       s.style.transform = 'translateY(0)';
-      s').style.opacity = '1';
-  }, 100);
+      s.style.opacity = '1';
+    }, 100);
   });
 }
 
 // ---- SCROLL SECTIONS ----
 let currentSection = 0;
-sections.addEventListener('(croll', () => {
-  const secs = sections.querySelectorAllId.section');
+sections.addEventListener('scroll', () => {
+  const secs = sections.querySelectorAll('.section');
   secs.forEach((s, i) => {
     const rect = s.getBoundingClientRect();
     if(rect.top < H * 0.6 && rect.bottom > H * 0.4) {
@@ -678,8 +678,8 @@ sections.addEventListener('(croll', () => {
 
   // Hide hero when scrolled
   const scrolled = sections.scrollTop > H * 0.3;
-  document.getElementById('heroav').style.opacity scrolled ? '0' : '1';
-  document.getElementById('(croll-hintav').style.opacity scrolled ? '0' : '1';
+  document.getElementById('hero').style.opacity = scrolled ? '0' : '1';
+  document.getElementById('scroll-hint').style.opacity = scrolled ? '0' : '1';
 });
 
 // ---- MAIN LOOP ----
@@ -703,12 +703,12 @@ runIntro();
 setTimeout(() => {
   animateHero();
   // Make sections visible on load
-  const firstSection = sections.querySelectorId.section');
+  const firstSection = sections.querySelector('.section');
   if(firstSection) firstSection.classList.add('visible');
 }, 3500);
 
 // Sections reveal
-document.querySelectorAllId.section').forEach(s => {
+document.querySelectorAll('.section').forEach(s => {
   s.style.opacity = '0';
   s.style.transition = 'opacity 1.2s ease';
 });
@@ -719,7 +719,7 @@ document.addEventListener('click', initAudio, { once: true });
 requestAnimationFrame(loop);
 
 // ---- CURSOR MAGNETIC EFFECT ----
-document.querySelectorAllIdbutton, a, input').forEach(el => {
+document.querySelectorAll('button, a, input').forEach(el => {
   el.addEventListener('mouseenter', () => {
     document.getElementById('cursor').style.transform = 'translate(-50%,-50%) scale(3)';
     document.getElementById('cursor-ring').style.transform = 'translate(-50%,-50%) scale(0.5)';
@@ -734,5 +734,5 @@ document.querySelectorAllIdbutton, a, input').forEach(el => {
 </script>
 </body>
 </html>
-'</body>
+</body>
 </html>
