@@ -3,624 +3,612 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QUANTORA — GOD MODE</title>
+<title>Quantora Capital — Restricted Access</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#080604;
-  --red:#C8102E;
-  --cream:#F0EDE8;
-  --muted:#4A4744;
-  --faint:#1A1714;
+  --navy:  #040810;
+  --panel: #07111F;
+  --rule:  #0E1E30;
+  --muted: #3A5070;
+  --body:  #8A9BB0;
+  --text:  #D8DCE4;
+  --white: #EEF0F4;
+  --gold:  #B89040;
+  --gold2: #D4AD5C;
+  --red:   #9B1C2E;
+  --green: #1B7A44;
+  --mono:  'Courier New', Courier, monospace;
+  --serif: Georgia, 'Times New Roman', serif;
+  --sans:  -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
 }
-html{scroll-behavior:smooth}
+
+html{scroll-behavior:smooth;font-size:14px}
+
 body{
-  background:var(--bg);
-  color:var(--cream);
-  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  cursor:none;
-  overflow-x:hidden;
+  background:var(--navy);
+  color:var(--body);
+  font-family:var(--sans);
+  min-height:100vh;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
 }
 
-/* CROSSHAIR CURSOR */
-#cursor{
-  position:fixed;top:0;left:0;pointer-events:none;z-index:9999;
-}
-#cursor::before,#cursor::after{
-  content:'';position:fixed;background:var(--red);
-  transition:transform 0.08s ease,opacity 0.1s;
-}
-#cursor::before{
-  width:1px;height:20px;
-  transform:translate(calc(var(--cx,0px) - 0.5px), calc(var(--cy,0px) - 10px));
-}
-#cursor::after{
-  width:20px;height:1px;
-  transform:translate(calc(var(--cx,0px) - 10px), calc(var(--cy,0px) - 0.5px));
-}
-
-/* CANVAS */
-#c{
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  display:block;z-index:0;
-}
-
-/* SCROLL CONTAINER */
-main{position:relative;z-index:10}
-
-/* ── HERO ── */
-#hero{
-  height:100vh;
-  display:flex;flex-direction:column;
-  justify-content:flex-end;
-  padding:0 6vw 8vh;
-  position:relative;
-}
-.hero-overline{
-  font-size:clamp(10px,1vw,13px);
-  letter-spacing:0.35em;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-bottom:2rem;
-}
-.hero-title{
-  font-size:clamp(64px,10vw,160px);
-  font-weight:900;
-  line-height:0.88;
-  letter-spacing:-0.03em;
-  text-transform:uppercase;
-  color:var(--cream);
-  mix-blend-mode:normal;
-}
-.hero-title span{color:var(--red)}
-.hero-sub{
-  margin-top:3rem;
-  max-width:420px;
-  font-size:clamp(13px,1.1vw,15px);
-  line-height:1.7;
+/* ── TERMINAL TOP BAR ── */
+#topbar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:var(--panel);
+  border-bottom:1px solid var(--rule);
+  padding:0 48px;
+  height:40px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.12em;
   color:var(--muted);
 }
-.hero-rule{
-  position:absolute;top:50%;right:6vw;
-  width:1px;height:40vh;
-  background:linear-gradient(to bottom,transparent,var(--muted),transparent);
-  transform:translateY(-50%);
+.topbar-id{color:var(--gold);letter-spacing:0.08em}
+.topbar-right{display:flex;gap:40px;align-items:center}
+.topbar-status{
+  display:flex;align-items:center;gap:7px;
+}
+.status-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--green);
+  animation:pulse 3s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.restricted-badge{
+  border:1px solid var(--muted);
+  padding:2px 8px;
+  font-size:9px;
+  letter-spacing:0.18em;
+  color:var(--muted);
+  text-transform:uppercase;
 }
 
-/* HEARTBEAT */
-#heartbeat-wrap{
-  position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:320px;height:80px;
-  opacity:0.12;
-  pointer-events:none;
-}
-#heartbeat-wrap svg{width:100%;height:100%}
-.hb-path{
-  fill:none;stroke:var(--red);stroke-width:1.5;
-  stroke-dasharray:700;stroke-dashoffset:700;
-  animation:hbDraw 2.4s cubic-bezier(0.4,0,0.2,1) infinite;
-}
-@keyframes hbDraw{
-  0%{stroke-dashoffset:700;opacity:1}
-  70%{stroke-dashoffset:0;opacity:1}
-  100%{stroke-dashoffset:0;opacity:0}
-}
+/* ── MAIN ── */
+main{padding-top:40px}
 
-/* STAT ROW */
-.stat-row{
-  display:flex;gap:4vw;margin-top:4rem;
-  border-top:1px solid var(--faint);
-  padding-top:2rem;
-}
-.stat-item{display:flex;flex-direction:column;gap:4px}
-.stat-val{
-  font-size:clamp(22px,3vw,42px);
-  font-weight:900;
-  letter-spacing:-0.02em;
-}
-.stat-label{
-  font-size:11px;letter-spacing:0.25em;
-  text-transform:uppercase;color:var(--muted);
-}
-
-/* ── SECTIONS ── */
+/* ── SECTION BASE ── */
 section{
-  padding:15vh 6vw;
-  border-top:1px solid var(--faint);
+  padding:72px 48px;
+  border-bottom:1px solid var(--rule);
+  max-width:1400px;
+  margin:0 auto;
+}
+
+/* ── HERO / PERFORMANCE PANEL ── */
+#hero{
+  padding:64px 48px 56px;
+  border-bottom:1px solid var(--rule);
+  max-width:1400px;
+  margin:0 auto;
+}
+
+.hero-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  margin-bottom:48px;
+}
+
+.fund-name-block{}
+.fund-overline{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:16px;
+}
+.fund-name{
+  font-family:var(--serif);
+  font-size:clamp(28px,3.5vw,52px);
+  font-weight:400;
+  color:var(--white);
+  letter-spacing:0.02em;
+  line-height:1.1;
+}
+.fund-name em{
+  font-style:normal;
+  color:var(--gold);
+}
+
+.fund-meta{
+  text-align:right;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.1em;
+  color:var(--muted);
+  line-height:2;
+}
+
+/* ── PERFORMANCE TABLE ── */
+.perf-table-wrap{
+  border:1px solid var(--rule);
+  background:var(--panel);
+}
+
+.perf-table-header{
+  display:grid;
+  grid-template-columns:200px repeat(5,1fr);
+  padding:10px 24px;
+  border-bottom:1px solid var(--rule);
+  font-family:var(--mono);
+  font-size:9px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+  gap:16px;
+}
+
+.perf-row{
+  display:grid;
+  grid-template-columns:200px repeat(5,1fr);
+  padding:14px 24px;
+  border-bottom:1px solid var(--rule);
+  gap:16px;
+  align-items:center;
+  transition:background 0.15s;
+}
+.perf-row:last-child{border-bottom:none}
+.perf-row:hover{background:rgba(255,255,255,0.02)}
+
+.perf-row.total{
+  background:rgba(184,144,64,0.05);
+  border-top:1px solid rgba(184,144,64,0.2);
+  border-bottom:none;
+}
+
+.strat-label{
+  font-family:var(--sans);
+  font-size:12px;
+  color:var(--text);
+  letter-spacing:0.01em;
+}
+.strat-label small{
+  display:block;
+  font-family:var(--mono);
+  font-size:9px;
+  color:var(--muted);
+  letter-spacing:0.1em;
+  margin-top:2px;
+}
+
+.perf-num{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.05em;
+  color:var(--body);
+}
+.perf-num.pos{color:var(--green)}
+.perf-num.neg{color:var(--red)}
+.perf-num.gold{color:var(--gold2);font-size:14px}
+
+.perf-bar-cell{display:flex;align-items:center;gap:8px}
+.perf-bar{
+  height:2px;
+  background:var(--rule);
+  flex:1;
+  max-width:80px;
   position:relative;
 }
-.sec-num{
-  font-size:11px;letter-spacing:0.3em;
-  text-transform:uppercase;color:var(--red);
-  margin-bottom:4rem;
+.perf-bar-fill{
+  position:absolute;left:0;top:0;bottom:0;
+  background:var(--gold);
+  opacity:0.6;
 }
-.sec-title{
-  font-size:clamp(36px,5vw,80px);
-  font-weight:900;line-height:0.92;
-  letter-spacing:-0.025em;
-  text-transform:uppercase;
-  max-width:600px;
-  margin-bottom:3rem;
-}
-.sec-body{
-  max-width:520px;
-  font-size:clamp(14px,1.2vw,16px);
-  line-height:1.75;
-  color:var(--muted);
-}
-.sec-body + .sec-body{margin-top:1.5rem}
 
-/* PERFORMANCE GRID */
-.perf-grid{
+/* SUMMARY ROW */
+.summary-strip{
+  display:flex;gap:0;
+  border:1px solid var(--rule);
+  border-top:none;
+  background:var(--panel);
+}
+.summary-cell{
+  flex:1;
+  padding:20px 24px;
+  border-right:1px solid var(--rule);
+}
+.summary-cell:last-child{border-right:none}
+.summary-label{
+  font-family:var(--mono);
+  font-size:9px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+.summary-val{
+  font-family:var(--serif);
+  font-size:clamp(20px,2.5vw,32px);
+  color:var(--white);
+  letter-spacing:0.01em;
+}
+.summary-val sup{
+  font-size:0.5em;
+  color:var(--gold);
+  vertical-align:super;
+}
+
+/* ── THESIS SECTION ── */
+#thesis{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1px;
-  margin-top:5rem;
-  background:var(--faint);
+  grid-template-columns:1fr 2fr;
+  gap:64px;
+  align-items:start;
 }
-.perf-cell{
-  background:var(--bg);
-  padding:3rem 2.5rem;
-}
-.perf-big{
-  font-size:clamp(40px,6vw,96px);
-  font-weight:900;letter-spacing:-0.03em;
-  color:var(--cream);
-  line-height:1;
-}
-.perf-big span{color:var(--red)}
-.perf-desc{
-  margin-top:1rem;
-  font-size:12px;letter-spacing:0.2em;
-  text-transform:uppercase;color:var(--muted);
-}
-
-/* STRATEGY LIST */
-.strategy-list{
-  margin-top:4rem;
-  display:flex;flex-direction:column;
-  gap:0;
-}
-.strategy-item{
-  display:grid;grid-template-columns:60px 1fr 120px;
-  align-items:center;
-  padding:2rem 0;
-  border-bottom:1px solid var(--faint);
-  gap:2rem;
-}
-.strategy-item:first-child{border-top:1px solid var(--faint)}
-.strat-idx{
-  font-size:11px;letter-spacing:0.2em;
+.thesis-label{
+  font-family:var(--mono);
+  font-size:9px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
   color:var(--muted);
+  padding-top:6px;
 }
-.strat-name{
-  font-size:clamp(18px,2vw,28px);
-  font-weight:900;letter-spacing:-0.01em;
-  text-transform:uppercase;
+.thesis-body{
+  font-family:var(--serif);
+  font-size:clamp(15px,1.5vw,20px);
+  color:var(--text);
+  line-height:1.8;
+  border-left:2px solid var(--gold);
+  padding-left:32px;
 }
-.strat-weight{
-  font-size:clamp(20px,2vw,32px);
-  font-weight:900;letter-spacing:-0.02em;
-  text-align:right;
+.thesis-body p+p{margin-top:1.2em}
+.thesis-fine{
+  margin-top:2em;
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:0.1em;
+  line-height:2;
+  border-left:2px solid var(--rule);
+  padding-left:32px;
 }
 
-/* ACCESS */
+/* ── STRUCTURE SECTION ── */
+#structure{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:1px;
+  background:var(--rule);
+  padding:0;
+  border:1px solid var(--rule);
+  max-width:1400px;
+  margin:0 auto;
+}
+.struct-cell{
+  background:var(--navy);
+  padding:40px 36px;
+}
+.struct-heading{
+  font-family:var(--mono);
+  font-size:9px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:20px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--rule);
+}
+.struct-item{
+  display:flex;justify-content:space-between;
+  padding:8px 0;
+  border-bottom:1px solid var(--rule);
+  font-size:12px;
+}
+.struct-item:last-child{border-bottom:none}
+.struct-key{color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:0.05em}
+.struct-val{color:var(--text);font-family:var(--mono);font-size:10px;text-align:right}
+.struct-val.gold{color:var(--gold2)}
+
+/* ── ACCESS SECTION ── */
 #access{
-  min-height:60vh;
-  display:flex;flex-direction:column;
-  justify-content:center;
-  border-top:1px solid var(--faint);
-  padding:15vh 6vw;
+  max-width:1400px;margin:0 auto;
+  padding:72px 48px;
+  border-bottom:none;
 }
-.access-title{
-  font-size:clamp(48px,8vw,140px);
-  font-weight:900;line-height:0.88;
-  letter-spacing:-0.035em;
+.access-inner{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:80px;
+  align-items:center;
+}
+.access-head{
+  font-family:var(--serif);
+  font-size:clamp(20px,2.5vw,36px);
+  color:var(--white);
+  line-height:1.4;
+  margin-bottom:24px;
+}
+.access-body{
+  font-size:12px;
+  line-height:2;
+  color:var(--muted);
+  font-family:var(--mono);
+  letter-spacing:0.05em;
+}
+.access-contact{
+  border:1px solid var(--rule);
+  padding:36px;
+  background:var(--panel);
+}
+.contact-label{
+  font-family:var(--mono);
+  font-size:9px;
+  letter-spacing:0.22em;
   text-transform:uppercase;
-  color:var(--cream);
-  max-width:900px;
+  color:var(--muted);
+  margin-bottom:20px;
 }
-.access-title span{color:var(--red)}
-.access-note{
-  margin-top:4rem;
-  font-size:12px;letter-spacing:0.3em;
-  text-transform:uppercase;color:var(--muted);
-  max-width:400px;
-  line-height:1.8;
-}
-.access-email{
-  margin-top:2rem;
-  font-size:clamp(14px,1.5vw,22px);
-  font-weight:900;letter-spacing:0.1em;
-  text-transform:uppercase;
-  color:var(--cream);
-  border-bottom:1px solid var(--red);
+.contact-email{
+  font-family:var(--serif);
+  font-size:18px;
+  color:var(--white);
+  letter-spacing:0.02em;
+  border-bottom:1px solid var(--gold);
   display:inline-block;
   padding-bottom:4px;
+  margin-bottom:24px;
+}
+.contact-note{
+  font-family:var(--mono);
+  font-size:9px;
+  letter-spacing:0.1em;
+  color:var(--muted);
+  line-height:2;
 }
 
-/* FOOTER */
+/* ── FOOTER ── */
 footer{
-  border-top:1px solid var(--faint);
-  padding:3rem 6vw;
-  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--rule);
+  padding:20px 48px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-family:var(--mono);
+  font-size:9px;
+  letter-spacing:0.1em;
+  color:var(--muted);
+  background:var(--panel);
 }
-.foot-logo{
-  font-size:13px;font-weight:900;
-  letter-spacing:0.3em;text-transform:uppercase;
+.footer-logo{
+  color:var(--text);
+  font-size:11px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
 }
-.foot-note{
-  font-size:10px;letter-spacing:0.15em;
-  text-transform:uppercase;color:var(--muted);
+.footer-legal{max-width:600px;text-align:right;line-height:1.8}
+
+/* ── CHART SVG HERO BACKGROUND ── */
+#hero-chart{
+  width:100%;
+  height:2px;
+  margin-bottom:40px;
+  overflow:visible;
 }
 
-/* SCROLL FADE-IN */
-.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.9s ease,transform 0.9s ease}
-.reveal.in{opacity:1;transform:none}
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--navy)}
+::-webkit-scrollbar-thumb{background:var(--muted)}
 </style>
 </head>
 <body>
 
-<!-- CROSSHAIR -->
-<div id="cursor"></div>
-
-<!-- WEBGL CANVAS -->
-<canvas id="c"></canvas>
-
-<!-- HEARTBEAT (hero center) -->
-<div id="heartbeat-wrap">
-  <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg">
-    <path class="hb-path" d="M0,40 L60,40 L75,15 L90,65 L105,10 L120,70 L135,40 L160,40 L175,28 L190,52 L200,40 L320,40"/>
-  </svg>
+<!-- TERMINAL BAR -->
+<div id="topbar">
+  <div>
+    <span class="topbar-id">QTR-LP</span>
+    &nbsp;·&nbsp; QUANTORA CAPITAL
+    &nbsp;·&nbsp; FUND MANAGEMENT INTERFACE
+  </div>
+  <div class="topbar-right">
+    <div class="topbar-status">
+      <div class="status-dot"></div>
+      <span>LIVE</span>
+    </div>
+    <span>NAV AS OF 02 MAY 2026</span>
+    <div class="restricted-badge">Qualified Purchasers Only</div>
+  </div>
 </div>
 
-<!-- MAIN -->
 <main>
 
-<!-- ═══ HERO ═══ -->
-<section id="hero">
-  <div class="hero-rule"></div>
+<!-- ══════════════════════════════════ HERO ══════════════════════════════════ -->
+<div id="hero">
 
-  <div class="hero-overline reveal">Quantora Capital — God Mode Interface</div>
-
-  <h1 class="hero-title reveal">
-    ABSOLUTE<br><span>RETURN</span><br>OR<br>NOTHING
-  </h1>
-
-  <p class="hero-sub reveal">
-    We do not benchmark against indices.<br>
-    We do not explain drawdowns.<br>
-    We accumulate.
-  </p>
-
-  <div class="stat-row reveal">
-    <div class="stat-item">
-      <span class="stat-val">312<span style="color:var(--red)">%</span></span>
-      <span class="stat-label">Net return — 36 mo</span>
+  <div class="hero-top">
+    <div class="fund-name-block">
+      <div class="fund-overline">Quantora Capital LP &nbsp;·&nbsp; Cayman Islands &nbsp;·&nbsp; Est. 2021</div>
+      <div class="fund-name">Systematic Absolute Return<br><em>at Institutional Scale.</em></div>
     </div>
-    <div class="stat-item">
-      <span class="stat-val">0.08</span>
-      <span class="stat-label">Max drawdown</span>
+    <div class="fund-meta">
+      STRUCTURE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cayman LP / Delaware Feeder<br>
+      DOMICILE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Grand Cayman, KY<br>
+      AUDITOR &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KPMG (Cayman Islands)<br>
+      ADMINISTRATOR &nbsp; Maples Fund Services<br>
+      PRIME BROKER &nbsp;&nbsp; Goldman Sachs PB<br>
+      REPORTING &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Monthly / Quarterly LP Letters
     </div>
-    <div class="stat-item">
-      <span class="stat-val">4.7<span style="color:var(--red)">σ</span></span>
-      <span class="stat-label">Risk-adjusted alpha</span>
+  </div>
+
+  <!-- PERFORMANCE TABLE -->
+  <div class="perf-table-wrap">
+    <div class="perf-table-header">
+      <span>Strategy</span>
+      <span>Net Return (36M)</span>
+      <span>Sharpe Ratio</span>
+      <span>Volatility</span>
+      <span>Max DD</span>
+      <span>AUM</span>
     </div>
-    <div class="stat-item">
-      <span class="stat-val">$2.4<span style="color:var(--red)">B</span></span>
-      <span class="stat-label">AUM (restricted)</span>
+
+    <div class="perf-row">
+      <div class="strat-label">Quantum Signal Arbitrage<small>QSA</small></div>
+      <div class="perf-num pos">+148.2%</div>
+      <div class="perf-num">31.4</div>
+      <div class="perf-num">4.2%</div>
+      <div class="perf-num">2.1%</div>
+      <div class="perf-num">$912M</div>
+    </div>
+    <div class="perf-row">
+      <div class="strat-label">Dark Pool Liquidity Extraction<small>DLP</small></div>
+      <div class="perf-num pos">+89.4%</div>
+      <div class="perf-num">22.1</div>
+      <div class="perf-num">6.8%</div>
+      <div class="perf-num">4.7%</div>
+      <div class="perf-num">$576M</div>
+    </div>
+    <div class="perf-row">
+      <div class="strat-label">Cross-Asset Regime Detection<small>CRD</small></div>
+      <div class="perf-num pos">+47.8%</div>
+      <div class="perf-num">18.7</div>
+      <div class="perf-num">9.1%</div>
+      <div class="perf-num">3.4%</div>
+      <div class="perf-num">$456M</div>
+    </div>
+    <div class="perf-row">
+      <div class="strat-label">Volatility Surface Exploitation<small>VSE</small></div>
+      <div class="perf-num pos">+18.6%</div>
+      <div class="perf-num">14.2</div>
+      <div class="perf-num">11.3%</div>
+      <div class="perf-num">6.2%</div>
+      <div class="perf-num">$288M</div>
+    </div>
+    <div class="perf-row">
+      <div class="strat-label">Sovereign Flow Intelligence<small>SFI</small></div>
+      <div class="perf-num pos">+8.4%</div>
+      <div class="perf-num">9.8</div>
+      <div class="perf-num">7.4%</div>
+      <div class="perf-num">3.9%</div>
+      <div class="perf-num">$168M</div>
+    </div>
+    <div class="perf-row total">
+      <div class="strat-label" style="color:var(--gold2);font-family:var(--mono);font-size:11px;letter-spacing:0.08em">FUND TOTAL<small style="color:var(--muted)">Inception: Jan 2021</small></div>
+      <div class="perf-num gold">+312.4%</div>
+      <div class="perf-num gold">47.2</div>
+      <div class="perf-num gold">5.8%</div>
+      <div class="perf-num gold">8.1%</div>
+      <div class="perf-num gold">$2.4B</div>
+    </div>
+  </div>
+
+  <!-- SUMMARY STRIP -->
+  <div class="summary-strip">
+    <div class="summary-cell">
+      <div class="summary-label">Cumulative Net Return</div>
+      <div class="summary-val">+312.4<sup>%</sup></div>
+    </div>
+    <div class="summary-cell">
+      <div class="summary-label">Sharpe Ratio (Ann.)</div>
+      <div class="summary-val">47.2</div>
+    </div>
+    <div class="summary-cell">
+      <div class="summary-label">Maximum Drawdown</div>
+      <div class="summary-val">8.1<sup>%</sup></div>
+    </div>
+    <div class="summary-cell">
+      <div class="summary-label">Assets Under Management</div>
+      <div class="summary-val">$2.4<sup>B</sup></div>
+    </div>
+    <div class="summary-cell">
+      <div class="summary-label">Down Years Since Inception</div>
+      <div class="summary-val">0</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════ THESIS ══════════════════════════════════ -->
+<section id="thesis">
+  <div class="thesis-label">01 — Investment Thesis</div>
+  <div>
+    <div class="thesis-body">
+      <p>Quantora Capital operates on the premise that modern financial markets are information-processing systems with systematic, exploitable inefficiencies. Our edge is not opinion — it is architecture.</p>
+      <p>Five orthogonal alpha engines process in parallel across equities, fixed income, derivatives, and alternative data streams. Each strategy is sovereign. Each is lethal in isolation. Together, they produce return profiles that conventional risk models cannot capture.</p>
+      <p>We do not benchmark against indices. We do not manage to drawdown targets. We accumulate capital.</p>
+    </div>
+    <div class="thesis-fine">
+      All performance figures are net of 2% management fee and 20% performance allocation.<br>
+      Past performance is not indicative of future results.<br>
+      This material is for informational purposes only and does not constitute an offer to invest.
     </div>
   </div>
 </section>
 
-<!-- ═══ PHILOSOPHY ═══ -->
-<section id="philosophy">
-  <div class="sec-num reveal">01 — Philosophy</div>
-  <h2 class="sec-title reveal">MARKETS ARE<br>PREDATOR<br>AND PREY</h2>
-  <p class="sec-body reveal">
-    Most funds are prey. They follow, react, position for consensus outcomes. They are designed to survive mediocrity.
-  </p>
-  <p class="sec-body reveal">
-    Quantora is designed differently. Every position is a bet on informational asymmetry. Every model is a weapon. We are not in the market. We are hunting it.
-  </p>
-</section>
-
-<!-- ═══ PERFORMANCE ═══ -->
-<section id="performance">
-  <div class="sec-num reveal">02 — Performance</div>
-  <h2 class="sec-title reveal">NUMBERS<br>DON'T<br>APOLOGIZE</h2>
-
-  <div class="perf-grid reveal">
-    <div class="perf-cell">
-      <div class="perf-big">+<span>312</span>%</div>
-      <div class="perf-desc">Cumulative net — 36 months</div>
-    </div>
-    <div class="perf-cell">
-      <div class="perf-big"><span>14.2</span>x</div>
-      <div class="perf-desc">vs. S&P 500 same period</div>
-    </div>
-    <div class="perf-cell">
-      <div class="perf-big"><span>8</span>%</div>
-      <div class="perf-desc">Maximum peak-to-trough drawdown</div>
-    </div>
-    <div class="perf-cell">
-      <div class="perf-big"><span>47</span></div>
-      <div class="perf-desc">Sharpe ratio (annualized)</div>
-    </div>
-    <div class="perf-cell">
-      <div class="perf-big"><span>0</span></div>
-      <div class="perf-desc">Down years since inception</div>
-    </div>
-    <div class="perf-cell">
-      <div class="perf-big"><span>11</span>ms</div>
-      <div class="perf-desc">Median execution latency</div>
-    </div>
+<!-- ══════════════════════════════════ STRUCTURE ══════════════════════════════════ -->
+<div id="structure">
+  <div class="struct-cell">
+    <div class="struct-heading">Terms &amp; Structure</div>
+    <div class="struct-item"><span class="struct-key">Minimum Investment</span><span class="struct-val gold">$50,000,000</span></div>
+    <div class="struct-item"><span class="struct-key">Lock-up Period</span><span class="struct-val">36 Months</span></div>
+    <div class="struct-item"><span class="struct-key">Redemption Notice</span><span class="struct-val">180 Days</span></div>
+    <div class="struct-item"><span class="struct-key">Management Fee</span><span class="struct-val">2.0% p.a.</span></div>
+    <div class="struct-item"><span class="struct-key">Performance Fee</span><span class="struct-val">20% (HWM)</span></div>
+    <div class="struct-item"><span class="struct-key">Subscription</span><span class="struct-val">Monthly</span></div>
   </div>
-</section>
-
-<!-- ═══ STRATEGY ═══ -->
-<section id="strategy">
-  <div class="sec-num reveal">03 — Strategy</div>
-  <h2 class="sec-title reveal">THE<br>ARCHITECTURE<br>OF EDGE</h2>
-  <p class="sec-body reveal">
-    Five orthogonal alpha streams, each sovereign, each lethal in isolation. Together they form something the risk models cannot capture.
-  </p>
-
-  <div class="strategy-list reveal">
-    <div class="strategy-item">
-      <span class="strat-idx">01</span>
-      <span class="strat-name">Quantum Signal Arbitrage</span>
-      <span class="strat-weight">38<span style="color:var(--red)">%</span></span>
-    </div>
-    <div class="strategy-item">
-      <span class="strat-idx">02</span>
-      <span class="strat-name">Dark Pool Liquidity Extraction</span>
-      <span class="strat-weight">24<span style="color:var(--red)">%</span></span>
-    </div>
-    <div class="strategy-item">
-      <span class="strat-idx">03</span>
-      <span class="strat-name">Cross-Asset Regime Detection</span>
-      <span class="strat-weight">19<span style="color:var(--red)">%</span></span>
-    </div>
-    <div class="strategy-item">
-      <span class="strat-idx">04</span>
-      <span class="strat-name">Volatility Surface Exploitation</span>
-      <span class="strat-weight">12<span style="color:var(--red)">%</span></span>
-    </div>
-    <div class="strategy-item">
-      <span class="strat-idx">05</span>
-      <span class="strat-name">Sovereign Flow Intelligence</span>
-      <span class="strat-weight">7<span style="color:var(--red)">%</span></span>
-    </div>
+  <div class="struct-cell">
+    <div class="struct-heading">Risk &amp; Operations</div>
+    <div class="struct-item"><span class="struct-key">Strategy Type</span><span class="struct-val">Systematic Multi-Strat</span></div>
+    <div class="struct-item"><span class="struct-key">Instruments</span><span class="struct-val">Global / All Asset Classes</span></div>
+    <div class="struct-item"><span class="struct-key">Gross Leverage</span><span class="struct-val">2.0–6.0x</span></div>
+    <div class="struct-item"><span class="struct-key">Portfolio VaR (95%)</span><span class="struct-val">0.18% daily</span></div>
+    <div class="struct-item"><span class="struct-key">Execution Latency</span><span class="struct-val">≤11ms median</span></div>
+    <div class="struct-item"><span class="struct-key">Data Sources</span><span class="struct-val">1,400+ feeds</span></div>
   </div>
-</section>
+  <div class="struct-cell">
+    <div class="struct-heading">Eligibility &amp; Compliance</div>
+    <div class="struct-item"><span class="struct-key">Investor Type</span><span class="struct-val">QP / QIB Only</span></div>
+    <div class="struct-item"><span class="struct-key">Exemption</span><span class="struct-val">Reg D / Reg S</span></div>
+    <div class="struct-item"><span class="struct-key">AIFMD</span><span class="struct-val">Non-EU AIFM</span></div>
+    <div class="struct-item"><span class="struct-key">FATCA / CRS</span><span class="struct-val">Compliant</span></div>
+    <div class="struct-item"><span class="struct-key">Disclosure</span><span class="struct-val">After NDA</span></div>
+    <div class="struct-item"><span class="struct-key">References</span><span class="struct-val">Tier 1 Only</span></div>
+  </div>
+</div>
 
-<!-- ═══ ACCESS ═══ -->
+<!-- ══════════════════════════════════ ACCESS ══════════════════════════════════ -->
 <section id="access">
-  <h2 class="access-title reveal">
-    IF YOU<br>QUALIFY,<br>YOU KNOW<br><span>WHO TO CALL.</span>
-  </h2>
-  <p class="access-note reveal">
-    Quantora does not accept unsolicited capital.<br>
-    Minimum commitment: $50,000,000 USD.<br>
-    Lock-up: 36 months, no exceptions.<br>
-    References provided only after NDA execution.
-  </p>
-  <div class="access-email reveal">GODMODE@QUANTORA.CAPITAL</div>
+  <div class="access-inner">
+    <div>
+      <div class="access-head">
+        Capital of this calibre<br>does not seek you.<br>
+        <span style="color:var(--gold)">You seek it.</span>
+      </div>
+      <div class="access-body">
+        Quantora does not accept unsolicited capital.<br>
+        Prospective limited partners must provide:<br><br>
+        &mdash; Proof of qualified purchaser status<br>
+        &mdash; Executed NDA prior to disclosure<br>
+        &mdash; Tier 1 institutional reference<br>
+        &mdash; Commitment letter within 14 days of term sheet
+      </div>
+    </div>
+    <div class="access-contact">
+      <div class="contact-label">Investor Relations &nbsp;·&nbsp; Restricted Access</div>
+      <div class="contact-email">godmode@quantora.capital</div>
+      <div class="contact-note">
+        All enquiries subject to NDA prior to response.<br>
+        Response time: 5–10 business days for qualified parties only.<br>
+        Unqualified enquiries receive no reply.
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="foot-logo">Quantora</div>
-  <div class="foot-note">© 2026 Quantora Capital LP — All positions are sovereign</div>
+  <div class="footer-logo">Quantora Capital</div>
+  <div class="footer-legal">
+    © 2026 Quantora Capital LP. All rights reserved. &nbsp;·&nbsp;
+    This material is not an offer to sell or a solicitation of an offer to buy interests in any investment fund. Past performance is not indicative of future results. All figures are unaudited estimates. For qualified purchasers only.
+  </div>
 </footer>
 
 </main>
 
-<script>
-/* ── CURSOR ── */
-const cur=document.getElementById('cursor');
-let mx=0,my=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cur.style.setProperty('--cx',mx+'px');
-  cur.style.setProperty('--cy',my+'px');
-});
-
-/* ── SCROLL REVEAL ── */
-const obs=new IntersectionObserver(es=>{
-  es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')});
-},{threshold:0.12});
-document.querySelectorAll('.reveal').forEach(el=>{
-  obs.observe(el);
-  // hero items start visible
-  if(el.closest('#hero'))el.classList.add('in');
-});
-
-/* ── WEBGL PARTICLE SPHERE ── */
-(function(){
-  const canvas=document.getElementById('c');
-  const gl=canvas.getContext('webgl',{antialias:true,alpha:true});
-  if(!gl)return;
-
-  /* resize */
-  function resize(){
-    canvas.width=window.innerWidth;
-    canvas.height=window.innerHeight;
-    gl.viewport(0,0,canvas.width,canvas.height);
-  }
-  resize();
-  window.addEventListener('resize',resize);
-
-  /* shaders */
-  const VS=`
-    attribute vec3 aPos;
-    attribute float aLife;
-    attribute float aSize;
-    uniform mat4 uMVP;
-    uniform float uTime;
-    uniform vec2 uMouse;
-    uniform float uAspect;
-    varying float vLife;
-    varying vec3 vColor;
-    void main(){
-      float t=mod(uTime*0.00018+aLife,1.0);
-      float pulse=1.0+sin(uTime*0.0014)*0.055;
-      float theta=aPos.x*6.28318;
-      float phi=aPos.y*3.14159;
-      float r=(0.1+aPos.z*0.9)*pulse;
-      float x=sin(phi)*cos(theta)*r;
-      float y=cos(phi)*r*0.5;
-      float z=sin(phi)*sin(theta)*r;
-      vec2 mn=(uMouse/vec2(1920.0,1080.0))*2.0-1.0;
-      float md=length(vec2(x,z)-mn);
-      float mf=0.012/(md*md+0.008);
-      vec2 dir=normalize(vec2(x,z)-mn+vec2(0.0001));
-      x+=dir.x*mf*0.5;
-      z+=dir.y*mf*0.5;
-      gl_Position=uMVP*vec4(x,y,z,1.0);
-      gl_PointSize=aSize*(0.6+mf*4.0)*(360.0/(gl_Position.w*uAspect));
-      float heat=clamp(mf*4.0,0.0,1.0);
-      vec3 cold=vec3(0.40,0.38,0.36);
-      vec3 hot=vec3(0.78,0.063,0.18);
-      vColor=mix(cold,hot,heat*heat);
-      vLife=0.15+t*0.85;
-    }
-  `;
-  const FS=`
-    precision mediump float;
-    varying float vLife;
-    varying vec3 vColor;
-    void main(){
-      vec2 uv=gl_PointCoord-0.5;
-      float d=length(uv);
-      if(d>0.5)discard;
-      float a=smoothstep(0.5,0.1,d)*vLife;
-      gl_FragColor=vec4(vColor*a,a);
-    }
-  `;
-
-  function mkShader(type,src){
-    const s=gl.createShader(type);
-    gl.shaderSource(s,src);
-    gl.compileShader(s);
-    return s;
-  }
-  const prog=gl.createProgram();
-  gl.attachShader(prog,mkShader(gl.VERTEX_SHADER,VS));
-  gl.attachShader(prog,mkShader(gl.FRAGMENT_SHADER,FS));
-  gl.linkProgram(prog);
-  gl.useProgram(prog);
-
-  /* locs */
-  const aPos=gl.getAttribLocation(prog,'aPos');
-  const aLife=gl.getAttribLocation(prog,'aLife');
-  const aSize=gl.getAttribLocation(prog,'aSize');
-  const uMVP=gl.getUniformLocation(prog,'uMVP');
-  const uTime=gl.getUniformLocation(prog,'uTime');
-  const uMouse=gl.getUniformLocation(prog,'uMouse');
-  const uAspect=gl.getUniformLocation(prog,'uAspect');
-
-  function bindBuf(buf,loc,size,type,norm,stride,off){
-    if(loc<0)return; /* guard: skip optimized-away attributes */
-    gl.bindBuffer(gl.ARRAY_BUFFER,buf);
-    gl.enableVertexAttribArray(loc);
-    gl.vertexAttribPointer(loc,size,type,norm,stride,off);
-  }
-
-  /* geometry — 35,000 particles on sphere surface */
-  const N=35000;
-  const pos=new Float32Array(N*3);
-  const life=new Float32Array(N);
-  const size=new Float32Array(N);
-  for(let i=0;i<N;i++){
-    pos[i*3]=Math.random();
-    pos[i*3+1]=Math.random();
-    pos[i*3+2]=Math.random();
-    life[i]=Math.random();
-    size[i]=0.8+Math.random()*2.2;
-  }
-
-  const bPos=gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER,bPos);
-  gl.bufferData(gl.ARRAY_BUFFER,pos,gl.STATIC_DRAW);
-
-  const bLife=gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER,bLife);
-  gl.bufferData(gl.ARRAY_BUFFER,life,gl.STATIC_DRAW);
-
-  const bSize=gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER,bSize);
-  gl.bufferData(gl.ARRAY_BUFFER,size,gl.STATIC_DRAW);
-
-  /* MVP — perspective + slow orbit */
-  function mat4(){return new Float32Array(16)}
-  function perspective(out,fov,asp,near,far){
-    const f=1/Math.tan(fov/2),nf=1/(near-far);
-    out[0]=f/asp;out[1]=0;out[2]=0;out[3]=0;
-    out[4]=0;out[5]=f;out[6]=0;out[7]=0;
-    out[8]=0;out[9]=0;out[10]=(far+near)*nf;out[11]=-1;
-    out[12]=0;out[13]=0;out[14]=(2*far*near)*nf;out[15]=0;
-    return out;
-  }
-  function mul(a,b){
-    const o=mat4();
-    for(let c=0;c<4;c++){
-      const b0=b[c],b1=b[4+c],b2=b[8+c],b3=b[12+c];
-      o[c]   =a[0]*b0+a[4]*b1+a[8]*b2+a[12]*b3;
-      o[4+c] =a[1]*b0+a[5]*b1+a[9]*b2+a[13]*b3;
-      o[8+c] =a[2]*b0+a[6]*b1+a[10]*b2+a[14]*b3;
-      o[12+c]=a[3]*b0+a[7]*b1+a[11]*b2+a[15]*b3;
-    }
-    return o;
-  }
-  function rotY(a){
-    const c=Math.cos(a),s=Math.sin(a),o=mat4();
-    o[0]=c;o[2]=s;o[5]=1;o[8]=-s;o[10]=c;o[15]=1;return o;
-  }
-  function rotX(a){
-    const c=Math.cos(a),s=Math.sin(a),o=mat4();
-    o[0]=1;o[5]=c;o[6]=-s;o[9]=s;o[10]=c;o[15]=1;return o;
-  }
-  function trans(tx,ty,tz){
-    const o=mat4();o[0]=o[5]=o[10]=o[15]=1;
-    o[12]=tx;o[13]=ty;o[14]=tz;return o;
-  }
-
-  gl.enable(gl.BLEND);
-  gl.blendFunc(gl.SRC_ALPHA,gl.ONE);
-  gl.clearColor(0,0,0,0);
-
-  let mouseX=0,mouseY=0;
-  window.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY});
-
-  let t0=null;
-  function frame(now){
-    requestAnimationFrame(frame);
-    if(!t0)t0=now;
-    const t=now-t0;
-
-    gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
-
-    const asp=canvas.width/canvas.height;
-    const proj=perspective(mat4(),0.72,asp,0.1,100);
-    const view=mul(trans(0,0,-2.6),mul(rotX(Math.sin(t*0.00018)*0.18),rotY(t*0.00022)));
-    const mvp=mul(proj,view);
-
-    gl.uniformMatrix4fv(uMVP,false,mvp);
-    gl.uniform1f(uTime,t);
-    gl.uniform2f(uMouse,mouseX,mouseY);
-    gl.uniform1f(uAspect,asp);
-
-    bindBuf(bPos,aPos,3,gl.FLOAT,false,0,0);
-    bindBuf(bLife,aLife,1,gl.FLOAT,false,0,0);
-    bindBuf(bSize,aSize,1,gl.FLOAT,false,0,0);
-
-    gl.drawArrays(gl.POINTS,0,N);
-  }
-  requestAnimationFrame(frame);
-})();
-</script>
 </body>
 </html>
