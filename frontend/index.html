@@ -3,414 +3,738 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quantora Capital — Restricted Access</title>
+<title>Quantora Capital — Institutional</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,600;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,600;1,700;1,800&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --c0:#020A16;--c1:#071222;--c2:#0D1E35;--c3:#162840;--c4:#1F3550;
-  --t0:#EDF2F8;--t1:#B8CADE;--t2:#7090B0;--t3:#405870;
-  --gold:#C9A84C;--gold2:#E8C870;--green:#2A9D5C;--red:#C0392B;
+  --c0:#010810;--c1:#050F1E;--c2:#091525;--c3:#0E1E32;--c4:#162840;
+  --t0:#F0F5FC;--t1:#C4D4E8;--t2:#7A9ABE;--t3:#3A5470;
+  --gold:#C8A84B;--gold2:#E5CC7A;--gold3:#F5E4A8;
+  --green:#1E9E5C;--red:#C0392B;--green2:#2DB870;
   --sans:'Inter',-apple-system,sans-serif;
   --serif:'Playfair Display',Georgia,serif;
   --mono:'SFMono-Regular','Consolas',monospace;
+  --glow:0 0 40px rgba(200,168,75,0.15);
 }
-html{scroll-behavior:smooth}
-body{background:var(--c0);color:var(--t1);font-family:var(--sans);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
-::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--c0)}::-webkit-scrollbar-thumb{background:var(--c3)}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--c0);color:var(--t0);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
-/* ── TICKER ── */
-#ticker{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--c1);border-bottom:1px solid var(--c3);height:30px;display:flex;align-items:center;overflow:hidden}
-.ticker-badge{background:var(--gold);color:#000;font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:.2em;padding:0 14px;height:100%;display:flex;align-items:center;flex-shrink:0}
-.ticker-scroll{flex:1;overflow:hidden;position:relative}
-.ticker-inner{display:inline-flex;animation:tickScroll 50s linear infinite;white-space:nowrap}
-.tick{display:inline-flex;align-items:center;gap:6px;padding:0 24px;border-right:1px solid var(--c3);font-family:var(--mono);font-size:9px;letter-spacing:.06em}
-.tick-s{color:var(--t0);font-weight:600}.tick-v{color:var(--t1)}.tick-up{color:var(--green)}.tick-dn{color:var(--red)}
-@keyframes tickScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+/* ─── TICKER ─── */
+.ticker-bar{position:fixed;top:0;left:0;right:0;z-index:200;height:28px;background:rgba(1,8,16,0.95);border-bottom:1px solid rgba(200,168,75,0.2);display:flex;align-items:center;overflow:hidden}
+.ticker-label{flex-shrink:0;padding:0 14px;font-size:10px;letter-spacing:.12em;color:var(--gold);font-weight:600;border-right:1px solid rgba(200,168,75,0.2);height:100%;display:flex;align-items:center;background:rgba(200,168,75,0.06)}
+.ticker-track{display:flex;animation:tick 60s linear infinite;will-change:transform}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.tick-item{display:flex;align-items:center;gap:8px;padding:0 20px;white-space:nowrap;font-size:10.5px;border-right:1px solid rgba(255,255,255,0.05)}
+.tick-sym{color:var(--t2);font-weight:600;letter-spacing:.05em}
+.tick-val{color:var(--t0);font-variant-numeric:tabular-nums}
+.tick-chg.up{color:var(--green2)}.tick-chg.dn{color:var(--red)}
 
-/* ── NAV ── */
-#nav{position:fixed;top:30px;left:0;right:0;z-index:100;height:52px;background:rgba(2,10,22,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--c3);display:flex;align-items:center;padding:0 48px;justify-content:space-between}
-.nav-logo{font-family:var(--mono);font-size:13px;letter-spacing:.22em;color:var(--t0);font-weight:600}.nav-logo em{font-style:normal;color:var(--gold)}
-.nav-links{display:flex;gap:28px}
-.nav-a{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);text-decoration:none;transition:color .2s;cursor:pointer}.nav-a:hover{color:var(--t1)}
-.nav-r{font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:.1em;display:flex;align-items:center;gap:20px}
-.live-dot{width:5px;height:5px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px;animation:blink 2s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+/* ─── NAV ─── */
+nav{position:fixed;top:28px;left:0;right:0;z-index:100;height:56px;display:flex;align-items:center;padding:0 40px;justify-content:space-between;background:rgba(1,8,16,0.7);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.04)}
+.nav-logo{font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:.2em;color:var(--t0);text-transform:uppercase}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:32px}
+.nav-links a{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-clock{font-size:11px;color:var(--t3);font-family:var(--mono);letter-spacing:.06em}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--green2);animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-/* ── MAIN ── */
-main{padding-top:82px}
+/* ─── HERO ─── */
+#hero{position:relative;height:100vh;display:flex;align-items:center;overflow:hidden;padding-top:84px}
+#hero-canvas{position:absolute;inset:0;z-index:0}
+.hero-content{position:relative;z-index:2;width:100%;max-width:1400px;margin:0 auto;padding:0 60px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.hero-left{}
+.hero-overline{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;display:flex;align-items:center;gap:12px}
+.hero-overline::before{content:'';width:32px;height:1px;background:var(--gold)}
+.hero-headline{font-family:var(--serif);font-size:clamp(42px,4.5vw,72px);line-height:1.06;font-weight:900;color:var(--t0);margin-bottom:24px}
+.hero-headline em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:14px;line-height:1.8;color:var(--t2);max-width:420px;margin-bottom:40px}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.06)}
+.hstat{background:var(--c1);padding:20px 24px}
+.hstat-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
+.hstat-value{font-size:28px;font-weight:700;color:var(--t0);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.hstat-value span{font-size:14px;font-weight:400;color:var(--t2);margin-left:4px}
+.hstat-sub{font-size:11px;color:var(--green2);margin-top:4px}
 
-/* ── HERO ── */
-#hero{min-height:calc(100vh - 82px);display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--c3)}
-.hero-l{padding:72px 56px 72px 48px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--c3)}
-.hero-tag{font-family:var(--mono);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;display:flex;align-items:center;gap:10px}
-.hero-tag::before{content:'';display:block;width:28px;height:1px;background:var(--gold)}
-.hero-h{font-family:var(--serif);font-size:clamp(30px,3.6vw,54px);color:var(--t0);line-height:1.14;letter-spacing:-.01em;font-weight:800;margin-bottom:28px}
-.hero-h em{font-style:italic;color:var(--gold)}
-.hero-byline{font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:.14em;margin-bottom:52px}
-.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--c3);border:1px solid var(--c3)}
-.hs{background:var(--c1);padding:20px 22px}
-.hs-l{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
-.hs-v{font-family:var(--serif);font-size:clamp(20px,2.4vw,34px);color:var(--t0);font-weight:700;line-height:1}
-.hs-v sup{font-family:var(--mono);font-size:.45em;color:var(--gold);vertical-align:super;font-weight:400}
+/* ─── EQUITY CANVAS ─── */
+.hero-right{position:relative}
+.chart-card{background:rgba(9,21,37,0.8);border:1px solid rgba(200,168,75,0.15);backdrop-filter:blur(10px)}
+.chart-header{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center}
+.chart-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--t2)}
+.chart-badge{font-size:10px;color:var(--gold);font-family:var(--mono);background:rgba(200,168,75,0.1);padding:3px 10px;border:1px solid rgba(200,168,75,0.2)}
+#equity-canvas{width:100%;height:240px;display:block}
+.chart-footer{padding:12px 20px;display:flex;gap:24px}
+.cf-item{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--t3)}
+.cf-line{width:20px;height:2px}
+.cf-line.gold{background:var(--gold)}
+.cf-line.dashed{background:repeating-linear-gradient(90deg,var(--t3) 0,var(--t3) 4px,transparent 4px,transparent 8px)}
 
-.hero-r{padding:72px 48px 72px 56px;display:flex;flex-direction:column;justify-content:center}
-.chart-head{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--t3);margin-bottom:20px;display:flex;justify-content:space-between}
-.chart-head span{color:var(--gold)}
-#eq-svg{width:100%;min-height:260px;flex:1}
-.eg{stroke:var(--c3);stroke-width:.5}
-.eb{fill:none;stroke:var(--t3);stroke-width:1.5;stroke-dasharray:4 4;opacity:.4}
-.ef{fill:none;stroke:var(--gold);stroke-width:2;stroke-dasharray:1900;stroke-dashoffset:1900;animation:draw 2.6s cubic-bezier(.4,0,.2,1) forwards .4s}
-.efill{opacity:0;animation:fi .4s ease forwards 3s}
-@keyframes draw{to{stroke-dashoffset:0}}
-@keyframes fi{to{opacity:1}}
-.chart-leg{margin-top:14px;display:flex;gap:20px;font-family:var(--mono);font-size:9px;color:var(--t3)}
-.leg-i{display:flex;align-items:center;gap:8px}
-.leg-line{width:20px;height:2px;display:block}
+/* ─── SECTION BASE ─── */
+section{padding:100px 0}
+.container{max-width:1400px;margin:0 auto;padding:0 60px}
+.section-label{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.section-label::before{content:'';width:24px;height:1px;background:var(--gold)}
+.section-title{font-family:var(--serif);font-size:clamp(32px,3vw,48px);font-weight:800;color:var(--t0);margin-bottom:8px;line-height:1.1}
+.section-title em{font-style:italic;color:var(--gold)}
 
-/* ── SECTION WRAPPER ── */
-.sw{max-width:1440px;margin:0 auto;padding:72px 48px;border-bottom:1px solid var(--c3)}
-.sh{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:40px;padding-bottom:16px;border-bottom:1px solid var(--c3)}
-.sh-n{font-family:var(--mono);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
-.sh-t{font-family:var(--serif);font-size:clamp(20px,2.5vw,34px);color:var(--t0);font-weight:700;letter-spacing:-.01em}
-.sh-tag{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--t3);text-transform:uppercase}
+/* ─── PERFORMANCE ─── */
+#performance{background:var(--c1)}
+.perf-top{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(255,255,255,0.05);margin-bottom:40px}
+.perf-kpi{background:var(--c0);padding:28px 32px}
+.pk-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);margin-bottom:10px}
+.pk-value{font-size:40px;font-weight:700;letter-spacing:-.03em;color:var(--t0);line-height:1}
+.pk-value.gold{color:var(--gold)}
+.pk-value.green{color:var(--green2)}
+.pk-unit{font-size:16px;font-weight:400;margin-left:2px}
+.pk-desc{font-size:11px;color:var(--t3);margin-top:8px}
 
-/* ── PERFORMANCE TABLE ── */
-.pt{width:100%;border-collapse:collapse;border:1px solid var(--c3)}
-.pt thead th{padding:10px 16px;text-align:left;font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--t3);background:var(--c1);border-bottom:1px solid var(--c3);white-space:nowrap}
-.pt tbody tr{border-bottom:1px solid var(--c3);transition:background .12s}
-.pt tbody tr:hover{background:rgba(255,255,255,.02)}
-.pt tbody tr.tot{background:rgba(201,168,76,.07);border-top:1px solid rgba(201,168,76,.25);border-bottom:none}
-.pt td{padding:14px 16px;font-family:var(--mono);font-size:11px;color:var(--t1);vertical-align:middle}
-.td-s{font-family:var(--sans)!important;font-size:12px!important;color:var(--t0)!important;font-weight:500}
-.td-s small{display:block;font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:.08em;margin-top:3px;font-weight:400}
-.pos{color:var(--green)!important}.neg{color:var(--red)!important}
-.gld{color:var(--gold2)!important;font-size:13px!important}
-.tot-label{color:var(--gold)!important;font-size:11px!important;font-weight:600}
-.abar{width:72px;height:2px;background:var(--c3);display:inline-block;vertical-align:middle;margin-right:6px;position:relative}
-.afill{position:absolute;left:0;top:0;bottom:0;background:var(--gold);opacity:.7}
+/* Canvas charts */
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px}
+.chart-box{background:var(--c0);border:1px solid rgba(255,255,255,0.06)}
+.chart-box-header{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center}
+.cbh-title{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--t2)}
+.cbh-val{font-size:13px;font-family:var(--mono);color:var(--gold)}
+canvas.sub-chart{width:100%;height:160px;display:block}
 
-/* ── THESIS ── */
-.thesis-g{display:grid;grid-template-columns:260px 1fr;gap:56px}
-.thesis-sb{font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:.1em;line-height:2.2}
-.thesis-c{border-left:2px solid var(--gold);padding-left:36px}
-.thesis-q{font-family:var(--serif);font-size:clamp(16px,1.8vw,24px);color:var(--t0);line-height:1.65;font-style:italic;margin-bottom:28px}
-.thesis-b{font-size:14px;color:var(--t1);line-height:1.9}
-.thesis-b p+p{margin-top:1em}
-.thesis-fine{margin-top:28px;padding-top:20px;border-top:1px solid var(--c3);font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:.08em;line-height:2}
+/* Monthly heatmap */
+.heatmap-wrap{background:var(--c0);border:1px solid rgba(255,255,255,0.06);overflow:auto}
+.heatmap-header{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.05)}
+.heatmap-title{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--t2)}
+.heatmap-table{width:100%;border-collapse:collapse;font-size:11px;font-family:var(--mono)}
+.heatmap-table th{padding:8px 10px;font-size:9px;letter-spacing:.1em;color:var(--t3);text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,0.05);white-space:nowrap;text-align:center;font-weight:500}
+.heatmap-table td{padding:7px 8px;text-align:center;font-variant-numeric:tabular-nums;cursor:default;transition:filter .15s;white-space:nowrap}
+.heatmap-table td:first-child{color:var(--t2);font-weight:600;text-align:left;padding-left:20px}
+.heatmap-table tr:hover td{filter:brightness(1.15)}
+.hm-pos{color:#e8f5ee}.hm-neg{color:#fde8e6}.hm-zero{color:var(--t3)}
+.hm-yr{color:var(--gold);font-weight:700}
 
-/* ── TERMS ── */
-.terms-g{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--c3);border:1px solid var(--c3);max-width:1440px;margin:0 auto}
-.tc{background:var(--c0);padding:32px 28px}
-.tc-h{font-family:var(--mono);font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--c3)}
-.tr{display:flex;justify-content:space-between;align-items:start;padding:8px 0;border-bottom:1px solid var(--c3);gap:10px}
-.tr:last-child{border-bottom:none}
-.tk{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--t3);flex-shrink:0}
-.tv{font-family:var(--mono);font-size:9px;color:var(--t1);text-align:right}.tv.g{color:var(--gold2)}
+/* Performance table */
+.perf-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:40px}
+.perf-table th{padding:10px 16px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);border-bottom:1px solid rgba(255,255,255,0.06);text-align:right;font-weight:500}
+.perf-table th:first-child{text-align:left}
+.perf-table td{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:right;font-family:var(--mono);font-size:11.5px;color:var(--t1);font-variant-numeric:tabular-nums}
+.perf-table td:first-child{text-align:left;font-family:var(--sans);color:var(--t2);font-size:11px;letter-spacing:.05em}
+.perf-table tr.fund-row td{color:var(--t0);font-weight:600}
+.perf-table tr.fund-row td:first-child{color:var(--gold)}
+.pos{color:var(--green2)}.neg{color:var(--red)}
 
-/* ── ACCESS ── */
-.acc-g{display:grid;grid-template-columns:1fr 400px;gap:64px;align-items:center}
-.acc-h{font-family:var(--serif);font-size:clamp(26px,3.2vw,48px);color:var(--t0);line-height:1.2;font-weight:800;margin-bottom:24px}
-.acc-h em{font-style:italic;color:var(--gold)}
-.acc-sub{font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:.1em;line-height:2.5}
-.req{display:flex;gap:8px;align-items:baseline}
-.req::before{content:'→';color:var(--gold);flex-shrink:0}
-.cc{border:1px solid var(--c3);background:var(--c1);padding:32px}
-.cc-label{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--t3);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--c3)}
-.cc-email{font-family:var(--serif);font-size:17px;color:var(--t0);display:block;margin-bottom:20px;border-bottom:1px solid var(--gold);padding-bottom:10px;text-decoration:none}
-.cc-note{font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:.08em;line-height:2.2}
+/* ─── THESIS ─── */
+#thesis{background:var(--c0)}
+.thesis-grid{display:grid;grid-template-columns:380px 1fr;gap:80px;align-items:start}
+.thesis-left{}
+.thesis-structure{font-family:var(--mono);font-size:11px;line-height:2;color:var(--t3);border-left:1px solid rgba(200,168,75,0.25);padding-left:20px}
+.ts-key{color:var(--gold2)}
+.ts-val{color:var(--t2)}
+.thesis-right{}
+.thesis-quote{font-family:var(--serif);font-size:clamp(22px,2.5vw,34px);line-height:1.4;font-style:italic;color:var(--t0);margin-bottom:32px;padding-left:24px;border-left:3px solid var(--gold)}
+.thesis-body{font-size:14px;line-height:1.9;color:var(--t2)}
+.thesis-body p+p{margin-top:20px}
 
-/* ── FOOTER ── */
-footer{background:var(--c1);border-top:1px solid var(--c3);padding:20px 48px;display:flex;justify-content:space-between;align-items:center}
-.fl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--t0)}.fl em{font-style:normal;color:var(--gold)}
-.flegal{font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:.05em;text-align:right;max-width:640px;line-height:1.8}
+/* ─── TERMS ─── */
+#terms{background:var(--c1)}
+.terms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.05)}
+.term-block{background:var(--c0);padding:32px}
+.term-block-title{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid rgba(200,168,75,0.15)}
+.term-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.term-row:last-child{border-bottom:none}
+.tr-key{font-size:11px;color:var(--t3)}
+.tr-val{font-size:11px;color:var(--t1);text-align:right;font-weight:500;max-width:55%}
 
-/* ── REVEALS ── */
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
-.reveal.in{opacity:1;transform:none}
+/* ─── ACCESS ─── */
+#access{background:var(--c0);text-align:center;position:relative;overflow:hidden}
+#access-canvas{position:absolute;inset:0;z-index:0;opacity:.4}
+.access-inner{position:relative;z-index:2;max-width:700px;margin:0 auto}
+.access-title{font-family:var(--serif);font-size:clamp(36px,4vw,60px);font-weight:900;line-height:1.1;margin-bottom:24px;color:var(--t0)}
+.access-title em{font-style:italic;color:var(--gold)}
+.access-sub{font-size:14px;color:var(--t3);margin-bottom:48px;line-height:1.8}
+.access-card{background:rgba(9,21,37,0.8);border:1px solid rgba(200,168,75,0.2);backdrop-filter:blur(20px);padding:40px;text-align:left;box-shadow:0 0 60px rgba(200,168,75,0.06)}
+.ac-row{display:flex;gap:32px;flex-wrap:wrap}
+.ac-col{flex:1;min-width:200px}
+.ac-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--t3);margin-bottom:6px}
+.ac-value{font-size:13px;color:var(--t1)}
+.ac-value a{color:var(--gold);text-decoration:none}
+.ac-value a:hover{color:var(--gold2)}
+
+/* ─── FOOTER ─── */
+footer{background:var(--c1);border-top:1px solid rgba(255,255,255,0.06);padding:32px 60px;display:flex;justify-content:space-between;align-items:center}
+.ft-logo{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--t3)}
+.ft-logo span{color:var(--gold)}
+.ft-legal{font-size:10px;color:var(--t3);max-width:600px;text-align:center;line-height:1.6}
+.ft-right{font-size:10px;color:var(--t3);text-align:right}
+
+/* ─── REVEAL ─── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
 </style>
 </head>
 <body>
 
-<!-- LIVE TICKER -->
-<div id="ticker">
-  <div class="ticker-badge">LIVE&nbsp;MKT</div>
-  <div class="ticker-scroll"><div class="ticker-inner" id="ti"></div></div>
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-label">LIVE MKT</div>
+  <div class="ticker-track" id="ticker-track"></div>
 </div>
 
 <!-- NAV -->
-<nav id="nav">
-  <div class="nav-logo">QUAN<em>TORA</em></div>
+<nav>
+  <div class="nav-logo">QUAN<span>TORA</span></div>
   <div class="nav-links">
-    <a class="nav-a" href="#hero">Overview</a>
-    <a class="nav-a" href="#perf">Performance</a>
-    <a class="nav-a" href="#thesis">Thesis</a>
-    <a class="nav-a" href="#terms">Terms</a>
-    <a class="nav-a" href="#access">Access</a>
+    <a href="#performance">Performance</a>
+    <a href="#thesis">Strategy</a>
+    <a href="#terms">Terms</a>
+    <a href="#access">Access</a>
   </div>
-  <div class="nav-r">
-    <span><span class="live-dot"></span>MARKETS OPEN</span>
-    <span id="clk"></span>
+  <div class="nav-right">
+    <div class="nav-dot"></div>
+    <div class="nav-clock" id="clock"></div>
   </div>
 </nav>
 
-<main>
-
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-l">
-    <div class="hero-tag">Quantora Capital LP &nbsp;·&nbsp; Est. 2021</div>
-    <h1 class="hero-h">The market does not<br>reward <em>participation.</em><br>It rewards asymmetry.</h1>
-    <div class="hero-byline">— Quantora Investment Committee &nbsp;·&nbsp; January 2021</div>
-    <div class="hero-stats">
-      <div class="hs"><div class="hs-l">Cumulative Net Return</div><div class="hs-v"><span class="ctr" data-t="312.4" data-s="%">0%</span></div></div>
-      <div class="hs"><div class="hs-l">Sharpe Ratio (Ann.)</div><div class="hs-v"><span class="ctr" data-t="47.2" data-s="">0</span></div></div>
-      <div class="hs"><div class="hs-l">Assets Under Management</div><div class="hs-v">$<span class="ctr" data-t="2.4" data-s="B">0</span></div></div>
-      <div class="hs"><div class="hs-l">Max Drawdown (Inception)</div><div class="hs-v"><span class="ctr" data-t="8.1" data-s="%">0%</span></div></div>
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-left reveal">
+      <div class="hero-overline">Quantora Capital LP — Flagship Fund</div>
+      <h1 class="hero-headline">
+        The market does not<br>reward <em>participation.</em><br>It rewards asymmetry.
+      </h1>
+      <p class="hero-sub">A systematic, multi-strategy fund engineered to generate uncorrelated alpha across global equity, volatility, and macro regimes.</p>
+      <div class="hero-stats">
+        <div class="hstat">
+          <div class="hstat-label">Net Return Since Inception</div>
+          <div class="hstat-value ctr" data-t="312.4" data-s="%">0%</div>
+          <div class="hstat-sub">↑ vs S&P 500 +42% same period</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-label">Sharpe Ratio</div>
+          <div class="hstat-value ctr" data-t="4.0" data-s="">0</div>
+          <div class="hstat-sub">3-year trailing</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-label">AUM</div>
+          <div class="hstat-value">$<span class="ctr" data-t="0.2" data-s="B">0</span></div>
+          <div class="hstat-sub">Soft-closed to new capital</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-label">Max Drawdown</div>
+          <div class="hstat-value ctr" data-t="0.7" data-s="%">0%</div>
+          <div class="hstat-sub">Since inception</div>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="hero-r">
-    <div class="chart-head">Equity Curve — Inception to Present (Jan 2021 – May 2026) &nbsp;·&nbsp; Indexed 100 <span>Net of Fees</span></div>
-    <svg id="eq-svg" viewBox="0 0 600 260" preserveAspectRatio="none">
-      <line class="eg" x1="0" y1="52" x2="600" y2="52"/>
-      <line class="eg" x1="0" y1="104" x2="600" y2="104"/>
-      <line class="eg" x1="0" y1="156" x2="600" y2="156"/>
-      <line class="eg" x1="0" y1="208" x2="600" y2="208"/>
-      <line class="eg" x1="150" y1="0" x2="150" y2="260"/>
-      <line class="eg" x1="300" y1="0" x2="300" y2="260"/>
-      <line class="eg" x1="450" y1="0" x2="450" y2="260"/>
-      <text x="4" y="50" font-family="monospace" font-size="8" fill="#405870">400</text>
-      <text x="4" y="102" font-family="monospace" font-size="8" fill="#405870">300</text>
-      <text x="4" y="154" font-family="monospace" font-size="8" fill="#405870">200</text>
-      <text x="4" y="206" font-family="monospace" font-size="8" fill="#405870">100</text>
-      <text x="2" y="256" font-family="monospace" font-size="8" fill="#405870">2021</text>
-      <text x="146" y="256" font-family="monospace" font-size="8" fill="#405870">2022</text>
-      <text x="296" y="256" font-family="monospace" font-size="8" fill="#405870">2023</text>
-      <text x="446" y="256" font-family="monospace" font-size="8" fill="#405870">2024</text>
-      <!-- Benchmark -->
-      <path class="eb" d="M0,208 C60,202 110,196 160,191 C210,186 250,184 300,178 C350,172 400,162 450,154 C490,148 550,144 600,138"/>
-      <!-- Fund fill -->
-      <defs>
-        <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#C9A84C" stop-opacity=".25"/>
-          <stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/>
-        </linearGradient>
-      </defs>
-      <path class="efill" d="M0,208 C40,202 75,194 100,182 C130,168 150,152 175,132 C200,112 220,94 248,72 C272,52 300,38 330,26 C358,16 390,10 425,6 C460,2 530,1 600,1 L600,260 L0,260 Z" fill="url(#g1)"/>
-      <!-- Fund curve -->
-      <path class="ef" d="M0,208 C40,202 75,194 100,182 C130,168 150,152 175,132 C200,112 220,94 248,72 C272,52 300,38 330,26 C358,16 390,10 425,6 C460,2 530,1 600,1"/>
-      <!-- End dot -->
-      <circle cx="600" cy="1" r="4" fill="#C9A84C" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="3s" dur=".3s" fill="freeze"/></circle>
-      <circle cx="600" cy="1" r="4" fill="none" stroke="#C9A84C" stroke-width="1" opacity="0"><animate attributeName="opacity" from="0" to=".5" begin="3s" dur=".4s" fill="freeze"/><animate attributeName="r" from="4" to="14" begin="3s" dur=".8s" fill="freeze"/></circle>
-      <!-- Labels -->
-      <text x="560" y="14" font-family="monospace" font-size="9" fill="#C9A84C">+312%</text>
-      <text x="560" y="130" font-family="monospace" font-size="9" fill="#405870">+42%</text>
-    </svg>
-    <div class="chart-leg">
-      <div class="leg-i"><span class="leg-line" style="background:var(--gold)"></span>Quantora Capital LP (Net)</div>
-      <div class="leg-i"><span class="leg-line" style="background:var(--t3);border-top:1px dashed var(--t3)"></span>S&amp;P 500 TR (Reference)</div>
+    <div class="hero-right reveal" style="transition-delay:.15s">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Equity Curve — Inception to Present</div>
+          <div class="chart-badge">+312.4% NET</div>
+        </div>
+        <canvas id="equity-canvas"></canvas>
+        <div class="chart-footer">
+          <div class="cf-item"><div class="cf-line gold"></div>Quantora Capital</div>
+          <div class="cf-item"><div class="cf-line dashed"></div>S&P 500</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- PERFORMANCE -->
-<div class="sw reveal" id="perf">
-  <div class="sh">
-    <div><div class="sh-n">01 — Performance</div><div class="sh-t">Strategy Breakdown</div></div>
-    <div class="sh-tag">Net of fees &nbsp;·&nbsp; 36-month period ended 30 Apr 2026</div>
+<section id="performance">
+  <div class="container">
+    <div class="section-label reveal">Track Record</div>
+    <h2 class="section-title reveal">Performance <em>Metrics</em></h2>
+
+    <div class="perf-top reveal">
+      <div class="perf-kpi">
+        <div class="pk-label">Annualised Return (Net)</div>
+        <div class="pk-value gold"><span class="ctr" data-t="26.2" data-s="">0</span><span class="pk-unit">%</span></div>
+        <div class="pk-desc">Since inception, after all fees</div>
+      </div>
+      <div class="perf-kpi">
+        <div class="pk-label">Volatility (Annualised)</div>
+        <div class="pk-value"><span class="ctr" data-t="6.4" data-s="">0</span><span class="pk-unit">%</span></div>
+        <div class="pk-desc">Realised portfolio volatility</div>
+      </div>
+      <div class="perf-kpi">
+        <div class="pk-label">Win Rate</div>
+        <div class="pk-value green"><span class="ctr" data-t="79" data-s="">0</span><span class="pk-unit">%</span></div>
+        <div class="pk-desc">Positive months since inception</div>
+      </div>
+    </div>
+
+    <div class="charts-grid reveal">
+      <div class="chart-box">
+        <div class="chart-box-header">
+          <div class="cbh-title">Rolling 12M Sharpe Ratio</div>
+          <div class="cbh-val" id="sharpe-val">4.0</div>
+        </div>
+        <canvas class="sub-chart" id="sharpe-canvas"></canvas>
+      </div>
+      <div class="chart-box">
+        <div class="chart-box-header">
+          <div class="cbh-title">Underwater (Drawdown) Chart</div>
+          <div class="cbh-val" id="dd-val">-0.7% MAX</div>
+        </div>
+        <canvas class="sub-chart" id="dd-canvas"></canvas>
+      </div>
+    </div>
+
+    <div class="heatmap-wrap reveal">
+      <div class="heatmap-header">
+        <div class="heatmap-title">Monthly Returns Heatmap (%)</div>
+      </div>
+      <table class="heatmap-table" id="heatmap"></table>
+    </div>
+
+    <table class="perf-table reveal" id="perf-table">
+      <thead>
+        <tr>
+          <th>Strategy</th>
+          <th>1M</th><th>3M</th><th>YTD</th><th>1Y</th><th>3Y Ann.</th><th>SI Ann.</th>
+          <th>Sharpe</th><th>Sortino</th><th>Max DD</th><th>Beta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="fund-row"><td>Quantora Capital LP</td><td class="pos">+2.1%</td><td class="pos">+8.4%</td><td class="pos">+11.2%</td><td class="pos">+29.7%</td><td class="pos">+24.1%</td><td class="pos">+26.2%</td><td class="pos">4.0</td><td class="pos">6.8</td><td class="pos">-0.7%</td><td>0.06</td></tr>
+        <tr><td>S&P 500 (SPX)</td><td class="pos">+0.2%</td><td class="pos">+3.1%</td><td class="pos">+6.4%</td><td class="pos">+18.2%</td><td class="pos">+11.4%</td><td class="pos">+10.9%</td><td>1.1</td><td>1.4</td><td class="neg">-33.9%</td><td>1.00</td></tr>
+        <tr><td>MSCI World</td><td class="pos">+0.1%</td><td class="pos">+2.8%</td><td class="pos">+5.9%</td><td class="pos">+14.3%</td><td class="pos">+9.8%</td><td class="pos">+9.1%</td><td>0.9</td><td>1.1</td><td class="neg">-34.1%</td><td>0.94</td></tr>
+        <tr><td>Barclays Agg (Bonds)</td><td class="neg">-0.3%</td><td class="neg">-1.1%</td><td class="neg">-2.4%</td><td class="neg">-4.2%</td><td class="neg">-3.1%</td><td class="pos">+2.1%</td><td>0.3</td><td>0.4</td><td class="neg">-17.2%</td><td>-0.02</td></tr>
+        <tr><td>HFRI Fund of Funds</td><td class="pos">+0.8%</td><td class="pos">+2.2%</td><td class="pos">+4.1%</td><td class="pos">+8.6%</td><td class="pos">+6.4%</td><td class="pos">+5.9%</td><td>0.7</td><td>0.9</td><td class="neg">-12.4%</td><td>0.38</td></tr>
+      </tbody>
+    </table>
   </div>
-  <table class="pt">
-    <thead>
-      <tr>
-        <th style="width:230px">Strategy</th>
-        <th>Net Return</th>
-        <th>Sharpe</th>
-        <th>Volatility</th>
-        <th>Max DD</th>
-        <th>Beta</th>
-        <th>Correlation</th>
-        <th>AUM</th>
-        <th style="width:110px">Weight</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="td-s">Quantum Signal Arbitrage<small>QSA · Systematic / Statistical</small></td>
-        <td class="pos">+148.2%</td><td>31.4</td><td>4.2%</td><td>2.1%</td><td>0.02</td><td>0.04</td><td>$912M</td>
-        <td><span class="abar"><span class="afill" style="width:38%"></span></span>38%</td>
-      </tr>
-      <tr>
-        <td class="td-s">Dark Pool Liquidity Extraction<small>DLP · Microstructure / HFT</small></td>
-        <td class="pos">+89.4%</td><td>22.1</td><td>6.8%</td><td>4.7%</td><td>0.06</td><td>0.07</td><td>$576M</td>
-        <td><span class="abar"><span class="afill" style="width:24%"></span></span>24%</td>
-      </tr>
-      <tr>
-        <td class="td-s">Cross-Asset Regime Detection<small>CRD · Macro / Machine Learning</small></td>
-        <td class="pos">+47.8%</td><td>18.7</td><td>9.1%</td><td>3.4%</td><td>0.11</td><td>0.09</td><td>$456M</td>
-        <td><span class="abar"><span class="afill" style="width:19%"></span></span>19%</td>
-      </tr>
-      <tr>
-        <td class="td-s">Volatility Surface Exploitation<small>VSE · Options / Derivatives</small></td>
-        <td class="pos">+18.6%</td><td>14.2</td><td>11.3%</td><td>6.2%</td><td>-0.08</td><td>-0.11</td><td>$288M</td>
-        <td><span class="abar"><span class="afill" style="width:12%"></span></span>12%</td>
-      </tr>
-      <tr>
-        <td class="td-s">Sovereign Flow Intelligence<small>SFI · Fixed Income / FX</small></td>
-        <td class="pos">+8.4%</td><td>9.8</td><td>7.4%</td><td>3.9%</td><td>0.04</td><td>0.05</td><td>$168M</td>
-        <td><span class="abar"><span class="afill" style="width:7%"></span></span>7%</td>
-      </tr>
-      <tr class="tot">
-        <td class="tot-label">FUND TOTAL<small style="color:var(--t3);font-family:var(--mono);font-size:9px;display:block;margin-top:3px;font-weight:400;letter-spacing:.08em">Inception Jan 2021 · GS Prime Brokerage</small></td>
-        <td class="gld">+312.4%</td><td class="gld">47.2</td><td class="gld">5.8%</td><td class="gld">8.1%</td><td class="gld">0.03</td><td class="gld">0.04</td><td class="gld">$2.4B</td><td></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+</section>
 
 <!-- THESIS -->
-<div class="sw reveal" id="thesis">
-  <div class="sh">
-    <div><div class="sh-n">02 — Investment Thesis</div><div class="sh-t">Philosophy of Edge</div></div>
-    <div class="sh-tag">Quantora Investment Committee</div>
-  </div>
-  <div class="thesis-g">
-    <div class="thesis-sb">
-      FUND STRUCTURE<br>Cayman Islands LP<br>Delaware Feeder Corp.<br><br>
-      AUDITOR<br>KPMG (Cayman Islands)<br><br>
-      ADMINISTRATOR<br>Maples Fund Services<br><br>
-      PRIME BROKER<br>Goldman Sachs PB<br><br>
-      CUSTODIAN<br>JPMorgan Chase Bank<br><br>
-      LEGAL COUNSEL<br>Walkers (Cayman)<br>Sidley Austin LLP (US)<br><br>
-      COMPLIANCE<br>Reg D / Reg S<br>FATCA &amp; CRS Compliant<br>AIFMD Non-EU AIFM
-    </div>
-    <div class="thesis-c">
-      <div class="thesis-q">"Modern financial markets are not efficient. They are systematically inefficient in ways that compound advantage for those with the architecture to exploit them."</div>
-      <div class="thesis-b">
-        <p>Quantora operates on a single foundational premise: alpha is not discovered, it is engineered. Our five parallel strategy engines process over 1,400 live data feeds across equities, fixed income, derivatives, and alternative data streams simultaneously. Each strategy is orthogonal — near-zero correlation in adverse regimes — and sovereign in its own right.</p>
-        <p>We do not manage to drawdown targets or benchmark against indices. We have no peers. Our only obligation is to compound capital for qualified limited partners at the highest possible risk-adjusted rate. Every system, every position, every trade exists in service of that mandate.</p>
-        <p>Capital under management is deliberately constrained. Capacity is a weapon we do not squander.</p>
+<section id="thesis">
+  <div class="container">
+    <div class="thesis-grid">
+      <div class="thesis-left reveal">
+        <div class="section-label">Fund Structure</div>
+        <h2 class="section-title" style="margin-bottom:32px">Investment <em>Thesis</em></h2>
+        <div class="thesis-structure">
+<span class="ts-key">Structure</span>        <span class="ts-val">Cayman LP</span><br>
+<span class="ts-key">GP Entity</span>        <span class="ts-val">Quantora GP Ltd.</span><br>
+<span class="ts-key">Domicile</span>         <span class="ts-val">Cayman Islands</span><br>
+<span class="ts-key">Administrator</span>    <span class="ts-val">KPMG Fund Admin</span><br>
+<span class="ts-key">Prime Broker</span>     <span class="ts-val">Goldman Sachs</span><br>
+<span class="ts-key">Auditor</span>          <span class="ts-val">Deloitte LLP</span><br>
+<span class="ts-key">Legal Counsel</span>    <span class="ts-val">Maples Group</span><br>
+<br>
+<span class="ts-key">Strategies</span>       <span class="ts-val">Stat Arb, Vol</span><br>
+                           <span class="ts-val">Macro, Momentum</span><br>
+<span class="ts-key">Instruments</span>      <span class="ts-val">Equities, Options</span><br>
+                           <span class="ts-val">Futures, FX</span><br>
+<span class="ts-key">Gross Exposure</span>   <span class="ts-val">120–200%</span><br>
+<span class="ts-key">Net Exposure</span>     <span class="ts-val">10–40%</span><br>
+<span class="ts-key">Holding Period</span>   <span class="ts-val">Intraday–60 days</span><br>
+        </div>
       </div>
-      <div class="thesis-fine">
-        Past performance is not indicative of future results. All figures are net of a 2.0% management fee and 20.0% performance allocation (HWM). This material is for informational purposes only and does not constitute an offer to sell or a solicitation to buy. Restricted to persons qualifying as "Qualified Purchasers" under the Investment Company Act of 1940.
+      <div class="thesis-right reveal" style="transition-delay:.1s">
+        <blockquote class="thesis-quote">
+          "We don't predict markets. We engineer positions that profit regardless of direction — and cut losses before they compound."
+        </blockquote>
+        <div class="thesis-body">
+          <p>Quantora Capital was built on a single conviction: that persistent, uncorrelated alpha is not found in consensus — it is extracted from structural inefficiencies that fundamental investors cannot access at speed, and that passive flows continuously recreate.</p>
+          <p>Our research infrastructure generates over 3,200 daily signals across 47 markets. The portfolio construction engine enforces strict correlation constraints, ensuring no two positions compound the same risk factor. The result is a fund that moves through market regimes — bull, bear, and sideways — without the cyclical dependence that defines 96% of institutional strategies.</p>
+          <p>We are soft-closed. We accept capital from endowments, family offices, and sovereign wealth funds on a selective basis, subject to capacity constraints and alignment of investment horizon. We do not take retail capital, and we do not participate in performance league tables.</p>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- TERMS -->
-<div class="sw reveal" id="terms" style="padding-bottom:0">
-  <div class="sh">
-    <div><div class="sh-n">03 — Fund Terms</div><div class="sh-t">Structure &amp; Eligibility</div></div>
-    <div class="sh-tag">As of 1 January 2026</div>
+<section id="terms">
+  <div class="container">
+    <div class="section-label reveal">Subscription</div>
+    <h2 class="section-title reveal" style="margin-bottom:40px">Fund <em>Terms</em></h2>
+    <div class="terms-grid reveal">
+      <div class="term-block">
+        <div class="term-block-title">Economics</div>
+        <div class="term-row"><span class="tr-key">Management Fee</span><span class="tr-val">1.5% per annum</span></div>
+        <div class="term-row"><span class="tr-key">Performance Fee</span><span class="tr-val">25% above HWM</span></div>
+        <div class="term-row"><span class="tr-key">High-Water Mark</span><span class="tr-val">Perpetual, in USD</span></div>
+        <div class="term-row"><span class="tr-key">Hurdle Rate</span><span class="tr-val">None</span></div>
+        <div class="term-row"><span class="tr-key">Crystallisation</span><span class="tr-val">Annual (Dec)</span></div>
+        <div class="term-row"><span class="tr-key">Fund Currency</span><span class="tr-val">USD</span></div>
+      </div>
+      <div class="term-block">
+        <div class="term-block-title">Liquidity</div>
+        <div class="term-row"><span class="tr-key">Subscriptions</span><span class="tr-val">Monthly, 5-day notice</span></div>
+        <div class="term-row"><span class="tr-key">Redemptions</span><span class="tr-val">Quarterly, 90-day notice</span></div>
+        <div class="term-row"><span class="tr-key">Lock-up</span><span class="tr-val">12 months from first NAV</span></div>
+        <div class="term-row"><span class="tr-key">Gate</span><span class="tr-val">20% of NAV per quarter</span></div>
+        <div class="term-row"><span class="tr-key">Side Pocket</span><span class="tr-val">Permitted (illiquid only)</span></div>
+        <div class="term-row"><span class="tr-key">NAV Reporting</span><span class="tr-val">Monthly, T+5</span></div>
+      </div>
+      <div class="term-block">
+        <div class="term-block-title">Eligibility</div>
+        <div class="term-row"><span class="tr-key">Minimum Investment</span><span class="tr-val">$5,000,000</span></div>
+        <div class="term-row"><span class="tr-key">Investor Type</span><span class="tr-val">Qualified Purchaser only</span></div>
+        <div class="term-row"><span class="tr-key">Capacity</span><span class="tr-val">Soft-closed (selective)</span></div>
+        <div class="term-row"><span class="tr-key">Regulated</span><span class="tr-val">CIMA registered</span></div>
+        <div class="term-row"><span class="tr-key">FATCA / CRS</span><span class="tr-val">Compliant</span></div>
+        <div class="term-row"><span class="tr-key">Jurisdiction</span><span class="tr-val">Non-US institutions</span></div>
+      </div>
+    </div>
   </div>
-</div>
-<div class="terms-g reveal">
-  <div class="tc"><div class="tc-h">Economics</div>
-    <div class="tr"><span class="tk">Minimum Investment</span><span class="tv g">$50,000,000</span></div>
-    <div class="tr"><span class="tk">Management Fee</span><span class="tv">2.0% per annum</span></div>
-    <div class="tr"><span class="tk">Performance Allocation</span><span class="tv">20% (High Water Mark)</span></div>
-    <div class="tr"><span class="tk">Lock-up Period</span><span class="tv">36 months (hard)</span></div>
-    <div class="tr"><span class="tk">Redemption Notice</span><span class="tv">180 calendar days</span></div>
-    <div class="tr"><span class="tk">Subscriptions</span><span class="tv">Monthly (1st business day)</span></div>
-  </div>
-  <div class="tc"><div class="tc-h">Risk &amp; Operations</div>
-    <div class="tr"><span class="tk">Strategy Type</span><span class="tv">Systematic Multi-Strategy</span></div>
-    <div class="tr"><span class="tk">Gross Leverage</span><span class="tv">2.0× – 6.0×</span></div>
-    <div class="tr"><span class="tk">Instrument Universe</span><span class="tv">Global / All Asset Classes</span></div>
-    <div class="tr"><span class="tk">Portfolio VaR (95%, 1d)</span><span class="tv">≤ 0.18% of NAV</span></div>
-    <div class="tr"><span class="tk">Execution Latency</span><span class="tv">≤ 11ms (median)</span></div>
-    <div class="tr"><span class="tk">Live Data Inputs</span><span class="tv">1,400+ feeds</span></div>
-  </div>
-  <div class="tc"><div class="tc-h">Eligibility &amp; Legal</div>
-    <div class="tr"><span class="tk">Investor Qualification</span><span class="tv">QP / QIB only</span></div>
-    <div class="tr"><span class="tk">US Exemption</span><span class="tv">Reg D / 3(c)(7)</span></div>
-    <div class="tr"><span class="tk">Non-US</span><span class="tv">Regulation S</span></div>
-    <div class="tr"><span class="tk">AIFMD Status</span><span class="tv">Non-EU AIFM</span></div>
-    <div class="tr"><span class="tk">FATCA / CRS</span><span class="tv">Compliant</span></div>
-    <div class="tr"><span class="tk">Disclosure / DDQ</span><span class="tv">Post-NDA execution only</span></div>
-  </div>
-</div>
+</section>
 
 <!-- ACCESS -->
-<div class="sw reveal" id="access">
-  <div class="sh">
-    <div><div class="sh-n">04 — Access</div><div class="sh-t">Investor Relations</div></div>
-    <div class="sh-tag">Restricted · Qualified Purchasers Only</div>
-  </div>
-  <div class="acc-g">
-    <div>
-      <div class="acc-h">Capital of this calibre<br>does not seek you.<br><em>You seek it.</em></div>
-      <div class="acc-sub">
-        Quantora does not accept unsolicited capital.<br>
-        Prospective limited partners must provide:<br><br>
-        <div class="req">Proof of qualified purchaser status (≥$5M investable assets)</div>
-        <div class="req">Executed NDA prior to any disclosure or DDQ response</div>
-        <div class="req">Tier 1 institutional or existing LP reference</div>
-        <div class="req">Commitment letter within 14 days of term sheet issuance</div>
-        <div class="req">Minimum $50M initial commitment — no exceptions</div>
-      </div>
-    </div>
-    <div class="cc">
-      <div class="cc-label">Investor Relations &nbsp;·&nbsp; Restricted Access</div>
-      <a class="cc-email" href="mailto:godmode@quantora.capital">godmode@quantora.capital</a>
-      <div class="cc-note">
-        Response time: 5–10 business days (qualified parties only).<br>
-        Unqualified enquiries receive no reply.<br>
-        All correspondence treated as subject to NDA.<br><br>
-        <strong style="color:var(--t2)">Quantora Capital LP</strong><br>
-        c/o Maples Fund Services<br>
-        P.O. Box 1093, Boundary Hall<br>
-        Grand Cayman KY1-1102, Cayman Islands
+<section id="access">
+  <canvas id="access-canvas"></canvas>
+  <div class="container">
+    <div class="access-inner">
+      <div class="section-label reveal" style="justify-content:center">Capital of this calibre</div>
+      <h2 class="access-title reveal">Does not seek you.<br><em>You seek it.</em></h2>
+      <p class="access-sub reveal">Qualified institutions and family offices may request our DDQ, audited financials, and offering memorandum through our investor relations office. All communications are held in strict confidence.</p>
+      <div class="access-card reveal">
+        <div class="ac-row">
+          <div class="ac-col">
+            <div class="ac-label">Investor Relations</div>
+            <div class="ac-value"><a href="mailto:ir@quantora.capital">ir@quantora.capital</a></div>
+          </div>
+          <div class="ac-col">
+            <div class="ac-label">General Inquiries</div>
+            <div class="ac-value"><a href="mailto:info@quantora.capital">info@quantora.capital</a></div>
+          </div>
+          <div class="ac-col">
+            <div class="ac-label">Registered Office</div>
+            <div class="ac-value">94 Solaris Ave, Camana Bay<br>Grand Cayman, KY1-1108</div>
+          </div>
+          <div class="ac-col">
+            <div class="ac-label">Business Hours</div>
+            <div class="ac-value">Monday–Friday<br>08:00–18:00 EST</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="fl">QUAN<em>TORA</em> CAPITAL</div>
-  <div class="flegal">© 2026 Quantora Capital LP. All rights reserved. &nbsp;·&nbsp; For qualified purchasers only. Not an offer. Past performance is not indicative of future results. All figures unaudited.</div>
+  <div class="ft-logo">QUAN<span>TORA</span> Capital</div>
+  <div class="ft-legal">This material is for informational purposes only and does not constitute an offer or solicitation. Past performance is not indicative of future results. Investment in the Fund involves significant risk, including possible loss of principal. For qualified purchasers only.</div>
+  <div class="ft-right">© 2024 Quantora Capital LP<br>All rights reserved.</div>
 </footer>
 
-</main>
-
 <script>
-/* TICKER */
+// ─── TICKER ───────────────────────────────────────────────────
 const TICKS=[
   {s:'SPX',v:'5,247.83',c:'+0.24%',p:1},{s:'NDX',v:'18,392.10',c:'+0.31%',p:1},
-  {s:'VVIX',v:'14.82',c:'-0.44%',p:0},{s:'DXY',v:'104.23',c:'+0.12%',p:1},
+  {s:'VIX',v:'14.21',c:'-3.12%',p:0},{s:'DXY',v:'104.23',c:'+0.12%',p:1},
   {s:'BTC',v:'63,842',c:'+1.87%',p:1},{s:'US10Y',v:'4.312%',c:'-0.018',p:0},
   {s:'GOLD',v:'2,341.40',c:'+0.67%',p:1},{s:'EUR/USD',v:'1.0742',c:'-0.08%',p:0},
-  {s:'VIX',v:'14.21',c:'-3.12%',p:0},{s:'WTI',v:'82.44',c:'+1.14%',p:1},
-  {s:'QTR NAV',v:'412.40',c:'+312.4%',p:1},
+  {s:'VVIX',v:'14.82',c:'-0.44%',p:0},{s:'WTI',v:'82.44',c:'+1.14%',p:1},
+  {s:'QTR NAV',v:'$412.40',c:'+312.4%',p:1},{s:'RUT',v:'2,043.1',c:'+0.41%',p:1},
+  {s:'HYG',v:'77.82',c:'-0.11%',p:0},{s:'TLT',v:'92.14',c:'+0.33%',p:1},
 ];
-const ti=document.getElementById('ti');
+const track=document.getElementById('ticker-track');
 [...TICKS,...TICKS].forEach(t=>{
-  const d=document.createElement('div');
-  d.className='tick';
-  d.innerHTML=`<span class="tick-s">${t.s}</span><span class="tick-v">${t.v}</span><span class="${t.p?'tick-up':'tick-dn'}">${t.c}</span>`;
-  ti.appendChild(d);
+  const el=document.createElement('div');
+  el.className='tick-item';
+  el.innerHTML=`<span class="tick-sym">${t.s}</span><span class="tick-val">${t.v}</span><span class="tick-chg ${t.p?'up':'dn'}">${t.c}</span>`;
+  track.appendChild(el);
 });
 
-/* CLOCK */
-function tick(){
-  const n=new Date();
-  document.getElementById('clk').textContent=n.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false})+' EST';
+// ─── CLOCK ────────────────────────────────────────────────────
+const clkEl=document.getElementById('clock');
+function updateClock(){
+  const now=new Date();
+  const est=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(now);
+  clkEl.textContent='EST '+est;
 }
-setInterval(tick,1000);tick();
+setInterval(updateClock,1000); updateClock();
 
-/* SCROLL REVEALS */
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.08});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// ─── CONSTELLATION BACKGROUND ────────────────────────────────
+function initConstellation(canvasId,opacity){
+  const cv=document.getElementById(canvasId);
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  let W,H,stars=[];
+  function resize(){
+    W=cv.width=cv.offsetWidth;
+    H=cv.height=cv.offsetHeight;
+    stars=Array.from({length:Math.floor(W*H/3000)},()=>({
+      x:Math.random()*W,y:Math.random()*H,
+      r:Math.random()*.8+.2,
+      vx:(Math.random()-.5)*.08,vy:(Math.random()-.5)*.08,
+      a:Math.random()
+    }));
+  }
+  new ResizeObserver(resize).observe(cv.parentElement||cv);
+  resize();
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // connections
+    for(let i=0;i<stars.length;i++){
+      for(let j=i+1;j<stars.length;j++){
+        const dx=stars[i].x-stars[j].x,dy=stars[i].y-stars[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<120){
+          ctx.beginPath();
+          ctx.strokeStyle=`rgba(200,168,75,${opacity*(1-d/120)*.18})`;
+          ctx.lineWidth=.4;
+          ctx.moveTo(stars[i].x,stars[i].y);
+          ctx.lineTo(stars[j].x,stars[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    // stars
+    stars.forEach(s=>{
+      s.x+=s.vx; s.y+=s.vy;
+      if(s.x<0)s.x=W; if(s.x>W)s.x=0;
+      if(s.y<0)s.y=H; if(s.y>H)s.y=0;
+      s.a+=.008; if(s.a>Math.PI*2)s.a=0;
+      const glow=.4+Math.sin(s.a)*.3;
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(200,168,75,${opacity*glow})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+initConstellation('hero-canvas',1);
+initConstellation('access-canvas',0.7);
 
-/* COUNTERS */
+// ─── EQUITY CURVE (CANVAS) ────────────────────────────────────
+function drawEquityChart(){
+  const cv=document.getElementById('equity-canvas');
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const dpr=window.devicePixelRatio||1;
+  const W=cv.offsetWidth, H=cv.offsetHeight||240;
+  cv.width=W*dpr; cv.height=H*dpr;
+  ctx.scale(dpr,dpr);
+
+  // Fund data: monthly cumulative returns (index, start=100)
+  const fundPts=[100,102,105,108,112,117,119,124,131,138,142,148,
+                 155,163,168,174,182,190,196,204,213,224,234,241,
+                 248,255,264,272,281,293,305,318,332,341,352,365,
+                 378,391,406,420,412];
+  const spPts=[100,101.5,103,104,106,108,107,110,113,116,118,121,
+               124,127,129,132,135,138,136,140,143,147,150,148,
+               151,154,157,160,162,166,170,174,178,180,184,132,
+               138,143,149,147,142];
+
+  const pad={t:20,r:20,b:30,l:48};
+  const cw=W-pad.l-pad.r, ch=H-pad.t-pad.b;
+  const n=fundPts.length;
+  const allVals=[...fundPts,...spPts];
+  const minV=Math.min(...allVals)*.97, maxV=Math.max(...allVals)*1.02;
+
+  function toX(i){return pad.l+i/(n-1)*cw}
+  function toY(v){return pad.t+ch-(v-minV)/(maxV-minV)*ch}
+
+  // Grid lines
+  ctx.strokeStyle='rgba(255,255,255,0.05)';
+  ctx.lineWidth=1;
+  [125,150,200,250,300,350,400].forEach(v=>{
+    if(v<minV||v>maxV)return;
+    const y=toY(v);
+    ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(W-pad.r,y); ctx.stroke();
+    ctx.fillStyle='rgba(200,168,75,0.4)';
+    ctx.font=`9px 'SFMono-Regular','Consolas',monospace`;
+    ctx.textAlign='right';
+    ctx.fillText(v,pad.l-6,y+3);
+  });
+
+  // S&P line (dashed)
+  ctx.setLineDash([4,4]);
+  ctx.strokeStyle='rgba(122,154,190,0.5)';
+  ctx.lineWidth=1.5;
+  ctx.beginPath();
+  spPts.forEach((v,i)=>{ i===0?ctx.moveTo(toX(i),toY(v)):ctx.lineTo(toX(i),toY(v)); });
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Animate fund curve
+  let progress=0;
+  const dur=2600;
+  const start=performance.now();
+  function animate(now){
+    const t=Math.min((now-start)/dur,1);
+    const ease=1-Math.pow(1-t,3);
+    progress=ease;
+
+    // Clear chart area
+    ctx.clearRect(pad.l,0,cw+pad.r,H);
+
+    // Re-draw grid
+    ctx.strokeStyle='rgba(255,255,255,0.05)'; ctx.lineWidth=1;
+    [125,150,200,250,300,350,400].forEach(v=>{
+      if(v<minV||v>maxV)return;
+      const y=toY(v);
+      ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(W-pad.r,y); ctx.stroke();
+    });
+
+    // S&P dashed
+    ctx.setLineDash([4,4]);
+    ctx.strokeStyle='rgba(122,154,190,0.5)'; ctx.lineWidth=1.5;
+    ctx.beginPath();
+    const spEnd=Math.max(1,Math.round(progress*(n-1)));
+    spPts.slice(0,spEnd+1).forEach((v,i)=>{ i===0?ctx.moveTo(toX(i),toY(v)):ctx.lineTo(toX(i),toY(v)); });
+    ctx.stroke(); ctx.setLineDash([]);
+
+    // Fund gradient fill
+    const endIdx=Math.max(1,Math.round(progress*(n-1)));
+    const grad=ctx.createLinearGradient(0,pad.t,0,H-pad.b);
+    grad.addColorStop(0,'rgba(200,168,75,0.25)');
+    grad.addColorStop(1,'rgba(200,168,75,0)');
+    ctx.beginPath();
+    fundPts.slice(0,endIdx+1).forEach((v,i)=>{ i===0?ctx.moveTo(toX(i),toY(v)):ctx.lineTo(toX(i),toY(v)); });
+    ctx.lineTo(toX(endIdx),toY(minV));
+    ctx.lineTo(toX(0),toY(minV));
+    ctx.closePath();
+    ctx.fillStyle=grad; ctx.fill();
+
+    // Fund line
+    ctx.beginPath();
+    ctx.strokeStyle='#C8A84B'; ctx.lineWidth=2.5;
+    fundPts.slice(0,endIdx+1).forEach((v,i)=>{ i===0?ctx.moveTo(toX(i),toY(v)):ctx.lineTo(toX(i),toY(v)); });
+    ctx.stroke();
+
+    // Dot at tip
+    if(endIdx<n-1||t<1){
+      const tip=fundPts[endIdx];
+      ctx.beginPath();
+      ctx.arc(toX(endIdx),toY(tip),4,0,Math.PI*2);
+      ctx.fillStyle='#C8A84B'; ctx.fill();
+      ctx.beginPath();
+      ctx.arc(toX(endIdx),toY(tip),7,0,Math.PI*2);
+      ctx.fillStyle='rgba(200,168,75,0.3)'; ctx.fill();
+    }
+
+    if(t<1) requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
+}
+window.addEventListener('load',drawEquityChart);
+
+// ─── ROLLING SHARPE CHART ─────────────────────────────────────
+function drawSharpe(){
+  const cv=document.getElementById('sharpe-canvas');
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const dpr=window.devicePixelRatio||1;
+  const W=cv.offsetWidth, H=cv.offsetHeight||160;
+  cv.width=W*dpr; cv.height=H*dpr;
+  ctx.scale(dpr,dpr);
+  const data=[2.1,2.4,2.8,3.1,2.9,3.4,3.7,3.5,3.8,4.0,3.9,4.1,4.2,4.0,3.8,4.0,4.1,4.3,4.0,3.9,4.2,4.4,4.1,4.0];
+  const pad={t:10,r:16,b:24,l:36};
+  const cw=W-pad.l-pad.r, ch=H-pad.t-pad.b;
+  const n=data.length;
+  const minV=0,maxV=5;
+  function toX(i){return pad.l+i/(n-1)*cw}
+  function toY(v){return pad.t+ch-(v-minV)/(maxV-minV)*ch}
+  // Reference line at 1
+  ctx.strokeStyle='rgba(255,255,255,0.06)'; ctx.lineWidth=1;
+  [1,2,3,4].forEach(v=>{
+    const y=toY(v);
+    ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(W-pad.r,y); ctx.stroke();
+    ctx.fillStyle='rgba(122,154,190,0.4)'; ctx.font=`8px 'SFMono-Regular',monospace`;
+    ctx.textAlign='right'; ctx.fillText(v.toFixed(0),pad.l-4,y+3);
+  });
+  const grad=ctx.createLinearGradient(0,pad.t,0,H-pad.b);
+  grad.addColorStop(0,'rgba(30,158,92,0.3)');
+  grad.addColorStop(1,'rgba(30,158,92,0)');
+  ctx.beginPath();
+  data.forEach((v,i)=>{ i===0?ctx.moveTo(toX(i),toY(v)):ctx.lineTo(toX(i),toY(v)); });
+  ctx.lineTo(toX(n-1),toY(0)); ctx.lineTo(toX(0),toY(0)); ctx.closePath();
+  ctx.fillStyle=grad; ctx.fill();
+  ctx.beginPath(); ctx.strokeStyle='#2DB870'; ctx.lineWidth=2;
+  data.forEach((v,i)=>{ i===0?ctx.moveTo(toX(i),toY(v)):ctx.lineTo(toX(i),toY(v)); });
+  ctx.stroke();
+}
+
+// ─── DRAWDOWN CHART ───────────────────────────────────────────
+function drawDD(){
+  const cv=document.getElementById('dd-canvas');
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const dpr=window.devicePixelRatio||1;
+  const W=cv.offsetWidth, H=cv.offsetHeight||160;
+  cv.width=W*dpr; cv.height=H*dpr;
+  ctx.scale(dpr,dpr);
+  const data=[0,-.1,-.2,-.15,-.3,-.25,-.4,-.35,-.2,-.1,-.3,-.5,-.4,-.6,-.5,-.7,-.55,-.4,-.3,-.2,-.15,-.1,-.05,0];
+  const pad={t:10,r:16,b:24,l:36};
+  const cw=W-pad.l-pad.r, ch=H-pad.t-pad.b;
+  const n=data.length;
+  const minV=-1, maxV=0;
+  function toX(i){return pad.l+i/(n-1)*cw}
+  function toY(v){return pad.t+ch-(v-minV)/(maxV-minV)*ch}
+  ctx.strokeStyle='rgba(255,255,255,0.06)'; ctx.lineWidth=1;
+  [-.25,-.5,-.75].forEach(v=>{
+    const y=toY(v);
+    ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(W-pad.r,y); ctx.stroke();
+    ctx.fillStyle='rgba(122,154,190,0.4)'; ctx.font=`8px 'SFMono-Regular',monospace`;
+    ctx.textAlign='right'; ctx.fillText((v*100).toFixed(0)+'%',pad.l-4,y+3);
+  });
+  const grad=ctx.createLinearGradient(0,pad.t,0,H-pad.b);
+  grad.addColorStop(0,'rgba(192,57,43,0)');
+  grad.addColorStop(1,'rgba(192,57,43,0.25)');
+  ctx.beginPath();
+  data.forEach((v,i)=>{ i===0?ctx.moveTo(toX(i),toY(0)):ctx.lineTo(toX(i),toY(0)); });
+  data.forEach((v,i)=>{ const j=n-1-i; ctx.lineTo(toX(j),toY(data[j])); });
+  ctx.closePath(); ctx.fillStyle=grad; ctx.fill();
+  ctx.beginPath(); ctx.strokeStyle='rgba(192,57,43,0.7)'; ctx.lineWidth=1.5;
+  data.forEach((v,i)=>{ i===0?ctx.moveTo(toX(i),toY(v)):ctx.lineTo(toX(i),toY(v)); });
+  ctx.stroke();
+  ctx.fillStyle='rgba(192,57,43,0.15)';
+}
+
+// ─── MONTHLY HEATMAP ─────────────────────────────────────────
+function buildHeatmap(){
+  const table=document.getElementById('heatmap');
+  if(!table)return;
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const years=[2020,2021,2022,2023,2024];
+  const data={
+    2020:[null,null,null,null,4.1,3.2,5.1,2.8,1.9,3.4,4.2,2.1],
+    2021:[3.1,2.4,4.2,3.8,2.1,1.9,3.6,4.1,2.8,3.2,2.9,2.2],
+    2022:[1.8,2.1,-0.3,1.4,2.8,3.1,2.4,-0.2,1.9,2.6,3.1,2.8],
+    2023:[2.4,3.1,2.8,3.4,2.1,4.2,3.8,2.9,1.8,2.4,3.6,2.1],
+    2024:[3.2,2.8,4.1,2.4,3.7,null,null,null,null,null,null,null]
+  };
+  const yrTotals={2020:35.0,2021:38.3,2022:26.5,2023:38.6,2024:16.2};
+  function color(v){
+    if(v===null)return'';
+    if(v>3.5)return'style="background:rgba(30,158,92,0.28)" class="hm-pos"';
+    if(v>2)return'style="background:rgba(30,158,92,0.14)" class="hm-pos"';
+    if(v>0)return'style="background:rgba(30,158,92,0.05)" class="hm-pos"';
+    if(v<-1)return'style="background:rgba(192,57,43,0.22)" class="hm-neg"';
+    return'style="background:rgba(192,57,43,0.08)" class="hm-neg"';
+  }
+  let html=`<thead><tr><th>Year</th>${months.map(m=>`<th>${m}</th>`).join('')}<th>YTD</th></tr></thead><tbody>`;
+  years.forEach(y=>{
+    html+=`<tr><td>${y}</td>`;
+    months.forEach((_,i)=>{
+      const v=data[y][i];
+      if(v===null){html+=`<td class="hm-zero">—</td>`;}
+      else{html+=`<td ${color(v)}>${v>0?'+':''}${v.toFixed(1)}%</td>`;}
+    });
+    html+=`<td class="hm-yr">${yrTotals[y]>0?'+':''}${yrTotals[y].toFixed(1)}%</td></tr>`;
+  });
+  html+='</tbody>';
+  table.innerHTML=html;
+}
+
+// ─── COUNTERS ─────────────────────────────────────────────────
 function easeOut(t){return 1-Math.pow(1-t,3)}
 function runCounters(){
   document.querySelectorAll('.ctr').forEach(el=>{
     const target=parseFloat(el.dataset.t),suffix=el.dataset.s||'';
-    const dec=!Number.isInteger(target)&&target%1!==0;
+    const dec=!Number.isInteger(target);
     const dur=2200,start=performance.now();
     (function update(now){
       const p=Math.min((now-start)/dur,1),val=easeOut(p)*target;
@@ -419,9 +743,26 @@ function runCounters(){
     })(start);
   });
 }
-const ho=new IntersectionObserver(es=>{if(es[0].isIntersecting){runCounters();ho.disconnect()}},{threshold:.25});
-ho.observe(document.getElementById('hero'));
-</script>
 
+// ─── SCROLL REVEAL ────────────────────────────────────────────
+let countersRun=false;
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      if(!countersRun){countersRun=true;runCounters();}
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// Init charts
+window.addEventListener('load',()=>{
+  drawSharpe();
+  drawDD();
+  buildHeatmap();
+});
+</script>
 </body>
 </html>
