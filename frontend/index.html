@@ -3,738 +3,624 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QUANTORA</title>
+<title>QUANTORA — GOD MODE</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: 'Times New Roman', serif; cursor: none; }
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#080604;
+  --red:#C8102E;
+  --cream:#F0EDE8;
+  --muted:#4A4744;
+  --faint:#1A1714;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--cream);
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  cursor:none;
+  overflow-x:hidden;
+}
 
-  #c { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+/* CROSSHAIR CURSOR */
+#cursor{
+  position:fixed;top:0;left:0;pointer-events:none;z-index:9999;
+}
+#cursor::before,#cursor::after{
+  content:'';position:fixed;background:var(--red);
+  transition:transform 0.08s ease,opacity 0.1s;
+}
+#cursor::before{
+  width:1px;height:20px;
+  transform:translate(calc(var(--cx,0px) - 0.5px), calc(var(--cy,0px) - 10px));
+}
+#cursor::after{
+  width:20px;height:1px;
+  transform:translate(calc(var(--cx,0px) - 10px), calc(var(--cy,0px) - 0.5px));
+}
 
-  /* CUSTOM CURSOR */
-  #cursor { position: fixed; width: 8px; height: 8px; background: #fff; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s, opacity 0.2s; mix-blend-mode: difference; }
-  #cursor-ring { position: fixed; width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.4); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: all 0.15s ease-out; }
+/* CANVAS */
+#c{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  display:block;z-index:0;
+}
 
-  /* OVERLAY UI */
-  #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; }
+/* SCROLL CONTAINER */
+main{position:relative;z-index:10}
 
-  /* TOP NAV */
-  #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 32px 48px; opacity: 0; transition: opacity 2s; }
-  #nav .logo { font-size: 11px; letter-spacing: 0.4em; color: rgba(255,255,255,0.9); font-family: 'Courier New', monospace; }
-  #nav .nav-right { font-size: 10px; letter-spacing: 0.3em; color: rgba(255,255,255,0.4); font-family: 'Courier New', monospace; }
-  #nav .nav-right span { margin-left: 32px; }
+/* ── HERO ── */
+#hero{
+  height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:flex-end;
+  padding:0 6vw 8vh;
+  position:relative;
+}
+.hero-overline{
+  font-size:clamp(10px,1vw,13px);
+  letter-spacing:0.35em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:2rem;
+}
+.hero-title{
+  font-size:clamp(64px,10vw,160px);
+  font-weight:900;
+  line-height:0.88;
+  letter-spacing:-0.03em;
+  text-transform:uppercase;
+  color:var(--cream);
+  mix-blend-mode:normal;
+}
+.hero-title span{color:var(--red)}
+.hero-sub{
+  margin-top:3rem;
+  max-width:420px;
+  font-size:clamp(13px,1.1vw,15px);
+  line-height:1.7;
+  color:var(--muted);
+}
+.hero-rule{
+  position:absolute;top:50%;right:6vw;
+  width:1px;height:40vh;
+  background:linear-gradient(to bottom,transparent,var(--muted),transparent);
+  transform:translateY(-50%);
+}
 
-  /* TICKER */
-  #ticker { position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; height: 32px; background: rgba(0,0,0,0.6); border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; overflow: hidden; opacity: 0; transition: opacity 2s; }
-  #ticker-inner { display: flex; white-space: nowrap; animation: ticker 40s linear infinite; }
-  #ticker-inner span { font-family: 'Courier New', monospace; font-size: 10px; letter-spacing: 0.15em; color: rgba(255,255,255,0.5); padding: 0 40px; }
-  #ticker-inner span.up { color: #00ff88; }
-  #ticker-inner span.down { color: #ff4444; }
-  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+/* HEARTBEAT */
+#heartbeat-wrap{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:320px;height:80px;
+  opacity:0.12;
+  pointer-events:none;
+}
+#heartbeat-wrap svg{width:100%;height:100%}
+.hb-path{
+  fill:none;stroke:var(--red);stroke-width:1.5;
+  stroke-dasharray:700;stroke-dashoffset:700;
+  animation:hbDraw 2.4s cubic-bezier(0.4,0,0.2,1) infinite;
+}
+@keyframes hbDraw{
+  0%{stroke-dashoffset:700;opacity:1}
+  70%{stroke-dashoffset:0;opacity:1}
+  100%{stroke-dashoffset:0;opacity:0}
+}
 
-  /* MAIN HERO */
-  #hero { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 50; text-align: center; pointer-events: none; opacity: 0; }
-  #hero-eyebrow { font-family: 'Courier New', monospace; font-size: 9px; letter-spacing: 0.6em; color: rgba(255,255,255,0.3); margin-bottom: 24px; text-transform: uppercase; }
-  #hero-title { font-size: clamp(80px, 12vw, 160px); font-weight: 400; color: #fff; line-height: 0.9; letter-spacing: -0.02em; font-family: 'Times New Roman', serif; text-shadow: 0 0 120px rgba(255,255,255,0.1); }
-  #hero-title span { display: block; }
-  #hero-sub { font-family: 'Courier New', monospace; font-size: 10px; letter-spacing: 0.5em; color: rgba(255,255,255,0.25); margin-top: 32px; }
+/* STAT ROW */
+.stat-row{
+  display:flex;gap:4vw;margin-top:4rem;
+  border-top:1px solid var(--faint);
+  padding-top:2rem;
+}
+.stat-item{display:flex;flex-direction:column;gap:4px}
+.stat-val{
+  font-size:clamp(22px,3vw,42px);
+  font-weight:900;
+  letter-spacing:-0.02em;
+}
+.stat-label{
+  font-size:11px;letter-spacing:0.25em;
+  text-transform:uppercase;color:var(--muted);
+}
 
-  /* STATS PANEL */
-  #stats { position: fixed; right: 48px; top: 50%; transform: translateY(-50%); z-index: 100; opacity: 0; transition: opacity 2s; }
-  .stat-row { margin-bottom: 28px; text-align: right; }
-  .stat-label { font-family: 'Courier New', monospace; font-size: 8px; letter-spacing: 0.4em; color: rgba(255,255,255,0.25); text-transform: uppercase; }
-  .stat-value { font-family: 'Courier New', monospace; font-size: 22px; color: rgba(255,255,255,0.9); letter-spacing: 0.05em; margin-top: 4px; }
-  .stat-value.green { color: #00ff88; }
+/* ── SECTIONS ── */
+section{
+  padding:15vh 6vw;
+  border-top:1px solid var(--faint);
+  position:relative;
+}
+.sec-num{
+  font-size:11px;letter-spacing:0.3em;
+  text-transform:uppercase;color:var(--red);
+  margin-bottom:4rem;
+}
+.sec-title{
+  font-size:clamp(36px,5vw,80px);
+  font-weight:900;line-height:0.92;
+  letter-spacing:-0.025em;
+  text-transform:uppercase;
+  max-width:600px;
+  margin-bottom:3rem;
+}
+.sec-body{
+  max-width:520px;
+  font-size:clamp(14px,1.2vw,16px);
+  line-height:1.75;
+  color:var(--muted);
+}
+.sec-body + .sec-body{margin-top:1.5rem}
 
-  /* LEFT PANEL */
-  #left-panel { position: fixed; left: 48px; top: 50%; transform: translateY(-50%); z-index: 100; opacity: 0; transition: opacity 2s; }
-  .lp-item { margin-bottom: 24px; }
-  .lp-label { font-family: 'Courier New', monospace; font-size: 8px; letter-spacing: 0.4em; color: rgba(255,255,255,0.25); }
-  .lp-value { font-family: 'Courier New', monospace; font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 4px; }
+/* PERFORMANCE GRID */
+.perf-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  margin-top:5rem;
+  background:var(--faint);
+}
+.perf-cell{
+  background:var(--bg);
+  padding:3rem 2.5rem;
+}
+.perf-big{
+  font-size:clamp(40px,6vw,96px);
+  font-weight:900;letter-spacing:-0.03em;
+  color:var(--cream);
+  line-height:1;
+}
+.perf-big span{color:var(--red)}
+.perf-desc{
+  margin-top:1rem;
+  font-size:12px;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--muted);
+}
 
-  /* SCROLL INDICATOR */
-  #scroll-hint { position: fixed; bottom: 60px; left: 50%; transform: translateX(-50%); z-index: 100; opacity: 0; transition: opacity 1s; text-align: center; }
-  #scroll-hint span { font-family: 'Courier New', monospace; font-size: 8px; letter-spacing: 0.5em; color: rgba(255,255,255,0.2); display: block; }
-  #scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent); margin: 12px auto 0; animation: pulse-line 2s ease-in-out infinite; }
-  @keyframes pulse-line { 0%,100%{opacity:0.2;transform:scaleY(1)} 50%{opacity:0.8;transform:scaleY(1.2)} }
+/* STRATEGY LIST */
+.strategy-list{
+  margin-top:4rem;
+  display:flex;flex-direction:column;
+  gap:0;
+}
+.strategy-item{
+  display:grid;grid-template-columns:60px 1fr 120px;
+  align-items:center;
+  padding:2rem 0;
+  border-bottom:1px solid var(--faint);
+  gap:2rem;
+}
+.strategy-item:first-child{border-top:1px solid var(--faint)}
+.strat-idx{
+  font-size:11px;letter-spacing:0.2em;
+  color:var(--muted);
+}
+.strat-name{
+  font-size:clamp(18px,2vw,28px);
+  font-weight:900;letter-spacing:-0.01em;
+  text-transform:uppercase;
+}
+.strat-weight{
+  font-size:clamp(20px,2vw,32px);
+  font-weight:900;letter-spacing:-0.02em;
+  text-align:right;
+}
 
-  /* INTRO SEQUENCE */
-  #intro { position: fixed; top:0;left:0;right:0;bottom:0; z-index:200; background:#000; display:flex; align-items:center; justify-content:center; }
-  #intro-text { font-family:'Courier New',monospace; font-size:10px; letter-spacing:0.6em; color:rgba(255,255,255,0); text-transform:uppercase; transition: color 1s; }
+/* ACCESS */
+#access{
+  min-height:60vh;
+  display:flex;flex-direction:column;
+  justify-content:center;
+  border-top:1px solid var(--faint);
+  padding:15vh 6vw;
+}
+.access-title{
+  font-size:clamp(48px,8vw,140px);
+  font-weight:900;line-height:0.88;
+  letter-spacing:-0.035em;
+  text-transform:uppercase;
+  color:var(--cream);
+  max-width:900px;
+}
+.access-title span{color:var(--red)}
+.access-note{
+  margin-top:4rem;
+  font-size:12px;letter-spacing:0.3em;
+  text-transform:uppercase;color:var(--muted);
+  max-width:400px;
+  line-height:1.8;
+}
+.access-email{
+  margin-top:2rem;
+  font-size:clamp(14px,1.5vw,22px);
+  font-weight:900;letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--cream);
+  border-bottom:1px solid var(--red);
+  display:inline-block;
+  padding-bottom:4px;
+}
 
-  /* SECTIONS */
-  #sections { position: fixed; top:0;left:0;right:0;bottom:0; z-index:60; overflow-y:scroll; scroll-snap-type:y mandatory; opacity:0; pointer-events:none; scrollbar-width:none; }
-  #sections::-webkit-scrollbar { display:none; }
-  .section { height:100vh; scroll-snap-align:start; display:flex; align-items:center; justify-content:center; position:relative; }
+/* FOOTER */
+footer{
+  border-top:1px solid var(--faint);
+  padding:3rem 6vw;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.foot-logo{
+  font-size:13px;font-weight:900;
+  letter-spacing:0.3em;text-transform:uppercase;
+}
+.foot-note{
+  font-size:10px;letter-spacing:0.15em;
+  text-transform:uppercase;color:var(--muted);
+}
 
-  /* PERFORMANCE SECTION */
-  .perf-section { flex-direction:column; }
-  .perf-title { font-size:9px; letter-spacing:0.6em; color:rgba(255,255,255,0.2); font-family:'Courier New',monospace; margin-bottom:48px; }
-  .perf-chart { width:min(700px,90vw); height:200px; position:relative; }
-  .chart-line { position:absolute; bottom:0; left:0; right:0; }
-  .perf-metrics { display:grid; grid-template-columns:repeat(4,1fr); gap:32px; margin-top:48px; width:min(700px,90vw); }
-  .metric { text-align:center; border:1px solid rgba(255,255,255,0.06); padding:24px 16px; }
-  .metric-n { font-family:'Courier New',monospace; font-size:28px; color:#fff; }
-  .metric-n.g { color:#00ff88; }
-  .metric-l { font-family:'Courier New',monospace; font-size:8px; letter-spacing:0.4em; color:rgba(255,255,255,0.25); margin-top:8px; }
-
-  /* MANIFESTO SECTION */
-  .manifesto-text { max-width:600px; text-align:center; padding:0 48px; }
-  .manifesto-text h2 { font-size:clamp(36px,5vw,64px); font-weight:400; color:#fff; line-height:1.1; letter-spacing:-0.01em; }
-  .manifesto-text h2 em { color:rgba(255,255,255,0.25); font-style:normal; }
-  .manifesto-text p { font-family:'Courier New',monospace; font-size:10px; letter-spacing:0.2em; color:rgba(255,255,255,0.3); margin-top:32px; line-height:2; }
-
-  /* ACCESS SECTION */
-  .access-section { flex-direction:column; }
-  .access-label { font-family:'Courier New',monospace; font-size:9px; letter-spacing:0.6em; color:rgba(255,255,255,0.2); margin-bottom:32px; }
-  .access-box { border:1px solid rgba(255,255,255,0.1); padding:48px; width:min(500px,90vw); text-align:center; position:relative; }
-  .access-box::before { content:'CONFIDENTIAL'; position:absolute; top:50%;left:50%;transform:translate(-50%,-50%) rotate(-15deg); font-size:80px; font-family:'Times New Roman',serif; color:rgba(255,255,255,0.02); white-space:nowrap; font-weight:700; letter-spacing:0.1em; pointer-events:none; }
-  .access-box h3 { font-size:28px; font-weight:400; color:#fff; margin-bottom:8px; }
-  .access-box p { font-family:'Courier New',monospace; font-size:9px; letter-spacing:0.3em; color:rgba(255,255,255,0.25); margin-bottom:32px; }
-  .access-input { width:100%; background:transparent; border:none; border-bottom:1px solid rgba(255,255,255,0.15); padding:12px 0; font-family:'Courier New',monospace; font-size:12px; color:#fff; outline:none; margin-bottom:20px; letter-spacing:0.1em; }
-  .access-input::placeholder { color:rgba(255,255,255,0.2); }
-  .access-btn { background:transparent; border:1px solid rgba(255,255,255,0.3); color:rgba(255,255,255,0.8); font-family:'Courier New',monospace; font-size:9px; letter-spacing:0.5em; padding:14px 32px; cursor:pointer; transition:all 0.3s; margin-top:8px; }
-  .access-btn:hover { background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.6); color:#fff; }
-
-  /* LOADING BAR */
-  #loading { position:fixed; bottom:0;left:0; height:1px; background:rgba(255,255,255,0.6); z-index:9999; width:0; transition:width 0.1s; }
-
-  /* GLITCH */
-  @keyframes glitch { 0%{clip-path:inset(40% 0 61% 0)} 20%{clip-path:inset(92% 0 1% 0)} 40%{clip-path:inset(43% 0 1% 0)} 60%{clip-path:inset(25% 0 58% 0)} 80%{clip-path:inset(54% 0 7% 0)} 100%{clip-path:inset(58% 0 43% 0)} }
-
-  /* SECTION TRANSITIONS */
-  .section { opacity:0; transition: opacity 1s; }
-  .section.visible { opacity:1; }
+/* SCROLL FADE-IN */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.9s ease,transform 0.9s ease}
+.reveal.in{opacity:1;transform:none}
 </style>
 </head>
 <body>
 
-<div id="loading"></div>
-<canvas id="c"></canvas>
+<!-- CROSSHAIR -->
 <div id="cursor"></div>
-<div id="cursor-ring"></div>
 
-<!-- INTRO -->
-<div id="intro">
-  <div id="intro-text">INITIALIZING</div>
+<!-- WEBGL CANVAS -->
+<canvas id="c"></canvas>
+
+<!-- HEARTBEAT (hero center) -->
+<div id="heartbeat-wrap">
+  <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg">
+    <path class="hb-path" d="M0,40 L60,40 L75,15 L90,65 L105,10 L120,70 L135,40 L160,40 L175,28 L190,52 L200,40 L320,40"/>
+  </svg>
 </div>
 
-<!-- NAV -->
-<div id="nav">
-  <div class="logo">QUANTORA — ALPHA FUND I</div>
-  <div class="nav-right">
-    <span>EST. 2019</span>
-    <span>CAYMAN ISLANDS</span>
-    <span id="live-time">--:--:-- UTC</span>
-  </div>
-</div>
+<!-- MAIN -->
+<main>
 
-<!-- STATS PANEL -->
-<div id="stats">
-  <div class="stat-row">
-    <div class="stat-label">NET RETURN YTD</div>
-    <div class="stat-value green" id="stat-ytd">+47.3%</div>
-  </div>
-  <div class="stat-row">
-    <div class="stat-label">SHARPE RATIO</div>
-    <div class="stat-value" id="stat-sharpe">3.41</div>
-  </div>
-  <div class="stat-row">
-    <div class="stat-label">AUM</div>
-    <div class="stat-value">$4.2B</div>
-  </div>
-  <div class="stat-row">
-    <div class="stat-label">SIGNALS ACTIVE</div>
-    <div class="stat-value green" id="stat-signals">847</div>
-  </div>
-</div>
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-rule"></div>
 
-<!-- LEFT PANEL -->
-<div id="left-panel">
-  <div class="lp-item">
-    <div class="lp-label">STRATEGY</div>
-    <div class="lp-value">GLOBAL MACRO / QUANT</div>
-  </div>
-  <div class="lp-item">
-    <div class="lp-label">AUDITOR</div>
-    <div class="lp-value">PRICEWATERHOUSECOOPERS</div>
-  </div>
-  <div class="lp-item">
-    <div class="lp-label">PRIME BROKER</div>
-    <div class="lp-value">GOLDMAN SACHS INTL</div>
-  </div>
-  <div class="lp-item">
-    <div class="lp-label">CUSTODIAN</div>
-    <div class="lp-value">BNY MELLON</div>
-  </div>
-  <div class="lp-item">
-    <div class="lp-label">MIN. SUBSCRIPTION</div>
-    <div class="lp-value">USD 10,000,000</div>
-  </div>
-</div>
+  <div class="hero-overline reveal">Quantora Capital — God Mode Interface</div>
 
-<!-- HERO -->
-<div id="hero">
-  <div id="hero-eyebrow">FOR QUALIFIED INSTITUTIONAL INVESTORS ONLY</div>
-  <div id="hero-title">
-    <span>QUAN</span>
-    <span>TORA</span>
-  </div>
-  <div id="hero-sub">THE INTELLIGENCE ENGINE · SINCE 2019</div>
-</div>
+  <h1 class="hero-title reveal">
+    ABSOLUTE<br><span>RETURN</span><br>OR<br>NOTHING
+  </h1>
 
-<!-- SCROLL HINT -->
-<div id="scroll-hint">
-  <span>SCROLL TO ENTER</span>
-  <div id="scroll-line"></div>
-</div>
+  <p class="hero-sub reveal">
+    We do not benchmark against indices.<br>
+    We do not explain drawdowns.<br>
+    We accumulate.
+  </p>
 
-<!-- TICKER -->
-<div id="ticker">
-  <div id="ticker-inner">
-    <span class="up">ALPHA FUND I · MTD +4.82%</span>
-    <span class="up">SHARPE 3.41</span>
-    <span>MAX DRAWDOWN -2.1%</span>
-    <span class="up">SIGNALS FIRED TODAY 847</span>
-    <span>VOL 6.2% ANN</span>
-    <span class="up">SINCE INCEPTION +312%</span>
-    <span>BETA TO S&P 0.04</span>
-    <span class="up">WIN RATE 68.4%</span>
-    <span>CORR TO HF INDEX 0.12</span>
-    <span class="up">INFORMATION RATIO 2.9</span>
-    <span>REDEMPTIONS: QUARTERLY</span>
-    <span class="up">ISIN US48127R1023</span>
-    <!-- Duplicate for infinite scroll -->
-    <span class="up">ALPHA FUND I · MTD +4.82%</span>
-    <span class="up">SHARPE 3.41</span>
-    <span>MAX DRAWDOWN -2.1%</span>
-    <span class="up">SIGNALS FIRED TODAY 847</span>
-    <span>VOL 6.2% ANN</span>
-    <span class="up">SINCE INCEPTION +312%</span>
-    <span>BETA TO S&P 0.04</span>
-    <span class="up">WIN RATE 68.4%</span>
-    <span>CORR TO HF INDEX 0.12</span>
-    <span class="up">INFORMATION RATIO 2.9</span>
-    <span>REDEMPTIONS: QUARTERLY</span>
-    <span class="up">ISIN US48127R1023</span>
-  </div>
-</div>
-
-<!-- SECTIONS -->
-<div id="sections">
-  <!-- Section 1: spacer for hero -->
-  <div class="section" style="height:100vh;"></div>
-
-  <!-- Section 2: Performance -->
-  <div class="section perf-section">
-    <div class="perf-title">CUMULATIVE PERFORMANCE · ALPHA FUND I</div>
-    <svg class="perf-chart" viewBox="0 0 700 200" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="rgba(0,255,136,0.3)"/>
-          <stop offset="100%" stop-color="rgba(0,255,136,0)"/>
-        </linearGradient>
-      </defs>
-      <!-- Grid lines -->
-      <line x1="0" y1="50" x2="700" y2="50" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-      <line x1="0" y1="100" x2="700" y2="100" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-      <line x1="0" y1="150" x2="700" y2="150" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-      <!-- S&P line (grey) -->
-      <polyline points="0,180 87,165 175,158 262,145 350,138 437,125 525,120 612,112 700,110" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-      <!-- Quantora line (green glow) -->
-      <filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      <path id="quantora-path" d="M0,180 C50,175 80,155 120,130 C160,110 200,95 240,75 C280,55 320,45 360,35 C400,25 440,20 480,18 C520,16 560,12 600,8 L700,5" fill="url(#chartGrad)" stroke="#00ff88" stroke-width="2" filter="url(#glow)" opacity="0">
-        <animate attributeName="opacity" from="0" to="1" dur="2s" begin="1s" fill="freeze"/>
-      </path>
-      <!-- Labels -->
-      <text x="8" y="195" fill="rgba(255,255,255,0.2)" font-family="Courier New" font-size="8" letter-spacing="2">2019</text>
-      <text x="168" y="195" fill="rgba(255,255,255,0.2)" font-family="Courier New" font-size="8" letter-spacing="2">2020</text>
-      <text x="342" y="195" fill="rgba(255,255,255,0.2)" font-family="Courier New" font-size="8" letter-spacing="2">2021</text>
-      <text x="510" y="195" fill="rgba(255,255,255,0.2)" font-family="Courier New" font-size="8" letter-spacing="2">2022</text>
-      <text x="656" y="195" fill="rgba(255,255,255,0.2)" font-family="Courier New" font-size="8" letter-spacing="2">NOW</text>
-      <text x="640" y="20" fill="#00ff88" font-family="Courier New" font-size="9">+312%</text>
-      <text x="640" y="105" fill="rgba(255,255,255,0.3)" font-family="Courier New" font-size="9">+52%</text>
-    </svg>
-    <div class="perf-metrics">
-      <div class="metric"><div class="metric-n g">+312%</div><div class="metric-l">SINCE INCEPTION</div></div>
-      <div class="metric"><div class="metric-n">3.41</div><div class="metric-l">SHARPE RATIO</div></div>
-      <div class="metric"><div class="metric-n">−2.1%</div><div class="metric-l">MAX DRAWDOWN</div></div>
-      <div class="metric"><div class="metric-n g">68.4%</div><div class="metric-l">WIN RATE</div></div>
+  <div class="stat-row reveal">
+    <div class="stat-item">
+      <span class="stat-val">312<span style="color:var(--red)">%</span></span>
+      <span class="stat-label">Net return — 36 mo</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-val">0.08</span>
+      <span class="stat-label">Max drawdown</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-val">4.7<span style="color:var(--red)">σ</span></span>
+      <span class="stat-label">Risk-adjusted alpha</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-val">$2.4<span style="color:var(--red)">B</span></span>
+      <span class="stat-label">AUM (restricted)</span>
     </div>
   </div>
+</section>
 
-  <!-- Section 3: Manifesto -->
-  <div class="section manifesto-text">
-    <h2>We do not<br><em>predict</em> markets.<br>We <em>understand</em> them.</h2>
-    <p>847 PROPRIETARY SIGNALS · 34 MARKETS · 6 ASSET CLASSES<br>REAL-TIME INFERENCE · SUB-MILLISECOND EXECUTION</p>
-  </div>
+<!-- ═══ PHILOSOPHY ═══ -->
+<section id="philosophy">
+  <div class="sec-num reveal">01 — Philosophy</div>
+  <h2 class="sec-title reveal">MARKETS ARE<br>PREDATOR<br>AND PREY</h2>
+  <p class="sec-body reveal">
+    Most funds are prey. They follow, react, position for consensus outcomes. They are designed to survive mediocrity.
+  </p>
+  <p class="sec-body reveal">
+    Quantora is designed differently. Every position is a bet on informational asymmetry. Every model is a weapon. We are not in the market. We are hunting it.
+  </p>
+</section>
 
-  <!-- Section 4: Access -->
-  <div class="section access-section">
-    <div class="access-label">CLOSED TO NEW INVESTORS · INVITATION ONLY</div>
-    <div class="access-box">
-      <h3>Request Access</h3>
-      <p>QUALIFIED INSTITUTIONAL INVESTORS · MINIMUM USD 10,000,000</p>
-      <input class="access-input" placeholder="INSTITUTION NAME" type="text"/>
-      <input class="access-input" placeholder="PROFESSIONAL EMAIL" type="email"/>
-      <input class="access-input" placeholder="AUM UNDER MANAGEMENT (USD)" type="text"/>
-      <button class="access-btn">SUBMIT INTRODUCTION →</button>
+<!-- ═══ PERFORMANCE ═══ -->
+<section id="performance">
+  <div class="sec-num reveal">02 — Performance</div>
+  <h2 class="sec-title reveal">NUMBERS<br>DON'T<br>APOLOGIZE</h2>
+
+  <div class="perf-grid reveal">
+    <div class="perf-cell">
+      <div class="perf-big">+<span>312</span>%</div>
+      <div class="perf-desc">Cumulative net — 36 months</div>
+    </div>
+    <div class="perf-cell">
+      <div class="perf-big"><span>14.2</span>x</div>
+      <div class="perf-desc">vs. S&P 500 same period</div>
+    </div>
+    <div class="perf-cell">
+      <div class="perf-big"><span>8</span>%</div>
+      <div class="perf-desc">Maximum peak-to-trough drawdown</div>
+    </div>
+    <div class="perf-cell">
+      <div class="perf-big"><span>47</span></div>
+      <div class="perf-desc">Sharpe ratio (annualized)</div>
+    </div>
+    <div class="perf-cell">
+      <div class="perf-big"><span>0</span></div>
+      <div class="perf-desc">Down years since inception</div>
+    </div>
+    <div class="perf-cell">
+      <div class="perf-big"><span>11</span>ms</div>
+      <div class="perf-desc">Median execution latency</div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- SCROLL HINT -->
-<div id="scroll-hint">
-  <span>SCROLL</span>
-  <div id="scroll-line"></div>
-</div>
+<!-- ═══ STRATEGY ═══ -->
+<section id="strategy">
+  <div class="sec-num reveal">03 — Strategy</div>
+  <h2 class="sec-title reveal">THE<br>ARCHITECTURE<br>OF EDGE</h2>
+  <p class="sec-body reveal">
+    Five orthogonal alpha streams, each sovereign, each lethal in isolation. Together they form something the risk models cannot capture.
+  </p>
+
+  <div class="strategy-list reveal">
+    <div class="strategy-item">
+      <span class="strat-idx">01</span>
+      <span class="strat-name">Quantum Signal Arbitrage</span>
+      <span class="strat-weight">38<span style="color:var(--red)">%</span></span>
+    </div>
+    <div class="strategy-item">
+      <span class="strat-idx">02</span>
+      <span class="strat-name">Dark Pool Liquidity Extraction</span>
+      <span class="strat-weight">24<span style="color:var(--red)">%</span></span>
+    </div>
+    <div class="strategy-item">
+      <span class="strat-idx">03</span>
+      <span class="strat-name">Cross-Asset Regime Detection</span>
+      <span class="strat-weight">19<span style="color:var(--red)">%</span></span>
+    </div>
+    <div class="strategy-item">
+      <span class="strat-idx">04</span>
+      <span class="strat-name">Volatility Surface Exploitation</span>
+      <span class="strat-weight">12<span style="color:var(--red)">%</span></span>
+    </div>
+    <div class="strategy-item">
+      <span class="strat-idx">05</span>
+      <span class="strat-name">Sovereign Flow Intelligence</span>
+      <span class="strat-weight">7<span style="color:var(--red)">%</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ACCESS ═══ -->
+<section id="access">
+  <h2 class="access-title reveal">
+    IF YOU<br>QUALIFY,<br>YOU KNOW<br><span>WHO TO CALL.</span>
+  </h2>
+  <p class="access-note reveal">
+    Quantora does not accept unsolicited capital.<br>
+    Minimum commitment: $50,000,000 USD.<br>
+    Lock-up: 36 months, no exceptions.<br>
+    References provided only after NDA execution.
+  </p>
+  <div class="access-email reveal">GODMODE@QUANTORA.CAPITAL</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">Quantora</div>
+  <div class="foot-note">© 2026 Quantora Capital LP — All positions are sovereign</div>
+</footer>
+
+</main>
 
 <script>
-// ============================================================
-// QUANTORA — GOD MODE
-// WebGL Particle Universe + Audio + Full Experience
-// ============================================================
-
-const canvas = document.getElementById('c');
-const gl = canvas.getContext('webgl2') || canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-
-let W, H, mouse = {x:0, y:0, vx:0, vy:0, px:0, py:0};
-let time = 0, frame = 0;
-let introComplete = false;
-
-// ---- RESIZE ----
-function resize() {
-  W = canvas.width = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-  if(gl) gl.viewport(0,0,W,H);
-}
-window.addEventListener('resize', resize);
-resize();
-
-// ---- MOUSE ----
-window.addEventListener('mousemove', e => {
-  mouse.px = mouse.x; mouse.py = mouse.y;
-  mouse.x = e.clientX; mouse.y = e.clientY;
-  mouse.vx = mouse.x - mouse.px;
-  mouse.vy = mouse.y - mouse.py;
-  document.getElementById('cursor').style.left = mouse.x + 'px';
-  document.getElementById('cursor').style.top = mouse.y + 'px';
-  document.getElementById('cursor-ring').style.left = mouse.x + 'px';
-  document.getElementById('cursor-ring').style.top = mouse.y + 'px';
+/* ── CURSOR ── */
+const cur=document.getElementById('cursor');
+let mx=0,my=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.setProperty('--cx',mx+'px');
+  cur.style.setProperty('--cy',my+'px');
 });
 
-// ---- WEBGL PARTICLE SYSTEM ----
-const PARTICLE_COUNT = 80000;
+/* ── SCROLL REVEAL ── */
+const obs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')});
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>{
+  obs.observe(el);
+  // hero items start visible
+  if(el.closest('#hero'))el.classList.add('in');
+});
 
-const vsSource = `
-attribute vec3 aPos;
-attribute vec3 aVel;
-attribute float aLife;
-attribute float aSize;
+/* ── WEBGL PARTICLE SPHERE ── */
+(function(){
+  const canvas=document.getElementById('c');
+  const gl=canvas.getContext('webgl',{antialias:true,alpha:true});
+  if(!gl)return;
 
-uniform mat4 uMVP;
-uniform float uTime;
-uniform vec2 uMouse;
-uniform float uAspect;
-
-varying float vLife;
-varying float vDist;
-varying vec3 vColor;
-
-void main() {
-  float t = mod(uTime * 0.0003 + aLife, 1.0);
-
-  // Spiral galaxy formation
-  float angle = aPos.z * 6.28318 + uTime * 0.0001 * (1.0 - aPos.z);
-  float radius = 0.1 + aPos.x * 0.8;
-  float arm = sin(aPos.y * 6.28318 * 2.0 + angle * 3.0) * 0.15;
-
-  float x = cos(angle) * (radius + arm);
-  float y = sin(aPos.y * 3.14159) * 0.15 * (1.0 - radius * 0.5);
-  float z = sin(angle) * (radius + arm);
-
-  // Mouse gravity
-  vec2 mouseNorm = (uMouse / vec2(1920.0, 1080.0)) * 2.0 - 1.0;
-  float mDist = length(vec2(x, z) - mouseNorm * 0.8);
-  float mForce = 0.04 / (mDist * mDist + 0.01);
-  x += (x - mouseNorm.x * 0.8) * mForce * 0.01;
-  z += (z - mouseNorm.y * 0.8) * mForce * 0.01;
-
-  vec4 pos = vec4(x * 0.85, y, z * 0.85, 1.0);
-  gl_Position = uMVP * pos;
-  gl_PointSize = aSize * (1.5 + mForce * 2.0) * (500.0 / (gl_Position.w * uAspect));
-
-  // Color: returns data drives hue
-  float heat = aPos.x * 0.5 + 0.5;
-  vColor = mix(
-    vec3(0.0, 0.8, 0.5),   // cool = teal
-    vec3(1.0, 1.0, 1.0),   // hot = white
-    heat
-  );
-  vLife = t;
-  vDist = mForce;
-}`;
-
-const fsSource = `
-precision highp float;
-varying float vLife;
-varying float vDist;
-varying vec3 vColor;
-
-void main() {
-  vec2 uv = gl_PointCoord * 2.0 - 1.0;
-  float d = dot(uv, uv);
-  if(d > 1.0) discard;
-
-  float alpha = (1.0 - d) * vLife * 0.9;
-  float glow = exp(-d * 3.0) * 0.6;
-
-  vec3 col = vColor + vec3(glow * 0.5, glow * 0.8, glow);
-  gl_FragColor = vec4(col, alpha + glow * 0.3);
-}`;
-
-function createShader(type, src) {
-  const s = gl.createShader(type);
-  gl.shaderSource(s, src);
-  gl.compileShader(s);
-  if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-    console.error('Shader error:', gl.getShaderInfoLog(s));
+  /* resize */
+  function resize(){
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+    gl.viewport(0,0,canvas.width,canvas.height);
   }
-  return s;
-}
+  resize();
+  window.addEventListener('resize',resize);
 
-let prog, uMVP, uTime, uMouse, uAspect;
-let posBuf, velBuf, lifeBuf, sizeBuf;
+  /* shaders */
+  const VS=`
+    attribute vec3 aPos;
+    attribute float aLife;
+    attribute float aSize;
+    uniform mat4 uMVP;
+    uniform float uTime;
+    uniform vec2 uMouse;
+    uniform float uAspect;
+    varying float vLife;
+    varying vec3 vColor;
+    void main(){
+      float t=mod(uTime*0.00018+aLife,1.0);
+      float pulse=1.0+sin(uTime*0.0014)*0.055;
+      float theta=aPos.x*6.28318;
+      float phi=aPos.y*3.14159;
+      float r=(0.1+aPos.z*0.9)*pulse;
+      float x=sin(phi)*cos(theta)*r;
+      float y=cos(phi)*r*0.5;
+      float z=sin(phi)*sin(theta)*r;
+      vec2 mn=(uMouse/vec2(1920.0,1080.0))*2.0-1.0;
+      float md=length(vec2(x,z)-mn);
+      float mf=0.012/(md*md+0.008);
+      vec2 dir=normalize(vec2(x,z)-mn+vec2(0.0001));
+      x+=dir.x*mf*0.5;
+      z+=dir.y*mf*0.5;
+      gl_Position=uMVP*vec4(x,y,z,1.0);
+      gl_PointSize=aSize*(0.6+mf*4.0)*(360.0/(gl_Position.w*uAspect));
+      float heat=clamp(mf*4.0,0.0,1.0);
+      vec3 cold=vec3(0.40,0.38,0.36);
+      vec3 hot=vec3(0.78,0.063,0.18);
+      vColor=mix(cold,hot,heat*heat);
+      vLife=0.15+t*0.85;
+    }
+  `;
+  const FS=`
+    precision mediump float;
+    varying float vLife;
+    varying vec3 vColor;
+    void main(){
+      vec2 uv=gl_PointCoord-0.5;
+      float d=length(uv);
+      if(d>0.5)discard;
+      float a=smoothstep(0.5,0.1,d)*vLife;
+      gl_FragColor=vec4(vColor*a,a);
+    }
+  `;
 
-function initGL() {
-  if(!gl) return;
-
-  prog = gl.createProgram();
-  gl.attachShader(prog, createShader(gl.VERTEX_SHADER, vsSource));
-  gl.attachShader(prog, createShader(gl.FRAGMENT_SHADER, fsSource));
+  function mkShader(type,src){
+    const s=gl.createShader(type);
+    gl.shaderSource(s,src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog=gl.createProgram();
+  gl.attachShader(prog,mkShader(gl.VERTEX_SHADER,VS));
+  gl.attachShader(prog,mkShader(gl.FRAGMENT_SHADER,FS));
   gl.linkProgram(prog);
   gl.useProgram(prog);
 
-  uMVP = gl.getUniformLocation(prog, 'uMVP');
-  uTime = gl.getUniformLocation(prog, 'uTime');
-  uMouse = gl.getUniformLocation(prog, 'uMouse');
-  uAspect = gl.getUniformLocation(prog, 'uAspect');
+  /* locs */
+  const aPos=gl.getAttribLocation(prog,'aPos');
+  const aLife=gl.getAttribLocation(prog,'aLife');
+  const aSize=gl.getAttribLocation(prog,'aSize');
+  const uMVP=gl.getUniformLocation(prog,'uMVP');
+  const uTime=gl.getUniformLocation(prog,'uTime');
+  const uMouse=gl.getUniformLocation(prog,'uMouse');
+  const uAspect=gl.getUniformLocation(prog,'uAspect');
 
-  // Generate particles
-  const pos = new Float32Array(PARTICLE_COUNT * 3);
-  const vel = new Float32Array(PARTICLE_COUNT * 3);
-  const life = new Float32Array(PARTICLE_COUNT);
-  const size = new Float32Array(PARTICLE_COUNT);
-
-  for(let i = 0; i < PARTICLE_COUNT; i++) {
-    pos[i*3]   = Math.random();           // radius control
-    pos[i*3+1] = Math.random();           // height control
-    pos[i*3+2] = Math.random();           // angle phase
-    vel[i*3]   = (Math.random()-0.5)*0.01;
-    vel[i*3+1] = (Math.random()-0.5)*0.001;
-    vel[i*3+2] = (Math.random()-0.5)*0.01;
-    life[i]    = Math.random();
-    size[i]    = 0.5 + Math.random() * 2.5;
+  function bindBuf(buf,loc,size,type,norm,stride,off){
+    if(loc<0)return; /* guard: skip optimized-away attributes */
+    gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc,size,type,norm,stride,off);
   }
 
-  function makeBuf(data, name) {
-    const buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
-    const loc = gl.getAttribLocation(prog, name);
-    return {buf, loc};
+  /* geometry — 35,000 particles on sphere surface */
+  const N=35000;
+  const pos=new Float32Array(N*3);
+  const life=new Float32Array(N);
+  const size=new Float32Array(N);
+  for(let i=0;i<N;i++){
+    pos[i*3]=Math.random();
+    pos[i*3+1]=Math.random();
+    pos[i*3+2]=Math.random();
+    life[i]=Math.random();
+    size[i]=0.8+Math.random()*2.2;
   }
 
-  posBuf  = makeBuf(pos,  'aPos');
-  velBuf  = makeBuf(vel,  'aVel');
-  lifeBuf = makeBuf(life, 'aLife');
-  sizeBuf = makeBuf(size, 'aSize');
+  const bPos=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,bPos);
+  gl.bufferData(gl.ARRAY_BUFFER,pos,gl.STATIC_DRAW);
+
+  const bLife=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,bLife);
+  gl.bufferData(gl.ARRAY_BUFFER,life,gl.STATIC_DRAW);
+
+  const bSize=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,bSize);
+  gl.bufferData(gl.ARRAY_BUFFER,size,gl.STATIC_DRAW);
+
+  /* MVP — perspective + slow orbit */
+  function mat4(){return new Float32Array(16)}
+  function perspective(out,fov,asp,near,far){
+    const f=1/Math.tan(fov/2),nf=1/(near-far);
+    out[0]=f/asp;out[1]=0;out[2]=0;out[3]=0;
+    out[4]=0;out[5]=f;out[6]=0;out[7]=0;
+    out[8]=0;out[9]=0;out[10]=(far+near)*nf;out[11]=-1;
+    out[12]=0;out[13]=0;out[14]=(2*far*near)*nf;out[15]=0;
+    return out;
+  }
+  function mul(a,b){
+    const o=mat4();
+    for(let c=0;c<4;c++){
+      const b0=b[c],b1=b[4+c],b2=b[8+c],b3=b[12+c];
+      o[c]   =a[0]*b0+a[4]*b1+a[8]*b2+a[12]*b3;
+      o[4+c] =a[1]*b0+a[5]*b1+a[9]*b2+a[13]*b3;
+      o[8+c] =a[2]*b0+a[6]*b1+a[10]*b2+a[14]*b3;
+      o[12+c]=a[3]*b0+a[7]*b1+a[11]*b2+a[15]*b3;
+    }
+    return o;
+  }
+  function rotY(a){
+    const c=Math.cos(a),s=Math.sin(a),o=mat4();
+    o[0]=c;o[2]=s;o[5]=1;o[8]=-s;o[10]=c;o[15]=1;return o;
+  }
+  function rotX(a){
+    const c=Math.cos(a),s=Math.sin(a),o=mat4();
+    o[0]=1;o[5]=c;o[6]=-s;o[9]=s;o[10]=c;o[15]=1;return o;
+  }
+  function trans(tx,ty,tz){
+    const o=mat4();o[0]=o[5]=o[10]=o[15]=1;
+    o[12]=tx;o[13]=ty;o[14]=tz;return o;
+  }
 
   gl.enable(gl.BLEND);
-  gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-  gl.disable(gl.DEPTH_TEST);
-}
+  gl.blendFunc(gl.SRC_ALPHA,gl.ONE);
+  gl.clearColor(0,0,0,0);
 
-function mat4Perspective(fov, aspect, near, far) {
-  const f = 1.0 / Math.tan(fov / 2);
-  const nf = 1 / (near - far);
-  return new Float32Array([
-    f/aspect,0,0,0,
-    0,f,0,0,
-    0,0,(far+near)*nf,-1,
-    0,0,2*far*near*nf,0
-  ]);
-}
+  let mouseX=0,mouseY=0;
+  window.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY});
 
-function mat4RotY(a) {
-  return new Float32Array([Math.cos(a),0,Math.sin(a),0, 0,1,0,0, -Math.sin(a),0,Math.cos(a),0, 0,0,0,1]);
-}
+  let t0=null;
+  function frame(now){
+    requestAnimationFrame(frame);
+    if(!t0)t0=now;
+    const t=now-t0;
 
-function mat4RotX(a) {
-  return new Float32Array([1,0,0,0, 0,Math.cos(a),-Math.sin(a),0, 0,Math.sin(a),Math.cos(a),0, 0,0,0,1]);
-}
+    gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
 
-function mat4Mul(a, b) {
-  const r = new Float32Array(16);
-  for(let i=0;i<4;i++) for(let j=0;j<4;j++) for(let k=0;k<4;k++) r[i*4+j]+=a[i*4+k]*b[k*4+j];
-  return r;
-}
+    const asp=canvas.width/canvas.height;
+    const proj=perspective(mat4(),0.72,asp,0.1,100);
+    const view=mul(trans(0,0,-2.6),mul(rotX(Math.sin(t*0.00018)*0.18),rotY(t*0.00022)));
+    const mvp=mul(proj,view);
 
-function mat4Trans(x,y,z) {
-  return new Float32Array([1,0,0,0, 0,1,0,0, 0,0,1,0, x,y,z,1]);
-}
+    gl.uniformMatrix4fv(uMVP,false,mvp);
+    gl.uniform1f(uTime,t);
+    gl.uniform2f(uMouse,mouseX,mouseY);
+    gl.uniform1f(uAspect,asp);
 
-function bindBuf(b, size) {
-  if(b.loc < 0) return;
-  gl.bindBuffer(gl.ARRAY_BUFFER, b.buf);
-  gl.enableVertexAttribArray(b.loc);
-  gl.vertexAttribPointer(b.loc, size, gl.FLOAT, false, 0, 0);
-}
+    bindBuf(bPos,aPos,3,gl.FLOAT,false,0,0);
+    bindBuf(bLife,aLife,1,gl.FLOAT,false,0,0);
+    bindBuf(bSize,aSize,1,gl.FLOAT,false,0,0);
 
-let scrollY = 0;
-const sections = document.getElementById('sections');
-
-function renderGL() {
-  if(!gl || !prog) return;
-
-  gl.clearColor(0, 0, 0, 1);
-  gl.clear(gl.COLOR_BUFFER_BIT);
-
-  gl.useProgram(prog);
-
-  const aspect = W / H;
-  const scrollProgress = sections.scrollTop / (sections.scrollHeight - H);
-
-  // Camera orbits based on scroll + time
-  const camAngleY = time * 0.00008 + scrollProgress * Math.PI;
-  const camAngleX = -0.3 + Math.sin(time * 0.00005) * 0.1 + (mouse.y / H - 0.5) * 0.15;
-  const camDist   = 2.2 - scrollProgress * 0.5;
-
-  const proj  = mat4Perspective(0.8, aspect, 0.01, 100);
-  const view  = mat4Trans(0, 0, -camDist);
-  const rotY  = mat4RotY(camAngleY);
-  const rotX  = mat4RotX(camAngleX);
-  const mvp   = mat4Mul(proj, mat4Mul(view, mat4Mul(rotX, rotY)));
-
-  gl.uniformMatrix4fv(uMVP, false, mvp);
-  gl.uniform1f(uTime, time);
-  gl.uniform2f(uMouse, mouse.x, mouse.y);
-  gl.uniform1f(uAspect, aspect);
-
-  bindBuf(posBuf, 3);
-  bindBuf(velBuf, 3);
-  bindBuf(lifeBuf, 1);
-  bindBuf(sizeBuf, 1);
-
-  gl.drawArrays(gl.POINTS, 0, PARTICLE_COUNT);
-}
-
-// ---- AUDIO ENGINE ----
-let audioCtx, masterGain, droneOsc, droneGain;
-let audioStarted = false;
-
-function initAudio() {
-  if(audioStarted) return;
-  audioStarted = true;
-
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  masterGain = audioCtx.createGain();
-  masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
-  masterGain.gain.linearRampToValueAtTime(0.06, audioCtx.currentTime + 4);
-  masterGain.connect(audioCtx.destination);
-
-  // Sub drone
-  const freqs = [27.5, 36.7, 55.0, 73.4];
-  freqs.forEach((f, i) => {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    const filter = audioCtx.createBiquadFilter();
-
-    osc.type = i < 2 ? 'sine' : 'triangle';
-    osc.frequency.value = f;
-
-    filter.type = 'lowpass';
-    filter.frequency.value = 200 + i * 50;
-    filter.Q.value = 0.5;
-
-    gain.gain.value = 0.3 / (i + 1);
-
-    osc.connect(filter);
-    filter.connect(gain);
-    gain.connect(masterGain);
-    osc.start();
-
-    // Slow pulse
-    const lfo = audioCtx.createOscillator();
-    const lfoGain = audioCtx.createGain();
-    lfo.frequency.value = 0.03 + i * 0.01;
-    lfoGain.gain.value = gain.gain.value * 0.3;
-    lfo.connect(lfoGain);
-    lfoGain.connect(gain.gain);
-    lfo.start();
-  });
-
-  // High shimmer
-  const shimmer = audioCtx.createOscillator();
-  const sGain = audioCtx.createGain();
-  const sFilter = audioCtx.createBiquadFilter();
-  shimmer.type = 'sine';
-  shimmer.frequency.value = 880;
-  sFilter.type = 'highpass';
-  sFilter.frequency.value = 600;
-  sGain.gain.value = 0.008;
-  shimmer.connect(sFilter);
-  sFilter.connect(sGain);
-  sGain.connect(masterGain);
-  shimmer.start();
-}
-
-// ---- LIVE DATA FLICKER ----
-function flickerData() {
-  const ytd = document.getElementById('stat-ytd');
-  const base = 47.3;
-  const tick = (base + (Math.random() - 0.5) * 0.04).toFixed(2);
-  if(ytd) ytd.textContent = '+' + tick + '%';
-
-  const sig = document.getElementById('stat-signals');
-  if(sig) sig.textContent = (847 + Math.floor(Math.random()*3 - 1));
-
-  const sh = document.getElementById('stat-sharpe');
-  if(sh) sh.textContent = (3.41 + (Math.random() - 0.5) * 0.01).toFixed(2);
-}
-
-// ---- LIVE CLOCK ----
-function updateClock() {
-  const el = document.getElementById('live-time');
-  if(!el) return;
-  const now = new Date();
-  const h = String(now.getUTCHours()).padStart(2,'0');
-  const m = String(now.getUTCMinutes()).padStart(2,'0');
-  const s = String(now.getUTCSeconds()).padStart(2,'0');
-  el.textContent = h + ':' + m + ':' + s + ' UTC';
-}
-
-// ---- INTRO SEQUENCE ----
-function runIntro() {
-  const intro = document.getElementById('intro');
-  const introText = document.getElementById('intro-text');
-  const loadBar = document.getElementById('loading');
-
-  const messages = ['INITIALIZING', 'LOADING SIGNALS...', 'CALIBRATING', 'QUANTORA'];
-  let i = 0;
-
-  function next() {
-    if(i >= messages.length) {
-      // Fade out intro
-      intro.style.transition = 'opacity 1.5s';
-      intro.style.opacity = '0';
-      setTimeout(() => {
-        intro.style.display = 'none';
-        introComplete = true;
-        document.getElementById('nav').style.opacity = '1';
-        document.getElementById('stats').style.opacity = '1';
-        document.getElementById('left-panel').style.opacity = '1';
-        document.getElementById('ticker').style.opacity = '1';
-        document.getElementById('hero').style.opacity = '1';
-        document.getElementById('scroll-hint').style.opacity = '1';
-        document.getElementById('sections').style.opacity = '1';
-        document.getElementById('sections').style.pointerEvents = 'all';
-        initAudio();
-      }, 1500);
-      return;
-    }
-    introText.textContent = messages[i];
-    introText.style.color = i === messages.length - 1 ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.4)';
-    loadBar.style.width = ((i+1) / messages.length * 100) + '%';
-    i++;
-    setTimeout(next, i === messages.length ? 800 : 600);
+    gl.drawArrays(gl.POINTS,0,N);
   }
-
-  setTimeout(next, 300);
-}
-
-// ---- HERO TEXT ANIMATION ----
-function animateHero() {
-  const hero = document.getElementById('hero');
-  hero.style.transition = 'opacity 2s';
-  // Title split animation via CSS
-  const spans = hero.querySelectorAll('span');
-  spans.forEach((s, i) => {
-    s.style.transform = 'translateY(40px)';
-    s.style.opacity = '0';
-    s.style.transition = `transform 1.2s ${i*0.15}s cubic-bezier(0.16,1,0.3,1), opacity 1.2s ${i*0.15}s`;
-    setTimeout(() => {
-      s.style.transform = 'translateY(0)';
-      s.style.opacity = '1';
-    }, 100);
-  });
-}
-
-// ---- SCROLL SECTIONS ----
-let currentSection = 0;
-sections.addEventListener('scroll', () => {
-  const secs = sections.querySelectorAll('.section');
-  secs.forEach((s, i) => {
-    const rect = s.getBoundingClientRect();
-    if(rect.top < H * 0.6 && rect.bottom > H * 0.4) {
-      s.classList.add('visible');
-    }
-  });
-
-  // Hide hero when scrolled
-  const scrolled = sections.scrollTop > H * 0.3;
-  document.getElementById('hero').style.opacity = scrolled ? '0' : '1';
-  document.getElementById('scroll-hint').style.opacity = scrolled ? '0' : '1';
-});
-
-// ---- MAIN LOOP ----
-function loop(ts) {
-  time = ts || 0;
-  frame++;
-
-  renderGL();
-  updateClock();
-
-  if(frame % 30 === 0) flickerData();
-
-  // Cursor ring follows with lag
-  requestAnimationFrame(loop);
-}
-
-// ---- BOOT ----
-initGL();
-runIntro();
-
-setTimeout(() => {
-  animateHero();
-  // Make sections visible on load
-  const firstSection = sections.querySelector('.section');
-  if(firstSection) firstSection.classList.add('visible');
-}, 3500);
-
-// Sections reveal
-document.querySelectorAll('.section').forEach(s => {
-  s.style.opacity = '0';
-  s.style.transition = 'opacity 1.2s ease';
-});
-
-// Click to init audio
-document.addEventListener('click', initAudio, { once: true });
-
-requestAnimationFrame(loop);
-
-// ---- CURSOR MAGNETIC EFFECT ----
-document.querySelectorAll('button, a, input').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    document.getElementById('cursor').style.transform = 'translate(-50%,-50%) scale(3)';
-    document.getElementById('cursor-ring').style.transform = 'translate(-50%,-50%) scale(0.5)';
-    document.getElementById('cursor-ring').style.borderColor = 'rgba(0,255,136,0.6)';
-  });
-  el.addEventListener('mouseleave', () => {
-    document.getElementById('cursor').style.transform = 'translate(-50%,-50%) scale(1)';
-    document.getElementById('cursor-ring').style.transform = 'translate(-50%,-50%) scale(1)';
-    document.getElementById('cursor-ring').style.borderColor = 'rgba(255,255,255,0.4)';
-  });
-});
+  requestAnimationFrame(frame);
+})();
 </script>
 </body>
 </html>
