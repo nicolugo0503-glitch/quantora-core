@@ -11,15 +11,59 @@ Q.HM = {
   2024:[1.9,2.4,1.7,3.2,2.1,1.5,2.8,-0.2,2.3,1.8,2.7,2.1],
 };
 
-Q.QTD = [3.2,2.1,1.8,-0.4,2.7,3.1,2.4,1.2,-2.8,5.6,8.3,4.1,2.8,3.3,-1.2,2.5,1.9,3.7,2.9,1.8,2.3,1.5,3.4,-0.6,2.1,2.8,1.4,1.9,3.2,-0.3,1.7,-0.8,1.4,3.6,2.1,1.8,-0.9,2.2,1.7,-0.5,3.1,2.4,1.9,2.8,1.6,2.2,-0.3,3.1,1.8,2.5,1.2,2.7,1.4,3.3,2.1,1.9,2.4,1.7,3.2,2.1,1.5,2.8,-0.2,2.3,1.8,2.7,2.1];
+Q.QTD = [3.2,2.1,1.8,-0.4,2.7,3.1,2.4,1.2,-2.8,5.6,8.3,4.1,2.8,3.3,-1.2,2.5,1.9,3.7,2.9,1.8,2.3,1.5,3.4,-0.6,2.1,2.8,1.4,1.9,3.2,-0.3,1/7,-0.8,1.4,3.6,2.1,1.8,-0.9,2.2,1.7,-0.5,3.1,2.4,1.9,2.8,1.6,2.2,-0.3,3.1,1.8,2.5,1.2,2.7,1.4,3.3,2.1,1.9,2.4,1.7,3.2,2.1,1.5,2.8,-0.2,2.3,1.8,2.7,2.1];
 Q.SPY = [2.1,1.5,-0.8,3.2,1.8,2.4,-0.3,2.9,1.1,4.2,5.8,2.1,-1.2,3.4,6.2,3.1,2.8,2.5,1.8,-2.4,1.9,3.2,-0.5,3.7,3.1,2.2,1.5,4.2,-1.8,2.9,2.3,3.8,1.2,-3.2,2.1,0.8,-4.2,2.1,1.8,-3.1,2.4,1.9,3.2,2.8,1.4,3.3,-1.2,2.7,1.9,2.1,1.5,3.8,1.2,2.4,1.8,2.1,1.3,1.9,2.8,1.4,3.2,2.1,-0.8,2.4,1.6,3.1,1.8];
+
 function mkNav(r,b=100){const a=[b];r.forEach(x=>a.push(a[a.length-1]*(1+x/100)));return a;}
 Q.NAV = mkNav(Q.QTD);
 Q.SP  = mkNav(Q.SPY);
-Q.SHARPE	= {const ret=[];for(loet i=1;i<Q.NAV.length;i++)ret.push((Q.NAV[i]/Q.NAV[i-1]-1)*100);const out=[];for(let i=11;i<ret.length;i++){const sl=ret.slice(i-11,i+1),mn=sl.reduce((a,b)=>a+b,0)/12;const sd=Math.sqrt(sl.reduce((a,b)=>a+(b-mn)]**2,0)/12);out.push(sd===0?0:((mn/sd)*Math.sqrt(12)));}return out;}();
-Q.DD = (()=>{let pk=Q.NAV[0];return Q.NAV.map(v=>{if(v>pk)pk=v;return((v-pk)/pk)*100;});})();
-Q.CORR_LBL=['QTR','SPX','BOND','GOLD','VIX','EM'];
-Q.CORR=[[1.00,0.12,-0.05,0.08,-0.18,0.14],[0.12,1.00,0.31,0.21,-0.72,0.84],[-0.05,0.31,1.00,0.43,-0.28,0.24],[0.08,0.21,0.43,1.00,-0.31,0.18],[-0.18,-0.72,-0.28,-0.31,1.00,-0.68],[0.14,0.84,0.24,0.18,-0.68,1.00]];
-Q.FAC_LBL=['Momentum','Value','Quality','Low Vol','Size','Carry'];Q.FAC_VAL=[0.82,-0.23,0.65,0.58,-0.31,0.44];
-Q.HIST_BINS=[-4,-3,-2,-1,0,1,2,3,4,5,6,7];Q.HIST_COUNTS=[0,1,2,5,11,14,12,9,6,3,1,0];
-Q.TICKS=[{s:'SPX',key:'SPX',dp:2,suffix:''},{s:'tNDX',key:'NDX',dp:0,suffix:''},{s:'tRTY', key:'RTY',dp:2,suffix:''},{s:'VIX',key:'VIX',dp:2,suffix:''},{s:'tBTC',key:'BTC',dp:0,suffix:''},{s:'tGOLD',key:'GOLD',dp:2,suffix:''},{s:'WTI',key:'WTI',dp:2,suffix:''},{s:'DXY', key:'DXY',dp:2,suffix:''},{s:'US10Y',key:'US10Y',dp:3,suffix:'%'},{s:'US2Y',key:'US2Y',dp:3,suffix:'%'},{s:'HYG',key:'HYG',dp:2,suffix:''},{s:'tTLT',key:'TLT',dp:2,suffix:''},{s:'tQTR NAV',key:'QTR NAV',dp:1,suffix:''},{s:'EUR/USD',key:'EUR/USD',dp:4,suffix:''}];
+
+Q.SHARPE = (()=>{
+  const ret=[];
+  for(let i=1;i<Q.NAV.length;i++) ret.push((Q.NAV[i]/Q.NAV[i-1]-1)*100);
+  const out=[];
+  for(let i=11;i<ret.length;i++){
+    const sl=ret.slice(i-11,i+1),mn=sl.reduce((a,b)=>a+b,0)/12;
+    const sd=Math.sqrt(sl.reduce((a,b)=>a+(b-mn)**2,0)/12);
+    out.push(sd===0?0:(mn/sd)*Math.sqrt(12));
+  }
+  return out;
+})();
+
+Q.DD = (()=>{
+  let pk=Q.NAV[0];
+  return Q.NAV.map(v=>{if(v>pk)pk=v;return((v-pk)/pk)*100;});
+})();
+
+Q.CORR_LBL = ['QTR','SPX','BOND','GOLD','VIX','EM'];
+Q.CORR = [
+  [1.00, 0.12,-0.05, 0.08,-0.18, 0.14],
+  [0.12, 1.00, 0.31, 0.21,-0.72, 0.84],
+  [-0.05,0.31, 1.00, 0.43,-0.28, 0.24],
+  [0.08, 0.21, 0.43, 1.00,-0.31, 0.18],
+  [-0.18,-0.72,-0.28,-0.31,1.00,-0.68],
+  [0.14, 0.84, 0.24, 0.18,-0.68, 1.00],
+];
+
+Q.FAC_LBL = ['Momentum','Value','Quality','Low Vol','Size','Carry'];
+Q.FAC_VAL = [0.82,-0.23,0.65,0.58,-0.31,0.44];
+
+Q.HIST_BINS  = [-4,-3,-2,-1,0,1,2,3,4,5,6,7];
+Q.HIST_COUNTS= [0,1,2,5,11,14,12,9,6,3,1,0];
+
+Q.TICKS = [
+  {s:'SPX',   key:'SPX',       dp:2, suffix:''},
+  {s:'NDX',   key:'NDX',       dp:0, suffix:''},
+  {s:'RTY',   key:'RTY',       dp:2, suffix:''},
+  {s:'VIX',   key:'VIX',       dp:2, suffix:''},
+  {s:'BTC',   key:'BTC',       dp:0, suffix:''},
+  {s:'GOLD',  key:'GOLD',      dp:2, suffix:''},
+  {s:'WTI',   key:'WTI',       dp:2, suffix:''},
+  {s:'DXY',   key:'DXY',       dp:2, suffix:''},
+  {s:'US10Y', key:'US10Y',     dp:3, suffix:'%'},
+  {s:'US2Y',  key:'US2Y',      dp:3, suffix:'%'},
+  {s:'HYG',   key:'HYG',       dp:2, suffix:''},
+  {s:'TLT',   key:'TLT',       dp:2, suffix:''},
+  {s:'QTR NAV',key:'QTR NAV',  dp:1, suffix:''},
+  {s:'EUR/USD',key:'EUR/USD',  dp:4, suffix:''},
+];
