@@ -1,0 +1,12 @@
+{
+  "name": "quantora-capital",
+  "version": "1.0.0",
+  "description": "Quantora Capital — Institutional Access",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

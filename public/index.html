@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantora Capital — Institutional Access</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Inter:wght@200;300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<!-- ═══ INTRO ═══ -->
+<div id="intro-overlay">
+  <div id="intro-line"></div>
+  <div id="intro-name"></div>
+  <div id="intro-sub">Capital · Quantitative Strategies</div>
+</div>
+
+<!-- ═══ PROGRESS ═══ -->
+<div id="progress-bar"></div>
+
+<!-- ═══ CUSTOM CURSOR ═══ -->
+<div id="cursor-cross">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <line x1="10" y1="0"  x2="10" y2="7"  stroke="#C6A23A" stroke-width="1"/>
+    <line x1="10" y1="13" x2="10" y2="20" stroke="#C6A23A" stroke-width="1"/>
+    <line x1="0"  y1="10" x2="7"  y2="10" stroke="#C6A23A" stroke-width="1"/>
+    <line x1="13" y1="10" x2="20" y2="10" stroke="#C6A23A" stroke-width="1"/>
+    <circle cx="10" cy="10" r="1.5" fill="#C6A23A"/>
+  </svg>
+</div>
+<div id="cursor-ring"></div>
+
+<!-- ═══ TICKER ═══ -->
+<div class="tkr">
+  <div class="tkr-tag"><div class="tkr-live"></div>LIVE MARKET</div>
+  <div class="tkr-wrap"><div id="ticker-track"></div></div>
+</div>
+
+<!-- ═══ NAV ═══ -->
+<nav id="nav">
+  <div class="logo">
+    <div class="logo-name"><span>QUANTORA</span> CAPITAL</div>
+    <div class="logo-sub">Quantitative Strategies · Est. 2019</div>
+  </div>
+  <div class="nav-links">
+    <a href="#performance">Performance</a>
+    <a href="#analytics-h">Analytics</a>
+    <a href="#thesis">Strategy</a>
+    <a href="#terms">Terms</a>
+    <a href="#access">Access</a>
+  </div>
+  <div class="nav-r">
+    <div class="clk-wrap"><span id="clk">00:00:00</span><span class="clk-tz">EST</span></div>
+    <div class="nav-status"><div class="tkr-live"></div>Fund Open</div>
+    <button id="sound-btn">▶ SOUND</button>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-grid"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-inner">
+    <div class="h-left">
+      <div class="h-eyebrow"><div class="h-eyebrow-bar"></div><div class="h-eyebrow-txt">Quantitative Multi-Strategy · Inception 2019</div></div>
+      <h1 id="h-headline"></h1>
+      <p class="h-sub">Systematic alpha generation across global equity, futures, and volatility markets. Risk-adjusted returns engineered through proprietary signal architecture.</p>
+      <div class="h-stats">
+        <div class="h-stat"><div class="h-stat-v pos" data-cnt="312" data-sfx="%" data-dp="0">—</div><div class="h-stat-l">Cumulative Return</div></div>
+        <div class="h-stat"><div class="h-stat-v gld" data-cnt="3.84" data-sfx="" data-dp="2">—</div><div class="h-stat-l">Sharpe Ratio (ITD)</div></div>
+        <div class="h-stat"><div class="h-stat-v" data-cnt="26.4" data-sfx="%" data-dp="1">—</div><div class="h-stat-l">Net Annualized Return</div></div>
+        <div class="h-stat"><div class="h-stat-v" data-cnt="4.1" data-sfx="%" data-dp="1">—</div><div class="h-stat-l">Maximum Drawdown</div></div>
+      </div>
+    </div>
+    <div class="h-right">
+      <div class="h-ecurve">
+        <div class="h-ecurve-top">
+          <div class="h-ecurve-title">Equity Curve — Inception to Date</div>
+          <div><div class="h-ecurve-num">+312.4%</div><div class="h-ecurve-since">vs S&amp;P +68.3%</div></div>
+        </div>
+        <div class="h-ecurve-leg">
+          <div class="leg-i"><div class="leg-ln q"></div>Quantora NAV</div>
+          <div class="leg-i"><div class="leg-ln b"></div>S&amp;P 500 TR</div>
+        </div>
+        <canvas id="c-hero-curve" height="170"></canvas>
+        <div class="h-ecurve-footer">
+          <div class="ecf-stat"><div class="ecf-v" style="color:var(--green2)">6.44×</div><div class="ecf-l">Calmar</div></div>
+          <div class="ecf-stat"><div class="ecf-v">6.4%</div><div class="ecf-l">Ann. Vol</div></div>
+          <div class="ecf-stat"><div class="ecf-v" style="color:var(--green2)">79%</div><div class="ecf-l">Win Rate</div></div>
+          <div class="ecf-stat"><div class="ecf-v">72</div><div class="ecf-l">Months</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ KPIs ═══ -->
+<section id="kpis">
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-lbl">Net IRR (Ann.)</div><div class="kpi-val pos" data-cnt="26.4" data-sfx="%" data-dp="1">—</div><div class="kpi-note">Since inception · Net of fees</div></div>
+    <div class="kpi"><div class="kpi-lbl">Annualized Vol</div><div class="kpi-val dim" data-cnt="6.4" data-sfx="%" data-dp="1">—</div><div class="kpi-note">Realized · 36-mo rolling</div></div>
+    <div class="kpi"><div class="kpi-lbl">Sharpe Ratio</div><div class="kpi-val gld" data-cnt="3.84" data-sfx="" data-dp="2">—</div><div class="kpi-note">Inception to date</div></div>
+    <div class="kpi"><div class="kpi-lbl">Monthly Win Rate</div><div class="kpi-val pos" data-cnt="79" data-sfx="%" data-dp="0">—</div><div class="kpi-note">Positive return months</div></div>
+    <div class="kpi"><div class="kpi-lbl">Max Drawdown</div><div class="kpi-val neg" data-cnt="4.1" data-sfx="%" data-dp="1">—</div><div class="kpi-note">Peak-to-trough · All-time</div></div>
+    <div class="kpi"><div class="kpi-lbl">Calmar Ratio</div><div class="kpi-val gld" data-cnt="6.44" data-sfx="" data-dp="2">—</div><div class="kpi-note">Return ÷ max drawdown</div></div>
+  </div>
+</section>
+
+<!-- ═══ MANIFESTO ═══ -->
+<section id="manifesto">
+  <div id="mani-scan"></div>
+  <div class="mani-pre">Investment Philosophy</div>
+  <p class="mani-q rv">"The market <strong>is not efficient.</strong> It is merely <em>difficult.</em> The difference is everything."</p>
+  <div class="mani-attr rv">— Quantora Capital · Investment Memorandum · 2019</div>
+</section>
+
+<!-- ═══ PERFORMANCE ═══ -->
+<section id="performance" class="sec">
+  <div class="sec-inner">
+    <div class="sec-hdr rv">
+      <div class="sec-badge"><div class="sec-badge-line"></div><div class="sec-badge-txt">Risk Analytics</div></div>
+      <h2 class="sec-title">Performance <em>Anatomy</em></h2>
+    </div>
+    <div class="row2 rv">
+      <div class="cc">
+        <div class="cc-hdr"><div class="cc-title">Cumulative Return</div><div class="cc-badge bp">+312.4% ITD</div></div>
+        <div class="cc-sub">NAV indexed to 100 · Monthly · Net fees · vs S&amp;P 500 TR · Hover for date &amp; value</div>
+        <canvas class="ch" id="c-curve" height="210"></canvas>
+      </div>
+      <div class="cc">
+        <div class="cc-hdr"><div class="cc-title">Rolling 12M Sharpe</div><div class="cc-badge bx">3.84 ITD</div></div>
+        <div class="cc-sub">Annualized · 12-month rolling window · Risk-free rate adjusted</div>
+        <canvas class="ch" id="c-sharpe" height="210"></canvas>
+      </div>
+    </div>
+    <div class="row3 rv">
+      <div class="cc">
+        <div class="cc-hdr"><div class="cc-title">Drawdown Profile</div><div class="cc-badge bn">−4.1% Max</div></div>
+        <div class="cc-sub">Underwater equity · Peak-to-trough · All observation periods</div>
+        <canvas class="ch" id="c-dd" height="155"></canvas>
+      </div>
+      <div class="cc">
+        <div class="cc-hdr"><div class="cc-title">Factor Exposure</div><div class="cc-badge bx">Multi-Factor</div></div>
+        <div class="cc-sub">Style tilts · Risk-adjusted betas · Current positioning</div>
+        <canvas class="ch" id="c-radar" height="155"></canvas>
+      </div>
+      <div class="cc">
+        <div class="cc-hdr"><div class="cc-title">Return Distribution</div><div class="cc-badge bp">Positive Skew</div></div>
+        <div class="cc-sub">Monthly returns histogram · Theoretical normal overlay</div>
+        <canvas class="ch" id="c-hist" height="155"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HORIZONTAL SCROLL ANALYTICS ═══ -->
+<section id="analytics-h">
+  <div class="h-track">
+    <div class="h-panel">
+      <div class="h-panel-inner">
+        <div class="sec-badge"><div class="sec-badge-line"></div><div class="sec-badge-txt">Deep Analytics</div></div>
+        <h2 class="sec-title" style="margin-bottom:32px">Monthly Returns <em>Heatmap</em></h2>
+        <div class="cc">
+          <div class="cc-hdr"><div class="cc-title">Monthly Returns</div><div class="cc-badge bp">79% Positive</div></div>
+          <div class="cc-sub">Net of all fees · 2019–2024 · Hover cell for details</div>
+          <div id="hm-wrap"></div>
+        </div>
+      </div>
+    </div>
+    <div class="h-panel">
+      <div class="h-panel-inner">
+        <div class="sec-badge"><div class="sec-badge-line"></div><div class="sec-badge-txt">Correlation</div></div>
+        <h2 class="sec-title" style="margin-bottom:32px">Asset <em>Correlation Matrix</em></h2>
+        <div class="cc">
+          <div class="cc-hdr"><div class="cc-title">36M Rolling Correlation</div><div class="cc-badge bx">Low Correlation</div></div>
+          <div class="cc-sub">Quantora vs global asset classes · Gold = positive · Red = negative</div>
+          <canvas class="ch" id="c-corr" height="270"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="h-panel">
+      <div class="h-panel-inner">
+        <div class="sec-badge"><div class="sec-badge-line"></div><div class="sec-badge-txt">Factor Analysis</div></div>
+        <h2 class="sec-title" style="margin-bottom:32px">Factor <em>Deep Dive</em></h2>
+        <div class="row22">
+          <div class="cc">
+            <div class="cc-hdr"><div class="cc-title">Factor Radar</div><div class="cc-badge bx">6 Factors</div></div>
+            <div class="cc-sub">Momentum · Value · Quality · Low Vol · Size · Carry</div>
+            <canvas class="ch" id="c-radar-2" height="200"></canvas>
+          </div>
+          <div class="cc">
+            <div class="cc-hdr"><div class="cc-title">Return Histogram</div><div class="cc-badge bp">Right Tail</div></div>
+            <div class="cc-sub">Monthly return distribution · Normal curve overlay</div>
+            <canvas class="ch" id="c-hist-2" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="h-panel">
+      <div class="h-panel-inner">
+        <div class="sec-badge"><div class="sec-badge-line"></div><div class="sec-badge-txt">Risk Metrics</div></div>
+        <h2 class="sec-title" style="margin-bottom:32px">Risk <em>Decomposition</em></h2>
+        <div class="cc" style="margin-bottom:2px">
+          <div class="cc-hdr"><div class="cc-title">Drawdown Analysis</div><div class="cc-badge bn">−4.1% Max</div></div>
+          <div class="cc-sub">Every drawdown period · Duration &amp; magnitude</div>
+          <canvas class="ch" id="c-dd-2" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ THESIS ═══ -->
+<section id="thesis" class="sec" style="border-top:1px solid var(--brd)">
+  <div class="sec-inner">
+    <div class="sec-badge rv"><div class="sec-badge-line"></div><div class="sec-badge-txt">Investment Thesis</div></div>
+    <div class="thesis-grid rv">
+      <div>
+        <span class="t-sidebar-tag">Fund Architecture</span>
+        <div class="t-row"><span class="t-k">Strategy</span><span class="t-v">Quant Multi-Strat</span></div>
+        <div class="t-row"><span class="t-k">Instruments</span><span class="t-v">EQ / FUT / VOL</span></div>
+        <div class="t-row"><span class="t-k">Universe</span><span class="t-v">Global · Liquid</span></div>
+        <div class="t-row"><span class="t-k">Signal Horizon</span><span class="t-v">1D – 30D</span></div>
+        <div class="t-row"><span class="t-k">Rebalance</span><span class="t-v">Daily / Dynamic</span></div>
+        <div class="t-row"><span class="t-k">Leverage</span><span class="t-v">1.0× – 1.8×</span></div>
+        <div class="t-row"><span class="t-k">Short Exposure</span><span class="t-v">Yes · Hedged</span></div>
+        <div class="t-row"><span class="t-k">AUM</span><span class="t-v">$127M</span></div>
+        <div class="t-row"><span class="t-k">Hard Cap</span><span class="t-v">$500M</span></div>
+        <div class="t-row"><span class="t-k">Domicile</span><span class="t-v">Delaware LP</span></div>
+      </div>
+      <div class="t-body">
+        <div class="t-quote">"Edge is not a strategy. Edge is the persistent statistical residual after every rational participant has traded against you — and alpha remains."</div>
+        <p>Quantora operates on a simple but rigorous premise: <strong>structured inefficiency exists at the intersection of behavioral finance and market microstructure</strong>, and systematic exploitation of those inefficiencies — at scale, with discipline — produces risk-adjusted returns structurally uncorrelated to traditional beta.</p>
+        <p>Our signal architecture draws on three independent alpha streams: <em>cross-sectional momentum with volatility scaling</em>, <em>macro regime detection through yield curve topology</em>, and <em>options flow imbalance as an institutional sentiment proxy</em>. Each signal is orthogonal by design. Combined, they produce a portfolio engine that remains coherent across market regimes.</p>
+        <p>Risk management is not a constraint on the strategy — it <em>is</em> the strategy. Position sizing derives from realized covariance. Target volatility is fixed at 6–8% annualized. All drawdown triggers are hard-coded in execution logic rather than operator discretion. The result is a return profile that is <strong>positively skewed, right-tailed, and structurally uncorrelated</strong> to public market beta.</p>
+        <div class="t-fn">Backtested figures are for illustrative purposes only. All returns reported net of 1.5% management fee and 20% performance fee with high watermark. Past performance does not guarantee future results. This document is for qualified institutional investors only and does not constitute a solicitation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TERMS ═══ -->
+<section id="terms" style="border-top:1px solid var(--brd);border-bottom:1px solid var(--brd)">
+  <div class="sec-inner" style="padding-top:76px;padding-bottom:76px">
+    <div class="sec-badge rv"><div class="sec-badge-line"></div><div class="sec-badge-txt">Fund Terms</div></div>
+    <div class="terms-grid rv">
+      <div class="term-blk">
+        <div class="term-cat">Economics</div>
+        <div class="term-r"><div class="term-k">Management Fee</div><div class="term-v">1.50% p.a.</div><div class="term-n">Charged monthly on NAV</div></div>
+        <div class="term-r"><div class="term-k">Performance Fee</div><div class="term-v">20%</div><div class="term-n">Annual · High watermark</div></div>
+        <div class="term-r"><div class="term-k">Hurdle Rate</div><div class="term-v">SOFR + 2%</div><div class="term-n">Soft hurdle · Series A</div></div>
+        <div class="term-r"><div class="term-k">Minimum</div><div class="term-v">$250,000</div><div class="term-n">Series A · USD only</div></div>
+        <div class="term-r"><div class="term-k">Crystallization</div><div class="term-v">Annual</div><div class="term-n">December 31</div></div>
+      </div>
+      <div class="term-blk">
+        <div class="term-cat">Liquidity</div>
+        <div class="term-r"><div class="term-k">Subscriptions</div><div class="term-v">Monthly</div><div class="term-n">1st BD · 5-day notice</div></div>
+        <div class="term-r"><div class="term-k">Redemptions</div><div class="term-v">Quarterly</div><div class="term-n">30-day written notice</div></div>
+        <div class="term-r"><div class="term-k">Lock-Up</div><div class="term-v">12 Months</div><div class="term-n">Soft lock · Series A</div></div>
+        <div class="term-r"><div class="term-k">Early Redemption</div><div class="term-v">2.0% Fee</div><div class="term-n">During lock-up only</div></div>
+        <div class="term-r"><div class="term-k">Gate</div><div class="term-v">20% NAV</div><div class="term-n">Per quarter · Investor-level</div></div>
+      </div>
+      <div class="term-blk">
+        <div class="term-cat">Eligibility</div>
+        <div class="term-r"><div class="term-k">Investor Type</div><div class="term-v">QIB / QP Only</div><div class="term-n">Reg. D · Rule 506(c)</div></div>
+        <div class="term-r"><div class="term-k">Currency</div><div class="term-v">USD</div><div class="term-n">Reporting currency</div></div>
+        <div class="term-r"><div class="term-k">Structure</div><div class="term-v">Delaware LP</div><div class="term-n">Cayman feeder available</div></div>
+        <div class="term-r"><div class="term-k">Current AUM</div><div class="term-v">$127M</div><div class="term-n">$373M remaining capacity</div></div>
+        <div class="term-r"><div class="term-k">Reporting</div><div class="term-v">Monthly / Annual</div><div class="term-n">K-1 · Audited statements</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ACCESS ═══ -->
+<section id="access">
+  <canvas id="access-canvas"></canvas>
+  <div class="access-inner sec-inner">
+    <div class="access-pre rv">Institutional Access</div>
+    <h2 class="access-h rv">Quantora does not<br>seek you.<br><em>You seek it.</em></h2>
+    <p class="access-sub rv">Capacity is finite. Access is by introduction or direct inquiry only. We do not advertise, distribute, or solicit.</p>
+    <div class="access-card rv">
+      <div class="access-ttl">Direct Inquiry</div>
+      <div class="access-email">allocations@quantoracapital.com</div>
+      <div class="access-note">Encrypted communication preferred · PGP key on request</div>
+      <div class="access-div"></div>
+      <div class="access-dr"><span class="access-dk">Capacity Remaining</span><span class="access-dv">$373M</span></div>
+      <div class="access-dr"><span class="access-dk">Next Subscription</span><span class="access-dv">June 1, 2025</span></div>
+      <div class="access-dr"><span class="access-dk">Response Time</span><span class="access-dv">&lt; 48 hours</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div>
+    <div class="f-logo"><span>QUANTORA</span> CAPITAL LP</div>
+    <div class="f-copy">© 2025 Quantora Capital LP. All rights reserved. This document is confidential and for informational purposes only. It does not constitute an offer to sell or solicitation of any investment product. Past performance does not guarantee future results.</div>
+  </div>
+  <div class="f-disc">For use by Qualified Institutional Buyers and Qualified Purchasers only. Not for retail distribution. Quantora Capital LP is an exempt reporting adviser.</div>
+</footer>
+
+<!-- ═══ HEATMAP TOOLTIP ═══ -->
+<div id="hm-tooltip"></div>
+
+<!-- ═══ LIBRARIES ═══ -->
+<!-- Three.js + Post-processing -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<!-- Lenis smooth scroll -->
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+<!-- ═══ APP ═══ -->
+<script src="/js/data.js"></script>
+<script src="/js/intro.js"></script>
+<script src="/js/webgl.js"></script>
+<script src="/js/cursor.js"></script>
+<script src="/js/smooth.js"></script>
+<script src="/js/ticker.js"></script>
+<script src="/js/charts.js"></script>
+<script src="/js/heatmap.js"></script>
+<script src="/js/animations.js"></script>
+<script src="/js/main.js"></script>
+
+<!-- Access section constellation (inline — lightweight) -->
+<script>
+(function(){
+  const cv=document.getElementById('access-canvas');
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  let W,H,stars=[];
+  function resize(){W=cv.width=cv.offsetWidth||800;H=cv.height=cv.offsetHeight||600;stars=Array.from({length:Math.min(Math.floor(W*H/3200),90)},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*.7+.2,vx:(Math.random()-.5)*.06,vy:(Math.random()-.5)*.06,ph:Math.random()*Math.PI*2}));}
+  new ResizeObserver(resize).observe(cv.parentElement||cv);resize();
+  let t=0;
+  (function draw(){requestAnimationFrame(draw);t+=.007;ctx.clearRect(0,0,W,H);for(let i=0;i<stars.length;i++)for(let j=i+1;j<stars.length;j++){const dx=stars[i].x-stars[j].x,dy=stars[i].y-stars[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<95){ctx.beginPath();ctx.strokeStyle=`rgba(198,162,58,${(1-d/95)*.12})`;ctx.lineWidth=.35;ctx.moveTo(stars[i].x,stars[i].y);ctx.lineTo(stars[j].x,stars[j].y);ctx.stroke();}}stars.forEach(s=>{s.x+=s.vx;s.y+=s.vy;if(s.x<0)s.x=W;if(s.x>W)s.x=0;if(s.y<0)s.y=H;if(s.y>H)s.y=0;const g=.3+Math.sin(t+s.ph)*.28;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(198,162,58,${g*.7})`;ctx.fill();});})();
+})();
+</script>
+</body>
+</html>
