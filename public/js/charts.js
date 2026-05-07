@@ -105,7 +105,7 @@ function drawCurve(prog) {
     const tip  = `${mo} ${yr}  NAV ${Q.NAV[idx].toFixed(1)}  (+${ret}%)`;
     ctx.fillStyle = 'rgba(6,20,34,0.92)';
     const tw = ctx.measureText(tip).width + 16;
-    const tx = Math.min(cx 8, pL + cW - tw - 4);
+    const tx = Math.min(cx + 8, pL + cW - tw - 4);
     ctx.fillRect(tx, cy - 22, tw, 20);
     ctx.fillStyle = '#C8D8EE'; ctx.font = '9.5px Space Mono'; ctx.textAlign = 'left';
     ctx.fillText(tip, tx + 8, cy - 8);
@@ -137,7 +137,7 @@ function drawSharpe(prog) {
   const grd = ctx.createLinearGradient(0, pT, 0, pT + cH);
   grd.addColorStop(0, 'rgba(24,150,90,0.24)'); grd.addColorStop(1, 'rgba(24,150,90,0)');
   ctx.beginPath(); ctx.moveTo(sX(0), y0); ctx.lineTo(sX(0), sY(d[0]));
-  d.forEach((v, i)=> ctx.lineTo(sX(i), sY(v)));
+  d.forEach((v, i) => ctx.lineTo(sX(i), sY(v)));
   ctx.lineTo(sX(d.length - 1), y0); ctx.closePath(); ctx.fillStyle = grd; ctx.fill();
   ctx.beginPath(); ctx.moveTo(sX(0), sY(d[0]));
   d.forEach((v, i) => ctx.lineTo(sX(i), sY(v)));
@@ -333,7 +333,7 @@ function initChartObserver() {
     entries.forEach(e => {
       if (e.isIntersecting && !chartTriggered.has(e.target.id)) {
         chartTriggered.add(e.target.id);
-        chartns[e.target.id]?.();
+        chartFns[e.target.id]?.();
       }
     });
   }, { threshold: 0.12 });
