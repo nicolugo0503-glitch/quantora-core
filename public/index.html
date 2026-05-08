@@ -62,8 +62,12 @@
 <!-- â•â•â• HERO â•â•â• -->
 <section id="hero">
   <canvas id="hero-canvas"></canvas>
+  <!-- Gold particle stream â€” equity curve trajectory -->
+  <canvas id="particle-canvas"></canvas>
   <div class="hero-grid"></div>
   <div class="hero-vignette"></div>
+  <!-- Giant ambient number -->
+  <div class="hero-bg-number">312%</div>
   <div class="hero-inner">
     <div class="h-left">
       <div class="h-eyebrow"><div class="h-eyebrow-bar"></div><div class="h-eyebrow-txt">Quantitative Multi-Strategy Â· Inception 2019</div></div>
@@ -107,6 +111,27 @@
     <div class="kpi"><div class="kpi-lbl">Monthly Win Rate</div><div class="kpi-val pos" data-cnt="79" data-sfx="%" data-dp="0">â€”</div><div class="kpi-note">Positive return months</div></div>
     <div class="kpi"><div class="kpi-lbl">Max Drawdown</div><div class="kpi-val neg" data-cnt="4.1" data-sfx="%" data-dp="1">â€”</div><div class="kpi-note">Peak-to-trough Â· All-time</div></div>
     <div class="kpi"><div class="kpi-lbl">Calmar Ratio</div><div class="kpi-val gld" data-cnt="6.44" data-sfx="" data-dp="2">â€”</div><div class="kpi-note">Return Ã· max drawdown</div></div>
+  </div>
+</section>
+
+<!-- â•â•â• STAT EXPLOSION â•â•â• -->
+<section id="stat-explosion">
+  <div class="stat-exp-grid">
+    <div class="stat-exp-cell">
+      <div class="stat-exp-pre">Cumulative Return</div>
+      <div class="stat-exp-val pos">312<span class="stat-exp-sfx">%</span></div>
+      <div class="stat-exp-sub">Inception to date Â· Net of all fees</div>
+    </div>
+    <div class="stat-exp-cell stat-exp-mid">
+      <div class="stat-exp-pre">Sharpe Ratio</div>
+      <div class="stat-exp-val gld">3<span class="stat-exp-dec">.84</span></div>
+      <div class="stat-exp-sub">Inception to date Â· Risk-free adjusted</div>
+    </div>
+    <div class="stat-exp-cell">
+      <div class="stat-exp-pre">Net Annualized</div>
+      <div class="stat-exp-val pos">26<span class="stat-exp-dec">.4</span><span class="stat-exp-sfx">%</span></div>
+      <div class="stat-exp-sub">Since 2019 Â· Net of 1.5 / 20 fees</div>
+    </div>
   </div>
 </section>
 
@@ -155,7 +180,7 @@
       </div>
     </div>
   </div>
-</section>
+</rection>
 
 <!-- â•â•â• HORIZONTAL SCROLL ANALYTICS â•â•â• -->
 <section id="analytics-h">
@@ -301,51 +326,10 @@
     <div class="f-logo"><span>QUANTORA</span> CAPITAL LP</div>
     <div class="f-copy">Â© 2025 Quantora Capital LP. All rights reserved. This document is confidential and for informational purposes only. It does not constitute an offer to sell or solicitation of any investment product. Past performance does not guarantee future results.</div>
   </div>
-  <div class="f-disc">For use by Qualified Institutional Buyers and Qualified Purchasers only. Not for retail distribution. Quantora Capital LP is an exempt reporting adviser.</div>
+  <div class="f-disc">For use by Qualified Institutional Buyers and Qualified Purchasers only. Not for cmtail distribution. Quantora Capital LP is an exempt reporting adviser.</div>
 </footer>
 
 <!-- â•â•â• HEATMAP TOOLTIP â•â•â• -->
 <div id="hm-tooltip"></div>
 
-<!-- â•â•â• LIBRARIES â•â•â• -->
-<!-- Three.js + Post-processing -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
-<!-- GSAP -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<!-- Lenis smooth scroll -->
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-
-<!-- â•â•â• APP â•â•â• -->
-<script src="/js/data.js"></script>
-<script src="/js/intro.js"></script>
-<script src="/js/webgl.js"></script>
-<script src="/js/cursor.js"></script>
-<script src="/js/smooth.js"></script>
-<script src="/js/ticker.js"></script>
-<script src="/js/charts.js"></script>
-<script src="/js/heatmap.js"></script>
-<script src="/js/animations.js"></script>
-<script src="/js/main.js"></script>
-
-<!-- Access section constellation (inline â€” lightweight) -->
-<script>
-(function(){
-  const cv=document.getElementById('access-canvas');
-  if(!cv)return;
-  const ctx=cv.getContext('2d');
-  let W,H,stars=[];
-  function resize(){W=cv.width=cv.offsetWidth||800;H=cv.height=cv.offsetHeight||600;stars=Array.from({length:Math.min(Math.floor(W*H/3200),90)},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*.7+.2,vx:(Math.random()-.5)*.06,vy:(Math.random()-.5)*.06,ph:Math.random()*Math.PI*2}));}
-  new ResizeObserver(resize).observe(cv.parentElement||cv);resize();
-  let t=0;
-  (function draw(){requestAnimationFrame(draw);t+=.007;ctx.clearRect(0,0,W,H);for(let i=0;i<stars.length;i++)for(let j=i+1;j<stars.length;j++){const dx=stars[i].x-stars[j].x,dy=stars[i].y-stars[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<95){ctx.beginPath();ctx.strokeStyle=`rgba(198,162,58,${(1-d/95)*.12})`;ctx.lineWidth=.35;ctx.moveTo(stars[i].x,stars[i].y);ctx.lineTo(stars[j].x,stars[j].y);ctx.stroke();}}stars.forEach(s=>{s.x+=s.vx;s.y+=s.vy;if(s.x<0)s.x=W;if(s.x>W)s.x=0;if(s.y<0)s.y=H;if(s.y>H)s.y=0;const g=.3+Math.sin(t+s.ph)*.28;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(198,162,58,${g*.7})`;ctx.fill();});})();
-})();
-</script>
-</body>
-</html>
+<!-- â•â•â•€€1%	II%LƒŠVCŠVCŠV@€´´ø(ð„´´Q¡É•”¹©Ì€¬A½ÍÐµÁÉ½•ÍÍ¥¹œ€´´ø(ñÍÉ¥ÁÐÍÉŒô‰¡ÑÑÁÌè¼½‘¸¹©Í‘•±¥ÙÈ¹¹•Ð½¹Á´½Ñ¡É•• À¸ÄÈà¸À½‰Õ¥±½Ñ¡É•”¹µ¥¸¹©Ìˆøð½ÍÉ¥ÁÐø(ñÍÉ¥ÁÐÍÉŒô‰¡ÑÑÁÌè¼½‘¸¹©Í‘•±¥ÙÈ¹¹•Ð½¹Á´½Ñ¡É•• À¸ÄÈà¸À½•á…µÁ±•Ì½©Ì½Í¡…‘•ÉÌ½½ÁåM¡…‘•È¹©Ìˆøð½ÍÉ¥ÁÐø(ñÍÉ¥ÁÐÍÉŒô‰¡ÑÑÁÌè¼½‘¸¹©Í‘•±¥ÙÈ¹¹•Ð½¹Á´½Ñ¡É•• À¸ÄÈà¸À½•á…µÁ±•Ì½©Ì½Í¡…‘•ÉÌ½1Õµ¥¹½Í¥Ñå!¥¡A…ÍÍM¡…‘•È¹©Ìˆøð½ÍÉ¥ÁÐø(ñÍÉ¥ÁÐÍÉŒô‰¡ÑÑÁÌè¼½‘¸¹©Í‘•±¥ÙÈ¹¹•Ð½¹Á´½Ñ¡É•• À¸ÄÈà¸À½•á…µÁ±•Ì½©Ì½Á½ÍÑÁÉ½•ÍÍ¥¹œ½™™•Ñ½µÁ½Í•È¹©Ìˆøð½ÍÉ¥ÁÐø(ñÍÉ¥ÁÐÍÉŒô‰¡ÑÑÁÌè¼½‘¸¹©Í‘•±¥ÙÈ¹¹•Ð½¹Á´½Ñ¡É•• À¸ÄÈà¸À½•á…µÁ±•Ì½©Ì½Á½ÍÑÁÉ½•ÍÍ¥¹œ½I•¹‘•ÉA…ÍÌ¹©Ìˆøð½ÍÉ¥ÁÐø(ñÍÉ¥ÁÐÍÉŒô‰¡ÑÑÁÌè¼½‘¸¹©Í‘•±¥ÙÈ¹¹•Ð½¹Á´½Ñ¡É•• À¸ÄÈà¸À½•á…µÁ±•Ì½©Ì½Á½ÍÑÁÉ½•ÍÍ¥¹œ½M¡…‘•ÉA…ÍÌ¹©Ìˆøð½ÍÉ¥ÁÐø(ñÍÉ¥ÁÐÍÉŒô‰¡ÑÑÁÌè¼½‘¸¹©Í‘•±¥ÙÈ¹¹•Ð½¹Á´½Ñ¡É•• À¸ÄÈà¸À½•á…µÁ±•Ì½©Ì½Á½ÍÑÁÉ½•ÍÍ¥¹œ½U¹É•…±	±½½µA…ÍÌ¹©Ìˆøð½ÍÉ¥ÁÐø(ð„´´M@€´´ø(ñÍÉ¥ÁÐÍÉŒô‰¡ÑÑÁÌè¼½‘¹©Ì¹±½Õ‘™±…É”¹½´½…©…à½±¥‰Ì½Í…À¼Ì¸ÄÈ¸Ô½Í…À¹µ¥¸¹©Ìˆøð½ÍÉ¥ÁÐø(ñÍÉ¥ÁÐÍÉŒô‰¡ÑÑÁÌè¼½‘¹©Ì¹±½Õ‘™±…É”¹½´½…©…à½±¥‰Ì½Í…À¼Ì¸ÄÈ¸Ô½MÉ½±±QÉ¥•È¹µ¥¸¹©Ìˆøð½ÍÉ¥ÁÐø(ð„´´1•¹¥ÌÍµ½½Ñ ÍÉ½±°€´´ø(ñÍÉ¥ÁÐÍÉŒô‰¡ÑÑÁÌè¼½‘¸¹©Í‘•±¥ÙÈ¹¹•Ð½¹Á´½ÍÑÕ‘¥¼µ™É•¥¡Ð½±•¹¥Í Ä¸À¸ÐÈ½‘¥ÍÐ½±•¹¥Ì¹µ¥¸¹©Ìˆøð½ÍÉ¥ÁÐø((ð„´´ƒŠVCŠVCŠV@A@ƒŠVCŠVCŠV@€´´ø(ñÍÉ¥ÁÐÍÉŒôˆ½©Ì½‘…Ñ„¹©Ìˆøð½ÍÉ¥ÁÐø(ñÍÉ¥ÁÐÍÉŒôˆ½©Ì½¥¹ÑÉ¼¹©Ìˆøð½ÍÉ¥ÁÐø(ñÍÉ¥ÁÐÍÉŒôˆ½©Ì½Ý•‰°¹©Ìˆøð½ÍÉ¥ÁÐø(ñÍÉ¥ÁÐÍÉŒôˆ½©Ì½ÕÉÍ½È¹©Ìˆøð½ÍÉ¥ÁÐø(ñÍÉ¥ÁÐÍÉŒôˆ½©Ì½Íµ½½Ñ ¹©Ìˆøð½ÍÉ¥ÁÐø(ñÍÉ¥ÁÐÍÉŒôˆ½©Ì½Ñ¥­•È¹©Ìˆøð½ÍÉ¥ÁÐø(ñÍÉ¥ÁÐÍÉŒôˆ½©Ì½¡…ÉÑÌ¹©Ìˆøð½ÍÉ¥ÁÐø(ñÍÉ¥ÁÐÍÉŒôˆ½©Ì½¡•…Ñµ…À¹©Ìˆøð½ÍÉ¥ÁÐø(ñÍÉ¥ÁÐÍÉŒôˆ½©Ì½…¹¥µ…Ñ¥½¹Ì¹©Ìˆøð½ÍÉ¥ÁÐø(ñÍÉ¥ÁÐÍÉŒôˆ½©Ì½Á…ÉÑ¥±•Ì¹©Ìˆøð½ÍÉ¥ÁÐø(ñÍÉ¥ÁÐÍÉŒôˆ½©Ì½µ…¥¸¹©Ìˆøð½ÍÉ¥ÁÐø((ð„´´•ÍÌÍ•Ñ¥½¸½¹ÍÑ•±±…Ñ¥½¸€¡¥¹±¥¹”ƒŠP±¥¡ÑÝ•¥¡Ð¤€´´ø(ñÍÉ¥ÁÐø(¡™Õ¹Ñ¥½¸ ¥ì(€½¹ÍÐØõ‘½Õµ•¹Ð¹•Ñ±•µ•¹Ñ	å% …•ÍÌµ…¹Ù…Ìœ¤ì(€¥˜ …Ø¥É•ÑÕÉ¸ì(€½¹ÍÐÑàõØ¹•Ñ½¹Ñ•áÐ œÉœ¤ì(€±•Ð\± ±ÍÑ…ÉÌõmtì(€™Õ¹Ñ¥½¸É•Í¥é” ¥í\õØ¹Ý¥‘Ñ õØ¹½™™Í•Ñ]¥‘Ñ¡ñðàÀÀí õØ¹¡•¥¡ÐõØ¹½™™Í•Ñ!•¥¡ÑñðØÀÀíÍÑ…ÉÌõÉÉ…ä¹™É½´¡í±•¹Ñ é5…Ñ ¹µ¥¸¡5…Ñ ¹™±½½È¡\© ¼ÌÈÀÀ¤°äÀ¥ô° ¤ôø¡íàé5…Ñ ¹É…¹‘½´ ¤©\±äé5…Ñ ¹É…¹‘½´ ¤© ±Èé5…Ñ ¹É…¹‘½´ ¤¨¸Ü¬¸È±Ùàè¡5…Ñ ¹É…¹‘½´ ¤´¸Ô¤¨¸ÀØ±Ùäè¡5…Ñ ¹É…¹‘½´ ¤´¸Ô¤¨¸ÀØ±Á é5…Ñ ¹É…¹‘½´ ¤©5…Ñ ¹A$¨Éô¤¤íô(€¹•ÜI•Í¥é•=‰Í•ÉÙ•È¡É•Í¥é”¤¹½‰Í•ÉÙ”¡Ø¹Á…É•¹Ñ±•µ•¹ÑññØ¤íÉ•Í¥é” ¤ì(€±•ÐÐôÀì(€€¡™Õ¹Ñ¥½¸‘É…Ü ¥íÉ•ÅÕ•ÍÑ¹¥µ…Ñ¥½¹É…µ”¡‘É…Ü¤íÐ¬ô¸ÀÀÜíÑà¹±•…ÉI•Ð À°À±\± ¤í™½È¡±•Ð¤ôÀí¤ñÍÑ…ÉÌ¹±•¹Ñ í¤¬¬¥™½È¡±•Ð¨õ¤¬Äí¨ñÍÑ…ÉÌ¹±•¹Ñ í¨¬¬¥í½¹ÍÐ‘àõÍÑ…ÉÍm¥t¹àµÍÑ…ÉÍm©t¹à±‘äõÍÑ…ÉÍm¥t¹äµÍÑ…ÉÍm©t¹ä±õ5…Ñ ¹ÍÅÉÐ¡‘à©‘à­‘ä©‘ä¤í¥˜¡ðäÔ¥íÑà¹‰•¥¹A…Ñ  ¤íÑà¹ÍÑÉ½­•MÑå±”õÉ‰„ Ääà°ÄØÈ°Ôà°‘ì Äµ¼äÔ¤¨¸ÄÉô¥€íÑà¹±¥¹•]¥‘Ñ ô¸ÌÔíÑà¹µ½Ù•Q¼¡ÍÑ…ÉÍm¥t¹à±ÍÑ…ÉÍm¥t¹ä¤íÑà¹±¥¹•Q¼¡ÍÑ…ÉÍm©t¹à±ÍÑ…ÉÍm©t¹ä¤íÑà¹ÍÑÉ½­” ¤íõõÍÑ…ÉÌ¹™½É… ¡ÌôùíÌ¹à¬õÌ¹ÙàíÌ¹ä¬õÌ¹Ùäí¥˜¡Ì¹àðÀ¥Ì¹àõ\í¥˜¡Ì¹àù\¥Ì¹àôÀí¥˜¡Ì¹äðÀ¥Ì¹äõ í¥˜¡Ì¹äù ¥Ì¹äôÀí½¹ÍÐœô¸Ì­5…Ñ ¹Í¥¸¡Ð­Ì¹Á ¤¨¸ÈàíÑà¹‰•¥¹A…Ñ  ¤íÑà¹…ÉŒ¡Ì¹à±Ì¹ä±Ì¹È°À±5…Ñ ¹A$¨È¤íÑà¹™¥±±MÑå±”õÉ‰„ Ääà°ÄØÈ°Ôà°‘íœ¨¸Ýô¥€íÑà¹™¥±° ¤íô¤íô¤ ¤ì)ô¤ ¤ì(ð½ÍÉ¥ÁÐø(ð½‰½‘äø(ð½¡Ñµ°ø
